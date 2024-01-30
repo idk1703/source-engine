@@ -20,16 +20,16 @@
 //
 // Weapon Crowbar tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFCrowbar, DT_TFWeaponCrowbar )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFCrowbar, DT_TFWeaponCrowbar)
 
-BEGIN_NETWORK_TABLE( CTFCrowbar, DT_TFWeaponCrowbar )
+BEGIN_NETWORK_TABLE(CTFCrowbar, DT_TFWeaponCrowbar)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFCrowbar )
+BEGIN_PREDICTION_DATA(CTFCrowbar)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_crowbar, CTFCrowbar );
-PRECACHE_WEAPON_REGISTER( tf_weapon_crowbar );
+LINK_ENTITY_TO_CLASS(tf_weapon_crowbar, CTFCrowbar);
+PRECACHE_WEAPON_REGISTER(tf_weapon_crowbar);
 
 //=============================================================================
 //
@@ -39,6 +39,4 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_crowbar );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFCrowbar::CTFCrowbar()
-{
-}
+CTFCrowbar::CTFCrowbar() {}

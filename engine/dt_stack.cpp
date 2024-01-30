@@ -11,7 +11,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-CDatatableStack::CDatatableStack( CSendTablePrecalc *pPrecalc, unsigned char *pStructBase, int objectID )
+CDatatableStack::CDatatableStack(CSendTablePrecalc *pPrecalc, unsigned char *pStructBase, int objectID)
 {
 	m_pPrecalc = pPrecalc;
 
@@ -24,21 +24,20 @@ CDatatableStack::CDatatableStack( CSendTablePrecalc *pPrecalc, unsigned char *pS
 	m_bInitted = false;
 
 #ifdef _DEBUG
-	memset( m_pProxies, 0xFF, sizeof( m_pProxies ) );
+	memset(m_pProxies, 0xFF, sizeof(m_pProxies));
 #endif
 }
 
-
-void CDatatableStack::Init( bool bExplicitRoutes )
+void CDatatableStack::Init(bool bExplicitRoutes)
 {
-	if ( bExplicitRoutes )
+	if(bExplicitRoutes)
 	{
-		memset( m_pProxies, 0xFF, sizeof( m_pProxies[0] ) * m_pPrecalc->m_ProxyPaths.Count() );
+		memset(m_pProxies, 0xFF, sizeof(m_pProxies[0]) * m_pPrecalc->m_ProxyPaths.Count());
 	}
 	else
 	{
 		// Walk down the tree and call all the datatable proxies as we hit them.
-		RecurseAndCallProxies( &m_pPrecalc->m_Root, m_pStructBase );
+		RecurseAndCallProxies(&m_pPrecalc->m_Root, m_pStructBase);
 	}
 
 	m_bInitted = true;

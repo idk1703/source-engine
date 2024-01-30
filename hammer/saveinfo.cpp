@@ -12,7 +12,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the object should be saved, false if not. Normal
 //			serialization always returns true. Exporting VMF files with the
@@ -25,10 +24,10 @@ bool CSaveInfo::ShouldSaveObject(CMapClass *pObject)
 	// Currently the only thing that enables visible objects only serialization
 	// is the Export dialog. Normal VMF saves just save everything.
 	//
-	if (m_bVisiblesOnly && !pObject->IsVisible())
+	if(m_bVisiblesOnly && !pObject->IsVisible())
 	{
-		return(false);
+		return (false);
 	}
 
-	return(true);
+	return (true);
 }

@@ -23,8 +23,7 @@
 #define F4(x, y, z) (y ^ (x | ~z))
 
 // This is the central step in the MD5 algorithm.
-#define MD5STEP(f, w, x, y, z, data, s) \
-		( w += f(x, y, z) + data,  w = w<<s | w>>(32-s),  w += x )
+#define MD5STEP(f, w, x, y, z, data, s) (w += f(x, y, z) + data, w = w << s | w >> (32 - s), w += x)
 
 //-----------------------------------------------------------------------------
 // Purpose: The core of the MD5 algorithm, this alters an existing MD5 hash to
@@ -34,12 +33,12 @@
 //			in[16] -
 // Output : static void
 //-----------------------------------------------------------------------------
-#if ( PLAT_BIG_ENDIAN == 1 )
+#if(PLAT_BIG_ENDIAN == 1)
 static void MD5Transform(unsigned int buf[4], unsigned int const in_big[16])
 {
 
 	unsigned int in[16];
-	for( int i = 0; i != 16; ++i )
+	for(int i = 0; i != 16; ++i)
 	{
 		in[i] = LittleDWord(in_big[i]);
 	}
@@ -157,37 +156,37 @@ void MD5Update(MD5Context_t *ctx, unsigned char const *buf, unsigned int len)
 	/* Update bitcount */
 
 	t = ctx->bits[0];
-	if ((ctx->bits[0] = t + ((unsigned int) len << 3)) < t)
-		ctx->bits[1]++;         /* Carry from low to high */
+	if((ctx->bits[0] = t + ((unsigned int)len << 3)) < t)
+		ctx->bits[1]++; /* Carry from low to high */
 	ctx->bits[1] += len >> 29;
 
-	t = (t >> 3) & 0x3f;        /* Bytes already in shsInfo->data */
+	t = (t >> 3) & 0x3f; /* Bytes already in shsInfo->data */
 
 	/* Handle any leading odd-sized chunks */
 
-	if (t)
+	if(t)
 	{
-		unsigned char *p = (unsigned char *) ctx->in + t;
+		unsigned char *p = (unsigned char *)ctx->in + t;
 
 		t = 64 - t;
-		if (len < t)
+		if(len < t)
 		{
 			memcpy(p, buf, len);
 			return;
 		}
 		memcpy(p, buf, t);
-		//byteReverse(ctx->in, 16);
-		MD5Transform(ctx->buf, (unsigned int *) ctx->in);
+		// byteReverse(ctx->in, 16);
+		MD5Transform(ctx->buf, (unsigned int *)ctx->in);
 		buf += t;
 		len -= t;
 	}
 	/* Process data in 64-byte chunks */
 
-	while (len >= 64)
+	while(len >= 64)
 	{
 		memcpy(ctx->in, buf, 64);
-		//byteReverse(ctx->in, 16);
-		MD5Transform(ctx->buf, (unsigned int *) ctx->in);
+		// byteReverse(ctx->in, 16);
+		MD5Transform(ctx->buf, (unsigned int *)ctx->in);
 		buf += 64;
 		len -= 64;
 	}
@@ -219,12 +218,12 @@ void MD5Final(unsigned char digest[MD5_DIGEST_LENGTH], MD5Context_t *ctx)
 	count = 64 - 1 - count;
 
 	/* Pad out to 56 mod 64 */
-	if (count < 8)
+	if(count < 8)
 	{
 		/* Two lots of padding:  Pad the first block to 64 bytes */
 		memset(p, 0, count);
-		//byteReverse(ctx->in, 16);
-		MD5Transform(ctx->buf, (unsigned int *) ctx->in);
+		// byteReverse(ctx->in, 16);
+		MD5Transform(ctx->buf, (unsigned int *)ctx->in);
 
 		/* Now fill the next block with 56 bytes */
 		memset(ctx->in, 0, 56);
@@ -234,24 +233,24 @@ void MD5Final(unsigned char digest[MD5_DIGEST_LENGTH], MD5Context_t *ctx)
 		/* Pad block to 56 bytes */
 		memset(p, 0, count - 8);
 	}
-	//byteReverse(ctx->in, 14);
+	// byteReverse(ctx->in, 14);
 
 	/* Append length in bits and transform */
-	((unsigned int *) ctx->in)[14] = LittleDWord( ctx->bits[0] );
-	((unsigned int *) ctx->in)[15] = LittleDWord( ctx->bits[1] );
+	((unsigned int *)ctx->in)[14] = LittleDWord(ctx->bits[0]);
+	((unsigned int *)ctx->in)[15] = LittleDWord(ctx->bits[1]);
 
-	MD5Transform(ctx->buf, (unsigned int *) ctx->in);
-	//byteReverse((unsigned char *) ctx->buf, 4);
-#if ( PLAT_BIG_ENDIAN == 1 )
-	COMPILE_TIME_ASSERT( MD5_DIGEST_LENGTH == (sizeof(unsigned int) * 4) );
-	((unsigned int *)digest)[0] = LittleDWord( ctx->buf[0] );
-	((unsigned int *)digest)[1] = LittleDWord( ctx->buf[1] );
-	((unsigned int *)digest)[2] = LittleDWord( ctx->buf[2] );
-	((unsigned int *)digest)[3] = LittleDWord( ctx->buf[3] );
+	MD5Transform(ctx->buf, (unsigned int *)ctx->in);
+	// byteReverse((unsigned char *) ctx->buf, 4);
+#if(PLAT_BIG_ENDIAN == 1)
+	COMPILE_TIME_ASSERT(MD5_DIGEST_LENGTH == (sizeof(unsigned int) * 4));
+	((unsigned int *)digest)[0] = LittleDWord(ctx->buf[0]);
+	((unsigned int *)digest)[1] = LittleDWord(ctx->buf[1]);
+	((unsigned int *)digest)[2] = LittleDWord(ctx->buf[2]);
+	((unsigned int *)digest)[3] = LittleDWord(ctx->buf[3]);
 #else
 	memcpy(digest, ctx->buf, MD5_DIGEST_LENGTH);
 #endif
-	memset(ctx, 0, sizeof(ctx));        /* In case it's sensitive */
+	memset(ctx, 0, sizeof(ctx)); /* In case it's sensitive */
 }
 
 //-----------------------------------------------------------------------------
@@ -260,13 +259,13 @@ void MD5Final(unsigned char digest[MD5_DIGEST_LENGTH], MD5Context_t *ctx)
 //			hashlen -
 // Output : char
 //-----------------------------------------------------------------------------
-char *MD5_Print( unsigned char *hash, int hashlen )
+char *MD5_Print(unsigned char *hash, int hashlen)
 {
 	static char szReturn[64];
 
-	Assert( hashlen <= 32 );
+	Assert(hashlen <= 32);
 
-	V_binarytohex( hash, hashlen, szReturn, sizeof( szReturn ) );
+	V_binarytohex(hash, hashlen, szReturn, sizeof(szReturn));
 	return szReturn;
 }
 
@@ -277,15 +276,15 @@ char *MD5_Print( unsigned char *hash, int hashlen )
 //-----------------------------------------------------------------------------
 unsigned int MD5_PseudoRandom(unsigned int nSeed)
 {
-	nSeed = LittleDWord( nSeed );
+	nSeed = LittleDWord(nSeed);
 	MD5Context_t ctx;
 	unsigned char digest[MD5_DIGEST_LENGTH]; // The MD5 Hash
 
-	memset( &ctx, 0, sizeof( ctx ) );
+	memset(&ctx, 0, sizeof(ctx));
 
 	MD5Init(&ctx);
-	MD5Update(&ctx, (unsigned char*)&nSeed, sizeof(nSeed) );
+	MD5Update(&ctx, (unsigned char *)&nSeed, sizeof(nSeed));
 	MD5Final(digest, &ctx);
 
-	return LittleDWord(*(unsigned int*)(digest+6));	// use 4 middle bytes for random value
+	return LittleDWord(*(unsigned int *)(digest + 6)); // use 4 middle bytes for random value
 }

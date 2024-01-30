@@ -34,19 +34,19 @@ using namespace vgui;
 // In this demo we create a vertical scroll bar that is not attached to anything.
 // We display the current value of the slider nob next to the scroll bar.
 //-----------------------------------------------------------------------------
-class ScrollBarDemo: public DemoPage
+class ScrollBarDemo : public DemoPage
 {
-	public:
-		ScrollBarDemo(Panel *parent, const char *name);
-		~ScrollBarDemo();
+public:
+	ScrollBarDemo(Panel *parent, const char *name);
+	~ScrollBarDemo();
 
-		void OnSliderMoved();
+	void OnSliderMoved();
 
-	private:
-		ScrollBar *m_pScrollbar;
-		Label *m_pScrollValue;
+private:
+	ScrollBar *m_pScrollbar;
+	Label *m_pScrollValue;
 
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -55,13 +55,13 @@ class ScrollBarDemo: public DemoPage
 ScrollBarDemo::ScrollBarDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 {
 	// A vertical slider
-	m_pScrollbar = new ScrollBar (this, "ASscrollbar", true);
+	m_pScrollbar = new ScrollBar(this, "ASscrollbar", true);
 
 	// Set the position of the bar
 	m_pScrollbar->SetPos(100, 100);
 
 	// Set the size of the bar
-	m_pScrollbar->SetSize (20, 200);
+	m_pScrollbar->SetSize(20, 200);
 
 	// Set the size of the bar nob, which is actually proportionally
 	// related to how many lines of info fit into the window the
@@ -85,7 +85,7 @@ ScrollBarDemo::ScrollBarDemo(Panel *parent, const char *name) : DemoPage(parent,
 	// Finally we create a little label to tell us what the current value
 	// of the scroll bar is.
 	// We will update it every time the slider is moved.
-	m_pScrollValue = new Label (this, "ScrollBarValue", "0");
+	m_pScrollValue = new Label(this, "ScrollBarValue", "0");
 
 	// Stick the label next to the scroll bar.
 	m_pScrollValue->SetPos(130, 100);
@@ -94,9 +94,7 @@ ScrollBarDemo::ScrollBarDemo(Panel *parent, const char *name) : DemoPage(parent,
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ScrollBarDemo::~ScrollBarDemo()
-{
-}
+ScrollBarDemo::~ScrollBarDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Respond to movement of the scroll bar nob by updating the label's
@@ -105,21 +103,19 @@ ScrollBarDemo::~ScrollBarDemo()
 void ScrollBarDemo::OnSliderMoved()
 {
 	char number[6];
-	sprintf (number, "%d", m_pScrollbar->GetValue());
+	sprintf(number, "%d", m_pScrollbar->GetValue());
 	m_pScrollValue->SetText(number);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
-MessageMapItem_t ScrollBarDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( ScrollBarDemo, "ScrollBarSliderMoved", OnSliderMoved ),
+MessageMapItem_t ScrollBarDemo::m_MessageMap[] = {
+	MAP_MESSAGE(ScrollBarDemo, "ScrollBarSliderMoved", OnSliderMoved),
 };
 IMPLEMENT_PANELMAP(ScrollBarDemo, Panel);
 
-
-Panel* ScrollBarDemo_Create(Panel *parent)
+Panel *ScrollBarDemo_Create(Panel *parent)
 {
 	return new ScrollBarDemo(parent, "ScrollBarDemo");
 }

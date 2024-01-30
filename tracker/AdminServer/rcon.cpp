@@ -24,29 +24,30 @@ typedef enum
 	INFO_RECEIVED
 } RCONSTATUS;
 
+CRcon::CRcon(IResponse *target, serveritem_t &server, const char *password)
+{
 
-CRcon::CRcon(IResponse *target,serveritem_t &server,const char *password) {
+	memcpy(&m_Server, &server, sizeof(serveritem_t));
+	m_pResponseTarget = target;
 
-	memcpy(&m_Server, &server,sizeof(serveritem_t));
-	m_pResponseTarget=target;
+	m_bIsRefreshing = false;
+	m_bChallenge = false;
+	m_bNewRcon = false;
+	m_bPasswordFail = false;
+	m_bDisable = false;
+	m_bGotChallenge = false;
+	m_iChallenge = 0;
+	m_fQuerySendTime = 0;
 
-	m_bIsRefreshing	=	false;
-	m_bChallenge	=	false;
-	m_bNewRcon		=	false;
-	m_bPasswordFail	=	false;
-	m_bDisable		=	false;
-	m_bGotChallenge	=	false;
-	m_iChallenge	=	0;
-	m_fQuerySendTime=	0;
-
-	v_strncpy(m_sPassword,password,100);
+	v_strncpy(m_sPassword, password, 100);
 
 	int bytecode = S2A_INFO_DETAILED;
 	m_pQuery = new CSocket("internet rcon query", -1);
 	m_pQuery->AddMessageHandler(new CRconMsgHandlerDetails(this, CMsgHandler::MSGHANDLER_ALL, &bytecode));
 }
 
-CRcon::~CRcon() {
+CRcon::~CRcon()
+{
 	delete m_pQuery;
 }
 
@@ -55,16 +56,15 @@ CRcon::~CRcon() {
 //-----------------------------------------------------------------------------
 void CRcon::Reset()
 {
-	m_bIsRefreshing	=	false;
-	m_bChallenge	=	false;
-	m_bNewRcon		=	false;
-	m_bPasswordFail	=	false;
-	m_bDisable		=	false;
-	m_bGotChallenge	=	false;
-	m_iChallenge	=	0;
-	m_fQuerySendTime=	0;
+	m_bIsRefreshing = false;
+	m_bChallenge = false;
+	m_bNewRcon = false;
+	m_bPasswordFail = false;
+	m_bDisable = false;
+	m_bGotChallenge = false;
+	m_iChallenge = 0;
+	m_fQuerySendTime = 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sends a challenge request to the server if we have yet to get one,
@@ -73,7 +73,7 @@ void CRcon::Reset()
 void CRcon::SendRcon(const char *command)
 {
 
-	if(m_bDisable==true) // rcon is disabled because it has failed.
+	if(m_bDisable == true) // rcon is disabled because it has failed.
 	{
 		m_pResponseTarget->ServerFailedToRespond();
 		return;
@@ -82,32 +82,29 @@ void CRcon::SendRcon(const char *command)
 	if(m_bIsRefreshing)
 	{ // we are already processing a request, lets queue this
 		queue_requests_t queue;
-		strncpy(queue.queued,command,1024);
+		strncpy(queue.queued, command, 1024);
 
-		if(requests.Count()>10)  // to many request already...
+		if(requests.Count() > 10) // to many request already...
 			return;
 
 		requests.AddToTail(queue);
 		return;
 	}
 
-	m_bIsRefreshing=true;
-	m_bPasswordFail=false;
+	m_bIsRefreshing = true;
+	m_bPasswordFail = false;
 
-	if(m_bGotChallenge==false) // haven't got the challenge id yet
+	if(m_bGotChallenge == false) // haven't got the challenge id yet
 	{
 		GetChallenge();
-		v_strncpy(m_sCmd,command,1024); // store away the command for later :)
-		m_bChallenge=true; // note that we are requesting a challenge and need to still run this command
+		v_strncpy(m_sCmd, command, 1024); // store away the command for later :)
+		m_bChallenge = true;			  // note that we are requesting a challenge and need to still run this command
 	}
 	else
 	{
-		RconRequest(command,m_iChallenge);
+		RconRequest(command, m_iChallenge);
 	}
-
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: runs a frame of the net handler
@@ -115,15 +112,15 @@ void CRcon::SendRcon(const char *command)
 void CRcon::RunFrame()
 {
 	// only the "ping" command has a timeout
-/*	float curtime = CSocket::GetClock();
-	if(m_fQuerySendTime!=0 && (curtime-m_fQuerySendTime)> 10.0f) // 10 seconds
-	{
-		m_fQuerySendTime=	0;
-		m_pResponseTarget->ServerFailedToRespond();
-	}
-	*/
+	/*	float curtime = CSocket::GetClock();
+		if(m_fQuerySendTime!=0 && (curtime-m_fQuerySendTime)> 10.0f) // 10 seconds
+		{
+			m_fQuerySendTime=	0;
+			m_pResponseTarget->ServerFailedToRespond();
+		}
+		*/
 
-	if (m_pQuery)
+	if(m_pQuery)
 	{
 		m_pQuery->Frame();
 	}
@@ -135,9 +132,9 @@ void CRcon::RunFrame()
 void CRcon::GetChallenge()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
-	assert( buffer );
+	assert(buffer);
 
-	if ( !buffer )
+	if(!buffer)
 	{
 		return;
 	}
@@ -148,21 +145,20 @@ void CRcon::GetChallenge()
 	adr.ip[3] = m_Server.ip[3];
 	adr.port = (m_Server.port & 0xff) << 8 | (m_Server.port & 0xff00) >> 8;
 	adr.type = NA_IP;
-		// Set state
+	// Set state
 	m_Server.received = (int)INFO_REQUESTED;
-		// Create query message
+	// Create query message
 	buffer->Clear();
 	// Write control sequence
 	buffer->WriteLong(0xffffffff);
-		// Write query string
+	// Write query string
 	buffer->WriteString("challenge rcon");
-		// Sendmessage
-	m_pQuery->SendMessage( &adr );
+	// Sendmessage
+	m_pQuery->SendMessage(&adr);
 
 	// set the clock for this send
-	m_fQuerySendTime	= CSocket::GetClock();
+	m_fQuerySendTime = CSocket::GetClock();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: emits a valid rcon request, the challenge id has already been found
@@ -170,9 +166,9 @@ void CRcon::GetChallenge()
 void CRcon::RconRequest(const char *command, int challenge)
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
-	assert( buffer );
+	assert(buffer);
 
-	if ( !buffer )
+	if(!buffer)
 	{
 		return;
 	}
@@ -194,13 +190,13 @@ void CRcon::RconRequest(const char *command, int challenge)
 
 	// Write query string
 	char rcon_cmd[600];
-	_snprintf(rcon_cmd,600,"rcon %u \"%s\" %s",challenge,m_sPassword,command);
+	_snprintf(rcon_cmd, 600, "rcon %u \"%s\" %s", challenge, m_sPassword, command);
 
 	buffer->WriteString(rcon_cmd);
 	// Sendmessage
-	m_pQuery->SendMessage( &adr );
+	m_pQuery->SendMessage(&adr);
 	// set the clock for this send
-	m_fQuerySendTime	= CSocket::GetClock();
+	m_fQuerySendTime = CSocket::GetClock();
 }
 
 //-----------------------------------------------------------------------------
@@ -209,42 +205,36 @@ void CRcon::RconRequest(const char *command, int challenge)
 void CRcon::UpdateServer(netadr_t *adr, int challenge, const char *resp)
 {
 
-	m_fQuerySendTime=	0;
-	if(m_bChallenge==true)  // now send the RCON request itself
+	m_fQuerySendTime = 0;
+	if(m_bChallenge == true) // now send the RCON request itself
 	{
-		m_bChallenge=false; // m_bChallenge is set to say we just requested the challenge value
-		m_iChallenge=challenge;
-		m_bGotChallenge=true;
-		RconRequest(m_sCmd,m_iChallenge);
+		m_bChallenge = false; // m_bChallenge is set to say we just requested the challenge value
+		m_iChallenge = challenge;
+		m_bGotChallenge = true;
+		RconRequest(m_sCmd, m_iChallenge);
 	}
-	else  // this is the result of the RCON request
+	else // this is the result of the RCON request
 	{
-		m_bNewRcon=true;
-		v_strncpy(m_sRconResponse,resp,2048);
-		m_bIsRefreshing=false;
+		m_bNewRcon = true;
+		v_strncpy(m_sRconResponse, resp, 2048);
+		m_bIsRefreshing = false;
 
 		// this must be before the SeverResponded() :)
-		if(requests.Count()>0)
+		if(requests.Count() > 0)
 		{ // we have queued requests
 			SendRcon(requests[0].queued);
 			requests.Remove(0); // now delete this element
 		}
 
-
 		// notify the UI of the new server info
 		m_pResponseTarget->ServerResponded();
-
 	}
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: run when a refresh is asked for
 //-----------------------------------------------------------------------------
-void CRcon::Refresh()
-{
-
-}
+void CRcon::Refresh() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: returns if a rcon is currently being performed
@@ -277,7 +267,7 @@ bool CRcon::Challenge()
 bool CRcon::NewRcon()
 {
 	bool val = m_bNewRcon;
-	m_bNewRcon=false;
+	m_bNewRcon = false;
 
 	return val;
 }
@@ -295,10 +285,10 @@ const char *CRcon::RconResponse()
 //-----------------------------------------------------------------------------
 bool CRcon::PasswordFail()
 {
-	bool val=m_bPasswordFail;
-	m_bPasswordFail=false;
+	bool val = m_bPasswordFail;
+	m_bPasswordFail = false;
 	return val;
-	//m_pResponseTarget->ServerFailedToRespond();
+	// m_pResponseTarget->ServerFailedToRespond();
 }
 
 //-----------------------------------------------------------------------------
@@ -306,20 +296,20 @@ bool CRcon::PasswordFail()
 //-----------------------------------------------------------------------------
 void CRcon::BadPassword(const char *info)
 {
-	strncpy(m_sRconResponse,info,100);
-	m_bPasswordFail=true;
-	m_bDisable=true;
-	m_fQuerySendTime=	0;
+	strncpy(m_sRconResponse, info, 100);
+	m_bPasswordFail = true;
+	m_bDisable = true;
+	m_fQuerySendTime = 0;
 
-	m_bIsRefreshing=false;
+	m_bIsRefreshing = false;
 
-/*	// this must be before the ServerFailedToRespond() :)
-	if(requests.Count()>0)
-	{ // we have queued requests
-		SendRcon(requests[0].queued);
-		requests.Remove(0); // now delete this element
-	}
-*/
+	/*	// this must be before the ServerFailedToRespond() :)
+		if(requests.Count()>0)
+		{ // we have queued requests
+			SendRcon(requests[0].queued);
+			requests.Remove(0); // now delete this element
+		}
+	*/
 
 	m_pResponseTarget->ServerFailedToRespond();
 }
@@ -337,6 +327,6 @@ bool CRcon::Disabled()
 //-----------------------------------------------------------------------------
 void CRcon::SetPassword(const char *newPass)
 {
-	strncpy(m_sPassword,newPass,100);
-	m_bDisable=false; // new password, so we can try again
+	strncpy(m_sPassword, newPass, 100);
+	m_bDisable = false; // new password, so we can try again
 }

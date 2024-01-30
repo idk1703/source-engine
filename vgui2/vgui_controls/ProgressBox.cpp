@@ -26,17 +26,18 @@
 using namespace vgui;
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnknownTimeString, Panel *parent) : Frame(parent, NULL, parent ? false : true)
+ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnknownTimeString, Panel *parent)
+	: Frame(parent, NULL, parent ? false : true)
 {
 	// save off the non-localized title, since we may need to dynamically localize it (on progress updates)
 	const wchar_t *ws = g_pVGuiLocalize->Find(title);
-	if (ws)
+	if(ws)
 	{
 		wcsncpy(m_wszTitleString, ws, sizeof(m_wszTitleString) / sizeof(wchar_t));
 	}
@@ -48,7 +49,7 @@ ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnk
 	m_pMessageLabel = new Label(this, NULL, pszUnknownTimeString);
 
 	ws = g_pVGuiLocalize->Find(text);
-	if (ws)
+	if(ws)
 	{
 		wcsncpy(m_wcsInfoString, ws, sizeof(m_wcsInfoString) / sizeof(wchar_t));
 	}
@@ -58,7 +59,7 @@ ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnk
 	}
 
 	ws = g_pVGuiLocalize->Find(pszUnknownTimeString);
-	if (ws)
+	if(ws)
 	{
 		wcsncpy(m_wszUnknownTimeString, ws, sizeof(m_wszUnknownTimeString) / sizeof(wchar_t));
 	}
@@ -72,7 +73,9 @@ ProgressBox::ProgressBox(const char *title, const char *text, const char *pszUnk
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-ProgressBox::ProgressBox(const wchar_t *wszTitle, const wchar_t *wszText, const wchar_t *wszUnknownTimeString, Panel *parent) : Frame(parent, NULL, parent ? false : true)
+ProgressBox::ProgressBox(const wchar_t *wszTitle, const wchar_t *wszText, const wchar_t *wszUnknownTimeString,
+						 Panel *parent)
+	: Frame(parent, NULL, parent ? false : true)
 {
 	wcsncpy(m_wszTitleString, wszTitle, sizeof(m_wszTitleString) / sizeof(wchar_t));
 	m_pMessageLabel = new Label(this, NULL, wszUnknownTimeString);
@@ -111,9 +114,7 @@ void ProgressBox::Init()
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ProgressBox::~ProgressBox()
-{
-}
+ProgressBox::~ProgressBox() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: resize the message label
@@ -149,7 +150,7 @@ void ProgressBox::ShowWindow(Frame *pFrameOver)
 	// get our dialog size
 	GetSize(wide, tall);
 
-	if (pFrameOver)
+	if(pFrameOver)
 	{
 		int frameX, frameY;
 		int frameWide, frameTall;
@@ -184,7 +185,7 @@ void ProgressBox::PerformLayout()
 	m_pProgressBar->SetPos(leftEdge, y + 14 + m_pMessageLabel->GetTall() + 2);
 	m_pProgressBar->SetSize(wide - 44, 24);
 
-	if (m_pCancelButton->IsVisible())
+	if(m_pCancelButton->IsVisible())
 	{
 		// make room for cancel
 		int px, py, pw, pt;
@@ -207,10 +208,10 @@ void ProgressBox::SetProgress(float progress)
 	m_pProgressBar->SetVisible(true);
 
 	// only update progress timings if the progress has actually changed
-	if (progress != m_flCurrentProgress)
+	if(progress != m_flCurrentProgress)
 	{
 		// store off timings for calculating time remaining
-		if (m_flFirstProgressUpdate < 0.0f)
+		if(m_flFirstProgressUpdate < 0.0f)
 		{
 			m_flFirstProgressUpdate = (float)system()->GetFrameTime();
 		}
@@ -237,9 +238,10 @@ void ProgressBox::UpdateTitle()
 	// update progress text
 	wchar_t unicode[256];
 	wchar_t completion[64];
-	if ((int)(m_flCurrentProgress * 100.0f) > 0)
+	if((int)(m_flCurrentProgress * 100.0f) > 0)
 	{
-		_snwprintf(completion, sizeof(completion) / sizeof(wchar_t), L"- %d%% complete", (int)(m_flCurrentProgress * 100.0f));
+		_snwprintf(completion, sizeof(completion) / sizeof(wchar_t), L"- %d%% complete",
+				   (int)(m_flCurrentProgress * 100.0f));
 	}
 	else
 	{
@@ -255,10 +257,12 @@ void ProgressBox::UpdateTitle()
 void ProgressBox::OnThink()
 {
 	// calculate the progress made
-	if (m_flFirstProgressUpdate >= 0.0f && m_wcsInfoString[0])
+	if(m_flFirstProgressUpdate >= 0.0f && m_wcsInfoString[0])
 	{
 		wchar_t timeRemaining[128];
-		if (ProgressBar::ConstructTimeRemainingString(timeRemaining, sizeof(timeRemaining), m_flFirstProgressUpdate, (float)system()->GetFrameTime(), m_flCurrentProgress, m_flLastProgressUpdate, true))
+		if(ProgressBar::ConstructTimeRemainingString(timeRemaining, sizeof(timeRemaining), m_flFirstProgressUpdate,
+													 (float)system()->GetFrameTime(), m_flCurrentProgress,
+													 m_flLastProgressUpdate, true))
 		{
 			wchar_t unicode[256];
 			g_pVGuiLocalize->ConstructString(unicode, sizeof(unicode), m_wcsInfoString, 1, timeRemaining);
@@ -276,7 +280,7 @@ void ProgressBox::OnThink()
 //-----------------------------------------------------------------------------
 void ProgressBox::OnTick()
 {
-	if (m_flFirstProgressUpdate >= 0.0f)
+	if(m_flFirstProgressUpdate >= 0.0f)
 	{
 		Repaint();
 	}
@@ -289,7 +293,7 @@ void ProgressBox::OnTick()
 //-----------------------------------------------------------------------------
 void ProgressBox::OnCommand(const char *command)
 {
-	if (!stricmp(command, "Cancel"))
+	if(!stricmp(command, "Cancel"))
 	{
 		OnCancel();
 	}

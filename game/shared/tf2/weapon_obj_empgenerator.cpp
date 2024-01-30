@@ -16,22 +16,24 @@
 //-----------------------------------------------------------------------------
 class CWeaponObjEMPGenerator : public CWeaponBaseCombatObject
 {
-	DECLARE_CLASS( CWeaponObjEMPGenerator, CWeaponBaseCombatObject );
+	DECLARE_CLASS(CWeaponObjEMPGenerator, CWeaponBaseCombatObject);
+
 public:
-	CWeaponObjEMPGenerator( void );
+	CWeaponObjEMPGenerator(void);
 
 	DECLARE_SERVERCLASS();
 };
 
-IMPLEMENT_SERVERCLASS_ST( CWeaponObjEMPGenerator, DT_WeaponObjEMPGenerator )
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST(CWeaponObjEMPGenerator, DT_WeaponObjEMPGenerator)
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( weapon_obj_empgenerator, CWeaponObjEMPGenerator );
+	LINK_ENTITY_TO_CLASS(weapon_obj_empgenerator, CWeaponObjEMPGenerator);
 PRECACHE_WEAPON_REGISTER(weapon_obj_empgenerator);
 
-CWeaponObjEMPGenerator::CWeaponObjEMPGenerator( void )
+CWeaponObjEMPGenerator::CWeaponObjEMPGenerator(void)
 {
 	m_szObjectName = "obj_empgenerator";
-	m_vecBuildMins = EMPGENERATOR_MINS - Vector( 4,4,4 );
-	m_vecBuildMaxs = EMPGENERATOR_MAXS + Vector( 4,4,4 );
+	m_vecBuildMins = EMPGENERATOR_MINS - Vector(4, 4, 4);
+	m_vecBuildMaxs = EMPGENERATOR_MAXS + Vector(4, 4, 4);
 }

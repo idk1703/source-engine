@@ -18,7 +18,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 // -------------------------------------------------------------------------------------------------- //
 // PackedEntity.
 // -------------------------------------------------------------------------------------------------- //
@@ -35,41 +34,39 @@ PackedEntity::~PackedEntity()
 {
 	FreeData();
 
-	if ( m_pChangeFrameList )
+	if(m_pChangeFrameList)
 	{
 		m_pChangeFrameList->Release();
 		m_pChangeFrameList = NULL;
 	}
 }
 
-
-bool PackedEntity::AllocAndCopyPadded( const void *pData, unsigned long size )
+bool PackedEntity::AllocAndCopyPadded(const void *pData, unsigned long size)
 {
 	FreeData();
 
-	unsigned long nBytes = PAD_NUMBER( size, 4 );
+	unsigned long nBytes = PAD_NUMBER(size, 4);
 
 	// allocate the memory
-	m_pData = malloc( nBytes );
+	m_pData = malloc(nBytes);
 
-	if ( !m_pData )
+	if(!m_pData)
 	{
-		Assert( m_pData );
+		Assert(m_pData);
 		return false;
 	}
 
-	Q_memcpy( m_pData, pData, size );
-	SetNumBits( nBytes * 8 );
+	Q_memcpy(m_pData, pData, size);
+	SetNumBits(nBytes * 8);
 
 	return true;
 }
 
-
-int PackedEntity::GetPropsChangedAfterTick( int iTick, int *iOutProps, int nMaxOutProps )
+int PackedEntity::GetPropsChangedAfterTick(int iTick, int *iOutProps, int nMaxOutProps)
 {
-	if ( m_pChangeFrameList )
+	if(m_pChangeFrameList)
 	{
-		return m_pChangeFrameList->GetPropsChangedAfterTick( iTick, iOutProps, nMaxOutProps );
+		return m_pChangeFrameList->GetPropsChangedAfterTick(iTick, iOutProps, nMaxOutProps);
 	}
 	else
 	{
@@ -78,40 +75,36 @@ int PackedEntity::GetPropsChangedAfterTick( int iTick, int *iOutProps, int nMaxO
 	}
 }
 
-
-const CSendProxyRecipients*	PackedEntity::GetRecipients() const
+const CSendProxyRecipients *PackedEntity::GetRecipients() const
 {
 	return m_Recipients.Base();
 }
-
 
 int PackedEntity::GetNumRecipients() const
 {
 	return m_Recipients.Count();
 }
 
-
-void PackedEntity::SetRecipients( const CUtlMemory<CSendProxyRecipients> &recipients )
+void PackedEntity::SetRecipients(const CUtlMemory<CSendProxyRecipients> &recipients)
 {
-	m_Recipients.CopyArray( recipients.Base(), recipients.Count() );
+	m_Recipients.CopyArray(recipients.Base(), recipients.Count());
 }
 
-
-bool PackedEntity::CompareRecipients( const CUtlMemory<CSendProxyRecipients> &recipients )
+bool PackedEntity::CompareRecipients(const CUtlMemory<CSendProxyRecipients> &recipients)
 {
-	if ( recipients.Count() != m_Recipients.Count() )
+	if(recipients.Count() != m_Recipients.Count())
 		return false;
 
-	return memcmp( recipients.Base(), m_Recipients.Base(), sizeof( CSendProxyRecipients ) * m_Recipients.Count() ) == 0;
+	return memcmp(recipients.Base(), m_Recipients.Base(), sizeof(CSendProxyRecipients) * m_Recipients.Count()) == 0;
 }
 
-void PackedEntity::SetServerAndClientClass( ServerClass *pServerClass, ClientClass *pClientClass )
+void PackedEntity::SetServerAndClientClass(ServerClass *pServerClass, ClientClass *pClientClass)
 {
 	m_pServerClass = pServerClass;
 	m_pClientClass = pClientClass;
-	if ( pServerClass )
+	if(pServerClass)
 	{
-		Assert( pServerClass->m_pTable );
-		SetShouldCheckCreationTick( pServerClass->m_pTable->HasPropsEncodedAgainstTickCount() );
+		Assert(pServerClass->m_pTable);
+		SetShouldCheckCreationTick(pServerClass->m_pTable->HasPropsEncodedAgainstTickCount());
 	}
 }

@@ -28,7 +28,6 @@ static BOOL bCorrupt;
 class COldVisGroup
 {
 public:
-
 	char m_szName[128];
 	color32 m_rgbColor;
 
@@ -36,33 +35,33 @@ public:
 	bool m_bVisible;
 };
 
-
-float GetFileVersion() { return fThisVersion; }
-
-
-static void WriteString(std::fstream& file, LPCTSTR pszString)
+float GetFileVersion()
 {
-	BYTE cLen = strlen(pszString)+1;
-	file.write((char*)&cLen, 1);
+	return fThisVersion;
+}
+
+static void WriteString(std::fstream &file, LPCTSTR pszString)
+{
+	BYTE cLen = strlen(pszString) + 1;
+	file.write((char *)&cLen, 1);
 	file.write(pszString, cLen);
 }
 
-static void ReadString(std::fstream& file, char * pszString)
+static void ReadString(std::fstream &file, char *pszString)
 {
 	BYTE cLen;
 	file.read((char *)&cLen, 1);
 	file.read(pszString, cLen);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Loads a solid face from RMF.
 //-----------------------------------------------------------------------------
-int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+int CMapFace::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	int iSize;
 
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		//
 		// After 3.3 the alignment of vec4_t's changed. We never save the new format,
@@ -104,7 +103,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// layout changed with SSE optimizations.
 		//
 		float SavePoints[256][3];
-		for (int i = 0; i < iSize; i++)
+		for(int i = 0; i < iSize; i++)
 		{
 			SavePoints[i][0] = Points[i].x;
 			SavePoints[i][1] = Points[i].y;
@@ -117,7 +116,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// Save plane points. We don't serialize the Vectors directly because the memory
 		// layout changed with SSE optimizations.
 		//
-		for (int i = 0; i < 3; i++)
+		for(int i = 0; i < 3; i++)
 		{
 			SavePoints[i][0] = plane.planepts[i].x;
 			SavePoints[i][1] = plane.planepts[i].y;
@@ -132,7 +131,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		TEXTURE_21 OldTex;
 		memset(&OldTex, 0, sizeof(OldTex));
 
-		if (fThisVersion < 0.9f)
+		if(fThisVersion < 0.9f)
 		{
 			// Read the name
 			file.read(OldTex.texture, 16);
@@ -143,25 +142,26 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			// Read the rest - skip the name
 			file.read((char *)&OldTex.rotate, sizeof(OldTex.rotate) + sizeof(OldTex.shift) + sizeof(OldTex.scale));
 		}
-		else if (fThisVersion < 1.2f)
+		else if(fThisVersion < 1.2f)
 		{
 			// Didn't have smooth/material groups:
 			file.read((char *)&OldTex, 40);
-			file.read((char *)&OldTex, sizeof(OldTex.texture) - (MAX_PATH) + sizeof(OldTex.rotate) + sizeof(OldTex.shift) + sizeof(OldTex.scale));
+			file.read((char *)&OldTex, sizeof(OldTex.texture) - (MAX_PATH) + sizeof(OldTex.rotate) +
+										   sizeof(OldTex.shift) + sizeof(OldTex.scale));
 		}
-		else if (fThisVersion < 1.7f)
+		else if(fThisVersion < 1.7f)
 		{
 			// No quake2 fields yet and smaller texture size.
 			file.read((char *)&OldTex, 40);
 			file.read((char *)&OldTex.rotate, sizeof(OldTex) - (sizeof(int) * 3) - MAX_PATH);
 		}
-		else if (fThisVersion < 1.8f)
+		else if(fThisVersion < 1.8f)
 		{
 			// Texture name field changed from 40 to MAX_PATH in size.
 			file.read((char *)&OldTex, 40);
 			file.read((char *)&OldTex.rotate, sizeof(OldTex) - MAX_PATH);
 		}
-		else if (fThisVersion < 2.2f)
+		else if(fThisVersion < 2.2f)
 		{
 			file.read((char *)&OldTex, sizeof(OldTex));
 		}
@@ -199,14 +199,14 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			texture.q2contents = OldTex33.q2contents;
 			texture.nLightmapScale = OldTex33.nLightmapScale;
 
-			if (texture.nLightmapScale == 0)
+			if(texture.nLightmapScale == 0)
 			{
 				texture.nLightmapScale = g_pGameConfig->GetDefaultLightmapScale();
 			}
 		}
 
 		// If reading from a pre-2.2 RMF file, copy the texture info from the old format.
-		if (fThisVersion < 2.2f)
+		if(fThisVersion < 2.2f)
 		{
 			memcpy(texture.texture, OldTex.texture, sizeof(texture.texture));
 			memcpy(texture.scale, OldTex.scale, sizeof(texture.scale));
@@ -219,7 +219,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			texture.VAxis[3] = OldTex.shift[1];
 		}
 
-		if (fThisVersion < 1.8f)
+		if(fThisVersion < 1.8f)
 		{
 			texture.texture[40] = 0;
 		}
@@ -227,24 +227,24 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		//
 		// Reverse forward slashes if we are not using materials.
 		//
-		if (g_pGameConfig->GetTextureFormat() != tfVMT)
+		if(g_pGameConfig->GetTextureFormat() != tfVMT)
 		{
-			for (int i = strlen(texture.texture) - 1; i >= 0; i--)
+			for(int i = strlen(texture.texture) - 1; i >= 0; i--)
 			{
-				if (texture.texture[i] == '/')
+				if(texture.texture[i] == '/')
 				{
 					texture.texture[i] = '\\';
 				}
 			}
 		}
 
-		if (texture.texture[1] == ':')
+		if(texture.texture[1] == ':')
 		{
 			char szBuf[MAX_PATH];
 			char *psz;
 			strcpy(szBuf, texture.texture);
 			psz = strstr(szBuf, "textures\\");
-			if (psz)
+			if(psz)
 			{
 				memset(texture.texture, 0, sizeof(texture.texture));
 				psz += strlen("textures\\");
@@ -252,10 +252,10 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			}
 		}
 
-		if (fThisVersion < 0.6f)
+		if(fThisVersion < 0.6f)
 		{
 			float light;
-			file.read((char*) &light, sizeof(light));
+			file.read((char *)&light, sizeof(light));
 		}
 
 		//
@@ -270,7 +270,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		file.read((char *)&LoadPoints, iSize * 3 * sizeof(float));
 
 		Vector CreatePoints[256];
-		for (int i = 0; i < iSize; i++)
+		for(int i = 0; i < iSize; i++)
 		{
 			CreatePoints[i].x = LoadPoints[i][0];
 			CreatePoints[i].y = LoadPoints[i][1];
@@ -279,13 +279,13 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			//
 			// Negate Z for older RMF files.
 			//
-			if (fThisVersion < 0.5f)
+			if(fThisVersion < 0.5f)
 			{
 				CreatePoints[i].z = -CreatePoints[i].z;
 			}
 		}
 
-		if (fThisVersion < 2.2f)
+		if(fThisVersion < 2.2f)
 		{
 			CreateFace(CreatePoints, iSize);
 		}
@@ -294,7 +294,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// Load the plane points. We don't really need them, but they can fix the face if, somehow, it
 		// was saved without any points. RMF could have been smaller if we only saved these plane points.
 		//
-		if (fThisVersion >= 0.7f)
+		if(fThisVersion >= 0.7f)
 		{
 			//
 			// Load the points into an array of float[3]'s and transfer them into
@@ -304,7 +304,7 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			float LoadPlanePoints[3][3];
 			file.read((char *)LoadPlanePoints, sizeof(LoadPlanePoints));
 
-			for (int i = 0; i < 3; i++)
+			for(int i = 0; i < 3; i++)
 			{
 				plane.planepts[i].x = LoadPlanePoints[i][0];
 				plane.planepts[i].y = LoadPlanePoints[i][1];
@@ -314,13 +314,13 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 			CalcPlane();
 
 			// If reading from an older RMF file, set up the texture axes Quake-style.
-			if (fThisVersion < 2.2f)
+			if(fThisVersion < 2.2f)
 			{
 				InitializeTextureAxes(TEXTURE_ALIGN_QUAKE, INIT_TEXTURE_AXES | INIT_TEXTURE_FORCE);
 			}
 		}
 
-		if( fThisVersion < 2.2f )
+		if(fThisVersion < 2.2f)
 		{
 			SetTexture(texture.texture);
 		}
@@ -328,55 +328,54 @@ int CMapFace::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		//
 		// version 3.4 -- added displacement info to faces
 		//
-		if( ( fThisVersion >= 3.4f ) && ( fThisVersion <= 3.6f ) )
+		if((fThisVersion >= 3.4f) && (fThisVersion <= 3.6f))
 		{
 			bool bHasMapDisp;
 
-			if( fThisVersion >= 3.5f )
+			if(fThisVersion >= 3.5f)
 			{
 				int nLoadHasMapDisp;
 
 				// check displacement mapping flag
-				file.read( ( char* )&nLoadHasMapDisp, sizeof( int ) );
+				file.read((char *)&nLoadHasMapDisp, sizeof(int));
 				bHasMapDisp = nLoadHasMapDisp != 0;
 			}
 			else
 			{
 				// check displacement mapping flag
-				file.read( ( char* )&bHasMapDisp, sizeof( bool ) );
+				file.read((char *)&bHasMapDisp, sizeof(bool));
 			}
 
-			if( bHasMapDisp )
+			if(bHasMapDisp)
 			{
 				EditDispHandle_t handle = EditDispMgr()->Create();
-				SetDisp( handle );
+				SetDisp(handle);
 
-				CMapDisp *pDisp = EditDispMgr()->GetDisp( handle );
-				pDisp->SetParent( this );
-				pDisp->SerializedLoadRMF( file, this, fThisVersion );
+				CMapDisp *pDisp = EditDispMgr()->GetDisp(handle);
+				pDisp->SetParent(this);
+				pDisp->SerializedLoadRMF(file, this, fThisVersion);
 			}
 		}
 
-		if (fThisVersion >= 2.2f)
+		if(fThisVersion >= 2.2f)
 		{
 			CreateFace(CreatePoints, iSize);
 			SetTexture(texture.texture);
 		}
 	}
 
-	if (file.bad())
+	if(file.bad())
 	{
-		return(-1);
+		return (-1);
 	}
 
-	return(0);
+	return (0);
 }
 
-
-int MDkeyvalue::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+int MDkeyvalue::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	// load/save a keyvalue
-	if( fIsStoring )
+	if(fIsStoring)
 	{
 		WriteString(file, szKey);
 		WriteString(file, szValue);
@@ -387,13 +386,12 @@ int MDkeyvalue::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		ReadString(file, szValue);
 	}
 
-	if( file.bad() )
+	if(file.bad())
 		return -1;
 	return 0;
 }
 
-
-int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+int CMapSolid::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	int iRvl, iSize;
 
@@ -405,7 +403,7 @@ int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 	{
 		// serialize the Faces
 		iSize = Faces.GetCount();
-		file.write((char*) &iSize, sizeof(int));
+		file.write((char *)&iSize, sizeof(int));
 		for(int i = 0; i < iSize; i++)
 		{
 			iRvl = Faces[i].SerializeRMF(file, fIsStoring);
@@ -416,22 +414,22 @@ int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 	else
 	{
 		// There once was a bug that caused black solids. Fix it here.
-		if ((r == 0) && (g == 0) || (b == 0))
+		if((r == 0) && (g == 0) || (b == 0))
 		{
 			PickRandomColor();
 		}
 
 		// read Faces
-		file.read((char*) &iSize, sizeof(int));
+		file.read((char *)&iSize, sizeof(int));
 		Faces.SetCount(iSize);
 
 		for(int i = 0; i < iSize; i++)
 		{
 			// extract face
 			iRvl = Faces[i].SerializeRMF(file, fIsStoring);
-			if (iRvl < 0)
+			if(iRvl < 0)
 			{
-				return(iRvl);
+				return (iRvl);
 			}
 
 			Faces[i].SetRenderColor(r, g, b);
@@ -446,7 +444,7 @@ int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		m_eSolidType = HL1SolidTypeFromTextureName(Faces[0].texture.texture);
 	}
 
-	if (file.bad())
+	if(file.bad())
 	{
 		return -1;
 	}
@@ -454,23 +452,22 @@ int CMapSolid::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
-int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+int CEditGameClass::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	int iSize, iRvl;
 	int iAngle = 0;
 
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		// save data
 		WriteString(file, GetClassName());
-		file.write((char*) &iAngle, sizeof(iAngle));
+		file.write((char *)&iAngle, sizeof(iAngle));
 
 		int nSpawnFlags = GetSpawnFlags();
 		file.write((char *)&nSpawnFlags, sizeof(nSpawnFlags));
@@ -479,21 +476,21 @@ int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		// Write the number of keyvalues.
 		//
 		iSize = 0;
-		for ( int z=m_KeyValues.GetFirst(); z != m_KeyValues.GetInvalidIndex(); z=m_KeyValues.GetNext( z ) )
+		for(int z = m_KeyValues.GetFirst(); z != m_KeyValues.GetInvalidIndex(); z = m_KeyValues.GetNext(z))
 		{
 			iSize++;
 		}
-		file.write((char*) &iSize, sizeof(int));
+		file.write((char *)&iSize, sizeof(int));
 
 		//
 		// Write the keyvalues.
 		//
-		for ( int z=m_KeyValues.GetFirst(); z != m_KeyValues.GetInvalidIndex(); z=m_KeyValues.GetNext( z ) )
+		for(int z = m_KeyValues.GetFirst(); z != m_KeyValues.GetInvalidIndex(); z = m_KeyValues.GetNext(z))
 		{
 			MDkeyvalue KeyValue = m_KeyValues.GetKeyValue(z);
 
 			iRvl = KeyValue.SerializeRMF(file, fIsStoring);
-			if (iRvl < 0)
+			if(iRvl < 0)
 			{
 				return iRvl;
 			}
@@ -504,15 +501,15 @@ int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		//
 		BOOL bTimeline = FALSE;
 		int nTime = 0;
-		file.write((char*) &bTimeline, sizeof bTimeline);
-		file.write((char*) &nTime, sizeof nTime);
-		file.write((char*) &nTime, sizeof nTime);
+		file.write((char *)&bTimeline, sizeof bTimeline);
+		file.write((char *)&nTime, sizeof nTime);
+		file.write((char *)&nTime, sizeof nTime);
 	}
 	else
 	{
 		char buf[128];
 		ReadString(file, buf);
-		file.read((char*) &iAngle, sizeof(iAngle));
+		file.read((char *)&iAngle, sizeof(iAngle));
 
 		int nSpawnFlags;
 		file.read((char *)&nSpawnFlags, sizeof(nSpawnFlags));
@@ -524,12 +521,12 @@ int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		//
 		// Read the keyvalues.
 		//
-		file.read((char *) &iSize, sizeof(int));
-		for (int i = 0; i < iSize; i++ )
+		file.read((char *)&iSize, sizeof(int));
+		for(int i = 0; i < iSize; i++)
 		{
 			MDkeyvalue KeyValue;
 			iRvl = KeyValue.SerializeRMF(file, fIsStoring);
-			if (iRvl < 0)
+			if(iRvl < 0)
 			{
 				return iRvl;
 			}
@@ -540,7 +537,7 @@ int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		m_KeyValues.SetValue("classname", buf);
 
 		// backwards compatibility for old iAngle
-		if (iAngle)
+		if(iAngle)
 		{
 			ImportAngle(iAngle);
 		}
@@ -548,22 +545,21 @@ int CEditGameClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		//
 		// Dummy timeline information - unused.
 		//
-		if (fThisVersion >= 1.5f)
+		if(fThisVersion >= 1.5f)
 		{
 			BOOL bTimeline;
 			int nTime;
 
-			file.read((char*) &bTimeline, sizeof bTimeline);
-			file.read((char*) &nTime, sizeof nTime);
-			file.read((char*) &nTime, sizeof nTime);
+			file.read((char *)&bTimeline, sizeof bTimeline);
+			file.read((char *)&nTime, sizeof nTime);
+			file.read((char *)&nTime, sizeof nTime);
 		}
 	}
 
 	return file.bad() ? -1 : 0;
 }
 
-
-int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+int CMapClass::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	int iSize, iRvl;
 
@@ -597,10 +593,10 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		//
 		int nChildCount = 0;
 
-		FOR_EACH_OBJ( m_Children, pos )
+		FOR_EACH_OBJ(m_Children, pos)
 		{
 			CMapClass *pChild = m_Children.Element(pos);
-			if (pChild->ShouldSerialize())
+			if(pChild->ShouldSerialize())
 			{
 				nChildCount++;
 			}
@@ -608,13 +604,13 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 
 		file.write((char *)&nChildCount, sizeof(int));
 
-		FOR_EACH_OBJ( m_Children, pos )
+		FOR_EACH_OBJ(m_Children, pos)
 		{
 			CMapClass *pChild = m_Children.Element(pos);
-			if (pChild->ShouldSerialize())
+			if(pChild->ShouldSerialize())
 			{
 				iRvl = pChild->SerializeRMF(file, fIsStoring);
-				if (iRvl < 0)
+				if(iRvl < 0)
 				{
 					return iRvl;
 				}
@@ -627,14 +623,14 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		if(fThisVersion < 1.0f)
 		{
 			// kill group information .. unfortunate
-			file.read((char*) &iSize, sizeof(int));
+			file.read((char *)&iSize, sizeof(int));
 			file.seekg(iSize, std::ios::cur);
 		}
 		else
 		{
 			// just read the visgroup ID but ignore it
 			DWORD dwGroupID;
-			file.read((char*) &dwGroupID, sizeof(DWORD));
+			file.read((char *)&dwGroupID, sizeof(DWORD));
 		}
 
 		//
@@ -645,7 +641,7 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		file.read((char *)&b, sizeof(BYTE));
 
 		// load children
-		file.read((char*) &iSize, sizeof(int));
+		file.read((char *)&iSize, sizeof(int));
 		for(int i = 0; i < iSize; i++)
 		{
 			char buf[128];
@@ -666,7 +662,6 @@ int CMapClass::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 	return file.bad() ? -1 : 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
@@ -684,10 +679,10 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 	CMapClass::SerializeRMF(file, fIsStoring);
 	CEditGameClass::SerializeRMF(file, fIsStoring);
 
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		// Write flags
-		file.write((char*) &flags, sizeof(flags));
+		file.write((char *)&flags, sizeof(flags));
 
 		// Write origin
 		GetOrigin(Origin);
@@ -695,7 +690,7 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 
 		// Save padding for unused "complex" field
 		iSize = 0;
-		file.write((char*) &iSize, sizeof(int));
+		file.write((char *)&iSize, sizeof(int));
 	}
 	else
 	{
@@ -706,7 +701,7 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		file.read((char *)Origin.Base(), 3 * sizeof(float));
 		SetOrigin(Origin);
 
-		if (IsClass())
+		if(IsClass())
 		{
 			// Known class. Determine flags based on the class.
 			flags = IsSolidClass() ? (flags & ~flagPlaceholder) : (flags | flagPlaceholder);
@@ -717,7 +712,7 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 			flags = (m_Children.Count() > 0) ? (flags & ~flagPlaceholder) : (flags | flagPlaceholder);
 		}
 
-		if (!(IsPlaceholder()))
+		if(!(IsPlaceholder()))
 		{
 			CMapPoint::SetOrigin(Vector(0, 0, 0));
 		}
@@ -725,7 +720,7 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		GetOrigin(Origin);
 
 		// import for previous to 0.5
-		if (fThisVersion < 0.5f)
+		if(fThisVersion < 0.5f)
 		{
 			Origin.z = -Origin.z;
 		}
@@ -744,14 +739,13 @@ int CMapEntity::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		CalcBounds(TRUE);
 	}
 
-	if (file.bad())
+	if(file.bad())
 	{
 		return -1;
 	}
 
 	return 0;
 }
-
 
 int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
@@ -768,13 +762,13 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 	if(fIsStoring)
 	{
 		// write version
-		file.write((char*) &fVersion, sizeof(fVersion));
+		file.write((char *)&fVersion, sizeof(fVersion));
 
 		file.write("RMF", 3);
 
 		// we don't save vis groups
 		iSize = 0;
-		file.write((char*) &iSize, sizeof(int));
+		file.write((char *)&iSize, sizeof(int));
 
 		// save children & local data
 		if(CMapClass::SerializeRMF(file, fIsStoring) == -1)
@@ -786,9 +780,9 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 
 		// save paths
 		iSize = m_Paths.Count();
-		file.write((char*) &iSize, sizeof(iSize));
+		file.write((char *)&iSize, sizeof(iSize));
 
-		FOR_EACH_OBJ( m_Paths, pos )
+		FOR_EACH_OBJ(m_Paths, pos)
 		{
 			CMapPath *pPath = m_Paths.Element(pos);
 			pPath->SerializeRMF(file, TRUE);
@@ -800,12 +794,11 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 	else
 	{
 		// read & check version
-		file.read((char*) &fThisVersion, sizeof(fThisVersion));
+		file.read((char *)&fThisVersion, sizeof(fThisVersion));
 		if(fThisVersion < fLastCompat || fThisVersion > fVersion)
 		{
 			CString str;
-			str.Format("Oops! SerializeRMF() v%1.1f tried to load a file v%1.1f. Aborting.",
-				fVersion, fThisVersion);
+			str.Format("Oops! SerializeRMF() v%1.1f tried to load a file v%1.1f. Aborting.", fVersion, fThisVersion);
 			AfxMessageBox(str);
 			return -1;
 		}
@@ -823,15 +816,15 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		}
 
 		// load groups
-		if (fThisVersion >= 1.0f)
+		if(fThisVersion >= 1.0f)
 		{
-			file.read((char*) &iSize, sizeof(int));
+			file.read((char *)&iSize, sizeof(int));
 
-			for ( int i = 0; i < iSize; i++)
+			for(int i = 0; i < iSize; i++)
 			{
 				// just skip vis groups
 				COldVisGroup oldVisGroup;
-				file.read((char*) &oldVisGroup, sizeof(COldVisGroup));
+				file.read((char *)&oldVisGroup, sizeof(COldVisGroup));
 			}
 		}
 
@@ -856,14 +849,14 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		if(fThisVersion < 1.0f)
 		{
 			const int old_group_bytes = 134;
-			file.read((char*) &iSize, sizeof(int));
+			file.read((char *)&iSize, sizeof(int));
 			file.seekg(old_group_bytes * iSize, std::ios::cur);
 		}
 
 		// load paths
 		if(fThisVersion >= 1.1f)
 		{
-			file.read((char*) &iSize, sizeof iSize);
+			file.read((char *)&iSize, sizeof iSize);
 			for(int i = 0; i < iSize; i++)
 			{
 				CMapPath *pPath = new CMapPath;
@@ -871,7 +864,7 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 				if(pPath->GetNodeCount() == 0)
 				{
 					delete pPath;
-					continue;	// no add dead paths
+					continue; // no add dead paths
 				}
 				m_Paths.AddToTail(pPath);
 			}
@@ -881,8 +874,8 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 		if(fThisVersion < 1.4f)
 		{
 			float unused[3];
-			file.read((char*) unused, sizeof(float)*3);
-			file.read((char*) unused, sizeof(float)*3);
+			file.read((char *)unused, sizeof(float) * 3);
+			file.read((char *)unused, sizeof(float) * 3);
 		}
 
 		if(file.bad())
@@ -890,16 +883,16 @@ int CMapWorld::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 
 		PostloadWorld();
 
-		if (g_pGameConfig->GetTextureFormat() == tfVMT)
+		if(g_pGameConfig->GetTextureFormat() == tfVMT)
 		{
 			// do batch search and replace of textures from trans.txt if it exists.
 			char translationFilename[MAX_PATH];
-			Q_snprintf( translationFilename, sizeof( translationFilename ), "materials/trans.txt" );
-			FileHandle_t searchReplaceFP = fopen( translationFilename, "r" );
-			if( searchReplaceFP )
+			Q_snprintf(translationFilename, sizeof(translationFilename), "materials/trans.txt");
+			FileHandle_t searchReplaceFP = fopen(translationFilename, "r");
+			if(searchReplaceFP)
 			{
-				CMapDoc::GetActiveMapDoc()->BatchReplaceTextures( searchReplaceFP );
-				g_pFileSystem->Close( searchReplaceFP );
+				CMapDoc::GetActiveMapDoc()->BatchReplaceTextures(searchReplaceFP);
+				g_pFileSystem->Close(searchReplaceFP);
 			}
 		}
 	}
@@ -918,8 +911,7 @@ FatalError:
 	}
 
 	// OS error.
-	str.Format("The OS reported an error %s the file: %s",
-		fIsStoring ? "saving" : "loading", strerror(errno));
+	str.Format("The OS reported an error %s the file: %s", fIsStoring ? "saving" : "loading", strerror(errno));
 	AfxMessageBox(str);
 
 	return -1;

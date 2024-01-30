@@ -22,10 +22,11 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CCommentaryExplanationDialog::CCommentaryExplanationDialog(vgui::Panel *parent, char *pszFinishCommand) : BaseClass(parent, "CommentaryExplanationDialog")
+CCommentaryExplanationDialog::CCommentaryExplanationDialog(vgui::Panel *parent, char *pszFinishCommand)
+	: BaseClass(parent, "CommentaryExplanationDialog")
 {
 	SetDeleteSelfOnClose(true);
-	SetSizeable( false );
+	SetSizeable(false);
 
 	input()->SetAppModalSurface(GetVPanel());
 
@@ -36,21 +37,19 @@ CCommentaryExplanationDialog::CCommentaryExplanationDialog(vgui::Panel *parent, 
 	GameUI().PreventEngineHideGameUI();
 
 	// Save off the finish command
-	Q_snprintf( m_pszFinishCommand, sizeof( m_pszFinishCommand ), "%s", pszFinishCommand );
+	Q_snprintf(m_pszFinishCommand, sizeof(m_pszFinishCommand), "%s", pszFinishCommand);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CCommentaryExplanationDialog::~CCommentaryExplanationDialog()
-{
-}
+CCommentaryExplanationDialog::~CCommentaryExplanationDialog() {}
 
 void CCommentaryExplanationDialog::OnKeyCodeTyped(KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
-		OnCommand( "cancel" );
+		OnCommand("cancel");
 	}
 	else
 	{
@@ -63,13 +62,13 @@ void CCommentaryExplanationDialog::OnKeyCodeTyped(KeyCode code)
 //-----------------------------------------------------------------------------
 void CCommentaryExplanationDialog::OnKeyCodePressed(KeyCode code)
 {
-	if ( GetBaseButtonCode( code ) == KEY_XBUTTON_B || GetBaseButtonCode( code ) == STEAMCONTROLLER_B )
+	if(GetBaseButtonCode(code) == KEY_XBUTTON_B || GetBaseButtonCode(code) == STEAMCONTROLLER_B)
 	{
-		OnCommand( "cancel" );
+		OnCommand("cancel");
 	}
-	else if ( GetBaseButtonCode( code ) == KEY_XBUTTON_A || GetBaseButtonCode( code ) == STEAMCONTROLLER_A )
+	else if(GetBaseButtonCode(code) == KEY_XBUTTON_A || GetBaseButtonCode(code) == STEAMCONTROLLER_A)
 	{
-		OnCommand( "ok" );
+		OnCommand("ok");
 	}
 	else
 	{
@@ -80,27 +79,27 @@ void CCommentaryExplanationDialog::OnKeyCodePressed(KeyCode code)
 //-----------------------------------------------------------------------------
 // Purpose: handles button commands
 //-----------------------------------------------------------------------------
-void CCommentaryExplanationDialog::OnCommand( const char *command )
+void CCommentaryExplanationDialog::OnCommand(const char *command)
 {
-	if ( !stricmp( command, "ok" ) )
+	if(!stricmp(command, "ok"))
 	{
 		Close();
-		BasePanel()->FadeToBlackAndRunEngineCommand( m_pszFinishCommand );
+		BasePanel()->FadeToBlackAndRunEngineCommand(m_pszFinishCommand);
 	}
-	else if ( !stricmp( command, "cancel" ) || !stricmp( command, "close" ) )
+	else if(!stricmp(command, "cancel") || !stricmp(command, "close"))
 	{
 		Close();
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CCommentaryExplanationDialog::OnClose( void )
+void CCommentaryExplanationDialog::OnClose(void)
 {
 	BaseClass::OnClose();
 	GameUI().AllowEngineHideGameUI();

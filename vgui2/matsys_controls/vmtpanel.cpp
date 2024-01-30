@@ -23,66 +23,63 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 enum
 {
-	SCROLLBAR_SIZE=18,  // the width of a scrollbar
-	WINDOW_BORDER_WIDTH=2 // the width of the window's border
+	SCROLLBAR_SIZE = 18,	// the width of a scrollbar
+	WINDOW_BORDER_WIDTH = 2 // the width of the window's border
 };
 
 #define SPHERE_RADIUS 10.0f
 
-
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CVMTPanel::CVMTPanel( vgui::Panel *pParent, const char *pName ) : BaseClass( pParent, pName )
+CVMTPanel::CVMTPanel(vgui::Panel *pParent, const char *pName) : BaseClass(pParent, pName)
 {
 	m_bUseActualSize = true;
 	m_pMaterial = NULL;
 
-	m_pHorizontalBar = new ScrollBar( this, "HorizScrollBar", false );
+	m_pHorizontalBar = new ScrollBar(this, "HorizScrollBar", false);
 	m_pHorizontalBar->AddActionSignalTarget(this);
 	m_pHorizontalBar->SetVisible(false);
 
-	m_pVerticalBar = new ScrollBar( this, "VertScrollBar", true );
+	m_pVerticalBar = new ScrollBar(this, "VertScrollBar", true);
 	m_pVerticalBar->AddActionSignalTarget(this);
 	m_pVerticalBar->SetVisible(false);
 
-	LookAt( SPHERE_RADIUS );
+	LookAt(SPHERE_RADIUS);
 
-	m_pLightmapTexture.Init( "//platform/materials/debug/defaultlightmap", "editor" );
-	m_DefaultEnvCubemap.Init( "editor/cubemap", "editor", true );
+	m_pLightmapTexture.Init("//platform/materials/debug/defaultlightmap", "editor");
+	m_DefaultEnvCubemap.Init("editor/cubemap", "editor", true);
 }
 
 CVMTPanel::~CVMTPanel()
 {
 	m_pLightmapTexture.Shutdown();
 	m_DefaultEnvCubemap.Shutdown();
-	if (m_pMaterial)
+	if(m_pMaterial)
 	{
 		m_pMaterial->DecrementReferenceCount();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Scheme
 //-----------------------------------------------------------------------------
-void CVMTPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CVMTPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	SetBorder( pScheme->GetBorder( "MenuBorder") );
+	BaseClass::ApplySchemeSettings(pScheme);
+	SetBorder(pScheme->GetBorder("MenuBorder"));
 }
-
 
 //-----------------------------------------------------------------------------
 // Set the material to draw
 //-----------------------------------------------------------------------------
-void CVMTPanel::SetMaterial( IMaterial *pMaterial )
+void CVMTPanel::SetMaterial(IMaterial *pMaterial)
 {
-	if (pMaterial)
+	if(pMaterial)
 	{
 		pMaterial->IncrementReferenceCount();
 	}
-	if (m_pMaterial)
+	if(m_pMaterial)
 	{
 		m_pMaterial->DecrementReferenceCount();
 	}
@@ -90,16 +87,14 @@ void CVMTPanel::SetMaterial( IMaterial *pMaterial )
 	InvalidateLayout();
 }
 
-
 //-----------------------------------------------------------------------------
 // Set rendering mode (stretch to full screen, or use actual size)
 //-----------------------------------------------------------------------------
-void CVMTPanel::RenderUsingActualSize( bool bEnable )
+void CVMTPanel::RenderUsingActualSize(bool bEnable)
 {
 	m_bUseActualSize = bEnable;
 	InvalidateLayout();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: relayouts out the panel after any internal changes
@@ -111,11 +106,11 @@ void CVMTPanel::PerformLayout()
 
 	// Get the current size, see if it's big enough to view the entire thing
 	int iWidth, iHeight;
-	GetSize( iWidth, iHeight );
+	GetSize(iWidth, iHeight);
 
 	// In the case of stretching, just stretch to the size and blow off
 	// the scrollbars. Same holds true if there's no material
-	if (!m_bUseActualSize || !m_pMaterial)
+	if(!m_bUseActualSize || !m_pMaterial)
 	{
 		m_iViewableWidth = iWidth;
 		m_iViewableHeight = iHeight;
@@ -140,63 +135,61 @@ void CVMTPanel::PerformLayout()
 	m_iViewableHeight = bHorizScrollVisible ? iHeight - SCROLLBAR_SIZE - WINDOW_BORDER_WIDTH : iHeight;
 
 	// Set the position of the horizontal bar...
-	if (bHorizScrollVisible)
+	if(bHorizScrollVisible)
 	{
 		m_pHorizontalBar->SetPos(0, iHeight - SCROLLBAR_SIZE);
-		m_pHorizontalBar->SetSize( m_iViewableWidth, SCROLLBAR_SIZE );
+		m_pHorizontalBar->SetSize(m_iViewableWidth, SCROLLBAR_SIZE);
 
-		m_pHorizontalBar->SetRangeWindow( m_iViewableWidth );
-		m_pHorizontalBar->SetRange( 0, iMaterialWidth );
+		m_pHorizontalBar->SetRangeWindow(m_iViewableWidth);
+		m_pHorizontalBar->SetRange(0, iMaterialWidth);
 
 		// FIXME: Change scroll amount based on how much is not visible?
-		m_pHorizontalBar->SetButtonPressedScrollValue( 5 );
+		m_pHorizontalBar->SetButtonPressedScrollValue(5);
 	}
 
 	// Set the position of the vertical bar...
-	if (bVertScrollVisible)
+	if(bVertScrollVisible)
 	{
 		m_pVerticalBar->SetPos(iWidth - SCROLLBAR_SIZE, 0);
 		m_pVerticalBar->SetSize(SCROLLBAR_SIZE, m_iViewableHeight);
 
-		m_pVerticalBar->SetRangeWindow( m_iViewableHeight );
-		m_pVerticalBar->SetRange( 0, iMaterialHeight);
-		m_pVerticalBar->SetButtonPressedScrollValue( 5 );
+		m_pVerticalBar->SetRangeWindow(m_iViewableHeight);
+		m_pVerticalBar->SetRange(0, iMaterialHeight);
+		m_pVerticalBar->SetButtonPressedScrollValue(5);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // paint it stretched to the window size
 //-----------------------------------------------------------------------------
-void CVMTPanel::DrawStretchedToPanel( CMeshBuilder &meshBuilder )
+void CVMTPanel::DrawStretchedToPanel(CMeshBuilder &meshBuilder)
 {
 	// Draw a polygon the size of the panel
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( 0, 0, 0 );
-	meshBuilder.TexCoord2f( 0, 0, 0 );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(0, 0, 0);
+	meshBuilder.TexCoord2f(0, 0, 0);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( 0, m_iViewableHeight, 0 );
-	meshBuilder.TexCoord2f( 0, 0, 1 );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(0, m_iViewableHeight, 0);
+	meshBuilder.TexCoord2f(0, 0, 1);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( m_iViewableWidth, m_iViewableHeight, 0 );
-	meshBuilder.TexCoord2f( 0, 1, 1 );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(m_iViewableWidth, m_iViewableHeight, 0);
+	meshBuilder.TexCoord2f(0, 1, 1);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( m_iViewableWidth, 0, 0 );
-	meshBuilder.TexCoord2f( 0, 0, 1 );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(m_iViewableWidth, 0, 0);
+	meshBuilder.TexCoord2f(0, 0, 1);
 	meshBuilder.AdvanceVertex();
 }
-
 
 //-----------------------------------------------------------------------------
 // paint it actual size
 //-----------------------------------------------------------------------------
-void CVMTPanel::DrawActualSize( CMeshBuilder &meshBuilder )
+void CVMTPanel::DrawActualSize(CMeshBuilder &meshBuilder)
 {
 	// Check the size of the material...
 	int iMaterialWidth = m_pMaterial->GetMappingWidth();
@@ -207,12 +200,13 @@ void CVMTPanel::DrawActualSize( CMeshBuilder &meshBuilder )
 	Vector2D tul;
 	Vector2D tlr;
 
-	if (m_iViewableWidth >= iMaterialWidth)
+	if(m_iViewableWidth >= iMaterialWidth)
 	{
 		// Center the material if we've got enough horizontal space
 		ul.x = (m_iViewableWidth - iMaterialWidth) * 0.5f;
 		lr.x = ul.x + iMaterialWidth;
-		tul.x = 0.0f; tlr.x = 1.0f;
+		tul.x = 0.0f;
+		tlr.x = 1.0f;
 	}
 	else
 	{
@@ -225,12 +219,13 @@ void CVMTPanel::DrawActualSize( CMeshBuilder &meshBuilder )
 		lr.x = m_iViewableWidth;
 	}
 
-	if (m_iViewableHeight >= iMaterialHeight)
+	if(m_iViewableHeight >= iMaterialHeight)
 	{
 		// Center the material if we've got enough vertical space
 		ul.y = (m_iViewableHeight - iMaterialHeight) * 0.5f;
 		lr.y = ul.y + iMaterialHeight;
-		tul.y = 0.0f; tlr.y = 1.0f;
+		tul.y = 0.0f;
+		tlr.y = 1.0f;
 	}
 	else
 	{
@@ -244,50 +239,49 @@ void CVMTPanel::DrawActualSize( CMeshBuilder &meshBuilder )
 		lr.y = m_iViewableHeight;
 	}
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( ul.x, ul.y, 0 );
-	meshBuilder.TexCoord2f( 0, tul.x, tul.y );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(ul.x, ul.y, 0);
+	meshBuilder.TexCoord2f(0, tul.x, tul.y);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( lr.x, ul.y, 0 );
-	meshBuilder.TexCoord2f( 0, tlr.x, tul.y );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(lr.x, ul.y, 0);
+	meshBuilder.TexCoord2f(0, tlr.x, tul.y);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( lr.x, lr.y, 0 );
-	meshBuilder.TexCoord2f( 0, tlr.x, tlr.y );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(lr.x, lr.y, 0);
+	meshBuilder.TexCoord2f(0, tlr.x, tlr.y);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color4ub( 255, 255, 255, 255 );
-	meshBuilder.Position3f( ul.x, lr.y, 0 );
-	meshBuilder.TexCoord2f( 0, tul.x, tlr.y );
+	meshBuilder.Color4ub(255, 255, 255, 255);
+	meshBuilder.Position3f(ul.x, lr.y, 0);
+	meshBuilder.TexCoord2f(0, tul.x, tlr.y);
 	meshBuilder.AdvanceVertex();
 }
-
 
 //-----------------------------------------------------------------------------
 // Draw it on a sphere
 //-----------------------------------------------------------------------------
-void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta, int nPhi )
+void CVMTPanel::RenderSphere(const Vector &vCenter, float flRadius, int nTheta, int nPhi)
 {
-	int nVertices =  nTheta * nPhi;
-	int nIndices = 2 * ( nTheta + 1 ) * ( nPhi - 1 );
+	int nVertices = nTheta * nPhi;
+	int nIndices = 2 * (nTheta + 1) * (nPhi - 1);
 
-	CMatRenderContextPtr pRenderContext( MaterialSystem() );
-	pRenderContext->FogMode( MATERIAL_FOG_NONE );
-	pRenderContext->SetNumBoneWeights( 0 );
-	pRenderContext->Bind( m_pMaterial );
-	pRenderContext->BindLightmapTexture( m_pLightmapTexture );
-	pRenderContext->BindLocalCubemap( m_DefaultEnvCubemap );
+	CMatRenderContextPtr pRenderContext(MaterialSystem());
+	pRenderContext->FogMode(MATERIAL_FOG_NONE);
+	pRenderContext->SetNumBoneWeights(0);
+	pRenderContext->Bind(m_pMaterial);
+	pRenderContext->BindLightmapTexture(m_pLightmapTexture);
+	pRenderContext->BindLocalCubemap(m_DefaultEnvCubemap);
 
-	IMesh* pMesh = pRenderContext->GetDynamicMesh();
+	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 
 	CMeshBuilder meshBuilder;
-	meshBuilder.Begin( pMesh, MATERIAL_TRIANGLE_STRIP, nVertices, nIndices );
+	meshBuilder.Begin(pMesh, MATERIAL_TRIANGLE_STRIP, nVertices, nIndices);
 
-	bool bIsUsingLightmap = m_pMaterial->GetPropertyFlag( MATERIAL_PROPERTY_NEEDS_LIGHTMAP );
-	bool bIsUsingBumpedLightmap = m_pMaterial->GetPropertyFlag( MATERIAL_PROPERTY_NEEDS_BUMPED_LIGHTMAPS );
+	bool bIsUsingLightmap = m_pMaterial->GetPropertyFlag(MATERIAL_PROPERTY_NEEDS_LIGHTMAP);
+	bool bIsUsingBumpedLightmap = m_pMaterial->GetPropertyFlag(MATERIAL_PROPERTY_NEEDS_BUMPED_LIGHTMAPS);
 
 	int nLightmapWidth = m_pLightmapTexture->GetActualWidth();
 	float flHalfLuxel = 0.5f / nLightmapWidth;
@@ -296,13 +290,13 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 	// Build the index buffer.
 	//
 	int i, j;
-	for ( i = 0; i < nPhi; ++i )
+	for(i = 0; i < nPhi; ++i)
 	{
-		for ( j = 0; j < nTheta; ++j )
+		for(j = 0; j < nTheta; ++j)
 		{
-			float u = j / ( float )(nTheta - 1);
-			float v = i / ( float )(nPhi - 1);
-			float theta = ( j != nTheta-1 ) ? 2.0f * M_PI * u : 0.0f;
+			float u = j / (float)(nTheta - 1);
+			float v = i / (float)(nPhi - 1);
+			float theta = (j != nTheta - 1) ? 2.0f * M_PI * u : 0.0f;
 			float phi = M_PI * v;
 
 			Vector vecPos;
@@ -311,22 +305,22 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 			vecPos.z = flRadius * cos(phi);
 
 			Vector vecNormal = vecPos;
-			VectorNormalize( vecNormal );
+			VectorNormalize(vecNormal);
 
 			Vector4D vecTangentS;
 			Vector vecTangentT;
-			vecTangentS.Init( -vecPos.y, vecPos.x, 0.0f, 1.0f );
-			if ( VectorNormalize( vecTangentS.AsVector3D() ) == 0.0f )
+			vecTangentS.Init(-vecPos.y, vecPos.x, 0.0f, 1.0f);
+			if(VectorNormalize(vecTangentS.AsVector3D()) == 0.0f)
 			{
-				vecTangentS.Init( 1.0f, 0.0f, 0.0f, 1.0f );
+				vecTangentS.Init(1.0f, 0.0f, 0.0f, 1.0f);
 			}
 
-			CrossProduct( vecNormal, vecTangentS.AsVector3D(), vecTangentT );
+			CrossProduct(vecNormal, vecTangentS.AsVector3D(), vecTangentT);
 
-			unsigned char red = (int)( u * 255.0f );
-			unsigned char green = (int)( v * 255.0f );
-			unsigned char blue = (int)( v * 255.0f );
-			unsigned char alpha = (int)( v * 255.0f );
+			unsigned char red = (int)(u * 255.0f);
+			unsigned char green = (int)(v * 255.0f);
+			unsigned char blue = (int)(v * 255.0f);
+			unsigned char alpha = (int)(v * 255.0f);
 
 			vecPos += vCenter;
 
@@ -334,26 +328,26 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 			u1 = u2 = u;
 			v1 = v2 = v;
 
-			if ( bIsUsingLightmap )
+			if(bIsUsingLightmap)
 			{
-				u1 = RemapVal( u1, 0.0f, 1.0f, flHalfLuxel, 0.25 - flHalfLuxel );
+				u1 = RemapVal(u1, 0.0f, 1.0f, flHalfLuxel, 0.25 - flHalfLuxel);
 
-				if ( bIsUsingBumpedLightmap )
+				if(bIsUsingBumpedLightmap)
 				{
 					u2 = 0.25f;
 					v2 = 0.0f;
 				}
 			}
 
-			meshBuilder.Position3fv( vecPos.Base() );
-			meshBuilder.Normal3fv( vecNormal.Base() );
-			meshBuilder.Color4ub( red, green, blue, alpha );
-			meshBuilder.TexCoord2f( 0, u, v );
-			meshBuilder.TexCoord2f( 1, u1, v1 );
-			meshBuilder.TexCoord2f( 2, u2, v2 );
-			meshBuilder.TangentS3fv( vecTangentS.Base() );
-			meshBuilder.TangentT3fv( vecTangentT.Base() );
-			meshBuilder.UserData( vecTangentS.Base() );
+			meshBuilder.Position3fv(vecPos.Base());
+			meshBuilder.Normal3fv(vecNormal.Base());
+			meshBuilder.Color4ub(red, green, blue, alpha);
+			meshBuilder.TexCoord2f(0, u, v);
+			meshBuilder.TexCoord2f(1, u1, v1);
+			meshBuilder.TexCoord2f(2, u2, v2);
+			meshBuilder.TangentS3fv(vecTangentS.Base());
+			meshBuilder.TangentT3fv(vecTangentT.Base());
+			meshBuilder.UserData(vecTangentS.Base());
 			meshBuilder.AdvanceVertex();
 		}
 	}
@@ -362,24 +356,24 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 	// Emit the triangle strips.
 	//
 	int idx = 0;
-	for ( i = 0; i < nPhi - 1; ++i )
+	for(i = 0; i < nPhi - 1; ++i)
 	{
-		for ( j = 0; j < nTheta; ++j )
+		for(j = 0; j < nTheta; ++j)
 		{
 			idx = nTheta * i + j;
 
-			meshBuilder.FastIndex( idx );
-			meshBuilder.FastIndex( idx + nTheta );
+			meshBuilder.FastIndex(idx);
+			meshBuilder.FastIndex(idx + nTheta);
 		}
 
 		//
 		// Emit a degenerate triangle to skip to the next row without
 		// a connecting triangle.
 		//
-		if ( i < nPhi - 2 )
+		if(i < nPhi - 2)
 		{
-			meshBuilder.FastIndex( idx + 1 );
-			meshBuilder.FastIndex( idx + 1 + nTheta );
+			meshBuilder.FastIndex(idx + 1);
+			meshBuilder.FastIndex(idx + 1 + nTheta);
 		}
 	}
 
@@ -387,40 +381,38 @@ void CVMTPanel::RenderSphere( const Vector &vCenter, float flRadius, int nTheta,
 	pMesh->Draw();
 }
 
-
 //-----------------------------------------------------------------------------
 // Power of two FB texture
 //-----------------------------------------------------------------------------
 static CTextureReference s_pPowerOfTwoFrameBufferTexture;
 
-static ITexture *GetPowerOfTwoFrameBufferTexture( void )
+static ITexture *GetPowerOfTwoFrameBufferTexture(void)
 {
-	if( !s_pPowerOfTwoFrameBufferTexture )
+	if(!s_pPowerOfTwoFrameBufferTexture)
 	{
-		s_pPowerOfTwoFrameBufferTexture.Init( materials->FindTexture( "_rt_PowerOfTwoFB", TEXTURE_GROUP_RENDER_TARGET ) );
+		s_pPowerOfTwoFrameBufferTexture.Init(materials->FindTexture("_rt_PowerOfTwoFB", TEXTURE_GROUP_RENDER_TARGET));
 	}
 
 	return s_pPowerOfTwoFrameBufferTexture;
 }
-
 
 //-----------------------------------------------------------------------------
 // paint it!
 //-----------------------------------------------------------------------------
 void CVMTPanel::OnPaint3D()
 {
-	if (!m_pMaterial)
+	if(!m_pMaterial)
 		return;
 
 	// Deal with refraction
-	CMatRenderContextPtr pRenderContext( MaterialSystem() );
-	if ( m_pMaterial->NeedsPowerOfTwoFrameBufferTexture() )
+	CMatRenderContextPtr pRenderContext(MaterialSystem());
+	if(m_pMaterial->NeedsPowerOfTwoFrameBufferTexture())
 	{
 		ITexture *pTexture = GetPowerOfTwoFrameBufferTexture();
-		if ( pTexture && !pTexture->IsError() )
+		if(pTexture && !pTexture->IsError())
 		{
-			pRenderContext->CopyRenderTargetToTexture( pTexture );
-			pRenderContext->SetFrameBufferCopyTexture( pTexture );
+			pRenderContext->CopyRenderTargetToTexture(pTexture);
+			pRenderContext->SetFrameBufferCopyTexture(pTexture);
 		}
 	}
 
@@ -428,9 +420,9 @@ void CVMTPanel::OnPaint3D()
 
 	// FIXME: Draw the outline of this panel?
 
-	pRenderContext->CullMode( MATERIAL_CULLMODE_CW );
+	pRenderContext->CullMode(MATERIAL_CULLMODE_CW);
 
-	RenderSphere( vec3_origin, SPHERE_RADIUS, 20, 20 );
+	RenderSphere(vec3_origin, SPHERE_RADIUS, 20, 20);
 	/*
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );
 	pRenderContext->LoadIdentity();

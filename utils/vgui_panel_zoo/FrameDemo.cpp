@@ -12,23 +12,20 @@
 #include <Keyvalues.h>
 #include <vgui_controls/Frame.h>
 
-
 using namespace vgui;
 
-
-class FrameDemo: public DemoPage
+class FrameDemo : public DemoPage
 {
-	public:
-		FrameDemo(Panel *parent, const char *name);
-		~FrameDemo();
+public:
+	FrameDemo(Panel *parent, const char *name);
+	~FrameDemo();
 
-		void OnButtonClicked();
+	void OnButtonClicked();
 
-		void SetVisible(bool status);
+	void SetVisible(bool status);
 
-	private:
-		Frame *m_pFrame;
-
+private:
+	Frame *m_pFrame;
 };
 
 //-----------------------------------------------------------------------------
@@ -59,22 +56,19 @@ FrameDemo::FrameDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 	// Start the frame off invisible. This way it will not be visible when
 	// other demo tabs are selected. It becomes visible when this demo tab is selected.
 	m_pFrame->SetVisible(false);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-FrameDemo::~FrameDemo()
-{
-}
+FrameDemo::~FrameDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: When we make this this demo page we make the frame visible.
 //-----------------------------------------------------------------------------
 void FrameDemo::SetVisible(bool status)
 {
-	if (status)
+	if(status)
 		m_pFrame->SetVisible(true);
 	else
 		m_pFrame->SetVisible(false);
@@ -82,8 +76,7 @@ void FrameDemo::SetVisible(bool status)
 	DemoPage::SetVisible(status);
 }
 
-
-Panel* FrameDemo_Create(Panel *parent)
+Panel *FrameDemo_Create(Panel *parent)
 {
 	return new FrameDemo(parent, "FrameDemo");
 }

@@ -15,45 +15,47 @@
 
 // ------------------------------------------------------------------------ //
 // Explosives defines
-#define EXPLOSIVE_MINS				Vector(-10, -10, 0)
-#define EXPLOSIVE_MAXS				Vector( 10,  10, 10)
-#define EXPLOSIVE_MODEL				"models/objects/obj_explosives.mdl"
+#define EXPLOSIVE_MINS	Vector(-10, -10, 0)
+#define EXPLOSIVE_MAXS	Vector(10, 10, 10)
+#define EXPLOSIVE_MODEL "models/objects/obj_explosives.mdl"
 
 // ------------------------------------------------------------------------ //
 // Explosives upgrade
 // ------------------------------------------------------------------------ //
 class CObjectExplosives : public CBaseObjectUpgrade
 {
-	DECLARE_CLASS( CObjectExplosives, CBaseObjectUpgrade );
+	DECLARE_CLASS(CObjectExplosives, CBaseObjectUpgrade);
+
 public:
 	DECLARE_DATADESC();
 	DECLARE_SERVERCLASS();
 
 	CObjectExplosives();
 
-	virtual void	Spawn();
-	virtual void	Precache();
-	virtual void	Killed( void );
+	virtual void Spawn();
+	virtual void Precache();
+	virtual void Killed(void);
 
 	// Explosivo
-	void			ExplodeThink( void );
+	void ExplodeThink(void);
 };
 
-BEGIN_DATADESC( CObjectExplosives )
+BEGIN_DATADESC(CObjectExplosives)
 
-	DEFINE_THINKFUNC( ExplodeThink ),
+	DEFINE_THINKFUNC(ExplodeThink),
 
 END_DATADESC()
 
 IMPLEMENT_SERVERCLASS_ST(CObjectExplosives, DT_ObjectExplosives)
-END_SEND_TABLE();
+END_SEND_TABLE
+();
 
 LINK_ENTITY_TO_CLASS(obj_explosives, CObjectExplosives);
 PRECACHE_REGISTER(obj_explosives);
 
-ConVar	obj_explosives_health( "obj_explosives_health","1", FCVAR_NONE, "Explosives health" );
-ConVar	obj_explosives_damage( "obj_explosives_damage","100", FCVAR_NONE, "Explosives damage" );
-ConVar	obj_explosives_radius( "obj_explosives_radius","256", FCVAR_NONE, "Explosives damage" );
+ConVar obj_explosives_health("obj_explosives_health", "1", FCVAR_NONE, "Explosives health");
+ConVar obj_explosives_damage("obj_explosives_damage", "100", FCVAR_NONE, "Explosives damage");
+ConVar obj_explosives_radius("obj_explosives_radius", "256", FCVAR_NONE, "Explosives damage");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -69,15 +71,16 @@ CObjectExplosives::CObjectExplosives()
 void CObjectExplosives::Spawn()
 {
 	Precache();
-	SetModel( EXPLOSIVE_MODEL );
-	SetCollisionGroup( TFCOLLISION_GROUP_COMBATOBJECT );
+	SetModel(EXPLOSIVE_MODEL);
+	SetCollisionGroup(TFCOLLISION_GROUP_COMBATOBJECT);
 
 	UTIL_SetSize(this, EXPLOSIVE_MINS, EXPLOSIVE_MAXS);
 	m_takedamage = DAMAGE_YES;
 	m_iHealth = obj_explosives_health.GetInt();
 
-	SetType( OBJ_EXPLOSIVES );
-	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | OF_DONT_AUTO_REPAIR | OF_MUST_BE_BUILT_ON_ATTACHMENT;
+	SetType(OBJ_EXPLOSIVES);
+	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | OF_DONT_AUTO_REPAIR |
+					  OF_MUST_BE_BUILT_ON_ATTACHMENT;
 
 	BaseClass::Spawn();
 }
@@ -87,13 +90,13 @@ void CObjectExplosives::Spawn()
 //-----------------------------------------------------------------------------
 void CObjectExplosives::Precache()
 {
-	PrecacheModel( EXPLOSIVE_MODEL );
+	PrecacheModel(EXPLOSIVE_MODEL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Explosivo!
 //-----------------------------------------------------------------------------
-void CObjectExplosives::Killed( void )
+void CObjectExplosives::Killed(void)
 {
 	// Tell 'em I'm dying now
 	m_bDying = true;
@@ -102,17 +105,18 @@ void CObjectExplosives::Killed( void )
 	DetachObjectFromObject();
 
 	// Delay the explosion & death so that it's not blocked by the entity we were built on
-	SetThink( ExplodeThink );
-	SetNextThink( gpGlobals->curtime + 0.3 );
+	SetThink(ExplodeThink);
+	SetNextThink(gpGlobals->curtime + 0.3);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CObjectExplosives::ExplodeThink( void )
+void CObjectExplosives::ExplodeThink(void)
 {
 	// Do radius damage
-	RadiusDamage( CTakeDamageInfo( this, GetBuilder(), obj_explosives_damage.GetFloat(), DMG_BLAST ), GetAbsOrigin(), obj_explosives_radius.GetFloat(), CLASS_NONE, NULL );
+	RadiusDamage(CTakeDamageInfo(this, GetBuilder(), obj_explosives_damage.GetFloat(), DMG_BLAST), GetAbsOrigin(),
+				 obj_explosives_radius.GetFloat(), CLASS_NONE, NULL);
 
 	// Kill myself
 	BaseClass::Killed();

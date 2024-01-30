@@ -4,13 +4,12 @@
 //
 //===========================================================================//
 
-
 #if defined(_WIN32)
 #if !defined(_X360)
 #include <winsock.h>
 #endif
 #undef SetPort // winsock screws with the SetPort string... *sigh*
-#define socklen_t int
+#define socklen_t	 int
 #define MSG_NOSIGNAL 0
 #elif POSIX
 #include <sys/types.h>
@@ -19,9 +18,9 @@
 #include <netinet/tcp.h>
 #include <errno.h>
 #include <sys/ioctl.h>
-#define closesocket close
+#define closesocket		  close
 #define WSAGetLastError() errno
-#define ioctlsocket ioctl
+#define ioctlsocket		  ioctl
 #ifdef OSX
 #define MSG_NOSIGNAL 0
 #endif
@@ -30,7 +29,7 @@
 #include "socketcreator.h"
 #include "server.h"
 
-#if defined( _X360 )
+#if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
 #endif
 
@@ -49,12 +48,11 @@ bool SocketWouldBlock()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CSocketCreator::CSocketCreator( ISocketCreatorListener *pListener )
+CSocketCreator::CSocketCreator(ISocketCreatorListener *pListener)
 {
 	m_hListenSocket = -1;
 	m_pListener = pListener;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
@@ -75,68 +73,66 @@ bool CSocketCreator::IsListening() const
 //-----------------------------------------------------------------------------
 // Purpose: Bind to a TCP port and accept incoming connections
 //-----------------------------------------------------------------------------
-bool CSocketCreator::CreateListenSocket( const netadr_t &netAdr )
+bool CSocketCreator::CreateListenSocket(const netadr_t &netAdr)
 {
 	CloseListenSocket();
 
 	m_ListenAddress = netAdr;
-	m_hListenSocket = socket (PF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if ( m_hListenSocket == -1 )
+	m_hListenSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if(m_hListenSocket == -1)
 	{
-		Warning( "Socket unable to create socket (%s)\n", NET_ErrorString( WSAGetLastError() ) );
+		Warning("Socket unable to create socket (%s)\n", NET_ErrorString(WSAGetLastError()));
 		return false;
 	}
 
-	if ( !ConfigureSocket( m_hListenSocket ) )
+	if(!ConfigureSocket(m_hListenSocket))
 	{
 		CloseListenSocket();
 		return false;
 	}
 
 	struct sockaddr_in s;
-	m_ListenAddress.ToSockadr( (struct sockaddr *)&s );
-	int ret = bind( m_hListenSocket, (struct sockaddr *)&s, sizeof(struct sockaddr_in) );
-	if ( ret == -1 )
+	m_ListenAddress.ToSockadr((struct sockaddr *)&s);
+	int ret = bind(m_hListenSocket, (struct sockaddr *)&s, sizeof(struct sockaddr_in));
+	if(ret == -1)
 	{
-		Warning( "Socket bind failed (%s)\n", NET_ErrorString( WSAGetLastError() ) );
+		Warning("Socket bind failed (%s)\n", NET_ErrorString(WSAGetLastError()));
 		CloseListenSocket();
 		return false;
 	}
 
-	ret = listen( m_hListenSocket, SOCKET_TCP_MAX_ACCEPTS );
-	if ( ret == -1 )
+	ret = listen(m_hListenSocket, SOCKET_TCP_MAX_ACCEPTS);
+	if(ret == -1)
 	{
-		Warning( "Socket listen failed (%s)\n", NET_ErrorString( WSAGetLastError() ) );
+		Warning("Socket listen failed (%s)\n", NET_ErrorString(WSAGetLastError()));
 		CloseListenSocket();
 		return false;
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Configures a socket for use
 //-----------------------------------------------------------------------------
-bool CSocketCreator::ConfigureSocket( int sock )
+bool CSocketCreator::ConfigureSocket(int sock)
 {
 	// disable NAGLE (rcon cmds are small in size)
 	int nodelay = 1;
-	setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&nodelay, sizeof(nodelay));
+	setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char *)&nodelay, sizeof(nodelay));
 
 	nodelay = 1;
-	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*)&nodelay, sizeof(nodelay));
+	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *)&nodelay, sizeof(nodelay));
 
 	int opt = 1, ret;
-	ret = ioctlsocket( sock, FIONBIO, (unsigned long*)&opt ); // non-blocking
-	if ( ret == -1 )
+	ret = ioctlsocket(sock, FIONBIO, (unsigned long *)&opt); // non-blocking
+	if(ret == -1)
 	{
-		Warning( "Socket accept ioctl(FIONBIO) failed (%i)\n", WSAGetLastError() );
+		Warning("Socket accept ioctl(FIONBIO) failed (%i)\n", WSAGetLastError());
 		return false;
 	}
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle a new connection
@@ -147,31 +143,31 @@ void CSocketCreator::ProcessAccept()
 	sockaddr sa;
 	int nLengthAddr = sizeof(sa);
 
-	newSocket = accept( m_hListenSocket, &sa, (socklen_t *)&nLengthAddr );
-	if ( newSocket == -1 )
+	newSocket = accept(m_hListenSocket, &sa, (socklen_t *)&nLengthAddr);
+	if(newSocket == -1)
 	{
-		if ( !SocketWouldBlock()
+		if(!SocketWouldBlock()
 #ifdef POSIX
-			&& errno != EINTR
+		   && errno != EINTR
 #endif
-		 )
+		)
 		{
-			Warning ("Socket ProcessAccept Error: %s\n", NET_ErrorString( WSAGetLastError() ) );
+			Warning("Socket ProcessAccept Error: %s\n", NET_ErrorString(WSAGetLastError()));
 		}
 		return;
 	}
 
-	if ( !ConfigureSocket( newSocket ) )
+	if(!ConfigureSocket(newSocket))
 	{
-		closesocket( newSocket );
+		closesocket(newSocket);
 		return;
 	}
 
 	netadr_t adr;
-	adr.SetFromSockadr( &sa );
-	if ( m_pListener && !m_pListener->ShouldAcceptSocket( newSocket, adr ) )
+	adr.SetFromSockadr(&sa);
+	if(m_pListener && !m_pListener->ShouldAcceptSocket(newSocket, adr))
 	{
-		closesocket( newSocket );
+		closesocket(newSocket);
 		return;
 	}
 
@@ -182,55 +178,54 @@ void CSocketCreator::ProcessAccept()
 	pNewEntry->m_Address = adr;
 	pNewEntry->m_pData = NULL;
 
-	void* pData = NULL;
-	if ( m_pListener )
+	void *pData = NULL;
+	if(m_pListener)
 	{
-		m_pListener->OnSocketAccepted( newSocket, adr, &pData );
+		m_pListener->OnSocketAccepted(newSocket, adr, &pData);
 	}
 	pNewEntry->m_pData = pData;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: connect to the remote server
 //-----------------------------------------------------------------------------
-int CSocketCreator::ConnectSocket( const netadr_t &netAdr, bool bSingleSocket )
+int CSocketCreator::ConnectSocket(const netadr_t &netAdr, bool bSingleSocket)
 {
-	if ( bSingleSocket )
+	if(bSingleSocket)
 	{
 		CloseAllAcceptedSockets();
 	}
 
-	SocketHandle_t hSocket = socket( PF_INET, SOCK_STREAM, IPPROTO_TCP );
-	if ( hSocket == -1 )
+	SocketHandle_t hSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if(hSocket == -1)
 	{
-		Warning( "Unable to create socket (%s)\n", NET_ErrorString( WSAGetLastError() ) );
+		Warning("Unable to create socket (%s)\n", NET_ErrorString(WSAGetLastError()));
 		return -1;
 	}
 
 	int opt = 1, ret;
-	ret = ioctlsocket( hSocket, FIONBIO, (unsigned long*)&opt ); // non-blocking
-	if ( ret == -1 )
+	ret = ioctlsocket(hSocket, FIONBIO, (unsigned long *)&opt); // non-blocking
+	if(ret == -1)
 	{
-		Warning( "Socket ioctl(FIONBIO) failed (%s)\n", NET_ErrorString( WSAGetLastError() ) );
-		closesocket( hSocket );
+		Warning("Socket ioctl(FIONBIO) failed (%s)\n", NET_ErrorString(WSAGetLastError()));
+		closesocket(hSocket);
 		return -1;
 	}
 
 	// disable NAGLE (rcon cmds are small in size)
 	int nodelay = 1;
-	setsockopt( hSocket, IPPROTO_TCP, TCP_NODELAY, (char*)&nodelay, sizeof(nodelay) );
+	setsockopt(hSocket, IPPROTO_TCP, TCP_NODELAY, (char *)&nodelay, sizeof(nodelay));
 
 	struct sockaddr_in s;
-	netAdr.ToSockadr( (struct sockaddr *)&s );
+	netAdr.ToSockadr((struct sockaddr *)&s);
 
-	ret = connect( hSocket, (struct sockaddr *)&s, sizeof(s));
-	if ( ret == -1 )
+	ret = connect(hSocket, (struct sockaddr *)&s, sizeof(s));
+	if(ret == -1)
 	{
-		if ( !SocketWouldBlock() )
+		if(!SocketWouldBlock())
 		{
-			Warning( "Socket connection failed (%s)\n", NET_ErrorString( WSAGetLastError() ) );
-			closesocket( hSocket );
+			Warning("Socket connection failed (%s)\n", NET_ErrorString(WSAGetLastError()));
+			closesocket(hSocket);
 			return -1;
 		}
 
@@ -238,18 +233,18 @@ int CSocketCreator::ConnectSocket( const netadr_t &netAdr, bool bSingleSocket )
 		struct timeval tv;
 		tv.tv_usec = 0;
 		tv.tv_sec = 1;
-		FD_ZERO( &writefds );
-		FD_SET( static_cast<u_int>( hSocket ), &writefds );
-		if ( select ( hSocket + 1, NULL, &writefds, NULL, &tv ) < 1 ) // block for at most 1 second
+		FD_ZERO(&writefds);
+		FD_SET(static_cast<u_int>(hSocket), &writefds);
+		if(select(hSocket + 1, NULL, &writefds, NULL, &tv) < 1) // block for at most 1 second
 		{
-			closesocket( hSocket );		// took too long to connect to, give up
+			closesocket(hSocket); // took too long to connect to, give up
 			return -1;
 		}
 	}
 
-	if ( m_pListener && !m_pListener->ShouldAcceptSocket( hSocket, netAdr ) )
+	if(m_pListener && !m_pListener->ShouldAcceptSocket(hSocket, netAdr))
 	{
-		closesocket( hSocket );
+		closesocket(hSocket);
 		return -1;
 	}
 
@@ -261,57 +256,55 @@ int CSocketCreator::ConnectSocket( const netadr_t &netAdr, bool bSingleSocket )
 	pNewEntry->m_Address = netAdr;
 	pNewEntry->m_pData = NULL;
 
-	if ( m_pListener )
+	if(m_pListener)
 	{
-		m_pListener->OnSocketAccepted( hSocket, netAdr, &pData );
+		m_pListener->OnSocketAccepted(hSocket, netAdr, &pData);
 	}
 
 	pNewEntry->m_pData = pData;
 	return nIndex;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: close an open rcon connection
 //-----------------------------------------------------------------------------
 void CSocketCreator::CloseListenSocket()
 {
-	if ( m_hListenSocket != -1 )
+	if(m_hListenSocket != -1)
 	{
-		closesocket( m_hListenSocket );
+		closesocket(m_hListenSocket);
 		m_hListenSocket = -1;
 	}
 }
 
-void CSocketCreator::CloseAcceptedSocket( int nIndex )
+void CSocketCreator::CloseAcceptedSocket(int nIndex)
 {
-	if ( nIndex >= m_hAcceptedSockets.Count() )
+	if(nIndex >= m_hAcceptedSockets.Count())
 		return;
 
-	AcceptedSocket_t& connected = m_hAcceptedSockets[nIndex];
-	if ( m_pListener )
+	AcceptedSocket_t &connected = m_hAcceptedSockets[nIndex];
+	if(m_pListener)
 	{
-		m_pListener->OnSocketClosed( connected.m_hSocket, connected.m_Address, connected.m_pData );
+		m_pListener->OnSocketClosed(connected.m_hSocket, connected.m_Address, connected.m_pData);
 	}
-	closesocket( connected.m_hSocket );
-	m_hAcceptedSockets.Remove( nIndex );
+	closesocket(connected.m_hSocket);
+	m_hAcceptedSockets.Remove(nIndex);
 }
 
 void CSocketCreator::CloseAllAcceptedSockets()
 {
 	int nCount = m_hAcceptedSockets.Count();
-	for ( int i = 0; i < nCount; ++i )
+	for(int i = 0; i < nCount; ++i)
 	{
-		AcceptedSocket_t& connected = m_hAcceptedSockets[i];
-		if ( m_pListener )
+		AcceptedSocket_t &connected = m_hAcceptedSockets[i];
+		if(m_pListener)
 		{
-			m_pListener->OnSocketClosed( connected.m_hSocket, connected.m_Address, connected.m_pData );
+			m_pListener->OnSocketClosed(connected.m_hSocket, connected.m_Address, connected.m_pData);
 		}
-		closesocket( connected.m_hSocket );
+		closesocket(connected.m_hSocket);
 	}
 	m_hAcceptedSockets.RemoveAll();
 }
-
 
 void CSocketCreator::Disconnect()
 {
@@ -319,18 +312,16 @@ void CSocketCreator::Disconnect()
 	CloseAllAcceptedSockets();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: accept new connections and walk open sockets and handle any incoming data
 //-----------------------------------------------------------------------------
 void CSocketCreator::RunFrame()
 {
-	if ( IsListening() )
+	if(IsListening())
 	{
 		ProcessAccept(); // handle any new connection requests
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Returns socket info
@@ -340,17 +331,17 @@ int CSocketCreator::GetAcceptedSocketCount() const
 	return m_hAcceptedSockets.Count();
 }
 
-SocketHandle_t CSocketCreator::GetAcceptedSocketHandle( int nIndex ) const
+SocketHandle_t CSocketCreator::GetAcceptedSocketHandle(int nIndex) const
 {
 	return m_hAcceptedSockets[nIndex].m_hSocket;
 }
 
-const netadr_t& CSocketCreator::GetAcceptedSocketAddress( int nIndex ) const
+const netadr_t &CSocketCreator::GetAcceptedSocketAddress(int nIndex) const
 {
 	return m_hAcceptedSockets[nIndex].m_Address;
 }
 
-void* CSocketCreator::GetAcceptedSocketData( int nIndex )
+void *CSocketCreator::GetAcceptedSocketData(int nIndex)
 {
 	return m_hAcceptedSockets[nIndex].m_pData;
 }

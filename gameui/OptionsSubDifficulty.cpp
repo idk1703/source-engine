@@ -14,7 +14,6 @@
 
 using namespace vgui;
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -32,13 +31,13 @@ COptionsSubDifficulty::COptionsSubDifficulty(vgui::Panel *parent) : BaseClass(pa
 //-----------------------------------------------------------------------------
 void COptionsSubDifficulty::OnResetData()
 {
-	ConVarRef var( "skill" );
+	ConVarRef var("skill");
 
-	if (var.GetInt() == 1)
+	if(var.GetInt() == 1)
 	{
 		m_pEasyRadio->SetSelected(true);
 	}
-	else if (var.GetInt() == 3)
+	else if(var.GetInt() == 3)
 	{
 		m_pHardRadio->SetSelected(true);
 	}
@@ -53,22 +52,21 @@ void COptionsSubDifficulty::OnResetData()
 //-----------------------------------------------------------------------------
 void COptionsSubDifficulty::OnApplyChanges()
 {
-	ConVarRef var( "skill" );
+	ConVarRef var("skill");
 
-	if ( m_pEasyRadio->IsSelected() )
+	if(m_pEasyRadio->IsSelected())
 	{
-		var.SetValue( 1 );
+		var.SetValue(1);
 	}
-	else if ( m_pHardRadio->IsSelected() )
+	else if(m_pHardRadio->IsSelected())
 	{
-		var.SetValue( 3 );
+		var.SetValue(3);
 	}
 	else
 	{
-		var.SetValue( 2 );
+		var.SetValue(2);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: enables apply button on radio buttons being pressed

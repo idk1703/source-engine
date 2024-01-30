@@ -4,10 +4,9 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 
 #include "replaybrowsermainpanel.h"
 #include "replaybrowserbasepage.h"
@@ -29,17 +28,19 @@
 //-----------------------------------------------------------------------------
 class CConfirmDeleteReplayDialog : public CConfirmDeleteDialog
 {
-	DECLARE_CLASS_SIMPLE( CConfirmDeleteReplayDialog, CConfirmDeleteDialog );
+	DECLARE_CLASS_SIMPLE(CConfirmDeleteReplayDialog, CConfirmDeleteDialog);
+
 public:
-	CConfirmDeleteReplayDialog( Panel *pParent, IReplayItemManager *pItemManager, int iPerformance )
-	:	BaseClass( pParent )
+	CConfirmDeleteReplayDialog(Panel *pParent, IReplayItemManager *pItemManager, int iPerformance) : BaseClass(pParent)
 	{
-		m_pTextId = iPerformance >= 0 ? "#Replay_DeleteEditConfirm" : pItemManager->AreItemsMovies() ? "#Replay_DeleteMovieConfirm" : "#Replay_DeleteReplayConfirm";
+		m_pTextId = iPerformance >= 0				 ? "#Replay_DeleteEditConfirm"
+					: pItemManager->AreItemsMovies() ? "#Replay_DeleteMovieConfirm"
+													 : "#Replay_DeleteReplayConfirm";
 	}
 
 	const wchar_t *GetText()
 	{
-		return g_pVGuiLocalize->Find( m_pTextId );
+		return g_pVGuiLocalize->Find(m_pTextId);
 	}
 
 	const char *m_pTextId;
@@ -48,36 +49,37 @@ public:
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CReplayBrowserPanel::CReplayBrowserPanel( Panel *parent )
-:	PropertyDialog(parent, "ReplayBrowser"),
-	m_pConfirmDeleteDialog( NULL )
+CReplayBrowserPanel::CReplayBrowserPanel(Panel *parent)
+	: PropertyDialog(parent, "ReplayBrowser"), m_pConfirmDeleteDialog(NULL)
 {
 	// Clear out delete info
-	V_memset( &m_DeleteInfo, 0, sizeof( m_DeleteInfo ) );
+	V_memset(&m_DeleteInfo, 0, sizeof(m_DeleteInfo));
 
 	// Replay browser is parented to the game UI panel
-	vgui::VPANEL gameuiPanel = enginevgui->GetPanel( PANEL_GAMEUIDLL );
-	SetParent( gameuiPanel );
+	vgui::VPANEL gameuiPanel = enginevgui->GetPanel(PANEL_GAMEUIDLL);
+	SetParent(gameuiPanel);
 
-	SetMoveable( false );
-	SetSizeable( false );
+	SetMoveable(false);
+	SetSizeable(false);
 
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	SetProportional( true );
+	SetProportional(true);
 
 	// Setup page
-	m_pReplaysPage = new CReplayBrowserBasePage( this );
-	m_pReplaysPage->AddActionSignalTarget( this );
+	m_pReplaysPage = new CReplayBrowserBasePage(this);
+	m_pReplaysPage->AddActionSignalTarget(this);
 
-	AddPage( m_pReplaysPage, "#Replay_MyReplays" );
+	AddPage(m_pReplaysPage, "#Replay_MyReplays");
 
-	m_pReplaysPage->SetVisible( true );
+	m_pReplaysPage->SetVisible(true);
 
-	ListenForGameEvent( "gameui_hidden" );
+	ListenForGameEvent("gameui_hidden");
 
-	// Create this now, so that it can be the default button (if created in .res file, it fights with PropertyDialog's OkButton & generates asserts)
-	CExButton *pCloseButton = new CExButton( this, "BackButton", "" );
+	// Create this now, so that it can be the default button (if created in .res file, it fights with PropertyDialog's
+	// OkButton & generates asserts)
+	CExButton *pCloseButton = new CExButton(this, "BackButton", "");
 	GetFocusNavGroup().SetDefaultButton(pCloseButton);
 
 	m_flTimeOpened = 0.0f;
@@ -88,7 +90,7 @@ CReplayBrowserPanel::CReplayBrowserPanel( Panel *parent )
 //-----------------------------------------------------------------------------
 CReplayBrowserPanel::~CReplayBrowserPanel()
 {
-	if ( m_pConfirmDeleteDialog )
+	if(m_pConfirmDeleteDialog)
 	{
 		m_pConfirmDeleteDialog->MarkForDeletion();
 	}
@@ -97,11 +99,11 @@ CReplayBrowserPanel::~CReplayBrowserPanel()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CReplayBrowserPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings( "resource/ui/replaybrowser/mainpanel.res", "GAME" );
+	LoadControlSettings("resource/ui/replaybrowser/mainpanel.res", "GAME");
 
 	SetOKButtonVisible(false);
 	SetCancelButtonVisible(false);
@@ -110,13 +112,13 @@ void CReplayBrowserPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::PerformLayout( void )
+void CReplayBrowserPanel::PerformLayout(void)
 {
-	if ( GetVParent() )
+	if(GetVParent())
 	{
-		int w,h;
-		vgui::ipanel()->GetSize( GetVParent(), w, h );
-		SetBounds(0,0,w,h);
+		int w, h;
+		vgui::ipanel()->GetSize(GetVParent(), w, h);
+		SetBounds(0, 0, w, h);
 	}
 
 	BaseClass::PerformLayout();
@@ -125,85 +127,85 @@ void CReplayBrowserPanel::PerformLayout( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::ShowPanel(bool bShow, ReplayHandle_t hReplayDetails/*=REPLAY_HANDLE_INVALID*/,
-									int iPerformance/*=-1*/ )
+void CReplayBrowserPanel::ShowPanel(bool bShow, ReplayHandle_t hReplayDetails /*=REPLAY_HANDLE_INVALID*/,
+									int iPerformance /*=-1*/)
 {
-	if ( bShow )
+	if(bShow)
 	{
-		GetPropertySheet()->SetActivePage( m_pReplaysPage );
-		InvalidateLayout( false, true );
+		GetPropertySheet()->SetActivePage(m_pReplaysPage);
+		InvalidateLayout(false, true);
 		Activate();
 
 		m_flTimeOpened = gpGlobals->realtime;
 	}
 	else
 	{
-		PostMessage( m_pReplaysPage, new KeyValues("CancelSelection") );
+		PostMessage(m_pReplaysPage, new KeyValues("CancelSelection"));
 	}
 
-	SetVisible( bShow );
-	m_pReplaysPage->SetVisible( bShow );
+	SetVisible(bShow);
+	m_pReplaysPage->SetVisible(bShow);
 
-	if ( hReplayDetails != REPLAY_HANDLE_INVALID )
+	if(hReplayDetails != REPLAY_HANDLE_INVALID)
 	{
 		char szDetails[32];
-		V_snprintf( szDetails, sizeof( szDetails ), "details%i_%i", (int)hReplayDetails, iPerformance );
-		m_pReplaysPage->OnCommand( szDetails );
+		V_snprintf(szDetails, sizeof(szDetails), "details%i_%i", (int)hReplayDetails, iPerformance);
+		m_pReplaysPage->OnCommand(szDetails);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::FireGameEvent( IGameEvent *event )
+void CReplayBrowserPanel::FireGameEvent(IGameEvent *event)
 {
-	const char * type = event->GetName();
+	const char *type = event->GetName();
 
-	if ( Q_strcmp(type, "gameui_hidden") == 0 )
+	if(Q_strcmp(type, "gameui_hidden") == 0)
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::OnCommand( const char *command )
+void CReplayBrowserPanel::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "back" ) )
+	if(!Q_stricmp(command, "back"))
 	{
-		if ( m_pReplaysPage->IsDetailsViewOpen() )
+		if(m_pReplaysPage->IsDetailsViewOpen())
 		{
 			m_pReplaysPage->DeleteDetailsPanelAndShowReplayList();
 		}
 		else
 		{
 			// Close the main panel
-			ShowPanel( false );
+			ShowPanel(false);
 
 			// TODO: Properly manage the browser so that we don't have to recreate it ever time its opened
 			MarkForDeletion();
 
 			// If we're connected to a game server, we also close the game UI.
-			if ( engine->IsInGame() )
+			if(engine->IsInGame())
 			{
-				engine->ClientCmd_Unrestricted( "gameui_hide" );
+				engine->ClientCmd_Unrestricted("gameui_hide");
 			}
 		}
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 void CReplayBrowserPanel::OnKeyCodeTyped(vgui::KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 	}
 	else
 	{
-		BaseClass::OnKeyCodeTyped( code );
+		BaseClass::OnKeyCodeTyped(code);
 	}
 }
 
@@ -212,17 +214,17 @@ void CReplayBrowserPanel::OnKeyCodeTyped(vgui::KeyCode code)
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::OnKeyCodePressed(vgui::KeyCode code)
 {
-	if ( GetBaseButtonCode( code ) == KEY_XBUTTON_B )
+	if(GetBaseButtonCode(code) == KEY_XBUTTON_B)
 	{
-		ShowPanel( false );
+		ShowPanel(false);
 	}
-	else if ( code == KEY_ENTER )
+	else if(code == KEY_ENTER)
 	{
 		// do nothing, the default is to close the panel!
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
@@ -231,39 +233,40 @@ void CReplayBrowserPanel::OnKeyCodePressed(vgui::KeyCode code)
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::ShowDeleteReplayDenialDlg()
 {
-	ShowMessageBox( "#Replay_DeleteDenialTitle", "#Replay_DeleteDenialText", "#GameUI_OK" );
+	ShowMessageBox("#Replay_DeleteDenialTitle", "#Replay_DeleteDenialText", "#GameUI_OK");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::AttemptToDeleteReplayItem( Panel *pHandler, ReplayItemHandle_t hReplayItem,
-													 IReplayItemManager *pItemManager, int iPerformance )
+void CReplayBrowserPanel::AttemptToDeleteReplayItem(Panel *pHandler, ReplayItemHandle_t hReplayItem,
+													IReplayItemManager *pItemManager, int iPerformance)
 {
-	IQueryableReplayItem *pItem = pItemManager->GetItem( hReplayItem );
-	CGenericClassBasedReplay *pReplay = ToGenericClassBasedReplay( pItem->GetItemReplay() );
+	IQueryableReplayItem *pItem = pItemManager->GetItem(hReplayItem);
+	CGenericClassBasedReplay *pReplay = ToGenericClassBasedReplay(pItem->GetItemReplay());
 
 	// If this is an actual replay the user is trying to delete, only allow it
 	// if the replay says it's OK.  Don't execute this code for performances.
-	if ( !pItemManager->AreItemsMovies() && iPerformance < 0 && !pReplay->ShouldAllowDelete() )
+	if(!pItemManager->AreItemsMovies() && iPerformance < 0 && !pReplay->ShouldAllowDelete())
 	{
 		ShowDeleteReplayDenialDlg();
 		return;
 	}
 
 	// Otherwise, show the confirm delete dlg
-	vgui::surface()->PlaySound( "replay\\replaydialog_warn.wav" );
-	ConfirmReplayItemDelete( pHandler, hReplayItem, pItemManager, iPerformance );
+	vgui::surface()->PlaySound("replay\\replaydialog_warn.wav");
+	ConfirmReplayItemDelete(pHandler, hReplayItem, pItemManager, iPerformance);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHandle_t hReplayItem,
-												   IReplayItemManager *pItemManager, int iPerformance )
+void CReplayBrowserPanel::ConfirmReplayItemDelete(Panel *pHandler, ReplayItemHandle_t hReplayItem,
+												  IReplayItemManager *pItemManager, int iPerformance)
 {
-	CConfirmDeleteReplayDialog *pConfirm = vgui::SETUP_PANEL( new CConfirmDeleteReplayDialog( this, pItemManager, iPerformance ) );
-	if ( pConfirm )
+	CConfirmDeleteReplayDialog *pConfirm =
+		vgui::SETUP_PANEL(new CConfirmDeleteReplayDialog(this, pItemManager, iPerformance));
+	if(pConfirm)
 	{
 		// Cache replay and handler for later
 		m_DeleteInfo.m_hReplayItem = hReplayItem;
@@ -282,80 +285,80 @@ void CReplayBrowserPanel::ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHa
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::OnConfirmDelete( KeyValues *data )
+void CReplayBrowserPanel::OnConfirmDelete(KeyValues *data)
 {
 	// Clear confirm ptr
 	m_pConfirmDeleteDialog = NULL;
 
 	// User confirmed delete?
-	int nConfirmed = data->GetInt( "confirmed", 0 );
-	if ( !nConfirmed )
+	int nConfirmed = data->GetInt("confirmed", 0);
+	if(!nConfirmed)
 		return;
 
 	// Get the replay from the dialog
 	ReplayItemHandle_t hReplayItem = m_DeleteInfo.m_hReplayItem;
 
 	// Post actions signal to the handler
-	KeyValues *pMsg = new KeyValues( "ReplayItemDeleted" );
-	pMsg->SetInt( "replayitem", (int)hReplayItem );
-	pMsg->SetInt( "perf", m_DeleteInfo.m_iPerformance );
-	PostMessage( m_DeleteInfo.m_hHandler, pMsg );
+	KeyValues *pMsg = new KeyValues("ReplayItemDeleted");
+	pMsg->SetInt("replayitem", (int)hReplayItem);
+	pMsg->SetInt("perf", m_DeleteInfo.m_iPerformance);
+	PostMessage(m_DeleteInfo.m_hHandler, pMsg);
 
 	// Delete actual replay item
-	if ( m_DeleteInfo.m_iPerformance < 0 )
+	if(m_DeleteInfo.m_iPerformance < 0)
 	{
 		// Cleanup UI related to the replay/movie
-		CleanupUIForReplayItem( hReplayItem );
+		CleanupUIForReplayItem(hReplayItem);
 
 		// Delete the replay/movie
-		m_DeleteInfo.m_pItemManager->DeleteItem( GetActivePage(), hReplayItem, false );
+		m_DeleteInfo.m_pItemManager->DeleteItem(GetActivePage(), hReplayItem, false);
 	}
 
-	vgui::surface()->PlaySound( "replay\\deleted_take.wav" );
+	vgui::surface()->PlaySound("replay\\deleted_take.wav");
 
 	// Clear delete info
-	V_memset( &m_DeleteInfo, 0, sizeof( m_DeleteInfo ) );
+	V_memset(&m_DeleteInfo, 0, sizeof(m_DeleteInfo));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::OnSaveReplay( ReplayHandle_t hNewReplay )
+void CReplayBrowserPanel::OnSaveReplay(ReplayHandle_t hNewReplay)
 {
 	// Verify that the handle is valid
-	Assert( g_pReplayManager->GetReplay( hNewReplay ) );
+	Assert(g_pReplayManager->GetReplay(hNewReplay));
 
-	m_pReplaysPage->AddReplay( hNewReplay );
+	m_pReplaysPage->AddReplay(hNewReplay);
 	m_pReplaysPage->Repaint();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::OnDeleteReplay( ReplayHandle_t hDeletedReplay )
+void CReplayBrowserPanel::OnDeleteReplay(ReplayHandle_t hDeletedReplay)
 {
 	// Verify that the handle is valid
-	Assert( g_pReplayManager->GetReplay( hDeletedReplay ) );
+	Assert(g_pReplayManager->GetReplay(hDeletedReplay));
 
-	DeleteReplay( hDeletedReplay );
+	DeleteReplay(hDeletedReplay);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::DeleteReplay( ReplayHandle_t hReplay )
+void CReplayBrowserPanel::DeleteReplay(ReplayHandle_t hReplay)
 {
-	m_pReplaysPage->DeleteReplay( hReplay );
+	m_pReplaysPage->DeleteReplay(hReplay);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::CleanupUIForReplayItem( ReplayItemHandle_t hReplayItem )
+void CReplayBrowserPanel::CleanupUIForReplayItem(ReplayItemHandle_t hReplayItem)
 {
-	if ( GetActivePage() == m_pReplaysPage )
+	if(GetActivePage() == m_pReplaysPage)
 	{
-		m_pReplaysPage->CleanupUIForReplayItem( hReplayItem );
+		m_pReplaysPage->CleanupUIForReplayItem(hReplayItem);
 	}
 }
 
@@ -364,26 +367,25 @@ static vgui::DHANDLE<CReplayBrowserPanel> g_ReplayBrowserPanel;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CReplayBrowserPanel *ReplayUI_OpenReplayBrowserPanel( ReplayHandle_t hReplayDetails,
-													  int iPerformance )
+CReplayBrowserPanel *ReplayUI_OpenReplayBrowserPanel(ReplayHandle_t hReplayDetails, int iPerformance)
 {
-	if ( !g_ReplayBrowserPanel.Get() )
+	if(!g_ReplayBrowserPanel.Get())
 	{
-		g_ReplayBrowserPanel = vgui::SETUP_PANEL( new CReplayBrowserPanel( NULL ) );
-		g_ReplayBrowserPanel->InvalidateLayout( false, true );
+		g_ReplayBrowserPanel = vgui::SETUP_PANEL(new CReplayBrowserPanel(NULL));
+		g_ReplayBrowserPanel->InvalidateLayout(false, true);
 	}
 
-	engine->ClientCmd_Unrestricted( "gameui_activate" );
-	g_ReplayBrowserPanel->ShowPanel( true, hReplayDetails, iPerformance );
+	engine->ClientCmd_Unrestricted("gameui_activate");
+	g_ReplayBrowserPanel->ShowPanel(true, hReplayDetails, iPerformance);
 
 	extern IReplayMovieManager *g_pReplayMovieManager;
-	if ( g_pReplayMovieManager->GetMovieCount() > 0 )
+	if(g_pReplayMovieManager->GetMovieCount() > 0)
 	{
 		// Fire a message the game DLL can intercept (for achievements, etc).
-		IGameEvent *event = gameeventmanager->CreateEvent( "browse_replays" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("browse_replays");
+		if(event)
 		{
-			gameeventmanager->FireEventClientSide( event );
+			gameeventmanager->FireEventClientSide(event);
 		}
 	}
 
@@ -393,7 +395,7 @@ CReplayBrowserPanel *ReplayUI_OpenReplayBrowserPanel( ReplayHandle_t hReplayDeta
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CReplayBrowserPanel *ReplayUI_GetBrowserPanel( void )
+CReplayBrowserPanel *ReplayUI_GetBrowserPanel(void)
 {
 	return g_ReplayBrowserPanel.Get();
 }
@@ -403,7 +405,7 @@ CReplayBrowserPanel *ReplayUI_GetBrowserPanel( void )
 //-----------------------------------------------------------------------------
 void ReplayUI_CloseReplayBrowser()
 {
-	if ( g_ReplayBrowserPanel )
+	if(g_ReplayBrowserPanel)
 	{
 		g_ReplayBrowserPanel->MarkForDeletion();
 		g_ReplayBrowserPanel = NULL;
@@ -413,27 +415,27 @@ void ReplayUI_CloseReplayBrowser()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void ReplayUI_ReloadBrowser( ReplayHandle_t hReplay/*=REPLAY_HANDLE_INVALID*/,
-							 int iPerformance/*=-1*/ )
+void ReplayUI_ReloadBrowser(ReplayHandle_t hReplay /*=REPLAY_HANDLE_INVALID*/, int iPerformance /*=-1*/)
 {
 	delete g_ReplayBrowserPanel.Get();
 	g_ReplayBrowserPanel = NULL;
-	ReplayUI_OpenReplayBrowserPanel( hReplay, iPerformance );
+	ReplayUI_OpenReplayBrowserPanel(hReplay, iPerformance);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CON_COMMAND_F( open_replaybrowser, "Open the replay browser.", FCVAR_CLIENTDLL )
+CON_COMMAND_F(open_replaybrowser, "Open the replay browser.", FCVAR_CLIENTDLL)
 {
-	ReplayUI_OpenReplayBrowserPanel( REPLAY_HANDLE_INVALID, -1 );
-	g_ReplayBrowserPanel->InvalidateLayout( false, true );
+	ReplayUI_OpenReplayBrowserPanel(REPLAY_HANDLE_INVALID, -1);
+	g_ReplayBrowserPanel->InvalidateLayout(false, true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CON_COMMAND_F( replay_reloadbrowser, "Reloads replay data and display replay browser", FCVAR_CLIENTDLL | FCVAR_CLIENTCMD_CAN_EXECUTE )
+CON_COMMAND_F(replay_reloadbrowser, "Reloads replay data and display replay browser",
+			  FCVAR_CLIENTDLL | FCVAR_CLIENTCMD_CAN_EXECUTE)
 {
 	ReplayUI_ReloadBrowser();
 }
@@ -441,7 +443,7 @@ CON_COMMAND_F( replay_reloadbrowser, "Reloads replay data and display replay bro
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CON_COMMAND_F( replay_hidebrowser, "Hides replay browser", FCVAR_CLIENTDLL )
+CON_COMMAND_F(replay_hidebrowser, "Hides replay browser", FCVAR_CLIENTDLL)
 {
 	ReplayUI_CloseReplayBrowser();
 }

@@ -19,46 +19,44 @@
 // Purpose:
 // Output :
 //-----------------------------------------------------------------------------
-CHudPlayerOverlayHealth::CHudPlayerOverlayHealth( CHudPlayerOverlay *baseOverlay )
-: BaseClass( NULL, "CHudPlayerOverlayHealth" )
+CHudPlayerOverlayHealth::CHudPlayerOverlayHealth(CHudPlayerOverlay *baseOverlay)
+	: BaseClass(NULL, "CHudPlayerOverlayHealth")
 {
 	m_pBaseOverlay = baseOverlay;
 
-	SetHealth( 0 );
+	SetHealth(0);
 
-	SetPaintBackgroundEnabled( false );
+	SetPaintBackgroundEnabled(false);
 	// Send mouse inputs (but not cursorenter/exit for now) up to parent
-	SetReflectMouse( true );
+	SetReflectMouse(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output :
 //-----------------------------------------------------------------------------
-CHudPlayerOverlayHealth::~CHudPlayerOverlayHealth( void )
-{
-}
+CHudPlayerOverlayHealth::~CHudPlayerOverlayHealth(void) {}
 
 //-----------------------------------------------------------------------------
 // Parse values from the file
 //-----------------------------------------------------------------------------
 
-bool CHudPlayerOverlayHealth::Init( KeyValues* pInitData )
+bool CHudPlayerOverlayHealth::Init(KeyValues *pInitData)
 {
-	if (!pInitData)
+	if(!pInitData)
 		return false;
 
-	if (!ParseRGBA(pInitData, "fgcolor", m_fgColor ))
+	if(!ParseRGBA(pInitData, "fgcolor", m_fgColor))
 		return false;
 
-	if (!ParseRGBA(pInitData, "bgcolor", m_bgColor ))
+	if(!ParseRGBA(pInitData, "bgcolor", m_bgColor))
 		return false;
 
 	int x, y, w, h;
-	if (!ParseRect(pInitData, "position", x, y, w, h ))
+	if(!ParseRect(pInitData, "position", x, y, w, h))
 		return false;
-	SetPos( x, y );
-	SetSize( w, h );
+	SetPos(x, y);
+	SetSize(w, h);
 
 	return true;
 }
@@ -68,55 +66,54 @@ bool CHudPlayerOverlayHealth::Init( KeyValues* pInitData )
 // Input  : health -
 //-----------------------------------------------------------------------------
 
-void CHudPlayerOverlayHealth::SetHealth( float health )
+void CHudPlayerOverlayHealth::SetHealth(float health)
 {
 	m_Health = health;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudPlayerOverlayHealth::Paint( void )
+void CHudPlayerOverlayHealth::Paint(void)
 {
 	int w, h;
 
-	GetSize( w, h );
+	GetSize(w, h);
 
-	m_pBaseOverlay->SetColorLevel( this, m_fgColor, m_bgColor );
+	m_pBaseOverlay->SetColorLevel(this, m_fgColor, m_bgColor);
 
 	// Use a color related to health value....
-	vgui::surface()->DrawSetColor( 0, 255, 0, 255 * m_pBaseOverlay->GetAlphaFrac() );
+	vgui::surface()->DrawSetColor(0, 255, 0, 255 * m_pBaseOverlay->GetAlphaFrac());
 
 	int drawwidth;
 
 	float frac = m_Health;
-	frac = MIN( 1.0, m_Health );
-	frac = MAX( 0.0, m_Health );
+	frac = MIN(1.0, m_Health);
+	frac = MAX(0.0, m_Health);
 
 	drawwidth = frac * w;
 
-	vgui::surface()->DrawFilledRect( 0, 0, drawwidth, h/2 );
+	vgui::surface()->DrawFilledRect(0, 0, drawwidth, h / 2);
 
 	// This is the hurt part
-	if (w != drawwidth)
+	if(w != drawwidth)
 	{
-		vgui::surface()->DrawSetColor( 255, 64, 64, 255 * m_pBaseOverlay->GetAlphaFrac() );
-		vgui::surface()->DrawFilledRect( drawwidth, 0, w, h/2 );
+		vgui::surface()->DrawSetColor(255, 64, 64, 255 * m_pBaseOverlay->GetAlphaFrac());
+		vgui::surface()->DrawFilledRect(drawwidth, 0, w, h / 2);
 	}
 }
 
 void CHudPlayerOverlayHealth::OnCursorEntered()
 {
-	if ( m_pBaseOverlay->GetMouseOverText() )
+	if(m_pBaseOverlay->GetMouseOverText())
 	{
-		StatusPrint( TYPE_HINT, "%s", m_pBaseOverlay->GetMouseOverText() );
+		StatusPrint(TYPE_HINT, "%s", m_pBaseOverlay->GetMouseOverText());
 	}
 }
 
 void CHudPlayerOverlayHealth::OnCursorExited()
 {
-	if ( m_pBaseOverlay->GetMouseOverText() )
+	if(m_pBaseOverlay->GetMouseOverText())
 	{
 		StatusClear();
 	}

@@ -21,77 +21,62 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-
-bool
-mx_setcwd (const char *path)
+bool mx_setcwd(const char *path)
 {
 #ifdef WIN32
-	return (SetCurrentDirectory (path) == TRUE);
+	return (SetCurrentDirectory(path) == TRUE);
 #else
-	return (chdir (path) != -1);
+	return (chdir(path) != -1);
 #endif
 }
 
-
-
-const char *
-mx_getcwd ()
+const char *mx_getcwd()
 {
 	static char path[256];
 #ifdef WIN32
-	GetCurrentDirectory (256, path);
+	GetCurrentDirectory(256, path);
 #else
-	getcwd (path, 256);
+	getcwd(path, 256);
 #endif
 	return path;
 }
 
-
-
-const char *
-mx_getpath (const char *filename)
+const char *mx_getpath(const char *filename)
 {
 	static char path[256];
 #ifdef WIN32
-	_splitpath (filename, 0, path, 0, 0);
+	_splitpath(filename, 0, path, 0, 0);
 #else
-	strcpy (path, filename);
-	char *ptr = strrchr (path, '/');
-	if (ptr)
+	strcpy(path, filename);
+	char *ptr = strrchr(path, '/');
+	if(ptr)
 		*ptr = '\0';
 #endif
 	return path;
 }
 
-
-
-const char *
-mx_getextension (const char *filename)
+const char *mx_getextension(const char *filename)
 {
 	static char ext[256];
 #ifdef WIN32
-	_splitpath (filename, 0, 0, 0, ext);
+	_splitpath(filename, 0, 0, 0, ext);
 #else
-	char *ptr = strrchr (filename, '.');
-	if (ptr)
-		strcpy (ext, ptr);
+	char *ptr = strrchr(filename, '.');
+	if(ptr)
+		strcpy(ext, ptr);
 	else
-		strcpy (ext, "");
+		strcpy(ext, "");
 #endif
 	return ext;
 }
 
-
-
-const char *
-mx_gettemppath ()
+const char *mx_gettemppath()
 {
 	static char path[256];
 #ifdef WIN32
-	GetTempPath (256, path);
+	GetTempPath(256, path);
 #else
-	strcpy (path, "/tmp");
+	strcpy(path, "/tmp");
 #endif
 
 	return path;

@@ -11,26 +11,21 @@
 //
 // Infiltrator Data Table
 //
-BEGIN_RECV_TABLE_NOBASE( C_PlayerClassInfiltrator, DT_PlayerClassInfiltratorData )
+BEGIN_RECV_TABLE_NOBASE(C_PlayerClassInfiltrator, DT_PlayerClassInfiltratorData)
 END_RECV_TABLE()
 
-BEGIN_PREDICTION_DATA_NO_BASE( C_PlayerClassInfiltrator )
+BEGIN_PREDICTION_DATA_NO_BASE(C_PlayerClassInfiltrator)
 
-	DEFINE_PRED_TYPEDESCRIPTION( m_ClassData, PlayerClassInfiltratorData_t ),
+	DEFINE_PRED_TYPEDESCRIPTION(m_ClassData, PlayerClassInfiltratorData_t),
 
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PlayerClassInfiltrator::C_PlayerClassInfiltrator( C_BaseTFPlayer *pPlayer ) :
-	C_PlayerClass( pPlayer )
-{
-}
+C_PlayerClassInfiltrator::C_PlayerClassInfiltrator(C_BaseTFPlayer *pPlayer) : C_PlayerClass(pPlayer) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PlayerClassInfiltrator::~C_PlayerClassInfiltrator()
-{
-}
+C_PlayerClassInfiltrator::~C_PlayerClassInfiltrator() {}

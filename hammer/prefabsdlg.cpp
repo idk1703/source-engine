@@ -22,16 +22,14 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPrefabsDlg dialog
 
-CPrefabsDlg::CPrefabsDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CPrefabsDlg::IDD, pParent)
+CPrefabsDlg::CPrefabsDlg(CWnd *pParent /*=NULL*/) : CDialog(CPrefabsDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPrefabsDlg)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
-
-void CPrefabsDlg::DoDataExchange(CDataExchange* pDX)
+void CPrefabsDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPrefabsDlg)
@@ -41,7 +39,6 @@ void CPrefabsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIBRARIES, m_Libraries);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CPrefabsDlg, CDialog)
 	//{{AFX_MSG_MAP(CPrefabsDlg)
@@ -68,16 +65,17 @@ void CPrefabsDlg::OnAddobject()
 {
 	CPrefabLibrary *pLibrary = GetCurrentLibrary();
 	if(!pLibrary)
-		return;	// no lib, no add
+		return; // no lib, no add
 
-	CFileDialog dlg(TRUE, NULL, NULL, OFN_ALLOWMULTISELECT | OFN_FILEMUSTEXIST |
-		OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_NOCHANGEDIR,
-		"Prefab files (*.map;*.rmf;*.os)|*.map; *.rmf; *.os|"
-		"Game MAP files (*.map)|*.map|"
-		"Worldcraft RMF files (*.rmf)|*.rmf||", this);
+	CFileDialog dlg(TRUE, NULL, NULL,
+					OFN_ALLOWMULTISELECT | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_NOCHANGEDIR,
+					"Prefab files (*.map;*.rmf;*.os)|*.map; *.rmf; *.os|"
+					"Game MAP files (*.map)|*.map|"
+					"Worldcraft RMF files (*.rmf)|*.rmf||",
+					this);
 
 	if(dlg.DoModal() == IDCANCEL)
-		return;	// aborted
+		return; // aborted
 
 	// add all these files ..
 	char szDir[MAX_PATH], szFiles[2048];
@@ -89,7 +87,7 @@ void CPrefabsDlg::OnAddobject()
 	if(!p[0])
 	{
 		bOneFile = TRUE;
-		p = szDir;	// just one file
+		p = szDir; // just one file
 	}
 
 	// disable caching of prefabs
@@ -118,7 +116,7 @@ void CPrefabsDlg::OnAddobject()
 		{
 			case CPrefab::pftUnknown:
 			{
-				continue;	// no.
+				continue; // no.
 			}
 
 			case CPrefab::pftRMF:
@@ -139,12 +137,12 @@ void CPrefabsDlg::OnAddobject()
 
 			case CPrefab::pftScript:
 			{
-				Assert(0);	// not supported yet
+				Assert(0); // not supported yet
 				break;
 			}
 		}
 
-		if (!pPrefab)
+		if(!pPrefab)
 		{
 			continue;
 		}
@@ -162,24 +160,22 @@ void CPrefabsDlg::OnAddobject()
 	pLibrary->Sort();
 	pLibrary->Save();
 
-	CPrefab::FreeAllData();	// free memory
+	CPrefab::FreeAllData(); // free memory
 	// re-enable prefab caching
 	CPrefab::EnableCaching(TRUE);
 
 	bCurLibraryModified = FALSE;
 }
 
-
 void CPrefabsDlg::AddToObjectList(CPrefab *pPrefab, int iItem, BOOL bReplace)
 {
 	if(iItem == -1)
 		iItem = m_Objects.GetItemCount();
-	if(bReplace)	// replace existing item
+	if(bReplace) // replace existing item
 	{
 		m_Objects.DeleteItem(iItem);
 	}
-	iItem = m_Objects.InsertItem(iItem, pPrefab->GetName(),
-		pPrefab->GetType() == CPrefab::pftScript ? 1 : 0);
+	iItem = m_Objects.InsertItem(iItem, pPrefab->GetName(), pPrefab->GetType() == CPrefab::pftScript ? 1 : 0);
 	m_Objects.SetItemData(iItem, pPrefab->GetID());
 
 	bCurLibraryModified = TRUE;
@@ -189,12 +185,12 @@ BOOL CPrefabsDlg::HandleEditObjectPopup(UINT nID)
 {
 	switch(nID)
 	{
-	case id_EditObjectInfo:
-		EditObjectInfo();
-		break;
-	case id_EditObjectData:
-		EditObjectData();
-		break;
+		case id_EditObjectInfo:
+			EditObjectInfo();
+			break;
+		case id_EditObjectData:
+			EditObjectData();
+			break;
 	}
 	return TRUE;
 }
@@ -207,8 +203,7 @@ static BOOL IsValidFilename(LPCTSTR pszString)
 	{
 		BYTE ch = BYTE(p[0]);
 		++p;
-		if(ch > 127 || isalpha(ch) || isdigit(ch) ||
-			strchr(" $%`-_@~'!(){}^#&", ch))
+		if(ch > 127 || isalpha(ch) || isdigit(ch) || strchr(" $%`-_@~'!(){}^#&", ch))
 			continue;
 		// not one of those chars - not correct
 		return FALSE;
@@ -238,11 +233,10 @@ void CPrefabsDlg::EditObjectInfo()
 	bCurLibraryModified = TRUE;
 }
 
-
 void CPrefabsDlg::EditObjectData()
 {
 	// get application
-	CHammer *pApp = (CHammer*) AfxGetApp();
+	CHammer *pApp = (CHammer *)AfxGetApp();
 
 	if(bCurLibraryModified)
 	{
@@ -251,15 +245,14 @@ void CPrefabsDlg::EditObjectData()
 			pLibrary->Save();
 	}
 
-	CMapDoc *pDoc = (CMapDoc*) pApp->pMapDocTemplate->OpenDocumentFile(NULL);
+	CMapDoc *pDoc = (CMapDoc *)pApp->pMapDocTemplate->OpenDocumentFile(NULL);
 	pDoc->EditPrefab3D(GetCurrentObject()->GetID());
 	EndDialog(IDOK);
 }
 
-
 void CPrefabsDlg::OnEditobject()
 {
-	if(!GetCurrentObject())	// nothing
+	if(!GetCurrentObject()) // nothing
 		return;
 
 	// two stages - name/description OR data itself
@@ -272,8 +265,7 @@ void CPrefabsDlg::OnEditobject()
 	CWnd *pButton = GetDlgItem(IDC_EDITOBJECT);
 	CRect r;
 	pButton->GetWindowRect(r);
-	menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON, r.left, r.bottom,
-		this, NULL);
+	menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON, r.left, r.bottom, this, NULL);
 }
 
 void CPrefabsDlg::OnRemoveobject()
@@ -292,9 +284,10 @@ void CPrefabsDlg::OnRemoveobject()
 			{
 				// do confirmation.
 				if(AfxMessageBox("Are you sure you want to delete these "
-					"items?", MB_YESNO) == IDNO)
-					return;	// nope!
-				m_Objects.SetRedraw(FALSE);	// no redraw while doing this
+								 "items?",
+								 MB_YESNO) == IDNO)
+					return;					// nope!
+				m_Objects.SetRedraw(FALSE); // no redraw while doing this
 			}
 
 			bConfirmed = TRUE;
@@ -314,7 +307,7 @@ void CPrefabsDlg::OnRemoveobject()
 	// save library
 	pLibrary->Save();
 
-	m_Objects.SetRedraw(TRUE);	// redraw objects
+	m_Objects.SetRedraw(TRUE); // redraw objects
 	m_Objects.Invalidate();
 }
 
@@ -329,10 +322,10 @@ void CPrefabsDlg::OnExportobject()
 			// export it
 			CString strFilename;
 			strFilename = pPrefab->GetName();
-			CFileDialog dlg(FALSE, "map", strFilename, OFN_HIDEREADONLY |
-				OFN_OVERWRITEPROMPT, "Map files|*.map;*.rmf|", this);
+			CFileDialog dlg(FALSE, "map", strFilename, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Map files|*.map;*.rmf|",
+							this);
 			if(dlg.DoModal() == IDCANCEL)
-				return;	// nevermind
+				return; // nevermind
 			strFilename = dlg.GetPathName();
 
 			int iPos = strFilename.Find('.');
@@ -340,7 +333,7 @@ void CPrefabsDlg::OnExportobject()
 			if(iPos != -1)
 			{
 				char *p = strFilename.GetBuffer(0);
-				if(!strnicmp(p+iPos+1, "map", 3))
+				if(!strnicmp(p + iPos + 1, "map", 3))
 					dwFlags = CPrefab::lsMAP;
 			}
 
@@ -368,9 +361,9 @@ void CPrefabsDlg::SetCurObject(int iItem)
 	m_ObjectNotes.SetWindowText(pPrefab->GetNotes());
 }
 
-void CPrefabsDlg::OnItemchangedObjects(NMHDR* pNMHDR, LRESULT* pResult)
+void CPrefabsDlg::OnItemchangedObjects(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+	NM_LISTVIEW *pNMListView = (NM_LISTVIEW *)pNMHDR;
 	*pResult = 0;
 
 	if(!(pNMListView->uChanged & LVIF_STATE))
@@ -394,8 +387,7 @@ CPrefabLibrary *CPrefabsDlg::GetCurrentLibrary(int *piSel)
 	int iSel = m_Libraries.GetCurSel();
 	if(iSel == CB_ERR)
 		return NULL;
-	CPrefabLibrary *pLibrary = CPrefabLibrary::FindID(
-		m_Libraries.GetItemData(iSel));
+	CPrefabLibrary *pLibrary = CPrefabLibrary::FindID(m_Libraries.GetItemData(iSel));
 
 	if(piSel)
 		piSel[0] = iSel;
@@ -410,7 +402,7 @@ CPrefab *CPrefabsDlg::GetCurrentObject(int *piSel)
 	int iSel = iCurObject;
 	if(iSel == -1)
 		return NULL;
-	CPrefab *pPrefab= CPrefab::FindID(m_Objects.GetItemData(iSel));
+	CPrefab *pPrefab = CPrefab::FindID(m_Objects.GetItemData(iSel));
 
 	if(piSel)
 		piSel[0] = iSel;
@@ -421,8 +413,7 @@ CPrefab *CPrefabsDlg::GetCurrentObject(int *piSel)
 void CPrefabsDlg::OnSelchangeLibraries()
 {
 	// get last library
-	CPrefabLibrary *pLibrary = CPrefabLibrary::FindID(
-		m_Libraries.GetItemData(iCurLibrary));
+	CPrefabLibrary *pLibrary = CPrefabLibrary::FindID(m_Libraries.GetItemData(iCurLibrary));
 
 	// save its index
 	if(bCurLibraryModified)
@@ -435,7 +426,8 @@ void CPrefabsDlg::OnSelchangeLibraries()
 	iCurLibrary = m_Libraries.GetCurSel();
 	bCurLibraryModified = FALSE;
 	pLibrary = GetCurrentLibrary();
-	if(!pLibrary) return;
+	if(!pLibrary)
+		return;
 
 	// add objects to object list
 	m_Objects.SetRedraw(FALSE);
@@ -457,10 +449,10 @@ void CPrefabsDlg::OnSelchangeLibraries()
 static int AskAboutInvalidFilename()
 {
 	return AfxMessageBox("That's not a valid name - some of the characters aren't\n"
-			"acceptable. Try using a name with only A-Z, 0-9, space,\n"
-			"and these characters: $%`-_@~'!(){}^#&", MB_OKCANCEL);
+						 "acceptable. Try using a name with only A-Z, 0-9, space,\n"
+						 "and these characters: $%`-_@~'!(){}^#&",
+						 MB_OKCANCEL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -477,7 +469,7 @@ Again:
 	{
 		if(AskAboutInvalidFilename() == IDOK)
 			goto Again;
-		return;	// nevermind.
+		return; // nevermind.
 	}
 
 	CPrefabLibraryRMF *pLibrary = new CPrefabLibraryRMF;
@@ -490,10 +482,9 @@ Again:
 	m_Libraries.SetItemData(iIndex, pLibrary->GetID());
 
 	m_Libraries.SetCurSel(iIndex);
-	OnSelchangeLibraries();	// to redraw description window
+	OnSelchangeLibraries(); // to redraw description window
 	bCurLibraryModified = TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -503,7 +494,8 @@ void CPrefabsDlg::OnEditlibrary()
 	// get selection
 	int iSel;
 	CPrefabLibrary *pLibrary = GetCurrentLibrary(&iSel);
-	if(!pLibrary) return;
+	if(!pLibrary)
+		return;
 
 	CEditPrefabDlg dlg;
 	dlg.m_strName = pLibrary->GetName();
@@ -518,7 +510,7 @@ Again:
 	{
 		if(AskAboutInvalidFilename() == IDOK)
 			goto Again;
-		return;	// nevermind.
+		return; // nevermind.
 	}
 
 	pLibrary->SetName(dlg.m_strName);
@@ -533,22 +525,21 @@ Again:
 	m_Libraries.Invalidate();
 
 	m_Libraries.SetCurSel(iSel);
-	OnSelchangeLibraries();	// to redraw description window
+	OnSelchangeLibraries(); // to redraw description window
 	bCurLibraryModified = TRUE;
 }
-
 
 void CPrefabsDlg::OnRemovelibrary()
 {
 	// get cur library
 	int iSel;
 	CPrefabLibrary *pLibrary = GetCurrentLibrary(&iSel);
-	if (pLibrary == NULL)
+	if(pLibrary == NULL)
 	{
 		return;
 	}
 
-	if (AfxMessageBox("Are you sure you want to delete this library from your hard drive?", MB_YESNO) == IDYES)
+	if(AfxMessageBox("Are you sure you want to delete this library from your hard drive?", MB_YESNO) == IDYES)
 	{
 		pLibrary->DeleteFile();
 		delete pLibrary;
@@ -557,10 +548,9 @@ void CPrefabsDlg::OnRemovelibrary()
 
 		m_Libraries.DeleteString(iSel);
 		m_Libraries.SetCurSel(0);
-		OnSelchangeLibraries();	// to redraw description window
+		OnSelchangeLibraries(); // to redraw description window
 	}
 }
-
 
 BOOL CPrefabsDlg::OnInitDialog()
 {
@@ -591,10 +581,9 @@ BOOL CPrefabsDlg::OnInitDialog()
 	return TRUE;
 }
 
-
-void CPrefabsDlg::OnEndlabeleditObjects(NMHDR* pNMHDR, LRESULT* pResult)
+void CPrefabsDlg::OnEndlabeleditObjects(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
+	LV_DISPINFO *pDispInfo = (LV_DISPINFO *)pNMHDR;
 	LV_ITEM &item = pDispInfo->item;
 
 	*pResult = 0;

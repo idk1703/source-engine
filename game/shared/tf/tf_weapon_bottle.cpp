@@ -22,59 +22,59 @@
 //
 // Weapon Bottle tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFBottle, DT_TFWeaponBottle )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFBottle, DT_TFWeaponBottle)
 
-BEGIN_NETWORK_TABLE( CTFBottle, DT_TFWeaponBottle )
-#if defined( CLIENT_DLL )
-	RecvPropBool( RECVINFO( m_bBroken ) )
+BEGIN_NETWORK_TABLE(CTFBottle, DT_TFWeaponBottle)
+#if defined(CLIENT_DLL)
+	RecvPropBool(RECVINFO(m_bBroken))
 #else
-	SendPropBool( SENDINFO( m_bBroken ) )
+	SendPropBool(SENDINFO(m_bBroken))
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFBottle )
+BEGIN_PREDICTION_DATA(CTFBottle)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_bottle, CTFBottle );
-PRECACHE_WEAPON_REGISTER( tf_weapon_bottle );
+LINK_ENTITY_TO_CLASS(tf_weapon_bottle, CTFBottle);
+PRECACHE_WEAPON_REGISTER(tf_weapon_bottle);
 
 //=============================================================================
 //
 // Weapon Stickbomb tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFStickBomb, DT_TFWeaponStickBomb )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFStickBomb, DT_TFWeaponStickBomb)
 
 #ifdef CLIENT_DLL
-void RecvProxy_Detonated( const CRecvProxyData *pData, void *pStruct, void *pOut );
+void RecvProxy_Detonated(const CRecvProxyData *pData, void *pStruct, void *pOut);
 #endif
 
-BEGIN_NETWORK_TABLE( CTFStickBomb, DT_TFWeaponStickBomb )
-#if defined( CLIENT_DLL )
-	RecvPropInt( RECVINFO( m_iDetonated ), 0, RecvProxy_Detonated )
+BEGIN_NETWORK_TABLE(CTFStickBomb, DT_TFWeaponStickBomb)
+#if defined(CLIENT_DLL)
+	RecvPropInt(RECVINFO(m_iDetonated), 0, RecvProxy_Detonated)
 #else
-	SendPropInt( SENDINFO( m_iDetonated ), 1, SPROP_UNSIGNED )
+	SendPropInt(SENDINFO(m_iDetonated), 1, SPROP_UNSIGNED)
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFStickBomb )
+BEGIN_PREDICTION_DATA(CTFStickBomb)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_stickbomb, CTFStickBomb );
-PRECACHE_WEAPON_REGISTER( tf_weapon_stickbomb );
+LINK_ENTITY_TO_CLASS(tf_weapon_stickbomb, CTFStickBomb);
+PRECACHE_WEAPON_REGISTER(tf_weapon_stickbomb);
 
 #ifdef STAGING_ONLY
-#define TF_WEAPON_STICKBOMB_NORMAL_MODEL	"models/workshop/weapons/c_models/c_caber/c_caber.mdl"
-#define TF_WEAPON_STICKBOMB_BROKEN_MODEL	"models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
+#define TF_WEAPON_STICKBOMB_NORMAL_MODEL "models/workshop/weapons/c_models/c_caber/c_caber.mdl"
+#define TF_WEAPON_STICKBOMB_BROKEN_MODEL "models/workshop/weapons/c_models/c_caber/c_caber_exploded.mdl"
 #else
-#define TF_WEAPON_STICKBOMB_NORMAL_MODEL	"models/weapons/c_models/c_caber/c_caber.mdl"
-#define TF_WEAPON_STICKBOMB_BROKEN_MODEL	"models/weapons/c_models/c_caber/c_caber_exploded.mdl"
+#define TF_WEAPON_STICKBOMB_NORMAL_MODEL "models/weapons/c_models/c_caber/c_caber.mdl"
+#define TF_WEAPON_STICKBOMB_BROKEN_MODEL "models/weapons/c_models/c_caber/c_caber_exploded.mdl"
 #endif
 
 //=============================================================================
 
 #define TF_BOTTLE_SWITCHGROUP 1
-#define TF_BOTTLE_NOTBROKEN 0
-#define TF_BOTTLE_BROKEN 1
+#define TF_BOTTLE_NOTBROKEN	  0
+#define TF_BOTTLE_BROKEN	  1
 
 //=============================================================================
 //
@@ -84,22 +84,20 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_stickbomb );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFBottle::CTFBottle()
-{
-}
+CTFBottle::CTFBottle() {}
 
-void CTFBottle::WeaponReset( void )
+void CTFBottle::WeaponReset(void)
 {
 	BaseClass::WeaponReset();
 
 	m_bBroken = false;
 }
 
-bool CTFBottle::DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt )
+bool CTFBottle::DefaultDeploy(char *szViewModel, char *szWeaponModel, int iActivity, char *szAnimExt)
 {
-	bool bRet = BaseClass::DefaultDeploy( szViewModel, szWeaponModel, iActivity, szAnimExt );
+	bool bRet = BaseClass::DefaultDeploy(szViewModel, szWeaponModel, iActivity, szAnimExt);
 
-	if ( bRet )
+	if(bRet)
 	{
 		SwitchBodyGroups();
 	}
@@ -107,104 +105,105 @@ bool CTFBottle::DefaultDeploy( char *szViewModel, char *szWeaponModel, int iActi
 	return bRet;
 }
 
-void CTFBottle::SwitchBodyGroups( void )
+void CTFBottle::SwitchBodyGroups(void)
 {
 	int iState = 0;
 
-	if ( m_bBroken == true )
+	if(m_bBroken == true)
 	{
 		iState = 1;
 	}
 
-	SetBodygroup( TF_BOTTLE_SWITCHGROUP, iState );
+	SetBodygroup(TF_BOTTLE_SWITCHGROUP, iState);
 
-	CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
+	CTFPlayer *pTFPlayer = ToTFPlayer(GetOwner());
 
-	if ( pTFPlayer && pTFPlayer->GetActiveWeapon() == this )
+	if(pTFPlayer && pTFPlayer->GetActiveWeapon() == this)
 	{
-		if ( pTFPlayer->GetViewModel() )
+		if(pTFPlayer->GetViewModel())
 		{
-			pTFPlayer->GetViewModel()->SetBodygroup( TF_BOTTLE_SWITCHGROUP, iState );
+			pTFPlayer->GetViewModel()->SetBodygroup(TF_BOTTLE_SWITCHGROUP, iState);
 		}
 	}
 }
 
-void CTFBottle::Smack( void )
+void CTFBottle::Smack(void)
 {
 	BaseClass::Smack();
 
-	if ( ConnectedHit() && IsCurrentAttackACrit() )
+	if(ConnectedHit() && IsCurrentAttackACrit())
 	{
 		m_bBroken = true;
 		SwitchBodyGroups();
 	}
 }
 
-CTFStickBomb::CTFStickBomb()
-: CTFBottle()
+CTFStickBomb::CTFStickBomb() : CTFBottle()
 {
 	m_iDetonated = 0;
 }
 
-void CTFStickBomb::Precache( void )
+void CTFStickBomb::Precache(void)
 {
 	BaseClass::Precache();
 
-	PrecacheModel( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
-	PrecacheModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
+	PrecacheModel(TF_WEAPON_STICKBOMB_NORMAL_MODEL);
+	PrecacheModel(TF_WEAPON_STICKBOMB_BROKEN_MODEL);
 }
 
-void CTFStickBomb::Smack( void )
+void CTFStickBomb::Smack(void)
 {
 	CTFWeaponBaseMelee::Smack();
 
 	// Stick bombs detonate once, on impact.
-	if ( m_iDetonated == 0 && ConnectedHit() )
+	if(m_iDetonated == 0 && ConnectedHit())
 	{
 		m_iDetonated = 1;
 		m_bBroken = true;
 		SwitchBodyGroups();
 
 #ifdef GAME_DLL
-		CTFPlayer *pTFPlayer = ToTFPlayer( GetOwner() );
-		if ( pTFPlayer )
+		CTFPlayer *pTFPlayer = ToTFPlayer(GetOwner());
+		if(pTFPlayer)
 		{
 			Vector vecForward;
-			AngleVectors( pTFPlayer->EyeAngles(), &vecForward );
+			AngleVectors(pTFPlayer->EyeAngles(), &vecForward);
 			Vector vecSwingStart = pTFPlayer->Weapon_ShootPosition();
 			Vector vecSwingEnd = vecSwingStart + vecForward * GetSwingRange();
 
 			Vector explosion = vecSwingStart;
 
-			CPVSFilter filter( explosion );
+			CPVSFilter filter(explosion);
 
 			// Halloween Spell
 			int iHalloweenSpell = 0;
 			int iCustomParticleIndex = INVALID_STRING_INDEX;
-			if ( TF_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) )
+			if(TF_IsHolidayActive(kHoliday_HalloweenOrFullMoon))
 			{
-				CALL_ATTRIB_HOOK_INT_ON_OTHER( this, iHalloweenSpell, halloween_pumpkin_explosions );
-				if ( iHalloweenSpell > 0 )
+				CALL_ATTRIB_HOOK_INT_ON_OTHER(this, iHalloweenSpell, halloween_pumpkin_explosions);
+				if(iHalloweenSpell > 0)
 				{
-					iCustomParticleIndex = GetParticleSystemIndex( "halloween_explosion" );
+					iCustomParticleIndex = GetParticleSystemIndex("halloween_explosion");
 				}
 			}
 
-			TE_TFExplosion( filter, 0.0f, explosion, Vector(0,0,1), TF_WEAPON_GRENADELAUNCHER, pTFPlayer->entindex(), -1, SPECIAL1, iCustomParticleIndex );
+			TE_TFExplosion(filter, 0.0f, explosion, Vector(0, 0, 1), TF_WEAPON_GRENADELAUNCHER, pTFPlayer->entindex(),
+						   -1, SPECIAL1, iCustomParticleIndex);
 
 			int dmgType = DMG_BLAST | DMG_USEDISTANCEMOD;
-			if ( IsCurrentAttackACrit() )
+			if(IsCurrentAttackACrit())
 				dmgType |= DMG_CRITICAL;
 
-			CTakeDamageInfo info( pTFPlayer, pTFPlayer, this, explosion, explosion, 75.0f, dmgType, TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion );
-			CTFRadiusDamageInfo radiusinfo( &info, explosion, 100.f );
-			TFGameRules()->RadiusDamage( radiusinfo );
+			CTakeDamageInfo info(pTFPlayer, pTFPlayer, this, explosion, explosion, 75.0f, dmgType,
+								 TF_DMG_CUSTOM_STICKBOMB_EXPLOSION, &explosion);
+			CTFRadiusDamageInfo radiusinfo(&info, explosion, 100.f);
+			TFGameRules()->RadiusDamage(radiusinfo);
 		}
 #endif
 	}
 }
 
-void CTFStickBomb::WeaponReset( void )
+void CTFStickBomb::WeaponReset(void)
 {
 	BaseClass::WeaponReset();
 
@@ -213,35 +212,35 @@ void CTFStickBomb::WeaponReset( void )
 	SwitchBodyGroups();
 }
 
-void CTFStickBomb::WeaponRegenerate( void )
+void CTFStickBomb::WeaponRegenerate(void)
 {
 	BaseClass::WeaponRegenerate();
 
 	m_iDetonated = 0;
 
-	SetContextThink( &CTFStickBomb::SwitchBodyGroups, gpGlobals->curtime + 0.01f, "SwitchBodyGroups" );
+	SetContextThink(&CTFStickBomb::SwitchBodyGroups, gpGlobals->curtime + 0.01f, "SwitchBodyGroups");
 }
 
-void CTFStickBomb::SwitchBodyGroups( void )
+void CTFStickBomb::SwitchBodyGroups(void)
 {
 #ifdef CLIENT_DLL
-	if ( !GetViewmodelAttachment() )
+	if(!GetViewmodelAttachment())
 		return;
 
-	if ( m_iDetonated == 1 )
+	if(m_iDetonated == 1)
 	{
-		GetViewmodelAttachment()->SetModel( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
+		GetViewmodelAttachment()->SetModel(TF_WEAPON_STICKBOMB_BROKEN_MODEL);
 	}
 	else
 	{
-		GetViewmodelAttachment()->SetModel( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
+		GetViewmodelAttachment()->SetModel(TF_WEAPON_STICKBOMB_NORMAL_MODEL);
 	}
 #endif
 }
 
-const char *CTFStickBomb::GetWorldModel( void ) const
+const char *CTFStickBomb::GetWorldModel(void) const
 {
-	if ( m_iDetonated == 1 )
+	if(m_iDetonated == 1)
 	{
 		return TF_WEAPON_STICKBOMB_BROKEN_MODEL;
 	}
@@ -252,19 +251,19 @@ const char *CTFStickBomb::GetWorldModel( void ) const
 }
 
 #ifdef CLIENT_DLL
-int CTFStickBomb::GetWorldModelIndex( void )
+int CTFStickBomb::GetWorldModelIndex(void)
 {
-	if ( !modelinfo )
+	if(!modelinfo)
 		return BaseClass::GetWorldModelIndex();
 
-	if ( m_iDetonated == 1 )
+	if(m_iDetonated == 1)
 	{
-		m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_STICKBOMB_BROKEN_MODEL );
+		m_iWorldModelIndex = modelinfo->GetModelIndex(TF_WEAPON_STICKBOMB_BROKEN_MODEL);
 		return m_iWorldModelIndex;
 	}
 	else
 	{
-		m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_STICKBOMB_NORMAL_MODEL );
+		m_iWorldModelIndex = modelinfo->GetModelIndex(TF_WEAPON_STICKBOMB_NORMAL_MODEL);
 		return m_iWorldModelIndex;
 	}
 }
@@ -272,13 +271,13 @@ int CTFStickBomb::GetWorldModelIndex( void )
 
 #ifdef CLIENT_DLL
 
-void RecvProxy_Detonated( const CRecvProxyData *pData, void *pStruct, void *pOut )
+void RecvProxy_Detonated(const CRecvProxyData *pData, void *pStruct, void *pOut)
 {
-	C_TFStickBomb* pBomb = (C_TFStickBomb*) pStruct;
+	C_TFStickBomb *pBomb = (C_TFStickBomb *)pStruct;
 
-	if ( pData->m_Value.m_Int != pBomb->GetDetonated() )
+	if(pData->m_Value.m_Int != pBomb->GetDetonated())
 	{
-		pBomb->SetDetonated( pData->m_Value.m_Int );
+		pBomb->SetDetonated(pData->m_Value.m_Int);
 		pBomb->SwitchBodyGroups();
 	}
 }

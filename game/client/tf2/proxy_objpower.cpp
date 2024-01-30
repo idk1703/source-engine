@@ -19,16 +19,16 @@
 class CTFObjectPowerProxy : public CResultProxy
 {
 public:
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
-	virtual void OnBind( void *pEnt );
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
+	virtual void OnBind(void *pEnt);
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFObjectPowerProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CTFObjectPowerProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	if ( !CResultProxy::Init( pMaterial, pKeyValues ) )
+	if(!CResultProxy::Init(pMaterial, pKeyValues))
 		return false;
 
 	return true;
@@ -37,20 +37,19 @@ bool CTFObjectPowerProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFObjectPowerProxy::OnBind( void *pArg )
+void CTFObjectPowerProxy::OnBind(void *pArg)
 {
-	C_BaseEntity *pEntity = BindArgToEntity( pArg );
-	if (!pEntity)
+	C_BaseEntity *pEntity = BindArgToEntity(pArg);
+	if(!pEntity)
 		return;
 
-	C_BaseObject *pObject = dynamic_cast<C_BaseObject*>( pEntity );
-	Assert( pObject );
+	C_BaseObject *pObject = dynamic_cast<C_BaseObject *>(pEntity);
+	Assert(pObject);
 
 	float flPoweredState = (float)(!pObject->IsBuilding() && !pObject->IsPlacing() && pObject->IsPowered());
 
-	Assert( m_pResult );
-	SetFloatResult( flPoweredState );
+	Assert(m_pResult);
+	SetFloatResult(flPoweredState);
 }
 
-
-EXPOSE_INTERFACE( CTFObjectPowerProxy, IMaterialProxy, "TFObjectPower" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CTFObjectPowerProxy, IMaterialProxy, "TFObjectPower" IMATERIAL_PROXY_INTERFACE_VERSION);

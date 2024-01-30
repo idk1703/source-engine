@@ -24,17 +24,17 @@ typedef enum
 } QUERYSTATUS;
 
 extern void v_strncpy(char *dest, const char *src, int bufsize);
-#define min(a,b)    (((a) < (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 
 //-----------------------------------------------------------------------------
 // Purpose: Comparison function used in query redblack tree
 //-----------------------------------------------------------------------------
-bool QueryLessFunc( const query_t &item1, const query_t &item2 )
+bool QueryLessFunc(const query_t &item1, const query_t &item2)
 {
 	// compare port then ip
-	if (item1.addr.port < item2.addr.port)
+	if(item1.addr.port < item2.addr.port)
 		return true;
-	else if (item1.addr.port > item2.addr.port)
+	else if(item1.addr.port > item2.addr.port)
 		return false;
 
 	int ip1 = *(int *)&item1.addr.ip;
@@ -54,14 +54,15 @@ CServerList::CServerList(IServerRefreshResponse *target) : m_Queries(0, MAX_QUER
 	// calculate max sockets based on users' rate
 	char speedBuf[32];
 	int internetSpeed;
-	if (!vgui::system()->GetRegistryString("HKEY_CURRENT_USER\\Software\\Valve\\Tracker\\Rate", speedBuf, sizeof(speedBuf)-1))
+	if(!vgui::system()->GetRegistryString("HKEY_CURRENT_USER\\Software\\Valve\\Tracker\\Rate", speedBuf,
+										  sizeof(speedBuf) - 1))
 	{
 		// default to DSL speed if no reg key found (an unlikely occurance)
 		strcpy(speedBuf, "7500");
 	}
 	internetSpeed = atoi(speedBuf);
 	int maxSockets = (MAX_QUERY_SOCKETS * internetSpeed) / 10000;
-	if (internetSpeed < 6000)
+	if(internetSpeed < 6000)
 	{
 		// reduce the number of active queries again for slow internet speeds
 		maxSockets /= 2;
@@ -74,7 +75,6 @@ CServerList::CServerList(IServerRefreshResponse *target) : m_Queries(0, MAX_QUER
 
 	m_nInvalidServers = 0;
 	m_nRefreshedServers = 0;
-
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ CServerList::CServerList(IServerRefreshResponse *target) : m_Queries(0, MAX_QUER
 //-----------------------------------------------------------------------------
 CServerList::~CServerList()
 {
-//	delete m_pQuery;
+	//	delete m_pQuery;
 }
 
 //-----------------------------------------------------------------------------
@@ -91,8 +91,9 @@ CServerList::~CServerList()
 void CServerList::RunFrame()
 {
 
-	for(int i=0;i<m_Servers.Count();i++) {
-			m_Servers[i]->RunFrame();
+	for(int i = 0; i < m_Servers.Count(); i++)
+	{
+		m_Servers[i]->RunFrame();
 	}
 
 	QueryFrame();
@@ -103,7 +104,7 @@ void CServerList::RunFrame()
 //-----------------------------------------------------------------------------
 serveritem_t &CServerList::GetServer(unsigned int serverID)
 {
-	if (m_Servers.IsValidIndex(serverID))
+	if(m_Servers.IsValidIndex(serverID))
 	{
 		return m_Servers[serverID]->GetServer();
 	}
@@ -144,7 +145,7 @@ bool CServerList::IsRefreshing()
 unsigned int CServerList::AddNewServer(serveritem_t &server)
 {
 
-	unsigned int serverID = m_Servers.AddToTail(new CServerInfo(this ,server));
+	unsigned int serverID = m_Servers.AddToTail(new CServerInfo(this, server));
 	m_Servers[serverID]->serverID = serverID;
 	return serverID;
 }
@@ -169,7 +170,7 @@ void CServerList::StopRefresh()
 
 	// reset server received states
 	int count = ServerCount();
-	for (int i = 0; i < count; i++)
+	for(int i = 0; i < count; i++)
 	{
 		m_Servers[i]->received = 0;
 	}
@@ -190,7 +191,7 @@ void CServerList::StopRefresh()
 //-----------------------------------------------------------------------------
 void CServerList::AddServerToRefreshList(unsigned int serverID)
 {
-	if (!m_Servers.IsValidIndex(serverID))
+	if(!m_Servers.IsValidIndex(serverID))
 		return;
 
 	serveritem_t &server = m_Servers[serverID]->GetServer();
@@ -204,17 +205,18 @@ void CServerList::AddServerToRefreshList(unsigned int serverID)
 //-----------------------------------------------------------------------------
 void CServerList::StartRefresh()
 {
-	if (m_RefreshList.Count() > 0)
+	if(m_RefreshList.Count() > 0)
 	{
 		m_bQuerying = true;
 	}
 }
 
-
 void CServerList::ServerResponded()
 {
-	for(int i=0;i<m_Servers.Count();i++) {
-		if ( m_Servers[i]->Refreshed() ) {
+	for(int i = 0; i < m_Servers.Count(); i++)
+	{
+		if(m_Servers[i]->Refreshed())
+		{
 
 			serveritem_t &server = m_Servers[i]->GetServer();
 			// copy in data necessary for filters
@@ -228,7 +230,7 @@ void CServerList::ServerResponded()
 			int ping = CalculateAveragePing(server);
 
 			// make sure the ping changes each time so the user can see the server has updated
-			if (server.ping == ping && ping>0)
+			if(server.ping == ping && ping > 0)
 			{
 				ping--;
 			}
@@ -250,40 +252,32 @@ void CServerList::ServerResponded()
 			// notify the UI of the new server info
 			m_pResponseTarget->ServerResponded(server);
 		}
-
 	}
-
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: called when a server response has timed out
 //-----------------------------------------------------------------------------
-void CServerList::ServerFailedToRespond()
-{
-
-}
-
-
+void CServerList::ServerFailedToRespond() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: recalculates a servers ping, from the last few ping times
 //-----------------------------------------------------------------------------
 int CServerList::CalculateAveragePing(serveritem_t &server)
 {
-	if (server.pings[0])
+	if(server.pings[0])
 	{
 		// three pings, throw away any the most extreme and average the other two
 		int middlePing = 0, lowPing = 1, highPing = 2;
-		if (server.pings[0] < server.pings[1])
+		if(server.pings[0] < server.pings[1])
 		{
-			if (server.pings[0] > server.pings[2])
+			if(server.pings[0] > server.pings[2])
 			{
 				lowPing = 2;
 				middlePing = 0;
 				highPing = 1;
 			}
-			else if (server.pings[1] < server.pings[2])
+			else if(server.pings[1] < server.pings[2])
 			{
 				lowPing = 0;
 				middlePing = 1;
@@ -298,13 +292,13 @@ int CServerList::CalculateAveragePing(serveritem_t &server)
 		}
 		else
 		{
-			if (server.pings[1] > server.pings[2])
+			if(server.pings[1] > server.pings[2])
 			{
 				lowPing = 2;
 				middlePing = 1;
 				highPing = 0;
 			}
-			else if (server.pings[0] < server.pings[2])
+			else if(server.pings[0] < server.pings[2])
 			{
 				lowPing = 1;
 				middlePing = 0;
@@ -319,7 +313,7 @@ int CServerList::CalculateAveragePing(serveritem_t &server)
 		}
 
 		// we have the middle ping, see which it's closest to
-		if ((server.pings[middlePing] - server.pings[lowPing]) < (server.pings[highPing] - server.pings[middlePing]))
+		if((server.pings[middlePing] - server.pings[lowPing]) < (server.pings[highPing] - server.pings[middlePing]))
 		{
 			return (server.pings[middlePing] + server.pings[lowPing]) / 2;
 		}
@@ -328,7 +322,7 @@ int CServerList::CalculateAveragePing(serveritem_t &server)
 			return (server.pings[middlePing] + server.pings[highPing]) / 2;
 		}
 	}
-	else if (server.pings[1])
+	else if(server.pings[1])
 	{
 		// two pings received, average them
 		return (server.pings[1] + server.pings[2]) / 2;
@@ -340,23 +334,22 @@ int CServerList::CalculateAveragePing(serveritem_t &server)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called every frame to check queries
 //-----------------------------------------------------------------------------
 void CServerList::QueryFrame()
 {
-	if (!m_bQuerying)
+	if(!m_bQuerying)
 		return;
 
 	float curtime = CSocket::GetClock();
 
 	// walk the query list, looking for any server timeouts
 	unsigned short idx = m_Queries.FirstInorder();
-	while (m_Queries.IsValidIndex(idx))
+	while(m_Queries.IsValidIndex(idx))
 	{
 		query_t &query = m_Queries[idx];
-		if ((curtime - query.sendTime) > 1.2f)
+		if((curtime - query.sendTime) > 1.2f)
 		{
 			// server has timed out
 			serveritem_t &item = m_Servers[query.serverID]->GetServer();
@@ -366,7 +359,7 @@ void CServerList::QueryFrame()
 			item.pings[1] = item.pings[2];
 			item.pings[2] = 1200;
 			item.ping = CalculateAveragePing(item);
-			if (!item.hadSuccessfulResponse)
+			if(!item.hadSuccessfulResponse)
 			{
 				// remove the server if it has never responded before
 				item.doNotRefresh = true;
@@ -392,22 +385,21 @@ void CServerList::QueryFrame()
 		}
 	}
 
-
 	// increment the number of sockets to use
 	m_nMaxRampUp = min(m_nMaxActive, m_nMaxRampUp + m_nRampUpSpeed);
 
 	// see if we should send more queries
-	while (m_RefreshList.Count() > 0 && (int)m_Queries.Count() < m_nMaxRampUp)
+	while(m_RefreshList.Count() > 0 && (int)m_Queries.Count() < m_nMaxRampUp)
 	{
 		// get the first item from the list to refresh
 		int currentServer = m_RefreshList[0];
-		if (!m_Servers.IsValidIndex(currentServer))
+		if(!m_Servers.IsValidIndex(currentServer))
 			break;
 		serveritem_t &item = m_Servers[currentServer]->GetServer();
 
 		item.time = curtime;
 
-		//QueryServer(m_pQuery, currentServer);
+		// QueryServer(m_pQuery, currentServer);
 		m_Servers[currentServer]->Query();
 
 		query_t query;
@@ -420,9 +412,9 @@ void CServerList::QueryFrame()
 		adr.port = (item.port & 0xff) << 8 | (item.port & 0xff00) >> 8;
 		adr.type = NA_IP;
 
-		query.addr =adr;
-		query.sendTime=curtime;
-		query.serverID=item.serverID;
+		query.addr = adr;
+		query.sendTime = curtime;
+		query.serverID = item.serverID;
 
 		m_Queries.Insert(query);
 
@@ -431,7 +423,7 @@ void CServerList::QueryFrame()
 	}
 
 	// Done querying?
-	if (m_Queries.Count() < 1)
+	if(m_Queries.Count() < 1)
 	{
 		m_bQuerying = false;
 		m_pResponseTarget->RefreshComplete();

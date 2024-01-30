@@ -16,21 +16,19 @@
 extern ConVar tf_boss_alpha_grenade_launch_range;
 extern ConVar tf_boss_alpha_chase_range;
 
-
 //---------------------------------------------------------------------------------------------
-CBossAlphaChaseVictim::CBossAlphaChaseVictim( CBaseCombatCharacter *chaseTarget )
+CBossAlphaChaseVictim::CBossAlphaChaseVictim(CBaseCombatCharacter *chaseTarget)
 {
 	m_chaseTarget = chaseTarget;
 	m_lastKnownTargetSpot = chaseTarget->GetAbsOrigin();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CBossAlpha >	CBossAlphaChaseVictim::OnStart( CBossAlpha *me, Action< CBossAlpha > *priorAction )
+ActionResult<CBossAlpha> CBossAlphaChaseVictim::OnStart(CBossAlpha *me, Action<CBossAlpha> *priorAction)
 {
-	if ( m_chaseTarget == NULL )
+	if(m_chaseTarget == NULL)
 	{
-		return Done( "Target is NULL" );
+		return Done("Target is NULL");
 	}
 
 	m_lastKnownTargetSpot = m_chaseTarget->GetAbsOrigin();
@@ -38,61 +36,61 @@ ActionResult< CBossAlpha >	CBossAlphaChaseVictim::OnStart( CBossAlpha *me, Actio
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CBossAlpha >	CBossAlphaChaseVictim::Update( CBossAlpha *me, float interval )
+ActionResult<CBossAlpha> CBossAlphaChaseVictim::Update(CBossAlpha *me, float interval)
 {
-	if ( m_chaseTarget == NULL || !m_chaseTarget->IsAlive() )
+	if(m_chaseTarget == NULL || !m_chaseTarget->IsAlive())
 	{
-		return ChangeTo( new CBossAlphaLostVictim, "No victim" );
+		return ChangeTo(new CBossAlphaLostVictim, "No victim");
 	}
 
-	if ( m_chaseTarget != me->GetAttackTarget() )
+	if(m_chaseTarget != me->GetAttackTarget())
 	{
-		return Done( "Changing targets" );
+		return Done("Changing targets");
 	}
 
 	Vector moveGoal = m_chaseTarget->GetAbsOrigin();
 
-	if ( me->IsLineOfSightClear( m_chaseTarget ) )
+	if(me->IsLineOfSightClear(m_chaseTarget))
 	{
-		if ( !m_visibleTimer.HasStarted() )
+		if(!m_visibleTimer.HasStarted())
 		{
 			m_visibleTimer.Start();
 		}
 
-		if ( me->HasAbility( CBossAlpha::CAN_NUKE ) && me->GetNukeTimer()->IsElapsed() )
+		if(me->HasAbility(CBossAlpha::CAN_NUKE) && me->GetNukeTimer()->IsElapsed())
 		{
-			return SuspendFor( new CBossAlphaNukeAttack, "Nuking!" );
+			return SuspendFor(new CBossAlphaNukeAttack, "Nuking!");
 		}
 
 		m_lastKnownTargetSpot = m_chaseTarget->GetAbsOrigin();
 
-		if ( me->HasAbility( CBossAlpha::CAN_LAUNCH_STICKIES ) )
+		if(me->HasAbility(CBossAlpha::CAN_LAUNCH_STICKIES))
 		{
-			if ( ( me->GetGrenadeTimer()->IsElapsed() && me->IsRangeLessThan( m_chaseTarget, tf_boss_alpha_grenade_launch_range.GetFloat() ) ) ||
-				   me->IsInCondition( CBossAlpha::ENRAGED ) )
+			if((me->GetGrenadeTimer()->IsElapsed() &&
+				me->IsRangeLessThan(m_chaseTarget, tf_boss_alpha_grenade_launch_range.GetFloat())) ||
+			   me->IsInCondition(CBossAlpha::ENRAGED))
 			{
-				return SuspendFor( new CBossAlphaLaunchGrenades, "Target is close (or I am enraged) - grenades!" );
+				return SuspendFor(new CBossAlphaLaunchGrenades, "Target is close (or I am enraged) - grenades!");
 			}
 		}
 
 		// chase into line of sight a bit so they can't immediately get behind cover again
-		if ( me->HasAbility( CBossAlpha::CAN_FIRE_ROCKETS ) )
+		if(me->HasAbility(CBossAlpha::CAN_FIRE_ROCKETS))
 		{
-			if ( m_visibleTimer.IsGreaterThen( 1.0f ) ||
-				 me->IsRangeLessThan( m_chaseTarget, tf_boss_alpha_chase_range.GetFloat() ) )
+			if(m_visibleTimer.IsGreaterThen(1.0f) ||
+			   me->IsRangeLessThan(m_chaseTarget, tf_boss_alpha_chase_range.GetFloat()))
 			{
-				return SuspendFor( new CBossAlphaLaunchRockets, "Fire!" );
+				return SuspendFor(new CBossAlphaLaunchRockets, "Fire!");
 			}
 		}
 
-		if ( me->IsRangeLessThan( m_chaseTarget, 150.0f ) )
+		if(me->IsRangeLessThan(m_chaseTarget, 150.0f))
 		{
 			// too close - stand still
-			if ( !me->GetBodyInterface()->IsActivity( ACT_MP_STAND_MELEE ) )
+			if(!me->GetBodyInterface()->IsActivity(ACT_MP_STAND_MELEE))
 			{
-				me->GetBodyInterface()->StartActivity( ACT_MP_STAND_MELEE );
+				me->GetBodyInterface()->StartActivity(ACT_MP_STAND_MELEE);
 			}
 
 			return Continue();
@@ -105,63 +103,57 @@ ActionResult< CBossAlpha >	CBossAlphaChaseVictim::Update( CBossAlpha *me, float 
 		// move to where we last saw our target
 		moveGoal = m_lastKnownTargetSpot;
 
-		if ( me->IsRangeLessThan( m_lastKnownTargetSpot, 20.0f ) )
+		if(me->IsRangeLessThan(m_lastKnownTargetSpot, 20.0f))
 		{
 			// reached spot where we last saw our victim - give up
-			me->SetAttackTarget( NULL );
+			me->SetAttackTarget(NULL);
 
-			return ChangeTo( new CBossAlphaLostVictim, "I lost my chase victim" );
+			return ChangeTo(new CBossAlphaLostVictim, "I lost my chase victim");
 		}
 	}
 
-
 	// move into sight of target
-	if ( m_path.GetAge() > 1.0f )
+	if(m_path.GetAge() > 1.0f)
 	{
-		CBossAlphaPathCost cost( me );
-		m_path.Compute( me, moveGoal, cost );
+		CBossAlphaPathCost cost(me);
+		m_path.Compute(me, moveGoal, cost);
 	}
 
 	me->GetLocomotionInterface()->Run();
-	m_path.Update( me );
+	m_path.Update(me);
 
 	// play running animation
-	if ( !me->GetBodyInterface()->IsActivity( ACT_MP_RUN_MELEE ) )
+	if(!me->GetBodyInterface()->IsActivity(ACT_MP_RUN_MELEE))
 	{
-		me->GetBodyInterface()->StartActivity( ACT_MP_RUN_MELEE );
+		me->GetBodyInterface()->StartActivity(ACT_MP_RUN_MELEE);
 	}
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-EventDesiredResult< CBossAlpha > CBossAlphaChaseVictim::OnMoveToSuccess( CBossAlpha *me, const Path *path )
+EventDesiredResult<CBossAlpha> CBossAlphaChaseVictim::OnMoveToSuccess(CBossAlpha *me, const Path *path)
 {
-	return TryDone( RESULT_CRITICAL, "Reached move goal" );
+	return TryDone(RESULT_CRITICAL, "Reached move goal");
 }
 
-
 //---------------------------------------------------------------------------------------------
-EventDesiredResult< CBossAlpha > CBossAlphaChaseVictim::OnMoveToFailure( CBossAlpha *me, const Path *path, MoveToFailureType reason )
+EventDesiredResult<CBossAlpha> CBossAlphaChaseVictim::OnMoveToFailure(CBossAlpha *me, const Path *path,
+																	  MoveToFailureType reason)
 {
-	return TryDone( RESULT_CRITICAL, "Path follow failed" );
+	return TryDone(RESULT_CRITICAL, "Path follow failed");
 }
 
+//---------------------------------------------------------------------------------------------
+void CBossAlphaChaseVictim::OnEnd(CBossAlpha *me, Action<CBossAlpha> *nextAction) {}
 
 //---------------------------------------------------------------------------------------------
-void CBossAlphaChaseVictim::OnEnd( CBossAlpha *me, Action< CBossAlpha > *nextAction )
-{
-}
-
-
-//---------------------------------------------------------------------------------------------
-EventDesiredResult< CBossAlpha > CBossAlphaChaseVictim::OnStuck( CBossAlpha *me )
+EventDesiredResult<CBossAlpha> CBossAlphaChaseVictim::OnStuck(CBossAlpha *me)
 {
 	// we're stuck - just warp to the our next path goal
-	if ( m_path.GetCurrentGoal() )
+	if(m_path.GetCurrentGoal())
 	{
-		me->SetAbsOrigin( m_path.GetCurrentGoal()->pos + Vector( 0, 0, 10.0f ) );
+		me->SetAbsOrigin(m_path.GetCurrentGoal()->pos + Vector(0, 0, 10.0f));
 	}
 
 	return TryContinue();

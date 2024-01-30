@@ -36,39 +36,39 @@ using namespace vgui;
 
 #define INIT_BONUS_PROGRESS -1
 
-
 //-----------------------------------------------------------------------------
 // Purpose: BonusProgress panel
 //-----------------------------------------------------------------------------
 class CHudBonusProgress : public CHudElement, public CHudNumericDisplay
 {
-	DECLARE_CLASS_SIMPLE( CHudBonusProgress, CHudNumericDisplay );
+	DECLARE_CLASS_SIMPLE(CHudBonusProgress, CHudNumericDisplay);
 
 public:
-	CHudBonusProgress( const char *pElementName );
-	virtual void Init( void );
-	virtual void VidInit( void );
-	virtual void Reset( void );
+	CHudBonusProgress(const char *pElementName);
+	virtual void Init(void);
+	virtual void VidInit(void);
+	virtual void Reset(void);
 	virtual void OnThink();
 
 private:
-	void SetChallengeLabel( void );
+	void SetChallengeLabel(void);
 
 private:
 	// old variables
-	int		m_iBonusProgress;
+	int m_iBonusProgress;
 
-	int		m_iLastChallenge;
+	int m_iLastChallenge;
 };
 
-DECLARE_HUDELEMENT( CHudBonusProgress );
+DECLARE_HUDELEMENT(CHudBonusProgress);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudBonusProgress::CHudBonusProgress( const char *pElementName ) : CHudElement( pElementName ), CHudNumericDisplay(NULL, "HudBonusProgress")
+CHudBonusProgress::CHudBonusProgress(const char *pElementName)
+	: CHudElement(pElementName), CHudNumericDisplay(NULL, "HudBonusProgress")
 {
-	SetHiddenBits( HIDEHUD_BONUS_PROGRESS );
+	SetHiddenBits(HIDEHUD_BONUS_PROGRESS);
 }
 
 //-----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void CHudBonusProgress::Reset()
 	m_iBonusProgress = INIT_BONUS_PROGRESS;
 
 	C_BasePlayer *local = C_BasePlayer::GetLocalPlayer();
-	if ( local )
+	if(local)
 		m_iLastChallenge = local->GetBonusChallenge();
 
 	SetChallengeLabel();
@@ -110,7 +110,7 @@ void CHudBonusProgress::OnThink()
 {
 	C_GameRules *pGameRules = GameRules();
 
-	if ( !pGameRules )
+	if(!pGameRules)
 	{
 		// Not ready to init!
 		return;
@@ -120,25 +120,25 @@ void CHudBonusProgress::OnThink()
 	int iBonusChallenge = 0;
 
 	C_BasePlayer *local = C_BasePlayer::GetLocalPlayer();
-	if ( !local )
+	if(!local)
 	{
 		// Not ready to init!
 		return;
 	}
 
 	// Never below zero
-	newBonusProgress = MAX( local->GetBonusProgress(), 0 );
+	newBonusProgress = MAX(local->GetBonusProgress(), 0);
 	iBonusChallenge = local->GetBonusChallenge();
 
 	// Only update the fade if we've changed bonusProgress
-	if ( newBonusProgress == m_iBonusProgress && m_iLastChallenge == iBonusChallenge )
+	if(newBonusProgress == m_iBonusProgress && m_iLastChallenge == iBonusChallenge)
 	{
 		return;
 	}
 
 	m_iBonusProgress = newBonusProgress;
 
-	if ( m_iLastChallenge != iBonusChallenge )
+	if(m_iLastChallenge != iBonusChallenge)
 	{
 		m_iLastChallenge = iBonusChallenge;
 		SetChallengeLabel();
@@ -146,24 +146,24 @@ void CHudBonusProgress::OnThink()
 
 	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("BonusProgressFlash");
 
-	if ( pGameRules->IsBonusChallengeTimeBased() )
+	if(pGameRules->IsBonusChallengeTimeBased())
 	{
-		SetIsTime( true );
-		SetIndent( false );
+		SetIsTime(true);
+		SetIndent(false);
 	}
 	else
 	{
-		SetIsTime( false );
-		SetIndent( true );
+		SetIsTime(false);
+		SetIndent(true);
 	}
 
 	SetDisplayValue(m_iBonusProgress);
 }
 
-void CHudBonusProgress::SetChallengeLabel( void )
+void CHudBonusProgress::SetChallengeLabel(void)
 {
 	// Blank for no challenge
-	if ( m_iLastChallenge == 0 )
+	if(m_iLastChallenge == 0)
 	{
 		SetLabelText(L"");
 		return;
@@ -171,14 +171,14 @@ void CHudBonusProgress::SetChallengeLabel( void )
 
 	char szBonusTextName[] = "#Valve_Hud_BONUS_PROGRESS00";
 
-	int iStringLength = Q_strlen( szBonusTextName );
+	int iStringLength = Q_strlen(szBonusTextName);
 
-	szBonusTextName[ iStringLength - 2 ] = ( m_iLastChallenge / 10 ) + '0';
-	szBonusTextName[ iStringLength - 1 ] = ( m_iLastChallenge % 10 ) + '0';
+	szBonusTextName[iStringLength - 2] = (m_iLastChallenge / 10) + '0';
+	szBonusTextName[iStringLength - 1] = (m_iLastChallenge % 10) + '0';
 
 	wchar_t *tempString = g_pVGuiLocalize->Find(szBonusTextName);
 
-	if (tempString)
+	if(tempString)
 	{
 		SetLabelText(tempString);
 		return;
@@ -186,7 +186,7 @@ void CHudBonusProgress::SetChallengeLabel( void )
 
 	// Couldn't find a special string for this challenge
 	tempString = g_pVGuiLocalize->Find("#Valve_Hud_BONUS_PROGRESS");
-	if (tempString)
+	if(tempString)
 	{
 		SetLabelText(tempString);
 		return;

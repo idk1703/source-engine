@@ -33,42 +33,40 @@ using namespace vgui;
 
 class CScrollableEditablePanel : public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CScrollableEditablePanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CScrollableEditablePanel, vgui::EditablePanel);
 
 public:
-	CScrollableEditablePanel( vgui::Panel *pParent, vgui::EditablePanel *pChild, const char *pName );
+	CScrollableEditablePanel(vgui::Panel *pParent, vgui::EditablePanel *pChild, const char *pName);
 	virtual ~CScrollableEditablePanel() {}
 	virtual void PerformLayout();
 
-	MESSAGE_FUNC( OnScrollBarSliderMoved, "ScrollBarSliderMoved" );
+	MESSAGE_FUNC(OnScrollBarSliderMoved, "ScrollBarSliderMoved");
 
 private:
 	vgui::ScrollBar *m_pScrollBar;
 	vgui::EditablePanel *m_pChild;
 };
 
-
-CScrollableEditablePanel::CScrollableEditablePanel( vgui::Panel *pParent, vgui::EditablePanel *pChild, const char *pName ) :
-	BaseClass( pParent, pName )
+CScrollableEditablePanel::CScrollableEditablePanel(vgui::Panel *pParent, vgui::EditablePanel *pChild, const char *pName)
+	: BaseClass(pParent, pName)
 {
 	m_pChild = pChild;
-	m_pChild->SetParent( this );
+	m_pChild->SetParent(this);
 
-	m_pScrollBar = new vgui::ScrollBar( this, "VerticalScrollBar", true );
-	m_pScrollBar->SetWide( 16 );
-	m_pScrollBar->SetAutoResize( PIN_TOPRIGHT, AUTORESIZE_DOWN, 0, 0, -16, 0 );
-	m_pScrollBar->AddActionSignalTarget( this );
+	m_pScrollBar = new vgui::ScrollBar(this, "VerticalScrollBar", true);
+	m_pScrollBar->SetWide(16);
+	m_pScrollBar->SetAutoResize(PIN_TOPRIGHT, AUTORESIZE_DOWN, 0, 0, -16, 0);
+	m_pScrollBar->AddActionSignalTarget(this);
 }
 
 void CScrollableEditablePanel::PerformLayout()
 {
 	BaseClass::PerformLayout();
 
-	m_pChild->SetWide( GetWide() - 16 );
-	m_pScrollBar->SetRange( 0, m_pChild->GetTall() );
-	m_pScrollBar->SetRangeWindow( GetTall() );
+	m_pChild->SetWide(GetWide() - 16);
+	m_pScrollBar->SetRange(0, m_pChild->GetTall());
+	m_pScrollBar->SetRangeWindow(GetTall());
 }
-
 
 //-----------------------------------------------------------------------------
 // Called when the scroll bar moves
@@ -78,143 +76,137 @@ void CScrollableEditablePanel::OnScrollBarSliderMoved()
 	InvalidateLayout();
 
 	int nScrollAmount = m_pScrollBar->GetValue();
-	m_pChild->SetPos( 0, -nScrollAmount );
+	m_pChild->SetPos(0, -nScrollAmount);
 }
-
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CInfoTargetPropertiesPanel::CInfoTargetPropertiesPanel( CVcdBlockDoc *pDoc, vgui::Panel* pParent )
-	: BaseClass( pParent, "InfoTargetPropertiesPanel" ), m_pDoc( pDoc )
+CInfoTargetPropertiesPanel::CInfoTargetPropertiesPanel(CVcdBlockDoc *pDoc, vgui::Panel *pParent)
+	: BaseClass(pParent, "InfoTargetPropertiesPanel"), m_pDoc(pDoc)
 {
-	SetPaintBackgroundEnabled( true );
-	SetKeyBoardInputEnabled( true );
+	SetPaintBackgroundEnabled(true);
+	SetKeyBoardInputEnabled(true);
 
-	m_pInfoTarget = new vgui::EditablePanel( (vgui::Panel*)NULL, "InfoTarget" );
+	m_pInfoTarget = new vgui::EditablePanel((vgui::Panel *)NULL, "InfoTarget");
 
-	m_pTargetName = new vgui::TextEntry( m_pInfoTarget, "TargetName" );
-	m_pTargetName->AddActionSignalTarget( this );
+	m_pTargetName = new vgui::TextEntry(m_pInfoTarget, "TargetName");
+	m_pTargetName->AddActionSignalTarget(this);
 
-	m_pTargetPosition[0] = new vgui::TextEntry( m_pInfoTarget, "PositionX" );
-	m_pTargetPosition[0]->AddActionSignalTarget( this );
- 	m_pTargetPosition[1] = new vgui::TextEntry( m_pInfoTarget, "PositionY" );
-	m_pTargetPosition[1]->AddActionSignalTarget( this );
- 	m_pTargetPosition[2] = new vgui::TextEntry( m_pInfoTarget, "PositionZ" );
-	m_pTargetPosition[2]->AddActionSignalTarget( this );
+	m_pTargetPosition[0] = new vgui::TextEntry(m_pInfoTarget, "PositionX");
+	m_pTargetPosition[0]->AddActionSignalTarget(this);
+	m_pTargetPosition[1] = new vgui::TextEntry(m_pInfoTarget, "PositionY");
+	m_pTargetPosition[1]->AddActionSignalTarget(this);
+	m_pTargetPosition[2] = new vgui::TextEntry(m_pInfoTarget, "PositionZ");
+	m_pTargetPosition[2]->AddActionSignalTarget(this);
 
- 	m_pTargetOrientation[0] = new vgui::TextEntry( m_pInfoTarget, "Pitch" );
-	m_pTargetOrientation[0]->AddActionSignalTarget( this );
- 	m_pTargetOrientation[1] = new vgui::TextEntry( m_pInfoTarget, "Yaw" );
-	m_pTargetOrientation[1]->AddActionSignalTarget( this );
- 	m_pTargetOrientation[2] = new vgui::TextEntry( m_pInfoTarget, "Roll" );
-	m_pTargetOrientation[2]->AddActionSignalTarget( this );
+	m_pTargetOrientation[0] = new vgui::TextEntry(m_pInfoTarget, "Pitch");
+	m_pTargetOrientation[0]->AddActionSignalTarget(this);
+	m_pTargetOrientation[1] = new vgui::TextEntry(m_pInfoTarget, "Yaw");
+	m_pTargetOrientation[1]->AddActionSignalTarget(this);
+	m_pTargetOrientation[2] = new vgui::TextEntry(m_pInfoTarget, "Roll");
+	m_pTargetOrientation[2]->AddActionSignalTarget(this);
 
-	m_pInfoTarget->LoadControlSettings( "resource/infotargetpropertiessubpanel_target.res" );
+	m_pInfoTarget->LoadControlSettings("resource/infotargetpropertiessubpanel_target.res");
 
-	m_pInfoTargetScroll = new CScrollableEditablePanel( this, m_pInfoTarget, "InfoTargetScroll" );
+	m_pInfoTargetScroll = new CScrollableEditablePanel(this, m_pInfoTarget, "InfoTargetScroll");
 
-	LoadControlSettings( "resource/infotargetpropertiespanel.res" );
+	LoadControlSettings("resource/infotargetpropertiespanel.res");
 
-	m_pInfoTargetScroll->SetVisible( false );
+	m_pInfoTargetScroll->SetVisible(false);
 }
-
 
 //-----------------------------------------------------------------------------
 // Text to attribute...
 //-----------------------------------------------------------------------------
-void CInfoTargetPropertiesPanel::TextEntryToAttribute( vgui::TextEntry *pEntry, const char *pAttributeName )
+void CInfoTargetPropertiesPanel::TextEntryToAttribute(vgui::TextEntry *pEntry, const char *pAttributeName)
 {
 	int nLen = pEntry->GetTextLength();
-	char *pBuf = (char*)_alloca( nLen+1 );
-	pEntry->GetText( pBuf, nLen+1 );
-	m_hEntity->SetValue( pAttributeName, pBuf );
+	char *pBuf = (char *)_alloca(nLen + 1);
+	pEntry->GetText(pBuf, nLen + 1);
+	m_hEntity->SetValue(pAttributeName, pBuf);
 }
 
-void CInfoTargetPropertiesPanel::TextEntriesToVector( vgui::TextEntry *pEntry[3], const char *pAttributeName )
+void CInfoTargetPropertiesPanel::TextEntriesToVector(vgui::TextEntry *pEntry[3], const char *pAttributeName)
 {
 	Vector vec;
-	for ( int i = 0; i < 3; ++i )
+	for(int i = 0; i < 3; ++i)
 	{
 		int nLen = pEntry[i]->GetTextLength();
-		char *pBuf = (char*)_alloca( nLen+1 );
-		pEntry[i]->GetText( pBuf, nLen+1 );
-		vec[i] = atof( pBuf );
+		char *pBuf = (char *)_alloca(nLen + 1);
+		pEntry[i]->GetText(pBuf, nLen + 1);
+		vec[i] = atof(pBuf);
 	}
-	m_hEntity->SetValue( pAttributeName, vec );
-	clienttools->MarkClientRenderableDirty( m_hEntity );
+	m_hEntity->SetValue(pAttributeName, vec);
+	clienttools->MarkClientRenderableDirty(m_hEntity);
 }
-
 
 //-----------------------------------------------------------------------------
 // Updates entity state when text fields change
 //-----------------------------------------------------------------------------
 void CInfoTargetPropertiesPanel::UpdateInfoTarget()
 {
-	if ( !m_hEntity.Get() )
+	if(!m_hEntity.Get())
 		return;
 
-	CAppUndoScopeGuard guard( NOTIFY_SETDIRTYFLAG, "Info Target Change", "Info Target Change" );
-	TextEntryToAttribute( m_pTargetName, "targetname" );
-	TextEntriesToVector( m_pTargetPosition, "origin" );
-	TextEntriesToVector( m_pTargetOrientation, "angles" );
+	CAppUndoScopeGuard guard(NOTIFY_SETDIRTYFLAG, "Info Target Change", "Info Target Change");
+	TextEntryToAttribute(m_pTargetName, "targetname");
+	TextEntriesToVector(m_pTargetPosition, "origin");
+	TextEntriesToVector(m_pTargetOrientation, "angles");
 	m_hEntity->MarkDirty();
 }
-
 
 //-----------------------------------------------------------------------------
 // Populates the info_target fields
 //-----------------------------------------------------------------------------
 void CInfoTargetPropertiesPanel::PopulateInfoTargetFields()
 {
-	if ( !m_hEntity.Get() )
+	if(!m_hEntity.Get())
 		return;
 
-	m_pTargetName->SetText( m_hEntity->GetTargetName() );
+	m_pTargetName->SetText(m_hEntity->GetTargetName());
 
 	Vector vecPosition = m_hEntity->GetRenderOrigin();
 	QAngle vecAngles = m_hEntity->GetRenderAngles();
 
-	for ( int i = 0; i < 3; ++i )
+	for(int i = 0; i < 3; ++i)
 	{
 		char pTemp[512];
-		Q_snprintf( pTemp, sizeof(pTemp), "%.2f", vecPosition[i] );
-		m_pTargetPosition[i]->SetText( pTemp );
+		Q_snprintf(pTemp, sizeof(pTemp), "%.2f", vecPosition[i]);
+		m_pTargetPosition[i]->SetText(pTemp);
 
-		Q_snprintf( pTemp, sizeof(pTemp), "%.2f", vecAngles[i] );
-		m_pTargetOrientation[i]->SetText( pTemp );
+		Q_snprintf(pTemp, sizeof(pTemp), "%.2f", vecAngles[i]);
+		m_pTargetOrientation[i]->SetText(pTemp);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Sets the object to look at
 //-----------------------------------------------------------------------------
-void CInfoTargetPropertiesPanel::SetObject( CDmeVMFEntity *pEntity )
+void CInfoTargetPropertiesPanel::SetObject(CDmeVMFEntity *pEntity)
 {
 	m_hEntity = pEntity;
-	m_pInfoTargetScroll->SetVisible( false );
+	m_pInfoTargetScroll->SetVisible(false);
 
-	if ( pEntity )
+	if(pEntity)
 	{
-		if ( !Q_stricmp( pEntity->GetClassName(), "info_target" ) )
+		if(!Q_stricmp(pEntity->GetClassName(), "info_target"))
 		{
 			PopulateInfoTargetFields();
-			m_pInfoTargetScroll->SetVisible( true );
+			m_pInfoTargetScroll->SetVisible(true);
 			m_pTargetName->RequestFocus();
 			return;
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Called when text is changed
 //-----------------------------------------------------------------------------
-void CInfoTargetPropertiesPanel::OnTextChanged( KeyValues *pParams )
+void CInfoTargetPropertiesPanel::OnTextChanged(KeyValues *pParams)
 {
-	vgui::Panel *pPanel = (vgui::Panel*)pParams->GetPtr( "panel" );
-	if ( pPanel->GetParent() == m_pInfoTarget )
+	vgui::Panel *pPanel = (vgui::Panel *)pParams->GetPtr("panel");
+	if(pPanel->GetParent() == m_pInfoTarget)
 	{
 		UpdateInfoTarget();
 		return;

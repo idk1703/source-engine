@@ -5,46 +5,37 @@
 #include "CWMPEventDispatch.h"
 #include "CWMPHost.h"
 
-extern HWND		g_hBlackFadingWindow;
-extern CComPtr<IWMPPlayer>	g_spWMPPlayer;
-extern CWMPHost*			g_pFrame;
-extern double				g_timeAtFadeStart;
-extern bool					g_bFadeIn;
+extern HWND g_hBlackFadingWindow;
+extern CComPtr<IWMPPlayer> g_spWMPPlayer;
+extern CWMPHost *g_pFrame;
+extern double g_timeAtFadeStart;
+extern bool g_bFadeIn;
 
 bool g_bFadeWindowTriggered = false;
 
-
 bool IsFullScreen();
-bool SetFullScreen( bool bWantToBeFullscreen );
+bool SetFullScreen(bool bWantToBeFullscreen);
 bool IsVideoPlaying();
-void PlayVideo( bool bPlay );
-bool ShowFadeWindow( bool bShow );
-void LogPlayerEvent( EventType_t e, float pos );
-void LogPlayerEvent( EventType_t e );
+void PlayVideo(bool bPlay);
+bool ShowFadeWindow(bool bShow);
+void LogPlayerEvent(EventType_t e, float pos);
+void LogPlayerEvent(EventType_t e);
 
-
-HRESULT CWMPEventDispatch::Invoke(
-							DISPID  dispIdMember,
-							REFIID  riid,
-							LCID  lcid,
-							WORD  wFlags,
-							DISPPARAMS FAR*  pDispParams,
-							VARIANT FAR*  pVarResult,
-							EXCEPINFO FAR*  pExcepInfo,
-							unsigned int FAR*  puArgErr )
+HRESULT CWMPEventDispatch::Invoke(DISPID dispIdMember, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS FAR *pDispParams,
+								  VARIANT FAR *pVarResult, EXCEPINFO FAR *pExcepInfo, unsigned int FAR *puArgErr)
 {
-	if (!pDispParams)
+	if(!pDispParams)
 		return E_POINTER;
 
-	if (pDispParams->cNamedArgs != 0)
+	if(pDispParams->cNamedArgs != 0)
 		return DISP_E_NONAMEDARGS;
 
 	HRESULT hr = DISP_E_MEMBERNOTFOUND;
 
-	switch (dispIdMember)
+	switch(dispIdMember)
 	{
 		case DISPID_WMPCOREEVENT_OPENSTATECHANGE:
-			OpenStateChange(pDispParams->rgvarg[0].lVal /* NewState */ );
+			OpenStateChange(pDispParams->rgvarg[0].lVal /* NewState */);
 			break;
 
 		case DISPID_WMPCOREEVENT_PLAYSTATECHANGE:
@@ -60,7 +51,7 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPCOREEVENT_SCRIPTCOMMAND:
-			ScriptCommand(pDispParams->rgvarg[1].bstrVal /* scType */, pDispParams->rgvarg[0].bstrVal /* Param */ );
+			ScriptCommand(pDispParams->rgvarg[1].bstrVal /* scType */, pDispParams->rgvarg[0].bstrVal /* Param */);
 			break;
 
 		case DISPID_WMPCOREEVENT_NEWSTREAM:
@@ -68,7 +59,7 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPCOREEVENT_DISCONNECT:
-			Disconnect(pDispParams->rgvarg[0].lVal /* Result */ );
+			Disconnect(pDispParams->rgvarg[0].lVal /* Result */);
 			break;
 
 		case DISPID_WMPCOREEVENT_BUFFERING:
@@ -80,15 +71,17 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPCOREEVENT_WARNING:
-			Warning(pDispParams->rgvarg[1].lVal /* WarningType */, pDispParams->rgvarg[0].lVal /* Param */, pDispParams->rgvarg[2].bstrVal /* Description */);
+			Warning(pDispParams->rgvarg[1].lVal /* WarningType */, pDispParams->rgvarg[0].lVal /* Param */,
+					pDispParams->rgvarg[2].bstrVal /* Description */);
 			break;
 
 		case DISPID_WMPCOREEVENT_ENDOFSTREAM:
-			EndOfStream(pDispParams->rgvarg[0].lVal /* Result */ );
+			EndOfStream(pDispParams->rgvarg[0].lVal /* Result */);
 			break;
 
 		case DISPID_WMPCOREEVENT_POSITIONCHANGE:
-			PositionChange(pDispParams->rgvarg[1].dblVal /* oldPosition */, pDispParams->rgvarg[0].dblVal /* newPosition */);
+			PositionChange(pDispParams->rgvarg[1].dblVal /* oldPosition */,
+						   pDispParams->rgvarg[0].dblVal /* newPosition */);
 			break;
 
 		case DISPID_WMPCOREEVENT_MARKERHIT:
@@ -104,11 +97,12 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPCOREEVENT_PLAYLISTCHANGE:
-			PlaylistChange(pDispParams->rgvarg[1].pdispVal /* Playlist */, (WMPPlaylistChangeEventType) pDispParams->rgvarg[0].lVal /* change */);
+			PlaylistChange(pDispParams->rgvarg[1].pdispVal /* Playlist */,
+						   (WMPPlaylistChangeEventType)pDispParams->rgvarg[0].lVal /* change */);
 			break;
 
 		case DISPID_WMPCOREEVENT_CURRENTPLAYLISTCHANGE:
-			CurrentPlaylistChange((WMPPlaylistChangeEventType) pDispParams->rgvarg[0].lVal /* change */);
+			CurrentPlaylistChange((WMPPlaylistChangeEventType)pDispParams->rgvarg[0].lVal /* change */);
 			break;
 
 		case DISPID_WMPCOREEVENT_CURRENTPLAYLISTITEMAVAILABLE:
@@ -132,15 +126,19 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGADDED:
-			MediaCollectionAttributeStringAdded(pDispParams->rgvarg[1].bstrVal /* bstrAttribName */, pDispParams->rgvarg[0].bstrVal /* bstrAttribVal */ );
+			MediaCollectionAttributeStringAdded(pDispParams->rgvarg[1].bstrVal /* bstrAttribName */,
+												pDispParams->rgvarg[0].bstrVal /* bstrAttribVal */);
 			break;
 
 		case DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGREMOVED:
-			MediaCollectionAttributeStringRemoved(pDispParams->rgvarg[1].bstrVal /* bstrAttribName */, pDispParams->rgvarg[0].bstrVal /* bstrAttribVal */ );
+			MediaCollectionAttributeStringRemoved(pDispParams->rgvarg[1].bstrVal /* bstrAttribName */,
+												  pDispParams->rgvarg[0].bstrVal /* bstrAttribVal */);
 			break;
 
 		case DISPID_WMPCOREEVENT_MEDIACOLLECTIONATTRIBUTESTRINGCHANGED:
-			MediaCollectionAttributeStringChanged(pDispParams->rgvarg[2].bstrVal /* bstrAttribName */, pDispParams->rgvarg[1].bstrVal /* bstrOldAttribVal */, pDispParams->rgvarg[0].bstrVal /* bstrNewAttribVal */);
+			MediaCollectionAttributeStringChanged(pDispParams->rgvarg[2].bstrVal /* bstrAttribName */,
+												  pDispParams->rgvarg[1].bstrVal /* bstrOldAttribVal */,
+												  pDispParams->rgvarg[0].bstrVal /* bstrNewAttribVal */);
 			break;
 
 		case DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONCHANGE:
@@ -148,15 +146,16 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTADDED:
-			PlaylistCollectionPlaylistAdded(pDispParams->rgvarg[0].bstrVal /* bstrPlaylistName */ );
+			PlaylistCollectionPlaylistAdded(pDispParams->rgvarg[0].bstrVal /* bstrPlaylistName */);
 			break;
 
 		case DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTREMOVED:
-			PlaylistCollectionPlaylistRemoved(pDispParams->rgvarg[0].bstrVal /* bstrPlaylistName */ );
+			PlaylistCollectionPlaylistRemoved(pDispParams->rgvarg[0].bstrVal /* bstrPlaylistName */);
 			break;
 
 		case DISPID_WMPCOREEVENT_PLAYLISTCOLLECTIONPLAYLISTSETASDELETED:
-			PlaylistCollectionPlaylistSetAsDeleted(pDispParams->rgvarg[1].bstrVal /* bstrPlaylistName */, pDispParams->rgvarg[0].boolVal /* varfIsDeleted */);
+			PlaylistCollectionPlaylistSetAsDeleted(pDispParams->rgvarg[1].bstrVal /* bstrPlaylistName */,
+												   pDispParams->rgvarg[0].boolVal /* varfIsDeleted */);
 			break;
 
 		case DISPID_WMPCOREEVENT_MODECHANGE:
@@ -192,11 +191,13 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPOCXEVENT_CLICK:
-			Click(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,  pDispParams->rgvarg[1].lVal /* fX */,  pDispParams->rgvarg[0].lVal /* fY */);
+			Click(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,
+				  pDispParams->rgvarg[1].lVal /* fX */, pDispParams->rgvarg[0].lVal /* fY */);
 			break;
 
 		case DISPID_WMPOCXEVENT_DOUBLECLICK:
-			DoubleClick(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,  pDispParams->rgvarg[1].lVal /* fX */,  pDispParams->rgvarg[0].lVal /* fY */);
+			DoubleClick(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,
+						pDispParams->rgvarg[1].lVal /* fX */, pDispParams->rgvarg[0].lVal /* fY */);
 			break;
 
 		case DISPID_WMPOCXEVENT_KEYDOWN:
@@ -212,19 +213,22 @@ HRESULT CWMPEventDispatch::Invoke(
 			break;
 
 		case DISPID_WMPOCXEVENT_MOUSEDOWN:
-			MouseDown(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,  pDispParams->rgvarg[1].lVal /* fX */,  pDispParams->rgvarg[0].lVal /* fY */);
+			MouseDown(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,
+					  pDispParams->rgvarg[1].lVal /* fX */, pDispParams->rgvarg[0].lVal /* fY */);
 			break;
 
 		case DISPID_WMPOCXEVENT_MOUSEMOVE:
-			MouseMove(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,  pDispParams->rgvarg[1].lVal /* fX */,  pDispParams->rgvarg[0].lVal /* fY */);
+			MouseMove(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,
+					  pDispParams->rgvarg[1].lVal /* fX */, pDispParams->rgvarg[0].lVal /* fY */);
 			break;
 
 		case DISPID_WMPOCXEVENT_MOUSEUP:
-			MouseUp(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,  pDispParams->rgvarg[1].lVal /* fX */,  pDispParams->rgvarg[0].lVal /* fY */);
+			MouseUp(pDispParams->rgvarg[3].iVal /* nButton */, pDispParams->rgvarg[2].iVal /* nShiftState */,
+					pDispParams->rgvarg[1].lVal /* fX */, pDispParams->rgvarg[0].lVal /* fY */);
 			break;
 	}
 
-	return( hr );
+	return (hr);
 }
 
 // Sent when the control changes OpenState
@@ -237,46 +241,46 @@ void CWMPEventDispatch::OpenStateChange(long NewState)
 void CWMPEventDispatch::PlayStateChange(long NewState)
 {
 	WMPPlayState playstate;
-	if ( g_spWMPPlayer->get_playState( &playstate ) == S_OK )
+	if(g_spWMPPlayer->get_playState(&playstate) == S_OK)
 	{
-		switch ( playstate )
+		switch(playstate)
 		{
-		case wmppsPlaying:
+			case wmppsPlaying:
 			{
 				static bool s_first = true;
-				if ( s_first )
+				if(s_first)
 				{
 					s_first = false;
 
-					LogPlayerEvent( ET_MEDIABEGIN );
+					LogPlayerEvent(ET_MEDIABEGIN);
 
-					SetFullScreen( true );
-					ShowFadeWindow( false );
+					SetFullScreen(true);
+					ShowFadeWindow(false);
 				}
 				else
 				{
-					LogPlayerEvent( ET_PLAY );
+					LogPlayerEvent(ET_PLAY);
 				}
 				break;
 			}
 
-		case wmppsPaused:
-			LogPlayerEvent( ET_PAUSE );
-			break;
+			case wmppsPaused:
+				LogPlayerEvent(ET_PAUSE);
+				break;
 
-		case wmppsStopped:
-			LogPlayerEvent( ET_STOP );
-			break;
+			case wmppsStopped:
+				LogPlayerEvent(ET_STOP);
+				break;
 
-		case wmppsMediaEnded:
-			LogPlayerEvent( ET_MEDIAEND );
+			case wmppsMediaEnded:
+				LogPlayerEvent(ET_MEDIAEND);
 
-			if ( IsFullScreen() && !g_bFadeWindowTriggered )
-			{
-				g_bFadeWindowTriggered = true;
-				ShowFadeWindow( true );
-			}
-			break;
+				if(IsFullScreen() && !g_bFadeWindowTriggered)
+				{
+					g_bFadeWindowTriggered = true;
+					ShowFadeWindow(true);
+				}
+				break;
 		}
 	}
 }
@@ -288,12 +292,10 @@ void CWMPEventDispatch::AudioLanguageChange(long LangID)
 }
 
 // Sent when the status string changes
-void CWMPEventDispatch::StatusChange()
-{
-}
+void CWMPEventDispatch::StatusChange() {}
 
 // Sent when a synchronized command or URL is received
-void CWMPEventDispatch::ScriptCommand(BSTR scType,BSTR Param)
+void CWMPEventDispatch::ScriptCommand(BSTR scType, BSTR Param)
 {
 	return;
 }
@@ -305,13 +307,13 @@ void CWMPEventDispatch::NewStream()
 }
 
 // Sent when the control is disconnected from the server (obsolete)
-void CWMPEventDispatch:: Disconnect(long Result )
+void CWMPEventDispatch::Disconnect(long Result)
 {
 	return;
 }
 
 // Sent when the control begins or ends buffering
-void CWMPEventDispatch:: Buffering(VARIANT_BOOL Start)
+void CWMPEventDispatch::Buffering(VARIANT_BOOL Start)
 {
 	return;
 }
@@ -335,14 +337,14 @@ void CWMPEventDispatch::EndOfStream(long Result)
 }
 
 // Indicates that the current position of the movie has changed
-void CWMPEventDispatch::PositionChange(double oldPosition,double newPosition)
+void CWMPEventDispatch::PositionChange(double oldPosition, double newPosition)
 {
-	LogPlayerEvent( ET_SCRUBFROM, ( float )oldPosition );
-	LogPlayerEvent( ET_SCRUBTO, ( float )newPosition );
+	LogPlayerEvent(ET_SCRUBFROM, (float)oldPosition);
+	LogPlayerEvent(ET_SCRUBTO, (float)newPosition);
 }
 
 // Sent when a marker is reached
-void CWMPEventDispatch::MarkerHit(long MarkerNum )
+void CWMPEventDispatch::MarkerHit(long MarkerNum)
 {
 	return;
 }
@@ -360,13 +362,13 @@ void CWMPEventDispatch::CdromMediaChange(long CdromNum)
 }
 
 // Sent when a playlist changes
-void CWMPEventDispatch::PlaylistChange(IDispatch * Playlist,WMPPlaylistChangeEventType change)
+void CWMPEventDispatch::PlaylistChange(IDispatch *Playlist, WMPPlaylistChangeEventType change)
 {
 	return;
 }
 
 // Sent when the current playlist changes
-void CWMPEventDispatch::CurrentPlaylistChange(WMPPlaylistChangeEventType change )
+void CWMPEventDispatch::CurrentPlaylistChange(WMPPlaylistChangeEventType change)
 {
 	return;
 }
@@ -378,7 +380,7 @@ void CWMPEventDispatch::CurrentPlaylistItemAvailable(BSTR bstrItemName)
 }
 
 // Sent when a media object changes
-void CWMPEventDispatch::MediaChange(IDispatch * Item)
+void CWMPEventDispatch::MediaChange(IDispatch *Item)
 {
 	return;
 }
@@ -414,7 +416,8 @@ void CWMPEventDispatch::MediaCollectionAttributeStringRemoved(BSTR bstrAttribNam
 }
 
 // Sent when an attribute string is changed in the media collection
-void CWMPEventDispatch::MediaCollectionAttributeStringChanged(BSTR bstrAttribName, BSTR bstrOldAttribVal, BSTR bstrNewAttribVal)
+void CWMPEventDispatch::MediaCollectionAttributeStringChanged(BSTR bstrAttribName, BSTR bstrOldAttribVal,
+															  BSTR bstrNewAttribVal)
 {
 	return;
 }
@@ -450,36 +453,36 @@ void CWMPEventDispatch::ModeChange(BSTR ModeName, VARIANT_BOOL NewValue)
 }
 
 // Sent when the media object has an error condition
-void CWMPEventDispatch::MediaError(IDispatch * pMediaObject)
+void CWMPEventDispatch::MediaError(IDispatch *pMediaObject)
 {
-	while ( ShowCursor( TRUE ) < 0 )
+	while(ShowCursor(TRUE) < 0)
 		;
 
-	ShowWindow( g_hBlackFadingWindow, SW_HIDE );
-	if ( g_pFrame )
+	ShowWindow(g_hBlackFadingWindow, SW_HIDE);
+	if(g_pFrame)
 	{
-		g_pFrame->ShowWindow( SW_HIDE );
+		g_pFrame->ShowWindow(SW_HIDE);
 	}
 
-	CComPtr< IWMPMedia > spWMPMedia;
-	if ( pMediaObject )
+	CComPtr<IWMPMedia> spWMPMedia;
+	if(pMediaObject)
 	{
-		pMediaObject->QueryInterface( &spWMPMedia );
+		pMediaObject->QueryInterface(&spWMPMedia);
 	}
-	if ( spWMPMedia )
+	if(spWMPMedia)
 	{
 		BSTR bstr;
-		spWMPMedia->get_sourceURL( &bstr );
-		char str[ 1024 ];
-		sprintf( str, "Unable to open media: %s\n", CW2T( bstr ) );
-		MessageBox( NULL, str, "Media Error", MB_OK | MB_ICONERROR );
+		spWMPMedia->get_sourceURL(&bstr);
+		char str[1024];
+		sprintf(str, "Unable to open media: %s\n", CW2T(bstr));
+		MessageBox(NULL, str, "Media Error", MB_OK | MB_ICONERROR);
 	}
 	else
 	{
-		MessageBox( NULL, "Media Error", "Media Error", MB_OK | MB_ICONERROR );
+		MessageBox(NULL, "Media Error", "Media Error", MB_OK | MB_ICONERROR);
 	}
 
-	g_pFrame->PostMessage( WM_CLOSE );
+	g_pFrame->PostMessage(WM_CLOSE);
 }
 
 // Current playlist switch with no open state change
@@ -495,90 +498,78 @@ void CWMPEventDispatch::DomainChange(BSTR strDomain)
 }
 
 // Sent when display switches to player application
-void CWMPEventDispatch::SwitchedToPlayerApplication()
-{
-}
+void CWMPEventDispatch::SwitchedToPlayerApplication() {}
 
 // Sent when display switches to control
-void CWMPEventDispatch::SwitchedToControl()
-{
-}
+void CWMPEventDispatch::SwitchedToControl() {}
 
 // Sent when the player docks or undocks
-void CWMPEventDispatch::PlayerDockedStateChange()
-{
-}
+void CWMPEventDispatch::PlayerDockedStateChange() {}
 
 // Sent when the OCX reconnects to the player
-void CWMPEventDispatch::PlayerReconnect()
-{
-}
+void CWMPEventDispatch::PlayerReconnect() {}
 
 // Occurs when a user clicks the mouse
-void CWMPEventDispatch::Click( short nButton, short nShiftState, long fX, long fY )
+void CWMPEventDispatch::Click(short nButton, short nShiftState, long fX, long fY)
 {
-	if ( IsFullScreen() )
+	if(IsFullScreen())
 	{
-		SetFullScreen( false );
+		SetFullScreen(false);
 	}
 }
 
 // Occurs when a user double-clicks the mouse
-void CWMPEventDispatch::DoubleClick( short nButton, short nShiftState, long fX, long fY )
+void CWMPEventDispatch::DoubleClick(short nButton, short nShiftState, long fX, long fY)
 {
 	// the controls are just drawn into the main window, wheras the video has its own window
 	// this check allows us to only fullscreen on doubleclick within the video area
-	POINT pt = { fX, fY };
-	HWND hWnd = g_pFrame->ChildWindowFromPoint( pt );
-	if ( ChildWindowFromPoint( hWnd, pt ) != hWnd )
+	POINT pt = {fX, fY};
+	HWND hWnd = g_pFrame->ChildWindowFromPoint(pt);
+	if(ChildWindowFromPoint(hWnd, pt) != hWnd)
 	{
-		SetFullScreen( !IsFullScreen() );
+		SetFullScreen(!IsFullScreen());
 	}
 }
 
 // Occurs when a key is pressed
-void CWMPEventDispatch::KeyDown( short nKeyCode, short nShiftState )
+void CWMPEventDispatch::KeyDown(short nKeyCode, short nShiftState)
 {
 #if 1
-	if ( !g_pFrame )
+	if(!g_pFrame)
 		return;
 
 	BOOL rval;
-	if ( nShiftState & 4 ) // 4 is the alt keymask
+	if(nShiftState & 4) // 4 is the alt keymask
 	{
-		g_pFrame->OnSysKeyDown( WM_KEYDOWN, nKeyCode, 0, rval );
+		g_pFrame->OnSysKeyDown(WM_KEYDOWN, nKeyCode, 0, rval);
 	}
 	else
 	{
-		g_pFrame->OnKeyDown( WM_KEYDOWN, nKeyCode, 0, rval );
+		g_pFrame->OnKeyDown(WM_KEYDOWN, nKeyCode, 0, rval);
 	}
 #endif
 }
 
 // Occurs when a key is pressed and released
-void CWMPEventDispatch::KeyPress( short nKeyAscii )
+void CWMPEventDispatch::KeyPress(short nKeyAscii)
 {
 	return;
 }
 
 // Occurs when a key is released
-void CWMPEventDispatch::KeyUp( short nKeyCode, short nShiftState )
+void CWMPEventDispatch::KeyUp(short nKeyCode, short nShiftState)
 {
 	return;
 }
 
 // Occurs when a mouse button is pressed
-void CWMPEventDispatch::MouseDown( short nButton, short nShiftState, long fX, long fY )
-{
-}
+void CWMPEventDispatch::MouseDown(short nButton, short nShiftState, long fX, long fY) {}
 
 // Occurs when a mouse pointer is moved
-void CWMPEventDispatch::MouseMove( short nButton, short nShiftState, long fX, long fY )
+void CWMPEventDispatch::MouseMove(short nButton, short nShiftState, long fX, long fY)
 {
 	return;
 }
 
 // Occurs when a mouse button is released
-void CWMPEventDispatch::MouseUp( short nButton, short nShiftState, long fX, long fY )
-{
-}
+void CWMPEventDispatch::MouseUp(short nButton, short nShiftState, long fX, long fY) {}

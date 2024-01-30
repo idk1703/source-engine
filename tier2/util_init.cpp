@@ -12,39 +12,38 @@
 #include "tier0/progressbar.h"
 #include "tier1/strtools.h"
 
-
 static void PrintFReportHandler(char const *job_name, int total_units_to_do, int n_units_completed)
 {
-	static bool work_in_progress=false;
+	static bool work_in_progress = false;
 	static char LastJobName[1024];
-	if ( Q_strncmp( LastJobName, job_name, sizeof( LastJobName ) ) )
+	if(Q_strncmp(LastJobName, job_name, sizeof(LastJobName)))
 	{
-		if ( work_in_progress )
+		if(work_in_progress)
 			printf("..done\n");
-		Q_strncpy( LastJobName, job_name, sizeof( LastJobName ) );
+		Q_strncpy(LastJobName, job_name, sizeof(LastJobName));
 	}
- 	if ( (total_units_to_do > 0 ) && (total_units_to_do >= n_units_completed) )
+	if((total_units_to_do > 0) && (total_units_to_do >= n_units_completed))
 	{
-		int percent_done=(100*n_units_completed)/total_units_to_do;
-		printf("\r%s : %d%%",LastJobName, percent_done );
+		int percent_done = (100 * n_units_completed) / total_units_to_do;
+		printf("\r%s : %d%%", LastJobName, percent_done);
 		work_in_progress = true;
 	}
 	else
 	{
-		printf("%s\n",LastJobName);
+		printf("%s\n", LastJobName);
 		work_in_progress = false;
 	}
 }
 
-void InitCommandLineProgram( int argc, char **argv )
+void InitCommandLineProgram(int argc, char **argv)
 {
-	MathLib_Init( 1,1,1,0,false,true,true,true);
-	CommandLine()->CreateCmdLine( argc, argv );
+	MathLib_Init(1, 1, 1, 0, false, true, true, true);
+	CommandLine()->CreateCmdLine(argc, argv);
 	InitDefaultFileSystem();
-	InstallProgressReportHandler( PrintFReportHandler );
+	InstallProgressReportHandler(PrintFReportHandler);
 
 	// By default, command line programs should not use the new assert dialog,
 	// and any asserts should be fatal, unless we are being debugged
-	if ( !Plat_IsInDebugSession() )
-		SpewOutputFunc( DefaultSpewFuncAbortOnAsserts );
+	if(!Plat_IsInDebugSession())
+		SpewOutputFunc(DefaultSpewFuncAbortOnAsserts);
 }

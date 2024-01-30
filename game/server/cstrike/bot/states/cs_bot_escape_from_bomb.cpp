@@ -17,7 +17,7 @@
 /**
  * Escape from the bomb.
  */
-void EscapeFromBombState::OnEnter( CCSBot *me )
+void EscapeFromBombState::OnEnter(CCSBot *me)
 {
 	me->StandUp();
 	me->Run();
@@ -29,12 +29,12 @@ void EscapeFromBombState::OnEnter( CCSBot *me )
 /**
  * Escape from the bomb.
  */
-void EscapeFromBombState::OnUpdate( CCSBot *me )
+void EscapeFromBombState::OnUpdate(CCSBot *me)
 {
 	const Vector *bombPos = me->GetGameState()->GetBombPosition();
 
 	// if we don't know where the bomb is, we shouldn't be in this state
-	if (bombPos == NULL)
+	if(bombPos == NULL)
 	{
 		me->Idle();
 		return;
@@ -46,14 +46,14 @@ void EscapeFromBombState::OnUpdate( CCSBot *me )
 	// look around
 	me->UpdateLookAround();
 
-	if (me->UpdatePathMovement() != CCSBot::PROGRESSING)
+	if(me->UpdatePathMovement() != CCSBot::PROGRESSING)
 	{
 		// we have no path, or reached the end of one - create a new path far away from the bomb
-		FarAwayFromPositionFunctor func( *bombPos );
-		CNavArea *goalArea = FindMinimumCostArea( me->GetLastKnownArea(), func );
+		FarAwayFromPositionFunctor func(*bombPos);
+		CNavArea *goalArea = FindMinimumCostArea(me->GetLastKnownArea(), func);
 
 		// if this fails, we'll try again next time
-		me->ComputePath( goalArea->GetCenter(), FASTEST_ROUTE );
+		me->ComputePath(goalArea->GetCenter(), FASTEST_ROUTE);
 	}
 }
 
@@ -61,7 +61,7 @@ void EscapeFromBombState::OnUpdate( CCSBot *me )
 /**
  * Escape from the bomb.
  */
-void EscapeFromBombState::OnExit( CCSBot *me )
+void EscapeFromBombState::OnExit(CCSBot *me)
 {
 	me->EquipBestWeapon();
 }

@@ -29,12 +29,13 @@
 
 using namespace vgui;
 
-static const long RETRY_TIME = 10000;		// refresh server every 10 seconds
+static const long RETRY_TIME = 10000; // refresh server every 10 seconds
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDialogGameInfo::CDialogGameInfo(IGameList *gameList, unsigned int serverID, int serverIP, int serverPort) : Frame(NULL, "DialogGameInfo"), m_Servers(this)
+CDialogGameInfo::CDialogGameInfo(IGameList *gameList, unsigned int serverID, int serverIP, int serverPort)
+	: Frame(NULL, "DialogGameInfo"), m_Servers(this)
 {
 	MakePopup();
 	SetBounds(0, 0, 512, 384);
@@ -56,7 +57,8 @@ CDialogGameInfo::CDialogGameInfo(IGameList *gameList, unsigned int serverID, int
 	m_pAutoRetry->AddActionSignalTarget(this);
 
 	m_pAutoRetryAlert = new RadioButton(this, "AutoRetryAlert", "A&lert me when a player slot is available on server.");
-	m_pAutoRetryJoin = new RadioButton(this, "AutoRetryJoin", "J&oin the server as soon as a player slot is available.");
+	m_pAutoRetryJoin =
+		new RadioButton(this, "AutoRetryJoin", "J&oin the server as soon as a player slot is available.");
 
 	m_pAutoRetryAlert->SetSelected(true);
 
@@ -68,7 +70,7 @@ CDialogGameInfo::CDialogGameInfo(IGameList *gameList, unsigned int serverID, int
 
 	SetSizeable(false);
 
-	if (gameList)
+	if(gameList)
 	{
 		// we already have the game info, fill it in
 		serveritem_t &server = gameList->GetServer(serverID);
@@ -96,9 +98,7 @@ CDialogGameInfo::CDialogGameInfo(IGameList *gameList, unsigned int serverID, int
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDialogGameInfo::~CDialogGameInfo()
-{
-}
+CDialogGameInfo::~CDialogGameInfo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the dialog
@@ -106,7 +106,7 @@ CDialogGameInfo::~CDialogGameInfo()
 void CDialogGameInfo::Run(const char *titleName)
 {
 	char buf[512];
-	if (titleName)
+	if(titleName)
 	{
 		sprintf(buf, "Game Info - %s", titleName);
 	}
@@ -130,7 +130,7 @@ void CDialogGameInfo::ChangeGame(int serverIP, int serverPort)
 	// check to see if it's the same game
 	serveritem_t &server = m_Servers.GetServer(m_iServerID);
 
-	if (*(int *)server.ip == serverIP && server.port == serverPort)
+	if(*(int *)server.ip == serverIP && server.port == serverPort)
 	{
 		return;
 	}
@@ -149,7 +149,6 @@ void CDialogGameInfo::ChangeGame(int serverIP, int serverPort)
 	RequestInfo();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Relayouts the data
 //-----------------------------------------------------------------------------
@@ -165,7 +164,7 @@ void CDialogGameInfo::PerformLayout()
 	SetControlText("MapText", server.map);
 
 	char buf[128];
-	if (server.maxPlayers > 0)
+	if(server.maxPlayers > 0)
 	{
 		sprintf(buf, "%d / %d", server.players, server.maxPlayers);
 	}
@@ -175,7 +174,7 @@ void CDialogGameInfo::PerformLayout()
 	}
 	SetControlText("PlayersText", buf);
 
-	if (server.ip[0] && server.port)
+	if(server.ip[0] && server.port)
 	{
 		char buf[64];
 		sprintf(buf, "%d.%d.%d.%d:%d", server.ip[0], server.ip[1], server.ip[2], server.ip[3], server.port);
@@ -192,13 +191,13 @@ void CDialogGameInfo::PerformLayout()
 	SetControlText("PingText", buf);
 
 	// set the info text
-	if (m_pAutoRetry->IsSelected())
+	if(m_pAutoRetry->IsSelected())
 	{
-		if (server.players < server.maxPlayers)
+		if(server.players < server.maxPlayers)
 		{
 			m_pInfoLabel->SetText("Press 'Join Game' to connect to the server.");
 		}
-		else if (m_pAutoRetryJoin->IsSelected())
+		else if(m_pAutoRetryJoin->IsSelected())
 		{
 			m_pInfoLabel->SetText("You will join the server as soon as a player slot is free.");
 		}
@@ -207,14 +206,15 @@ void CDialogGameInfo::PerformLayout()
 			m_pInfoLabel->SetText("You will be alerted as soon player slot is free on the server.");
 		}
 	}
-	else if (m_bServerFull)
+	else if(m_bServerFull)
 	{
 		m_pInfoLabel->SetText("Could not connect - server is full.");
 	}
-	else if (m_bServerNotResponding)
+	else if(m_bServerNotResponding)
 	{
 		char text[100];
-		_snprintf(text,100,"Server is not responding.%d.%d.%d.%d:%d", server.ip[0], server.ip[1], server.ip[2], server.ip[3], server.port);
+		_snprintf(text, 100, "Server is not responding.%d.%d.%d.%d:%d", server.ip[0], server.ip[1], server.ip[2],
+				  server.ip[3], server.port);
 
 		m_pInfoLabel->SetText(text);
 	}
@@ -227,7 +227,7 @@ void CDialogGameInfo::PerformLayout()
 	// auto-retry layout
 	m_pAutoRetry->SetVisible(m_bShowAutoRetryToggle);
 
-	if (m_pAutoRetry->IsSelected())
+	if(m_pAutoRetry->IsSelected())
 	{
 		m_pAutoRetryAlert->SetVisible(true);
 		m_pAutoRetryJoin->SetVisible(true);
@@ -303,7 +303,7 @@ void CDialogGameInfo::OnClose()
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::OnButtonToggled(Panel *panel)
 {
-	if (panel == m_pAutoRetry)
+	if(panel == m_pAutoRetry)
 	{
 		ShowAutoRetryOptions(m_pAutoRetry->IsSelected());
 	}
@@ -319,7 +319,7 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 {
 	// we need to extend the dialog
 	int growSize = 60;
-	if (!state)
+	if(!state)
 	{
 		growSize = -growSize;
 	}
@@ -339,7 +339,7 @@ void CDialogGameInfo::ShowAutoRetryOptions(bool state)
 void CDialogGameInfo::SetControlText(const char *textEntryName, const char *text)
 {
 	TextEntry *entry = dynamic_cast<TextEntry *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetText(text);
 	}
@@ -353,7 +353,7 @@ void CDialogGameInfo::RequestInfo()
 	// reset the time at which we auto-refresh
 	m_iRequestRetry = system()->GetTimeMillis() + RETRY_TIME;
 
-	if (!m_Servers.IsRefreshing())
+	if(!m_Servers.IsRefreshing())
 	{
 		m_Servers.AddServerToRefreshList(m_iServerID);
 		m_Servers.StartRefresh();
@@ -366,7 +366,7 @@ void CDialogGameInfo::RequestInfo()
 void CDialogGameInfo::OnTick()
 {
 	// check to see if we should perform an auto-refresh
-	if (m_iRequestRetry && m_iRequestRetry < system()->GetTimeMillis())
+	if(m_iRequestRetry && m_iRequestRetry < system()->GetTimeMillis())
 	{
 		// reask
 		RequestInfo();
@@ -380,14 +380,14 @@ void CDialogGameInfo::OnTick()
 //-----------------------------------------------------------------------------
 void CDialogGameInfo::ServerResponded(serveritem_t &server)
 {
-	if (m_bConnecting)
+	if(m_bConnecting)
 	{
 		ConnectToServer();
 	}
-	else if (m_pAutoRetry->IsSelected())
+	else if(m_pAutoRetry->IsSelected())
 	{
 		// auto-retry is enabled, see if we can join
-		if (server.players < server.maxPlayers)
+		if(server.players < server.maxPlayers)
 		{
 			// there is a slot free, we can join
 
@@ -398,7 +398,7 @@ void CDialogGameInfo::ServerResponded(serveritem_t &server)
 			FlashWindow();
 
 			// if it's set, connect right away
-			if (m_pAutoRetryJoin->IsSelected())
+			if(m_pAutoRetryJoin->IsSelected())
 			{
 				ConnectToServer();
 			}
@@ -418,7 +418,7 @@ void CDialogGameInfo::ServerFailedToRespond(serveritem_t &server)
 {
 	// the server didn't respond, mark that in the UI
 	// only mark if we haven't ever received a response
-	if (!server.hadSuccessfulResponse)
+	if(!server.hadSuccessfulResponse)
 	{
 		m_bServerNotResponding = true;
 	}
@@ -436,7 +436,7 @@ void CDialogGameInfo::ConnectToServer()
 	serveritem_t &server = m_Servers.GetServer(m_iServerID);
 
 	// check to see if we need a password
-	if (server.password && !m_szPassword[0])
+	if(server.password && !m_szPassword[0])
 	{
 		CDialogServerPassword *box = new CDialogServerPassword();
 		box->AddActionSignalTarget(this);
@@ -445,7 +445,7 @@ void CDialogGameInfo::ConnectToServer()
 	}
 
 	// check the player count
-	if (server.players >= server.maxPlayers)
+	if(server.players >= server.maxPlayers)
 	{
 		// mark why we cannot connect
 		m_bServerFull = true;
@@ -460,12 +460,12 @@ void CDialogGameInfo::ConnectToServer()
 	sprintf(buf, "%d.%d.%d.%d:%d", server.ip[0], server.ip[1], server.ip[2], server.ip[3], server.port);
 
 	const char *gameDir = server.gameDir;
-	if (g_pRunGameEngine->IsRunning())
+	if(g_pRunGameEngine->IsRunning())
 	{
 		char command[256];
 
 		// set the server password, if any
-		if (m_szPassword[0])
+		if(m_szPassword[0])
 		{
 			sprintf(command, "password \"%s\"\n", m_szPassword);
 			g_pRunGameEngine->AddTextCommand(command);
@@ -478,13 +478,13 @@ void CDialogGameInfo::ConnectToServer()
 	else
 	{
 		char command[256];
-//		sprintf(command, " -game %s +connect %s", gameDir, buf);
+		//		sprintf(command, " -game %s +connect %s", gameDir, buf);
 		sprintf(command, " +connect %s", buf);
-		if (m_szPassword[0])
+		if(m_szPassword[0])
 		{
 			strcat(command, " +password \"");
 			strcat(command, m_szPassword);
-			strcat(command, "\"");\
+			strcat(command, "\"");
 		}
 
 		g_pRunGameEngine->RunEngine(gameDir, command);
@@ -494,13 +494,10 @@ void CDialogGameInfo::ConnectToServer()
 	PostMessage(this, new KeyValues("Close"));
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: called when the current refresh list is complete
 //-----------------------------------------------------------------------------
-void CDialogGameInfo::RefreshComplete()
-{
-}
+void CDialogGameInfo::RefreshComplete() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: handles response from the get password dialog
@@ -514,19 +511,17 @@ void CDialogGameInfo::OnJoinServerWithPassword(const char *password)
 	OnConnect();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
-MessageMapItem_t CDialogGameInfo::m_MessageMap[] =
-{
-	MAP_MESSAGE( CDialogGameInfo, "Refresh", OnRefresh ),
-	MAP_MESSAGE( CDialogGameInfo, "Connect", OnConnect ),
+MessageMapItem_t CDialogGameInfo::m_MessageMap[] = {
+	MAP_MESSAGE(CDialogGameInfo, "Refresh", OnRefresh),
+	MAP_MESSAGE(CDialogGameInfo, "Connect", OnConnect),
 
-	MAP_MESSAGE_PTR( CDialogGameInfo, "ButtonToggled", OnButtonToggled, "panel" ),
-	MAP_MESSAGE_PTR( CDialogGameInfo, "RadioButtonChecked", OnButtonToggled, "panel" ),
+	MAP_MESSAGE_PTR(CDialogGameInfo, "ButtonToggled", OnButtonToggled, "panel"),
+	MAP_MESSAGE_PTR(CDialogGameInfo, "RadioButtonChecked", OnButtonToggled, "panel"),
 
-	MAP_MESSAGE_CONSTCHARPTR( CDialogGameInfo, "JoinServerWithPassword", OnJoinServerWithPassword, "password" ),
+	MAP_MESSAGE_CONSTCHARPTR(CDialogGameInfo, "JoinServerWithPassword", OnJoinServerWithPassword, "password"),
 };
 
-IMPLEMENT_PANELMAP( CDialogGameInfo, Frame );
+IMPLEMENT_PANELMAP(CDialogGameInfo, Frame);

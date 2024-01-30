@@ -10,60 +10,59 @@
 #include "tf_shareddefs.h"
 
 // Enumator class for ragdolls being affected by explosive forces
-CPlayerAndObjectEnumerator::CPlayerAndObjectEnumerator( float radius )
+CPlayerAndObjectEnumerator::CPlayerAndObjectEnumerator(float radius)
 {
-	m_flRadiusSquared		= radius * radius;
+	m_flRadiusSquared = radius * radius;
 	m_Objects.RemoveAll();
 	m_pLocal = C_BasePlayer::GetLocalPlayer();
 }
 
-int	CPlayerAndObjectEnumerator::GetObjectCount()
+int CPlayerAndObjectEnumerator::GetObjectCount()
 {
 	return m_Objects.Size();
 }
 
-C_BaseEntity *CPlayerAndObjectEnumerator::GetObject( int index )
+C_BaseEntity *CPlayerAndObjectEnumerator::GetObject(int index)
 {
-	if ( index < 0 || index >= GetObjectCount() )
+	if(index < 0 || index >= GetObjectCount())
 		return NULL;
 
-	return m_Objects[ index ];
+	return m_Objects[index];
 }
 
 // Actual work code
-IterationRetval_t CPlayerAndObjectEnumerator::EnumElement( IHandleEntity *pHandleEntity )
+IterationRetval_t CPlayerAndObjectEnumerator::EnumElement(IHandleEntity *pHandleEntity)
 {
-	if ( !m_pLocal )
+	if(!m_pLocal)
 		return ITERATION_STOP;
 
-	C_BaseEntity *pEnt = ClientEntityList().GetBaseEntityFromHandle( pHandleEntity->GetRefEHandle() );
-	if ( pEnt == NULL )
+	C_BaseEntity *pEnt = ClientEntityList().GetBaseEntityFromHandle(pHandleEntity->GetRefEHandle());
+	if(pEnt == NULL)
 		return ITERATION_CONTINUE;
 
-	if ( pEnt == m_pLocal )
+	if(pEnt == m_pLocal)
 		return ITERATION_CONTINUE;
 
-	if ( !pEnt->IsPlayer() &&
-		 !pEnt->IsBaseObject() )
+	if(!pEnt->IsPlayer() && !pEnt->IsBaseObject())
 	{
 		return ITERATION_CONTINUE;
 	}
 
 	// Ignore vehicles, since they have vcollide collisions that's push me away
-	if ( pEnt->GetCollisionGroup() == COLLISION_GROUP_VEHICLE )
+	if(pEnt->GetCollisionGroup() == COLLISION_GROUP_VEHICLE)
 		return ITERATION_CONTINUE;
 
 	// If it's solid to player movement, don't steer around it since we'll just bump into it
-	if ( pEnt->GetCollisionGroup() == TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT )
+	if(pEnt->GetCollisionGroup() == TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT)
 		return ITERATION_CONTINUE;
 
-	Vector	deltaPos = pEnt->GetAbsOrigin() - m_pLocal->GetAbsOrigin();
-	if ( deltaPos.LengthSqr() > m_flRadiusSquared )
+	Vector deltaPos = pEnt->GetAbsOrigin() - m_pLocal->GetAbsOrigin();
+	if(deltaPos.LengthSqr() > m_flRadiusSquared)
 		return ITERATION_CONTINUE;
 
-	CHandle< C_BaseEntity > h;
+	CHandle<C_BaseEntity> h;
 	h = pEnt;
-	m_Objects.AddToTail( h );
+	m_Objects.AddToTail(h);
 
 	return ITERATION_CONTINUE;
 }

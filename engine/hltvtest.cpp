@@ -20,10 +20,7 @@
 
 CHLTVTestSystem *hltvtest = NULL;
 
-CHLTVTestSystem::CHLTVTestSystem(void)
-{
-
-}
+CHLTVTestSystem::CHLTVTestSystem(void) {}
 
 CHLTVTestSystem::~CHLTVTestSystem(void)
 {
@@ -32,7 +29,7 @@ CHLTVTestSystem::~CHLTVTestSystem(void)
 
 void CHLTVTestSystem::RunFrame()
 {
-	FOR_EACH_VEC( m_Servers, iServer )
+	FOR_EACH_VEC(m_Servers, iServer)
 	{
 		m_Servers[iServer]->RunFrame();
 	}
@@ -40,19 +37,19 @@ void CHLTVTestSystem::RunFrame()
 
 bool CHLTVTestSystem::StartTest(int nClients, const char *pszAddress)
 {
-	Assert( m_Servers.Count() == 0 );
+	Assert(m_Servers.Count() == 0);
 
-	while ( m_Servers.Count() < nClients )
+	while(m_Servers.Count() < nClients)
 	{
 		CHLTVServer *pServer = new CHLTVServer();
-		m_Servers.AddToTail( pServer );
-		pServer->Init( NET_IsDedicated() );
-		pServer->m_ClientState.m_Socket = NET_AddExtraSocket( PORT_ANY );
+		m_Servers.AddToTail(pServer);
+		pServer->Init(NET_IsDedicated());
+		pServer->m_ClientState.m_Socket = NET_AddExtraSocket(PORT_ANY);
 	}
 
-	for( int i=0; i<nClients; i++ )
+	for(int i = 0; i < nClients; i++)
 	{
-		m_Servers[i]->ConnectRelay( pszAddress );
+		m_Servers[i]->ConnectRelay(pszAddress);
 	}
 
 	return true;
@@ -60,18 +57,18 @@ bool CHLTVTestSystem::StartTest(int nClients, const char *pszAddress)
 
 void CHLTVTestSystem::RetryTest(int nClients)
 {
-	int maxClients = min( nClients+1, m_Servers.Count() );
+	int maxClients = min(nClients + 1, m_Servers.Count());
 
-	for ( int i=0; i<maxClients; i++ )
+	for(int i = 0; i < maxClients; i++)
 	{
 		CHLTVServer *pHLTV = m_Servers[i];
-		pHLTV->ConnectRelay( pHLTV->m_ClientState.m_szRetryAddress );
+		pHLTV->ConnectRelay(pHLTV->m_ClientState.m_szRetryAddress);
 	}
 }
 
 bool CHLTVTestSystem::StopsTest()
 {
-	FOR_EACH_VEC( m_Servers, iServer )
+	FOR_EACH_VEC(m_Servers, iServer)
 	{
 		m_Servers[iServer]->Shutdown();
 	}
@@ -83,38 +80,37 @@ bool CHLTVTestSystem::StopsTest()
 	return true;
 }
 
-
 #ifdef _HLTVTEST
 
-CON_COMMAND( tv_test_start, "Starts the SourceTV test system" )
+CON_COMMAND(tv_test_start, "Starts the SourceTV test system")
 {
-	if ( args.ArgC() < 3 )
+	if(args.ArgC() < 3)
 	{
-		Msg( "Usage: tv_test_start <number> <ip:port>\n" );
+		Msg("Usage: tv_test_start <number> <ip:port>\n");
 		return;
 	}
 
-	int nClients = Q_atoi( args[1] );
+	int nClients = Q_atoi(args[1]);
 
 	char address[MAX_PATH];
 
-	if ( args.ArgC() == 3 )
+	if(args.ArgC() == 3)
 	{
-		Q_strncpy( address, args[2], MAX_PATH );
+		Q_strncpy(address, args[2], MAX_PATH);
 	}
 	else
 	{
-		Q_snprintf( address, MAX_PATH, "%s:%s", args[2], args[4] );
+		Q_snprintf(address, MAX_PATH, "%s:%s", args[2], args[4]);
 	}
 
 	// If it's not a single player connection to "localhost", initialize networking & stop listenserver
-	if ( !Q_strncmp( address, "localhost", 9 ) )
+	if(!Q_strncmp(address, "localhost", 9))
 	{
-		Msg( "SourceTV test can't connect to localhost.\n" );
+		Msg("SourceTV test can't connect to localhost.\n");
 		return;
 	}
 
-	if ( !hltvtest )
+	if(!hltvtest)
 	{
 		// create new HLTV test system
 		hltvtest = new CHLTVTestSystem();
@@ -126,27 +122,27 @@ CON_COMMAND( tv_test_start, "Starts the SourceTV test system" )
 	}
 
 	// shutdown anything else
-	Host_Disconnect( false );
+	Host_Disconnect(false);
 
 	// start networking
-	NET_SetMutiplayer( true );
+	NET_SetMutiplayer(true);
 
-	hltvtest->StartTest( nClients, address );
+	hltvtest->StartTest(nClients, address);
 }
 
-CON_COMMAND( tv_test_retry, "Tell test clients to reconnect" )
+CON_COMMAND(tv_test_retry, "Tell test clients to reconnect")
 {
-	if ( args.ArgC() < 2 )
+	if(args.ArgC() < 2)
 	{
-		Msg( "Usage: tv_test_retry <number>\n" );
+		Msg("Usage: tv_test_retry <number>\n");
 		return;
 	}
 
-	int nClients = Q_atoi( args[1] );
+	int nClients = Q_atoi(args[1]);
 
-	if ( hltvtest )
+	if(hltvtest)
 	{
-		hltvtest->RetryTest( nClients );
+		hltvtest->RetryTest(nClients);
 	}
 	else
 	{
@@ -154,9 +150,9 @@ CON_COMMAND( tv_test_retry, "Tell test clients to reconnect" )
 	}
 }
 
-CON_COMMAND( tv_test_stop, "Stops the SourceTV test system" )
+CON_COMMAND(tv_test_stop, "Stops the SourceTV test system")
 {
-	if ( hltvtest )
+	if(hltvtest)
 	{
 		hltvtest->StopsTest();
 	}

@@ -13,24 +13,24 @@
 #include "tier0/memdbgon.h"
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectMapDefined, DT_ObjectMapDefined, CObjectMapDefined)
-	RecvPropString( RECVINFO(m_szCustomName) ),
-END_RECV_TABLE()
+RecvPropString(RECVINFO(m_szCustomName)),
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-C_ObjectMapDefined::C_ObjectMapDefined()
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_ObjectMapDefined::C_ObjectMapDefined()
 {
-	memset( m_szCustomName, 0, sizeof(m_szCustomName) );
+	memset(m_szCustomName, 0, sizeof(m_szCustomName));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Get a text description for the object target
 //-----------------------------------------------------------------------------
-const char *C_ObjectMapDefined::GetTargetDescription( void ) const
+const char *C_ObjectMapDefined::GetTargetDescription(void) const
 {
-	if ( m_szCustomName && m_szCustomName[0] )
+	if(m_szCustomName && m_szCustomName[0])
 		return m_szCustomName;
 
 	return BaseClass::GetTargetDescription();

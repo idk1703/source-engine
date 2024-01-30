@@ -8,22 +8,21 @@
 #include "weapon_csbase.h"
 #include "fx_cs_shared.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
-	#define CWeaponFiveSeven C_WeaponFiveSeven
-	#include "c_cs_player.h"
+#define CWeaponFiveSeven C_WeaponFiveSeven
+#include "c_cs_player.h"
 
 #else
 
-	#include "cs_player.h"
+#include "cs_player.h"
 
 #endif
-
 
 class CWeaponFiveSeven : public CWeaponCSBase
 {
 public:
-	DECLARE_CLASS( CWeaponFiveSeven, CWeaponCSBase );
+	DECLARE_CLASS(CWeaponFiveSeven, CWeaponCSBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -39,40 +38,39 @@ public:
 
 	virtual void WeaponIdle();
 
- 	virtual float GetInaccuracy() const;
+	virtual float GetInaccuracy() const;
 
-	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_FIVESEVEN; }
+	virtual CSWeaponID GetWeaponID(void) const
+	{
+		return WEAPON_FIVESEVEN;
+	}
 
 private:
-
-	CWeaponFiveSeven( const CWeaponFiveSeven & );
+	CWeaponFiveSeven(const CWeaponFiveSeven &);
 
 	float m_flLastFire;
 };
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponFiveSeven, DT_WeaponFiveSeven )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponFiveSeven, DT_WeaponFiveSeven)
 
-BEGIN_NETWORK_TABLE( CWeaponFiveSeven, DT_WeaponFiveSeven )
+BEGIN_NETWORK_TABLE(CWeaponFiveSeven, DT_WeaponFiveSeven)
 END_NETWORK_TABLE()
 
 #if defined CLIENT_DLL
-BEGIN_PREDICTION_DATA( CWeaponFiveSeven )
-	DEFINE_FIELD( m_flLastFire, FIELD_FLOAT ),
+BEGIN_PREDICTION_DATA(CWeaponFiveSeven)
+	DEFINE_FIELD(m_flLastFire, FIELD_FLOAT),
 END_PREDICTION_DATA()
 #endif
 
-LINK_ENTITY_TO_CLASS( weapon_fiveseven, CWeaponFiveSeven );
-PRECACHE_WEAPON_REGISTER( weapon_fiveseven );
-
-
+LINK_ENTITY_TO_CLASS(weapon_fiveseven, CWeaponFiveSeven);
+PRECACHE_WEAPON_REGISTER(weapon_fiveseven);
 
 CWeaponFiveSeven::CWeaponFiveSeven()
 {
 	m_flLastFire = gpGlobals->curtime;
 }
 
-
-void CWeaponFiveSeven::Spawn( )
+void CWeaponFiveSeven::Spawn()
 {
 	BaseClass::Spawn();
 
@@ -85,20 +83,19 @@ bool CWeaponFiveSeven::Deploy()
 	return BaseClass::Deploy();
 }
 
-
 float CWeaponFiveSeven::GetInaccuracy() const
 {
-	if ( weapon_accuracy_model.GetInt() == 1 )
+	if(weapon_accuracy_model.GetInt() == 1)
 	{
 		CCSPlayer *pPlayer = GetPlayerOwner();
-		if ( !pPlayer )
+		if(!pPlayer)
 			return 0.0f;
 
-		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
+		if(!FBitSet(pPlayer->GetFlags(), FL_ONGROUND))
 			return 1.5f * (1 - m_flAccuracy);
-		else if (pPlayer->GetAbsVelocity().Length2D() > 5)
+		else if(pPlayer->GetAbsVelocity().Length2D() > 5)
 			return 0.255f * (1 - m_flAccuracy);
-		else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )
+		else if(FBitSet(pPlayer->GetFlags(), FL_DUCKING))
 			return 0.075f * (1 - m_flAccuracy);
 		else
 			return 0.15f * (1 - m_flAccuracy);
@@ -110,22 +107,22 @@ float CWeaponFiveSeven::GetInaccuracy() const
 void CWeaponFiveSeven::PrimaryAttack()
 {
 	CCSPlayer *pPlayer = GetPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	// Mark the time of this shot and determine the accuracy modifier based on the last shot fired...
-	m_flAccuracy -= (0.25)*(0.275 - (gpGlobals->curtime - m_flLastFire));
+	m_flAccuracy -= (0.25) * (0.275 - (gpGlobals->curtime - m_flLastFire));
 
-	if (m_flAccuracy > 0.92)
+	if(m_flAccuracy > 0.92)
 		m_flAccuracy = 0.92;
-	else if (m_flAccuracy < 0.725)
+	else if(m_flAccuracy < 0.725)
 		m_flAccuracy = 0.725;
 
 	m_flLastFire = gpGlobals->curtime;
 
-	if (m_iClip1 <= 0)
+	if(m_iClip1 <= 0)
 	{
-		if ( m_bFireOnEmpty )
+		if(m_bFireOnEmpty)
 		{
 			PlayEmptySound();
 			m_flNextPrimaryAttack = gpGlobals->curtime + 0.1f;
@@ -140,48 +137,37 @@ void CWeaponFiveSeven::PrimaryAttack()
 	m_iClip1--;
 	pPlayer->DoMuzzleFlash();
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+	SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 	// player "shoot" animation
-	pPlayer->SetAnimation( PLAYER_ATTACK1 );
+	pPlayer->SetAnimation(PLAYER_ATTACK1);
 
-
-	FX_FireBullets(
-		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(),
-		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(),
-		GetWeaponID(),
-		Primary_Mode,
-		CBaseEntity::GetPredictionRandomSeed() & 255,
-		GetInaccuracy(),
-		GetSpread());
+	FX_FireBullets(pPlayer->entindex(), pPlayer->Weapon_ShootPosition(),
+				   pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(), GetWeaponID(), Primary_Mode,
+				   CBaseEntity::GetPredictionRandomSeed() & 255, GetInaccuracy(), GetSpread());
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + GetCSWpnData().m_flCycleTime;
 
-	if (!m_iClip1 && pPlayer->GetAmmoCount( GetPrimaryAmmoType() ) <= 0)
+	if(!m_iClip1 && pPlayer->GetAmmoCount(GetPrimaryAmmoType()) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
 		pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 	}
 
-	SetWeaponIdleTime( gpGlobals->curtime + 2 );
+	SetWeaponIdleTime(gpGlobals->curtime + 2);
 
 	// update accuracy
 	m_fAccuracyPenalty += GetCSWpnData().m_fInaccuracyImpulseFire[Primary_Mode];
 
 	QAngle angle = pPlayer->GetPunchAngle();
 	angle.x -= 2;
-	pPlayer->SetPunchAngle( angle );
+	pPlayer->SetPunchAngle(angle);
 }
 
-
-void CWeaponFiveSeven::SecondaryAttack()
-{
-}
-
+void CWeaponFiveSeven::SecondaryAttack() {}
 
 bool CWeaponFiveSeven::Reload()
 {
-	if ( !DefaultPistolReload() )
+	if(!DefaultPistolReload())
 		return false;
 
 	m_flAccuracy = 0.92;
@@ -190,13 +176,13 @@ bool CWeaponFiveSeven::Reload()
 
 void CWeaponFiveSeven::WeaponIdle()
 {
-	if (m_flTimeWeaponIdle > gpGlobals->curtime)
+	if(m_flTimeWeaponIdle > gpGlobals->curtime)
 		return;
 
 	// only idle if the slid isn't back
-	if (m_iClip1 != 0)
+	if(m_iClip1 != 0)
 	{
-		SetWeaponIdleTime( gpGlobals->curtime + 4 );
-		SendWeaponAnim( ACT_VM_IDLE );
+		SetWeaponIdleTime(gpGlobals->curtime + 4);
+		SendWeaponAnim(ACT_VM_IDLE);
 	}
 }

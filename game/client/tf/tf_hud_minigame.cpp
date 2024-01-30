@@ -14,47 +14,46 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-DECLARE_HUDELEMENT( CHudMiniGame );
+DECLARE_HUDELEMENT(CHudMiniGame);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CHudMiniGame::CHudMiniGame( const char *pElementName ) :
-	CHudElement( pElementName ), BaseClass( NULL, "HudMiniGame" )
+CHudMiniGame::CHudMiniGame(const char *pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudMiniGame")
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
 	m_pActiveMinigame = NULL;
-	V_strcpy_safe( m_szResFilename, "resource/UI/HudMiniGame_Base.res" );
+	V_strcpy_safe(m_szResFilename, "resource/UI/HudMiniGame_Base.res");
 
-	SetHiddenBits( 0 );
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+	SetHiddenBits(0);
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 100);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudMiniGame::ApplySchemeSettings( vgui::IScheme *scheme )
+void CHudMiniGame::ApplySchemeSettings(vgui::IScheme *scheme)
 {
 	// load control settings...
-	LoadControlSettings( m_szResFilename );
+	LoadControlSettings(m_szResFilename);
 
-	BaseClass::ApplySchemeSettings( scheme );
+	BaseClass::ApplySchemeSettings(scheme);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CHudMiniGame::ShouldDraw( void )
+bool CHudMiniGame::ShouldDraw(void)
 {
-	if ( !CHudElement::ShouldDraw() )
+	if(!CHudElement::ShouldDraw())
 		return false;
 
-	if ( !CTFMinigameLogic::GetMinigameLogic() || !CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame() )
+	if(!CTFMinigameLogic::GetMinigameLogic() || !CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame())
 		return false;
 
-	if ( TFGameRules() && ( TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) )
+	if(TFGameRules() && (TFGameRules()->State_Get() != GR_STATE_RND_RUNNING))
 		return false;
 
 	return true;
@@ -65,35 +64,35 @@ bool CHudMiniGame::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudMiniGame::OnTick()
 {
-	if ( CTFMinigameLogic::GetMinigameLogic() )
+	if(CTFMinigameLogic::GetMinigameLogic())
 	{
 		const char *pszResFilename = NULL;
 		CTFMiniGame *pActiveMinigame = CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame();
 
-		if ( pActiveMinigame )
+		if(pActiveMinigame)
 		{
 			pszResFilename = pActiveMinigame->GetResFile();
 		}
 
-		if ( pActiveMinigame != m_pActiveMinigame )
+		if(pActiveMinigame != m_pActiveMinigame)
 		{
 			m_pActiveMinigame = pActiveMinigame;
 		}
 
-		if ( pszResFilename && pszResFilename[0] && m_szResFilename && m_szResFilename[0] )
+		if(pszResFilename && pszResFilename[0] && m_szResFilename && m_szResFilename[0])
 		{
-			if ( !FStrEq( pszResFilename, m_szResFilename + sizeof( "resource/UI/" ) - 1 ) )
+			if(!FStrEq(pszResFilename, m_szResFilename + sizeof("resource/UI/") - 1))
 			{
-				V_sprintf_safe( m_szResFilename, "resource/UI/%s", pszResFilename );
-				InvalidateLayout( false, true );
+				V_sprintf_safe(m_szResFilename, "resource/UI/%s", pszResFilename);
+				InvalidateLayout(false, true);
 			}
 		}
 
-		if ( m_pActiveMinigame )
+		if(m_pActiveMinigame)
 		{
-			SetDialogVariable( "redscore", m_pActiveMinigame->GetScoreForTeam( TF_TEAM_RED ) );
-			SetDialogVariable( "bluescore", m_pActiveMinigame->GetScoreForTeam( TF_TEAM_BLUE ) );
-			SetDialogVariable( "rounds", m_pActiveMinigame->GetMaxScore() );
+			SetDialogVariable("redscore", m_pActiveMinigame->GetScoreForTeam(TF_TEAM_RED));
+			SetDialogVariable("bluescore", m_pActiveMinigame->GetScoreForTeam(TF_TEAM_BLUE));
+			SetDialogVariable("rounds", m_pActiveMinigame->GetMaxScore());
 		}
 	}
 }

@@ -22,7 +22,6 @@
 
 #include <stdio.h>
 
-
 //-----------------------------------------------------------------------------
 // The application object
 //-----------------------------------------------------------------------------
@@ -38,36 +37,33 @@ public:
 	virtual void Destroy() {}
 };
 
-DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT( CVLocalizeApp );
-
+DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT(CVLocalizeApp);
 
 //-----------------------------------------------------------------------------
 // The application object
 //-----------------------------------------------------------------------------
 bool CVLocalizeApp::Create()
 {
-	AppSystemInfo_t appSystems[] =
-	{
-		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
-		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
-		{ "", "" }	// Required to terminate the list
+	AppSystemInfo_t appSystems[] = {
+		{"inputsystem.dll", INPUTSYSTEM_INTERFACE_VERSION},
+		{"vgui2.dll", VGUI_IVGUI_INTERFACE_VERSION},
+		{"", ""} // Required to terminate the list
 	};
 
-	return AddSystems( appSystems );
+	return AddSystems(appSystems);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Entry point
 //-----------------------------------------------------------------------------
 bool CVLocalizeApp::PreInit()
 {
-	if ( !BaseClass::PreInit() )
+	if(!BaseClass::PreInit())
 		return false;
 
-	if ( !BaseClass::SetupSearchPaths( NULL, false, true ) )
+	if(!BaseClass::SetupSearchPaths(NULL, false, true))
 	{
-		::MessageBox( NULL, "Error", "Unable to initialize file system\n", MB_OK );
+		::MessageBox(NULL, "Error", "Unable to initialize file system\n", MB_OK);
 		return false;
 	}
 
@@ -75,14 +71,13 @@ bool CVLocalizeApp::PreInit()
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Entry point
 //-----------------------------------------------------------------------------
 int CVLocalizeApp::Main()
 {
 	// load the scheme
-	if (!vgui::scheme()->LoadSchemeFromFile("Resource/TrackerScheme.res", "Tracker" ))
+	if(!vgui::scheme()->LoadSchemeFromFile("Resource/TrackerScheme.res", "Tracker"))
 		return 1;
 
 	// Init the surface
@@ -93,24 +88,24 @@ int CVLocalizeApp::Main()
 	vgui::ivgui()->Start();
 
 	// add our main window
-	if ( CommandLine()->ParmCount() < 2 )
+	if(CommandLine()->ParmCount() < 2)
 	{
-		Warning( "Must specify a localization file!\n" );
+		Warning("Must specify a localization file!\n");
 		return 0;
 	}
 
-	const char *pFileName = CommandLine()->GetParm( 1 );
-	CLocalizationDialog *dlg = new CLocalizationDialog( pFileName );
-	dlg->SetParent( panel->GetVPanel() );
+	const char *pFileName = CommandLine()->GetParm(1);
+	CLocalizationDialog *dlg = new CLocalizationDialog(pFileName);
+	dlg->SetParent(panel->GetVPanel());
 	dlg->MakePopup();
-//	dlg->SetBounds( 0, 0, 800, 600 );
-	dlg->SetVisible( true );
+	//	dlg->SetBounds( 0, 0, 800, 600 );
+	dlg->SetVisible(true);
 
 	// Run app frame loop
-	while (vgui::ivgui()->IsRunning())
+	while(vgui::ivgui()->IsRunning())
 	{
 		vgui::ivgui()->RunFrame();
-		vgui::surface()->PaintTraverseEx( panel->GetVPanel(), true );
+		vgui::surface()->PaintTraverseEx(panel->GetVPanel(), true);
 	}
 
 	return 1;

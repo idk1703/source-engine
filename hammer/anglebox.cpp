@@ -14,8 +14,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#pragma warning(disable: 4244)
-
+#pragma warning(disable : 4244)
 
 BEGIN_MESSAGE_MAP(CAngleBox, CWnd)
 	//{{AFX_MSG_MAP(CAngleBox)
@@ -25,7 +24,6 @@ BEGIN_MESSAGE_MAP(CAngleBox, CWnd)
 	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -37,14 +35,10 @@ CAngleBox::CAngleBox(void)
 	m_pEdit = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CAngleBox::~CAngleBox()
-{
-}
-
+CAngleBox::~CAngleBox() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -53,7 +47,7 @@ CAngleBox::~CAngleBox()
 //-----------------------------------------------------------------------------
 void CAngleBox::OnMouseMove(UINT nFlags, CPoint point)
 {
-	if (m_bDragging)
+	if(m_bDragging)
 	{
 		//
 		// Remove old angle line by redrawing it (XOR).
@@ -76,7 +70,6 @@ void CAngleBox::OnMouseMove(UINT nFlags, CPoint point)
 	CWnd::OnMouseMove(nFlags, point);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : nFlags -
@@ -85,7 +78,7 @@ void CAngleBox::OnMouseMove(UINT nFlags, CPoint point)
 void CAngleBox::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// release dc
-	if (m_bDragging)
+	if(m_bDragging)
 	{
 		::ReleaseDC(m_hWnd, m_DragDC.Detach());
 		m_bDragging = false;
@@ -102,7 +95,6 @@ void CAngleBox::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CWnd::OnLButtonUp(nFlags, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -123,15 +115,14 @@ void CAngleBox::OnLButtonDown(UINT nFlags, CPoint point)
 	OnMouseMove(0, point);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pDC -
 //-----------------------------------------------------------------------------
 void CAngleBox::DrawAngleLine(CDC *pDC)
 {
-	if ((m_vecAngles[PITCH] != 0) || (m_vecAngles[ROLL] != 0) ||
-		(m_vecAngles[YAW] < 0 || m_vecAngles[YAW] > 359) ||	m_bDifferent)
+	if((m_vecAngles[PITCH] != 0) || (m_vecAngles[ROLL] != 0) || (m_vecAngles[YAW] < 0 || m_vecAngles[YAW] > 359) ||
+	   m_bDifferent)
 	{
 		return;
 	}
@@ -153,7 +144,6 @@ void CAngleBox::DrawAngleLine(CDC *pDC)
 	pDC->LineTo(pt);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the current state of the control as a keyvalue string.
 // Input  : szAngles - Buffer to receive angles string.
@@ -161,16 +151,15 @@ void CAngleBox::DrawAngleLine(CDC *pDC)
 //-----------------------------------------------------------------------------
 bool CAngleBox::GetAngles(QAngle &vecAngles)
 {
-	if (m_bDifferent)
+	if(m_bDifferent)
 	{
 		return false;
 	}
 
 	vecAngles = m_vecAngles;
 
-	return(true);
+	return (true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the current state of the control as a keyvalue string.
@@ -182,9 +171,8 @@ char *CAngleBox::GetAngles(char *szAngles)
 	QAngle vecAngles;
 	GetAngles(vecAngles);
 	sprintf(szAngles, "%g %g %g", (double)vecAngles[0], (double)vecAngles[1], (double)vecAngles[2]);
-	return(szAngles);
+	return (szAngles);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a string indicating the current state of the angle control.
@@ -195,26 +183,25 @@ char *CAngleBox::GetAngleEditText(char *szBuf)
 {
 	szBuf[0] = '\0';
 
-	if (m_bDifferent)
+	if(m_bDifferent)
 	{
 		strcpy(szBuf, "(diff)");
 	}
-	else if ((m_vecAngles[PITCH] == 90) && (m_vecAngles[YAW] == 0) && (m_vecAngles[ROLL] == 0))
+	else if((m_vecAngles[PITCH] == 90) && (m_vecAngles[YAW] == 0) && (m_vecAngles[ROLL] == 0))
 	{
 		strcpy(szBuf, "Down");
 	}
-	else if ((m_vecAngles[PITCH] == -90) && (m_vecAngles[YAW] == 0) && (m_vecAngles[ROLL] == 0))
+	else if((m_vecAngles[PITCH] == -90) && (m_vecAngles[YAW] == 0) && (m_vecAngles[ROLL] == 0))
 	{
 		strcpy(szBuf, "Up");
 	}
-	else if (m_vecAngles[YAW] >= 0)
+	else if(m_vecAngles[YAW] >= 0)
 	{
 		itoa((int)m_vecAngles[YAW], szBuf, 10);
 	}
 
-	return(szBuf);
+	return (szBuf);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called internally and by the linked combo box, this updates the angles
@@ -225,21 +212,21 @@ char *CAngleBox::GetAngleEditText(char *szBuf)
 void CAngleBox::SetAnglesInternal(const QAngle &vecAngles, bool bRedraw)
 {
 	QAngle vecAngleSet = vecAngles;
-	while (vecAngleSet[YAW] < 0)
+	while(vecAngleSet[YAW] < 0)
 	{
 		vecAngleSet[YAW] += 360.0;
 	}
 
 	CDC *pDC = NULL;
 
-	if (bRedraw)
+	if(bRedraw)
 	{
 		//
 		// Erase the old line.
 		//
 		Assert(::IsWindow(m_hWnd));
 		pDC = GetDC();
-		if (pDC != NULL)
+		if(pDC != NULL)
 		{
 			DrawAngleLine(pDC);
 		}
@@ -250,7 +237,7 @@ void CAngleBox::SetAnglesInternal(const QAngle &vecAngles, bool bRedraw)
 	//
 	m_vecAngles = vecAngleSet;
 
-	if ((bRedraw) && (pDC != NULL))
+	if((bRedraw) && (pDC != NULL))
 	{
 		//
 		// Draw the new line.
@@ -259,7 +246,6 @@ void CAngleBox::SetAnglesInternal(const QAngle &vecAngles, bool bRedraw)
 		ReleaseDC(pDC);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called from the client code, this sets our angles and updates the
@@ -272,7 +258,6 @@ void CAngleBox::SetAngles(const QAngle &vecAngles, bool bRedraw)
 	SetAnglesInternal(vecAngles, bRedraw);
 	UpdateAngleEditText();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called from the client code, this sets our angles via a string and
@@ -287,7 +272,6 @@ void CAngleBox::SetAngles(const char *szAngles, bool bRedraw)
 	SetAngles(vecAngles, bRedraw);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called internally and by the linked combo box, this sets our
 //			'different' state without updating the linked combo box.
@@ -298,14 +282,14 @@ void CAngleBox::SetDifferentInternal(bool bDifferent, bool bRedraw)
 {
 	CDC *pDC = NULL;
 
-	if (bRedraw)
+	if(bRedraw)
 	{
 		//
 		// Erase the old line.
 		//
 		Assert(::IsWindow(m_hWnd));
 		pDC = GetDC();
-		if (pDC != NULL)
+		if(pDC != NULL)
 		{
 			DrawAngleLine(pDC);
 		}
@@ -316,7 +300,7 @@ void CAngleBox::SetDifferentInternal(bool bDifferent, bool bRedraw)
 	//
 	m_bDifferent = bDifferent;
 
-	if ((bRedraw) && (pDC != NULL))
+	if((bRedraw) && (pDC != NULL))
 	{
 		//
 		// Draw the new line.
@@ -325,7 +309,6 @@ void CAngleBox::SetDifferentInternal(bool bDifferent, bool bRedraw)
 		ReleaseDC(pDC);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets our state to indicate multiselect of objects with different
@@ -338,7 +321,6 @@ void CAngleBox::SetDifferent(bool bDifferent, bool bRedraw)
 	UpdateAngleEditText();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -347,7 +329,7 @@ void CAngleBox::OnPaint(void)
 	PAINTSTRUCT ps;
 	CDC *pDC = BeginPaint(&ps);
 
-	if (pDC == NULL)
+	if(pDC == NULL)
 	{
 		return;
 	}
@@ -390,7 +372,7 @@ void CAngleBox::OnPaint(void)
 	//
 	// Draw line indicating angles direction.
 	//
-	if (IsWindowEnabled())
+	if(IsWindowEnabled())
 	{
 		DrawAngleLine(pDC);
 	}
@@ -398,17 +380,16 @@ void CAngleBox::OnPaint(void)
 	EndPaint(&ps);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Enables or disables the angles controls.
 //-----------------------------------------------------------------------------
 void CAngleBox::Enable(bool bEnable)
 {
-	if (bEnable)
+	if(bEnable)
 	{
 		EnableWindow(TRUE);
 
-		if (m_pEdit)
+		if(m_pEdit)
 		{
 			m_pEdit->EnableWindow(TRUE);
 		}
@@ -417,7 +398,7 @@ void CAngleBox::Enable(bool bEnable)
 	{
 		EnableWindow(FALSE);
 
-		if (m_pEdit)
+		if(m_pEdit)
 		{
 			m_pEdit->EnableWindow(FALSE);
 		}
@@ -427,17 +408,16 @@ void CAngleBox::Enable(bool bEnable)
 	UpdateWindow();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Hides or shows the angles controls.
 //-----------------------------------------------------------------------------
 void CAngleBox::Show(bool bShow)
 {
-	if (bShow)
+	if(bShow)
 	{
 		ShowWindow(SW_SHOW);
 
-		if (m_pEdit)
+		if(m_pEdit)
 		{
 			m_pEdit->ShowWindow(SW_SHOW);
 		}
@@ -446,7 +426,7 @@ void CAngleBox::Show(bool bShow)
 	{
 		ShowWindow(SW_HIDE);
 
-		if (m_pEdit)
+		if(m_pEdit)
 		{
 			m_pEdit->ShowWindow(SW_HIDE);
 		}
@@ -456,21 +436,19 @@ void CAngleBox::Show(bool bShow)
 	UpdateWindow();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Updates the text in the angle combo to reflect the current angles
 //			in the angles control.
 //-----------------------------------------------------------------------------
 void CAngleBox::UpdateAngleEditText(void)
 {
-	if (m_pEdit)
+	if(m_pEdit)
 	{
 		char szBuf[20];
 		GetAngleEditText(szBuf);
 		m_pEdit->SetAnglesInternal(szBuf);
 	}
 }
-
 
 BEGIN_MESSAGE_MAP(CAngleCombo, CWnd)
 	//{{AFX_MSG_MAP(CAngleBox)
@@ -479,17 +457,14 @@ BEGIN_MESSAGE_MAP(CAngleCombo, CWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Construktor.
 //-----------------------------------------------------------------------------
-CAngleCombo::CAngleCombo()
-	: CComboBox()
+CAngleCombo::CAngleCombo() : CComboBox()
 {
 	m_pBox = NULL;
 	m_bEnableUpdate = true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -502,13 +477,12 @@ void CAngleCombo::SetAnglesInternal(const char *szAngles)
 	m_bEnableUpdate = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles a change in the contents of the angle edit control.
 //-----------------------------------------------------------------------------
 void CAngleCombo::OnChangeAngleEdit(void)
 {
-	if (m_bEnableUpdate)
+	if(m_bEnableUpdate)
 	{
 		char buf[64];
 		GetWindowText(buf, 64);
@@ -517,7 +491,6 @@ void CAngleCombo::OnChangeAngleEdit(void)
 		GetParent()->PostMessage(ABN_CHANGED, GetDlgCtrlID(), 0);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles a change in the current selection of the angle edit combo.
@@ -532,7 +505,6 @@ void CAngleCombo::OnSelChangeAngleEdit(void)
 	GetParent()->PostMessage(ABN_CHANGED, GetDlgCtrlID(), 0);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Updates angle box with the settings from the combo box. Call the
 //			internal functions so we don't get a reflected notification, mucking
@@ -540,16 +512,16 @@ void CAngleCombo::OnSelChangeAngleEdit(void)
 //-----------------------------------------------------------------------------
 void CAngleCombo::UpdateAngleBox(char *szText)
 {
-	if (m_pBox)
+	if(m_pBox)
 	{
 		m_pBox->SetDifferentInternal(false);
 
-		if (V_isdigit(szText[0]))
+		if(V_isdigit(szText[0]))
 		{
 			QAngle vecAngles(0, atoi(szText), 0);
 			m_pBox->SetAnglesInternal(vecAngles, true);
 		}
-		else if (!stricmp(szText, "down"))
+		else if(!stricmp(szText, "down"))
 		{
 			m_pBox->SetAnglesInternal(QAngle(90, 0, 0), true);
 		}

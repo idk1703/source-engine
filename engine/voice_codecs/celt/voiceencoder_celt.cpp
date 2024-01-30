@@ -49,10 +49,8 @@ damage. */
 #include <stdio.h>
 #include "celt.h"
 
-
 // NOTE: This has to be the last file included!
 #include "tier0/memdbgon.h"
-
 
 #define CHANNELS 1
 
@@ -65,23 +63,14 @@ struct celt_versions
 
 #define CELT_VERSION 4
 
-celt_versions g_CeltVersion[CELT_VERSION] =
-{
-	{
-		44100, 256, 120
-	},
+celt_versions g_CeltVersion[CELT_VERSION] = {
+	{44100, 256, 120},
 
-	{
-		22050, 120, 60
-	},
+	{22050, 120, 60},
 
-	{
-		22050, 256, 60
-	},
+	{22050, 256, 60},
 
-	{
-		22050, 512, 64
-	},
+	{22050, 512, 64},
 };
 
 class VoiceEncoder_Celt : public IFrameEncoder
@@ -99,23 +88,22 @@ public:
 	bool ResetState();
 
 private:
+	bool InitStates();
+	void TermStates();
 
-	bool	InitStates();
-	void	TermStates();
-
-	CELTEncoder *m_EncoderState;	// Celt internal encoder state
+	CELTEncoder *m_EncoderState; // Celt internal encoder state
 	CELTDecoder *m_DecoderState; // Celt internal decoder state
-	CELTMode	*m_Mode;
+	CELTMode *m_Mode;
 
 	int m_iVersion;
 };
 
-extern IVoiceCodec* CreateVoiceCodec_Frame(IFrameEncoder *pEncoder);
+extern IVoiceCodec *CreateVoiceCodec_Frame(IFrameEncoder *pEncoder);
 
-void* CreateCeltVoiceCodec()
+void *CreateCeltVoiceCodec()
 {
 	IFrameEncoder *pEncoder = new VoiceEncoder_Celt;
-	return CreateVoiceCodec_Frame( pEncoder );
+	return CreateVoiceCodec_Frame(pEncoder);
 }
 
 EXPOSE_INTERFACE_FN(CreateCeltVoiceCodec, IVoiceCodec, "vaudio_celt")
@@ -137,9 +125,9 @@ VoiceEncoder_Celt::~VoiceEncoder_Celt()
 	TermStates();
 }
 
-bool VoiceEncoder_Celt::Init( int quality, int &rawFrameSize, int &encodedFrameSize)
+bool VoiceEncoder_Celt::Init(int quality, int &rawFrameSize, int &encodedFrameSize)
 {
-	if ( quality >= CELT_VERSION )
+	if(quality >= CELT_VERSION)
 		return false;
 
 	m_iVersion = quality;
@@ -148,11 +136,11 @@ bool VoiceEncoder_Celt::Init( int quality, int &rawFrameSize, int &encodedFrameS
 
 	int iError = 0;
 
-	m_Mode = celt_mode_create( g_CeltVersion[m_iVersion].iSampleRate, g_CeltVersion[m_iVersion].iRawFrameSize, &iError );
-	m_EncoderState = celt_encoder_create_custom( m_Mode, CHANNELS, NULL);
-	m_DecoderState = celt_decoder_create_custom( m_Mode, CHANNELS, NULL);
+	m_Mode = celt_mode_create(g_CeltVersion[m_iVersion].iSampleRate, g_CeltVersion[m_iVersion].iRawFrameSize, &iError);
+	m_EncoderState = celt_encoder_create_custom(m_Mode, CHANNELS, NULL);
+	m_DecoderState = celt_decoder_create_custom(m_Mode, CHANNELS, NULL);
 
-	if ( !InitStates() )
+	if(!InitStates())
 		return false;
 
 	encodedFrameSize = g_CeltVersion[m_iVersion].iPacketSize;
@@ -169,9 +157,10 @@ void VoiceEncoder_Celt::EncodeFrame(const char *pUncompressedBytes, char *pCompr
 {
 	unsigned char output[1024];
 
-	celt_encode( m_EncoderState, (celt_int16*)pUncompressedBytes, g_CeltVersion[m_iVersion].iRawFrameSize, output, g_CeltVersion[m_iVersion].iPacketSize );
+	celt_encode(m_EncoderState, (celt_int16 *)pUncompressedBytes, g_CeltVersion[m_iVersion].iRawFrameSize, output,
+				g_CeltVersion[m_iVersion].iPacketSize);
 
-	for ( int i = 0; i < g_CeltVersion[m_iVersion].iPacketSize; i++ )
+	for(int i = 0; i < g_CeltVersion[m_iVersion].iPacketSize; i++)
 	{
 		*pCompressed = (char)output[i];
 		pCompressed++;
@@ -183,55 +172,56 @@ void VoiceEncoder_Celt::DecodeFrame(const char *pCompressed, char *pDecompressed
 	unsigned char output[1024];
 	char *out = (char *)pCompressed;
 
-	if ( !pCompressed )
+	if(!pCompressed)
 	{
-		celt_decode( m_DecoderState, NULL, g_CeltVersion[m_iVersion].iPacketSize, (celt_int16 *)pDecompressedBytes, g_CeltVersion[m_iVersion].iRawFrameSize );
+		celt_decode(m_DecoderState, NULL, g_CeltVersion[m_iVersion].iPacketSize, (celt_int16 *)pDecompressedBytes,
+					g_CeltVersion[m_iVersion].iRawFrameSize);
 		return;
 	}
 
-	for ( int i = 0; i < g_CeltVersion[m_iVersion].iPacketSize; i++ )
+	for(int i = 0; i < g_CeltVersion[m_iVersion].iPacketSize; i++)
 	{
-		output[i] = ( unsigned char ) ( ( *out < 0 ) ? (*out + 256) : *out );
+		output[i] = (unsigned char)((*out < 0) ? (*out + 256) : *out);
 		out++;
 	}
 
-
-	//celt_decoder_ctl( m_DecoderState, CELT_RESET_STATE_REQUEST, NULL );
-	celt_decode( m_DecoderState, output, g_CeltVersion[m_iVersion].iPacketSize, (celt_int16 *)pDecompressedBytes, g_CeltVersion[m_iVersion].iRawFrameSize );
+	// celt_decoder_ctl( m_DecoderState, CELT_RESET_STATE_REQUEST, NULL );
+	celt_decode(m_DecoderState, output, g_CeltVersion[m_iVersion].iPacketSize, (celt_int16 *)pDecompressedBytes,
+				g_CeltVersion[m_iVersion].iRawFrameSize);
 }
 
 bool VoiceEncoder_Celt::ResetState()
 {
-	celt_encoder_ctl(m_EncoderState, CELT_RESET_STATE_REQUEST , NULL );
-	celt_decoder_ctl(m_DecoderState, CELT_RESET_STATE_REQUEST , NULL );
+	celt_encoder_ctl(m_EncoderState, CELT_RESET_STATE_REQUEST, NULL);
+	celt_decoder_ctl(m_DecoderState, CELT_RESET_STATE_REQUEST, NULL);
 
 	return true;
 }
 
 bool VoiceEncoder_Celt::InitStates()
 {
-	if ( !m_EncoderState || !m_DecoderState )
+	if(!m_EncoderState || !m_DecoderState)
 		return false;
 
-	celt_encoder_ctl( m_EncoderState, CELT_RESET_STATE_REQUEST , NULL );
-	celt_decoder_ctl( m_DecoderState, CELT_RESET_STATE_REQUEST , NULL );
+	celt_encoder_ctl(m_EncoderState, CELT_RESET_STATE_REQUEST, NULL);
+	celt_decoder_ctl(m_DecoderState, CELT_RESET_STATE_REQUEST, NULL);
 
 	return true;
 }
 
 void VoiceEncoder_Celt::TermStates()
 {
-	if( m_EncoderState )
+	if(m_EncoderState)
 	{
-		celt_encoder_destroy( m_EncoderState );
+		celt_encoder_destroy(m_EncoderState);
 		m_EncoderState = NULL;
 	}
 
-	if( m_DecoderState )
+	if(m_DecoderState)
 	{
-		celt_decoder_destroy( m_DecoderState );
+		celt_decoder_destroy(m_DecoderState);
 		m_DecoderState = NULL;
 	}
 
-	celt_mode_destroy( m_Mode );
+	celt_mode_destroy(m_Mode);
 }

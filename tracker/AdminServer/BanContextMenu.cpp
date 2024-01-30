@@ -19,15 +19,13 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 CBanContextMenu::CBanContextMenu(Panel *parent) : Menu(parent, "BanContextMenu")
 {
-	CBanContextMenu::parent=parent;
+	CBanContextMenu::parent = parent;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CBanContextMenu::~CBanContextMenu()
-{
-}
+CBanContextMenu::~CBanContextMenu() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the menu
@@ -36,7 +34,7 @@ void CBanContextMenu::ShowMenu(Panel *target, unsigned int banID)
 {
 	DeleteAllItems();
 
-	if(banID==-1)
+	if(banID == -1)
 	{
 		AddMenuItem("ban", "#Ban_Menu_Add", new KeyValues("addban", "banID", banID), CBanContextMenu::parent);
 	}

@@ -27,30 +27,30 @@ static int s_iBeamSprite = 0;
 /**
  * Return true if given name is already in use by another player
  */
-bool UTIL_IsNameTaken( const char *name, bool ignoreHumans )
+bool UTIL_IsNameTaken(const char *name, bool ignoreHumans)
 {
-	for ( int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (player == NULL)
+		if(player == NULL)
 			continue;
 
-		if (player->IsPlayer() && player->IsBot())
+		if(player->IsPlayer() && player->IsBot())
 		{
 			// bots can have prefixes so we need to check the name
 			// against the profile name instead.
 			CCSBot *bot = dynamic_cast<CCSBot *>(player);
-			if ( bot && bot->GetProfile()->GetName() && FStrEq(name, bot->GetProfile()->GetName()))
+			if(bot && bot->GetProfile()->GetName() && FStrEq(name, bot->GetProfile()->GetName()))
 			{
 				return true;
 			}
 		}
 		else
 		{
-			if (!ignoreHumans)
+			if(!ignoreHumans)
 			{
-				if (FStrEq( name, player->GetPlayerName() ))
+				if(FStrEq(name, player->GetPlayerName()))
 					return true;
 			}
 		}
@@ -59,17 +59,16 @@ bool UTIL_IsNameTaken( const char *name, bool ignoreHumans )
 	return false;
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
-int UTIL_ClientsInGame( void )
+int UTIL_ClientsInGame(void)
 {
 	int count = 0;
 
-	for ( int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBaseEntity *player = UTIL_PlayerByIndex( i );
+		CBaseEntity *player = UTIL_PlayerByIndex(i);
 
-		if (player == NULL)
+		if(player == NULL)
 			continue;
 
 		count++;
@@ -82,26 +81,26 @@ int UTIL_ClientsInGame( void )
 /**
  * Return the number of non-bots on the given team
  */
-int UTIL_HumansOnTeam( int teamID, bool isAlive )
+int UTIL_HumansOnTeam(int teamID, bool isAlive)
 {
 	int count = 0;
 
-	for ( int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBaseEntity *entity = UTIL_PlayerByIndex( i );
+		CBaseEntity *entity = UTIL_PlayerByIndex(i);
 
-		if ( entity == NULL )
+		if(entity == NULL)
 			continue;
 
-		CBasePlayer *player = static_cast<CBasePlayer *>( entity );
+		CBasePlayer *player = static_cast<CBasePlayer *>(entity);
 
-		if (player->IsBot())
+		if(player->IsBot())
 			continue;
 
-		if (player->GetTeamNumber() != teamID)
+		if(player->GetTeamNumber() != teamID)
 			continue;
 
-		if (isAlive && !player->IsAlive())
+		if(isAlive && !player->IsAlive())
 			continue;
 
 		count++;
@@ -110,20 +109,19 @@ int UTIL_HumansOnTeam( int teamID, bool isAlive )
 	return count;
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
-int UTIL_BotsInGame( void )
+int UTIL_BotsInGame(void)
 {
 	int count = 0;
 
-	for (int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex( i ));
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if ( player == NULL )
+		if(player == NULL)
 			continue;
 
-		if ( !player->IsBot() )
+		if(!player->IsBot())
 			continue;
 
 		count++;
@@ -136,45 +134,45 @@ int UTIL_BotsInGame( void )
 /**
  * Kick a bot from the given team. If no bot exists on the team, return false.
  */
-bool UTIL_KickBotFromTeam( int kickTeam )
+bool UTIL_KickBotFromTeam(int kickTeam)
 {
 	int i;
 
 	// try to kick a dead bot first
-	for ( i = 1; i <= gpGlobals->maxClients; ++i )
+	for(i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (player == NULL)
+		if(player == NULL)
 			continue;
 
-		if (!player->IsBot())
+		if(!player->IsBot())
 			continue;
 
-		if (!player->IsAlive() && player->GetTeamNumber() == kickTeam)
+		if(!player->IsAlive() && player->GetTeamNumber() == kickTeam)
 		{
 			// its a bot on the right team - kick it
-			engine->ServerCommand( UTIL_VarArgs( "kick \"%s\"\n", player->GetPlayerName() ) );
+			engine->ServerCommand(UTIL_VarArgs("kick \"%s\"\n", player->GetPlayerName()));
 
 			return true;
 		}
 	}
 
 	// no dead bots, kick any bot on the given team
-	for ( i = 1; i <= gpGlobals->maxClients; ++i )
+	for(i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (player == NULL)
+		if(player == NULL)
 			continue;
 
-		if (!player->IsBot())
+		if(!player->IsBot())
 			continue;
 
-		if (player->GetTeamNumber() == kickTeam)
+		if(player->GetTeamNumber() == kickTeam)
 		{
 			// its a bot on the right team - kick it
-			engine->ServerCommand( UTIL_VarArgs( "kick \"%s\"\n", player->GetPlayerName() ) );
+			engine->ServerCommand(UTIL_VarArgs("kick \"%s\"\n", player->GetPlayerName()));
 
 			return true;
 		}
@@ -187,23 +185,23 @@ bool UTIL_KickBotFromTeam( int kickTeam )
 /**
  * Return true if all of the members of the given team are bots
  */
-bool UTIL_IsTeamAllBots( int team )
+bool UTIL_IsTeamAllBots(int team)
 {
 	int botCount = 0;
 
-	for( int i=1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (player == NULL)
+		if(player == NULL)
 			continue;
 
 		// skip players on other teams
-		if (player->GetTeamNumber() != team)
+		if(player->GetTeamNumber() != team)
 			continue;
 
 		// if not a bot, fail the test
-		if (!player->IsBot())
+		if(!player->IsBot())
 			return false;
 
 		// is a bot on given team
@@ -219,32 +217,32 @@ bool UTIL_IsTeamAllBots( int team )
  * Return the closest active player to the given position.
  * If 'distance' is non-NULL, the distance to the closest player is returned in it.
  */
-extern CBasePlayer *UTIL_GetClosestPlayer( const Vector &pos, float *distance )
+extern CBasePlayer *UTIL_GetClosestPlayer(const Vector &pos, float *distance)
 {
 	CBasePlayer *closePlayer = NULL;
 	float closeDistSq = 999999999999.9f;
 
-	for ( int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (!IsEntityValid( player ))
+		if(!IsEntityValid(player))
 			continue;
 
-		if (!player->IsAlive())
+		if(!player->IsAlive())
 			continue;
 
-		Vector playerOrigin = GetCentroid( player );
+		Vector playerOrigin = GetCentroid(player);
 		float distSq = (playerOrigin - pos).LengthSqr();
-		if (distSq < closeDistSq)
+		if(distSq < closeDistSq)
 		{
 			closeDistSq = distSq;
-			closePlayer = static_cast<CBasePlayer *>( player );
+			closePlayer = static_cast<CBasePlayer *>(player);
 		}
 	}
 
-	if (distance)
-		*distance = (float)sqrt( closeDistSq );
+	if(distance)
+		*distance = (float)sqrt(closeDistSq);
 
 	return closePlayer;
 }
@@ -254,61 +252,61 @@ extern CBasePlayer *UTIL_GetClosestPlayer( const Vector &pos, float *distance )
  * Return the closest active player on the given team to the given position.
  * If 'distance' is non-NULL, the distance to the closest player is returned in it.
  */
-extern CBasePlayer *UTIL_GetClosestPlayer( const Vector &pos, int team, float *distance )
+extern CBasePlayer *UTIL_GetClosestPlayer(const Vector &pos, int team, float *distance)
 {
 	CBasePlayer *closePlayer = NULL;
 	float closeDistSq = 999999999999.9f;
 
-	for ( int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (!IsEntityValid( player ))
+		if(!IsEntityValid(player))
 			continue;
 
-		if (!player->IsAlive())
+		if(!player->IsAlive())
 			continue;
 
-		if (player->GetTeamNumber() != team)
+		if(player->GetTeamNumber() != team)
 			continue;
 
-		Vector playerOrigin = GetCentroid( player );
+		Vector playerOrigin = GetCentroid(player);
 		float distSq = (playerOrigin - pos).LengthSqr();
-		if (distSq < closeDistSq)
+		if(distSq < closeDistSq)
 		{
 			closeDistSq = distSq;
-			closePlayer = static_cast<CBasePlayer *>( player );
+			closePlayer = static_cast<CBasePlayer *>(player);
 		}
 	}
 
-	if (distance)
-		*distance = (float)sqrt( closeDistSq );
+	if(distance)
+		*distance = (float)sqrt(closeDistSq);
 
 	return closePlayer;
 }
 
 //--------------------------------------------------------------------------------------------------------------
 // Takes the bot pointer and constructs the net name using the current bot name prefix.
-void UTIL_ConstructBotNetName( char *name, int nameLength, const BotProfile *profile )
+void UTIL_ConstructBotNetName(char *name, int nameLength, const BotProfile *profile)
 {
-	if (profile == NULL)
+	if(profile == NULL)
 	{
 		name[0] = 0;
 		return;
 	}
 
 	// if there is no bot prefix just use the profile name.
-	if ((cv_bot_prefix.GetString() == NULL) || (strlen(cv_bot_prefix.GetString()) == 0))
+	if((cv_bot_prefix.GetString() == NULL) || (strlen(cv_bot_prefix.GetString()) == 0))
 	{
-		Q_strncpy( name, profile->GetName(), nameLength );
+		Q_strncpy(name, profile->GetName(), nameLength);
 		return;
 	}
 
 	// find the highest difficulty
 	const char *diffStr = BotDifficultyName[0];
-	for ( int i=BOT_EXPERT; i>0; --i )
+	for(int i = BOT_EXPERT; i > 0; --i)
 	{
-		if ( profile->IsDifficulty( (BotDifficultyType)i ) )
+		if(profile->IsDifficulty((BotDifficultyType)i))
 		{
 			diffStr = BotDifficultyName[i];
 			break;
@@ -316,103 +314,100 @@ void UTIL_ConstructBotNetName( char *name, int nameLength, const BotProfile *pro
 	}
 
 	const char *weaponStr = NULL;
-	if ( profile->GetWeaponPreferenceCount() )
+	if(profile->GetWeaponPreferenceCount())
 	{
-		weaponStr = profile->GetWeaponPreferenceAsString( 0 );
+		weaponStr = profile->GetWeaponPreferenceAsString(0);
 
-		const char *translatedAlias = GetTranslatedWeaponAlias( weaponStr );
+		const char *translatedAlias = GetTranslatedWeaponAlias(weaponStr);
 
 		char wpnName[128];
-		Q_snprintf( wpnName, sizeof( wpnName ), "weapon_%s", translatedAlias );
-		WEAPON_FILE_INFO_HANDLE	hWpnInfo = LookupWeaponInfoSlot( wpnName );
-		if ( hWpnInfo != GetInvalidWeaponInfoHandle() )
+		Q_snprintf(wpnName, sizeof(wpnName), "weapon_%s", translatedAlias);
+		WEAPON_FILE_INFO_HANDLE hWpnInfo = LookupWeaponInfoSlot(wpnName);
+		if(hWpnInfo != GetInvalidWeaponInfoHandle())
 		{
-			CCSWeaponInfo *pWeaponInfo = dynamic_cast< CCSWeaponInfo* >( GetFileWeaponInfoFromHandle( hWpnInfo ) );
-			if ( pWeaponInfo )
+			CCSWeaponInfo *pWeaponInfo = dynamic_cast<CCSWeaponInfo *>(GetFileWeaponInfoFromHandle(hWpnInfo));
+			if(pWeaponInfo)
 			{
 				CSWeaponType weaponType = pWeaponInfo->m_WeaponType;
-				weaponStr = WeaponClassAsString( weaponType );
+				weaponStr = WeaponClassAsString(weaponType);
 			}
 		}
 	}
-	if ( !weaponStr )
+	if(!weaponStr)
 	{
 		weaponStr = "";
 	}
 
 	char skillStr[16];
-	Q_snprintf( skillStr, sizeof( skillStr ), "%.0f", profile->GetSkill()*100 );
+	Q_snprintf(skillStr, sizeof(skillStr), "%.0f", profile->GetSkill() * 100);
 
-	char temp[MAX_PLAYER_NAME_LENGTH*2];
-	char prefix[MAX_PLAYER_NAME_LENGTH*2];
-	Q_strncpy( temp, cv_bot_prefix.GetString(), sizeof( temp ) );
-	Q_StrSubst( temp, "<difficulty>", diffStr, prefix, sizeof( prefix ) );
-	Q_StrSubst( prefix, "<weaponclass>", weaponStr, temp, sizeof( temp ) );
-	Q_StrSubst( temp, "<skill>", skillStr, prefix, sizeof( prefix ) );
-	Q_snprintf( name, nameLength, "%s %s", prefix, profile->GetName() );
+	char temp[MAX_PLAYER_NAME_LENGTH * 2];
+	char prefix[MAX_PLAYER_NAME_LENGTH * 2];
+	Q_strncpy(temp, cv_bot_prefix.GetString(), sizeof(temp));
+	Q_StrSubst(temp, "<difficulty>", diffStr, prefix, sizeof(prefix));
+	Q_StrSubst(prefix, "<weaponclass>", weaponStr, temp, sizeof(temp));
+	Q_StrSubst(temp, "<skill>", skillStr, prefix, sizeof(prefix));
+	Q_snprintf(name, nameLength, "%s %s", prefix, profile->GetName());
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Return true if anyone on the given team can see the given spot
  */
-bool UTIL_IsVisibleToTeam( const Vector &spot, int team )
+bool UTIL_IsVisibleToTeam(const Vector &spot, int team)
 {
-	for( int i = 1; i <= gpGlobals->maxClients; ++i )
+	for(int i = 1; i <= gpGlobals->maxClients; ++i)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( i ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(i));
 
-		if (player == NULL)
+		if(player == NULL)
 			continue;
 
-		if (!player->IsAlive())
+		if(!player->IsAlive())
 			continue;
 
-		if (player->GetTeamNumber() != team)
+		if(player->GetTeamNumber() != team)
 			continue;
 
 		trace_t result;
-		UTIL_TraceLine( player->EyePosition(), spot, CONTENTS_SOLID, player, COLLISION_GROUP_NONE, &result );
+		UTIL_TraceLine(player->EyePosition(), spot, CONTENTS_SOLID, player, COLLISION_GROUP_NONE, &result);
 
-		if (result.fraction == 1.0f)
+		if(result.fraction == 1.0f)
 			return true;
 	}
 
 	return false;
 }
 
-
 //------------------------------------------------------------------------------------------------------------
-void UTIL_DrawBeamFromEnt( int i, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue )
+void UTIL_DrawBeamFromEnt(int i, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue)
 {
-/* BOTPORT: What is the replacement for MESSAGE_BEGIN?
-	MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecEnd );   // vecEnd = origin???
-					WRITE_BYTE( TE_BEAMENTPOINT );
-					WRITE_SHORT( i );
-					WRITE_COORD( vecEnd.x );
-					WRITE_COORD( vecEnd.y );
-					WRITE_COORD( vecEnd.z );
-					WRITE_SHORT( s_iBeamSprite );
-					WRITE_BYTE( 0 );		 // startframe
-					WRITE_BYTE( 0 );		 // framerate
-					WRITE_BYTE( iLifetime ); // life
-					WRITE_BYTE( 10 );		 // width
-					WRITE_BYTE( 0 );		 // noise
-					WRITE_BYTE( bRed );		 // r, g, b
-					WRITE_BYTE( bGreen );		 // r, g, b
-					WRITE_BYTE( bBlue );    // r, g, b
-					WRITE_BYTE( 255 );	 // brightness
-					WRITE_BYTE( 0 );		 // speed
-					MESSAGE_END();
-					*/
+	/* BOTPORT: What is the replacement for MESSAGE_BEGIN?
+		MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecEnd );   // vecEnd = origin???
+						WRITE_BYTE( TE_BEAMENTPOINT );
+						WRITE_SHORT( i );
+						WRITE_COORD( vecEnd.x );
+						WRITE_COORD( vecEnd.y );
+						WRITE_COORD( vecEnd.z );
+						WRITE_SHORT( s_iBeamSprite );
+						WRITE_BYTE( 0 );		 // startframe
+						WRITE_BYTE( 0 );		 // framerate
+						WRITE_BYTE( iLifetime ); // life
+						WRITE_BYTE( 10 );		 // width
+						WRITE_BYTE( 0 );		 // noise
+						WRITE_BYTE( bRed );		 // r, g, b
+						WRITE_BYTE( bGreen );		 // r, g, b
+						WRITE_BYTE( bBlue );    // r, g, b
+						WRITE_BYTE( 255 );	 // brightness
+						WRITE_BYTE( 0 );		 // speed
+						MESSAGE_END();
+						*/
 }
 
-
 //------------------------------------------------------------------------------------------------------------
-void UTIL_DrawBeamPoints( Vector vecStart, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue )
+void UTIL_DrawBeamPoints(Vector vecStart, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue)
 {
-	NDebugOverlay::Line( vecStart, vecEnd, bRed, bGreen, bBlue, true, 0.1f );
+	NDebugOverlay::Line(vecStart, vecEnd, bRed, bGreen, bBlue, true, 0.1f);
 
 	/*
 	MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecStart );
@@ -438,60 +433,57 @@ void UTIL_DrawBeamPoints( Vector vecStart, Vector vecEnd, int iLifetime, byte bR
 					*/
 }
 
-
 //------------------------------------------------------------------------------------------------------------
-void CONSOLE_ECHO( const char * pszMsg, ... )
+void CONSOLE_ECHO(const char *pszMsg, ...)
 {
-	va_list     argptr;
+	va_list argptr;
 	static char szStr[1024];
 
-	va_start( argptr, pszMsg );
-	vsprintf( szStr, pszMsg, argptr );
-	va_end( argptr );
+	va_start(argptr, pszMsg);
+	vsprintf(szStr, pszMsg, argptr);
+	va_end(argptr);
 
-	Msg( "%s", szStr );
+	Msg("%s", szStr);
 }
 
-
 //------------------------------------------------------------------------------------------------------------
-void BotPrecache( void )
+void BotPrecache(void)
 {
-	s_iBeamSprite = CBaseEntity::PrecacheModel( "sprites/smoke.spr" );
+	s_iBeamSprite = CBaseEntity::PrecacheModel("sprites/smoke.spr");
 }
 
 //------------------------------------------------------------------------------------------------------------
 #define COS_TABLE_SIZE 256
-static float cosTable[ COS_TABLE_SIZE ];
+static float cosTable[COS_TABLE_SIZE];
 
-void InitBotTrig( void )
+void InitBotTrig(void)
 {
-	for( int i=0; i<COS_TABLE_SIZE; ++i )
+	for(int i = 0; i < COS_TABLE_SIZE; ++i)
 	{
-		float angle = (float)(2.0f * M_PI * i / (float)(COS_TABLE_SIZE-1));
-		cosTable[i] = (float)cos( angle );
+		float angle = (float)(2.0f * M_PI * i / (float)(COS_TABLE_SIZE - 1));
+		cosTable[i] = (float)cos(angle);
 	}
 }
 
-float BotCOS( float angle )
+float BotCOS(float angle)
 {
-	angle = AngleNormalizePositive( angle );
-	int i = (int)( angle * (COS_TABLE_SIZE-1) / 360.0f );
+	angle = AngleNormalizePositive(angle);
+	int i = (int)(angle * (COS_TABLE_SIZE - 1) / 360.0f);
 	return cosTable[i];
 }
 
-float BotSIN( float angle )
+float BotSIN(float angle)
 {
-	angle = AngleNormalizePositive( angle - 90 );
-	int i = (int)( angle * (COS_TABLE_SIZE-1) / 360.0f );
+	angle = AngleNormalizePositive(angle - 90);
+	int i = (int)(angle * (COS_TABLE_SIZE - 1) / 360.0f);
 	return cosTable[i];
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Send a "hint" message to all players, dead or alive.
  */
-void HintMessageToAllPlayers( const char *message )
+void HintMessageToAllPlayers(const char *message)
 {
 	hudtextparms_t textParms;
 
@@ -510,7 +502,7 @@ void HintMessageToAllPlayers( const char *message )
 	textParms.effect = 0;
 	textParms.channel = 0;
 
-	UTIL_HudMessageAll( textParms, message );
+	UTIL_HudMessageAll(textParms, message);
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -519,39 +511,39 @@ void HintMessageToAllPlayers( const char *message )
  * The path from "start" to "finish" is assumed to be a straight line.
  * "start" and "finish" are assumed to be points on the ground.
  */
-bool IsCrossingLineOfFire( const Vector &start, const Vector &finish, CBaseEntity *ignore, int ignoreTeam  )
+bool IsCrossingLineOfFire(const Vector &start, const Vector &finish, CBaseEntity *ignore, int ignoreTeam)
 {
-	for ( int p=1; p <= gpGlobals->maxClients; ++p )
+	for(int p = 1; p <= gpGlobals->maxClients; ++p)
 	{
-		CBasePlayer *player = static_cast<CBasePlayer *>( UTIL_PlayerByIndex( p ) );
+		CBasePlayer *player = static_cast<CBasePlayer *>(UTIL_PlayerByIndex(p));
 
-		if (!IsEntityValid( player ))
+		if(!IsEntityValid(player))
 			continue;
 
-		if (player == ignore)
+		if(player == ignore)
 			continue;
 
-		if (!player->IsAlive())
+		if(!player->IsAlive())
 			continue;
 
-		if (ignoreTeam && player->GetTeamNumber() == ignoreTeam)
+		if(ignoreTeam && player->GetTeamNumber() == ignoreTeam)
 			continue;
 
 		// compute player's unit aiming vector
 		Vector viewForward;
-		AngleVectors( player->EyeAngles() + player->GetPunchAngle(), &viewForward );
+		AngleVectors(player->EyeAngles() + player->GetPunchAngle(), &viewForward);
 
 		const float longRange = 5000.0f;
-		Vector playerOrigin = GetCentroid( player );
+		Vector playerOrigin = GetCentroid(player);
 		Vector playerTarget = playerOrigin + longRange * viewForward;
 
-		Vector result( 0, 0, 0 );
-		if (IsIntersecting2D( start, finish, playerOrigin, playerTarget, &result ))
+		Vector result(0, 0, 0);
+		if(IsIntersecting2D(start, finish, playerOrigin, playerTarget, &result))
 		{
 			// simple check to see if intersection lies in the Z range of the path
 			float loZ, hiZ;
 
-			if (start.z < finish.z)
+			if(start.z < finish.z)
 			{
 				loZ = start.z;
 				hiZ = finish.z;
@@ -562,7 +554,7 @@ bool IsCrossingLineOfFire( const Vector &start, const Vector &finish, CBaseEntit
 				hiZ = start.z;
 			}
 
-			if (result.z >= loZ && result.z <= hiZ + HumanHeight)
+			if(result.z >= loZ && result.z <= hiZ + HumanHeight)
 				return true;
 		}
 	}
@@ -570,31 +562,30 @@ bool IsCrossingLineOfFire( const Vector &start, const Vector &finish, CBaseEntit
 	return false;
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 /**
-* Performs a simple case-insensitive string comparison, honoring trailing * wildcards
-*/
-bool WildcardMatch( const char *query, const char *test )
+ * Performs a simple case-insensitive string comparison, honoring trailing * wildcards
+ */
+bool WildcardMatch(const char *query, const char *test)
 {
-	if ( !query || !test )
+	if(!query || !test)
 		return false;
 
-	while ( *test && *query )
+	while(*test && *query)
 	{
 		char nameChar = *test;
 		char queryChar = *query;
-		if ( tolower(nameChar) != tolower(queryChar) ) // case-insensitive
+		if(tolower(nameChar) != tolower(queryChar)) // case-insensitive
 			break;
 		++test;
 		++query;
 	}
 
-	if ( *query == 0 && *test == 0 )
+	if(*query == 0 && *test == 0)
 		return true;
 
 	// Support trailing *
-	if ( *query == '*' )
+	if(*query == '*')
 		return true;
 
 	return false;

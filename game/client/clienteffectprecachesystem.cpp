@@ -13,26 +13,26 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-//Global singelton accessor
-CClientEffectPrecacheSystem	*ClientEffectPrecacheSystem( void )
+// Global singelton accessor
+CClientEffectPrecacheSystem *ClientEffectPrecacheSystem(void)
 {
-	static CClientEffectPrecacheSystem	s_ClientEffectPrecacheSystem;
+	static CClientEffectPrecacheSystem s_ClientEffectPrecacheSystem;
 	return &s_ClientEffectPrecacheSystem;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Precache all the registered effects
 //-----------------------------------------------------------------------------
-void CClientEffectPrecacheSystem::LevelInitPreEntity( void )
+void CClientEffectPrecacheSystem::LevelInitPreEntity(void)
 {
-	//Precache all known effects
-	for ( int i = 0; i < m_Effects.Size(); i++ )
+	// Precache all known effects
+	for(int i = 0; i < m_Effects.Size(); i++)
 	{
 		m_Effects[i]->Cache();
 	}
 
-	//FIXME: Double check this
-	//Finally, force the cache of these materials
+	// FIXME: Double check this
+	// Finally, force the cache of these materials
 	materials->CacheUsedMaterials();
 
 	// Now, cache off our material handles
@@ -42,28 +42,26 @@ void CClientEffectPrecacheSystem::LevelInitPreEntity( void )
 //-----------------------------------------------------------------------------
 // Purpose: Nothing to do here
 //-----------------------------------------------------------------------------
-void CClientEffectPrecacheSystem::LevelShutdownPreEntity( void )
-{
-}
+void CClientEffectPrecacheSystem::LevelShutdownPreEntity(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Dereference all the registered effects
 //-----------------------------------------------------------------------------
-void CClientEffectPrecacheSystem::LevelShutdownPostEntity( void )
+void CClientEffectPrecacheSystem::LevelShutdownPostEntity(void)
 {
 	// mark all known effects as free
-	for ( int i = 0; i < m_Effects.Size(); i++ )
+	for(int i = 0; i < m_Effects.Size(); i++)
 	{
-		m_Effects[i]->Cache( false );
+		m_Effects[i]->Cache(false);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Purges the effect list
 //-----------------------------------------------------------------------------
-void CClientEffectPrecacheSystem::Shutdown( void )
+void CClientEffectPrecacheSystem::Shutdown(void)
 {
-	//Release all effects
+	// Release all effects
 	m_Effects.Purge();
 }
 
@@ -71,8 +69,8 @@ void CClientEffectPrecacheSystem::Shutdown( void )
 // Purpose: Adds the effect to the list to be precached
 // Input  : *effect - system to precache
 //-----------------------------------------------------------------------------
-void CClientEffectPrecacheSystem::Register( IClientEffect *effect )
+void CClientEffectPrecacheSystem::Register(IClientEffect *effect)
 {
-	//Hold onto this effect for precaching later
-	m_Effects.AddToTail( effect );
+	// Hold onto this effect for precaching later
+	m_Effects.AddToTail(effect);
 }

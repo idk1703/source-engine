@@ -18,74 +18,76 @@
 
 class CTFSupportNotificationDialog : public CTFMessageBoxDialog
 {
-	DECLARE_CLASS_SIMPLE( CTFSupportNotificationDialog, CTFMessageBoxDialog );
+	DECLARE_CLASS_SIMPLE(CTFSupportNotificationDialog, CTFMessageBoxDialog);
+
 public:
-	CTFSupportNotificationDialog( int iNotificationID, const char *pszSupportMessage )
-		: CTFMessageBoxDialog( NULL, pszSupportMessage, NULL, NULL, NULL )
-		, m_iNotificationID( iNotificationID )
-		, m_pConfirmDialog( NULL )
+	CTFSupportNotificationDialog(int iNotificationID, const char *pszSupportMessage)
+		: CTFMessageBoxDialog(NULL, pszSupportMessage, NULL, NULL, NULL),
+		  m_iNotificationID(iNotificationID),
+		  m_pConfirmDialog(NULL)
 	{
-		SetDialogVariable( "text", GetText() );
+		SetDialogVariable("text", GetText());
 	}
 
 	void CleanupConfirmDialog()
 	{
-		if ( m_pConfirmDialog )
+		if(m_pConfirmDialog)
 		{
-			m_pConfirmDialog->SetVisible( false );
+			m_pConfirmDialog->SetVisible(false);
 			m_pConfirmDialog->MarkForDeletion();
 			m_pConfirmDialog = NULL;
 		}
 	}
 
-	virtual ~CTFSupportNotificationDialog() {
+	virtual ~CTFSupportNotificationDialog()
+	{
 		CleanupConfirmDialog();
 	}
 
-	void ConfirmDialogCallback( bool bConfirmed )
+	void ConfirmDialogCallback(bool bConfirmed)
 	{
 		CleanupConfirmDialog();
 
-		if ( bConfirmed )
+		if(bConfirmed)
 		{
 			// User acknowledged the message, tell the notification it can go away now
-			CClientNotification *pNotification = dynamic_cast< CClientNotification * >( NotificationQueue_Get( m_iNotificationID ) );
-			if ( pNotification )
+			CClientNotification *pNotification =
+				dynamic_cast<CClientNotification *>(NotificationQueue_Get(m_iNotificationID));
+			if(pNotification)
 			{
 				pNotification->OnDialogAcknowledged();
 			}
 
-			BaseClass::OnCommand( "confirm" );
+			BaseClass::OnCommand("confirm");
 		}
 	}
 
-	static void StaticConfirmDialogCallback( bool bConfirmed, void *pContext )
+	static void StaticConfirmDialogCallback(bool bConfirmed, void *pContext)
 	{
-		static_cast< CTFSupportNotificationDialog * >( pContext )->ConfirmDialogCallback( bConfirmed );
+		static_cast<CTFSupportNotificationDialog *>(pContext)->ConfirmDialogCallback(bConfirmed);
 	}
 
-	virtual void OnCommand( const char *command ) OVERRIDE
+	virtual void OnCommand(const char *command) OVERRIDE
 	{
-		if ( FStrEq( "acknowledge", command ) )
+		if(FStrEq("acknowledge", command))
 		{
 			// Confirm this, it's going away forever!
 			CleanupConfirmDialog();
-			m_pConfirmDialog = ShowConfirmDialog( "#DeleteConfirmDefault",
-			                                      "#TF_Support_Message_Confirm_Acknowledge_Text",
-			                                      "#TF_Support_Message_Acknowledge", "#Cancel",
-			                                      &StaticConfirmDialogCallback );
-			m_pConfirmDialog->SetContext( this );
+			m_pConfirmDialog =
+				ShowConfirmDialog("#DeleteConfirmDefault", "#TF_Support_Message_Confirm_Acknowledge_Text",
+								  "#TF_Support_Message_Acknowledge", "#Cancel", &StaticConfirmDialogCallback);
+			m_pConfirmDialog->SetContext(this);
 			return;
 		}
-		else if ( FStrEq( "show_later", command ) )
+		else if(FStrEq("show_later", command))
 		{
 			// User selected "show this later" -- leave notification as is and close.
 			CleanupConfirmDialog();
-			BaseClass::OnCommand( "confirm" );
+			BaseClass::OnCommand("confirm");
 			return;
 		}
 
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 
 	virtual const char *GetResFile() OVERRIDE
@@ -112,14 +114,13 @@ CClientNotification::CClientNotification()
 	m_bSupportMessage = false;
 }
 
-CClientNotification::~CClientNotification()
-{}
+CClientNotification::~CClientNotification() {}
 
-void CClientNotification::Update( const CTFNotification* notification )
+void CClientNotification::Update(const CTFNotification *notification)
 {
 	// Custom type handling. For now only support message does anything special.
 	m_bSupportMessage = false;
-	switch ( notification->Obj().type() )
+	switch(notification->Obj().type())
 	{
 		case CMsgGCNotification_NotificationType_NOTIFICATION_REPORTED_PLAYER_BANNED:
 		case CMsgGCNotification_NotificationType_NOTIFICATION_CUSTOM_STRING:
@@ -134,13 +135,13 @@ void CClientNotification::Update( const CTFNotification* notification )
 			m_bSupportMessage = true;
 			break;
 		default:
-			Assert( !"Unhandled enum value" );
+			Assert(!"Unhandled enum value");
 	}
 
 	m_pText = NULL;
 	m_strText = notification->Obj().notification_string().c_str();
 
-	if ( m_bSupportMessage )
+	if(m_bSupportMessage)
 	{
 		// Use generic notification, save actual notification contents for dialog
 		m_pText = "#TF_Support_Message_Notification";
@@ -156,20 +157,19 @@ void CClientNotification::Update( const CTFNotification* notification )
 	m_flExpireTime = rtExpire > 0 ? (float)rtExpire : FLT_MAX;
 	m_ulNotificationID = notification->Obj().notification_id();
 	m_unAccountID = notification->Obj().account_id();
-
 }
 
-void CClientNotification::GCAcknowledge() {
+void CClientNotification::GCAcknowledge()
+{
 
-	GTFGCClientSystem()->AcknowledgeNotification( m_unAccountID, m_ulNotificationID );
+	GTFGCClientSystem()->AcknowledgeNotification(m_unAccountID, m_ulNotificationID);
 }
 
 void CClientNotification::Deleted()
 {
-	if ( m_bSupportMessage )
+	if(m_bSupportMessage)
 	{
-		AssertMsg( !m_bSupportMessage,
-		           "Support messages should only be able to be triggered, not deleted" );
+		AssertMsg(!m_bSupportMessage, "Support messages should only be able to be triggered, not deleted");
 		return;
 	}
 
@@ -184,7 +184,7 @@ void CClientNotification::Expired()
 CClientNotification::EType CClientNotification::NotificationType()
 {
 	// Support messages are "must trigger" type -- no delete action, user must click "view"
-	if ( m_bSupportMessage )
+	if(m_bSupportMessage)
 	{
 		return eType_MustTrigger;
 	}
@@ -199,23 +199,24 @@ bool CClientNotification::BHighPriority()
 
 void CClientNotification::Trigger()
 {
-	if ( !m_bSupportMessage )
+	if(!m_bSupportMessage)
 	{
-		AssertMsg( m_bSupportMessage,
-		           "Don't expect to be trigger-able when not in support message mode" );
+		AssertMsg(m_bSupportMessage, "Don't expect to be trigger-able when not in support message mode");
 		return;
 	}
 
-	CTFSupportNotificationDialog *pDialog = vgui::SETUP_PANEL( new CTFSupportNotificationDialog( GetID(), m_strText.Get() ) );
+	CTFSupportNotificationDialog *pDialog =
+		vgui::SETUP_PANEL(new CTFSupportNotificationDialog(GetID(), m_strText.Get()));
 	pDialog->Show();
 }
 
 void CClientNotification::OnDialogAcknowledged()
 {
-	if ( !m_bSupportMessage )
+	if(!m_bSupportMessage)
 	{
-		AssertMsg( m_bSupportMessage,
-		           "Don't expect to be getting callbacks from the support message dialog when not in support message mode" );
+		AssertMsg(
+			m_bSupportMessage,
+			"Don't expect to be getting callbacks from the support message dialog when not in support message mode");
 		return;
 	}
 
@@ -223,15 +224,14 @@ void CClientNotification::OnDialogAcknowledged()
 	MarkForDeletion();
 }
 
-
 //-----------------------------------------------------------------------------
 // CAutobalanceVolunteerNotification
 //-----------------------------------------------------------------------------
-void CAutobalanceVolunteerNotification::SendResponse( bool bResponse )
+void CAutobalanceVolunteerNotification::SendResponse(bool bResponse)
 {
-	KeyValues *kv = new KeyValues( "AutoBalanceVolunteerReply" );
-	kv->SetBool( "response", bResponse );
-	engine->ServerCmdKeyValues( kv );
+	KeyValues *kv = new KeyValues("AutoBalanceVolunteerReply");
+	kv->SetBool("response", bResponse);
+	engine->ServerCmdKeyValues(kv);
 
 	MarkForDeletion();
 }

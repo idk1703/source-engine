@@ -45,9 +45,7 @@ CDialogCvarChange::CDialogCvarChange(vgui::Panel *parent) : Frame(parent, "Dialo
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CDialogCvarChange::~CDialogCvarChange()
-{
-}
+CDialogCvarChange::~CDialogCvarChange() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Hides value text
@@ -64,14 +62,14 @@ void CDialogCvarChange::MakePassword()
 void CDialogCvarChange::Activate(const char *cvarName, const char *curValue, const char *type, const char *question)
 {
 	m_pCvarLabel->SetText(cvarName);
-	if (!m_bAddCvarText)
+	if(!m_bAddCvarText)
 	{
 		m_pCvarLabel->SetVisible(false); // hide this
 	}
 
 	m_pInfoLabel->SetText(question);
 
-	m_cType=type;
+	m_cType = type;
 
 	m_pOkayButton->SetAsDefaultButton(true);
 	MakePopup();
@@ -94,7 +92,7 @@ void CDialogCvarChange::Activate(const char *cvarName, const char *curValue, con
 void CDialogCvarChange::SetLabelText(const char *textEntryName, const char *text)
 {
 	Label *entry = dynamic_cast<Label *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetText(text);
 	}
@@ -107,22 +105,22 @@ void CDialogCvarChange::OnCommand(const char *command)
 {
 	bool bClose = false;
 
-	if (!stricmp(command, "Okay"))
+	if(!stricmp(command, "Okay"))
 	{
 		KeyValues *msg = new KeyValues("CvarChangeValue");
 		char buf[64];
-		m_pCvarLabel->GetText(buf,64);
+		m_pCvarLabel->GetText(buf, 64);
 
-		msg->SetString("player", buf );
-		m_pCvarEntry->GetText(buf, sizeof(buf)-1);
+		msg->SetString("player", buf);
+		m_pCvarEntry->GetText(buf, sizeof(buf) - 1);
 		msg->SetString("value", buf);
-		msg->SetString("type",m_cType);
+		msg->SetString("type", m_cType);
 
 		PostActionSignal(msg);
 
 		bClose = true;
 	}
-	else if (!stricmp(command, "Close"))
+	else if(!stricmp(command, "Close"))
 	{
 		bClose = true;
 	}
@@ -131,7 +129,7 @@ void CDialogCvarChange::OnCommand(const char *command)
 		BaseClass::OnCommand(command);
 	}
 
-	if (bClose)
+	if(bClose)
 	{
 		Close();
 	}

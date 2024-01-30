@@ -13,11 +13,14 @@
 class IIsHolidayActive
 {
 public:
-	IIsHolidayActive( const char *pszHolidayName ) : m_pszHolidayName( pszHolidayName ) { }
-	virtual ~IIsHolidayActive ( ) { }
-	virtual bool IsActive( const CRTime& timeCurrent ) = 0;
+	IIsHolidayActive(const char *pszHolidayName) : m_pszHolidayName(pszHolidayName) {}
+	virtual ~IIsHolidayActive() {}
+	virtual bool IsActive(const CRTime &timeCurrent) = 0;
 
-	const char *GetHolidayName() const { return m_pszHolidayName; }
+	const char *GetHolidayName() const
+	{
+		return m_pszHolidayName;
+	}
 
 private:
 	const char *m_pszHolidayName;
@@ -30,9 +33,9 @@ private:
 class CNoHoliday : public IIsHolidayActive
 {
 public:
-	CNoHoliday() : IIsHolidayActive( "none" ) { }
+	CNoHoliday() : IIsHolidayActive("none") {}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
 		return false;
 	}
@@ -44,18 +47,15 @@ public:
 class CSingleDayHoliday : public IIsHolidayActive
 {
 public:
-	CSingleDayHoliday( const char *pszName, int iMonth, int iDay )
-		: IIsHolidayActive( pszName )
-		, m_iMonth( iMonth )
-		, m_iDay( iDay )
+	CSingleDayHoliday(const char *pszName, int iMonth, int iDay)
+		: IIsHolidayActive(pszName), m_iMonth(iMonth), m_iDay(iDay)
 	{
 		//
 	}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
-		return m_iMonth == timeCurrent.GetMonth()
-			&& m_iDay == timeCurrent.GetDayOfMonth();
+		return m_iMonth == timeCurrent.GetMonth() && m_iDay == timeCurrent.GetDayOfMonth();
 	}
 
 private:
@@ -71,52 +71,53 @@ private:
 class CWeeksBasedHoliday : public IIsHolidayActive
 {
 public:
-	CWeeksBasedHoliday( const char *pszName, int iMonth, int iDay, int iExtraWeeks )
-		: IIsHolidayActive( pszName )
-		, m_iMonth( iMonth )
-		, m_iDay( iDay )
-		, m_iExtraWeeks( iExtraWeeks )
-		, m_iCachedCalculatedYear( 0 )
+	CWeeksBasedHoliday(const char *pszName, int iMonth, int iDay, int iExtraWeeks)
+		: IIsHolidayActive(pszName),
+		  m_iMonth(iMonth),
+		  m_iDay(iDay),
+		  m_iExtraWeeks(iExtraWeeks),
+		  m_iCachedCalculatedYear(0)
 	{
 		// We'll calculate the interval the first time we call IsActive().
 	}
 
-	void RecalculateTimeActiveInterval( int iYear )
+	void RecalculateTimeActiveInterval(int iYear)
 	{
 		// Get the date of the holiday.
-		tm holiday_tm = { };
+		tm holiday_tm = {};
 		holiday_tm.tm_mday = m_iDay;
-		holiday_tm.tm_mon  = m_iMonth - 1;
+		holiday_tm.tm_mon = m_iMonth - 1;
 		holiday_tm.tm_year = iYear - 1900; // convert to years since 1900
-		mktime( &holiday_tm );
+		mktime(&holiday_tm);
 
 		// The event starts on the first Friday at least four days prior to the holiday.
-		tm start_time_tm( holiday_tm );
-		start_time_tm.tm_mday -= 4;							// Move back four days.
-		mktime( &start_time_tm );
-		int days_offset = start_time_tm.tm_wday - kFriday;	// Find the nearest prior Friday.
-		if ( days_offset < 0 )
+		tm start_time_tm(holiday_tm);
+		start_time_tm.tm_mday -= 4; // Move back four days.
+		mktime(&start_time_tm);
+		int days_offset = start_time_tm.tm_wday - kFriday; // Find the nearest prior Friday.
+		if(days_offset < 0)
 			days_offset += 7;
 		start_time_tm.tm_mday -= days_offset;
-		time_t start_time = mktime( &start_time_tm );
+		time_t start_time = mktime(&start_time_tm);
 
 		// The event ends on the first Monday after the holiday, maybe plus some additional fudge
 		// time.
-		tm end_time_tm( holiday_tm );
+		tm end_time_tm(holiday_tm);
 		days_offset = 7 - (end_time_tm.tm_wday - kMonday);
-		if ( days_offset >= 7 )
+		if(days_offset >= 7)
 			days_offset -= 7;
 		end_time_tm.tm_mday += days_offset + 7 * m_iExtraWeeks;
-		time_t end_time = mktime( &end_time_tm );
+		time_t end_time = mktime(&end_time_tm);
 
 #ifdef GC_DLL
-		char rgchDateStartBuf[ 128 ];
-		BGetLocalFormattedDate( start_time, rgchDateStartBuf, sizeof( rgchDateStartBuf) );
+		char rgchDateStartBuf[128];
+		BGetLocalFormattedDate(start_time, rgchDateStartBuf, sizeof(rgchDateStartBuf));
 
-		char rgchDateEndBuf[ 128 ];
-		BGetLocalFormattedDate( end_time, rgchDateEndBuf, sizeof( rgchDateEndBuf ) );
+		char rgchDateEndBuf[128];
+		BGetLocalFormattedDate(end_time, rgchDateEndBuf, sizeof(rgchDateEndBuf));
 
-		EmitInfo( GCSDK::SPEW_GC, 4, LOG_ALWAYS, "Holiday - '%s' event starts on '%s' and ends on '%s'.\n", GetHolidayName(), rgchDateStartBuf, rgchDateEndBuf );
+		EmitInfo(GCSDK::SPEW_GC, 4, LOG_ALWAYS, "Holiday - '%s' event starts on '%s' and ends on '%s'.\n",
+				 GetHolidayName(), rgchDateStartBuf, rgchDateEndBuf);
 #endif // GC_DLL
 
 		m_timeStart = start_time;
@@ -126,14 +127,13 @@ public:
 		m_iCachedCalculatedYear = iYear;
 	}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
 		const int iCurrentYear = timeCurrent.GetYear();
-		if ( m_iCachedCalculatedYear != iCurrentYear )
-			RecalculateTimeActiveInterval( iCurrentYear );
+		if(m_iCachedCalculatedYear != iCurrentYear)
+			RecalculateTimeActiveInterval(iCurrentYear);
 
-		return timeCurrent.GetRTime32() > m_timeStart
-			&& timeCurrent.GetRTime32() < m_timeEnd;
+		return timeCurrent.GetRTime32() > m_timeStart && timeCurrent.GetRTime32() < m_timeEnd;
 	}
 
 private:
@@ -158,37 +158,36 @@ private:
 class CCyclicalHoliday : public IIsHolidayActive
 {
 public:
-	CCyclicalHoliday( const char *pszName, int iMonth, int iDay, int iYear, float fCycleLengthInDays, float fBonusTimeInDays )
-		: IIsHolidayActive( pszName )
-		, m_fCycleLengthInDays( fCycleLengthInDays )
-		, m_fBonusTimeInDays( fBonusTimeInDays )
+	CCyclicalHoliday(const char *pszName, int iMonth, int iDay, int iYear, float fCycleLengthInDays,
+					 float fBonusTimeInDays)
+		: IIsHolidayActive(pszName), m_fCycleLengthInDays(fCycleLengthInDays), m_fBonusTimeInDays(fBonusTimeInDays)
 	{
 		// When is our initial interval?
-		tm holiday_tm = { };
+		tm holiday_tm = {};
 		holiday_tm.tm_mday = iDay;
-		holiday_tm.tm_mon  = iMonth - 1;
+		holiday_tm.tm_mon = iMonth - 1;
 		holiday_tm.tm_year = iYear - 1900; // convert to years since 1900
-		m_timeInitial = mktime( &holiday_tm );
+		m_timeInitial = mktime(&holiday_tm);
 	}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
 		// Days-to-seconds conversion.
 		const int iSecondsPerDay = 24 * 60 * 60;
 
 		// Convert our cycle/buffer times to seconds.
 		const int iCycleLengthInSeconds = (int)(m_fCycleLengthInDays * iSecondsPerDay);
-		const int iBufferTimeInSeconds  = (int)(m_fBonusTimeInDays * iSecondsPerDay);
+		const int iBufferTimeInSeconds = (int)(m_fBonusTimeInDays * iSecondsPerDay);
 
 		// How long has it been since we started this cycle?
 		int iSecondsIntoCycle = (timeCurrent.GetRTime32() - m_timeInitial) % iCycleLengthInSeconds;
 
 		// If we're within the buffer period right after the start of a cycle, we're active.
-		if ( iSecondsIntoCycle < iBufferTimeInSeconds )
+		if(iSecondsIntoCycle < iBufferTimeInSeconds)
 			return true;
 
 		// If we're within the buffer period towards the end of a cycle, we're active.
-		if ( iSecondsIntoCycle > iCycleLengthInSeconds - iBufferTimeInSeconds )
+		if(iSecondsIntoCycle > iCycleLengthInSeconds - iBufferTimeInSeconds)
 			return true;
 
 		// Alas, normal mode for us.
@@ -196,7 +195,7 @@ public:
 	}
 
 private:
-	time_t m_timeInitial ;
+	time_t m_timeInitial;
 
 	float m_fCycleLengthInDays;
 	float m_fBonusTimeInDays;
@@ -209,20 +208,17 @@ private:
 class COrHoliday : public IIsHolidayActive
 {
 public:
-	COrHoliday( const char *pszName, IIsHolidayActive *pA, IIsHolidayActive *pB )
-		: IIsHolidayActive( pszName )
-		, m_pA( pA )
-		, m_pB( pB )
+	COrHoliday(const char *pszName, IIsHolidayActive *pA, IIsHolidayActive *pB)
+		: IIsHolidayActive(pszName), m_pA(pA), m_pB(pB)
 	{
-		Assert( pA );
-		Assert( pB );
-		Assert( pA != pB );
+		Assert(pA);
+		Assert(pB);
+		Assert(pA != pB);
 	}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
-		return m_pA->IsActive( timeCurrent )
-			|| m_pB->IsActive( timeCurrent );
+		return m_pA->IsActive(timeCurrent) || m_pB->IsActive(timeCurrent);
 	}
 
 private:
@@ -236,23 +232,21 @@ private:
 class CDateBasedHoliday : public IIsHolidayActive
 {
 public:
-	CDateBasedHoliday( const char *pszName, const char *pszStartTime, const char *pszEndTime )
-		: IIsHolidayActive( pszName )
+	CDateBasedHoliday(const char *pszName, const char *pszStartTime, const char *pszEndTime) : IIsHolidayActive(pszName)
 	{
-		m_rtStartTime =	 CRTime::RTime32FromString( pszStartTime );
-		m_rtEndTime = CRTime::RTime32FromString( pszEndTime );
+		m_rtStartTime = CRTime::RTime32FromString(pszStartTime);
+		m_rtEndTime = CRTime::RTime32FromString(pszEndTime);
 	}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
-		return ( ( timeCurrent >= m_rtStartTime ) && ( timeCurrent <= m_rtEndTime ) );
+		return ((timeCurrent >= m_rtStartTime) && (timeCurrent <= m_rtEndTime));
 	}
 
 	RTime32 GetEndRTime() const
 	{
 		return m_rtEndTime.GetRTime32();
 	}
-
 
 private:
 	CRTime m_rtStartTime;
@@ -265,32 +259,29 @@ private:
 class CDateBasedHolidayNoSpecificYear : public IIsHolidayActive
 {
 public:
-	CDateBasedHolidayNoSpecificYear( const char *pszName, const char *pszStartTime, const char *pszEndTime )
-		: IIsHolidayActive( pszName )
-		, m_pszStartTime( pszStartTime )
-		, m_pszEndTime( pszEndTime )
-		, m_iCachedYear( -1 )
+	CDateBasedHolidayNoSpecificYear(const char *pszName, const char *pszStartTime, const char *pszEndTime)
+		: IIsHolidayActive(pszName), m_pszStartTime(pszStartTime), m_pszEndTime(pszEndTime), m_iCachedYear(-1)
 	{
 	}
 
-	virtual bool IsActive( const CRTime& timeCurrent )
+	virtual bool IsActive(const CRTime &timeCurrent)
 	{
 		const int iYear = timeCurrent.GetYear();
 
-		if ( iYear != m_iCachedYear )
+		if(iYear != m_iCachedYear)
 		{
 			char m_szStartTime[k_RTimeRenderBufferSize];
 			char m_szEndTime[k_RTimeRenderBufferSize];
 
-			V_sprintf_safe( m_szStartTime, "%d-%s", iYear, m_pszStartTime );
-			V_sprintf_safe( m_szEndTime, "%d-%s", iYear, m_pszEndTime );
+			V_sprintf_safe(m_szStartTime, "%d-%s", iYear, m_pszStartTime);
+			V_sprintf_safe(m_szEndTime, "%d-%s", iYear, m_pszEndTime);
 
 			m_iCachedYear = iYear;
-			m_rtCachedStartTime = CRTime::RTime32FromString( m_szStartTime );
-			m_rtCachedEndTime = CRTime::RTime32FromString( m_szEndTime );
+			m_rtCachedStartTime = CRTime::RTime32FromString(m_szStartTime);
+			m_rtCachedEndTime = CRTime::RTime32FromString(m_szEndTime);
 		}
 
-		return ( ( timeCurrent >= m_rtCachedStartTime ) && ( timeCurrent <= m_rtCachedEndTime ) );
+		return ((timeCurrent >= m_rtCachedStartTime) && (timeCurrent <= m_rtCachedEndTime));
 	}
 
 private:
@@ -306,74 +297,74 @@ private:
 // Purpose: Actual holiday implementation objects.
 //-----------------------------------------------------------------------------
 
-static CNoHoliday			g_Holiday_NoHoliday;
+static CNoHoliday g_Holiday_NoHoliday;
 
-static CDateBasedHolidayNoSpecificYear	g_Holiday_TF2Birthday	( "birthday",	"08-23", "08-25" );
+static CDateBasedHolidayNoSpecificYear g_Holiday_TF2Birthday("birthday", "08-23", "08-25");
 
-static CDateBasedHoliday	g_Holiday_Halloween					( "halloween",	"2016-10-19", "2016-11-18" );
+static CDateBasedHoliday g_Holiday_Halloween("halloween", "2016-10-19", "2016-11-18");
 
-static CDateBasedHoliday	g_Holiday_Christmas					( "christmas", "2016-11-28", "2017-01-12" );
+static CDateBasedHoliday g_Holiday_Christmas("christmas", "2016-11-28", "2017-01-12");
 
-static CDateBasedHolidayNoSpecificYear	g_Holiday_ValentinesDay	( "valentines",	"02-13", "02-15" );
+static CDateBasedHolidayNoSpecificYear g_Holiday_ValentinesDay("valentines", "02-13", "02-15");
 
-static CDateBasedHoliday	g_Holiday_MeetThePyro				( "meet_the_pyro",	"2012-06-26", "2012-07-05" );
-														   /*					starting date		cycle length in days	bonus time in days on both sides */
-static CCyclicalHoliday		g_Holiday_FullMoon					( "fullmoon",		5, 21, 2016,		29.53f,					1.0f );
-																								 // note: the cycle length is 29.5 instead of 29.53 so that the time calculations always start at noon based on the way CCyclicalHoliday works
-static COrHoliday			g_Holiday_HalloweenOrFullMoon		( "halloween_or_fullmoon",	&g_Holiday_Halloween,	&g_Holiday_FullMoon );
+static CDateBasedHoliday g_Holiday_MeetThePyro("meet_the_pyro", "2012-06-26", "2012-07-05");
+/*					starting date		cycle length in days	bonus time in days on both sides */
+static CCyclicalHoliday g_Holiday_FullMoon("fullmoon", 5, 21, 2016, 29.53f, 1.0f);
+// note: the cycle length is 29.5 instead of 29.53 so that the time calculations always start at noon based on the way
+// CCyclicalHoliday works
+static COrHoliday g_Holiday_HalloweenOrFullMoon("halloween_or_fullmoon", &g_Holiday_Halloween, &g_Holiday_FullMoon);
 
-static COrHoliday			g_Holiday_HalloweenOrFullMoonOrValentines	( "halloween_or_fullmoon_or_valentines",	&g_Holiday_HalloweenOrFullMoon,	&g_Holiday_ValentinesDay );
+static COrHoliday g_Holiday_HalloweenOrFullMoonOrValentines("halloween_or_fullmoon_or_valentines",
+															&g_Holiday_HalloweenOrFullMoon, &g_Holiday_ValentinesDay);
 
-static CDateBasedHolidayNoSpecificYear			g_Holiday_AprilFools	( "april_fools",	"03-31", "04-02" );
+static CDateBasedHolidayNoSpecificYear g_Holiday_AprilFools("april_fools", "03-31", "04-02");
 
-static CDateBasedHoliday	g_Holiday_EndOfTheLine				( "eotl_launch",	"2014-12-03", "2015-01-05" );
+static CDateBasedHoliday g_Holiday_EndOfTheLine("eotl_launch", "2014-12-03", "2015-01-05");
 
-static CDateBasedHoliday	g_Holiday_CommunityUpdate			( "community_update", "2015-09-01", "2015-11-05" );
+static CDateBasedHoliday g_Holiday_CommunityUpdate("community_update", "2015-09-01", "2015-11-05");
 
 // ORDER NEEDS TO MATCH enum EHoliday
-static IIsHolidayActive *s_HolidayChecks[] =
-{
-	&g_Holiday_NoHoliday,							// kHoliday_None
-	&g_Holiday_TF2Birthday,							// kHoliday_TFBirthday
-	&g_Holiday_Halloween,							// kHoliday_Halloween
-	&g_Holiday_Christmas,							// kHoliday_Christmas
-	&g_Holiday_CommunityUpdate,						// kHoliday_CommunityUpdate
-	&g_Holiday_EndOfTheLine,						// kHoliday_EOTL
-	&g_Holiday_ValentinesDay,						// kHoliday_Valentines
-	&g_Holiday_MeetThePyro,							// kHoliday_MeetThePyro
-	&g_Holiday_FullMoon,							// kHoliday_FullMoon
-	&g_Holiday_HalloweenOrFullMoon,					// kHoliday_HalloweenOrFullMoon
-	&g_Holiday_HalloweenOrFullMoonOrValentines,		// kHoliday_HalloweenOrFullMoonOrValentines
-	&g_Holiday_AprilFools,							// kHoliday_AprilFools
+static IIsHolidayActive *s_HolidayChecks[] = {
+	&g_Holiday_NoHoliday,						// kHoliday_None
+	&g_Holiday_TF2Birthday,						// kHoliday_TFBirthday
+	&g_Holiday_Halloween,						// kHoliday_Halloween
+	&g_Holiday_Christmas,						// kHoliday_Christmas
+	&g_Holiday_CommunityUpdate,					// kHoliday_CommunityUpdate
+	&g_Holiday_EndOfTheLine,					// kHoliday_EOTL
+	&g_Holiday_ValentinesDay,					// kHoliday_Valentines
+	&g_Holiday_MeetThePyro,						// kHoliday_MeetThePyro
+	&g_Holiday_FullMoon,						// kHoliday_FullMoon
+	&g_Holiday_HalloweenOrFullMoon,				// kHoliday_HalloweenOrFullMoon
+	&g_Holiday_HalloweenOrFullMoonOrValentines, // kHoliday_HalloweenOrFullMoonOrValentines
+	&g_Holiday_AprilFools,						// kHoliday_AprilFools
 };
 
-COMPILE_TIME_ASSERT( ARRAYSIZE( s_HolidayChecks ) == kHolidayCount );
+COMPILE_TIME_ASSERT(ARRAYSIZE(s_HolidayChecks) == kHolidayCount);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool EconHolidays_IsHolidayActive( int iHolidayIndex, const CRTime& timeCurrent )
+bool EconHolidays_IsHolidayActive(int iHolidayIndex, const CRTime &timeCurrent)
 {
-	if ( iHolidayIndex < 0 || iHolidayIndex >= kHolidayCount )
+	if(iHolidayIndex < 0 || iHolidayIndex >= kHolidayCount)
 		return false;
 
-	Assert( s_HolidayChecks[iHolidayIndex] );
-	if ( !s_HolidayChecks[iHolidayIndex] )
+	Assert(s_HolidayChecks[iHolidayIndex]);
+	if(!s_HolidayChecks[iHolidayIndex])
 		return false;
 
-	return s_HolidayChecks[iHolidayIndex]->IsActive( timeCurrent );
+	return s_HolidayChecks[iHolidayIndex]->IsActive(timeCurrent);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int	EconHolidays_GetHolidayForString( const char* pszHolidayName )
+int EconHolidays_GetHolidayForString(const char *pszHolidayName)
 {
-	for ( int iHoliday = 0; iHoliday < kHolidayCount; ++iHoliday )
+	for(int iHoliday = 0; iHoliday < kHolidayCount; ++iHoliday)
 	{
-		Assert( s_HolidayChecks[iHoliday] );
-		if ( s_HolidayChecks[iHoliday] &&
-			 0 == Q_stricmp( pszHolidayName, s_HolidayChecks[iHoliday]->GetHolidayName() ) )
+		Assert(s_HolidayChecks[iHoliday]);
+		if(s_HolidayChecks[iHoliday] && 0 == Q_stricmp(pszHolidayName, s_HolidayChecks[iHoliday]->GetHolidayName()))
 		{
 			return iHoliday;
 		}
@@ -389,13 +380,13 @@ const char *EconHolidays_GetActiveHolidayString()
 {
 	CRTime timeNow;
 	timeNow.SetToCurrentTime();
-	timeNow.SetToGMT( true );
+	timeNow.SetToGMT(true);
 
-	for ( int iHoliday = 0; iHoliday < kHolidayCount; iHoliday++ )
+	for(int iHoliday = 0; iHoliday < kHolidayCount; iHoliday++)
 	{
-		if ( EconHolidays_IsHolidayActive( iHoliday, timeNow ) )
+		if(EconHolidays_IsHolidayActive(iHoliday, timeNow))
 		{
-			Assert( s_HolidayChecks[iHoliday] );
+			Assert(s_HolidayChecks[iHoliday]);
 			return s_HolidayChecks[iHoliday]->GetHolidayName();
 		}
 	}

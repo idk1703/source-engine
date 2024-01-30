@@ -7,7 +7,7 @@
 //=============================================================================//
 #include "stdafx.h"
 
-#ifdef _PSEUDO_DEBUG   // entire file
+#ifdef _PSEUDO_DEBUG // entire file
 
 #ifdef _PSEUDO_DEBUG
 #undef THIS_FILE
@@ -19,19 +19,18 @@ LONG AssertReallyBusy = -1;
 
 BOOL AssertFailedLine(LPCSTR lpszFileName, int nLine)
 {
-	TCHAR szMessage[_MAX_PATH*2];
+	TCHAR szMessage[_MAX_PATH * 2];
 
 	InterlockedDecrement(&AssertReallyBusy);
 
 	// format message into buffer
-	wsprintf(szMessage, _T("File %hs, Line %d"),
-		lpszFileName, nLine);
+	wsprintf(szMessage, _T("File %hs, Line %d"), lpszFileName, nLine);
 
-	TCHAR szT[_MAX_PATH*2 + 20];
+	TCHAR szT[_MAX_PATH * 2 + 20];
 	wsprintf(szT, _T("Assertion Failed: %s\n"), szMessage);
 	OutputDebugString(szT);
 
-	if (InterlockedIncrement(&AssertBusy) > 0)
+	if(InterlockedIncrement(&AssertBusy) > 0)
 	{
 		InterlockedDecrement(&AssertBusy);
 
@@ -42,23 +41,23 @@ BOOL AssertFailedLine(LPCSTR lpszFileName, int nLine)
 
 	// active popup window for the current thread
 	HWND hWndParent = GetActiveWindow();
-	if (hWndParent != NULL)
+	if(hWndParent != NULL)
 		hWndParent = GetLastActivePopup(hWndParent);
 
 	// display the assert
 	int nCode = ::MessageBox(hWndParent, szMessage, _T("Assertion Failed!"),
-		MB_TASKMODAL|MB_ICONHAND|MB_ABORTRETRYIGNORE|MB_SETFOREGROUND);
+							 MB_TASKMODAL | MB_ICONHAND | MB_ABORTRETRYIGNORE | MB_SETFOREGROUND);
 
 	// cleanup
 	InterlockedDecrement(&AssertBusy);
 
-	if (nCode == IDIGNORE)
-		return FALSE;   // ignore
+	if(nCode == IDIGNORE)
+		return FALSE; // ignore
 
-	if (nCode == IDRETRY)
-		return TRUE;    // will cause DebugBreak
+	if(nCode == IDRETRY)
+		return TRUE; // will cause DebugBreak
 
-	AfxAbort();     // should not return (but otherwise DebugBreak)
+	AfxAbort(); // should not return (but otherwise DebugBreak)
 	return TRUE;
 }
 
@@ -71,17 +70,16 @@ void Trace(LPCTSTR lpszFormat, ...)
 	TCHAR szBuffer[512];
 
 	nBuf = _vstprintf(szBuffer, lpszFormat, args);
-	ASSERT(nBuf < (sizeof(szBuffer)/sizeof(szBuffer[0])));
+	ASSERT(nBuf < (sizeof(szBuffer) / sizeof(szBuffer[0])));
 
 	CString strMessage;
 
-	if (AfxGetApp() != NULL)
-		strMessage = ((CString) (AfxGetApp()->m_pszExeName)) + _T(": ");
+	if(AfxGetApp() != NULL)
+		strMessage = ((CString)(AfxGetApp()->m_pszExeName)) + _T(": ");
 	strMessage += szBuffer;
 	OutputDebugString(strMessage);
 
 	va_end(args);
 }
-
 
 #endif // _PSEUDO_DEBUG

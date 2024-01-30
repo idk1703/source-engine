@@ -20,25 +20,23 @@ public:
 		m_pMaterial = NULL;
 		m_pOriginVar = NULL;
 	}
-	virtual ~CEntityOriginMaterialProxy()
-	{
-	}
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+	virtual ~CEntityOriginMaterialProxy() {}
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 	{
 		m_pMaterial = pMaterial;
 		bool found;
-		m_pOriginVar = m_pMaterial->FindVar( "$entityorigin", &found );
-		if( !found )
+		m_pOriginVar = m_pMaterial->FindVar("$entityorigin", &found);
+		if(!found)
 		{
 			m_pOriginVar = NULL;
 			return false;
 		}
 		return true;
 	}
-	virtual void OnBind( C_BaseEntity *pC_BaseEntity )
+	virtual void OnBind(C_BaseEntity *pC_BaseEntity)
 	{
 		const Vector &origin = pC_BaseEntity->GetAbsOrigin();
-		m_pOriginVar->SetVecValue( origin.x, origin.y, origin.z );
+		m_pOriginVar->SetVecValue(origin.x, origin.y, origin.z);
 	}
 
 	virtual IMaterial *GetMaterial()
@@ -51,7 +49,7 @@ protected:
 	IMaterialVar *m_pOriginVar;
 };
 
-EXPOSE_INTERFACE( CEntityOriginMaterialProxy, IMaterialProxy, "EntityOrigin" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CEntityOriginMaterialProxy, IMaterialProxy, "EntityOrigin" IMATERIAL_PROXY_INTERFACE_VERSION);
 
 //=================================================================================================================
 // This is a last-minute hack to ship Orange Box on the 360!
@@ -64,25 +62,23 @@ public:
 		m_pMaterial = NULL;
 		m_pOriginVar = NULL;
 	}
-	virtual ~CEntityOriginAlyxMaterialProxy()
-	{
-	}
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+	virtual ~CEntityOriginAlyxMaterialProxy() {}
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 	{
 		m_pMaterial = pMaterial;
 		bool found;
-		m_pOriginVar = m_pMaterial->FindVar( "$entityorigin", &found );
-		if( !found )
+		m_pOriginVar = m_pMaterial->FindVar("$entityorigin", &found);
+		if(!found)
 		{
 			m_pOriginVar = NULL;
 			return false;
 		}
 		return true;
 	}
-	virtual void OnBind( C_BaseEntity *pC_BaseEntity )
+	virtual void OnBind(C_BaseEntity *pC_BaseEntity)
 	{
 		const Vector &origin = pC_BaseEntity->GetAbsOrigin();
-		m_pOriginVar->SetVecValue( origin.x - 15.0f, origin.y, origin.z );
+		m_pOriginVar->SetVecValue(origin.x - 15.0f, origin.y, origin.z);
 	}
 
 	virtual IMaterial *GetMaterial()
@@ -95,7 +91,7 @@ protected:
 	IMaterialVar *m_pOriginVar;
 };
 
-EXPOSE_INTERFACE( CEntityOriginAlyxMaterialProxy, IMaterialProxy, "EntityOriginAlyx" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CEntityOriginAlyxMaterialProxy, IMaterialProxy, "EntityOriginAlyx" IMATERIAL_PROXY_INTERFACE_VERSION);
 
 //=================================================================================================================
 // This is a last-minute hack to ship Orange Box on the 360!
@@ -108,30 +104,28 @@ public:
 		m_pMaterial = NULL;
 		m_pOriginVar = NULL;
 	}
-	virtual ~CEp1IntroVortRefractMaterialProxy()
-	{
-	}
-	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+	virtual ~CEp1IntroVortRefractMaterialProxy() {}
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 	{
 		m_pMaterial = pMaterial;
 		bool found;
-		m_pOriginVar = m_pMaterial->FindVar( "$refractamount", &found );
-		if( !found )
+		m_pOriginVar = m_pMaterial->FindVar("$refractamount", &found);
+		if(!found)
 		{
 			m_pOriginVar = NULL;
 			return false;
 		}
 		return true;
 	}
-	virtual void OnBind( C_BaseEntity *pC_BaseEntity )
+	virtual void OnBind(C_BaseEntity *pC_BaseEntity)
 	{
-		if ( m_pOriginVar != NULL)
+		if(m_pOriginVar != NULL)
 		{
-			float flTmp = ( 1.0f - m_pOriginVar->GetFloatValue() );
+			float flTmp = (1.0f - m_pOriginVar->GetFloatValue());
 			flTmp *= flTmp;
 			flTmp *= flTmp;
-			flTmp = ( 1.0f - flTmp ) * 0.25f;
-			m_pOriginVar->SetFloatValue( flTmp );
+			flTmp = (1.0f - flTmp) * 0.25f;
+			m_pOriginVar->SetFloatValue(flTmp);
 		}
 	}
 
@@ -145,4 +139,5 @@ protected:
 	IMaterialVar *m_pOriginVar;
 };
 
-EXPOSE_INTERFACE( CEp1IntroVortRefractMaterialProxy, IMaterialProxy, "Ep1IntroVortRefract" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CEp1IntroVortRefractMaterialProxy, IMaterialProxy,
+				 "Ep1IntroVortRefract" IMATERIAL_PROXY_INTERFACE_VERSION);

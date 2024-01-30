@@ -16,38 +16,34 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-static CHistory *pCurHistory;	// The Undo/Redo history associated with the active doc.
-static CHistory FakeHistory;	// Used when there is no active doc. Always paused.
-
+static CHistory *pCurHistory; // The Undo/Redo history associated with the active doc.
+static CHistory FakeHistory;  // Used when there is no active doc. Always paused.
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the current active Undo/Redo history.
 //-----------------------------------------------------------------------------
 CHistory *GetHistory(void)
 {
-	if (!pCurHistory)
+	if(!pCurHistory)
 	{
-		return(&FakeHistory);
+		return (&FakeHistory);
 	}
 
-	return(pCurHistory);
+	return (pCurHistory);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
 CHistory::CHistory(void)
 {
-	static BOOL bFirst = TRUE;	// fake history is always first
+	static BOOL bFirst = TRUE; // fake history is always first
 	Opposite = NULL;
 	CurTrack = NULL;
-	bPaused = bFirst ? 2 : FALSE;	// if 2, never unpaused
+	bPaused = bFirst ? 2 : FALSE; // if 2, never unpaused
 	bFirst = FALSE;
 	m_bActive = TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
@@ -56,7 +52,6 @@ CHistory::~CHistory()
 {
 	Tracks.PurgeAndDeleteElements();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -69,7 +64,6 @@ void CHistory::SetOpposite(BOOL bUndo_, CHistory *pOpposite)
 	Opposite = pOpposite;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : Returns TRUE on success, FALSE on failure.
@@ -80,7 +74,6 @@ BOOL CHistory::IsUndoable()
 	return (CurTrack && m_bActive) ? TRUE : FALSE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : bActive -
@@ -88,10 +81,10 @@ BOOL CHistory::IsUndoable()
 void CHistory::SetActive(BOOL bActive)
 {
 	m_bActive = bActive;
-	if (!m_bActive)
+	if(!m_bActive)
 	{
 		// kill all tracks right now
-		FOR_EACH_OBJ( Tracks, pos )
+		FOR_EACH_OBJ(Tracks, pos)
 		{
 			CHistoryTrack *pTrack = Tracks.Element(pos);
 			delete pTrack;
@@ -101,7 +94,6 @@ void CHistory::SetActive(BOOL bActive)
 		MarkUndoPosition();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Actually, this implements both Undo and Redo, because a Redo is just
@@ -115,7 +107,7 @@ void CHistory::Undo(CMapObjectList *pNewSelection)
 	//
 	// Track entries are consumed LIFO.
 	//
-	int pos = Tracks.Count()-1;
+	int pos = Tracks.Count() - 1;
 	Tracks.Remove(pos);
 
 	//
@@ -141,9 +133,9 @@ void CHistory::Undo(CMapObjectList *pNewSelection)
 	//
 	// Move to the previous track entry.
 	//
-	if ( Tracks.Count() > 0 )
+	if(Tracks.Count() > 0)
 	{
-		CurTrack = Tracks.Element(Tracks.Count()-1);
+		CurTrack = Tracks.Element(Tracks.Count() - 1);
 	}
 	else
 	{
@@ -151,25 +143,23 @@ void CHistory::Undo(CMapObjectList *pNewSelection)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pSelection -
 //			pszName -
 //			bFromOpposite -
 //-----------------------------------------------------------------------------
-void CHistory::MarkUndoPosition( const CMapObjectList *pSelection, LPCTSTR pszName, BOOL bFromOpposite)
+void CHistory::MarkUndoPosition(const CMapObjectList *pSelection, LPCTSTR pszName, BOOL bFromOpposite)
 {
 	if(Opposite && bUndo && !bFromOpposite)
 	{
 		// this is the undo tracker and the call is NOT from the redo
 		// tracker. kill the redo tracker's history.
-		FOR_EACH_OBJ( Opposite->Tracks, pos )
+		FOR_EACH_OBJ(Opposite->Tracks, pos)
 		{
 			CHistoryTrack *pTrack = Opposite->Tracks.Element(pos);
 			pTrack->m_bAutoDestruct = true;
 			delete pTrack;
-
 		}
 
 		Opposite->Tracks.RemoveAll();
@@ -190,14 +180,14 @@ void CHistory::MarkUndoPosition( const CMapObjectList *pSelection, LPCTSTR pszNa
 		int pos = 0;
 		while(i--)
 		{
-			CHistoryTrack *pTrack = Tracks.Element(pos); pos++;
+			CHistoryTrack *pTrack = Tracks.Element(pos);
+			pos++;
 			if(pTrack == CurTrack)
 			{
 				i2 -= (i2 - i);
-				break;	// safeguard
+				break; // safeguard
 			}
 			delete pTrack;
-
 		}
 		// delete them from the list now
 		while(i2--)
@@ -207,14 +197,13 @@ void CHistory::MarkUndoPosition( const CMapObjectList *pSelection, LPCTSTR pszNa
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Keeps an object, so changes to it can be undone.
 // Input  : pObject - Object to keep.
 //-----------------------------------------------------------------------------
 void CHistory::Keep(CMapClass *pObject)
 {
-	if (CurTrack == NULL)
+	if(CurTrack == NULL)
 	{
 		MarkUndoPosition();
 	}
@@ -226,13 +215,12 @@ void CHistory::Keep(CMapClass *pObject)
 	//
 	EnumChildrenPos_t pos;
 	CMapClass *pChild = pObject->GetFirstDescendent(pos);
-	while (pChild != NULL)
+	while(pChild != NULL)
 	{
 		CurTrack->Keep(pChild, true);
 		pChild = pObject->GetNextDescendent(pos);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Keeps an object, so changes to it can be undone.
@@ -240,7 +228,7 @@ void CHistory::Keep(CMapClass *pObject)
 //-----------------------------------------------------------------------------
 void CHistory::KeepNoChildren(CMapClass *pObject)
 {
-	if (CurTrack == NULL)
+	if(CurTrack == NULL)
 	{
 		MarkUndoPosition();
 	}
@@ -248,20 +236,18 @@ void CHistory::KeepNoChildren(CMapClass *pObject)
 	CurTrack->Keep(pObject, false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Keeps a list of objects, so changes to them can be undone.
 // Input  : pList - List of objects to keep.
 //-----------------------------------------------------------------------------
 void CHistory::Keep(const CMapObjectList *pList)
 {
-	FOR_EACH_OBJ( *pList, pos )
+	FOR_EACH_OBJ(*pList, pos)
 	{
 		CMapClass *pObject = pList->Element(pos);
 		Keep(pObject);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -269,7 +255,7 @@ void CHistory::Keep(const CMapObjectList *pList)
 //-----------------------------------------------------------------------------
 void CHistory::KeepForDestruction(CMapClass *pObject)
 {
-	if (CurTrack == NULL)
+	if(CurTrack == NULL)
 	{
 		MarkUndoPosition();
 	}
@@ -277,14 +263,13 @@ void CHistory::KeepForDestruction(CMapClass *pObject)
 	CurTrack->KeepForDestruction(pObject);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Keeps a new object, so it can be deleted on an undo.
 // Input  : pObject - Object to keep.
 //-----------------------------------------------------------------------------
 void CHistory::KeepNew(CMapClass *pObject, bool bKeepChildren)
 {
-	if (CurTrack == NULL)
+	if(CurTrack == NULL)
 	{
 		MarkUndoPosition();
 	}
@@ -292,11 +277,11 @@ void CHistory::KeepNew(CMapClass *pObject, bool bKeepChildren)
 	//
 	// Keep this object's children.
 	//
-	if (bKeepChildren)
+	if(bKeepChildren)
 	{
 		EnumChildrenPos_t pos;
 		CMapClass *pChild = pObject->GetFirstDescendent(pos);
-		while (pChild != NULL)
+		while(pChild != NULL)
 		{
 			CurTrack->KeepNew(pChild);
 			pChild = pObject->GetNextDescendent(pos);
@@ -306,20 +291,18 @@ void CHistory::KeepNew(CMapClass *pObject, bool bKeepChildren)
 	CurTrack->KeepNew(pObject);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Keeps a list of new objects, so changes to them can be undone.
 // Input  : pList - List of objects to keep.
 //-----------------------------------------------------------------------------
-void CHistory::KeepNew( const CMapObjectList *pList, bool bKeepChildren)
+void CHistory::KeepNew(const CMapObjectList *pList, bool bKeepChildren)
 {
-	FOR_EACH_OBJ( *pList, pos )
+	FOR_EACH_OBJ(*pList, pos)
 	{
 		CMapClass *pObject = pList->Element(pos);
 		KeepNew(pObject, bKeepChildren);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the given history object as the one to use for all Undo operations.
@@ -329,23 +312,21 @@ void CHistory::SetHistory(class CHistory *pHistory)
 	pCurHistory = pHistory;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CHistory::OnRemoveVisGroup(CVisGroup *pVisGroup)
 {
-	if (CurTrack)
+	if(CurTrack)
 	{
 		CurTrack->OnRemoveVisGroup(pVisGroup);
 	}
 
-	if (Opposite && Opposite->CurTrack)
+	if(Opposite && Opposite->CurTrack)
 	{
 		Opposite->CurTrack->OnRemoveVisGroup(pVisGroup);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -358,7 +339,6 @@ CTrackEntry::CTrackEntry()
 	m_bUndone = false;
 	m_bKeptChildren = false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructs a track entry from a list of parameters.
@@ -374,7 +354,7 @@ CTrackEntry::CTrackEntry(TrackType_t eType, ...)
 	va_list vl;
 	va_start(vl, eType);
 
-	switch (m_eType)
+	switch(m_eType)
 	{
 		//
 		// Keep track of an object that was modified by the user. An Undo will cause this
@@ -417,7 +397,6 @@ CTrackEntry::CTrackEntry(TrackType_t eType, ...)
 	va_end(vl);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor. Called when history events are removed from the Undo
 //			history. The goal here is to clean up any copies of objects that
@@ -428,19 +407,19 @@ CTrackEntry::CTrackEntry(TrackType_t eType, ...)
 //-----------------------------------------------------------------------------
 CTrackEntry::~CTrackEntry()
 {
-	if (!m_bAutoDestruct || m_eType == ttNone)
+	if(!m_bAutoDestruct || m_eType == ttNone)
 	{
 		return;
 	}
 
-	switch (m_eType)
+	switch(m_eType)
 	{
 		//
 		// We kept a copy of an object. Delete our copy of the object.
 		//
 		case ttCopy:
 		{
-			if (!m_bUndone)
+			if(!m_bUndone)
 			{
 				delete m_Copy.pKeptObject;
 			}
@@ -466,7 +445,7 @@ CTrackEntry::~CTrackEntry()
 			// If this entry was undone, the object has been added back into the world, so we
 			// should not delete the object.
 			//
-			if (!m_bUndone)
+			if(!m_bUndone)
 			{
 				delete m_Delete.pDeleted;
 			}
@@ -475,11 +454,10 @@ CTrackEntry::~CTrackEntry()
 
 		default:
 		{
-			Assert( false );
+			Assert(false);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -489,7 +467,6 @@ void CTrackEntry::SetKeptChildren(bool bSet)
 	m_bKeptChildren = bSet;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Performs the undo by restoring the kept object to its original state.
 // Input  : Opposite - Pointer to the opposite history track. If we are in the
@@ -497,14 +474,14 @@ void CTrackEntry::SetKeptChildren(bool bSet)
 //-----------------------------------------------------------------------------
 void CTrackEntry::Undo(CHistory *Opposite)
 {
-	switch (m_eType)
+	switch(m_eType)
 	{
 		//
 		// We are undoing a change to an object. Restore it to its original state.
 		//
 		case ttCopy:
 		{
-			if (m_bKeptChildren)
+			if(m_bKeptChildren)
 			{
 				Opposite->Keep(m_Copy.pCurrent);
 			}
@@ -569,7 +546,6 @@ void CTrackEntry::Undo(CHistory *Opposite)
 	m_bUndone = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Notifies the object that it has been undone/redone. Called after all
 //			undo entries have been handled so that objects are dealing with the
@@ -577,7 +553,7 @@ void CTrackEntry::Undo(CHistory *Opposite)
 //-----------------------------------------------------------------------------
 void CTrackEntry::DispatchUndoNotify(void)
 {
-	switch (m_eType)
+	switch(m_eType)
 	{
 		//
 		// We are undoing a change to an object. Restore it to its original state.
@@ -591,7 +567,6 @@ void CTrackEntry::DispatchUndoNotify(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: The given visgroup is being deleted. Remove pointers to it from
 //			the object in this track entry.
@@ -599,7 +574,7 @@ void CTrackEntry::DispatchUndoNotify(void)
 //-----------------------------------------------------------------------------
 void CTrackEntry::OnRemoveVisGroup(CVisGroup *pVisGroup)
 {
-	switch (m_eType)
+	switch(m_eType)
 	{
 		case ttCopy:
 		{
@@ -620,7 +595,6 @@ void CTrackEntry::OnRemoveVisGroup(CVisGroup *pVisGroup)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pParent -
@@ -635,11 +609,11 @@ CHistoryTrack::CHistoryTrack(CHistory *pParent, const CMapObjectList *pSelected)
 
 	uDataSize = 0;
 
-	static int dwTrackerID = 1;	// objects start at 0, so we don't want to
-	dwID = dwTrackerID ++;
+	static int dwTrackerID = 1; // objects start at 0, so we don't want to
+	dwID = dwTrackerID++;
 
 	// add to local list of selected objects at time of creation
-	if (pSelected)
+	if(pSelected)
 	{
 		Selected.AddVectorToTail(*pSelected);
 	}
@@ -647,7 +621,6 @@ CHistoryTrack::CHistoryTrack(CHistory *pParent, const CMapObjectList *pSelected)
 	m_bAutoDestruct = true;
 	szName[0] = 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor. Called when this track's document is being deleted.
@@ -657,12 +630,11 @@ CHistoryTrack::CHistoryTrack(CHistory *pParent, const CMapObjectList *pSelected)
 //-----------------------------------------------------------------------------
 CHistoryTrack::~CHistoryTrack()
 {
-	for (int i = 0; i < Data.Count(); i++)
+	for(int i = 0; i < Data.Count(); i++)
 	{
 		Data[i].m_bAutoDestruct = m_bAutoDestruct;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -684,8 +656,7 @@ BOOL CHistoryTrack::CheckObjectFlag(CMapClass *pObject, int iFlag)
 		// if we've already stored that this is a new object in this
 		//  track, there is no point in storing a copy since UNDOing
 		//  this track will delete the object.
-		if(iFlag == CTrackEntry::ttCopy &&
-			(pObject->Kept.Types & CTrackEntry::ttCreate))
+		if(iFlag == CTrackEntry::ttCopy && (pObject->Kept.Types & CTrackEntry::ttCreate))
 		{
 			return TRUE;
 		}
@@ -702,20 +673,16 @@ BOOL CHistoryTrack::CheckObjectFlag(CMapClass *pObject, int iFlag)
 	return FALSE;
 }
 
-
-
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CHistoryTrack::OnRemoveVisGroup(CVisGroup *pVisGroup)
 {
-	for (int i = 0; i < Data.Count(); i++)
+	for(int i = 0; i < Data.Count(); i++)
 	{
 		Data[i].OnRemoveVisGroup(pVisGroup);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -741,7 +708,6 @@ void CHistoryTrack::Keep(CMapClass *pObject, bool bKeepChildren)
 	Parent->Resume();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pObject -
@@ -764,7 +730,6 @@ void CHistoryTrack::KeepForDestruction(CMapClass *pObject)
 	Parent->Resume();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pObject -
@@ -786,13 +751,12 @@ void CHistoryTrack::KeepNew(CMapClass *pObject)
 	Parent->Resume();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Undoes all the track entries in this track.
 //-----------------------------------------------------------------------------
 void CHistoryTrack::Undo()
 {
-	for (int i = Data.Count() - 1; i >= 0; i--)
+	for(int i = Data.Count() - 1; i >= 0; i--)
 	{
 		Data[i].Undo(Parent->Opposite);
 	}
@@ -801,7 +765,7 @@ void CHistoryTrack::Undo()
 	// Do notification separately so that objects are dealing with the
 	// correct data set when they calculate bounds, etc.
 	//
-	for (int i = Data.Count() - 1; i >= 0; i--)
+	for(int i = Data.Count() - 1; i >= 0; i--)
 	{
 		Data[i].DispatchUndoNotify();
 	}

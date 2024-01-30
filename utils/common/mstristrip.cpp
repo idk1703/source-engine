@@ -14,10 +14,10 @@
 //-----------------------------------------------------------------------------
 
 // identifier was truncated to '255' characters in the debug information
-#pragma warning(disable: 4786)
+#pragma warning(disable : 4786)
 // conversion from 'double' to 'float'
-#pragma warning(disable: 4244)
-#pragma warning(disable: 4530)
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4530)
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -86,8 +86,8 @@ public:
 	void InitTriangleInfo(int tri, int vert);
 
 	// get maximum length strip from tri/vert
-	int CreateStrip(int tri, int vert, int maxlen, int *pswaps,
-		bool flookahead, bool fstartcw, int *pstriptris, int *pstripverts);
+	int CreateStrip(int tri, int vert, int maxlen, int *pswaps, bool flookahead, bool fstartcw, int *pstriptris,
+					int *pstripverts);
 
 	// stripify entire mesh
 	void BuildStrips(STRIPLIST *pstriplist, int maxlen, bool flookahead);
@@ -108,11 +108,11 @@ public:
 	}
 
 	// from callee
-	int m_numtris;              // # tris
-	TRIANGLELIST m_ptriangles;  // trilist
+	int m_numtris;			   // # tris
+	TRIANGLELIST m_ptriangles; // trilist
 
-	TRIANGLEINFO *m_ptriinfo;   // tri edge, neighbor info
-	int *m_pused;               // tri used flag
+	TRIANGLEINFO *m_ptriinfo; // tri edge, neighbor info
+	int *m_pused;			  // tri used flag
 };
 
 //=========================================================================
@@ -122,9 +122,10 @@ class CVertCache
 {
 public:
 	CVertCache()
-		{ Reset(); }
-	~CVertCache()
-		{};
+	{
+		Reset();
+	}
+	~CVertCache() {};
 
 	// reset cache
 	void Reset()
@@ -138,23 +139,28 @@ public:
 	bool Add(int strip, int vertindex);
 
 	int NumCacheHits() const
-		{ return m_cachehits; }
+	{
+		return m_cachehits;
+	}
 
-//    enum { CACHE_SIZE = 10 };
-	enum { CACHE_SIZE = 18 };
+	//    enum { CACHE_SIZE = 10 };
+	enum
+	{
+		CACHE_SIZE = 18
+	};
 
 private:
-	int m_cachehits;                // current # of cache hits
-	WORD m_rgCache[CACHE_SIZE];     // vertex cache
+	int m_cachehits;				// current # of cache hits
+	WORD m_rgCache[CACHE_SIZE];		// vertex cache
 	int m_rgCacheStrip[CACHE_SIZE]; // strip # which added vert
-	int m_iCachePtr;                // fifo ptr
+	int m_iCachePtr;				// fifo ptr
 };
 
 //=========================================================================
 // Get maximum length of strip starting at tri/vert
 //=========================================================================
-int CStripper::CreateStrip(int tri, int vert, int maxlen, int *pswaps,
-	bool flookahead, bool fstartcw, int *pstriptris, int *pstripverts)
+int CStripper::CreateStrip(int tri, int vert, int maxlen, int *pswaps, bool flookahead, bool fstartcw, int *pstriptris,
+						   int *pstripverts)
 {
 	*pswaps = 0;
 
@@ -193,7 +199,7 @@ int CStripper::CreateStrip(int tri, int vert, int maxlen, int *pswaps,
 
 	// start building the strip until we run out of room or indices
 	int stripcount;
-	for( stripcount = 3; stripcount < maxlen; stripcount++)
+	for(stripcount = 3; stripcount < maxlen; stripcount++)
 	{
 		// dead end?
 		if(nexttri == -1 || m_pused[nexttri])
@@ -295,8 +301,7 @@ int CStripper::CreateStrip(int tri, int vert, int maxlen, int *pswaps,
 //=========================================================================
 // Given a striplist and current cache state, pick the best next strip
 //=========================================================================
-STRIPLIST::iterator FindBestCachedStrip(STRIPLIST *pstriplist,
-	const CVertCache &vertcachestate)
+STRIPLIST::iterator FindBestCachedStrip(STRIPLIST *pstriplist, const CVertCache &vertcachestate)
 {
 	if(pstriplist->empty())
 		return pstriplist->end();
@@ -309,17 +314,14 @@ STRIPLIST::iterator FindBestCachedStrip(STRIPLIST *pstriplist,
 	bool fstartcw = FIsStripCW(**istriplistbest);
 
 	// go through all the other strips looking for the best caching
-	for(STRIPLIST::iterator istriplist = pstriplist->begin();
-		istriplist != pstriplist->end();
-		++istriplist)
+	for(STRIPLIST::iterator istriplist = pstriplist->begin(); istriplist != pstriplist->end(); ++istriplist)
 	{
 		bool fFlip = false;
 		const STRIPVERTS &stripverts = **istriplist;
 		int striplennew = StripLen(stripverts);
 
 		// check cache if this strip is the same type as us (ie: cw/odd)
-		if((FIsStripCW(stripverts) == fstartcw) &&
-			((striplen & 0x1) == (striplennew & 0x1)))
+		if((FIsStripCW(stripverts) == fstartcw) && ((striplen & 0x1) == (striplennew & 0x1)))
 		{
 			// copy current state of cache
 			CVertCache vertcachenew = vertcachestate;
@@ -370,7 +372,6 @@ STRIPLIST::iterator FindBestCachedStrip(STRIPLIST *pstriplist,
 	return pstriplist->begin();
 }
 
-
 //=========================================================================
 // Don't merge the strips - just blast em into the stripbuffer one by one
 // (useful for debugging)
@@ -382,22 +383,20 @@ int CStripper::CreateManyStrips(STRIPLIST *pstriplist, WORD **ppstripindices)
 
 	// we're storing the strips in [size1 i1 i2 i3][size2 i4 i5 i6][0] format
 	STRIPLIST::iterator istriplist;
-	for( istriplist = pstriplist->begin(); istriplist != pstriplist->end(); ++istriplist)
+	for(istriplist = pstriplist->begin(); istriplist != pstriplist->end(); ++istriplist)
 	{
 		// add striplength plus potential degenerate to swap ccw --> cw
 		indexcount += StripLen(**istriplist) + 1;
 	}
 
 	// alloc the space for all this stuff
-	WORD *pstripindices = new WORD [indexcount];
+	WORD *pstripindices = new WORD[indexcount];
 	assert(pstripindices);
 
 	CVertCache vertcache;
 	int numstripindices = 0;
 
-	for(istriplist = pstriplist->begin();
-		!pstriplist->empty();
-		istriplist = FindBestCachedStrip(pstriplist, vertcache))
+	for(istriplist = pstriplist->begin(); !pstriplist->empty(); istriplist = FindBestCachedStrip(pstriplist, vertcache))
 	{
 		const STRIPVERTS &stripverts = **istriplist;
 
@@ -443,13 +442,13 @@ int CStripper::CreateLongStrip(STRIPLIST *pstriplist, WORD **ppstripindices)
 
 	// we're storing the strips in [size1 i1 i2 i3][size2 i4 i5 i6][0] format
 	STRIPLIST::iterator istriplist;
-	for( istriplist = pstriplist->begin(); istriplist != pstriplist->end(); ++istriplist)
+	for(istriplist = pstriplist->begin(); istriplist != pstriplist->end(); ++istriplist)
 	{
 		indexcount += StripLen(**istriplist);
 	}
 
 	// alloc the space for all this stuff
-	WORD *pstripindices = new WORD [indexcount];
+	WORD *pstripindices = new WORD[indexcount];
 	assert(pstripindices);
 
 	CVertCache vertcache;
@@ -538,7 +537,7 @@ void CStripper::BuildStrips(STRIPLIST *pstriplist, int maxlen, bool flookahead)
 		int bestneighborcount = INT_MAX;
 
 		int tri;
-		for( tri = 0; tri < m_numtris; tri++)
+		for(tri = 0; tri < m_numtris; tri++)
 		{
 			// if used the continue
 			if(m_pused[tri])
@@ -560,8 +559,7 @@ void CStripper::BuildStrips(STRIPLIST *pstriplist, int maxlen, bool flookahead)
 			for(int vert = 0; vert < 3; vert++)
 			{
 				int swaps;
-				int len = CreateStrip(tri, vert, maxlen, &swaps, flookahead,
-					fstartcw, pstriptris, pstripverts);
+				int len = CreateStrip(tri, vert, maxlen, &swaps, flookahead, fstartcw, pstriptris, pstripverts);
 				assert(len);
 
 				float ratio = (len == 3) ? 1.0f : (float)swaps / len;
@@ -569,7 +567,7 @@ void CStripper::BuildStrips(STRIPLIST *pstriplist, int maxlen, bool flookahead)
 				// check if this ratio is better than what we've already got for
 				// this neighborcount
 				if((curneightborcount < bestneighborcount) ||
-					((curneightborcount == bestneighborcount) && (ratio < bestratio)))
+				   ((curneightborcount == bestneighborcount) && (ratio < bestratio)))
 				{
 					bestneighborcount = curneightborcount;
 
@@ -577,7 +575,6 @@ void CStripper::BuildStrips(STRIPLIST *pstriplist, int maxlen, bool flookahead)
 					bestvert = vert;
 					bestratio = ratio;
 				}
-
 			}
 		}
 
@@ -587,8 +584,7 @@ void CStripper::BuildStrips(STRIPLIST *pstriplist, int maxlen, bool flookahead)
 
 		// recreate this strip
 		int swaps;
-		int len = CreateStrip(besttri, bestvert, maxlen,
-			&swaps, flookahead, fstartcw, pstriptris, pstripverts);
+		int len = CreateStrip(besttri, bestvert, maxlen, &swaps, flookahead, fstartcw, pstriptris, pstripverts);
 		assert(len);
 
 		// mark the tris on the best strip as used
@@ -626,9 +622,7 @@ int EstimateStripCost(STRIPLIST *pstriplist)
 {
 	int count = 0;
 
-	for(STRIPLIST::iterator istriplist = pstriplist->begin();
-		istriplist != pstriplist->end();
-		++istriplist)
+	for(STRIPLIST::iterator istriplist = pstriplist->begin(); istriplist != pstriplist->end(); ++istriplist)
 	{
 		// add count of indices
 		count += StripLen(**istriplist);
@@ -653,8 +647,7 @@ void CStripper::InitTriangleInfo(int tri, int vert)
 		{
 			for(int ivert = 0; ivert < 3; ivert++)
 			{
-				if((ptriverts[ivert] == vert1) &&
-					(ptriverts[(ivert + 1) % 3] == vert2))
+				if((ptriverts[ivert] == vert1) && (ptriverts[(ivert + 1) % 3] == vert2))
 				{
 					// add the triangle info
 					m_ptriinfo[tri].neighbortri[vert] = itri;
@@ -687,7 +680,7 @@ CStripper::CStripper(int numtris, TRIANGLELIST ptriangles)
 
 	// init triinfo
 	int itri;
-	for( itri = 0; itri < numtris; itri++)
+	for(itri = 0; itri < numtris; itri++)
 	{
 		m_ptriinfo[itri].neighbortri[0] = -1;
 		m_ptriinfo[itri].neighbortri[1] = -1;
@@ -717,10 +710,10 @@ CStripper::CStripper(int numtris, TRIANGLELIST ptriangles)
 CStripper::~CStripper()
 {
 	// free stuff
-	delete [] m_pused;
+	delete[] m_pused;
 	m_pused = NULL;
 
-	delete [] m_ptriinfo;
+	delete[] m_ptriinfo;
 	m_ptriinfo = NULL;
 }
 
@@ -763,10 +756,7 @@ void EnableLeakChecking()
 {
 	int flCrtDbgFlags = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 
-	flCrtDbgFlags &=
-		~(_CRTDBG_LEAK_CHECK_DF |
-		_CRTDBG_CHECK_ALWAYS_DF |
-		_CRTDBG_DELAY_FREE_MEM_DF);
+	flCrtDbgFlags &= ~(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_DELAY_FREE_MEM_DF);
 
 	// always check for memory leaks
 	flCrtDbgFlags |= _CRTDBG_LEAK_CHECK_DF;
@@ -807,24 +797,22 @@ int Stripify(int numtris, WORD *ptriangles, int *pnumindices, WORD **ppstripindi
 	// map of various args to try stripifying mesh with
 	struct ARGMAP
 	{
-		int     maxlen;         // maximum length of strips
-		bool    flookahead;     // use sgi greedy lookahead (or not)
-	} rgargmap[] =
-	{
-		{ 1024,  true  },
-		{ 1024,  false },
+		int maxlen;		 // maximum length of strips
+		bool flookahead; // use sgi greedy lookahead (or not)
+	} rgargmap[] = {
+		{1024, true},
+		{1024, false},
 	};
 	static const int cargmaps = sizeof(rgargmap) / sizeof(rgargmap[0]);
-	STRIPLIST   striplistbest;
-	int         bestlistcost = 0;
+	STRIPLIST striplistbest;
+	int bestlistcost = 0;
 
 	for(int imap = 0; imap < cargmaps; imap++)
 	{
 		STRIPLIST striplist;
 
 		// build the strip with the various args
-		stripper.BuildStrips(&striplist, rgargmap[imap].maxlen,
-			rgargmap[imap].flookahead);
+		stripper.BuildStrips(&striplist, rgargmap[imap].maxlen, rgargmap[imap].flookahead);
 
 		// guesstimate the list cost and store it if it's good
 		int listcost = EstimateStripCost(&striplist);
@@ -867,7 +855,7 @@ public:
 	int iFirstUsed;
 	int iOrigIndex;
 
-	bool operator<(const SortEntry& rhs)
+	bool operator<(const SortEntry &rhs)
 	{
 		return iFirstUsed < rhs.iFirstUsed;
 	}
@@ -876,15 +864,14 @@ public:
 //=========================================================================
 // Reorder the vertices
 //=========================================================================
-void ComputeVertexPermutation(int numstripindices, WORD* pstripindices,
-							int* pnumverts, WORD** ppvertexpermutation)
+void ComputeVertexPermutation(int numstripindices, WORD *pstripindices, int *pnumverts, WORD **ppvertexpermutation)
 {
 	// Sort verts to maximize locality.
-	SortEntry* pSortTable = new SortEntry[*pnumverts];
+	SortEntry *pSortTable = new SortEntry[*pnumverts];
 
 	// Fill in original index.
 	int i;
-	for( i = 0; i < *pnumverts; i++)
+	for(i = 0; i < *pnumverts; i++)
 	{
 		pSortTable[i].iOrigIndex = i;
 		pSortTable[i].iFirstUsed = -1;
@@ -911,7 +898,7 @@ void ComputeVertexPermutation(int numstripindices, WORD* pstripindices,
 	}
 
 	// Build original to re-mapped permutation.
-	WORD* pInversePermutation = new WORD[numstripindices];
+	WORD *pInversePermutation = new WORD[numstripindices];
 
 	for(i = 0; i < *pnumverts; i++)
 	{

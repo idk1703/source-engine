@@ -12,21 +12,20 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-IMPLEMENT_CLIENTCLASS_DT( C_Tesla, DT_Tesla, CTesla )
-	RecvPropString( RECVINFO( m_SoundName ) ),
-	RecvPropString( RECVINFO( m_iszSpriteName ) )
-END_RECV_TABLE()
+IMPLEMENT_CLIENTCLASS_DT(C_Tesla, DT_Tesla, CTesla)
+RecvPropString(RECVINFO(m_SoundName)), RecvPropString(RECVINFO(m_iszSpriteName))
+END_RECV_TABLE
+()
 
-
-C_Tesla::C_Tesla()
+	C_Tesla::C_Tesla()
 {
 }
 
-void C_Tesla::ReceiveMessage( int classID, bf_read &msg )
+void C_Tesla::ReceiveMessage(int classID, bf_read &msg)
 {
 	CTeslaInfo teslaInfo;
 
-	msg.ReadBitVec3Coord( teslaInfo.m_vPos );
+	msg.ReadBitVec3Coord(teslaInfo.m_vPos);
 	teslaInfo.m_vAngles.Init();
 
 	teslaInfo.m_nEntIndex = msg.ReadShort();
@@ -45,19 +44,18 @@ void C_Tesla::ReceiveMessage( int classID, bf_read &msg )
 	teslaInfo.m_flTimeVisible = msg.ReadFloat();
 	teslaInfo.m_pszSpriteName = m_iszSpriteName;
 
-	EmitSound( m_SoundName );
+	EmitSound(m_SoundName);
 
-	m_QueuedCommands.AddToTail( teslaInfo );
-	SetNextClientThink( CLIENT_THINK_ALWAYS );
+	m_QueuedCommands.AddToTail(teslaInfo);
+	SetNextClientThink(CLIENT_THINK_ALWAYS);
 }
-
 
 void C_Tesla::ClientThink()
 {
-	FOR_EACH_LL( m_QueuedCommands, i )
+	FOR_EACH_LL(m_QueuedCommands, i)
 	{
-		FX_Tesla( m_QueuedCommands[i] );
+		FX_Tesla(m_QueuedCommands[i]);
 	}
 	m_QueuedCommands.Purge();
-	SetNextClientThink( CLIENT_THINK_NEVER );
+	SetNextClientThink(CLIENT_THINK_NEVER);
 }

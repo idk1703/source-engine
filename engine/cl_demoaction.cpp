@@ -14,22 +14,18 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseDemoAction::CBaseDemoAction()
-{
-}
+CBaseDemoAction::CBaseDemoAction() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseDemoAction::~CBaseDemoAction()
-{
-}
+CBaseDemoAction::~CBaseDemoAction() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : DEMOACTION
 //-----------------------------------------------------------------------------
-DEMOACTION CBaseDemoAction::GetType( void ) const
+DEMOACTION CBaseDemoAction::GetType(void) const
 {
 	return m_Type;
 }
@@ -38,7 +34,7 @@ DEMOACTION CBaseDemoAction::GetType( void ) const
 // Purpose:
 // Input  : actionType -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetType( DEMOACTION actionType )
+void CBaseDemoAction::SetType(DEMOACTION actionType)
 {
 	m_Type = actionType;
 }
@@ -47,7 +43,7 @@ void CBaseDemoAction::SetType( DEMOACTION actionType )
 // Purpose:
 // Output : DEMOACTIONTIMINGTYPE
 //-----------------------------------------------------------------------------
-DEMOACTIONTIMINGTYPE CBaseDemoAction::GetTimingType( void ) const
+DEMOACTIONTIMINGTYPE CBaseDemoAction::GetTimingType(void) const
 {
 	return m_Timing;
 }
@@ -56,7 +52,7 @@ DEMOACTIONTIMINGTYPE CBaseDemoAction::GetTimingType( void ) const
 // Purpose:
 // Input  : timingtype -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetTimingType( DEMOACTIONTIMINGTYPE timingtype )
+void CBaseDemoAction::SetTimingType(DEMOACTIONTIMINGTYPE timingtype)
 {
 	m_Timing = timingtype;
 }
@@ -65,7 +61,7 @@ void CBaseDemoAction::SetTimingType( DEMOACTIONTIMINGTYPE timingtype )
 // Purpose:
 // Input  : fired -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetActionFired( bool fired )
+void CBaseDemoAction::SetActionFired(bool fired)
 {
 	m_bActionFired = fired;
 }
@@ -74,7 +70,7 @@ void CBaseDemoAction::SetActionFired( bool fired )
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseDemoAction::GetActionFired( void ) const
+bool CBaseDemoAction::GetActionFired(void) const
 {
 	return m_bActionFired;
 }
@@ -82,10 +78,10 @@ bool CBaseDemoAction::GetActionFired( void ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetFinishedAction( bool finished )
+void CBaseDemoAction::SetFinishedAction(bool finished)
 {
 	m_bActionFinished = finished;
-	if ( finished )
+	if(finished)
 	{
 		OnActionFinished();
 	}
@@ -95,7 +91,7 @@ void CBaseDemoAction::SetFinishedAction( bool finished )
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseDemoAction::HasActionFinished( void ) const
+bool CBaseDemoAction::HasActionFinished(void) const
 {
 	return m_bActionFinished;
 }
@@ -107,10 +103,10 @@ bool CBaseDemoAction::HasActionFinished( void ) const
 // Input  : sz -
 // Output : void *CBaseDemoAction::operator
 //-----------------------------------------------------------------------------
-void *CBaseDemoAction::operator new( size_t sz )
+void *CBaseDemoAction::operator new(size_t sz)
 {
-	Assert( sz != 0 );
-	return calloc( 1, sz );
+	Assert(sz != 0);
+	return calloc(1, sz);
 };
 
 //-----------------------------------------------------------------------------
@@ -118,16 +114,16 @@ void *CBaseDemoAction::operator new( size_t sz )
 // Input  : *pMem -
 // Output : void CBaseDemoAction::operator
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::operator delete( void *pMem )
+void CBaseDemoAction::operator delete(void *pMem)
 {
-#if defined( WIN32 ) && defined( _DEBUG )
+#if defined(WIN32) && defined(_DEBUG)
 	// set the memory to a known value
-	int size = _msize( pMem );
-	Q_memset( pMem, 0xcd, size );
+	int size = _msize(pMem);
+	Q_memset(pMem, 0xcd, size);
 #endif
 
 	// get the engine to free the memory
-	free( pMem );
+	free(pMem);
 }
 
 #include "tier0/memdbgon.h"
@@ -137,38 +133,38 @@ void CBaseDemoAction::operator delete( void *pMem )
 //-----------------------------------------------------------------------------
 struct DemoActionDictionary
 {
-	DEMOACTION				actiontype;;
-	char const				*name;
-	DEMOACTIONFACTORY_FUNC	func;
-	DEMOACTIONEDIT_FUNC		editfunc;
+	DEMOACTION actiontype;
+	;
+	char const *name;
+	DEMOACTIONFACTORY_FUNC func;
+	DEMOACTIONEDIT_FUNC editfunc;
 };
 
-static DemoActionDictionary g_rgDemoTypeNames[ NUM_DEMO_ACTIONS ] =
-{
-	{ DEMO_ACTION_UNKNOWN					, "Unknown" },
-	{ DEMO_ACTION_SKIPAHEAD					, "SkipAhead" },
-	{ DEMO_ACTION_STOPPLAYBACK				, "StopPlayback" },
-	{ DEMO_ACTION_PLAYCOMMANDS				, "PlayCommands" },
-	{ DEMO_ACTION_SCREENFADE_START			, "ScreenFadeStart" },
-	{ DEMO_ACTION_SCREENFADE_STOP			, "ScreenFadeStop" },
-	{ DEMO_ACTION_TEXTMESSAGE_START			, "TextMessageStart" },
-	{ DEMO_ACTION_TEXTMESSAGE_STOP			, "TextMessageStop" },
-	{ DEMO_ACTION_PLAYCDTRACK_START			, "PlayCDTrackStart" },
-	{ DEMO_ACTION_PLAYCDTRACK_STOP			, "PlayCDTrackStop" },
-	{ DEMO_ACTION_PLAYSOUND_START			, "PlaySoundStart" },
-	{ DEMO_ACTION_PLAYSOUND_END				, "PlaySoundStop" },
+static DemoActionDictionary g_rgDemoTypeNames[NUM_DEMO_ACTIONS] = {
+	{DEMO_ACTION_UNKNOWN, "Unknown"},
+	{DEMO_ACTION_SKIPAHEAD, "SkipAhead"},
+	{DEMO_ACTION_STOPPLAYBACK, "StopPlayback"},
+	{DEMO_ACTION_PLAYCOMMANDS, "PlayCommands"},
+	{DEMO_ACTION_SCREENFADE_START, "ScreenFadeStart"},
+	{DEMO_ACTION_SCREENFADE_STOP, "ScreenFadeStop"},
+	{DEMO_ACTION_TEXTMESSAGE_START, "TextMessageStart"},
+	{DEMO_ACTION_TEXTMESSAGE_STOP, "TextMessageStop"},
+	{DEMO_ACTION_PLAYCDTRACK_START, "PlayCDTrackStart"},
+	{DEMO_ACTION_PLAYCDTRACK_STOP, "PlayCDTrackStop"},
+	{DEMO_ACTION_PLAYSOUND_START, "PlaySoundStart"},
+	{DEMO_ACTION_PLAYSOUND_END, "PlaySoundStop"},
 
-	{ DEMO_ACTION_ONSKIPPEDAHEAD			, "OnSkippedAhead" },
-	{ DEMO_ACTION_ONSTOPPEDPLAYBACK			, "OnStoppedPlayback" },
-	{ DEMO_ACTION_ONSCREENFADE_FINISHED		, "OnScreenFadeFinished" },
-	{ DEMO_ACTION_ONTEXTMESSAGE_FINISHED	, "OnTextMessageFinished" },
-	{ DEMO_ACTION_ONPLAYCDTRACK_FINISHED	, "OnPlayCDTrackFinished" },
-	{ DEMO_ACTION_ONPLAYSOUND_FINISHED		, "OnPlaySoundFinished" },
+	{DEMO_ACTION_ONSKIPPEDAHEAD, "OnSkippedAhead"},
+	{DEMO_ACTION_ONSTOPPEDPLAYBACK, "OnStoppedPlayback"},
+	{DEMO_ACTION_ONSCREENFADE_FINISHED, "OnScreenFadeFinished"},
+	{DEMO_ACTION_ONTEXTMESSAGE_FINISHED, "OnTextMessageFinished"},
+	{DEMO_ACTION_ONPLAYCDTRACK_FINISHED, "OnPlayCDTrackFinished"},
+	{DEMO_ACTION_ONPLAYSOUND_FINISHED, "OnPlaySoundFinished"},
 
-	{ DEMO_ACTION_PAUSE						, "Pause" },
-	{ DEMO_ACTION_CHANGEPLAYBACKRATE		, "ChangePlaybackRate" },
+	{DEMO_ACTION_PAUSE, "Pause"},
+	{DEMO_ACTION_CHANGEPLAYBACKRATE, "ChangePlaybackRate"},
 
-	{ DEMO_ACTION_ZOOM						, "Zoom FOV" },
+	{DEMO_ACTION_ZOOM, "Zoom FOV"},
 };
 
 //-----------------------------------------------------------------------------
@@ -176,36 +172,35 @@ static DemoActionDictionary g_rgDemoTypeNames[ NUM_DEMO_ACTIONS ] =
 // Input  : actionType -
 //			func -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::AddFactory( DEMOACTION actionType, DEMOACTIONFACTORY_FUNC func )
+void CBaseDemoAction::AddFactory(DEMOACTION actionType, DEMOACTIONFACTORY_FUNC func)
 {
 	int idx = (int)actionType;
-	if ( idx < 0 || idx >= NUM_DEMO_ACTIONS )
+	if(idx < 0 || idx >= NUM_DEMO_ACTIONS)
 	{
-		Sys_Error( "CBaseDemoAction::AddFactory: Bogus factory type %i\n", idx );
+		Sys_Error("CBaseDemoAction::AddFactory: Bogus factory type %i\n", idx);
 		return;
 	}
 
-	g_rgDemoTypeNames[ idx ].func = func;
+	g_rgDemoTypeNames[idx].func = func;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : actionType -
 //-----------------------------------------------------------------------------
-CBaseDemoAction	*CBaseDemoAction::CreateDemoAction( DEMOACTION actionType )
+CBaseDemoAction *CBaseDemoAction::CreateDemoAction(DEMOACTION actionType)
 {
 	int idx = (int)actionType;
-	if ( idx < 0 || idx >= NUM_DEMO_ACTIONS )
+	if(idx < 0 || idx >= NUM_DEMO_ACTIONS)
 	{
-		Sys_Error( "CBaseDemoAction::AddFactory: Bogus factory type %i\n", idx );
+		Sys_Error("CBaseDemoAction::AddFactory: Bogus factory type %i\n", idx);
 		return NULL;
 	}
 
-	DEMOACTIONFACTORY_FUNC pfn = g_rgDemoTypeNames[ idx ].func;
-	if ( !pfn )
+	DEMOACTIONFACTORY_FUNC pfn = g_rgDemoTypeNames[idx].func;
+	if(!pfn)
 	{
-		ConMsg( "CBaseDemoAction::CreateDemoAction:  Missing factory for %s\n",
-			NameForType( actionType ) );
+		ConMsg("CBaseDemoAction::CreateDemoAction:  Missing factory for %s\n", NameForType(actionType));
 		return NULL;
 	}
 
@@ -217,16 +212,16 @@ CBaseDemoAction	*CBaseDemoAction::CreateDemoAction( DEMOACTION actionType )
 // Input  : actionType -
 //			func -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::AddEditorFactory( DEMOACTION actionType, DEMOACTIONEDIT_FUNC func )
+void CBaseDemoAction::AddEditorFactory(DEMOACTION actionType, DEMOACTIONEDIT_FUNC func)
 {
 	int idx = (int)actionType;
-	if ( idx < 0 || idx >= NUM_DEMO_ACTIONS )
+	if(idx < 0 || idx >= NUM_DEMO_ACTIONS)
 	{
-		Sys_Error( "CBaseDemoAction::AddEditorFactory: Bogus factory type %i\n", idx );
+		Sys_Error("CBaseDemoAction::AddEditorFactory: Bogus factory type %i\n", idx);
 		return;
 	}
 
-	g_rgDemoTypeNames[ idx ].editfunc = func;
+	g_rgDemoTypeNames[idx].editfunc = func;
 }
 
 //-----------------------------------------------------------------------------
@@ -237,24 +232,24 @@ void CBaseDemoAction::AddEditorFactory( DEMOACTION actionType, DEMOACTIONEDIT_FU
 //			newaction -
 // Output : CBaseActionEditDialog
 //-----------------------------------------------------------------------------
-CBaseActionEditDialog *CBaseDemoAction::CreateActionEditor( DEMOACTION actionType, CDemoEditorPanel *parent, CBaseDemoAction *action, bool newaction )
+CBaseActionEditDialog *CBaseDemoAction::CreateActionEditor(DEMOACTION actionType, CDemoEditorPanel *parent,
+														   CBaseDemoAction *action, bool newaction)
 {
 	int idx = (int)actionType;
-	if ( idx < 0 || idx >= NUM_DEMO_ACTIONS )
+	if(idx < 0 || idx >= NUM_DEMO_ACTIONS)
 	{
-		Sys_Error( "CBaseDemoAction::AddFactory: Bogus factory type %i\n", idx );
+		Sys_Error("CBaseDemoAction::AddFactory: Bogus factory type %i\n", idx);
 		return NULL;
 	}
 
-	DEMOACTIONEDIT_FUNC pfn = g_rgDemoTypeNames[ idx ].editfunc;
-	if ( !pfn )
+	DEMOACTIONEDIT_FUNC pfn = g_rgDemoTypeNames[idx].editfunc;
+	if(!pfn)
 	{
-		ConMsg( "CBaseDemoAction::CreateActionEditor:  Missing edit factory for %s\n",
-			NameForType( actionType ) );
+		ConMsg("CBaseDemoAction::CreateActionEditor:  Missing edit factory for %s\n", NameForType(actionType));
 		return NULL;
 	}
 
-	return (*pfn)( parent, action, newaction );
+	return (*pfn)(parent, action, newaction);
 }
 
 //-----------------------------------------------------------------------------
@@ -262,16 +257,16 @@ CBaseActionEditDialog *CBaseDemoAction::CreateActionEditor( DEMOACTION actionTyp
 // Input  : actionType -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseDemoAction::HasEditorFactory( DEMOACTION actionType )
+bool CBaseDemoAction::HasEditorFactory(DEMOACTION actionType)
 {
 	int idx = (int)actionType;
-	if ( idx < 0 || idx >= NUM_DEMO_ACTIONS )
+	if(idx < 0 || idx >= NUM_DEMO_ACTIONS)
 	{
 		return false;
 	}
 
-	DEMOACTIONEDIT_FUNC pfn = g_rgDemoTypeNames[ idx ].editfunc;
-	if ( !pfn )
+	DEMOACTIONEDIT_FUNC pfn = g_rgDemoTypeNames[idx].editfunc;
+	if(!pfn)
 	{
 		return false;
 	}
@@ -284,15 +279,15 @@ bool CBaseDemoAction::HasEditorFactory( DEMOACTION actionType )
 //-----------------------------------------------------------------------------
 struct DemoTimingTagDictionary
 {
-	DEMOACTIONTIMINGTYPE timingtype;;
-	char const			*name;
+	DEMOACTIONTIMINGTYPE timingtype;
+	;
+	char const *name;
 };
 
-static DemoTimingTagDictionary g_rgDemoTimingTypeNames[ NUM_TIMING_TYPES ] =
-{
-	{ ACTION_USES_NEITHER			, "TimeDontCare" },
-	{ ACTION_USES_TICK				, "TimeUseTick" },
-	{ ACTION_USES_TIME				, "TimeUseClock" },
+static DemoTimingTagDictionary g_rgDemoTimingTypeNames[NUM_TIMING_TYPES] = {
+	{ACTION_USES_NEITHER, "TimeDontCare"},
+	{ACTION_USES_TICK, "TimeUseTick"},
+	{ACTION_USES_TIME, "TimeUseClock"},
 };
 
 //-----------------------------------------------------------------------------
@@ -300,17 +295,17 @@ static DemoTimingTagDictionary g_rgDemoTimingTypeNames[ NUM_TIMING_TYPES ] =
 // Input  : DEMOACTION -
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CBaseDemoAction::NameForType( DEMOACTION actionType )
+char const *CBaseDemoAction::NameForType(DEMOACTION actionType)
 {
 	int idx = (int)actionType;
-	if ( idx < 0 || idx >= NUM_DEMO_ACTIONS )
+	if(idx < 0 || idx >= NUM_DEMO_ACTIONS)
 	{
-		ConMsg( "ERROR: CBaseDemoAction::NameForType type %i out of range\n", idx );
-		return g_rgDemoTypeNames[ DEMO_ACTION_UNKNOWN ].name;
+		ConMsg("ERROR: CBaseDemoAction::NameForType type %i out of range\n", idx);
+		return g_rgDemoTypeNames[DEMO_ACTION_UNKNOWN].name;
 	}
 
-	DemoActionDictionary *entry = &g_rgDemoTypeNames[ idx ];
-	Assert( entry->actiontype == actionType );
+	DemoActionDictionary *entry = &g_rgDemoTypeNames[idx];
+	Assert(entry->actiontype == actionType);
 
 	return entry->name;
 }
@@ -320,14 +315,14 @@ char const *CBaseDemoAction::NameForType( DEMOACTION actionType )
 // Input  : *name -
 // Output : DEMOACTION
 //-----------------------------------------------------------------------------
-DEMOACTION CBaseDemoAction::TypeForName( char const *name )
+DEMOACTION CBaseDemoAction::TypeForName(char const *name)
 {
 	int c = NUM_DEMO_ACTIONS;
 	int i;
-	for ( i= 0; i < c; i++ )
+	for(i = 0; i < c; i++)
 	{
-		DemoActionDictionary *entry = &g_rgDemoTypeNames[ i ];
-		if ( !Q_strcasecmp( entry->name, name ) )
+		DemoActionDictionary *entry = &g_rgDemoTypeNames[i];
+		if(!Q_strcasecmp(entry->name, name))
 		{
 			return entry->actiontype;
 		}
@@ -341,17 +336,17 @@ DEMOACTION CBaseDemoAction::TypeForName( char const *name )
 // Input  : DEMOACTION -
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CBaseDemoAction::NameForTimingType( DEMOACTIONTIMINGTYPE timingType )
+char const *CBaseDemoAction::NameForTimingType(DEMOACTIONTIMINGTYPE timingType)
 {
 	int idx = (int)timingType;
-	if ( idx < 0 || idx >= NUM_TIMING_TYPES )
+	if(idx < 0 || idx >= NUM_TIMING_TYPES)
 	{
-		ConMsg( "ERROR: CBaseDemoAction::NameForTimingType type %i out of range\n", idx );
-		return g_rgDemoTimingTypeNames[ ACTION_USES_NEITHER ].name;
+		ConMsg("ERROR: CBaseDemoAction::NameForTimingType type %i out of range\n", idx);
+		return g_rgDemoTimingTypeNames[ACTION_USES_NEITHER].name;
 	}
 
-	DemoTimingTagDictionary *entry = &g_rgDemoTimingTypeNames[ idx ];
-	Assert( entry->timingtype == timingType );
+	DemoTimingTagDictionary *entry = &g_rgDemoTimingTypeNames[idx];
+	Assert(entry->timingtype == timingType);
 
 	return entry->name;
 }
@@ -361,14 +356,14 @@ char const *CBaseDemoAction::NameForTimingType( DEMOACTIONTIMINGTYPE timingType 
 // Input  : *name -
 // Output : DEMOACTION
 //-----------------------------------------------------------------------------
-DEMOACTIONTIMINGTYPE CBaseDemoAction::TimingTypeForName( char const *name )
+DEMOACTIONTIMINGTYPE CBaseDemoAction::TimingTypeForName(char const *name)
 {
 	int c = NUM_TIMING_TYPES;
 	int i;
-	for ( i= 0; i < c; i++ )
+	for(i = 0; i < c; i++)
 	{
-		DemoTimingTagDictionary *entry = &g_rgDemoTimingTypeNames[ i ];
-		if ( !Q_strcasecmp( entry->name, name ) )
+		DemoTimingTagDictionary *entry = &g_rgDemoTimingTypeNames[i];
+		if(!Q_strcasecmp(entry->name, name))
 		{
 			return entry->timingtype;
 		}
@@ -385,49 +380,49 @@ static bool g_bSaveChained = false;
 //			*fmt -
 //			... -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::BufPrintf( int depth, CUtlBuffer& buf, char const *fmt, ... )
+void CBaseDemoAction::BufPrintf(int depth, CUtlBuffer &buf, char const *fmt, ...)
 {
-	va_list		argptr;
-	char		string[1024];
-	va_start (argptr,fmt);
-	Q_vsnprintf(string, sizeof( string ), fmt,argptr);
-	va_end (argptr);
+	va_list argptr;
+	char string[1024];
+	va_start(argptr, fmt);
+	Q_vsnprintf(string, sizeof(string), fmt, argptr);
+	va_end(argptr);
 
-	while ( depth-- > 0 )
+	while(depth-- > 0)
 	{
-		buf.Printf( "\t" );
+		buf.Printf("\t");
 	}
 
-	buf.Printf( "%s", string );
+	buf.Printf("%s", string);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : buf -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
+void CBaseDemoAction::SaveKeysToBuffer(int depth, CUtlBuffer &buf)
 {
 	// All derived actions will need to do a BaseClass::SaveKeysToBuffer call
 	g_bSaveChained = true;
 
-	BufPrintf( depth, buf, "name \"%s\"\n", GetActionName() );
-	if ( ActionHasTarget() )
+	BufPrintf(depth, buf, "name \"%s\"\n", GetActionName());
+	if(ActionHasTarget())
 	{
-		BufPrintf( depth, buf, "target \"%s\"\n", GetActionTarget() );
+		BufPrintf(depth, buf, "target \"%s\"\n", GetActionTarget());
 	}
-	switch ( GetTimingType() )
+	switch(GetTimingType())
 	{
-	default:
-	case ACTION_USES_NEITHER:
-		break;
-	case ACTION_USES_TICK:
+		default:
+		case ACTION_USES_NEITHER:
+			break;
+		case ACTION_USES_TICK:
 		{
-			BufPrintf( depth, buf, "starttick \"%i\"\n", GetStartTick() );
+			BufPrintf(depth, buf, "starttick \"%i\"\n", GetStartTick());
 		}
 		break;
-	case ACTION_USES_TIME:
+		case ACTION_USES_TIME:
 		{
-			BufPrintf( depth, buf, "starttime \"%.3f\"\n", GetStartTime() );
+			BufPrintf(depth, buf, "starttime \"%.3f\"\n", GetStartTime());
 		}
 		break;
 	}
@@ -437,29 +432,29 @@ void CBaseDemoAction::SaveKeysToBuffer( int depth, CUtlBuffer& buf )
 // Purpose:
 // Input  : buf -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SaveToBuffer( int depth, int index, CUtlBuffer& buf )
+void CBaseDemoAction::SaveToBuffer(int depth, int index, CUtlBuffer &buf)
 {
 	// Store index
-	BufPrintf( depth, buf, "\"%i\"\n", index );
-	BufPrintf( depth, buf, "%{\n" );
+	BufPrintf(depth, buf, "\"%i\"\n", index);
+	BufPrintf(depth, buf, "%{\n");
 
 	g_bSaveChained = false;
 
 	// First key is factory name
-	BufPrintf( depth + 1, buf, "factory \"%s\"\n", NameForType( GetType() ) );
-	SaveKeysToBuffer( depth + 1, buf );
-	Assert( g_bSaveChained );
+	BufPrintf(depth + 1, buf, "factory \"%s\"\n", NameForType(GetType()));
+	SaveKeysToBuffer(depth + 1, buf);
+	Assert(g_bSaveChained);
 
-	BufPrintf( depth, buf, "}\n" );
+	BufPrintf(depth, buf, "}\n");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetActionName( char const *name )
+void CBaseDemoAction::SetActionName(char const *name)
 {
-	Q_strncpy( m_szActionName, name, sizeof( m_szActionName ) );
+	Q_strncpy(m_szActionName, name, sizeof(m_szActionName));
 }
 
 //-----------------------------------------------------------------------------
@@ -467,39 +462,39 @@ void CBaseDemoAction::SetActionName( char const *name )
 // Input  : *pInitData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseDemoAction::Init( KeyValues *pInitData )
+bool CBaseDemoAction::Init(KeyValues *pInitData)
 {
-	char const *actionname = pInitData->GetString( "name", "" );
-	if ( !actionname || !actionname[ 0 ] )
+	char const *actionname = pInitData->GetString("name", "");
+	if(!actionname || !actionname[0])
 	{
-		Msg( "CBaseDemoAction::Init:  must specify a name for action!\n" );
+		Msg("CBaseDemoAction::Init:  must specify a name for action!\n");
 		return false;
 	}
 
-	SetActionName( actionname );
+	SetActionName(actionname);
 
-	m_nStartTick	= pInitData->GetInt( "starttick", -1 );
-	m_flStartTime	= pInitData->GetFloat( "starttime", -1.0f );
+	m_nStartTick = pInitData->GetInt("starttick", -1);
+	m_flStartTime = pInitData->GetFloat("starttime", -1.0f);
 
-	if ( m_nStartTick == -1 && m_flStartTime == -1.0f )
+	if(m_nStartTick == -1 && m_flStartTime == -1.0f)
 	{
 		m_Timing = ACTION_USES_NEITHER;
 	}
-	else if ( m_nStartTick != -1 )
+	else if(m_nStartTick != -1)
 	{
 		m_Timing = ACTION_USES_TICK;
 	}
 	else
 	{
-		Assert( m_flStartTime != -1.0f );
+		Assert(m_flStartTime != -1.0f);
 		m_Timing = ACTION_USES_TIME;
 	}
 
 	// See if there's a target name
-	char const *target = pInitData->GetString( "target", "" );
-	if ( target && target[ 0 ] )
+	char const *target = pInitData->GetString("target", "");
+	if(target && target[0])
 	{
-		Q_strncpy( m_szActionTarget, target, sizeof( m_szActionTarget ) );
+		Q_strncpy(m_szActionTarget, target, sizeof(m_szActionTarget));
 	}
 
 	return true;
@@ -509,9 +504,9 @@ bool CBaseDemoAction::Init( KeyValues *pInitData )
 // Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseDemoAction::GetStartTick( void ) const
+int CBaseDemoAction::GetStartTick(void) const
 {
-	Assert( m_Timing == ACTION_USES_TICK );
+	Assert(m_Timing == ACTION_USES_TICK);
 	return m_nStartTick;
 }
 
@@ -519,9 +514,9 @@ int CBaseDemoAction::GetStartTick( void ) const
 // Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
-float CBaseDemoAction::GetStartTime( void ) const
+float CBaseDemoAction::GetStartTime(void) const
 {
-	Assert( m_Timing == ACTION_USES_TIME );
+	Assert(m_Timing == ACTION_USES_TIME);
 	return m_flStartTime;
 }
 
@@ -529,9 +524,9 @@ float CBaseDemoAction::GetStartTime( void ) const
 // Purpose:
 // Input  : frame -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetStartTick( int tick )
+void CBaseDemoAction::SetStartTick(int tick)
 {
-	Assert( m_Timing == ACTION_USES_TICK );
+	Assert(m_Timing == ACTION_USES_TICK);
 	m_nStartTick = tick;
 }
 
@@ -539,9 +534,9 @@ void CBaseDemoAction::SetStartTick( int tick )
 // Purpose:
 // Input  : t -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetStartTime( float t )
+void CBaseDemoAction::SetStartTime(float t)
 {
-	Assert( m_Timing == ACTION_USES_TIME );
+	Assert(m_Timing == ACTION_USES_TIME);
 	m_flStartTime = t;
 }
 
@@ -550,40 +545,40 @@ void CBaseDemoAction::SetStartTime( float t )
 // Input  : demoframe -
 //			demotime -
 //-----------------------------------------------------------------------------
-bool CBaseDemoAction::Update( const DemoActionTimingContext& tc )
+bool CBaseDemoAction::Update(const DemoActionTimingContext &tc)
 {
 	// Already fired and done?
-	if ( HasActionFinished() )
+	if(HasActionFinished())
 	{
-		Assert( GetActionFired() );
+		Assert(GetActionFired());
 		return false;
 	}
 
 	// Already fired, just waiting for finished tag
-	if ( GetActionFired() )
+	if(GetActionFired())
 	{
 		return true;
 	}
 
 	// See if it's time to fire
-	switch ( GetTimingType() )
+	switch(GetTimingType())
 	{
-	default:
-	case ACTION_USES_NEITHER:
-		return false;
-	case ACTION_USES_TICK:
+		default:
+		case ACTION_USES_NEITHER:
+			return false;
+		case ACTION_USES_TICK:
 		{
-			if ( GetStartTick() >= tc.prevtick && GetStartTick() <= tc.curtick )
+			if(GetStartTick() >= tc.prevtick && GetStartTick() <= tc.curtick)
 			{
-				demoaction->InsertFireEvent( this );
+				demoaction->InsertFireEvent(this);
 			}
 		}
 		break;
-	case ACTION_USES_TIME:
+		case ACTION_USES_TIME:
 		{
-			if ( GetStartTime() >= tc.prevtime && GetStartTime() <= tc.curtime )
+			if(GetStartTime() >= tc.prevtime && GetStartTime() <= tc.curtime)
 			{
-				demoaction->InsertFireEvent( this );
+				demoaction->InsertFireEvent(this);
 			}
 		}
 		break;
@@ -596,9 +591,9 @@ bool CBaseDemoAction::Update( const DemoActionTimingContext& tc )
 // Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CBaseDemoAction::GetActionName( void ) const
+char const *CBaseDemoAction::GetActionName(void) const
 {
-	Assert( m_szActionName[ 0 ] );
+	Assert(m_szActionName[0]);
 	return m_szActionName;
 }
 
@@ -606,18 +601,18 @@ char const *CBaseDemoAction::GetActionName( void ) const
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseDemoAction::ActionHasTarget( void ) const
+bool CBaseDemoAction::ActionHasTarget(void) const
 {
-	return m_szActionTarget[ 0 ] ? true : false;
+	return m_szActionTarget[0] ? true : false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CBaseDemoAction::GetActionTarget( void ) const
+char const *CBaseDemoAction::GetActionTarget(void) const
 {
-	Assert( ActionHasTarget() );
+	Assert(ActionHasTarget());
 	return m_szActionTarget;
 }
 
@@ -625,20 +620,18 @@ char const *CBaseDemoAction::GetActionTarget( void ) const
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::SetActionTarget( char const *name )
+void CBaseDemoAction::SetActionTarget(char const *name)
 {
-	Q_strncpy( m_szActionTarget, name, sizeof( m_szActionTarget ) );
+	Q_strncpy(m_szActionTarget, name, sizeof(m_szActionTarget));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Restart timing info
 //-----------------------------------------------------------------------------
-void CBaseDemoAction::Reset( void )
+void CBaseDemoAction::Reset(void)
 {
-	SetActionFired( false );
-	SetFinishedAction( false );
+	SetActionFired(false);
+	SetFinishedAction(false);
 }
 
-void CBaseDemoAction::OnActionFinished( void )
-{
-}
+void CBaseDemoAction::OnActionFinished(void) {}

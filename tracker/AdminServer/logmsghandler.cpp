@@ -18,28 +18,25 @@ extern void v_strncpy(char *dest, const char *src, int bufsize);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLogMsgHandlerDetails::CLogMsgHandlerDetails(IResponse *baseobject, HANDLERTYPE type, void *typeinfo )
-	: CMsgHandler( type, typeinfo )
+CLogMsgHandlerDetails::CLogMsgHandlerDetails(IResponse *baseobject, HANDLERTYPE type, void *typeinfo)
+	: CMsgHandler(type, typeinfo)
 {
 	m_pLogList = baseobject;
-	m_bNewMessage=false;
+	m_bNewMessage = false;
 }
 
-CLogMsgHandlerDetails::~CLogMsgHandlerDetails()
-{
-}
-
+CLogMsgHandlerDetails::~CLogMsgHandlerDetails() {}
 
 //-------------------------------------------------------------------------
 // Purpose: Process cracked message
 //-----------------------------------------------------------------------------
-bool CLogMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
+bool CLogMsgHandlerDetails::Process(netadr_t *from, CMsgBuffer *msg)
 {
 
-	m_bNewMessage=true;
-	v_strncpy(message,msg->ReadString(),512);
-	message[strlen(message)-1]='\n';
-	message[strlen(message)]='\0';
+	m_bNewMessage = true;
+	v_strncpy(message, msg->ReadString(), 512);
+	message[strlen(message) - 1] = '\n';
+	message[strlen(message)] = '\0';
 
 	// now tell the UI we have this new message
 	m_pLogList->ServerResponded();
@@ -52,8 +49,8 @@ bool CLogMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
 //-----------------------------------------------------------------------------
 bool CLogMsgHandlerDetails::NewMessage()
 {
-	bool val=m_bNewMessage;
-	m_bNewMessage=false;
+	bool val = m_bNewMessage;
+	m_bNewMessage = false;
 	return val;
 }
 

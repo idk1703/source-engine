@@ -9,64 +9,65 @@
 
 #ifdef CLIENT_DLL
 
-void GetRagdollCurSequenceWithDeathPose( C_BaseAnimating *entity, matrix3x4_t *curBones, float flTime, int activity, int frame )
+void GetRagdollCurSequenceWithDeathPose(C_BaseAnimating *entity, matrix3x4_t *curBones, float flTime, int activity,
+										int frame)
 {
 	// blow the cached prev bones
 	entity->InvalidateBoneCache();
 
 	Vector vPrevOrigin = entity->GetAbsOrigin();
 
-	entity->Interpolate( flTime );
+	entity->Interpolate(flTime);
 
-	if ( activity != ACT_INVALID )
+	if(activity != ACT_INVALID)
 	{
 		Vector vNewOrigin = entity->GetAbsOrigin();
 		Vector vDirection = vNewOrigin - vPrevOrigin;
 
-		float flVelocity = VectorNormalize( vDirection );
+		float flVelocity = VectorNormalize(vDirection);
 
-		Vector vAdjustedOrigin = vNewOrigin + vDirection * ( ( flVelocity * flVelocity ) * gpGlobals->frametime );
+		Vector vAdjustedOrigin = vNewOrigin + vDirection * ((flVelocity * flVelocity) * gpGlobals->frametime);
 
 		int iTempSequence = entity->GetSequence();
 		float flTempCycle = entity->GetCycle();
 
-		entity->SetSequence( activity );
+		entity->SetSequence(activity);
 
-		entity->SetCycle( (float)frame / MAX_DEATHPOSE_FRAMES );
+		entity->SetCycle((float)frame / MAX_DEATHPOSE_FRAMES);
 
-		entity->SetAbsOrigin( vAdjustedOrigin );
+		entity->SetAbsOrigin(vAdjustedOrigin);
 
 		// Now do the current bone setup
-		entity->SetupBones( curBones, MAXSTUDIOBONES, BONE_USED_BY_ANYTHING, flTime );
+		entity->SetupBones(curBones, MAXSTUDIOBONES, BONE_USED_BY_ANYTHING, flTime);
 
-		entity->SetAbsOrigin( vNewOrigin );
+		entity->SetAbsOrigin(vNewOrigin);
 
 		// blow the cached prev bones
 		entity->InvalidateBoneCache();
 
-		entity->SetSequence( iTempSequence );
-		entity->SetCycle( flTempCycle );
+		entity->SetSequence(iTempSequence);
+		entity->SetCycle(flTempCycle);
 
-		entity->Interpolate( gpGlobals->curtime );
+		entity->Interpolate(gpGlobals->curtime);
 
-		entity->SetupBones( NULL, -1, BONE_USED_BY_ANYTHING, gpGlobals->curtime );
+		entity->SetupBones(NULL, -1, BONE_USED_BY_ANYTHING, gpGlobals->curtime);
 	}
 	else
 	{
-		entity->SetupBones( curBones, MAXSTUDIOBONES, BONE_USED_BY_ANYTHING, flTime );
+		entity->SetupBones(curBones, MAXSTUDIOBONES, BONE_USED_BY_ANYTHING, flTime);
 
 		// blow the cached prev bones
 		entity->InvalidateBoneCache();
 
-		entity->SetupBones( NULL, -1, BONE_USED_BY_ANYTHING, flTime );
+		entity->SetupBones(NULL, -1, BONE_USED_BY_ANYTHING, flTime);
 	}
 }
 
 #else // !CLIENT_DLL
 
-Activity GetDeathPoseActivity( CBaseAnimating *entity, const CTakeDamageInfo &info )
+Activity GetDeathPoseActivity(CBaseAnimating *entity, const CTakeDamageInfo &info)
 {
-	if ( !entity )
+	if(!entity)
 	{
 		return ACT_INVALID;
 	}
@@ -74,39 +75,39 @@ Activity GetDeathPoseActivity( CBaseAnimating *entity, const CTakeDamageInfo &in
 	Activity aActivity;
 
 	Vector vForward, vRight;
-	entity->GetVectors( &vForward, &vRight, NULL );
+	entity->GetVectors(&vForward, &vRight, NULL);
 
 	Vector vDir = -info.GetDamageForce();
-	VectorNormalize( vDir );
+	VectorNormalize(vDir);
 
-	float flDotForward	= DotProduct( vForward, vDir );
-	float flDotRight	= DotProduct( vRight, vDir );
+	float flDotForward = DotProduct(vForward, vDir);
+	float flDotRight = DotProduct(vRight, vDir);
 
 	bool bNegativeForward = false;
 	bool bNegativeRight = false;
 
-	if ( flDotForward < 0.0f )
+	if(flDotForward < 0.0f)
 	{
 		bNegativeForward = true;
 		flDotForward = flDotForward * -1;
 	}
 
-	if ( flDotRight < 0.0f )
+	if(flDotRight < 0.0f)
 	{
 		bNegativeRight = true;
 		flDotRight = flDotRight * -1;
 	}
 
-	if ( flDotRight > flDotForward )
+	if(flDotRight > flDotForward)
 	{
-		if ( bNegativeRight == true )
+		if(bNegativeRight == true)
 			aActivity = ACT_DIE_LEFTSIDE;
 		else
 			aActivity = ACT_DIE_RIGHTSIDE;
 	}
 	else
 	{
-		if ( bNegativeForward == true )
+		if(bNegativeForward == true)
 			aActivity = ACT_DIE_BACKSIDE;
 		else
 			aActivity = ACT_DIE_FRONTSIDE;
@@ -115,20 +116,21 @@ Activity GetDeathPoseActivity( CBaseAnimating *entity, const CTakeDamageInfo &in
 	return aActivity;
 }
 
-void SelectDeathPoseActivityAndFrame( CBaseAnimating *entity, const CTakeDamageInfo &info, int hitgroup, Activity& activity, int& frame )
+void SelectDeathPoseActivityAndFrame(CBaseAnimating *entity, const CTakeDamageInfo &info, int hitgroup,
+									 Activity &activity, int &frame)
 {
 	activity = ACT_INVALID;
 	frame = 0;
 
-	if ( !entity->GetModelPtr() )
+	if(!entity->GetModelPtr())
 		return;
 
-	activity = GetDeathPoseActivity( entity, info );
+	activity = GetDeathPoseActivity(entity, info);
 	frame = DEATH_FRAME_HEAD;
 
-	switch( hitgroup )
+	switch(hitgroup)
 	{
-		//Do normal ragdoll stuff if no specific hitgroup was hit.
+		// Do normal ragdoll stuff if no specific hitgroup was hit.
 		case HITGROUP_GENERIC:
 		default:
 		{

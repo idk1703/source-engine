@@ -21,16 +21,16 @@
 #include "tier0/memdbgon.h"
 
 IMPLEMENT_CLIENTCLASS_DT(C_PhysicsProp, DT_PhysicsProp, CPhysicsProp)
-	RecvPropBool( RECVINFO( m_bAwake ) ),
-END_RECV_TABLE()
+RecvPropBool(RECVINFO(m_bAwake)),
+END_RECV_TABLE
+()
 
-ConVar r_PhysPropStaticLighting( "r_PhysPropStaticLighting", "1" );
-
+	ConVar r_PhysPropStaticLighting("r_PhysPropStaticLighting", "1");
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PhysicsProp::C_PhysicsProp( void )
+C_PhysicsProp::C_PhysicsProp(void)
 {
 	m_pPhysicsObject = NULL;
 	m_takedamage = DAMAGE_YES;
@@ -42,47 +42,44 @@ C_PhysicsProp::C_PhysicsProp( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PhysicsProp::~C_PhysicsProp( void )
-{
-}
-
+C_PhysicsProp::~C_PhysicsProp(void) {}
 
 // @MULTICORE (toml 9/18/2006): this visualization will need to be implemented elsewhere
-ConVar r_visualizeproplightcaching( "r_visualizeproplightcaching", "0" );
+ConVar r_visualizeproplightcaching("r_visualizeproplightcaching", "0");
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws the object
 // Input  : flags -
 //-----------------------------------------------------------------------------
-bool C_PhysicsProp::OnInternalDrawModel( ClientModelRenderInfo_t *pInfo )
+bool C_PhysicsProp::OnInternalDrawModel(ClientModelRenderInfo_t *pInfo)
 {
 	CreateModelInstance();
 
-	if ( r_PhysPropStaticLighting.GetBool() && m_bAwakeLastTime != m_bAwake )
+	if(r_PhysPropStaticLighting.GetBool() && m_bAwakeLastTime != m_bAwake)
 	{
-		if ( m_bAwakeLastTime && !m_bAwake )
+		if(m_bAwakeLastTime && !m_bAwake)
 		{
 			// transition to sleep, bake lighting now, once
-			if ( !modelrender->RecomputeStaticLighting( GetModelInstance() ) )
+			if(!modelrender->RecomputeStaticLighting(GetModelInstance()))
 			{
 				// not valid for drawing
 				return false;
 			}
 
-			if ( r_visualizeproplightcaching.GetBool() )
+			if(r_visualizeproplightcaching.GetBool())
 			{
-				float color[] = { 0.0f, 1.0f, 0.0f, 1.0f };
-				render->SetColorModulation( color );
+				float color[] = {0.0f, 1.0f, 0.0f, 1.0f};
+				render->SetColorModulation(color);
 			}
 		}
-		else if ( r_visualizeproplightcaching.GetBool() )
+		else if(r_visualizeproplightcaching.GetBool())
 		{
-			float color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-			render->SetColorModulation( color );
+			float color[] = {1.0f, 0.0f, 0.0f, 1.0f};
+			render->SetColorModulation(color);
 		}
 	}
 
-	if ( !m_bAwake && r_PhysPropStaticLighting.GetBool() )
+	if(!m_bAwake && r_PhysPropStaticLighting.GetBool())
 	{
 		// going to sleep, have static lighting
 		pInfo->flags |= STUDIO_STATIC_LIGHTING;

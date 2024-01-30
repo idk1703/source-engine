@@ -35,9 +35,7 @@ CRemoteServer::CRemoteServer()
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CRemoteServer::~CRemoteServer()
-{
-}
+CRemoteServer::~CRemoteServer() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
@@ -45,9 +43,9 @@ CRemoteServer::~CRemoteServer()
 void CRemoteServer::Initialize()
 {
 	m_bInitialized = true;
-	Assert( g_pGameServerData );
-	m_ListenerID = g_pGameServerData->GetNextListenerID( false ); // don't require auth on this connection
-	g_pGameServerData->RegisterAdminUIID( m_ListenerID );
+	Assert(g_pGameServerData);
+	m_ListenerID = g_pGameServerData->GetNextListenerID(false); // don't require auth on this connection
+	g_pGameServerData->RegisterAdminUIID(m_ListenerID);
 }
 
 //-----------------------------------------------------------------------------
@@ -63,7 +61,7 @@ void CRemoteServer::ConnectRemoteGameServer(unsigned int ip, unsigned short port
 //-----------------------------------------------------------------------------
 void CRemoteServer::RequestValue(IServerDataResponse *requester, const char *variable)
 {
-	Assert( m_bInitialized );
+	Assert(m_bInitialized);
 	// add to the response handling table
 	int i = m_ResponseHandlers.AddToTail();
 	m_ResponseHandlers[i].requestID = m_iCurrentRequestID;
@@ -87,7 +85,7 @@ void CRemoteServer::RequestValue(IServerDataResponse *requester, const char *var
 //-----------------------------------------------------------------------------
 void CRemoteServer::SetValue(const char *variable, const char *value)
 {
-	Assert( m_bInitialized );
+	Assert(m_bInitialized);
 	// build the command
 	char buf[512];
 	CUtlBuffer cmd(buf, sizeof(buf));
@@ -106,7 +104,7 @@ void CRemoteServer::SetValue(const char *variable, const char *value)
 //-----------------------------------------------------------------------------
 void CRemoteServer::SendCommand(const char *commandString)
 {
-	Assert( m_bInitialized );
+	Assert(m_bInitialized);
 	// build the command
 	char buf[512];
 	CUtlBuffer cmd(buf, sizeof(buf));
@@ -123,9 +121,7 @@ void CRemoteServer::SendCommand(const char *commandString)
 // Purpose: changes the current password on the server
 //			responds with "PasswordChange" "true" or "PasswordChange" "false"
 //-----------------------------------------------------------------------------
-void CRemoteServer::ChangeAccessPassword(IServerDataResponse *requester, const char *newPassword)
-{
-}
+void CRemoteServer::ChangeAccessPassword(IServerDataResponse *requester, const char *newPassword) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: process any return values, firing any IServerDataResponse items
@@ -134,15 +130,15 @@ void CRemoteServer::ChangeAccessPassword(IServerDataResponse *requester, const c
 bool CRemoteServer::ProcessServerResponse()
 {
 	Assert(g_pGameServerData != NULL);
-	Assert( m_bInitialized );
+	Assert(m_bInitialized);
 
 	char charbuf[4096];
 	bool bProcessedAnyPackets = false;
-	while (1)
+	while(1)
 	{
 		// get packet from networking
 		int bytesRead = g_pGameServerData->ReadDataResponse(m_ListenerID, charbuf, sizeof(charbuf));
-		if (bytesRead < 1)
+		if(bytesRead < 1)
 			break;
 		bProcessedAnyPackets = true;
 
@@ -153,14 +149,14 @@ bool CRemoteServer::ProcessServerResponse()
 		char variable[64];
 		buf.GetString(variable);
 
-		switch (responseType)
+		switch(responseType)
 		{
-		case SERVERDATA_RESPONSE_VALUE:
+			case SERVERDATA_RESPONSE_VALUE:
 			{
 				int valueSize = buf.GetInt();
 				Assert(valueSize > 0);
 				CUtlBuffer value(0, valueSize);
-				if (valueSize > 0)
+				if(valueSize > 0)
 				{
 					value.Put(buf.PeekGet(), valueSize);
 				}
@@ -171,9 +167,10 @@ bool CRemoteServer::ProcessServerResponse()
 				}
 
 				// find callback (usually will be the first one in the list)
-				for (int i = m_ResponseHandlers.Head(); m_ResponseHandlers.IsValidIndex(i); i = m_ResponseHandlers.Next(i))
+				for(int i = m_ResponseHandlers.Head(); m_ResponseHandlers.IsValidIndex(i);
+					i = m_ResponseHandlers.Next(i))
 				{
-					if (m_ResponseHandlers[i].requestID == requestID)
+					if(m_ResponseHandlers[i].requestID == requestID)
 					{
 						// found, call
 						m_ResponseHandlers[i].handler->OnServerDataResponse(variable, (const char *)value.Base());
@@ -188,12 +185,12 @@ bool CRemoteServer::ProcessServerResponse()
 			}
 			break;
 
-		case SERVERDATA_UPDATE:
+			case SERVERDATA_UPDATE:
 			{
 				// find all the people watching for this message
-				for (int i = m_MessageHandlers.Head(); m_MessageHandlers.IsValidIndex(i); i = m_MessageHandlers.Next(i))
+				for(int i = m_MessageHandlers.Head(); m_MessageHandlers.IsValidIndex(i); i = m_MessageHandlers.Next(i))
 				{
-					if (!stricmp(m_MessageHandlers[i].messageName, variable))
+					if(!stricmp(m_MessageHandlers[i].messageName, variable))
 					{
 						// found, call
 						m_MessageHandlers[i].handler->OnServerDataResponse(variable, "");
@@ -203,9 +200,9 @@ bool CRemoteServer::ProcessServerResponse()
 				}
 			}
 			break;
-		default:
-			Assert(responseType == SERVERDATA_RESPONSE_VALUE || responseType == SERVERDATA_UPDATE);
-			break;
+			default:
+				Assert(responseType == SERVERDATA_RESPONSE_VALUE || responseType == SERVERDATA_UPDATE);
+				break;
 		}
 	}
 
@@ -230,11 +227,11 @@ void CRemoteServer::AddServerMessageHandler(IServerDataResponse *handler, const 
 void CRemoteServer::RemoveServerDataResponseTarget(IServerDataResponse *invalidRequester)
 {
 	// iterate the responses
-	for (int i = 0; i < m_ResponseHandlers.MaxElementIndex(); i++)
+	for(int i = 0; i < m_ResponseHandlers.MaxElementIndex(); i++)
 	{
-		if (m_ResponseHandlers.IsValidIndex(i))
+		if(m_ResponseHandlers.IsValidIndex(i))
 		{
-			if (m_ResponseHandlers[i].handler == invalidRequester)
+			if(m_ResponseHandlers[i].handler == invalidRequester)
 			{
 				// found invalid handler, remove from list
 				m_ResponseHandlers.Remove(i);
@@ -242,11 +239,11 @@ void CRemoteServer::RemoveServerDataResponseTarget(IServerDataResponse *invalidR
 		}
 	}
 	// iterate the message handlers
-	for (int i = 0; i < m_MessageHandlers.MaxElementIndex(); i++)
+	for(int i = 0; i < m_MessageHandlers.MaxElementIndex(); i++)
 	{
-		if (m_MessageHandlers.IsValidIndex(i))
+		if(m_MessageHandlers.IsValidIndex(i))
 		{
-			if (m_MessageHandlers[i].handler == invalidRequester)
+			if(m_MessageHandlers[i].handler == invalidRequester)
 			{
 				// found invalid handler, remove from list
 				m_MessageHandlers.Remove(i);

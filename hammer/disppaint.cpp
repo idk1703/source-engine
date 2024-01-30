@@ -19,14 +19,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-#define DISPPAINT_RADIUS_OUTER_CLAMP	0.01f
+#define DISPPAINT_RADIUS_OUTER_CLAMP 0.01f
 
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CDispPaintMgr::CDispPaintMgr()
-{
-}
+CDispPaintMgr::CDispPaintMgr() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: destructor
@@ -39,18 +37,18 @@ CDispPaintMgr::~CDispPaintMgr()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::Paint( SpatialPaintData_t &spatialData, bool bAutoSew )
+bool CDispPaintMgr::Paint(SpatialPaintData_t &spatialData, bool bAutoSew)
 {
 	// Setup painting.
-	if ( !PrePaint( spatialData ) )
+	if(!PrePaint(spatialData))
 		return false;
 
 	// Handle painting.
-	if ( !DoPaint( spatialData ) )
+	if(!DoPaint(spatialData))
 		return false;
 
 	// Finish painting.
-	if ( !PostPaint( bAutoSew ) )
+	if(!PostPaint(bAutoSew))
 		return false;
 
 	// Successful paint operation.
@@ -60,14 +58,14 @@ bool CDispPaintMgr::Paint( SpatialPaintData_t &spatialData, bool bAutoSew )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::PrePaint( SpatialPaintData_t &spatialData )
+bool CDispPaintMgr::PrePaint(SpatialPaintData_t &spatialData)
 {
 	// Generate cached spatial data.
-	spatialData.m_flRadius2 = ( spatialData.m_flRadius * spatialData.m_flRadius );
+	spatialData.m_flRadius2 = (spatialData.m_flRadius * spatialData.m_flRadius);
 	spatialData.m_flOORadius2 = 1.0f / spatialData.m_flRadius2;
 
 	// Setup nudge data.
-	if ( spatialData.m_bNudgeInit )
+	if(spatialData.m_bNudgeInit)
 	{
 		m_aNudgeData.RemoveAll();
 	}
@@ -78,26 +76,26 @@ bool CDispPaintMgr::PrePaint( SpatialPaintData_t &spatialData )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::PostPaint( bool bAutoSew )
+bool CDispPaintMgr::PostPaint(bool bAutoSew)
 {
 	// Get the displacement manager from the active map document.
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 		return false;
 
 	// Update the modified displacements.
 	int nDispCount = pDispMgr->SelectCount();
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
-			pDisp->Paint_Update( false );
+			pDisp->Paint_Update(false);
 		}
 	}
 
 	// Auto "sew" if necessary.
-	if ( bAutoSew )
+	if(bAutoSew)
 	{
 		FaceListSewEdges();
 	}
@@ -108,48 +106,48 @@ bool CDispPaintMgr::PostPaint( bool bAutoSew )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::DoPaint( SpatialPaintData_t &spatialData )
+bool CDispPaintMgr::DoPaint(SpatialPaintData_t &spatialData)
 {
 	// Get the displacement manager from the active map document.
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 		return false;
 
 	// Special case - nudging!
-	if ( spatialData.m_bNudge && !spatialData.m_bNudgeInit )
+	if(spatialData.m_bNudge && !spatialData.m_bNudgeInit)
 	{
-		DoNudgeAdd( spatialData );
+		DoNudgeAdd(spatialData);
 		return true;
 	}
 
 	// For each displacement surface is the selection list attempt to paint on it.
 	int nDispCount = pDispMgr->SelectCount();
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
 			// Test paint sphere displacement bbox for overlap.
 			Vector vBBoxMin, vBBoxMax;
-			pDisp->GetBoundingBox( vBBoxMin, vBBoxMax );
-			if ( PaintSphereDispBBoxOverlap( spatialData.m_vCenter, spatialData.m_flRadius, vBBoxMin, vBBoxMax ) )
+			pDisp->GetBoundingBox(vBBoxMin, vBBoxMax);
+			if(PaintSphereDispBBoxOverlap(spatialData.m_vCenter, spatialData.m_flRadius, vBBoxMin, vBBoxMax))
 			{
 				// Paint with the correct effect
-				switch ( spatialData.m_nEffect )
+				switch(spatialData.m_nEffect)
 				{
-				case DISPPAINT_EFFECT_RAISELOWER:
+					case DISPPAINT_EFFECT_RAISELOWER:
 					{
-						DoPaintAdd( spatialData, pDisp );
+						DoPaintAdd(spatialData, pDisp);
 						break;
 					}
-				case DISPPAINT_EFFECT_RAISETO:
+					case DISPPAINT_EFFECT_RAISETO:
 					{
-						DoPaintEqual( spatialData, pDisp );
+						DoPaintEqual(spatialData, pDisp);
 						break;
 					}
-				case DISPPAINT_EFFECT_SMOOTH:
+					case DISPPAINT_EFFECT_SMOOTH:
 					{
-						DoPaintSmooth( spatialData, pDisp );
+						DoPaintSmooth(spatialData, pDisp);
 						break;
 					}
 				}
@@ -164,7 +162,7 @@ bool CDispPaintMgr::DoPaint( SpatialPaintData_t &spatialData )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::NudgeAdd( CMapDisp *pDisp, int iVert )
+void CDispPaintMgr::NudgeAdd(CMapDisp *pDisp, int iVert)
 {
 	int iNudge = m_aNudgeData.AddToTail();
 	m_aNudgeData[iNudge].m_hDisp = pDisp->GetEditHandle();
@@ -174,33 +172,33 @@ void CDispPaintMgr::NudgeAdd( CMapDisp *pDisp, int iVert )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::DoNudgeAdd( SpatialPaintData_t &spatialData )
+void CDispPaintMgr::DoNudgeAdd(SpatialPaintData_t &spatialData)
 {
 	Vector vPaintPos, vVert;
 	float flDistance2;
 
 	int nNudgeCount = m_aNudgeData.Count();
-	for ( int iNudge = 0; iNudge < nNudgeCount; iNudge++ )
+	for(int iNudge = 0; iNudge < nNudgeCount; iNudge++)
 	{
 		DispVertPair_t *pPairData = &m_aNudgeData[iNudge];
 
 		// Get the current vert.
-		CMapDisp *pDisp = EditDispMgr()->GetDisp( pPairData->m_hDisp );
-		pDisp->GetVert( pPairData->m_iVert, vVert );
+		CMapDisp *pDisp = EditDispMgr()->GetDisp(pPairData->m_hDisp);
+		pDisp->GetVert(pPairData->m_iVert, vVert);
 
-		if ( IsInSphereRadius( spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2 ) )
+		if(IsInSphereRadius(spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2))
 		{
 			// Build the new position (paint value) and set it.
-			if ( spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_SOFT )
+			if(spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_SOFT)
 			{
-				DoPaintOneOverR( spatialData, vVert, flDistance2, vPaintPos );
+				DoPaintOneOverR(spatialData, vVert, flDistance2, vPaintPos);
 			}
-			else if ( spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_HARD )
+			else if(spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_HARD)
 			{
-				DoPaintOne( spatialData, vVert, vPaintPos );
+				DoPaintOne(spatialData, vVert, vPaintPos);
 			}
-			AddToUndo( &pDisp );
-			pDisp->Paint_SetValue( pPairData->m_iVert, vPaintPos );
+			AddToUndo(&pDisp);
+			pDisp->Paint_SetValue(pPairData->m_iVert, vPaintPos);
 		}
 	}
 }
@@ -208,74 +206,73 @@ void CDispPaintMgr::DoNudgeAdd( SpatialPaintData_t &spatialData )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::PaintSphereDispBBoxOverlap( const Vector &vCenter, float flRadius,
-											    const Vector &vBBoxMin, const Vector &vBBoxMax )
+bool CDispPaintMgr::PaintSphereDispBBoxOverlap(const Vector &vCenter, float flRadius, const Vector &vBBoxMin,
+											   const Vector &vBBoxMax)
 {
-	return IsBoxIntersectingSphere( vBBoxMin, vBBoxMax, vCenter, flRadius );
+	return IsBoxIntersectingSphere(vBBoxMin, vBBoxMax, vCenter, flRadius);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::IsInSphereRadius( const Vector &vCenter, float flRadius2,
-									  const Vector &vPos, float &flDistance2 )
+bool CDispPaintMgr::IsInSphereRadius(const Vector &vCenter, float flRadius2, const Vector &vPos, float &flDistance2)
 {
 	Vector vTmp;
-	VectorSubtract( vPos, vCenter, vTmp );
-	flDistance2 = ( vTmp.x * vTmp.x ) + ( vTmp.y * vTmp.y ) + ( vTmp.z * vTmp.z );
-	return ( flDistance2 < flRadius2 );
+	VectorSubtract(vPos, vCenter, vTmp);
+	flDistance2 = (vTmp.x * vTmp.x) + (vTmp.y * vTmp.y) + (vTmp.z * vTmp.z);
+	return (flDistance2 < flRadius2);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::AddToUndo( CMapDisp **pDisp )
+void CDispPaintMgr::AddToUndo(CMapDisp **pDisp)
 {
 	CMapDisp *pUndoDisp = *pDisp;
-	if ( pUndoDisp->Paint_IsDirty() )
+	if(pUndoDisp->Paint_IsDirty())
 		return;
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( pDispMgr )
+	if(pDispMgr)
 	{
 		EditDispHandle_t handle = pUndoDisp->GetEditHandle();
-		pDispMgr->Undo( handle, false );
-		*pDisp = EditDispMgr()->GetDisp( handle );
+		pDispMgr->Undo(handle, false);
+		*pDisp = EditDispMgr()->GetDisp(handle);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::DoPaintAdd( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
+void CDispPaintMgr::DoPaintAdd(SpatialPaintData_t &spatialData, CMapDisp *pDisp)
 {
 	Vector vPaintPos, vVert;
 	float flDistance2;
 
 	int nVertCount = pDisp->GetSize();
-	for ( int iVert = 0; iVert < nVertCount; iVert++ )
+	for(int iVert = 0; iVert < nVertCount; iVert++)
 	{
 		// Get the current vert.
-		pDisp->GetVert( iVert, vVert );
+		pDisp->GetVert(iVert, vVert);
 
-		if ( IsInSphereRadius( spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2 ) )
+		if(IsInSphereRadius(spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2))
 		{
 			// Build the new position (paint value) and set it.
-			if ( spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_SOFT )
+			if(spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_SOFT)
 			{
-				DoPaintOneOverR( spatialData, vVert, flDistance2, vPaintPos );
+				DoPaintOneOverR(spatialData, vVert, flDistance2, vPaintPos);
 			}
-			else if ( spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_HARD )
+			else if(spatialData.m_uiBrushType == DISPPAINT_BRUSHTYPE_HARD)
 			{
-				DoPaintOne( spatialData, vVert, vPaintPos );
+				DoPaintOne(spatialData, vVert, vPaintPos);
 			}
-			AddToUndo( &pDisp );
-			pDisp->Paint_SetValue( iVert, vPaintPos );
+			AddToUndo(&pDisp);
+			pDisp->Paint_SetValue(iVert, vPaintPos);
 
 			// Add data to nudge list.
-			if ( spatialData.m_bNudgeInit )
+			if(spatialData.m_bNudgeInit)
 			{
-				NudgeAdd( pDisp, iVert );
+				NudgeAdd(pDisp, iVert);
 			}
 		}
 	}
@@ -284,26 +281,26 @@ void CDispPaintMgr::DoPaintAdd( SpatialPaintData_t &spatialData, CMapDisp *pDisp
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
+void CDispPaintMgr::DoPaintEqual(SpatialPaintData_t &spatialData, CMapDisp *pDisp)
 {
 	Vector vPaintPos, vVert, vFlatVert;
 	float flDistance2;
 
 	int nVertCount = pDisp->GetSize();
-	for ( int iVert = 0; iVert < nVertCount; iVert++ )
+	for(int iVert = 0; iVert < nVertCount; iVert++)
 	{
 		// Get the current vert.
-		pDisp->GetVert( iVert, vVert );
+		pDisp->GetVert(iVert, vVert);
 
-		if ( IsInSphereRadius( spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2 ) )
+		if(IsInSphereRadius(spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2))
 		{
 			// Get the base vert.
-			pDisp->GetFlatVert( iVert, vFlatVert );
+			pDisp->GetFlatVert(iVert, vFlatVert);
 
 			// Build the new position (paint value) and set it.
-			DoPaintOne( spatialData, vFlatVert, vPaintPos );
-			AddToUndo( &pDisp );
-			pDisp->Paint_SetValue( iVert, vPaintPos );
+			DoPaintOne(spatialData, vFlatVert, vPaintPos);
+			AddToUndo(&pDisp);
+			pDisp->Paint_SetValue(iVert, vPaintPos);
 		}
 	}
 }
@@ -311,24 +308,24 @@ void CDispPaintMgr::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDi
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::DoPaintSmooth( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
+void CDispPaintMgr::DoPaintSmooth(SpatialPaintData_t &spatialData, CMapDisp *pDisp)
 {
 	Vector vPaintPos, vVert;
 	float flDistance2;
 
 	int nVertCount = pDisp->GetSize();
-	for ( int iVert = 0; iVert < nVertCount; iVert++ )
+	for(int iVert = 0; iVert < nVertCount; iVert++)
 	{
 		// Get the current vert.
-		pDisp->GetVert( iVert, vVert );
+		pDisp->GetVert(iVert, vVert);
 
-		if ( IsInSphereRadius( spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2 ) )
+		if(IsInSphereRadius(spatialData.m_vCenter, spatialData.m_flRadius2, vVert, flDistance2))
 		{
 			// Build the new smoothed position and set it.
-			if ( DoPaintSmoothOneOverExp( spatialData, vVert, vPaintPos ) )
+			if(DoPaintSmoothOneOverExp(spatialData, vVert, vPaintPos))
 			{
-				AddToUndo( &pDisp );
-				pDisp->Paint_SetValue( iVert, vPaintPos );
+				AddToUndo(&pDisp);
+				pDisp->Paint_SetValue(iVert, vPaintPos);
 			}
 		}
 	}
@@ -337,73 +334,72 @@ void CDispPaintMgr::DoPaintSmooth( SpatialPaintData_t &spatialData, CMapDisp *pD
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CDispPaintMgr::CalcSmoothRadius2( const SpatialPaintData_t &spatialData, const Vector &vPoint )
+float CDispPaintMgr::CalcSmoothRadius2(const SpatialPaintData_t &spatialData, const Vector &vPoint)
 {
 	Vector vTmp;
-	VectorSubtract( spatialData.m_vCenter, vPoint, vTmp );
-	float flDistance2 = ( vTmp.x * vTmp.x ) + ( vTmp.y * vTmp.y ) + ( vTmp.z * vTmp.z );
+	VectorSubtract(spatialData.m_vCenter, vPoint, vTmp);
+	float flDistance2 = (vTmp.x * vTmp.x) + (vTmp.y * vTmp.y) + (vTmp.z * vTmp.z);
 
 	float flRatio = flDistance2 / spatialData.m_flRadius2;
 	flRatio = 1.0f - flRatio;
 
 	float flRadius = flRatio * spatialData.m_flRadius;
-	return ( flRadius * flRadius );
+	return (flRadius * flRadius);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialData,
-										     const Vector &vNewCenter,
-										     Vector &vPaintPos )
+bool CDispPaintMgr::DoPaintSmoothOneOverExp(const SpatialPaintData_t &spatialData, const Vector &vNewCenter,
+											Vector &vPaintPos)
 {
 	// Get the displacement manager from the active map document.
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 		return false;
 
 	// Calculate the smoothing radius.
-	float flNewRadius2 = CalcSmoothRadius2( spatialData, vNewCenter );
-	float flNewRadius = ( float )sqrt( flNewRadius2 );
+	float flNewRadius2 = CalcSmoothRadius2(spatialData, vNewCenter);
+	float flNewRadius = (float)sqrt(flNewRadius2);
 
 	// Test all selected surfaces for smoothing.
 	float flWeight = 0.0f;
 	float flSmoothDist = 0.0f;
 
 	// Calculate the plane dist.
-	float flPaintDist = spatialData.m_vPaintAxis.Dot( vNewCenter );
+	float flPaintDist = spatialData.m_vPaintAxis.Dot(vNewCenter);
 
 	int nDispCount = pDispMgr->SelectCount();
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
 			// Test paint sphere displacement bbox for overlap.
 			Vector vBBoxMin, vBBoxMax;
-			pDisp->GetBoundingBox( vBBoxMin, vBBoxMax );
-			if ( PaintSphereDispBBoxOverlap( vNewCenter, flNewRadius, vBBoxMin, vBBoxMax ) )
+			pDisp->GetBoundingBox(vBBoxMin, vBBoxMax);
+			if(PaintSphereDispBBoxOverlap(vNewCenter, flNewRadius, vBBoxMin, vBBoxMax))
 			{
 				Vector vVert;
 				int nVertCount = pDisp->GetSize();
-				for ( int iVert = 0; iVert < nVertCount; iVert++ )
+				for(int iVert = 0; iVert < nVertCount; iVert++)
 				{
 					// Get the current vert.
-					pDisp->GetVert( iVert, vVert );
+					pDisp->GetVert(iVert, vVert);
 
 					float flDistance2 = 0.0f;
-					if ( IsInSphereRadius( vNewCenter, flNewRadius2, vVert, flDistance2 ) )
+					if(IsInSphereRadius(vNewCenter, flNewRadius2, vVert, flDistance2))
 					{
 						float flRatio = flDistance2 / flNewRadius2;
-						float flFactor = 1.0f / exp( flRatio );
-						if ( flFactor != 1.0f )
+						float flFactor = 1.0f / exp(flRatio);
+						if(flFactor != 1.0f)
 						{
-							flFactor *= 1.0f / ( spatialData.m_flScalar * 2.0f );
+							flFactor *= 1.0f / (spatialData.m_flScalar * 2.0f);
 						}
 
 						Vector vProjectVert;
-						float flProjectDist = DotProduct( vVert, spatialData.m_vPaintAxis ) - flPaintDist;
-						flSmoothDist += ( flProjectDist * flFactor );
+						float flProjectDist = DotProduct(vVert, spatialData.m_vPaintAxis) - flPaintDist;
+						flSmoothDist += (flProjectDist * flFactor);
 						flWeight += flFactor;
 					}
 				}
@@ -413,7 +409,7 @@ bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialDa
 
 	// Re-normalize the smoothing position.
 	flSmoothDist /= flWeight;
-	vPaintPos = vNewCenter + ( spatialData.m_vPaintAxis * flSmoothDist );
+	vPaintPos = vNewCenter + (spatialData.m_vPaintAxis * flSmoothDist);
 
 	return true;
 }
@@ -421,23 +417,21 @@ bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialDa
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::DoPaintOneOverR( const SpatialPaintData_t &spatialData,
-									 const Vector &vPos, float flDistance2,
-									 Vector &vNewPos )
+void CDispPaintMgr::DoPaintOneOverR(const SpatialPaintData_t &spatialData, const Vector &vPos, float flDistance2,
+									Vector &vNewPos)
 {
-	float flValue = 1.0f - ( flDistance2 * spatialData.m_flOORadius2 );
+	float flValue = 1.0f - (flDistance2 * spatialData.m_flOORadius2);
 	flValue *= spatialData.m_flScalar;
-	VectorScale( spatialData.m_vPaintAxis, flValue, vNewPos );
-	VectorAdd( vNewPos, vPos, vNewPos );
+	VectorScale(spatialData.m_vPaintAxis, flValue, vNewPos);
+	VectorAdd(vNewPos, vPos, vNewPos);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDispPaintMgr::DoPaintOne( const SpatialPaintData_t &spatialData,
-							    const Vector &vPos, Vector &vNewPos )
+void CDispPaintMgr::DoPaintOne(const SpatialPaintData_t &spatialData, const Vector &vPos, Vector &vNewPos)
 {
 	float flValue = spatialData.m_flScalar;
-	VectorScale( spatialData.m_vPaintAxis, flValue, vNewPos );
-	VectorAdd( vNewPos, vPos, vNewPos );
+	VectorScale(spatialData.m_vPaintAxis, flValue, vNewPos);
+	VectorAdd(vNewPos, vPos, vNewPos);
 }

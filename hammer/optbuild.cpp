@@ -14,10 +14,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 void UpdateConfigList(CComboBox &combo);
 void SelectActiveConfig(CComboBox &combo);
-
 
 // dvs: this is duplicated in RunMapExpertDlg.cpp!!
 enum
@@ -32,13 +30,10 @@ enum
 	id_InsertParmEnd
 };
 
-
 void EditorUtil_ConvertPath(CString &str, bool bSave);
 void EditorUtil_TransferPath(CDialog *pDlg, int nIDC, char *szDest, bool bSave);
 
-
-COPTBuild::COPTBuild()
-	: CPropertyPage(COPTBuild::IDD)
+COPTBuild::COPTBuild() : CPropertyPage(COPTBuild::IDD)
 {
 	//{{AFX_DATA_INIT(COPTBuild)
 	//}}AFX_DATA_INIT
@@ -46,8 +41,7 @@ COPTBuild::COPTBuild()
 	m_pConfig = NULL;
 }
 
-
-void COPTBuild::DoDataExchange(CDataExchange* pDX)
+void COPTBuild::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(COPTBuild)
@@ -59,7 +53,6 @@ void COPTBuild::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CONFIGS, m_cConfigs);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(COPTBuild, CPropertyPage)
 	//{{AFX_MSG_MAP(COPTBuild)
@@ -77,7 +70,6 @@ BEGIN_MESSAGE_MAP(COPTBuild, CPropertyPage)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -88,8 +80,9 @@ void COPTBuild::DoBrowse(CWnd *pWnd)
 	pWnd->GetWindowText(str);
 	EditorUtil_ConvertPath(str, true);
 
-	CFileDialog dlg(TRUE, ".exe", str, OFN_NOCHANGEDIR | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, "Programs (*.exe)|*.exe||", this);
-	if (dlg.DoModal() == IDCANCEL)
+	CFileDialog dlg(TRUE, ".exe", str, OFN_NOCHANGEDIR | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY,
+					"Programs (*.exe)|*.exe||", this);
+	if(dlg.DoModal() == IDCANCEL)
 		return;
 
 	// Convert back to $Steam tokens.
@@ -147,10 +140,9 @@ void COPTBuild::OnSelchangeConfigs()
 	EditorUtil_TransferPath(this, IDC_BSPDIR, m_pConfig->szBSPDir, false);
 }
 
-
 void COPTBuild::SaveInfo(CGameConfig *pConfig)
 {
-	if (!pConfig)
+	if(!pConfig)
 	{
 		return;
 	}
@@ -161,7 +153,6 @@ void COPTBuild::SaveInfo(CGameConfig *pConfig)
 	EditorUtil_TransferPath(this, IDC_GAME, m_pConfig->szExecutable, true);
 	EditorUtil_TransferPath(this, IDC_BSPDIR, m_pConfig->szBSPDir, true);
 }
-
 
 void COPTBuild::UpdateConfigList()
 {
@@ -197,7 +188,7 @@ BOOL COPTBuild::HandleInsertParm(UINT nID)
 {
 	LPCTSTR pszInsert = 0;
 
-	switch (nID)
+	switch(nID)
 	{
 		case id_InsertParmMapFileNoExt:
 			pszInsert = "$file";
@@ -220,7 +211,7 @@ BOOL COPTBuild::HandleInsertParm(UINT nID)
 	}
 
 	Assert(pszInsert != NULL);
-	if (!pszInsert)
+	if(!pszInsert)
 	{
 		return TRUE;
 	}
@@ -229,7 +220,6 @@ BOOL COPTBuild::HandleInsertParm(UINT nID)
 
 	return TRUE;
 }
-
 
 void COPTBuild::InsertParm(UINT nID, CEdit *pEdit)
 {
@@ -252,7 +242,6 @@ void COPTBuild::InsertParm(UINT nID, CEdit *pEdit)
 	pButton->GetWindowRect(r);
 	menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON, r.left, r.bottom, this, NULL);
 }
-
 
 void COPTBuild::OnParmsBsp()
 {
@@ -292,7 +281,7 @@ void COPTBuild::OnBrowseBspdir()
 
 	LPITEMIDLIST idl = SHBrowseForFolder(&bi);
 
-	if (idl == NULL)
+	if(idl == NULL)
 		return;
 
 	SHGetPathFromIDList(idl, szTemp);

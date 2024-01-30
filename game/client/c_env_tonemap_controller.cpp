@@ -20,13 +20,14 @@ EHANDLE g_hTonemapControllerInUse = NULL;
 //-----------------------------------------------------------------------------
 class C_EnvTonemapController : public C_BaseEntity
 {
-	DECLARE_CLASS( C_EnvTonemapController, C_BaseEntity );
+	DECLARE_CLASS(C_EnvTonemapController, C_BaseEntity);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_EnvTonemapController();
 	~C_EnvTonemapController();
-	virtual void	OnDataChanged( DataUpdateType_t updateType );
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 
 private:
 	bool m_bUseCustomAutoExposureMin;
@@ -36,24 +37,23 @@ private:
 	float m_flCustomAutoExposureMax;
 	float m_flCustomBloomScale;
 	float m_flCustomBloomScaleMinimum;
+
 private:
-	C_EnvTonemapController( const C_EnvTonemapController & );
+	C_EnvTonemapController(const C_EnvTonemapController &);
 };
 
-IMPLEMENT_CLIENTCLASS_DT( C_EnvTonemapController, DT_EnvTonemapController, CEnvTonemapController )
-	RecvPropInt( RECVINFO(m_bUseCustomAutoExposureMin) ),
-	RecvPropInt( RECVINFO(m_bUseCustomAutoExposureMax) ),
-	RecvPropInt( RECVINFO(m_bUseCustomBloomScale) ),
-	RecvPropFloat( RECVINFO(m_flCustomAutoExposureMin) ),
-	RecvPropFloat( RECVINFO(m_flCustomAutoExposureMax) ),
-	RecvPropFloat( RECVINFO(m_flCustomBloomScale) ),
-	RecvPropFloat( RECVINFO(m_flCustomBloomScaleMinimum) ),
-END_RECV_TABLE()
+IMPLEMENT_CLIENTCLASS_DT(C_EnvTonemapController, DT_EnvTonemapController, CEnvTonemapController)
+RecvPropInt(RECVINFO(m_bUseCustomAutoExposureMin)), RecvPropInt(RECVINFO(m_bUseCustomAutoExposureMax)),
+	RecvPropInt(RECVINFO(m_bUseCustomBloomScale)), RecvPropFloat(RECVINFO(m_flCustomAutoExposureMin)),
+	RecvPropFloat(RECVINFO(m_flCustomAutoExposureMax)), RecvPropFloat(RECVINFO(m_flCustomBloomScale)),
+	RecvPropFloat(RECVINFO(m_flCustomBloomScaleMinimum)),
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-C_EnvTonemapController::C_EnvTonemapController( void )
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_EnvTonemapController::C_EnvTonemapController(void)
 {
 	m_bUseCustomAutoExposureMin = false;
 	m_bUseCustomAutoExposureMax = false;
@@ -67,9 +67,9 @@ C_EnvTonemapController::C_EnvTonemapController( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_EnvTonemapController::~C_EnvTonemapController( void )
+C_EnvTonemapController::~C_EnvTonemapController(void)
 {
-	if ( g_hTonemapControllerInUse == this )
+	if(g_hTonemapControllerInUse == this)
 	{
 		g_bUseCustomAutoExposureMin = false;
 		g_bUseCustomAutoExposureMax = false;
@@ -80,7 +80,7 @@ C_EnvTonemapController::~C_EnvTonemapController( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_EnvTonemapController::OnDataChanged( DataUpdateType_t updateType )
+void C_EnvTonemapController::OnDataChanged(DataUpdateType_t updateType)
 {
 	BaseClass::OnDataChanged(updateType);
 

@@ -9,15 +9,15 @@
 #include "BaseVSShader.h"
 #include "particlelitgeneric_dx9_helper.h"
 
-BEGIN_VS_SHADER( ParticleLitGeneric_DX9,
-				"Help for ParticleLitGeneric_DX9" )
+BEGIN_VS_SHADER(ParticleLitGeneric_DX9, "Help for ParticleLitGeneric_DX9")
 	BEGIN_SHADER_PARAMS
-		SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map" )
-		SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
-		SHADER_PARAM( BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$bumpmap texcoord transform" )
+		SHADER_PARAM(BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map")
+		SHADER_PARAM(BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap")
+		SHADER_PARAM(BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0",
+					 "$bumpmap texcoord transform")
 	END_SHADER_PARAMS
 
-	void SetupVars( ParticleLitGeneric_DX9_Vars_t& info )
+	void SetupVars(ParticleLitGeneric_DX9_Vars_t & info)
 	{
 		info.m_nBaseTexture = BASETEXTURE;
 		info.m_nBaseTextureFrame = FRAME;
@@ -33,16 +33,16 @@ BEGIN_VS_SHADER( ParticleLitGeneric_DX9,
 	SHADER_INIT_PARAMS()
 	{
 		ParticleLitGeneric_DX9_Vars_t vars;
-		SetupVars( vars );
-//		InitParamsParticleLitGeneric_DX9( this, params, pMaterialName, vars );
+		SetupVars(vars);
+		//		InitParamsParticleLitGeneric_DX9( this, params, pMaterialName, vars );
 	}
 
 	SHADER_FALLBACK
 	{
-		if (g_pHardwareConfig->GetDXSupportLevel() < 70)
+		if(g_pHardwareConfig->GetDXSupportLevel() < 70)
 			return "ParticleLitGeneric_DX6";
 
-		if (g_pHardwareConfig->GetDXSupportLevel() < 80)
+		if(g_pHardwareConfig->GetDXSupportLevel() < 80)
 			return "ParticleLitGeneric_DX7";
 
 		return "ParticleLitGeneric_DX8";
@@ -53,14 +53,14 @@ BEGIN_VS_SHADER( ParticleLitGeneric_DX9,
 	SHADER_INIT
 	{
 		ParticleLitGeneric_DX9_Vars_t vars;
-		SetupVars( vars );
-//		InitParticleLitGeneric_DX9( this, params, vars );
+		SetupVars(vars);
+		//		InitParticleLitGeneric_DX9( this, params, vars );
 	}
 
 	SHADER_DRAW
 	{
 		ParticleLitGeneric_DX9_Vars_t vars;
-		SetupVars( vars );
-//		DrawParticleLitGeneric_DX9( this, params, pShaderAPI, pShaderShadow, vars );
+		SetupVars(vars);
+		//		DrawParticleLitGeneric_DX9( this, params, pShaderAPI, pShaderShadow, vars );
 	}
 END_SHADER

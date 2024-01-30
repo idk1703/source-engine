@@ -18,9 +18,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CNewKeyValue dialog
 
-
-CNewKeyValue::CNewKeyValue(CWnd* pParent /*=NULL*/)
-	: CDialog(CNewKeyValue::IDD, pParent)
+CNewKeyValue::CNewKeyValue(CWnd *pParent /*=NULL*/) : CDialog(CNewKeyValue::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CNewKeyValue)
 	m_Key = _T("");
@@ -28,8 +26,7 @@ CNewKeyValue::CNewKeyValue(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
-void CNewKeyValue::DoDataExchange(CDataExchange* pDX)
+void CNewKeyValue::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CNewKeyValue)
@@ -40,10 +37,9 @@ void CNewKeyValue::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CNewKeyValue, CDialog)
 	//{{AFX_MSG_MAP(CNewKeyValue)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

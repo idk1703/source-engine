@@ -73,84 +73,76 @@
 	ACHIEVEMENT_EVENT_PORTAL_BEAT_GAME
 */
 
-
 // Allows map logic to send achievement related events to the achievement system.
 class CLogicAchievement : public CLogicalEntity
 {
 public:
-	DECLARE_CLASS( CLogicAchievement, CLogicalEntity );
+	DECLARE_CLASS(CLogicAchievement, CLogicalEntity);
 
 	CLogicAchievement();
 
 protected:
-
 	// Inputs
-	void InputFireEvent( inputdata_t &inputdata );
-	void InputEnable( inputdata_t &inputdata );
-	void InputDisable( inputdata_t &inputdata );
-	void InputToggle( inputdata_t &inputdata );
+	void InputFireEvent(inputdata_t &inputdata);
+	void InputEnable(inputdata_t &inputdata);
+	void InputDisable(inputdata_t &inputdata);
+	void InputToggle(inputdata_t &inputdata);
 
-	bool			m_bDisabled;
-	string_t		m_iszAchievementEventID;				// Which achievement event this entity marks
+	bool m_bDisabled;
+	string_t m_iszAchievementEventID; // Which achievement event this entity marks
 
-	COutputEvent	m_OnFired;
+	COutputEvent m_OnFired;
 
 	DECLARE_DATADESC();
 };
 
+LINK_ENTITY_TO_CLASS(logic_achievement, CLogicAchievement);
 
-LINK_ENTITY_TO_CLASS( logic_achievement, CLogicAchievement );
+BEGIN_DATADESC(CLogicAchievement)
 
+	DEFINE_KEYFIELD(m_bDisabled, FIELD_BOOLEAN, "StartDisabled"),
+		DEFINE_KEYFIELD(m_iszAchievementEventID, FIELD_STRING, "AchievementEvent"),
 
-BEGIN_DATADESC( CLogicAchievement )
+		// Inputs
+		DEFINE_INPUTFUNC(FIELD_VOID, "FireEvent", InputFireEvent), DEFINE_INPUTFUNC(FIELD_VOID, "Enable", InputEnable),
+		DEFINE_INPUTFUNC(FIELD_VOID, "Disable", InputDisable), DEFINE_INPUTFUNC(FIELD_VOID, "Toggle", InputToggle),
 
-	DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
-	DEFINE_KEYFIELD( m_iszAchievementEventID, FIELD_STRING, "AchievementEvent" ),
-
-	// Inputs
-	DEFINE_INPUTFUNC( FIELD_VOID, "FireEvent", InputFireEvent ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Toggle", InputToggle ),
-
-	// Outputs
-	DEFINE_OUTPUT( m_OnFired, "OnFired" ),
+		// Outputs
+		DEFINE_OUTPUT(m_OnFired, "OnFired"),
 
 END_DATADESC()
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
 CLogicAchievement::CLogicAchievement(void)
 {
-	m_iszAchievementEventID		= NULL_STRING;
+	m_iszAchievementEventID = NULL_STRING;
 }
 
-#define ACHIEVEMENT_PREFIX	"ACHIEVEMENT_EVENT_"
+#define ACHIEVEMENT_PREFIX "ACHIEVEMENT_EVENT_"
 
 //-----------------------------------------------------------------------------
 // Purpose: Sends the achievement event to the achievement marking system.
 //-----------------------------------------------------------------------------
-void CLogicAchievement::InputFireEvent( inputdata_t &inputdata )
+void CLogicAchievement::InputFireEvent(inputdata_t &inputdata)
 {
 	// If we're active, and our string matched a valid achievement ID
-	if ( !m_bDisabled  && m_iszAchievementEventID != NULL_STRING)
+	if(!m_bDisabled && m_iszAchievementEventID != NULL_STRING)
 	{
-		m_OnFired.FireOutput( inputdata.pActivator, this );
+		m_OnFired.FireOutput(inputdata.pActivator, this);
 
-		char const *pchName = STRING( m_iszAchievementEventID );
+		char const *pchName = STRING(m_iszAchievementEventID);
 
-		int nPrefixLen = Q_strlen( ACHIEVEMENT_PREFIX );
-		if ( !Q_strnicmp( pchName, ACHIEVEMENT_PREFIX, nPrefixLen ) )
+		int nPrefixLen = Q_strlen(ACHIEVEMENT_PREFIX);
+		if(!Q_strnicmp(pchName, ACHIEVEMENT_PREFIX, nPrefixLen))
 		{
 			// Skip the prefix
 			pchName += nPrefixLen;
-			if ( pchName && *pchName )
+			if(pchName && *pchName)
 			{
 				CBroadcastRecipientFilter filter;
-				g_pGameRules->MarkAchievement( filter, pchName );
+				g_pGameRules->MarkAchievement(filter, pchName);
 			}
 		}
 	}
@@ -159,7 +151,7 @@ void CLogicAchievement::InputFireEvent( inputdata_t &inputdata )
 //------------------------------------------------------------------------------
 // Purpose: Turns on the relay, allowing it to fire outputs.
 //------------------------------------------------------------------------------
-void CLogicAchievement::InputEnable( inputdata_t &inputdata )
+void CLogicAchievement::InputEnable(inputdata_t &inputdata)
 {
 	m_bDisabled = false;
 }
@@ -167,16 +159,15 @@ void CLogicAchievement::InputEnable( inputdata_t &inputdata )
 //------------------------------------------------------------------------------
 // Purpose: Turns off the relay, preventing it from firing outputs.
 //------------------------------------------------------------------------------
-void CLogicAchievement::InputDisable( inputdata_t &inputdata )
+void CLogicAchievement::InputDisable(inputdata_t &inputdata)
 {
 	m_bDisabled = true;
 }
 
-
 //------------------------------------------------------------------------------
 // Purpose: Toggles the enabled/disabled state of the relay.
 //------------------------------------------------------------------------------
-void CLogicAchievement::InputToggle( inputdata_t &inputdata )
+void CLogicAchievement::InputToggle(inputdata_t &inputdata)
 {
 	m_bDisabled = !m_bDisabled;
 }

@@ -15,14 +15,13 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static LPCTSTR pszSection = "Torus";
 
-void MakeArcCenterRadius(float xCenter, float yCenter, float xrad, float yrad, int npoints, float start_ang, float fArc, float points[][2]);
+void MakeArcCenterRadius(float xCenter, float yCenter, float xrad, float yrad, int npoints, float start_ang, float fArc,
+						 float points[][2]);
 void MakeArc(float x1, float y1, float x2, float y2, int npoints, float start_ang, float fArc, float points[][2]);
 
-CTorusDlg::CTorusDlg(Vector& boxmins, Vector& boxmaxs, CWnd* pParent /*=NULL*/)
-	: CDialog(CTorusDlg::IDD, pParent)
+CTorusDlg::CTorusDlg(Vector &boxmins, Vector &boxmaxs, CWnd *pParent /*=NULL*/) : CDialog(CTorusDlg::IDD, pParent)
 {
 	bmins = boxmins;
 	bmaxs = boxmaxs;
@@ -57,8 +56,8 @@ CTorusDlg::CTorusDlg(Vector& boxmins, Vector& boxmaxs, CWnd* pParent /*=NULL*/)
 	m_iAddHeight = AfxGetApp()->GetProfileInt(pszSection, "Add Height", 0);
 
 	Vector vecSize;
-	VectorSubtract( bmaxs, bmins, vecSize );
-	if ( m_iAddHeight > vecSize.z )
+	VectorSubtract(bmaxs, bmins, vecSize);
+	if(m_iAddHeight > vecSize.z)
 	{
 		m_iAddHeight = vecSize.z;
 	}
@@ -85,7 +84,7 @@ void CTorusDlg::SaveValues()
 	AfxGetApp()->WriteProfileInt(pszSection, "Add Height", m_iAddHeight);
 }
 
-void CTorusDlg::DoDataExchange(CDataExchange* pDX)
+void CTorusDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTorusDlg)
@@ -116,17 +115,16 @@ void CTorusDlg::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxFloat(pDX, m_fCrossSectionRadius, 0.f, 5000.f);
 	//}}AFX_DATA_MAP
 
-	if ( pDX->m_bSaveAndValidate )
+	if(pDX->m_bSaveAndValidate)
 	{
 		Vector vecSize;
-		VectorSubtract( bmaxs, bmins, vecSize );
-		if ( m_iAddHeight > vecSize.z )
+		VectorSubtract(bmaxs, bmins, vecSize);
+		if(m_iAddHeight > vecSize.z)
 		{
 			m_iAddHeight = vecSize.z;
 		}
 	}
 }
-
 
 BEGIN_MESSAGE_MAP(CTorusDlg, CDialog)
 	//{{AFX_MSG_MAP(CTorusDlg)
@@ -144,13 +142,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorusDlg message handlers
 
-void CTorusDlg::OnChangeArc()
-{
-}
+void CTorusDlg::OnChangeArc() {}
 
-void CTorusDlg::OnChangeTorusArc()
-{
-}
+void CTorusDlg::OnChangeTorusArc() {}
 
 void CTorusDlg::OnCircle()
 {
@@ -160,21 +154,17 @@ void CTorusDlg::OnCircle()
 
 void CTorusDlg::OnComputeRadius()
 {
-	UpdateData( TRUE );
+	UpdateData(TRUE);
 
 	// This is the maximum cross-section radius
 	m_fCrossSectionRadius = MaxTorusCrossSectionRadius();
-	UpdateData( FALSE );
+	UpdateData(FALSE);
 	OnTorusPreview();
 }
 
-void CTorusDlg::OnUpdateSides()
-{
-}
+void CTorusDlg::OnUpdateSides() {}
 
-void CTorusDlg::OnUpdateWallwidth()
-{
-}
+void CTorusDlg::OnUpdateWallwidth() {}
 
 BOOL CTorusDlg::OnInitDialog()
 {
@@ -196,8 +186,8 @@ void CTorusDlg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
-	CBrush black(RGB(0,0,0));
-	CBrush grey(RGB(128,128,128));
+	CBrush black(RGB(0, 0, 0));
+	CBrush grey(RGB(128, 128, 128));
 
 	// Do not call CDialog::OnPaint() for painting messages
 	CRect rcPreview;
@@ -205,9 +195,9 @@ void CTorusDlg::OnPaint()
 	ScreenToClient(&rcPreview);
 	dc.FillRect(rcPreview, &black);
 
-	DrawTorusCrossSection( &dc );
+	DrawTorusCrossSection(&dc);
 
-	rcPreview.InflateRect(1,1);
+	rcPreview.InflateRect(1, 1);
 	dc.FrameRect(rcPreview, &grey);
 	ValidateRect(rcPreview);
 
@@ -215,9 +205,9 @@ void CTorusDlg::OnPaint()
 	ScreenToClient(&rcPreview);
 	dc.FillRect(rcPreview, &black);
 
-	DrawTorusTopView( &dc );
+	DrawTorusTopView(&dc);
 
-	rcPreview.InflateRect(1,1);
+	rcPreview.InflateRect(1, 1);
 	dc.FrameRect(rcPreview, &grey);
 	ValidateRect(rcPreview);
 
@@ -234,10 +224,7 @@ void CTorusDlg::OnTorusPreview()
 	UpdateWindow();
 }
 
-CTorusDlg::~CTorusDlg()
-{
-}
-
+CTorusDlg::~CTorusDlg() {}
 
 //-----------------------------------------------------------------------------
 // Gets the inner radius of the torus cross-section
@@ -245,34 +232,34 @@ CTorusDlg::~CTorusDlg()
 float CTorusDlg::MaxTorusCrossSectionRadius() const
 {
 	Vector vecSize;
-	VectorSubtract( bmaxs, bmins, vecSize );
+	VectorSubtract(bmaxs, bmins, vecSize);
 
 	float flTorusRadius = (vecSize.z - m_iAddHeight);
 
 	// Check for multiple revolutions...
-	if ( ( m_fRotationArc > 360 ) || (( m_fRotationArc == 360 ) && ( m_iAddHeight != 0 )) )
+	if((m_fRotationArc > 360) || ((m_fRotationArc == 360) && (m_iAddHeight != 0)))
 	{
 		// Height per revolution
 		float flHeightPerRev = 360.0f * m_iAddHeight / m_fRotationArc;
-		if ( flHeightPerRev < flTorusRadius )
+		if(flHeightPerRev < flTorusRadius)
 		{
 			flTorusRadius = flHeightPerRev;
 		}
 	}
 
 	// Also constrain it based on x & y too...
-	if ( (vecSize.x * 0.5f) < flTorusRadius )
+	if((vecSize.x * 0.5f) < flTorusRadius)
 	{
 		flTorusRadius = vecSize.x * 0.5f;
 	}
 
-	if ( (vecSize.y * 0.5f) < flTorusRadius )
+	if((vecSize.y * 0.5f) < flTorusRadius)
 	{
 		flTorusRadius = vecSize.y * 0.5f;
 	}
 
 	flTorusRadius *= 0.5f;
-	if ( flTorusRadius < m_iWallWidth )
+	if(flTorusRadius < m_iWallWidth)
 	{
 		flTorusRadius = m_iWallWidth;
 	}
@@ -280,24 +267,23 @@ float CTorusDlg::MaxTorusCrossSectionRadius() const
 	return flTorusRadius;
 }
 
-
 //-----------------------------------------------------------------------------
 // Gets the inner radius of the torus cross-section
 //-----------------------------------------------------------------------------
 float CTorusDlg::GetTorusCrossSectionRadius() const
 {
 	Vector vecSize;
-	VectorSubtract( bmaxs, bmins, vecSize );
+	VectorSubtract(bmaxs, bmins, vecSize);
 
 	float flTorusRadius = m_fCrossSectionRadius;
 
 	// Also constrain it based on x & y too...
-	if ( (vecSize.x * 0.25f) < flTorusRadius )
+	if((vecSize.x * 0.25f) < flTorusRadius)
 	{
 		flTorusRadius = vecSize.x * 0.25f;
 	}
 
-	if ( (vecSize.y * 0.25f) < flTorusRadius )
+	if((vecSize.y * 0.25f) < flTorusRadius)
 	{
 		flTorusRadius = vecSize.y * 0.25f;
 	}
@@ -305,11 +291,10 @@ float CTorusDlg::GetTorusCrossSectionRadius() const
 	return flTorusRadius;
 }
 
-
 //-----------------------------------------------------------------------------
 // Draws the torus cross-section
 //-----------------------------------------------------------------------------
-void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
+void CTorusDlg::DrawTorusCrossSection(CDC *pDC)
 {
 	int iSides, iWallWidth;
 	float fArc, fStartAngle;
@@ -325,7 +310,7 @@ void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
 
 	CPen m_hPen, *pOldPen;
 
-	m_hPen.CreatePen(PS_SOLID, 1, RGB(255,255,255));
+	m_hPen.CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 
 	pOldPen = pDC->SelectObject(&m_hPen);
 
@@ -334,53 +319,50 @@ void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
 	ScreenToClient(&rcItem);
 
 	CPoint pt;
-	pt.x = rcItem.left + rcItem.Width()  / 2;
-	pt.y = rcItem.top  + rcItem.Height() / 2;
+	pt.x = rcItem.left + rcItem.Width() / 2;
+	pt.y = rcItem.top + rcItem.Height() / 2;
 
 	float flMaxRadius = GetTorusCrossSectionRadius();
 	iWallWidth = m_iWallWidth;
-	if ( iWallWidth > flMaxRadius )
+	if(iWallWidth > flMaxRadius)
 		iWallWidth = flMaxRadius;
 	float flTorusRadius = flMaxRadius - iWallWidth;
 
 	float flDeltaZ = bmaxs[2] - bmins[2];
-	if (flDeltaZ)
+	if(flDeltaZ)
 	{
-		if ( flDeltaZ < flMaxRadius * 2.0f )
+		if(flDeltaZ < flMaxRadius * 2.0f)
 		{
 			flDeltaZ = flMaxRadius * 2.0f;
 		}
-		fScaleX = rcItem.Width()/flDeltaZ;
-		fScaleY = rcItem.Height()/flDeltaZ;
+		fScaleX = rcItem.Width() / flDeltaZ;
+		fScaleY = rcItem.Height() / flDeltaZ;
 	}
 	else
 	{
 		fScaleX = fScaleY = 1.0f;
-//		fScaleX = rcItem.Width() / (2.0f * flMaxRadius);
-//		fScaleY = rcItem.Height() / (2.0f * flMaxRadius);
+		//		fScaleX = rcItem.Width() / (2.0f * flMaxRadius);
+		//		fScaleY = rcItem.Height() / (2.0f * flMaxRadius);
 	}
 
 	fArc = m_fArc;
 	fStartAngle = m_fAngle;
 	iSides = m_iSides;
 
-	MakeArcCenterRadius(0, 0,
-		flTorusRadius + iWallWidth, flTorusRadius + iWallWidth,
-		iSides, fStartAngle, fArc, fOuterPoints);
+	MakeArcCenterRadius(0, 0, flTorusRadius + iWallWidth, flTorusRadius + iWallWidth, iSides, fStartAngle, fArc,
+						fOuterPoints);
 
-	MakeArcCenterRadius(0, 0,
-		flTorusRadius, flTorusRadius,
-		iSides, fStartAngle, fArc, fInnerPoints);
+	MakeArcCenterRadius(0, 0, flTorusRadius, flTorusRadius, iSides, fStartAngle, fArc, fInnerPoints);
 
 	// check wall width - if it's half or more of the total,
 	//  set the inner poinst to the center point of the box
 	//  and turn off the CreateSouthFace flag
 
 	Vector points[4];
-	for (i = 0; i < iSides; i++)
+	for(i = 0; i < iSides; i++)
 	{
-		int iNextPoint = i+1;
-		if (iNextPoint >= iSides + 1)
+		int iNextPoint = i + 1;
+		if(iNextPoint >= iSides + 1)
 		{
 			iNextPoint = 0;
 		}
@@ -397,7 +379,7 @@ void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
 		points[3][0] = fInnerPoints[i][0];
 		points[3][1] = fInnerPoints[i][1];
 
-		for (int j = 0; j < 4; j++)
+		for(int j = 0; j < 4; j++)
 		{
 			points[j][0] = fScaleX * points[j][0];
 			points[j][1] = fScaleY * points[j][1];
@@ -410,7 +392,7 @@ void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
 	}
 
 	// Close the cross-section off...
-	if ( fArc != 360.0f )
+	if(fArc != 360.0f)
 	{
 		pDC->LineTo(pt.x + (int)points[1][0], pt.y - (int)points[1][1]);
 	}
@@ -418,8 +400,7 @@ void CTorusDlg::DrawTorusCrossSection(CDC* pDC )
 	pDC->SelectObject(pOldPen);
 }
 
-
-void CTorusDlg::DrawTorusTopView( CDC* pDC )
+void CTorusDlg::DrawTorusTopView(CDC *pDC)
 {
 	int i;
 	float fOuterPoints[ARC_MAX_POINTS][2];
@@ -432,7 +413,7 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 
 	CPen m_hPen, *pOldPen;
 
-	m_hPen.CreatePen(PS_SOLID, 1, RGB(255,255,255));
+	m_hPen.CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 
 	pOldPen = pDC->SelectObject(&m_hPen);
 
@@ -441,21 +422,21 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 	ScreenToClient(&rcItem);
 
 	CPoint pt;
-	pt.x = rcItem.left + rcItem.Width()  / 2;
-	pt.y = rcItem.top  + rcItem.Height() / 2;
+	pt.x = rcItem.left + rcItem.Width() / 2;
+	pt.y = rcItem.top + rcItem.Height() / 2;
 
-	if (bmaxs[0] - bmins[0])
+	if(bmaxs[0] - bmins[0])
 	{
-		fScaleX = rcItem.Width() /(bmaxs[0] - bmins[0]);
+		fScaleX = rcItem.Width() / (bmaxs[0] - bmins[0]);
 	}
 	else
 	{
 		fScaleX = 1.0f;
 	}
 
-	if (bmaxs[1] - bmins[1])
+	if(bmaxs[1] - bmins[1])
 	{
-		fScaleY = rcItem.Height() /(bmaxs[1] - bmins[1]);
+		fScaleY = rcItem.Height() / (bmaxs[1] - bmins[1]);
 	}
 	else
 	{
@@ -474,29 +455,28 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 	float yCenter = (bmaxs[1] + bmins[1]) * 0.5f;
 	float xRad = (bmaxs[0] - xCenter - iWallWidth);
 	float yRad = (bmaxs[1] - yCenter - iWallWidth);
-	if (xRad < 0.0f )
+	if(xRad < 0.0f)
 	{
 		xRad = 0.0f;
 	}
-	if (yRad < 0.0f )
+	if(yRad < 0.0f)
 	{
 		yRad = 0.0f;
 	}
 
-	MakeArcCenterRadius(xCenter, yCenter, xRad + iWallWidth, yRad + iWallWidth,
-		iSides,	fStartAngle, fArc, fOuterPoints);
+	MakeArcCenterRadius(xCenter, yCenter, xRad + iWallWidth, yRad + iWallWidth, iSides, fStartAngle, fArc,
+						fOuterPoints);
 
-	MakeArcCenterRadius(xCenter, yCenter, xRad, yRad,
-		iSides, fStartAngle, fArc, fInnerPoints);
+	MakeArcCenterRadius(xCenter, yCenter, xRad, yRad, iSides, fStartAngle, fArc, fInnerPoints);
 
 	Vector vecCenter;
-	VectorLerp( bmins, bmaxs, 0.5f, vecCenter );
+	VectorLerp(bmins, bmaxs, 0.5f, vecCenter);
 
 	Vector points[4];
-	for (i = 0; i < iSides; i++)
+	for(i = 0; i < iSides; i++)
 	{
-		int iNextPoint = i+1;
-		if (iNextPoint >= iSides + 1)
+		int iNextPoint = i + 1;
+		if(iNextPoint >= iSides + 1)
 		{
 			iNextPoint = 0;
 		}
@@ -513,7 +493,7 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 		points[3][0] = fInnerPoints[i][0];
 		points[3][1] = fInnerPoints[i][1];
 
-		for (int j = 0; j < 4; j++)
+		for(int j = 0; j < 4; j++)
 		{
 			points[j][0] = fScaleX * (points[j][0] - vecCenter[0]);
 			points[j][1] = fScaleY * (points[j][1] - vecCenter[1]);
@@ -526,7 +506,7 @@ void CTorusDlg::DrawTorusTopView( CDC* pDC )
 	}
 
 	// Close the cross-section off...
-	if ( fArc != 360.0f )
+	if(fArc != 360.0f)
 	{
 		pDC->LineTo(pt.x + (int)points[1][0], pt.y - (int)points[1][1]);
 	}

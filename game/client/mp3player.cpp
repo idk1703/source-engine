@@ -44,17 +44,17 @@ static CMP3Player *g_pPlayer = NULL;
 vgui::Panel *GetSDKRootPanel();
 
 // Time between songs
-#define END_GAP_TIME	1.0f
+#define END_GAP_TIME 1.0f
 
 #define SOUND_ROOT "sound"
 
-#define MUTED_VOLUME		0.02f
+#define MUTED_VOLUME 0.02f
 
-#define TREE_TEXT_COLOR		Color( 200, 255, 200, 255 )
-#define LIST_TEXT_COLOR		TREE_TEXT_COLOR
+#define TREE_TEXT_COLOR Color(200, 255, 200, 255)
+#define LIST_TEXT_COLOR TREE_TEXT_COLOR
 
-#define DB_FILENAME			"resource/mp3player_db.txt"
-#define MP3_SETTINGS_FILE	"resource/mp3settings.txt"
+#define DB_FILENAME		  "resource/mp3player_db.txt"
+#define MP3_SETTINGS_FILE "resource/mp3settings.txt"
 
 #define MP3_DEFAULT_MP3DIR "c:\\my music"
 
@@ -2464,12 +2464,8 @@ static CMP3PlayerGameSystem g_MP3Helper;
 
 #else
 
-void MP3Player_Create( vgui::VPANEL parent )
-{
-}
+void MP3Player_Create(vgui::VPANEL parent) {}
 
-void MP3Player_Destroy()
-{
-}
+void MP3Player_Destroy() {}
 
 #endif

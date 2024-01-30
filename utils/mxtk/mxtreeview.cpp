@@ -15,211 +15,175 @@
 #include <windows.h>
 #include <commctrl.h>
 
-
-
 class mxTreeView_i
 {
 public:
 	HWND d_hwnd;
 };
 
-
-
-mxTreeView::mxTreeView (mxWindow *parent, int x, int y, int w, int h, int id)
-: mxWidget (parent, x, y, w, h)
+mxTreeView::mxTreeView(mxWindow *parent, int x, int y, int w, int h, int id) : mxWidget(parent, x, y, w, h)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
 	d_this = new mxTreeView_i;
 
 	DWORD dwStyle = TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_VISIBLE | WS_CHILD;
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	d_this->d_hwnd = CreateWindowEx (WS_EX_CLIENTEDGE, WC_TREEVIEW, "", dwStyle,
-				x, y, w, h, hwndParent,
-				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
+	d_this->d_hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, WC_TREEVIEW, "", dwStyle, x, y, w, h, hwndParent, (HMENU)id,
+									(HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	SendMessage (d_this->d_hwnd, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
-	SetWindowLong (d_this->d_hwnd, GWL_USERDATA, (LONG) this);
+	SendMessage(d_this->d_hwnd, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+	SetWindowLong(d_this->d_hwnd, GWL_USERDATA, (LONG)this);
 
-	setHandle ((void *) d_this->d_hwnd);
-	setType (MX_TREEVIEW);
-	setParent (parent);
-	setId (id);
+	setHandle((void *)d_this->d_hwnd);
+	setType(MX_TREEVIEW);
+	setParent(parent);
+	setId(id);
 }
 
-
-
-mxTreeView::~mxTreeView ()
+mxTreeView::~mxTreeView()
 {
-	remove (0);
+	remove(0);
 	delete d_this;
 }
 
-
-
-mxTreeViewItem*
-mxTreeView::add (mxTreeViewItem *parent, const char *item)
+mxTreeViewItem *mxTreeView::add(mxTreeViewItem *parent, const char *item)
 {
-	if (!d_this)
+	if(!d_this)
 		return 0;
 
 	TV_ITEM tvItem;
 	tvItem.mask = TVIF_TEXT;
-	tvItem.pszText = (LPSTR) item;
+	tvItem.pszText = (LPSTR)item;
 	tvItem.cchTextMax = 256;
 
 	HTREEITEM hParent;
-	if (!parent)
+	if(!parent)
 		hParent = TVI_ROOT;
 	else
-		hParent = (HTREEITEM) parent;
+		hParent = (HTREEITEM)parent;
 
 	TV_INSERTSTRUCT tvInsert;
 	tvInsert.hParent = hParent;
 	tvInsert.hInsertAfter = TVI_LAST;
 	tvInsert.item = tvItem;
 
-	return (mxTreeViewItem *) TreeView_InsertItem (d_this->d_hwnd, &tvInsert);
+	return (mxTreeViewItem *)TreeView_InsertItem(d_this->d_hwnd, &tvInsert);
 }
 
-
-void
-mxTreeView::remove (mxTreeViewItem *item)
+void mxTreeView::remove(mxTreeViewItem *item)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	if (!item)
-		TreeView_DeleteAllItems (d_this->d_hwnd);
+	if(!item)
+		TreeView_DeleteAllItems(d_this->d_hwnd);
 	else
-		TreeView_DeleteItem (d_this->d_hwnd, (HTREEITEM) item);
+		TreeView_DeleteItem(d_this->d_hwnd, (HTREEITEM)item);
 }
 
-void
-mxTreeView::removeAll ()
+void mxTreeView::removeAll()
 {
-	remove( 0 );
+	remove(0);
 }
 
-void
-mxTreeView::setLabel (mxTreeViewItem *item, const char *label)
+void mxTreeView::setLabel(mxTreeViewItem *item, const char *label)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
 		tvItem.mask = TVIF_HANDLE | TVIF_TEXT;
-		tvItem.hItem = (HTREEITEM) item;
-		tvItem.pszText = (LPSTR) label;
+		tvItem.hItem = (HTREEITEM)item;
+		tvItem.pszText = (LPSTR)label;
 		tvItem.cchTextMax = 256;
 
-		TreeView_SetItem (d_this->d_hwnd, &tvItem);
+		TreeView_SetItem(d_this->d_hwnd, &tvItem);
 	}
 }
 
-
-
-void
-mxTreeView::setUserData (mxTreeViewItem *item, void *userData)
+void mxTreeView::setUserData(mxTreeViewItem *item, void *userData)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
 		tvItem.mask = TVIF_HANDLE | TVIF_PARAM;
-		tvItem.hItem = (HTREEITEM) item;
-		tvItem.lParam = (LPARAM) userData;
+		tvItem.hItem = (HTREEITEM)item;
+		tvItem.lParam = (LPARAM)userData;
 
-		TreeView_SetItem (d_this->d_hwnd, &tvItem);
+		TreeView_SetItem(d_this->d_hwnd, &tvItem);
 	}
 }
 
-
-
-void
-mxTreeView::setOpen (mxTreeViewItem *item, bool b)
+void mxTreeView::setOpen(mxTreeViewItem *item, bool b)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	if (item)
-		TreeView_Expand (d_this->d_hwnd, (HTREEITEM) item, b ? TVE_EXPAND:TVE_COLLAPSE);
+	if(item)
+		TreeView_Expand(d_this->d_hwnd, (HTREEITEM)item, b ? TVE_EXPAND : TVE_COLLAPSE);
 }
 
-
-
-void
-mxTreeView::setSelected (mxTreeViewItem *item, bool b)
+void mxTreeView::setSelected(mxTreeViewItem *item, bool b)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	if (item)
-		TreeView_SelectItem (d_this->d_hwnd, (HTREEITEM) item);
+	if(item)
+		TreeView_SelectItem(d_this->d_hwnd, (HTREEITEM)item);
 }
 
-
-
-mxTreeViewItem*
-mxTreeView::getFirstChild (mxTreeViewItem *item) const
+mxTreeViewItem *mxTreeView::getFirstChild(mxTreeViewItem *item) const
 {
-	if (!d_this)
+	if(!d_this)
 		return 0;
 
-	return (mxTreeViewItem *) TreeView_GetChild (d_this->d_hwnd, item ? (HTREEITEM) item:TVI_ROOT);
+	return (mxTreeViewItem *)TreeView_GetChild(d_this->d_hwnd, item ? (HTREEITEM)item : TVI_ROOT);
 }
 
-
-
-mxTreeViewItem*
-mxTreeView::getNextChild (mxTreeViewItem *item) const
+mxTreeViewItem *mxTreeView::getNextChild(mxTreeViewItem *item) const
 {
-	if (!d_this)
+	if(!d_this)
 		return 0;
 
-	if (item)
-		return (mxTreeViewItem *) TreeView_GetNextSibling (d_this->d_hwnd, (HTREEITEM) item);
+	if(item)
+		return (mxTreeViewItem *)TreeView_GetNextSibling(d_this->d_hwnd, (HTREEITEM)item);
 	else
 		return 0;
 }
 
-
-
-mxTreeViewItem*
-mxTreeView::getSelectedItem () const
+mxTreeViewItem *mxTreeView::getSelectedItem() const
 {
-	if (!d_this)
+	if(!d_this)
 		return 0;
 
-	return (mxTreeViewItem *) TreeView_GetSelection (d_this->d_hwnd);
+	return (mxTreeViewItem *)TreeView_GetSelection(d_this->d_hwnd);
 }
 
-
-
-const char*
-mxTreeView::getLabel (mxTreeViewItem *item) const
+const char *mxTreeView::getLabel(mxTreeViewItem *item) const
 {
 	static char label[256];
-	strcpy (label, "");
+	strcpy(label, "");
 
-	if (!d_this)
+	if(!d_this)
 		return label;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
 		tvItem.mask = TVIF_HANDLE | TVIF_TEXT;
-		tvItem.hItem = (HTREEITEM) item;
-		tvItem.pszText = (LPSTR) label;
+		tvItem.hItem = (HTREEITEM)item;
+		tvItem.pszText = (LPSTR)label;
 		tvItem.cchTextMax = 256;
 
-		TreeView_GetItem (d_this->d_hwnd, &tvItem);
+		TreeView_GetItem(d_this->d_hwnd, &tvItem);
 
 		return tvItem.pszText;
 	}
@@ -227,44 +191,38 @@ mxTreeView::getLabel (mxTreeViewItem *item) const
 	return label;
 }
 
-
-
-void*
-mxTreeView::getUserData (mxTreeViewItem *item) const
+void *mxTreeView::getUserData(mxTreeViewItem *item) const
 {
-	if (!d_this)
+	if(!d_this)
 		return 0;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
 		tvItem.mask = TVIF_HANDLE | TVIF_PARAM;
-		tvItem.hItem = (HTREEITEM) item;
+		tvItem.hItem = (HTREEITEM)item;
 
-		TreeView_GetItem (d_this->d_hwnd, &tvItem);
+		TreeView_GetItem(d_this->d_hwnd, &tvItem);
 
-		return (void *) tvItem.lParam;
+		return (void *)tvItem.lParam;
 	}
 
 	return 0;
 }
 
-
-
-bool
-mxTreeView::isOpen (mxTreeViewItem *item) const
+bool mxTreeView::isOpen(mxTreeViewItem *item) const
 {
-	if (!d_this)
+	if(!d_this)
 		return false;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
 		tvItem.mask = TVIF_HANDLE | TVIF_STATE;
-		tvItem.hItem = (HTREEITEM) item;
+		tvItem.hItem = (HTREEITEM)item;
 		tvItem.stateMask = TVIS_STATEIMAGEMASK;
 
-		TreeView_GetItem (d_this->d_hwnd, &tvItem);
+		TreeView_GetItem(d_this->d_hwnd, &tvItem);
 
 		return ((tvItem.state & TVIS_EXPANDED) == TVIS_EXPANDED);
 	}
@@ -272,22 +230,19 @@ mxTreeView::isOpen (mxTreeViewItem *item) const
 	return false;
 }
 
-
-
-bool
-mxTreeView::isSelected (mxTreeViewItem *item) const
+bool mxTreeView::isSelected(mxTreeViewItem *item) const
 {
-	if (!d_this)
+	if(!d_this)
 		return false;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
 		tvItem.mask = TVIF_HANDLE | TVIF_STATE;
-		tvItem.hItem = (HTREEITEM) item;
+		tvItem.hItem = (HTREEITEM)item;
 		tvItem.stateMask = TVIS_STATEIMAGEMASK;
 
-		TreeView_GetItem (d_this->d_hwnd, &tvItem);
+		TreeView_GetItem(d_this->d_hwnd, &tvItem);
 
 		return ((tvItem.state & TVIS_SELECTED) == TVIS_SELECTED);
 	}
@@ -295,62 +250,58 @@ mxTreeView::isSelected (mxTreeViewItem *item) const
 	return false;
 }
 
-
-
-mxTreeViewItem *
-mxTreeView::getParent (mxTreeViewItem *item) const
+mxTreeViewItem *mxTreeView::getParent(mxTreeViewItem *item) const
 {
-	if (!d_this)
+	if(!d_this)
 		return 0;
 
-	if (item)
-		return (mxTreeViewItem *) TreeView_GetParent (d_this->d_hwnd, (HTREEITEM) item);
+	if(item)
+		return (mxTreeViewItem *)TreeView_GetParent(d_this->d_hwnd, (HTREEITEM)item);
 
 	return 0;
 }
 
-void mxTreeView::setImageList( void *himagelist )
+void mxTreeView::setImageList(void *himagelist)
 {
 	TreeView_SetImageList(d_this->d_hwnd, (HIMAGELIST)himagelist, TVSIL_NORMAL);
 }
 
-void mxTreeView::setImages(mxTreeViewItem *item, int imagenormal, int imageselected )
+void mxTreeView::setImages(mxTreeViewItem *item, int imagenormal, int imageselected)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	if (item)
+	if(item)
 	{
 		TV_ITEM tvItem;
-		tvItem.mask = TVIF_HANDLE | TVIF_SELECTEDIMAGE | TVIF_IMAGE ;
-		tvItem.hItem = (HTREEITEM) item;
+		tvItem.mask = TVIF_HANDLE | TVIF_SELECTEDIMAGE | TVIF_IMAGE;
+		tvItem.hItem = (HTREEITEM)item;
 		tvItem.iImage = imagenormal;
 		tvItem.iSelectedImage = imageselected;
 		tvItem.stateMask = TVIS_STATEIMAGEMASK;
 
-		TreeView_SetItem (d_this->d_hwnd, &tvItem);
+		TreeView_SetItem(d_this->d_hwnd, &tvItem);
 	}
 }
-void mxTreeView::sortTree( mxTreeViewItem *parent, bool recurse,
-	void *func, int parameter )
+void mxTreeView::sortTree(mxTreeViewItem *parent, bool recurse, void *func, int parameter)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
 	TVSORTCB cb;
-	memset( &cb, 0, sizeof( cb ) );
+	memset(&cb, 0, sizeof(cb));
 
 	cb.hParent = (HTREEITEM)parent;
 	cb.lParam = parameter;
-	cb.lpfnCompare = (int (__stdcall *)(long,long,long)) func;
+	cb.lpfnCompare = (int(__stdcall *)(long, long, long))func;
 
-	TreeView_SortChildrenCB( d_this->d_hwnd, &cb, recurse );
+	TreeView_SortChildrenCB(d_this->d_hwnd, &cb, recurse);
 }
 
-void mxTreeView::scrollTo( mxTreeViewItem *item )
+void mxTreeView::scrollTo(mxTreeViewItem *item)
 {
-	if (!d_this)
+	if(!d_this)
 		return;
 
-	TreeView_EnsureVisible( d_this->d_hwnd, item );
+	TreeView_EnsureVisible(d_this->d_hwnd, item);
 }

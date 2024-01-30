@@ -29,54 +29,58 @@ using namespace vgui;
 
 namespace vgui
 {
-ComboBoxButton::ComboBoxButton(ComboBox *parent, const char *panelName, const char *text) : Button(parent, panelName, text)
-{
-	SetButtonActivationType(ACTIVATE_ONPRESSED);
-}
+	ComboBoxButton::ComboBoxButton(ComboBox *parent, const char *panelName, const char *text)
+		: Button(parent, panelName, text)
+	{
+		SetButtonActivationType(ACTIVATE_ONPRESSED);
+	}
 
-void ComboBoxButton::ApplySchemeSettings(IScheme *pScheme)
-{
-	Button::ApplySchemeSettings(pScheme);
+	void ComboBoxButton::ApplySchemeSettings(IScheme *pScheme)
+	{
+		Button::ApplySchemeSettings(pScheme);
 
-	SetFont(pScheme->GetFont("Marlett", IsProportional()));
-	SetContentAlignment(Label::a_west);
+		SetFont(pScheme->GetFont("Marlett", IsProportional()));
+		SetContentAlignment(Label::a_west);
 #ifdef OSX
-	SetTextInset(-3, 0);
+		SetTextInset(-3, 0);
 #else
-	SetTextInset(3, 0);
+		SetTextInset(3, 0);
 #endif
-	SetDefaultBorder(pScheme->GetBorder("ScrollBarButtonBorder"));
+		SetDefaultBorder(pScheme->GetBorder("ScrollBarButtonBorder"));
 
-	// arrow changes color but the background doesnt.
-	SetDefaultColor(GetSchemeColor("ComboBoxButton.ArrowColor", pScheme), GetSchemeColor("ComboBoxButton.BgColor", pScheme));
-	SetArmedColor(GetSchemeColor("ComboBoxButton.ArmedArrowColor", pScheme), GetSchemeColor("ComboBoxButton.BgColor", pScheme));
-	SetDepressedColor(GetSchemeColor("ComboBoxButton.ArmedArrowColor", pScheme), GetSchemeColor("ComboBoxButton.BgColor", pScheme));
-	m_DisabledBgColor = GetSchemeColor("ComboBoxButton.DisabledBgColor", pScheme);
-}
+		// arrow changes color but the background doesnt.
+		SetDefaultColor(GetSchemeColor("ComboBoxButton.ArrowColor", pScheme),
+						GetSchemeColor("ComboBoxButton.BgColor", pScheme));
+		SetArmedColor(GetSchemeColor("ComboBoxButton.ArmedArrowColor", pScheme),
+					  GetSchemeColor("ComboBoxButton.BgColor", pScheme));
+		SetDepressedColor(GetSchemeColor("ComboBoxButton.ArmedArrowColor", pScheme),
+						  GetSchemeColor("ComboBoxButton.BgColor", pScheme));
+		m_DisabledBgColor = GetSchemeColor("ComboBoxButton.DisabledBgColor", pScheme);
+	}
 
-IBorder * ComboBoxButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
-{
-	return NULL;
-	//		return Button::GetBorder(depressed, armed, selected, keyfocus);
-}
+	IBorder *ComboBoxButton::GetBorder(bool depressed, bool armed, bool selected, bool keyfocus)
+	{
+		return NULL;
+		//		return Button::GetBorder(depressed, armed, selected, keyfocus);
+	}
 
-//-----------------------------------------------------------------------------
-// Purpose: Dim the arrow on the button when exiting the box
-//			only if the menu is closed, so let the parent handle this.
-//-----------------------------------------------------------------------------
-void ComboBoxButton::OnCursorExited()
-{
-	// want the arrow to go grey when we exit the box if the menu is not open
-	CallParentFunction(new KeyValues("CursorExited"));
-}
+	//-----------------------------------------------------------------------------
+	// Purpose: Dim the arrow on the button when exiting the box
+	//			only if the menu is closed, so let the parent handle this.
+	//-----------------------------------------------------------------------------
+	void ComboBoxButton::OnCursorExited()
+	{
+		// want the arrow to go grey when we exit the box if the menu is not open
+		CallParentFunction(new KeyValues("CursorExited"));
+	}
 
 } // namespace vgui
 
 vgui::Panel *ComboBox_Factory()
 {
-	return new ComboBox( NULL, NULL, 5, true );
+	return new ComboBox(NULL, NULL, 5, true);
 }
-DECLARE_BUILD_FACTORY_CUSTOM( ComboBox, ComboBox_Factory );
+DECLARE_BUILD_FACTORY_CUSTOM(ComboBox, ComboBox_Factory);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -85,7 +89,7 @@ DECLARE_BUILD_FACTORY_CUSTOM( ComboBox, ComboBox_Factory );
 //			numLines - number of lines in dropdown menu
 //			allowEdit - whether combobox is editable or not
 //-----------------------------------------------------------------------------
-ComboBox::ComboBox(Panel *parent, const char *panelName, int numLines, bool allowEdit ) : TextEntry(parent, panelName)
+ComboBox::ComboBox(Panel *parent, const char *panelName, int numLines, bool allowEdit) : TextEntry(parent, panelName)
 {
 	SetEditable(allowEdit);
 	SetHorizontalScrolling(false); // do not scroll, always Start at the beginning of the text.
@@ -93,7 +97,7 @@ ComboBox::ComboBox(Panel *parent, const char *panelName, int numLines, bool allo
 	// create the drop-down menu
 	m_pDropDown = new Menu(this, NULL);
 	m_pDropDown->AddActionSignalTarget(this);
-	m_pDropDown->SetTypeAheadMode( Menu::TYPE_AHEAD_MODE );
+	m_pDropDown->SetTypeAheadMode(Menu::TYPE_AHEAD_MODE);
 
 	// button to Activate menu
 	m_pButton = new ComboBoxButton(this, "Button", "u");
@@ -122,9 +126,9 @@ ComboBox::~ComboBox()
 // Purpose: Set the number of items in the dropdown menu.
 // Input  : numLines -  number of items in dropdown menu
 //-----------------------------------------------------------------------------
-void ComboBox::SetNumberOfEditLines( int numLines )
+void ComboBox::SetNumberOfEditLines(int numLines)
 {
-	m_pDropDown->SetNumberOfVisibleItems( numLines );
+	m_pDropDown->SetNumberOfVisibleItems(numLines);
 }
 
 //-----------------------------------------------------------------------------
@@ -134,9 +138,8 @@ void ComboBox::SetNumberOfEditLines( int numLines )
 int ComboBox::AddItem(const char *itemText, const KeyValues *userData)
 {
 	// when the menu item is selected it will send the custom message "SetText"
-	return m_pDropDown->AddMenuItem( itemText, new KeyValues("SetText", "text", itemText), this, userData );
+	return m_pDropDown->AddMenuItem(itemText, new KeyValues("SetText", "text", itemText), this, userData);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Add an item to the drop down
@@ -154,18 +157,16 @@ int ComboBox::AddItem(const wchar_t *itemText, const KeyValues *userData)
 	return m_pDropDown->AddMenuItem(ansi, kv, this, userData);
 }
 
-
 //-----------------------------------------------------------------------------
 // Removes a single item
 //-----------------------------------------------------------------------------
-void ComboBox::DeleteItem( int itemID )
+void ComboBox::DeleteItem(int itemID)
 {
-	if ( !m_pDropDown->IsValidMenuID(itemID))
+	if(!m_pDropDown->IsValidMenuID(itemID))
 		return;
 
-	m_pDropDown->DeleteItem( itemID );
+	m_pDropDown->DeleteItem(itemID);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Updates a current item to the drop down
@@ -173,7 +174,7 @@ void ComboBox::DeleteItem( int itemID )
 //-----------------------------------------------------------------------------
 bool ComboBox::UpdateItem(int itemID, const char *itemText, const KeyValues *userData)
 {
-	if ( !m_pDropDown->IsValidMenuID(itemID))
+	if(!m_pDropDown->IsValidMenuID(itemID))
 		return false;
 
 	// when the menu item is selected it will send the custom message "SetText"
@@ -187,7 +188,7 @@ bool ComboBox::UpdateItem(int itemID, const char *itemText, const KeyValues *use
 //-----------------------------------------------------------------------------
 bool ComboBox::UpdateItem(int itemID, const wchar_t *itemText, const KeyValues *userData)
 {
-	if ( !m_pDropDown->IsValidMenuID(itemID))
+	if(!m_pDropDown->IsValidMenuID(itemID))
 		return false;
 
 	// when the menu item is selected it will send the custom message "SetText"
@@ -202,7 +203,7 @@ bool ComboBox::UpdateItem(int itemID, const wchar_t *itemText, const KeyValues *
 // Purpose: Updates a current item to the drop down
 // Input  : wchar_t *itemText - name of dropdown menu item
 //-----------------------------------------------------------------------------
-bool ComboBox::IsItemIDValid( int itemID )
+bool ComboBox::IsItemIDValid(int itemID)
 {
 	return m_pDropDown->IsValidMenuID(itemID);
 }
@@ -239,10 +240,10 @@ int ComboBox::GetItemCount() const
 	return m_pDropDown->GetItemCount();
 }
 
-int ComboBox::GetItemIDFromRow( int row )
+int ComboBox::GetItemIDFromRow(int row)
 {
 	// valid from [0, GetItemCount)
-	return m_pDropDown->GetMenuID( row );
+	return m_pDropDown->GetMenuID(row);
 }
 
 //-----------------------------------------------------------------------------
@@ -269,10 +270,10 @@ void ComboBox::ActivateItemByRow(int row)
 //-----------------------------------------------------------------------------
 void ComboBox::SilentActivateItemByRow(int row)
 {
-	int itemID = GetItemIDFromRow( row );
-	if ( itemID >= 0 )
+	int itemID = GetItemIDFromRow(row);
+	if(itemID >= 0)
 	{
-		SilentActivateItem( itemID );
+		SilentActivateItem(itemID);
 	}
 }
 
@@ -285,28 +286,28 @@ void ComboBox::SilentActivateItem(int itemID)
 	m_pDropDown->SilentActivateItem(itemID);
 
 	// Now manually call our set text, with a wrapper to ensure we don't send the Text Changed message
-	wchar_t name[ 256 ];
-	GetItemText( itemID, name, sizeof( name ) );
+	wchar_t name[256];
+	GetItemText(itemID, name, sizeof(name));
 
 	m_bPreventTextChangeMessage = true;
-	OnSetText( name );
+	OnSetText(name);
 	m_bPreventTextChangeMessage = false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Allows a custom menu to be used with the combo box
 //-----------------------------------------------------------------------------
-void ComboBox::SetMenu( Menu *menu )
+void ComboBox::SetMenu(Menu *menu)
 {
-	if ( m_pDropDown )
+	if(m_pDropDown)
 	{
 		m_pDropDown->MarkForDeletion();
 	}
 
 	m_pDropDown = menu;
-	if ( m_pDropDown )
+	if(m_pDropDown)
 	{
-		m_pDropDown->SetParent( this );
+		m_pDropDown->SetParent(this);
 	}
 }
 
@@ -321,19 +322,19 @@ void ComboBox::PerformLayout()
 	BaseClass::PerformLayout();
 
 	HFont buttonFont = m_pButton->GetFont();
-	int fontTall = surface()->GetFontTall( buttonFont );
+	int fontTall = surface()->GetFontTall(buttonFont);
 
-	int buttonSize = min( tall, fontTall );
+	int buttonSize = min(tall, fontTall);
 
-	int buttonY = ( ( tall - 1 ) - buttonSize ) / 2;
+	int buttonY = ((tall - 1) - buttonSize) / 2;
 
 	// Some dropdown button icons in our games are wider than they are taller. We need to factor that in.
 	int button_wide, button_tall;
 	m_pButton->GetContentSize(button_wide, button_tall);
-	button_wide = max( buttonSize, button_wide );
+	button_wide = max(buttonSize, button_wide);
 
-	m_pButton->SetBounds( wide - button_wide, buttonY, button_wide, buttonSize );
-	if ( IsEditable() )
+	m_pButton->SetBounds(wide - button_wide, buttonY, button_wide, buttonSize);
+	if(IsEditable())
 	{
 		SetCursor(dc_ibeam);
 	}
@@ -352,20 +353,17 @@ void ComboBox::PerformLayout()
 //-----------------------------------------------------------------------------
 void ComboBox::DoMenuLayout()
 {
-	m_pDropDown->PositionRelativeToPanel( this, m_iDirection, m_iOpenOffsetY );
+	m_pDropDown->PositionRelativeToPanel(this, m_iDirection, m_iOpenOffsetY);
 
 	// reset the width of the drop down menu to be the width of the combo box
 	m_pDropDown->SetFixedWidth(GetWide());
 	m_pDropDown->ForceCalculateWidth();
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Sorts the items in the list
 //-----------------------------------------------------------------------------
-void ComboBox::SortItems( void )
-{
-}
+void ComboBox::SortItems(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: return the index of the last selected item
@@ -383,7 +381,6 @@ KeyValues *ComboBox::GetActiveItemUserData()
 	return m_pDropDown->GetItemUserData(GetActiveItem());
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -392,20 +389,18 @@ KeyValues *ComboBox::GetItemUserData(int itemID)
 	return m_pDropDown->GetItemUserData(itemID);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
-void ComboBox::GetItemText( int itemID, wchar_t *text, int bufLenInBytes )
+void ComboBox::GetItemText(int itemID, wchar_t *text, int bufLenInBytes)
 {
-	m_pDropDown->GetItemText( itemID, text, bufLenInBytes );
+	m_pDropDown->GetItemText(itemID, text, bufLenInBytes);
 }
 
-void ComboBox::GetItemText( int itemID, char *text, int bufLenInBytes )
+void ComboBox::GetItemText(int itemID, char *text, int bufLenInBytes)
 {
-	m_pDropDown->GetItemText( itemID, text, bufLenInBytes );
+	m_pDropDown->GetItemText(itemID, text, bufLenInBytes);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -424,23 +419,23 @@ void ComboBox::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetBorder( pScheme->GetBorder( m_szBorderOverride[0] ? m_szBorderOverride : "ComboBoxBorder" ) );
+	SetBorder(pScheme->GetBorder(m_szBorderOverride[0] ? m_szBorderOverride : "ComboBoxBorder"));
 }
 
-void ComboBox::ApplySettings( KeyValues *pInResourceData )
+void ComboBox::ApplySettings(KeyValues *pInResourceData)
 {
-	BaseClass::ApplySettings( pInResourceData );
+	BaseClass::ApplySettings(pInResourceData);
 
-	const char *pBorderOverride = pInResourceData->GetString( "border_override", NULL );
-	if ( pBorderOverride )
+	const char *pBorderOverride = pInResourceData->GetString("border_override", NULL);
+	if(pBorderOverride)
 	{
-		V_strncpy( m_szBorderOverride, pBorderOverride, sizeof( m_szBorderOverride ) );
+		V_strncpy(m_szBorderOverride, pBorderOverride, sizeof(m_szBorderOverride));
 	}
 
-	KeyValues *pKVButton = pInResourceData->FindKey( "Button" );
-	if ( pKVButton && m_pButton )
+	KeyValues *pKVButton = pInResourceData->FindKey("Button");
+	if(pKVButton && m_pButton)
 	{
-		m_pButton->ApplySettings( pKVButton );
+		m_pButton->ApplySettings(pKVButton);
 	}
 }
 
@@ -457,20 +452,20 @@ void ComboBox::SetDropdownButtonVisible(bool state)
 //-----------------------------------------------------------------------------
 void ComboBox::OnMousePressed(MouseCode code)
 {
-	if ( !m_pDropDown )
+	if(!m_pDropDown)
 		return;
 
-	if ( !IsEnabled() )
+	if(!IsEnabled())
 		return;
 
 	// make sure it's getting pressed over us (it may not be due to mouse capture)
-	if ( !IsCursorOver() )
+	if(!IsCursorOver())
 	{
 		HideMenu();
 		return;
 	}
 
-	if ( IsEditable() )
+	if(IsEditable())
 	{
 		BaseClass::OnMousePressed(code);
 		HideMenu();
@@ -488,7 +483,7 @@ void ComboBox::OnMousePressed(MouseCode code)
 //-----------------------------------------------------------------------------
 void ComboBox::OnMouseDoublePressed(MouseCode code)
 {
-	if (IsEditable())
+	if(IsEditable())
 	{
 		BaseClass::OnMouseDoublePressed(code);
 	}
@@ -503,9 +498,9 @@ void ComboBox::OnMouseDoublePressed(MouseCode code)
 //			Changes the label text to be that of the command
 // Input  : char *command -
 //-----------------------------------------------------------------------------
-void ComboBox::OnCommand( const char *command )
+void ComboBox::OnCommand(const char *command)
 {
-	if (!stricmp(command, "ButtonClicked"))
+	if(!stricmp(command, "ButtonClicked"))
 	{
 		// hide / show the menu underneath
 		DoClick();
@@ -523,7 +518,7 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 	const wchar_t *text = newtext;
 
 	// check if the new text is a localized string, if so undo it
-	if (*text == '#')
+	if(*text == '#')
 	{
 		char cbuf[255];
 		g_pVGuiLocalize->ConvertUnicodeToANSI(text, cbuf, 255);
@@ -531,7 +526,7 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 		// try lookup in localization tables
 		StringIndex_t unlocalizedTextSymbol = g_pVGuiLocalize->FindIndex(cbuf + 1);
 
-		if (unlocalizedTextSymbol != INVALID_LOCALIZE_STRING_INDEX)
+		if(unlocalizedTextSymbol != INVALID_LOCALIZE_STRING_INDEX)
 		{
 			// we have a new text value
 			text = g_pVGuiLocalize->GetValueByIndex(unlocalizedTextSymbol);
@@ -541,13 +536,13 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 	wchar_t wbuf[255];
 	GetText(wbuf, 254);
 
-	if ( wcscmp(wbuf, text) )
+	if(wcscmp(wbuf, text))
 	{
 		// text has changed
 		SetText(text);
 
 		// fire off that things have changed
-		if ( !m_bPreventTextChangeMessage )
+		if(!m_bPreventTextChangeMessage)
 		{
 			PostActionSignal(new KeyValues("TextChanged", "text", text));
 		}
@@ -563,7 +558,7 @@ void ComboBox::OnSetText(const wchar_t *newtext)
 //-----------------------------------------------------------------------------
 void ComboBox::HideMenu(void)
 {
-	if ( !m_pDropDown )
+	if(!m_pDropDown)
 		return;
 
 	// hide the menu
@@ -577,7 +572,7 @@ void ComboBox::HideMenu(void)
 //-----------------------------------------------------------------------------
 void ComboBox::ShowMenu(void)
 {
-	if ( !m_pDropDown )
+	if(!m_pDropDown)
 		return;
 
 	// hide the menu
@@ -600,19 +595,19 @@ void ComboBox::OnMenuClose()
 {
 	HideMenu();
 
-	if ( HasFocus() )
+	if(HasFocus())
 	{
 		SelectAllText(false);
 	}
-	else if ( m_bHighlight )
+	else if(m_bHighlight)
 	{
 		m_bHighlight = false;
 		// we want the text to be highlighted when we request the focus
-//		SelectAllOnFirstFocus(true);
+		//		SelectAllOnFirstFocus(true);
 		RequestFocus();
 	}
 	// if cursor is in this box or the arrow box
-	else if ( IsCursorOver() )// make sure it's getting pressed over us (it may not be due to mouse capture)
+	else if(IsCursorOver()) // make sure it's getting pressed over us (it may not be due to mouse capture)
 	{
 		SelectAllText(false);
 		OnCursorEntered();
@@ -632,14 +627,14 @@ void ComboBox::OnMenuClose()
 void ComboBox::DoClick()
 {
 	// menu is already visible, hide the menu
-	if ( m_pDropDown->IsVisible() )
+	if(m_pDropDown->IsVisible())
 	{
 		HideMenu();
 		return;
 	}
 
 	// do nothing if menu is not enabled
-	if ( !m_pDropDown->IsEnabled() )
+	if(!m_pDropDown->IsEnabled())
 	{
 		return;
 	}
@@ -654,26 +649,25 @@ void ComboBox::DoClick()
 	int i;
 	wchar_t comboBoxContents[255];
 	GetText(comboBoxContents, 255);
-	for ( i = 0 ; i < m_pDropDown->GetItemCount() ; i++ )
+	for(i = 0; i < m_pDropDown->GetItemCount(); i++)
 	{
 		wchar_t menuItemName[255];
 		int menuID = m_pDropDown->GetMenuID(i);
 		m_pDropDown->GetMenuItem(menuID)->GetText(menuItemName, 255);
-		if (!wcscmp(menuItemName, comboBoxContents))
+		if(!wcscmp(menuItemName, comboBoxContents))
 		{
 			itemToSelect = i;
 			break;
 		}
 	}
 	// if we found a match, highlight it on opening the menu
-	if ( itemToSelect >= 0 )
+	if(itemToSelect >= 0)
 	{
-		m_pDropDown->SetCurrentlyHighlightedItem( m_pDropDown->GetMenuID(itemToSelect) );
+		m_pDropDown->SetCurrentlyHighlightedItem(m_pDropDown->GetMenuID(itemToSelect));
 	}
 
 	// reset the dropdown's position
 	DoMenuLayout();
-
 
 	// make sure we're at the top of the draw order (and therefore our children as well)
 	// this important to make sure the menu will be drawn in the foreground
@@ -684,7 +678,7 @@ void ComboBox::DoClick()
 	// and the stencil test
 	Color c = m_pDropDown->GetBgColor();
 	c[3] = 255;
-	m_pDropDown->SetBgColor( c );
+	m_pDropDown->SetBgColor(c);
 
 	// notify
 	OnShowMenu(m_pDropDown);
@@ -704,7 +698,6 @@ void ComboBox::DoClick()
 	Repaint();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Brighten the arrow on the button when entering the box
 //-----------------------------------------------------------------------------
@@ -721,7 +714,7 @@ void ComboBox::OnCursorEntered()
 void ComboBox::OnCursorExited()
 {
 	// want the arrow to go grey when we exit the box if the menu is not open
-	if ( !m_pDropDown->IsVisible() )
+	if(!m_pDropDown->IsVisible())
 	{
 		m_pButton->SetArmed(false);
 		TextEntry::OnCursorExited();
@@ -751,12 +744,12 @@ void ComboBox::OnMenuItemSelected()
 	//=============================================================================
 	{
 		int idx = GetActiveItem();
-		if ( idx >= 0 )
+		if(idx >= 0)
 		{
-			wchar_t name[ 256 ];
-			GetItemText( idx, name, sizeof( name ) );
+			wchar_t name[256];
+			GetItemText(idx, name, sizeof(name));
 
-			OnSetText( name );
+			OnSetText(name);
 		}
 	}
 
@@ -773,15 +766,15 @@ void ComboBox::OnMenuItemSelected()
 {
 	m_bHighlight = true;
 	// For editable cbs, fill in the text field from whatever is chosen from the dropdown...
-	//if ( m_bAllowEdit )
+	// if ( m_bAllowEdit )
 	{
 		int idx = GetActiveItem();
-		if ( idx >= 0 )
+		if(idx >= 0)
 		{
-			wchar_t name[ 256 ];
-			GetItemText( idx, name, sizeof( name ) );
+			wchar_t name[256];
+			GetItemText(idx, name, sizeof(name));
 
-			OnSetText( name );
+			OnSetText(name);
 		}
 	}
 
@@ -794,13 +787,13 @@ void ComboBox::OnMenuItemSelected()
 //-----------------------------------------------------------------------------
 void ComboBox::OnSizeChanged(int wide, int tall)
 {
-	BaseClass::OnSizeChanged( wide, tall);
+	BaseClass::OnSizeChanged(wide, tall);
 
 	// set the drawwidth.
 	int bwide, btall;
 	PerformLayout();
-	m_pButton->GetSize( bwide, btall);
-	SetDrawWidth( wide - bwide );
+	m_pButton->GetSize(bwide, btall);
+	SetDrawWidth(wide - bwide);
 }
 
 //-----------------------------------------------------------------------------
@@ -830,38 +823,38 @@ void ComboBox::OnSetFocus()
 #ifdef _X360
 void ComboBox::OnKeyCodePressed(KeyCode code)
 {
-	switch ( GetBaseButtonCode( code ) )
+	switch(GetBaseButtonCode(code))
 	{
-	case KEY_XBUTTON_A:
-		DoClick();
-		break;
-	case KEY_XBUTTON_UP:
-	case KEY_XSTICK1_UP:
-	case KEY_XSTICK2_UP:
-		if(m_pDropDown->IsVisible())
-		{
-			MoveAlongMenuItemList(-1);
-		}
-		else
-		{
+		case KEY_XBUTTON_A:
+			DoClick();
+			break;
+		case KEY_XBUTTON_UP:
+		case KEY_XSTICK1_UP:
+		case KEY_XSTICK2_UP:
+			if(m_pDropDown->IsVisible())
+			{
+				MoveAlongMenuItemList(-1);
+			}
+			else
+			{
+				BaseClass::OnKeyCodePressed(code);
+			}
+			break;
+		case KEY_XBUTTON_DOWN:
+		case KEY_XSTICK1_DOWN:
+		case KEY_XSTICK2_DOWN:
+			if(m_pDropDown->IsVisible())
+			{
+				MoveAlongMenuItemList(1);
+			}
+			else
+			{
+				BaseClass::OnKeyCodePressed(code);
+			}
+			break;
+		default:
 			BaseClass::OnKeyCodePressed(code);
-		}
-		break;
-	case KEY_XBUTTON_DOWN:
-	case KEY_XSTICK1_DOWN:
-	case KEY_XSTICK2_DOWN:
-		if(m_pDropDown->IsVisible())
-		{
-			MoveAlongMenuItemList(1);
-		}
-		else
-		{
-			BaseClass::OnKeyCodePressed(code);
-		}
-		break;
-	default:
-		BaseClass::OnKeyCodePressed(code);
-		break;
+			break;
 	}
 }
 #endif
@@ -873,17 +866,17 @@ void ComboBox::OnKeyCodeTyped(KeyCode code)
 {
 	bool alt = (input()->IsKeyDown(KEY_LALT) || input()->IsKeyDown(KEY_RALT));
 
-	if (alt)
+	if(alt)
 	{
-		switch (code)
+		switch(code)
 		{
-		case KEY_UP:
-		case KEY_DOWN:
+			case KEY_UP:
+			case KEY_DOWN:
 			{
 				DoClick();
 				break;
 			}
-		default:
+			default:
 			{
 				BaseClass::OnKeyCodeTyped(code);
 				break;
@@ -892,34 +885,34 @@ void ComboBox::OnKeyCodeTyped(KeyCode code)
 	}
 	else
 	{
-		switch (code)
+		switch(code)
 		{
-		case KEY_HOME:
-		case KEY_END:
-		case KEY_PAGEUP:
-		case KEY_PAGEDOWN:
-		case KEY_UP:
-		case KEY_DOWN:
+			case KEY_HOME:
+			case KEY_END:
+			case KEY_PAGEUP:
+			case KEY_PAGEDOWN:
+			case KEY_UP:
+			case KEY_DOWN:
 			{
 				int itemSelected = m_pDropDown->GetCurrentlyHighlightedItem();
 				m_pDropDown->OnKeyCodeTyped(code);
 				int itemToSelect = m_pDropDown->GetCurrentlyHighlightedItem();
 
-				if ( itemToSelect != itemSelected )
+				if(itemToSelect != itemSelected)
 				{
 					SelectMenuItem(itemToSelect);
 				}
 				break;
 			}
 
-		case KEY_ENTER:
+			case KEY_ENTER:
 			{
 				int itemToSelect = m_pDropDown->GetCurrentlyHighlightedItem();
 				m_pDropDown->ActivateItem(itemToSelect);
 				break;
 			}
 
-		default:
+			default:
 			{
 				BaseClass::OnKeyCodeTyped(code);
 				break;
@@ -933,9 +926,9 @@ void ComboBox::OnKeyCodeTyped(KeyCode code)
 //-----------------------------------------------------------------------------
 void ComboBox::OnKeyTyped(wchar_t unichar)
 {
-	if ( IsEditable() || unichar == '\t') // don't play with key presses in edit mode
+	if(IsEditable() || unichar == '\t') // don't play with key presses in edit mode
 	{
-		BaseClass::OnKeyTyped( unichar );
+		BaseClass::OnKeyTyped(unichar);
 		return;
 	}
 
@@ -943,20 +936,20 @@ void ComboBox::OnKeyTyped(wchar_t unichar)
 	m_pDropDown->OnKeyTyped(unichar);
 	int itemToSelect = m_pDropDown->GetCurrentlyHighlightedItem();
 
-	if ( itemToSelect != itemSelected )
+	if(itemToSelect != itemSelected)
 	{
 		SelectMenuItem(itemToSelect);
 	}
 	else
 	{
-		BaseClass::OnKeyTyped( unichar );
+		BaseClass::OnKeyTyped(unichar);
 	}
 }
 
 void ComboBox::SelectMenuItem(int itemToSelect)
 {
 	// if we found this item, then we scroll up or down
-	if ( itemToSelect >= 0 && itemToSelect < m_pDropDown->GetItemCount() )
+	if(itemToSelect >= 0 && itemToSelect < m_pDropDown->GetItemCount())
 	{
 		wchar_t menuItemName[255];
 
@@ -979,32 +972,31 @@ void ComboBox::MoveAlongMenuItemList(int direction)
 
 	wchar_t comboBoxContents[255];
 	GetText(comboBoxContents, 254);
-	for ( i = 0 ; i < m_pDropDown->GetItemCount() ; i++ )
+	for(i = 0; i < m_pDropDown->GetItemCount(); i++)
 	{
 		int menuID = m_pDropDown->GetMenuID(i);
 		m_pDropDown->GetMenuItem(menuID)->GetText(menuItemName, 254);
 
-		if ( !wcscmp(menuItemName, comboBoxContents) )
+		if(!wcscmp(menuItemName, comboBoxContents))
 		{
 			itemToSelect = i;
 			break;
 		}
 	}
 
-	if ( itemToSelect >= 0 )
+	if(itemToSelect >= 0)
 	{
 		int newItem = itemToSelect + direction;
-		if ( newItem < 0 )
+		if(newItem < 0)
 		{
 			newItem = 0;
 		}
-		else if ( newItem >= m_pDropDown->GetItemCount() )
+		else if(newItem >= m_pDropDown->GetItemCount())
 		{
 			newItem = m_pDropDown->GetItemCount() - 1;
 		}
 		SelectMenuItem(newItem);
 	}
-
 }
 
 void ComboBox::MoveToFirstMenuItem()
@@ -1017,7 +1009,6 @@ void ComboBox::MoveToLastMenuItem()
 	SelectMenuItem(m_pDropDown->GetItemCount() - 1);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the direction from the menu button the menu should open
 //-----------------------------------------------------------------------------
@@ -1026,16 +1017,15 @@ void ComboBox::SetOpenDirection(Menu::MenuDirection_e direction)
 	m_iDirection = direction;
 }
 
-void ComboBox::SetFont( HFont font )
+void ComboBox::SetFont(HFont font)
 {
-	BaseClass::SetFont( font );
+	BaseClass::SetFont(font);
 
-	m_pDropDown->SetFont( font );
+	m_pDropDown->SetFont(font);
 }
 
-
-void ComboBox::SetUseFallbackFont( bool bState, HFont hFallback )
+void ComboBox::SetUseFallbackFont(bool bState, HFont hFallback)
 {
-	BaseClass::SetUseFallbackFont( bState, hFallback );
-	m_pDropDown->SetUseFallbackFont( bState, hFallback );
+	BaseClass::SetUseFallbackFont(bState, hFallback);
+	m_pDropDown->SetUseFallbackFont(bState, hFallback);
 }

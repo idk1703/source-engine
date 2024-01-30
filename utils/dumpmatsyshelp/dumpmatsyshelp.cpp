@@ -27,112 +27,108 @@ public:
 };
 CUtlVector<CShaderDLLInfo> g_ShaderDLLs;
 
-bool LoadShaderDLL( const char *pFilename )
+bool LoadShaderDLL(const char *pFilename)
 {
 	// Load the new shader
-	CSysModule *hInstance = g_pFullFileSystem->LoadModule( pFilename );
-	if ( !hInstance )
+	CSysModule *hInstance = g_pFullFileSystem->LoadModule(pFilename);
+	if(!hInstance)
 		return false;
 
 	// Get at the shader DLL interface
-	CreateInterfaceFn factory = Sys_GetFactory( hInstance );
-	if (!factory)
+	CreateInterfaceFn factory = Sys_GetFactory(hInstance);
+	if(!factory)
 	{
-		g_pFullFileSystem->UnloadModule( hInstance );
+		g_pFullFileSystem->UnloadModule(hInstance);
 		return false;
 	}
 
-	IShaderDLLInternal *pShaderDLL = (IShaderDLLInternal*)factory( SHADER_DLL_INTERFACE_VERSION, NULL );
-	if ( !pShaderDLL )
+	IShaderDLLInternal *pShaderDLL = (IShaderDLLInternal *)factory(SHADER_DLL_INTERFACE_VERSION, NULL);
+	if(!pShaderDLL)
 	{
-		g_pFullFileSystem->UnloadModule( hInstance );
+		g_pFullFileSystem->UnloadModule(hInstance);
 		return false;
 	}
 
-	CShaderDLLInfo *pOut = &g_ShaderDLLs[ g_ShaderDLLs.AddToTail() ];
+	CShaderDLLInfo *pOut = &g_ShaderDLLs[g_ShaderDLLs.AddToTail()];
 	pOut->m_pInternal = pShaderDLL;
-	Q_strncpy( pOut->m_Filename, pFilename, sizeof( pOut->m_Filename ) );
+	Q_strncpy(pOut->m_Filename, pFilename, sizeof(pOut->m_Filename));
 
 	return true;
 }
 
-
-void PrintHeader( void )
+void PrintHeader(void)
 {
-	printf( "<HTML>\n" );
-	printf( "<HEAD>\n" );
-	printf( "<TITLE>Valve Source Shader Reference</TITLE>\n" );
-	printf( "</HEAD>\n" );
-	printf( "<CENTER>\n" );
-	printf( "<H1>Valve Source Shader Reference</H1>\n" );
-	printf( "</CENTER>\n" );
+	printf("<HTML>\n");
+	printf("<HEAD>\n");
+	printf("<TITLE>Valve Source Shader Reference</TITLE>\n");
+	printf("</HEAD>\n");
+	printf("<CENTER>\n");
+	printf("<H1>Valve Source Shader Reference</H1>\n");
+	printf("</CENTER>\n");
 }
 
-void PrintShaderContents( int dllID )
+void PrintShaderContents(int dllID)
 {
 	IShaderDLLInternal *pShaderDLL = g_ShaderDLLs[dllID].m_pInternal;
 	int nShaders = pShaderDLL->ShaderCount();
 	int i;
-	printf( "<H2>%s</H2><BR>\n", g_ShaderDLLs[dllID].m_Filename );
-	printf( "<dl>\n" ); // define list
-	for( i = 0; i < nShaders; i++ )
+	printf("<H2>%s</H2><BR>\n", g_ShaderDLLs[dllID].m_Filename);
+	printf("<dl>\n"); // define list
+	for(i = 0; i < nShaders; i++)
 	{
-		IShader *pShader = pShaderDLL->GetShader( i );
-		printf( "<A HREF=\"#%s_%s\">\n", g_ShaderDLLs[dllID].m_Filename, pShader->GetName() );
-		printf( "<dt>%s</A>\n", pShader->GetName() );
-//		int nParams = pShader->GetNumParams();
+		IShader *pShader = pShaderDLL->GetShader(i);
+		printf("<A HREF=\"#%s_%s\">\n", g_ShaderDLLs[dllID].m_Filename, pShader->GetName());
+		printf("<dt>%s</A>\n", pShader->GetName());
+		//		int nParams = pShader->GetNumParams();
 	}
-	printf( "</dl>\n" ); // end define list
+	printf("</dl>\n"); // end define list
 }
 
-void PrintShaderHelp( int dllID )
+void PrintShaderHelp(int dllID)
 {
 	IShaderDLLInternal *pShaderDLL = g_ShaderDLLs[dllID].m_pInternal;
 	int nShaders = pShaderDLL->ShaderCount();
 	int i;
-	printf( "<H2>%s</H2><BR>\n", g_ShaderDLLs[dllID].m_Filename );
-	printf( "<dl>\n" ); // define list
-	for( i = 0; i < nShaders; i++ )
+	printf("<H2>%s</H2><BR>\n", g_ShaderDLLs[dllID].m_Filename);
+	printf("<dl>\n"); // define list
+	for(i = 0; i < nShaders; i++)
 	{
-		IShader *pShader = pShaderDLL->GetShader( i );
-		printf( "<A NAME=\"%s_%s\"></A>\n", g_ShaderDLLs[dllID].m_Filename, pShader->GetName() );
-		printf( "<dt>%s<dl>\n", pShader->GetName() );
+		IShader *pShader = pShaderDLL->GetShader(i);
+		printf("<A NAME=\"%s_%s\"></A>\n", g_ShaderDLLs[dllID].m_Filename, pShader->GetName());
+		printf("<dt>%s<dl>\n", pShader->GetName());
 		int nParams = pShader->GetNumParams();
 		int j;
-		for( j = 0; j < nParams; j++ )
+		for(j = 0; j < nParams; j++)
 		{
-			printf( "<dt>%s\n<dd>%s\n",
-				pShader->GetParamName( j ),
-				pShader->GetParamHelp( j )
-				);
+			printf("<dt>%s\n<dd>%s\n", pShader->GetParamName(j), pShader->GetParamHelp(j));
 		}
-		printf( "</dl><br>\n" ); // end define list
+		printf("</dl><br>\n"); // end define list
 	}
-	printf( "</dl>\n" ); // end define list
+	printf("</dl>\n"); // end define list
 }
 
-void PrintFooter( void )
+void PrintFooter(void)
 {
-	printf( "</HTML>\n" );
+	printf("</HTML>\n");
 }
 
-int main( int argc, char **argv )
+int main(int argc, char **argv)
 {
-	CommandLine()->CreateCmdLine( argc, argv );
-	FileSystem_Init( "" );
+	CommandLine()->CreateCmdLine(argc, argv);
+	FileSystem_Init("");
 	PrintHeader();
-	LoadShaderDLL( "stdshader_dx6.dll" );
-	LoadShaderDLL( "stdshader_dx7.dll" );
-	LoadShaderDLL( "stdshader_dx8.dll" );
-	LoadShaderDLL( "stdshader_dx9.dll" );
+	LoadShaderDLL("stdshader_dx6.dll");
+	LoadShaderDLL("stdshader_dx7.dll");
+	LoadShaderDLL("stdshader_dx8.dll");
+	LoadShaderDLL("stdshader_dx9.dll");
 	int i;
-	for( i = 0; i < g_ShaderDLLs.Count(); i++ )
+	for(i = 0; i < g_ShaderDLLs.Count(); i++)
 	{
-		PrintShaderContents( i );
+		PrintShaderContents(i);
 	}
-	for( i = 0; i < g_ShaderDLLs.Count(); i++ )
+	for(i = 0; i < g_ShaderDLLs.Count(); i++)
 	{
-		PrintShaderHelp( i );
+		PrintShaderHelp(i);
 	}
 	PrintFooter();
 	FileSystem_Term();

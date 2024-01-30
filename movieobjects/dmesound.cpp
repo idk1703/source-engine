@@ -15,29 +15,25 @@
 //-----------------------------------------------------------------------------
 // Expose this class to the scene database
 //-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeSound, CDmeSound );
-
+IMPLEMENT_ELEMENT_FACTORY(DmeSound, CDmeSound);
 
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 void CDmeSound::OnConstruction()
 {
-	m_SoundName.Init( this, "soundname" );
-	m_GameSoundName.Init( this, "gameSoundName" );
+	m_SoundName.Init(this, "soundname");
+	m_GameSoundName.Init(this, "gameSoundName");
 }
 
-void CDmeSound::OnDestruction()
-{
-}
-
+void CDmeSound::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
 // For sounds that are relative paths (instead of GameSound names), get full path
 //-----------------------------------------------------------------------------
-bool CDmeSound::ComputeSoundFullPath( char *pBuf, int nBufLen )
+bool CDmeSound::ComputeSoundFullPath(char *pBuf, int nBufLen)
 {
-	if ( !m_SoundName[0] )
+	if(!m_SoundName[0])
 	{
 		pBuf[0] = 0;
 		return false;
@@ -45,49 +41,45 @@ bool CDmeSound::ComputeSoundFullPath( char *pBuf, int nBufLen )
 
 	// Compute the full path of the sound
 	char pRelativePath[MAX_PATH];
-	Q_snprintf( pRelativePath, sizeof(pRelativePath), "sound\\%s", m_SoundName.Get() );
-	return g_pFullFileSystem->RelativePathToFullPath( pRelativePath, "GAME", pBuf, nBufLen ) != NULL;
+	Q_snprintf(pRelativePath, sizeof(pRelativePath), "sound\\%s", m_SoundName.Get());
+	return g_pFullFileSystem->RelativePathToFullPath(pRelativePath, "GAME", pBuf, nBufLen) != NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // Expose this class to the scene database
 //-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeGameSound, CDmeGameSound );
-
+IMPLEMENT_ELEMENT_FACTORY(DmeGameSound, CDmeGameSound);
 
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
 void CDmeGameSound::OnConstruction()
 {
-	m_Volume	.Init( this, "volume" );
-	m_Level		.Init( this, "level" );
-	m_Pitch		.Init( this, "pitch" );
+	m_Volume.Init(this, "volume");
+	m_Level.Init(this, "level");
+	m_Pitch.Init(this, "pitch");
 
-	m_IsStatic	.Init( this, "static" );
-	m_Channel	.Init( this, "channel" );
-	m_Flags		.Init( this, "flags" );
+	m_IsStatic.Init(this, "static");
+	m_Channel.Init(this, "channel");
+	m_Flags.Init(this, "flags");
 
-//	m_Source	.Init( this, "source" );
-//	m_FollowSource.Init( this, "followsource" );
-	m_Origin	.Init( this, "origin" );
-	m_Direction	.Init( this, "direction" );
+	//	m_Source	.Init( this, "source" );
+	//	m_FollowSource.Init( this, "followsource" );
+	m_Origin.Init(this, "origin");
+	m_Direction.Init(this, "direction");
 }
 
-void CDmeGameSound::OnDestruction()
-{
-}
+void CDmeGameSound::OnDestruction() {}
 
 CDmElement *CDmeGameSound::FindOrAddPhonemeExtractionSettings()
 {
-	if ( HasAttribute( "PhonemeExtractionSettings" ) )
-		return GetValueElement< CDmElement >( "PhonemeExtractionSettings" );
+	if(HasAttribute("PhonemeExtractionSettings"))
+		return GetValueElement<CDmElement>("PhonemeExtractionSettings");
 
-	CDmElement *settings = CreateElement< CDmElement >( "PhonemeExtractionSettings", GetFileId() );
-	if ( !settings )
+	CDmElement *settings = CreateElement<CDmElement>("PhonemeExtractionSettings", GetFileId());
+	if(!settings)
 		return NULL;
 
-	SetValue( "PhonemeExtractionSettings", settings );
+	SetValue("PhonemeExtractionSettings", settings);
 	return settings;
 }

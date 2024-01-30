@@ -22,21 +22,21 @@
 class CTEImpact : public CBaseTempEntity
 {
 public:
-	DECLARE_CLASS( CTEImpact, CBaseTempEntity );
+	DECLARE_CLASS(CTEImpact, CBaseTempEntity);
 
 	DECLARE_SERVERCLASS();
 
-	CTEImpact( const char *name );
-	virtual	~CTEImpact();
+	CTEImpact(const char *name);
+	virtual ~CTEImpact();
 
-	void Precache( void );
-	void Test( const Vector& current_origin, const Vector& current_normal );
+	void Precache(void);
+	void Test(const Vector &current_origin, const Vector &current_normal);
 
 public:
-
-	CNetworkVector( m_vecOrigin );
-	CNetworkVector( m_vecNormal );	//NOTENOTE: In a multi-play setup we'll probably want non-oriented effects for bandwidth
-	CNetworkVar( int, m_iType );
+	CNetworkVector(m_vecOrigin);
+	CNetworkVector(
+		m_vecNormal); // NOTENOTE: In a multi-play setup we'll probably want non-oriented effects for bandwidth
+	CNetworkVar(int, m_iType);
 };
 
 //-----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ public:
 // Input  : *name -
 // Output :
 //-----------------------------------------------------------------------------
-CTEImpact::CTEImpact( const char *name ) : CBaseTempEntity( name )
+CTEImpact::CTEImpact(const char *name) : CBaseTempEntity(name)
 {
 	m_vecOrigin.Init();
 	m_vecNormal.Init();
@@ -53,36 +53,29 @@ CTEImpact::CTEImpact( const char *name ) : CBaseTempEntity( name )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTEImpact::~CTEImpact( void )
-{
-}
+CTEImpact::~CTEImpact(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTEImpact::Precache( void )
-{
-}
+void CTEImpact::Precache(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *current_origin -
 //			*current_angles -
 //-----------------------------------------------------------------------------
-void CTEImpact::Test( const Vector& current_origin, const Vector& current_normal )
-{
-}
+void CTEImpact::Test(const Vector &current_origin, const Vector &current_normal) {}
 
+// Server class implementation
+IMPLEMENT_SERVERCLASS_ST(CTEImpact, DT_TEImpact)
+SendPropVector(SENDINFO(m_vecOrigin), -1, SPROP_COORD), SendPropVector(SENDINFO(m_vecNormal), -1, SPROP_COORD),
+	SendPropInt(SENDINFO(m_iType), 32, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
-//Server class implementation
-IMPLEMENT_SERVERCLASS_ST( CTEImpact, DT_TEImpact)
-	SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_COORD ),
-	SendPropVector( SENDINFO( m_vecNormal ), -1, SPROP_COORD ),
-	SendPropInt( SENDINFO( m_iType ), 32, SPROP_UNSIGNED ),
-END_SEND_TABLE()
-
-// Singleton to fire TEImpact objects
-static CTEImpact g_TEImpact( "Impact" );
+	// Singleton to fire TEImpact objects
+	static CTEImpact g_TEImpact("Impact");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -91,7 +84,7 @@ static CTEImpact g_TEImpact( "Impact" );
 //			*origin -
 //			*recipient -
 //-----------------------------------------------------------------------------
-void TE_Impact( IRecipientFilter& filter, float delay )
+void TE_Impact(IRecipientFilter &filter, float delay)
 {
-	g_TEImpact.Create( filter, delay );
+	g_TEImpact.Create(filter, delay);
 }

@@ -28,6 +28,7 @@
 class CTextMessagePanel : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
+
 public:
 	enum
 	{
@@ -39,137 +40,134 @@ public:
 
 	struct message_t
 	{
-		vgui::HFont	font;
-		short		x, y;
-		wchar_t		ch;
-		byte		type;
-		byte		r, g, b, a;
+		vgui::HFont font;
+		short x, y;
+		wchar_t ch;
+		byte type;
+		byte r, g, b, a;
 	};
 
-						CTextMessagePanel( vgui::VPANEL parent );
-	virtual				~CTextMessagePanel( void );
+	CTextMessagePanel(vgui::VPANEL parent);
+	virtual ~CTextMessagePanel(void);
 
-	virtual void		SetPosition( int x, int y );
+	virtual void SetPosition(int x, int y);
 
-	virtual void		AddChar( int r, int g, int b, int a, wchar_t ch );
-	virtual void		GetTextExtents( int *wide, int *tall, const char *string );
+	virtual void AddChar(int r, int g, int b, int a, wchar_t ch);
+	virtual void GetTextExtents(int *wide, int *tall, const char *string);
 
-	virtual void		SetFont( vgui::HFont hCustomFont );
-	virtual void		SetDefaultFont( void );
+	virtual void SetFont(vgui::HFont hCustomFont);
+	virtual void SetDefaultFont(void);
 
-	virtual void		OnTick( void );
+	virtual void OnTick(void);
 
-	virtual void		Paint();
+	virtual void Paint();
 
-	virtual bool		ShouldDraw( void );
+	virtual bool ShouldDraw(void);
 
 	// Get character data for textmessage text
-	virtual int			GetFontInfo( FONTABC *pABCs, vgui::HFont hFont );
+	virtual int GetFontInfo(FONTABC *pABCs, vgui::HFont hFont);
 
-	virtual void		ApplySchemeSettings( vgui::IScheme *pScheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
-		SetSize( ScreenWidth(), ScreenHeight() );
-		SetPos( 0, 0 );
+		BaseClass::ApplySchemeSettings(pScheme);
+		SetSize(ScreenWidth(), ScreenHeight());
+		SetPos(0, 0);
 	}
 
 private:
-	message_t			*AllocMessage( void );
-	void				Reset( void );
+	message_t *AllocMessage(void);
+	void Reset(void);
 
-	vgui::HFont			m_hFont;
-	vgui::HFont			m_hDefaultFont;
-	CUtlVector< message_t > m_Messages;
+	vgui::HFont m_hFont;
+	vgui::HFont m_hDefaultFont;
+	CUtlVector<message_t> m_Messages;
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 // Input  : *parent -
 //-----------------------------------------------------------------------------
-CTextMessagePanel::CTextMessagePanel( vgui::VPANEL parent )
-: BaseClass( NULL, "CTextMessagePanel" )
+CTextMessagePanel::CTextMessagePanel(vgui::VPANEL parent) : BaseClass(NULL, "CTextMessagePanel")
 {
-	SetParent( parent );
-	SetSize( ScreenWidth(), ScreenHeight() );
-	SetPos( 0, 0 );
-	SetVisible( false );
-	SetCursor( null );
-	SetKeyBoardInputEnabled( false );
-	SetMouseInputEnabled( false );
+	SetParent(parent);
+	SetSize(ScreenWidth(), ScreenHeight());
+	SetPos(0, 0);
+	SetVisible(false);
+	SetCursor(null);
+	SetKeyBoardInputEnabled(false);
+	SetMouseInputEnabled(false);
 
 	m_hFont = g_hFontTrebuchet24;
 	m_hDefaultFont = m_hFont;
 
-	SetFgColor( Color( 0, 0, 0, 255 ) );
-	SetPaintBackgroundEnabled( false );
+	SetFgColor(Color(0, 0, 0, 255));
+	SetPaintBackgroundEnabled(false);
 
 	// Clear memory out
 	Reset();
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 100);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTextMessagePanel::~CTextMessagePanel( void )
-{
-}
+CTextMessagePanel::~CTextMessagePanel(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Get font sizes
 // Input  : *pWidth -
 // Output : int
 //-----------------------------------------------------------------------------
-int CTextMessagePanel::GetFontInfo( FONTABC *pABCs, vgui::HFont hFont )
+int CTextMessagePanel::GetFontInfo(FONTABC *pABCs, vgui::HFont hFont)
 {
 	int i;
 
-	if ( !hFont )
+	if(!hFont)
 	{
 		hFont = m_hFont;
 	}
 
-	if ( !hFont )
+	if(!hFont)
 		return 0;
 
-	if ( pABCs )
+	if(pABCs)
 	{
-		for ( i =0; i < 256; i++ )
+		for(i = 0; i < 256; i++)
 		{
 			int a, b, c;
-			vgui::surface()->GetCharABCwide( hFont, (char)i, a, b, c );
+			vgui::surface()->GetCharABCwide(hFont, (char)i, a, b, c);
 			pABCs[i].abcA = a;
 			pABCs[i].abcB = b;
 			pABCs[i].abcC = c;
-			pABCs[i].total = a+b+c;
+			pABCs[i].total = a + b + c;
 		}
 	}
 
-	return vgui::surface()->GetFontTall( hFont );
+	return vgui::surface()->GetFontTall(hFont);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Clear all messages out of active list, etc.
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::Reset( void )
+void CTextMessagePanel::Reset(void)
 {
 	m_Messages.Purge();
-	SetVisible( false );
+	SetVisible(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Grab next free message, if any
 // Output : CTextMessagePanel::message_t
 //-----------------------------------------------------------------------------
-CTextMessagePanel::message_t *CTextMessagePanel::AllocMessage( void )
+CTextMessagePanel::message_t *CTextMessagePanel::AllocMessage(void)
 {
 	CTextMessagePanel::message_t *msg;
 
-	if ( m_Messages.Count() >= MAX_TEXTMESSAGE_CHARS )
+	if(m_Messages.Count() >= MAX_TEXTMESSAGE_CHARS)
 		return NULL;
 
-	msg = &m_Messages[ m_Messages.AddToTail() ];
+	msg = &m_Messages[m_Messages.AddToTail()];
 
 	msg->type = TYPE_UNKNOWN;
 	msg->x = 0;
@@ -180,7 +178,7 @@ CTextMessagePanel::message_t *CTextMessagePanel::AllocMessage( void )
 	msg->b = 0;
 	msg->a = 0;
 
-	SetVisible( true );
+	SetVisible(true);
 
 	return msg;
 }
@@ -190,10 +188,10 @@ CTextMessagePanel::message_t *CTextMessagePanel::AllocMessage( void )
 // Input  : x -
 //			y -
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::SetPosition( int x, int y )
+void CTextMessagePanel::SetPosition(int x, int y)
 {
 	CTextMessagePanel::message_t *msg = AllocMessage();
-	if ( !msg )
+	if(!msg)
 		return;
 
 	msg->type = TYPE_POSITION;
@@ -214,10 +212,10 @@ void CTextMessagePanel::SetPosition( int x, int y )
 //			ch -
 // Output : int
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::AddChar( int r, int g, int b, int a, wchar_t ch )
+void CTextMessagePanel::AddChar(int r, int g, int b, int a, wchar_t ch)
 {
 	CTextMessagePanel::message_t *msg = AllocMessage();
-	if ( !msg )
+	if(!msg)
 		return;
 
 	msg->type = TYPE_CHARACTER;
@@ -236,21 +234,21 @@ void CTextMessagePanel::AddChar( int r, int g, int b, int a, wchar_t ch )
 //			*tall -
 //			*string -
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::GetTextExtents( int *wide, int *tall, const char *string )
+void CTextMessagePanel::GetTextExtents(int *wide, int *tall, const char *string)
 {
-	*wide = g_pMatSystemSurface->DrawTextLen( m_hFont, "%s", (char *)string );
-	*tall = vgui::surface()->GetFontTall( m_hFont );
+	*wide = g_pMatSystemSurface->DrawTextLen(m_hFont, "%s", (char *)string);
+	*tall = vgui::surface()->GetFontTall(m_hFont);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::SetFont( vgui::HFont hCustomFont )
+void CTextMessagePanel::SetFont(vgui::HFont hCustomFont)
 {
 	m_hFont = hCustomFont;
 
 	CTextMessagePanel::message_t *msg = AllocMessage();
-	if ( !msg )
+	if(!msg)
 		return;
 
 	msg->type = TYPE_FONT;
@@ -262,26 +260,26 @@ void CTextMessagePanel::SetFont( vgui::HFont hCustomFont )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::SetDefaultFont( void )
+void CTextMessagePanel::SetDefaultFont(void)
 {
-	SetFont( m_hDefaultFont );
+	SetFont(m_hDefaultFont);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTextMessagePanel::OnTick( void )
+void CTextMessagePanel::OnTick(void)
 {
-	SetVisible( ShouldDraw() );
+	SetVisible(ShouldDraw());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CTextMessagePanel::ShouldDraw( void )
+bool CTextMessagePanel::ShouldDraw(void)
 {
-	if ( !m_Messages.Count() )
+	if(!m_Messages.Count())
 		return false;
 
 	return true;
@@ -295,42 +293,42 @@ void CTextMessagePanel::Paint()
 	CTextMessagePanel::message_t *msg;
 
 	int xpos = 0, ypos = 0;
-	vgui::surface()->DrawSetTextFont( m_hFont );
+	vgui::surface()->DrawSetTextFont(m_hFont);
 
 	int messageCount = m_Messages.Count();
-	for ( int i = 0 ; i < messageCount; ++i )
+	for(int i = 0; i < messageCount; ++i)
 	{
-		msg = &m_Messages[ i ];
+		msg = &m_Messages[i];
 
-		switch ( msg->type )
+		switch(msg->type)
 		{
-		default:
-		case TYPE_UNKNOWN:
-			Assert( 0 );
-			break;
-		case TYPE_POSITION:
-			xpos = msg->x;
-			ypos = msg->y;
-			break;
-		case TYPE_FONT:
-			m_hFont = msg->font;
-			vgui::surface()->DrawSetTextFont( m_hFont );
-			break;
-		case TYPE_CHARACTER:
-			if ( m_hFont )
-			{
-				int a, b, c;
-				vgui::surface()->GetCharABCwide( m_hFont, msg->ch, a, b, c );
-
-				if ( msg->ch > 32 )
+			default:
+			case TYPE_UNKNOWN:
+				Assert(0);
+				break;
+			case TYPE_POSITION:
+				xpos = msg->x;
+				ypos = msg->y;
+				break;
+			case TYPE_FONT:
+				m_hFont = msg->font;
+				vgui::surface()->DrawSetTextFont(m_hFont);
+				break;
+			case TYPE_CHARACTER:
+				if(m_hFont)
 				{
-					vgui::surface()->DrawSetTextColor( msg->r,  msg->g,  msg->b,  msg->a );
-					vgui::surface()->DrawSetTextPos( xpos, ypos );
-					vgui::surface()->DrawUnicodeChar( msg->ch );
+					int a, b, c;
+					vgui::surface()->GetCharABCwide(m_hFont, msg->ch, a, b, c);
+
+					if(msg->ch > 32)
+					{
+						vgui::surface()->DrawSetTextColor(msg->r, msg->g, msg->b, msg->a);
+						vgui::surface()->DrawSetTextPos(xpos, ypos);
+						vgui::surface()->DrawUnicodeChar(msg->ch);
+					}
+					xpos += a + b + c;
 				}
-				xpos += a + b + c;
-			}
-			break;
+				break;
 		}
 	}
 
@@ -341,69 +339,70 @@ class CTextMessage : public ITextMessage
 {
 private:
 	CTextMessagePanel *textMessagePanel;
+
 public:
-	CTextMessage( void )
+	CTextMessage(void)
 	{
 		textMessagePanel = NULL;
 	}
 
-	void Create( vgui::VPANEL parent )
+	void Create(vgui::VPANEL parent)
 	{
-		textMessagePanel = new CTextMessagePanel( parent );
+		textMessagePanel = new CTextMessagePanel(parent);
 	}
 
-	void Destroy( void )
+	void Destroy(void)
 	{
-		if ( textMessagePanel )
+		if(textMessagePanel)
 		{
-			textMessagePanel->SetParent( (vgui::Panel *)NULL );
+			textMessagePanel->SetParent((vgui::Panel *)NULL);
 			delete textMessagePanel;
 		}
 	}
 
-	void SetPosition( int x, int y )
+	void SetPosition(int x, int y)
 	{
-		if ( !textMessagePanel )
+		if(!textMessagePanel)
 			return;
 
-		textMessagePanel->SetPosition( x, y );
+		textMessagePanel->SetPosition(x, y);
 	}
 
-	void AddChar( int r, int g, int b, int a, wchar_t ch )
+	void AddChar(int r, int g, int b, int a, wchar_t ch)
 	{
-		if ( !textMessagePanel )
+		if(!textMessagePanel)
 			return;
 
-		textMessagePanel->AddChar( r, g, b, a, ch );
+		textMessagePanel->AddChar(r, g, b, a, ch);
 	}
 
-	void GetLength( int *wide, int *tall, const char *string )
+	void GetLength(int *wide, int *tall, const char *string)
 	{
-		if ( !textMessagePanel )
+		if(!textMessagePanel)
 		{
 			*wide = *tall = 0;
 			return;
 		}
 
-		textMessagePanel->GetTextExtents( wide, tall, string );
+		textMessagePanel->GetTextExtents(wide, tall, string);
 	}
 
-	int GetFontInfo( FONTABC *pABCs, vgui::HFont hFont )
+	int GetFontInfo(FONTABC *pABCs, vgui::HFont hFont)
 	{
-		return textMessagePanel ? textMessagePanel->GetFontInfo( pABCs, hFont ) : 0;
+		return textMessagePanel ? textMessagePanel->GetFontInfo(pABCs, hFont) : 0;
 	}
 
-	void SetFont( vgui::HFont hCustomFont )
+	void SetFont(vgui::HFont hCustomFont)
 	{
-		if ( !textMessagePanel )
+		if(!textMessagePanel)
 			return;
 
-		textMessagePanel->SetFont( hCustomFont );
+		textMessagePanel->SetFont(hCustomFont);
 	}
 
-	void SetDefaultFont( void )
+	void SetDefaultFont(void)
 	{
-		if ( !textMessagePanel )
+		if(!textMessagePanel)
 			return;
 
 		textMessagePanel->SetDefaultFont();

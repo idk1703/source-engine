@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 ucs2 *AdvanceOverWhitespace(ucs2 *Start)
 {
-	while (*Start != 0 && iswspace(*Start))
+	while(*Start != 0 && iswspace(*Start))
 	{
 		Start++;
 	}
@@ -34,27 +34,27 @@ ucs2 *ReadUnicodeToken(ucs2 *start, ucs2 *token, int tokenBufferSize, bool &quot
 	quoted = false;
 	*token = 0;
 
-	if (!*start)
+	if(!*start)
 	{
 		return start;
 	}
 
 	// check to see if it's a quoted string
-	if (*start == '\"')
+	if(*start == '\"')
 	{
 		quoted = true;
 		// copy out the string until we hit an end quote
 		start++;
 		int count = 0;
-		while (*start && *start != '\"' && count < tokenBufferSize-1)
+		while(*start && *start != '\"' && count < tokenBufferSize - 1)
 		{
 			// check for special characters
-			if (*start == '\\' && *(start+1) == 'n')
+			if(*start == '\\' && *(start + 1) == 'n')
 			{
 				start++;
 				*token = '\n';
 			}
-			else if (*start == '\\' && *(start+1) == '\"')
+			else if(*start == '\\' && *(start + 1) == '\"')
 			{
 				start++;
 				*token = '\"';
@@ -69,7 +69,7 @@ ucs2 *ReadUnicodeToken(ucs2 *start, ucs2 *token, int tokenBufferSize, bool &quot
 			count++;
 		}
 
-		if (*start == '\"')
+		if(*start == '\"')
 		{
 			start++;
 		}
@@ -78,7 +78,7 @@ ucs2 *ReadUnicodeToken(ucs2 *start, ucs2 *token, int tokenBufferSize, bool &quot
 	{
 		// copy out the string until we hit a whitespace
 		int count = 0;
-		while (*start && !iswspace(*start) && count < tokenBufferSize-1)
+		while(*start && !iswspace(*start) && count < tokenBufferSize - 1)
 		{
 			// no checking for special characters if it's not a quoted string
 			*token = *start;
@@ -103,19 +103,19 @@ ucs2 *ReadUnicodeTokenNoSpecial(ucs2 *start, ucs2 *token, int tokenBufferSize, b
 	quoted = false;
 	*token = 0;
 
-	if (!*start)
+	if(!*start)
 	{
 		return start;
 	}
 
 	// check to see if it's a quoted string
-	if (*start == '\"')
+	if(*start == '\"')
 	{
 		quoted = true;
 		// copy out the string until we hit an end quote
 		start++;
 		int count = 0;
-		while (*start && *start != '\"' && count < tokenBufferSize-1)
+		while(*start && *start != '\"' && count < tokenBufferSize - 1)
 		{
 			// check for special characters
 			/*
@@ -126,7 +126,7 @@ ucs2 *ReadUnicodeTokenNoSpecial(ucs2 *start, ucs2 *token, int tokenBufferSize, b
 			}
 			else
 			*/
-			if (*start == '\\' && *(start+1) == '\"')
+			if(*start == '\\' && *(start + 1) == '\"')
 			{
 				start++;
 				*token = '\"';
@@ -141,7 +141,7 @@ ucs2 *ReadUnicodeTokenNoSpecial(ucs2 *start, ucs2 *token, int tokenBufferSize, b
 			count++;
 		}
 
-		if (*start == '\"')
+		if(*start == '\"')
 		{
 			start++;
 		}
@@ -150,7 +150,7 @@ ucs2 *ReadUnicodeTokenNoSpecial(ucs2 *start, ucs2 *token, int tokenBufferSize, b
 	{
 		// copy out the string until we hit a whitespace
 		int count = 0;
-		while (*start && !iswspace(*start) && count < tokenBufferSize-1)
+		while(*start && !iswspace(*start) && count < tokenBufferSize - 1)
 		{
 			// no checking for special characters if it's not a quoted string
 			*token = *start;
@@ -170,17 +170,17 @@ ucs2 *ReadUnicodeTokenNoSpecial(ucs2 *start, ucs2 *token, int tokenBufferSize, b
 //-----------------------------------------------------------------------------
 ucs2 *ReadToEndOfLine(ucs2 *start)
 {
-	if (!*start)
+	if(!*start)
 		return start;
 
-	while (*start)
+	while(*start)
 	{
-		if (*start == 0x0D || *start== 0x0A)
+		if(*start == 0x0D || *start == 0x0A)
 			break;
 		start++;
 	}
 
-	while (*start == 0x0D || *start== 0x0A)
+	while(*start == 0x0D || *start == 0x0A)
 		start++;
 
 	return start;
@@ -191,15 +191,15 @@ ucs2 *ReadToEndOfLine(ucs2 *start)
 //-----------------------------------------------------------------------------
 void WriteUnicodeString(CUtlBuffer &buf, const wchar_t *string, bool addQuotes)
 {
-	if (addQuotes)
+	if(addQuotes)
 	{
 		buf.PutUnsignedShort('\"');
 	}
 
-	for (const wchar_t *ws = string; *ws != 0; ws++)
+	for(const wchar_t *ws = string; *ws != 0; ws++)
 	{
 		// handle special characters
-		if (addQuotes && *ws == '\"')
+		if(addQuotes && *ws == '\"')
 		{
 			buf.PutUnsignedShort('\\');
 		}
@@ -207,7 +207,7 @@ void WriteUnicodeString(CUtlBuffer &buf, const wchar_t *string, bool addQuotes)
 		buf.PutUnsignedShort(*ws);
 	}
 
-	if (addQuotes)
+	if(addQuotes)
 	{
 		buf.PutUnsignedShort('\"');
 	}
@@ -218,22 +218,22 @@ void WriteUnicodeString(CUtlBuffer &buf, const wchar_t *string, bool addQuotes)
 //-----------------------------------------------------------------------------
 void WriteAsciiStringAsUnicode(CUtlBuffer &buf, const char *string, bool addQuotes)
 {
-	if (addQuotes)
+	if(addQuotes)
 	{
 		buf.PutUnsignedShort('\"');
 	}
 
-	for (const char *sz = string; *sz != 0; sz++)
+	for(const char *sz = string; *sz != 0; sz++)
 	{
 		// handle special characters
-		if (addQuotes && *sz == '\"')
+		if(addQuotes && *sz == '\"')
 		{
 			buf.PutUnsignedShort('\\');
 		}
 		buf.PutUnsignedShort(*sz);
 	}
 
-	if (addQuotes)
+	if(addQuotes)
 	{
 		buf.PutUnsignedShort('\"');
 	}

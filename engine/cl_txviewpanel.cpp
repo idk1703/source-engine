@@ -36,30 +36,29 @@
 
 using namespace vgui;
 
-
 TxViewPanel *g_pTxViewPanel = NULL;
 
-void TxViewPanel::Install( vgui::Panel *parent )
+void TxViewPanel::Install(vgui::Panel *parent)
 {
-	if ( g_pTxViewPanel )
+	if(g_pTxViewPanel)
 		return;
 
-	g_pTxViewPanel = new TxViewPanel( parent );
-	Assert( g_pTxViewPanel );
+	g_pTxViewPanel = new TxViewPanel(parent);
+	Assert(g_pTxViewPanel);
 }
 
-TxViewPanel::TxViewPanel( vgui::Panel *parent ) : vgui::Frame( parent, "TxViewPanel" )
+TxViewPanel::TxViewPanel(vgui::Panel *parent) : vgui::Frame(parent, "TxViewPanel")
 {
-	m_pRefresh = new vgui::Button( this, "Refresh", "Refresh" );
-	m_pView = new vgui::ListViewPanel( this, "Textures" );
+	m_pRefresh = new vgui::Button(this, "Refresh", "Refresh");
+	m_pView = new vgui::ListViewPanel(this, "Textures");
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 0 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 0);
 
-	LoadControlSettings( "Resource\\TxViewPanel.res" );
+	LoadControlSettings("Resource\\TxViewPanel.res");
 
-	SetVisible( false );
-	SetSizeable( true );
-	SetMoveable( true );
+	SetVisible(false);
+	SetSizeable(true);
+	SetMoveable(true);
 }
 
 TxViewPanel::~TxViewPanel()
@@ -71,32 +70,32 @@ void TxViewPanel::OnTick()
 {
 	BaseClass::OnTick();
 
-	if ( !IsVisible() )
+	if(!IsVisible())
 		return;
 
 	;
 }
 
-void TxViewPanel::OnCommand( const char *command )
+void TxViewPanel::OnCommand(const char *command)
 {
-	if ( !Q_strcasecmp( command, "refresh" ) )
+	if(!Q_strcasecmp(command, "refresh"))
 	{
 		;
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
-void TxViewPanel::OnMessage( const KeyValues *params, vgui::VPANEL fromPanel )
+void TxViewPanel::OnMessage(const KeyValues *params, vgui::VPANEL fromPanel)
 {
-	BaseClass::OnMessage( params, fromPanel );
+	BaseClass::OnMessage(params, fromPanel);
 }
 
-void TxViewPanel::OnFileSelected( const char *fullpath )
+void TxViewPanel::OnFileSelected(const char *fullpath)
 {
-	if ( !fullpath || !fullpath[0] )
+	if(!fullpath || !fullpath[0])
 		return;
 
 	;
@@ -104,10 +103,10 @@ void TxViewPanel::OnFileSelected( const char *fullpath )
 
 void TxView_f()
 {
-	if ( !g_pTxViewPanel )
+	if(!g_pTxViewPanel)
 		return;
 
-	if ( g_pTxViewPanel->IsVisible() )
+	if(g_pTxViewPanel->IsVisible())
 	{
 		g_pTxViewPanel->Close();
 	}

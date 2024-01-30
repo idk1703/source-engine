@@ -20,61 +20,60 @@
 //-----------------------------------------------------------------------------
 // Creates a new unique id
 //-----------------------------------------------------------------------------
-void CreateUniqueId( UniqueId_t *pDest )
+void CreateUniqueId(UniqueId_t *pDest)
 {
 #ifdef IS_WINDOWS_PC
-	Assert( sizeof( UUID ) == sizeof( *pDest ) );
-	UuidCreate( (UUID *)pDest );
+	Assert(sizeof(UUID) == sizeof(*pDest));
+	UuidCreate((UUID *)pDest);
 #else
 	// X360/linux TBD: Need a real UUID Implementation
-	Q_memset( pDest, 0, sizeof( UniqueId_t ) );
+	Q_memset(pDest, 0, sizeof(UniqueId_t));
 #endif
 }
-
 
 //-----------------------------------------------------------------------------
 // Creates a new unique id from a string representation of one
 //-----------------------------------------------------------------------------
-bool UniqueIdFromString( UniqueId_t *pDest, const char *pBuf, int nMaxLen )
+bool UniqueIdFromString(UniqueId_t *pDest, const char *pBuf, int nMaxLen)
 {
-	if ( nMaxLen == 0 )
+	if(nMaxLen == 0)
 	{
-		nMaxLen = Q_strlen( pBuf );
+		nMaxLen = Q_strlen(pBuf);
 	}
 
-	char *pTemp = (char*)stackalloc( nMaxLen + 1 );
-	V_strncpy( pTemp, pBuf, nMaxLen + 1 );
+	char *pTemp = (char *)stackalloc(nMaxLen + 1);
+	V_strncpy(pTemp, pBuf, nMaxLen + 1);
 	--nMaxLen;
-	while( (nMaxLen >= 0) && isspace( pTemp[nMaxLen] ) )
+	while((nMaxLen >= 0) && isspace(pTemp[nMaxLen]))
 	{
 		--nMaxLen;
 	}
-	pTemp[ nMaxLen + 1 ] = 0;
+	pTemp[nMaxLen + 1] = 0;
 
-	while( *pTemp && isspace( *pTemp ) )
+	while(*pTemp && isspace(*pTemp))
 	{
 		++pTemp;
 	}
 
 #ifdef IS_WINDOWS_PC
-	Assert( sizeof( UUID ) == sizeof( *pDest ) );
+	Assert(sizeof(UUID) == sizeof(*pDest));
 
-	if ( RPC_S_OK != UuidFromString( (unsigned char *)pTemp, (UUID *)pDest ) )
+	if(RPC_S_OK != UuidFromString((unsigned char *)pTemp, (UUID *)pDest))
 	{
-		InvalidateUniqueId( pDest );
+		InvalidateUniqueId(pDest);
 		return false;
 	}
 #else
 	// X360TBD: Need a real UUID Implementation
 	// For now, use crc to generate a unique ID from the UUID string.
-	Q_memset( pDest, 0, sizeof( UniqueId_t ) );
-	if ( nMaxLen > 0 )
+	Q_memset(pDest, 0, sizeof(UniqueId_t));
+	if(nMaxLen > 0)
 	{
 		CRC32_t crc;
-		CRC32_Init( &crc );
-		CRC32_ProcessBuffer( &crc, pBuf, nMaxLen );
-		CRC32_Final( &crc );
-		Q_memcpy( pDest, &crc, sizeof( CRC32_t ) );
+		CRC32_Init(&crc);
+		CRC32_ProcessBuffer(&crc, pBuf, nMaxLen);
+		CRC32_Final(&crc);
+		Q_memcpy(pDest, &crc, sizeof(CRC32_t));
 	}
 #endif
 
@@ -84,72 +83,72 @@ bool UniqueIdFromString( UniqueId_t *pDest, const char *pBuf, int nMaxLen )
 //-----------------------------------------------------------------------------
 // Sets an object ID to be an invalid state
 //-----------------------------------------------------------------------------
-void InvalidateUniqueId( UniqueId_t *pDest )
+void InvalidateUniqueId(UniqueId_t *pDest)
 {
-	Assert( pDest );
-	memset( pDest, 0, sizeof( UniqueId_t ) );
+	Assert(pDest);
+	memset(pDest, 0, sizeof(UniqueId_t));
 }
 
-bool IsUniqueIdValid( const UniqueId_t &id )
+bool IsUniqueIdValid(const UniqueId_t &id)
 {
 	UniqueId_t invalidId;
-	memset( &invalidId, 0, sizeof( UniqueId_t ) );
-	return !IsUniqueIdEqual( invalidId, id );
+	memset(&invalidId, 0, sizeof(UniqueId_t));
+	return !IsUniqueIdEqual(invalidId, id);
 }
 
-bool IsUniqueIdEqual( const UniqueId_t &id1, const UniqueId_t &id2 )
+bool IsUniqueIdEqual(const UniqueId_t &id1, const UniqueId_t &id2)
 {
-	return memcmp( &id1, &id2, sizeof( UniqueId_t ) ) == 0;
+	return memcmp(&id1, &id2, sizeof(UniqueId_t)) == 0;
 }
 
-void UniqueIdToString( const UniqueId_t &id, char *pBuf, int nMaxLen )
+void UniqueIdToString(const UniqueId_t &id, char *pBuf, int nMaxLen)
 {
-	pBuf[ 0 ] = 0;
+	pBuf[0] = 0;
 
 // X360TBD: Need a real UUID Implementation
 #ifdef IS_WINDOWS_PC
-	UUID *self = ( UUID * )&id;
+	UUID *self = (UUID *)&id;
 
 	unsigned char *outstring = NULL;
 
-	UuidToString( self, &outstring );
-	if ( outstring && *outstring )
+	UuidToString(self, &outstring);
+	if(outstring && *outstring)
 	{
-		Q_strncpy( pBuf, (const char *)outstring, nMaxLen );
-		RpcStringFree( &outstring );
+		Q_strncpy(pBuf, (const char *)outstring, nMaxLen);
+		RpcStringFree(&outstring);
 	}
 #endif
 }
 
-void CopyUniqueId( const UniqueId_t &src, UniqueId_t *pDest )
+void CopyUniqueId(const UniqueId_t &src, UniqueId_t *pDest)
 {
-	memcpy( pDest, &src, sizeof( UniqueId_t ) );
+	memcpy(pDest, &src, sizeof(UniqueId_t));
 }
 
-bool Serialize( CUtlBuffer &buf, const UniqueId_t &src )
+bool Serialize(CUtlBuffer &buf, const UniqueId_t &src)
 {
 // X360TBD: Need a real UUID Implementation
 #ifdef IS_WINDOWS_PC
-	if ( buf.IsText() )
+	if(buf.IsText())
 	{
-		UUID *pId = ( UUID * )&src;
+		UUID *pId = (UUID *)&src;
 
 		unsigned char *outstring = NULL;
 
-		UuidToString( pId, &outstring );
-		if ( outstring && *outstring )
+		UuidToString(pId, &outstring);
+		if(outstring && *outstring)
 		{
-			buf.PutString( (const char *)outstring );
-			RpcStringFree( &outstring );
+			buf.PutString((const char *)outstring);
+			RpcStringFree(&outstring);
 		}
 		else
 		{
-			buf.PutChar( '\0' );
+			buf.PutChar('\0');
 		}
 	}
 	else
 	{
-		buf.Put( &src, sizeof(UniqueId_t) );
+		buf.Put(&src, sizeof(UniqueId_t));
 	}
 	return buf.IsValid();
 #else
@@ -157,18 +156,18 @@ bool Serialize( CUtlBuffer &buf, const UniqueId_t &src )
 #endif
 }
 
-bool Unserialize( CUtlBuffer &buf, UniqueId_t &dest )
+bool Unserialize(CUtlBuffer &buf, UniqueId_t &dest)
 {
-	if ( buf.IsText() )
+	if(buf.IsText())
 	{
 		int nTextLen = buf.PeekStringLength();
-		char *pBuf = (char*)stackalloc( nTextLen );
-		buf.GetStringManualCharCount( pBuf, nTextLen );
-		UniqueIdFromString( &dest, pBuf, nTextLen );
+		char *pBuf = (char *)stackalloc(nTextLen);
+		buf.GetStringManualCharCount(pBuf, nTextLen);
+		UniqueIdFromString(&dest, pBuf, nTextLen);
 	}
 	else
 	{
-		buf.Get( &dest, sizeof(UniqueId_t) );
+		buf.Get(&dest, sizeof(UniqueId_t));
 	}
 	return buf.IsValid();
 }

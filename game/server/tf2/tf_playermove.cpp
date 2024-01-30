@@ -19,33 +19,31 @@
 #include "ipredictionsystem.h"
 
 ConVar jetpack_infinite("jetpack_infinite", "0");
-extern float g_JetpackDepleteRate;		// How fast the jetpack depletes.
-extern float g_JetpackNegSnap;			// When the jetpack is fully depleted, it snaps to this so the pilot sputters.
+extern float g_JetpackDepleteRate; // How fast the jetpack depletes.
+extern float g_JetpackNegSnap;	   // When the jetpack is fully depleted, it snaps to this so the pilot sputters.
 
 static CTFMoveData g_TFMoveData;
 CMoveData *g_pMoveData = &g_TFMoveData;
 
 IPredictionSystem *IPredictionSystem::g_pPredictionSystems = NULL;
 
-
 //-----------------------------------------------------------------------------
 // Sets up the move data for TF2
 //-----------------------------------------------------------------------------
 class CTFPlayerMove : public CPlayerMove
 {
-DECLARE_CLASS( CTFPlayerMove, CPlayerMove );
+	DECLARE_CLASS(CTFPlayerMove, CPlayerMove);
 
 public:
-	virtual void	SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
-	virtual void	FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move );
+	virtual void SetupMove(CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move);
+	virtual void FinishMove(CBasePlayer *player, CUserCmd *ucmd, CMoveData *move);
 
 private:
+	void SetupMoveCommando(CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper, CTFMoveData *pTFMove);
+	void SetupMoveRecon(CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper, CTFMoveData *pTFMove);
 
-	void SetupMoveCommando( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper, CTFMoveData *pTFMove );
-	void SetupMoveRecon( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper, CTFMoveData *pTFMove );
-
-	void FinishMoveCommando( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, CUserCmd *ucmd );
-	void FinishMoveRecon( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, CUserCmd *ucmd );
+	void FinishMoveCommando(CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, CUserCmd *ucmd);
+	void FinishMoveRecon(CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, CUserCmd *ucmd);
 };
 
 // PlayerMove Interface
@@ -68,19 +66,19 @@ CPlayerMove *PlayerMove()
 //          from the player for movement. (Server-side, the client-side version
 //          of this code can be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
+void CTFPlayerMove::SetupMove(CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move)
 {
 	// Call the default SetupMove code.
-	BaseClass::SetupMove( player, ucmd, pHelper, move );
+	BaseClass::SetupMove(player, ucmd, pHelper, move);
 
 	//
 	// Convert to TF2 data.
 	//
-	CBaseTFPlayer *pTFPlayer = static_cast<CBaseTFPlayer*>( player );
-	Assert( pTFPlayer );
+	CBaseTFPlayer *pTFPlayer = static_cast<CBaseTFPlayer *>(player);
+	Assert(pTFPlayer);
 
-	CTFMoveData *pTFMove = static_cast<CTFMoveData*>( move );
-	Assert( pTFMove );
+	CTFMoveData *pTFMove = static_cast<CTFMoveData *>(move);
+	Assert(pTFMove);
 
 	//
 	// Player movement data.
@@ -91,7 +89,7 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 
 	// Copy the momentum data.
 	pTFMove->m_iMomentumHead = pTFPlayer->m_iMomentumHead;
-	for ( int iMomentum = 0; iMomentum < CTFMoveData::MOMENTUM_MAXSIZE; iMomentum++ )
+	for(int iMomentum = 0; iMomentum < CTFMoveData::MOMENTUM_MAXSIZE; iMomentum++)
 	{
 		pTFMove->m_aMomentum[iMomentum] = pTFPlayer->m_aMomentum[iMomentum];
 	}
@@ -99,45 +97,45 @@ void CTFPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 	pTFMove->m_nClassID = pTFPlayer->PlayerClass();
 
 	IVehicle *pVehicle = player->GetVehicle();
-	if (!pVehicle)
+	if(!pVehicle)
 	{
 		// Handle player class specific setup.
-		switch( pTFPlayer->PlayerClass() )
+		switch(pTFPlayer->PlayerClass())
 		{
-		case TFCLASS_RECON:
+			case TFCLASS_RECON:
 			{
-				SetupMoveRecon( pTFPlayer, ucmd, pHelper, pTFMove );
+				SetupMoveRecon(pTFPlayer, ucmd, pHelper, pTFMove);
 				break;
 			}
-		case TFCLASS_COMMANDO:
+			case TFCLASS_COMMANDO:
 			{
-				SetupMoveCommando( pTFPlayer, ucmd, pHelper, pTFMove );
+				SetupMoveCommando(pTFPlayer, ucmd, pHelper, pTFMove);
 				break;
 			}
-		default:
+			default:
 			{
-	//			pTFMove->m_nClassID = TFCLASS_UNDECIDED;
+				//			pTFMove->m_nClassID = TFCLASS_UNDECIDED;
 				break;
 			}
 		}
 	}
 	else
 	{
-		pVehicle->SetupMove( player, ucmd, pHelper, move );
+		pVehicle->SetupMove(player, ucmd, pHelper, move);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::SetupMoveRecon( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper,
-								    CTFMoveData *pTFMove )
+void CTFPlayerMove::SetupMoveRecon(CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper,
+								   CTFMoveData *pTFMove)
 {
-	CPlayerClassRecon *pRecon = static_cast<CPlayerClassRecon*>( pTFPlayer->GetPlayerClass() );
-	if ( pRecon )
+	CPlayerClassRecon *pRecon = static_cast<CPlayerClassRecon *>(pTFPlayer->GetPlayerClass());
+	if(pRecon)
 	{
 		PlayerClassReconData_t *pReconData = pRecon->GetClassData();
-		if ( pReconData )
+		if(pReconData)
 		{
 			pTFMove->ReconData().m_nJumpCount = pReconData->m_nJumpCount;
 			pTFMove->ReconData().m_flSuppressionJumpTime = pReconData->m_flSuppressionJumpTime;
@@ -154,14 +152,14 @@ void CTFPlayerMove::SetupMoveRecon( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, I
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::SetupMoveCommando( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper,
-								       CTFMoveData *pTFMove )
+void CTFPlayerMove::SetupMoveCommando(CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd, IMoveHelper *pHelper,
+									  CTFMoveData *pTFMove)
 {
-	CPlayerClassCommando *pCommando = static_cast<CPlayerClassCommando*>( pTFPlayer->GetPlayerClass() );
-	if ( pCommando )
+	CPlayerClassCommando *pCommando = static_cast<CPlayerClassCommando *>(pTFPlayer->GetPlayerClass());
+	if(pCommando)
 	{
 		PlayerClassCommandoData_t *pCommandoData = pCommando->GetClassData();
-		if ( pCommandoData )
+		if(pCommandoData)
 		{
 			pTFMove->CommandoData().m_bCanBullRush = pCommandoData->m_bCanBullRush;
 			pTFMove->CommandoData().m_bBullRush = pCommandoData->m_bBullRush;
@@ -180,40 +178,40 @@ void CTFPlayerMove::SetupMoveCommando( CBaseTFPlayer *pTFPlayer, CUserCmd *pUcmd
 //          movement. (Server-side, the client-side version of this code can
 //          be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
+void CTFPlayerMove::FinishMove(CBasePlayer *player, CUserCmd *ucmd, CMoveData *move)
 {
 	// Call the default FinishMove code.
-	BaseClass::FinishMove( player, ucmd, move );
+	BaseClass::FinishMove(player, ucmd, move);
 
 	//
 	// Convert to TF2 data.
 	//
-	CBaseTFPlayer *pTFPlayer = static_cast<CBaseTFPlayer*>( player );
-	Assert( pTFPlayer );
+	CBaseTFPlayer *pTFPlayer = static_cast<CBaseTFPlayer *>(player);
+	Assert(pTFPlayer);
 
-	CTFMoveData *pTFMove = static_cast<CTFMoveData*>( move );
-	Assert( pTFMove );
+	CTFMoveData *pTFMove = static_cast<CTFMoveData *>(move);
+	Assert(pTFMove);
 
 	// The class had better not have changed during the move!!
-	Assert( pTFMove->m_nClassID == pTFPlayer->PlayerClass() );
+	Assert(pTFMove->m_nClassID == pTFPlayer->PlayerClass());
 
 	IVehicle *pVehicle = player->GetVehicle();
-	if (!pVehicle)
+	if(!pVehicle)
 	{
 		// Handle player class specific setup.
-		switch( pTFPlayer->PlayerClass() )
+		switch(pTFPlayer->PlayerClass())
 		{
-		case TFCLASS_RECON:
+			case TFCLASS_RECON:
 			{
-				FinishMoveRecon( pTFPlayer, pTFMove, ucmd );
+				FinishMoveRecon(pTFPlayer, pTFMove, ucmd);
 				break;
 			}
-		case TFCLASS_COMMANDO:
+			case TFCLASS_COMMANDO:
 			{
-				FinishMoveCommando( pTFPlayer, pTFMove, ucmd );
+				FinishMoveCommando(pTFPlayer, pTFMove, ucmd);
 				break;
 			}
-		default:
+			default:
 			{
 				break;
 			}
@@ -222,8 +220,8 @@ void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 	else
 	{
 		// Similarly, the vehicle had better not have changed during the move!
-		Assert( pTFPlayer->IsInAVehicle() );
-		pVehicle->FinishMove( pTFPlayer, ucmd, pTFMove );
+		Assert(pTFPlayer->IsInAVehicle());
+		pVehicle->FinishMove(pTFPlayer, ucmd, pTFMove);
 	}
 
 	//
@@ -233,11 +231,11 @@ void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 	// Copy the position delta.
 	pTFPlayer->m_vecPosDelta = pTFMove->m_vecPosDelta;
 
-	COMPILE_TIME_ASSERT( CBaseTFPlayer::MOMENTUM_MAXSIZE == CTFMoveData::MOMENTUM_MAXSIZE );
+	COMPILE_TIME_ASSERT(CBaseTFPlayer::MOMENTUM_MAXSIZE == CTFMoveData::MOMENTUM_MAXSIZE);
 
 	// Copy the momentum data back (the movement may have updated it!).
 	pTFPlayer->m_iMomentumHead = pTFMove->m_iMomentumHead;
-	for ( int iMomentum = 0; iMomentum < CTFMoveData::MOMENTUM_MAXSIZE; iMomentum++ )
+	for(int iMomentum = 0; iMomentum < CTFMoveData::MOMENTUM_MAXSIZE; iMomentum++)
 	{
 		pTFPlayer->m_aMomentum[iMomentum] = pTFMove->m_aMomentum[iMomentum];
 	}
@@ -246,14 +244,13 @@ void CTFPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::FinishMoveRecon( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove,
-									 CUserCmd *ucmd )
+void CTFPlayerMove::FinishMoveRecon(CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, CUserCmd *ucmd)
 {
-	CPlayerClassRecon *pRecon = static_cast<CPlayerClassRecon*>( pTFPlayer->GetPlayerClass() );
-	if ( pRecon )
+	CPlayerClassRecon *pRecon = static_cast<CPlayerClassRecon *>(pTFPlayer->GetPlayerClass());
+	if(pRecon)
 	{
 		PlayerClassReconData_t *pReconData = pRecon->GetClassData();
-		if ( pReconData )
+		if(pReconData)
 		{
 			pReconData->m_nJumpCount = pTFMove->ReconData().m_nJumpCount;
 			pReconData->m_flSuppressionJumpTime = pTFMove->ReconData().m_flSuppressionJumpTime;
@@ -270,14 +267,13 @@ void CTFPlayerMove::FinishMoveRecon( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFM
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFPlayerMove::FinishMoveCommando( CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove,
-									    CUserCmd *ucmd )
+void CTFPlayerMove::FinishMoveCommando(CBaseTFPlayer *pTFPlayer, CTFMoveData *pTFMove, CUserCmd *ucmd)
 {
-	CPlayerClassCommando *pCommando = static_cast<CPlayerClassCommando*>( pTFPlayer->GetPlayerClass() );
-	if ( pCommando )
+	CPlayerClassCommando *pCommando = static_cast<CPlayerClassCommando *>(pTFPlayer->GetPlayerClass());
+	if(pCommando)
 	{
 		PlayerClassCommandoData_t *pCommandoData = pCommando->GetClassData();
-		if ( pCommandoData )
+		if(pCommandoData)
 		{
 			pCommandoData->m_bCanBullRush = pTFMove->CommandoData().m_bCanBullRush;
 			pCommandoData->m_bBullRush = pTFMove->CommandoData().m_bBullRush;

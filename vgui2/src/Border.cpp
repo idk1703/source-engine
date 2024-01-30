@@ -27,10 +27,10 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 Border::Border()
 {
-	_inset[0]=0;
-	_inset[1]=0;
-	_inset[2]=0;
-	_inset[3]=0;
+	_inset[0] = 0;
+	_inset[1] = 0;
+	_inset[2] = 0;
+	_inset[3] = 0;
 	_name = NULL;
 	m_eBackgroundType = IBorder::BACKGROUND_FILLED;
 
@@ -42,18 +42,18 @@ Border::Border()
 //-----------------------------------------------------------------------------
 Border::~Border()
 {
-	delete [] _name;
+	delete[] _name;
 
-	for (int i = 0; i < 4; i++)
+	for(int i = 0; i < 4; i++)
 	{
-		delete [] _sides[i].lines;
+		delete[] _sides[i].lines;
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void Border::SetInset(int left,int top,int right,int bottom)
+void Border::SetInset(int left, int top, int right, int bottom)
 {
 	_inset[SIDE_LEFT] = left;
 	_inset[SIDE_TOP] = top;
@@ -64,7 +64,7 @@ void Border::SetInset(int left,int top,int right,int bottom)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void Border::GetInset(int& left,int& top,int& right,int& bottom)
+void Border::GetInset(int &left, int &top, int &right, int &bottom)
 {
 	left = _inset[SIDE_LEFT];
 	top = _inset[SIDE_TOP];
@@ -88,21 +88,21 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	// iterate through and draw all lines
 	// draw left
 	int i;
-	for (i = 0; i < _sides[SIDE_LEFT].count; i++)
+	for(i = 0; i < _sides[SIDE_LEFT].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_LEFT].lines[i]);
 		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
 
-		if (breakSide == SIDE_LEFT)
+		if(breakSide == SIDE_LEFT)
 		{
 			// split into two section
-			if (breakStart > 0)
+			if(breakStart > 0)
 			{
 				// draw before the break Start
 				g_pSurface->DrawFilledRect(x + i, y + line->startOffset, x + i + 1, y + breakStart);
 			}
 
-			if (breakEnd < (tall - line->endOffset))
+			if(breakEnd < (tall - line->endOffset))
 			{
 				// draw after break end
 				g_pSurface->DrawFilledRect(x + i, y + breakEnd + 1, x + i + 1, tall - line->endOffset);
@@ -115,21 +115,21 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	}
 
 	// draw top
-	for (i = 0; i < _sides[SIDE_TOP].count; i++)
+	for(i = 0; i < _sides[SIDE_TOP].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_TOP].lines[i]);
 		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
 
-		if (breakSide == SIDE_TOP)
+		if(breakSide == SIDE_TOP)
 		{
 			// split into two section
-			if (breakStart > 0)
+			if(breakStart > 0)
 			{
 				// draw before the break Start
 				g_pSurface->DrawFilledRect(x + line->startOffset, y + i, x + breakStart, y + i + 1);
 			}
 
-			if (breakEnd < (wide - line->endOffset))
+			if(breakEnd < (wide - line->endOffset))
 			{
 				// draw after break end
 				g_pSurface->DrawFilledRect(x + breakEnd + 1, y + i, wide - line->endOffset, y + i + 1);
@@ -142,19 +142,19 @@ void Border::Paint(int x, int y, int wide, int tall, int breakSide, int breakSta
 	}
 
 	// draw right
-	for (i = 0; i < _sides[SIDE_RIGHT].count; i++)
+	for(i = 0; i < _sides[SIDE_RIGHT].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_RIGHT].lines[i]);
 		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
-		g_pSurface->DrawFilledRect(wide - (i+1), y + line->startOffset, (wide - (i+1)) + 1, tall - line->endOffset);
+		g_pSurface->DrawFilledRect(wide - (i + 1), y + line->startOffset, (wide - (i + 1)) + 1, tall - line->endOffset);
 	}
 
 	// draw bottom
-	for (i = 0; i < _sides[SIDE_BOTTOM].count; i++)
+	for(i = 0; i < _sides[SIDE_BOTTOM].count; i++)
 	{
 		line_t *line = &(_sides[SIDE_BOTTOM].lines[i]);
 		g_pSurface->DrawSetColor(line->col[0], line->col[1], line->col[2], line->col[3]);
-		g_pSurface->DrawFilledRect(x + line->startOffset, tall - (i+1), wide - line->endOffset, (tall - (i+1)) + 1);
+		g_pSurface->DrawFilledRect(x + line->startOffset, tall - (i + 1), wide - line->endOffset, (tall - (i + 1)) + 1);
 	}
 }
 
@@ -183,10 +183,10 @@ void Border::ApplySchemeSettings(IScheme *pScheme, KeyValues *inResourceData)
 	SetInset(left, top, right, bottom);
 
 	// get the border information from the scheme
-	ParseSideSettings(SIDE_LEFT, inResourceData->FindKey("Left"),pScheme);
-	ParseSideSettings(SIDE_TOP, inResourceData->FindKey("Top"),pScheme);
-	ParseSideSettings(SIDE_RIGHT, inResourceData->FindKey("Right"),pScheme);
-	ParseSideSettings(SIDE_BOTTOM, inResourceData->FindKey("Bottom"),pScheme);
+	ParseSideSettings(SIDE_LEFT, inResourceData->FindKey("Left"), pScheme);
+	ParseSideSettings(SIDE_TOP, inResourceData->FindKey("Top"), pScheme);
+	ParseSideSettings(SIDE_RIGHT, inResourceData->FindKey("Right"), pScheme);
+	ParseSideSettings(SIDE_BOTTOM, inResourceData->FindKey("Bottom"), pScheme);
 
 	m_eBackgroundType = (backgroundtype_e)inResourceData->GetInt("backgroundtype");
 }
@@ -196,13 +196,13 @@ void Border::ApplySchemeSettings(IScheme *pScheme, KeyValues *inResourceData)
 //-----------------------------------------------------------------------------
 void Border::ParseSideSettings(int side_index, KeyValues *inResourceData, IScheme *pScheme)
 {
-	if (!inResourceData)
+	if(!inResourceData)
 		return;
 
 	// count the numeber of lines in the side
 	int count = 0;
 	KeyValues *kv;
-	for (kv = inResourceData->GetFirstSubKey(); kv != NULL; kv = kv->GetNextKey())
+	for(kv = inResourceData->GetFirstSubKey(); kv != NULL; kv = kv->GetNextKey())
 	{
 		count++;
 	}
@@ -214,7 +214,7 @@ void Border::ParseSideSettings(int side_index, KeyValues *inResourceData, ISchem
 	// iterate through the keys
 	//!! this loads in order, ignoring key names
 	int index = 0;
-	for (kv = inResourceData->GetFirstSubKey(); kv != NULL; kv = kv->GetNextKey())
+	for(kv = inResourceData->GetFirstSubKey(); kv != NULL; kv = kv->GetNextKey())
 	{
 		line_t *line = &(_sides[side_index].lines[index]);
 
@@ -224,7 +224,7 @@ void Border::ParseSideSettings(int side_index, KeyValues *inResourceData, ISchem
 
 		col = kv->GetString("offset", NULL);
 		int Start = 0, end = 0;
-		if (col)
+		if(col)
 		{
 			sscanf(col, "%d %d", &Start, &end);
 		}
@@ -240,7 +240,7 @@ void Border::ParseSideSettings(int side_index, KeyValues *inResourceData, ISchem
 //-----------------------------------------------------------------------------
 const char *Border::GetName()
 {
-	if (_name)
+	if(_name)
 		return _name;
 	return "";
 }
@@ -250,14 +250,14 @@ const char *Border::GetName()
 //-----------------------------------------------------------------------------
 void Border::SetName(const char *name)
 {
-	if (_name)
+	if(_name)
 	{
-		delete [] _name;
+		delete[] _name;
 	}
 
 	int len = Q_strlen(name) + 1;
-	_name = new char[ len ];
-	Q_strncpy( _name, name, len );
+	_name = new char[len];
+	Q_strncpy(_name, name, len);
 }
 
 //-----------------------------------------------------------------------------

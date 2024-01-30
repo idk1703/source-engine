@@ -17,20 +17,20 @@
 //-----------------------------------------------------------------------------
 // Helper class to deal with floating point inputs
 //-----------------------------------------------------------------------------
-bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char *pKeyName, float flDefault )
+bool CFloatInput::Init(IMaterial *pMaterial, KeyValues *pKeyValues, const char *pKeyName, float flDefault)
 {
 	m_pFloatVar = NULL;
-	KeyValues *pSection = pKeyValues->FindKey( pKeyName );
-	if (pSection)
+	KeyValues *pSection = pKeyValues->FindKey(pKeyName);
+	if(pSection)
 	{
-		if (pSection->GetDataType() == KeyValues::TYPE_STRING)
+		if(pSection->GetDataType() == KeyValues::TYPE_STRING)
 		{
 			const char *pVarName = pSection->GetString();
 
 			// Look for numbers...
 			float flValue;
-			int nCount = sscanf( pVarName, "%f", &flValue );
-			if (nCount == 1)
+			int nCount = sscanf(pVarName, "%f", &flValue);
+			if(nCount == 1)
 			{
 				m_flValue = flValue;
 				return true;
@@ -38,15 +38,15 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 
 			// Look for array specification...
 			char pTemp[256];
-			if (strchr(pVarName, '['))
+			if(strchr(pVarName, '['))
 			{
 				// strip off the array...
-				Q_strncpy( pTemp, pVarName, 256 );
-				char *pArray = strchr( pTemp, '[' );
+				Q_strncpy(pTemp, pVarName, 256);
+				char *pArray = strchr(pTemp, '[');
 				*pArray++ = 0;
 
-				char* pIEnd;
-				m_FloatVecComp = strtol( pArray, &pIEnd, 10 );
+				char *pIEnd;
+				m_FloatVecComp = strtol(pArray, &pIEnd, 10);
 
 				// Use the version without the array...
 				pVarName = pTemp;
@@ -57,8 +57,8 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 			}
 
 			bool bFoundVar;
-			m_pFloatVar = pMaterial->FindVar( pVarName, &bFoundVar, true );
-			if (!bFoundVar)
+			m_pFloatVar = pMaterial->FindVar(pVarName, &bFoundVar, true);
+			if(!bFoundVar)
 				return false;
 		}
 		else
@@ -75,22 +75,20 @@ bool CFloatInput::Init( IMaterial *pMaterial, KeyValues *pKeyValues, const char 
 
 float CFloatInput::GetFloat() const
 {
-	if (!m_pFloatVar)
+	if(!m_pFloatVar)
 		return m_flValue;
 
-	if( m_FloatVecComp < 0 )
+	if(m_FloatVecComp < 0)
 		return m_pFloatVar->GetFloatValue();
 
 	int iVecSize = m_pFloatVar->VectorSize();
-	if ( m_FloatVecComp >= iVecSize )
+	if(m_FloatVecComp >= iVecSize)
 		return 0;
 
 	float v[4];
-	m_pFloatVar->GetVecValue( v, iVecSize );
+	m_pFloatVar->GetVecValue(v, iVecSize);
 	return v[m_FloatVecComp];
 }
-
-
 
 //-----------------------------------------------------------------------------
 //
@@ -98,32 +96,27 @@ float CFloatInput::GetFloat() const
 //
 //-----------------------------------------------------------------------------
 
-CResultProxy::CResultProxy() : m_pResult(0)
-{
-}
+CResultProxy::CResultProxy() : m_pResult(0) {}
 
-CResultProxy::~CResultProxy()
-{
-}
+CResultProxy::~CResultProxy() {}
 
-
-bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CResultProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	char const* pResult = pKeyValues->GetString( "resultVar" );
-	if( !pResult )
+	char const *pResult = pKeyValues->GetString("resultVar");
+	if(!pResult)
 		return false;
 
 	// Look for array specification...
 	char pTemp[256];
-	if (strchr(pResult, '['))
+	if(strchr(pResult, '['))
 	{
 		// strip off the array...
-		Q_strncpy( pTemp, pResult, 256 );
-		char *pArray = strchr( pTemp, '[' );
+		Q_strncpy(pTemp, pResult, 256);
+		char *pArray = strchr(pTemp, '[');
 		*pArray++ = 0;
 
-		char* pIEnd;
-		m_ResultVecComp = strtol( pArray, &pIEnd, 10 );
+		char *pIEnd;
+		m_ResultVecComp = strtol(pArray, &pIEnd, 10);
 
 		// Use the version without the array...
 		pResult = pTemp;
@@ -134,43 +127,42 @@ bool CResultProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	}
 
 	bool foundVar;
-	m_pResult = pMaterial->FindVar( pResult, &foundVar, true );
-	if( !foundVar )
+	m_pResult = pMaterial->FindVar(pResult, &foundVar, true);
+	if(!foundVar)
 		return false;
 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // A little code to allow us to set single components of vectors
 //-----------------------------------------------------------------------------
-void CResultProxy::SetFloatResult( float result )
+void CResultProxy::SetFloatResult(float result)
 {
-	if (m_pResult->GetType() == MATERIAL_VAR_TYPE_VECTOR)
+	if(m_pResult->GetType() == MATERIAL_VAR_TYPE_VECTOR)
 	{
-		if ( m_ResultVecComp >= 0 )
+		if(m_ResultVecComp >= 0)
 		{
-			m_pResult->SetVecComponentValue( result, m_ResultVecComp );
+			m_pResult->SetVecComponentValue(result, m_ResultVecComp);
 		}
 		else
 		{
 			float v[4];
 			int vecSize = m_pResult->VectorSize();
 
-			for (int i = 0; i < vecSize; ++i)
+			for(int i = 0; i < vecSize; ++i)
 				v[i] = result;
 
-			m_pResult->SetVecValue( v, vecSize );
+			m_pResult->SetVecValue(v, vecSize);
 		}
 	}
 	else
 	{
-		m_pResult->SetFloatValue( result );
+		m_pResult->SetFloatValue(result);
 	}
 }
 
-C_BaseEntity *CResultProxy::BindArgToEntity( void *pArg )
+C_BaseEntity *CResultProxy::BindArgToEntity(void *pArg)
 {
 	IClientRenderable *pRend = (IClientRenderable *)pArg;
 	return pRend ? pRend->GetIClientUnknown()->GetBaseEntity() : NULL;
@@ -181,42 +173,36 @@ IMaterial *CResultProxy::GetMaterial()
 	return m_pResult->GetOwningMaterial();
 }
 
-
 //-----------------------------------------------------------------------------
 //
 // Base functional proxy; two sources (one is optional) and a result
 //
 //-----------------------------------------------------------------------------
 
-CFunctionProxy::CFunctionProxy() : m_pSrc1(0), m_pSrc2(0)
-{
-}
+CFunctionProxy::CFunctionProxy() : m_pSrc1(0), m_pSrc2(0) {}
 
-CFunctionProxy::~CFunctionProxy()
-{
-}
+CFunctionProxy::~CFunctionProxy() {}
 
-
-bool CFunctionProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
+bool CFunctionProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
-	if (!CResultProxy::Init( pMaterial, pKeyValues ))
+	if(!CResultProxy::Init(pMaterial, pKeyValues))
 		return false;
 
-	char const* pSrcVar1 = pKeyValues->GetString( "srcVar1" );
-	if( !pSrcVar1 )
+	char const *pSrcVar1 = pKeyValues->GetString("srcVar1");
+	if(!pSrcVar1)
 		return false;
 
 	bool foundVar;
-	m_pSrc1 = pMaterial->FindVar( pSrcVar1, &foundVar, true );
-	if( !foundVar )
+	m_pSrc1 = pMaterial->FindVar(pSrcVar1, &foundVar, true);
+	if(!foundVar)
 		return false;
 
 	// Source 2 is optional, some math ops may be single-input
-	char const* pSrcVar2 = pKeyValues->GetString( "srcVar2" );
-	if( pSrcVar2 && (*pSrcVar2) )
+	char const *pSrcVar2 = pKeyValues->GetString("srcVar2");
+	if(pSrcVar2 && (*pSrcVar2))
 	{
-		m_pSrc2 = pMaterial->FindVar( pSrcVar2, &foundVar, true );
-		if( !foundVar )
+		m_pSrc2 = pMaterial->FindVar(pSrcVar2, &foundVar, true);
+		if(!foundVar)
 			return false;
 	}
 	else
@@ -227,29 +213,28 @@ bool CFunctionProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	return true;
 }
 
-
-void CFunctionProxy::ComputeResultType( MaterialVarType_t& resultType, int& vecSize )
+void CFunctionProxy::ComputeResultType(MaterialVarType_t &resultType, int &vecSize)
 {
 	// Feh, this is ugly. Basically, don't change the result type
 	// unless it's undefined.
 	resultType = m_pResult->GetType();
-	if (resultType == MATERIAL_VAR_TYPE_VECTOR)
+	if(resultType == MATERIAL_VAR_TYPE_VECTOR)
 	{
-		if (m_ResultVecComp >= 0)
+		if(m_ResultVecComp >= 0)
 			resultType = MATERIAL_VAR_TYPE_FLOAT;
 		vecSize = m_pResult->VectorSize();
 	}
-	else if (resultType == MATERIAL_VAR_TYPE_UNDEFINED)
+	else if(resultType == MATERIAL_VAR_TYPE_UNDEFINED)
 	{
 		resultType = m_pSrc1->GetType();
-		if (resultType == MATERIAL_VAR_TYPE_VECTOR)
+		if(resultType == MATERIAL_VAR_TYPE_VECTOR)
 		{
 			vecSize = m_pSrc1->VectorSize();
 		}
-		else if ((resultType == MATERIAL_VAR_TYPE_UNDEFINED) && m_pSrc2)
+		else if((resultType == MATERIAL_VAR_TYPE_UNDEFINED) && m_pSrc2)
 		{
 			resultType = m_pSrc2->GetType();
-			if (resultType == MATERIAL_VAR_TYPE_VECTOR)
+			if(resultType == MATERIAL_VAR_TYPE_VECTOR)
 			{
 				vecSize = m_pSrc2->VectorSize();
 			}

@@ -28,43 +28,42 @@
 
 using namespace vgui;
 
-#define FAKE_CDKEY_LEN		49
-#define FAKE_CDKEY_REGKEY	"HKEY_CURRENT_USER\\Software\\Valve\\Source\\Settings\\EncryptedCDKey"
+#define FAKE_CDKEY_LEN	  49
+#define FAKE_CDKEY_REGKEY "HKEY_CURRENT_USER\\Software\\Valve\\Source\\Settings\\EncryptedCDKey"
 
 //-----------------------------------------------------------------------------
 // Purpose: hacky class to make all input uppercase
 //-----------------------------------------------------------------------------
 class CUpperCaseTextEntry : public vgui::TextEntry
 {
-	DECLARE_CLASS_SIMPLE( CUpperCaseTextEntry, vgui::TextEntry );
+	DECLARE_CLASS_SIMPLE(CUpperCaseTextEntry, vgui::TextEntry);
+
 public:
 	CUpperCaseTextEntry(vgui::Panel *parent, const char *name) : TextEntry(parent, name) {}
 
 	virtual void InsertChar(wchar_t unichar)
 	{
 		// only allow input of valid cdkey characters
-		if (unichar >= 'a' && unichar <= 'z')
+		if(unichar >= 'a' && unichar <= 'z')
 		{
 			// force to be uppercase
 			BaseClass::InsertChar(unichar - 'a' + 'A');
 		}
-		else if ((unichar >= 'A' && unichar <= 'Z')
-			|| (unichar >= '0' && unichar <= '9'))
+		else if((unichar >= 'A' && unichar <= 'Z') || (unichar >= '0' && unichar <= '9'))
 		{
 			BaseClass::InsertChar(unichar);
 		}
 	}
 };
 
-
 class CloseMessageBox : public vgui::MessageBox
 {
 public:
-	CloseMessageBox(const char *title, const char *text, Panel *parent = NULL): MessageBox( title, text, parent) {}
+	CloseMessageBox(const char *title, const char *text, Panel *parent = NULL) : MessageBox(title, text, parent) {}
 
 	virtual void OnClose()
 	{
-			engine->ClientCmd_Unrestricted("quit\n");
+		engine->ClientCmd_Unrestricted("quit\n");
 	}
 };
 
@@ -81,7 +80,8 @@ CCDKeyEntryDialog::CCDKeyEntryDialog(vgui::Panel *parent, bool inConnect) : Base
 
 	m_pOK = new Button(this, "OKButton", "#GameUI_OK");
 	m_pQuitGame = new Button(this, "CancelButton", "#GameUI_Quit");
-	m_pEntry1 = new CUpperCaseTextEntry(this, "Entry1");;
+	m_pEntry1 = new CUpperCaseTextEntry(this, "Entry1");
+	;
 	m_pEntry2 = new CUpperCaseTextEntry(this, "Entry2");
 	m_pEntry3 = new CUpperCaseTextEntry(this, "Entry3");
 	m_pEntry4 = new CUpperCaseTextEntry(this, "Entry4");
@@ -104,7 +104,7 @@ CCDKeyEntryDialog::CCDKeyEntryDialog(vgui::Panel *parent, bool inConnect) : Base
 	SetTitle("#GameUI_CDKey", true);
 
 	LoadControlSettings("Resource/ValveCDKeyEntryDialog.res");
-//	MoveToCenterOfScreen();
+	//	MoveToCenterOfScreen();
 
 	SetMinimizeButtonVisible(false);
 	SetMaximizeButtonVisible(false);
@@ -126,12 +126,9 @@ CCDKeyEntryDialog::~CCDKeyEntryDialog()
 bool CCDKeyEntryDialog::IsValidWeakCDKeyInRegistry()
 {
 	char fakekey[FAKE_CDKEY_LEN];
-	if (vgui::system()->GetRegistryString(FAKE_CDKEY_REGKEY, fakekey, sizeof(fakekey)))
+	if(vgui::system()->GetRegistryString(FAKE_CDKEY_REGKEY, fakekey, sizeof(fakekey)))
 	{
-		if (strlen(fakekey) == (FAKE_CDKEY_LEN - 1)
-			&& fakekey[17] == 'E'
-			&& fakekey[31] == 'z'
-			&& fakekey[43] == 'n')
+		if(strlen(fakekey) == (FAKE_CDKEY_LEN - 1) && fakekey[17] == 'E' && fakekey[31] == 'z' && fakekey[43] == 'n')
 		{
 			return true;
 		}
@@ -139,32 +136,31 @@ bool CCDKeyEntryDialog::IsValidWeakCDKeyInRegistry()
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::OnCommand(const char *command)
 {
-	if (!stricmp(command, "OK"))
+	if(!stricmp(command, "OK"))
 	{
-		if (IsEnteredKeyValid())
+		if(IsEnteredKeyValid())
 		{
 			m_bEnteredValidCDKey = true;
 
 			// write out fake key and continue
 			char fakekey[FAKE_CDKEY_LEN];
-			for (int i = 0; i < sizeof(fakekey) - 1; i++)
+			for(int i = 0; i < sizeof(fakekey) - 1; i++)
 			{
 				// pick some random fields for us to check later
-				if (i == 17)
+				if(i == 17)
 				{
 					fakekey[i] = 'E';
 				}
-				else if (i == 31)
+				else if(i == 31)
 				{
 					fakekey[i] = 'z';
 				}
-				else if (i == 43)
+				else if(i == 43)
 				{
 					fakekey[i] = 'n';
 				}
@@ -176,19 +172,19 @@ void CCDKeyEntryDialog::OnCommand(const char *command)
 			fakekey[sizeof(fakekey) - 1] = 0;
 			vgui::system()->SetRegistryString(FAKE_CDKEY_REGKEY, fakekey);
 
-			if ( m_bInConnect )
+			if(m_bInConnect)
 			{
-				engine->ClientCmd_Unrestricted( "retry\n" ); // retry the server connection with this new key...
+				engine->ClientCmd_Unrestricted("retry\n"); // retry the server connection with this new key...
 			}
 			Close();
 		}
 		else
 		{
-			m_hErrorBox = new MessageBox("#GameUI_CDKey_Invalid_Title","#GameUI_CDKey_Invalid_Text", this);
-			m_hErrorBox->ShowWindow( this );
+			m_hErrorBox = new MessageBox("#GameUI_CDKey_Invalid_Title", "#GameUI_CDKey_Invalid_Text", this);
+			m_hErrorBox->ShowWindow(this);
 		}
 	}
-	else if (!stricmp(command, "Cancel") || !stricmp(command, "Close"))
+	else if(!stricmp(command, "Cancel") || !stricmp(command, "Close"))
 	{
 		Close();
 	}
@@ -197,17 +193,17 @@ void CCDKeyEntryDialog::OnCommand(const char *command)
 		BaseClass::OnCommand(command);
 	}
 
-	if (!m_bEnteredValidCDKey) // moved away from the dialog box to make it a little harder to crack...
+	if(!m_bEnteredValidCDKey) // moved away from the dialog box to make it a little harder to crack...
 	{
 		m_iErrCount++;
-		if( m_iErrCount >= MAX_CDKEY_ERRORS )
+		if(m_iErrCount >= MAX_CDKEY_ERRORS)
 		{
 			// too many bad entries, make em quit
-			CloseMessageBox *bx = new CloseMessageBox("#GameUI_CDKey_Invalid_Title","#GameUI_CDKey_TooManyTries", this);
-			bx->ShowWindow( this );
+			CloseMessageBox *bx =
+				new CloseMessageBox("#GameUI_CDKey_Invalid_Title", "#GameUI_CDKey_TooManyTries", this);
+			bx->ShowWindow(this);
 		}
 	}
-
 }
 
 //-----------------------------------------------------------------------------
@@ -215,7 +211,7 @@ void CCDKeyEntryDialog::OnCommand(const char *command)
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::OnClose()
 {
-	if (!m_bEnteredValidCDKey)
+	if(!m_bEnteredValidCDKey)
 	{
 		// if we don't have a valid key we can't continue
 		engine->ClientCmd_Unrestricted("quit\n");
@@ -229,14 +225,14 @@ void CCDKeyEntryDialog::OnClose()
 //-----------------------------------------------------------------------------
 void CCDKeyEntryDialog::OnThink()
 {
-	if (!m_bEnteredValidCDKey)
+	if(!m_bEnteredValidCDKey)
 	{
 		// force us to be the only thing to draw
 		VPANEL vpanel = m_hErrorBox.Get() ? m_hErrorBox->GetVPanel() : GetVPanel();
 		vgui::surface()->RestrictPaintToSinglePanel(vpanel);
 
 		// make sure we're the focus
-		if (!(input()->GetFocus() && ipanel()->HasParent(input()->GetFocus(), GetVPanel())))
+		if(!(input()->GetFocus() && ipanel()->HasParent(input()->GetFocus(), GetVPanel())))
 		{
 			BaseClass::Activate();
 		}
@@ -264,26 +260,25 @@ bool CCDKeyEntryDialog::IsEnteredKeyValid()
 	cdkey[23] = '-';
 
 	// verify the entry
-	for (int i = 0; i < 29; i++)
+	for(int i = 0; i < 29; i++)
 	{
-		if (cdkey[i] != '-' && !isalnum(cdkey[i]))
+		if(cdkey[i] != '-' && !isalnum(cdkey[i]))
 			return false;
 	}
-#if !defined( NO_STEAM )
+#if !defined(NO_STEAM)
 	uint gameCode, salesTerritoryCode, uniqueSerialNumber;
 
 	// test key - this key passes they weak check, but not the strong check
 	// "5J5Q3-QCME2-2SMMV-SBHN9-43S2S"
-	if ( SteamWeakVerifyNewValveCDKey(cdkey, &gameCode, &salesTerritoryCode, &uniqueSerialNumber) == eSteamErrorNone )
+	if(SteamWeakVerifyNewValveCDKey(cdkey, &gameCode, &salesTerritoryCode, &uniqueSerialNumber) == eSteamErrorNone)
 	{
 		// require hl2 retail cdkey (ATI Bundle keys are also in this category)
-		if (gameCode == eHalfLife2)
+		if(gameCode == eHalfLife2)
 			return true;
 	}
 #endif
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles user entering data in fields
@@ -303,7 +298,7 @@ void CCDKeyEntryDialog::OnTextChanged(Panel *entry)
 	cdkey[17] = '-';
 	cdkey[23] = '-';
 
-	if (strlen(cdkey) == 29)
+	if(strlen(cdkey) == 29)
 	{
 		m_pOK->SetEnabled(true);
 	}

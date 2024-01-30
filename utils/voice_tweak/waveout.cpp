@@ -12,43 +12,37 @@
 #include "waveout.h"
 #include "ivoicecodec.h"
 
-
 class CWaveOutHdr
 {
 public:
-	WAVEHDR		m_Hdr;
-	CWaveOutHdr	*m_pNext;
-	char		m_Data[1];
+	WAVEHDR m_Hdr;
+	CWaveOutHdr *m_pNext;
+	char m_Data[1];
 };
-
 
 class CWaveOut : public IWaveOut
 {
-// IWaveOut overrides.
+	// IWaveOut overrides.
 public:
-					CWaveOut();
-	virtual			~CWaveOut();
-	virtual void	Release();
-	virtual bool	PutSamples(short *pSamples, int nSamples);
-	virtual void	Idle();
-	virtual int		GetNumBufferedSamples();
-
+	CWaveOut();
+	virtual ~CWaveOut();
+	virtual void Release();
+	virtual bool PutSamples(short *pSamples, int nSamples);
+	virtual void Idle();
+	virtual int GetNumBufferedSamples();
 
 public:
-	bool			Init(int sampleRate);
-	void			Term();
-
+	bool Init(int sampleRate);
+	void Term();
 
 private:
-	void			KillOldHeaders();
-
+	void KillOldHeaders();
 
 private:
-	HWAVEOUT		m_hWaveOut;
-	CWaveOutHdr		m_Headers;		// Head of a linked list of WAVEHDRs.
-	int				m_nBufferedSamples;
+	HWAVEOUT m_hWaveOut;
+	CWaveOutHdr m_Headers; // Head of a linked list of WAVEHDRs.
+	int m_nBufferedSamples;
 };
-
 
 CWaveOut::CWaveOut()
 {
@@ -70,7 +64,7 @@ void CWaveOut::Release()
 bool CWaveOut::PutSamples(short *pInSamples, int nInSamples)
 {
 	int granularity = 2048;
-	while( nInSamples )
+	while(nInSamples)
 	{
 		int nSamples = (nInSamples > granularity) ? granularity : nInSamples;
 		short *pSamples = pInSamples;
@@ -85,14 +79,14 @@ bool CWaveOut::PutSamples(short *pInSamples, int nInSamples)
 
 		// Allocate a header..
 		CWaveOutHdr *pHdr;
-		if(!(pHdr = (CWaveOutHdr*)malloc(sizeof(CWaveOutHdr) - 1 + nSamples*2)))
+		if(!(pHdr = (CWaveOutHdr *)malloc(sizeof(CWaveOutHdr) - 1 + nSamples * 2)))
 			return false;
 
 		// Make a new one.
 		memset(&pHdr->m_Hdr, 0, sizeof(pHdr->m_Hdr));
 		pHdr->m_Hdr.lpData = pHdr->m_Data;
 		pHdr->m_Hdr.dwBufferLength = nSamples * 2;
-		memcpy(pHdr->m_Data, pSamples, nSamples*2);
+		memcpy(pHdr->m_Data, pSamples, nSamples * 2);
 
 		MMRESULT mmr = waveOutPrepareHeader(m_hWaveOut, &pHdr->m_Hdr, sizeof(pHdr->m_Hdr));
 		if(mmr != MMSYSERR_NOERROR)
@@ -130,25 +124,15 @@ bool CWaveOut::Init(int sampleRate)
 {
 	Term();
 
+	WAVEFORMATEX format = {WAVE_FORMAT_PCM,				  // wFormatTag
+						   1,							  // nChannels
+						   sampleRate,					  // nSamplesPerSec
+						   sampleRate * BYTES_PER_SAMPLE, // nAvgBytesPerSec
+						   BYTES_PER_SAMPLE,			  // nBlockAlign
+						   BYTES_PER_SAMPLE * 8,		  // wBitsPerSample
+						   sizeof(WAVEFORMATEX)};
 
-	WAVEFORMATEX format =
-	{
-		WAVE_FORMAT_PCM,			// wFormatTag
-		1,							// nChannels
-		sampleRate,					// nSamplesPerSec
-		sampleRate*BYTES_PER_SAMPLE,// nAvgBytesPerSec
-		BYTES_PER_SAMPLE,			// nBlockAlign
-		BYTES_PER_SAMPLE * 8,		// wBitsPerSample
-		sizeof(WAVEFORMATEX)
-	};
-
-	MMRESULT mmr = waveOutOpen(
-		&m_hWaveOut,
-		0,
-		&format,
-		0,
-		0,
-		CALLBACK_NULL);
+	MMRESULT mmr = waveOutOpen(&m_hWaveOut, 0, &format, 0, 0, CALLBACK_NULL);
 
 	return mmr == MMSYSERR_NOERROR;
 }
@@ -167,7 +151,7 @@ void CWaveOut::KillOldHeaders()
 	// Look for any headers windows is done with.
 	CWaveOutHdr *pNext;
 	CWaveOutHdr **ppPrev = &m_Headers.m_pNext;
-	for(CWaveOutHdr *pCur=m_Headers.m_pNext; pCur; pCur=pNext)
+	for(CWaveOutHdr *pCur = m_Headers.m_pNext; pCur; pCur = pNext)
 	{
 		pNext = pCur->m_pNext;
 
@@ -186,9 +170,7 @@ void CWaveOut::KillOldHeaders()
 	}
 }
 
-
-
-IWaveOut* CreateWaveOut(int sampleRate)
+IWaveOut *CreateWaveOut(int sampleRate)
 {
 	CWaveOut *pRet = new CWaveOut;
 	if(pRet && pRet->Init(sampleRate))

@@ -19,25 +19,25 @@
 #include "KeyValues.h"
 #endif
 
-#define GRENADE_TIMER	3.0f //Seconds
+#define GRENADE_TIMER 3.0f // Seconds
 
 //=============================================================================
 //
 // TF Normal Grenade tables.
 //
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFGrenadeNormal, DT_TFGrenadeNormal )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFGrenadeNormal, DT_TFGrenadeNormal)
 
-BEGIN_NETWORK_TABLE( CTFGrenadeNormal, DT_TFGrenadeNormal )
+BEGIN_NETWORK_TABLE(CTFGrenadeNormal, DT_TFGrenadeNormal)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFGrenadeNormal )
+BEGIN_PREDICTION_DATA(CTFGrenadeNormal)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_grenade_normal, CTFGrenadeNormal );
-PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_normal );
+LINK_ENTITY_TO_CLASS(tf_weapon_grenade_normal, CTFGrenadeNormal);
+PRECACHE_WEAPON_REGISTER(tf_weapon_grenade_normal);
 
-//IMPLEMENT_ACTTABLE( CTFGrenadeNormal );
+// IMPLEMENT_ACTTABLE( CTFGrenadeNormal );
 
 //=============================================================================
 //
@@ -47,23 +47,23 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_normal );
 // Server specific.
 #ifdef GAME_DLL
 
-BEGIN_DATADESC( CTFGrenadeNormal )
+BEGIN_DATADESC(CTFGrenadeNormal)
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeNormal::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
-							        AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeNormal::EmitGrenade(Vector vecSrc, QAngle vecAngles, Vector vecVel,
+														AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime,
+														int iflags)
 {
-	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
-	if ( pTFPlayer )
+	CTFPlayer *pTFPlayer = ToTFPlayer(pPlayer);
+	if(pTFPlayer)
 	{
 		pTFPlayer->RemoveDisguise();
 	}
 
-	return CTFGrenadeNormalProjectile::Create( vecSrc, vecAngles, vecVel, angImpulse,
-		                                pPlayer, GetTFWpnData(), flTime );
+	return CTFGrenadeNormalProjectile::Create(vecSrc, vecAngles, vecVel, angImpulse, pPlayer, GetTFWpnData(), flTime);
 }
 
 #endif
@@ -77,17 +77,21 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeNormal::EmitGrenade( Vector vecSrc, QAngle v
 #define GRENADE_MODEL "models/Weapons/w_models/w_grenade_frag.mdl"
 //#define GRENADE_MODEL "models/weapons/w_grenade_normal.mdl"
 
-LINK_ENTITY_TO_CLASS( tf_weapon_grenade_normal_projectile, CTFGrenadeNormalProjectile );
-PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_normal_projectile );
+LINK_ENTITY_TO_CLASS(tf_weapon_grenade_normal_projectile, CTFGrenadeNormalProjectile);
+PRECACHE_WEAPON_REGISTER(tf_weapon_grenade_normal_projectile);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGrenadeNormalProjectile* CTFGrenadeNormalProjectile::Create( const Vector &position, const QAngle &angles,
-																const Vector &velocity, const AngularImpulse &angVelocity,
-																CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, float timer, int iFlags )
+CTFGrenadeNormalProjectile *CTFGrenadeNormalProjectile::Create(const Vector &position, const QAngle &angles,
+															   const Vector &velocity,
+															   const AngularImpulse &angVelocity,
+															   CBaseCombatCharacter *pOwner,
+															   const CTFWeaponInfo &weaponInfo, float timer, int iFlags)
 {
-	CTFGrenadeNormalProjectile *pGrenade = static_cast<CTFGrenadeNormalProjectile*>( CTFWeaponBaseGrenadeProj::Create( "tf_weapon_grenade_normal_projectile", position, angles, velocity, angVelocity, pOwner, weaponInfo, timer, iFlags ) );
+	CTFGrenadeNormalProjectile *pGrenade = static_cast<CTFGrenadeNormalProjectile *>(
+		CTFWeaponBaseGrenadeProj::Create("tf_weapon_grenade_normal_projectile", position, angles, velocity, angVelocity,
+										 pOwner, weaponInfo, timer, iFlags));
 	return pGrenade;
 }
 
@@ -96,7 +100,7 @@ CTFGrenadeNormalProjectile* CTFGrenadeNormalProjectile::Create( const Vector &po
 //-----------------------------------------------------------------------------
 void CTFGrenadeNormalProjectile::Spawn()
 {
-	SetModel( GRENADE_MODEL );
+	SetModel(GRENADE_MODEL);
 
 	BaseClass::Spawn();
 }
@@ -106,7 +110,7 @@ void CTFGrenadeNormalProjectile::Spawn()
 //-----------------------------------------------------------------------------
 void CTFGrenadeNormalProjectile::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
+	PrecacheModel(GRENADE_MODEL);
 
 	BaseClass::Precache();
 }
@@ -114,9 +118,9 @@ void CTFGrenadeNormalProjectile::Precache()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGrenadeNormalProjectile::BounceSound( void )
+void CTFGrenadeNormalProjectile::BounceSound(void)
 {
-	EmitSound( "BaseGrenade.BounceSound" );
+	EmitSound("BaseGrenade.BounceSound");
 }
 
 //-----------------------------------------------------------------------------
@@ -124,7 +128,7 @@ void CTFGrenadeNormalProjectile::BounceSound( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadeNormalProjectile::Detonate()
 {
-	if ( ShouldNotDetonate() )
+	if(ShouldNotDetonate())
 	{
 		RemoveGrenade();
 		return;

@@ -18,43 +18,38 @@
 #include "viewport_panel_names.h"
 #include "c_tfc_player.h"
 
-
 using namespace vgui;
-
 
 // ----------------------------------------------------------------------------- //
 // CTFCClassMenu
 // ----------------------------------------------------------------------------- //
 
-CTFCClassMenu::CTFCClassMenu(IViewPort *pViewPort) : CClassMenu(pViewPort)
-{
-}
+CTFCClassMenu::CTFCClassMenu(IViewPort *pViewPort) : CClassMenu(pViewPort) {}
 
-const char *CTFCClassMenu::GetName( void )
+const char *CTFCClassMenu::GetName(void)
 {
 	return PANEL_CLASS;
 }
 
 void CTFCClassMenu::ShowPanel(bool bShow)
 {
-	if ( bShow)
+	if(bShow)
 	{
-		engine->CheckPoint( "ClassMenu" );
+		engine->CheckPoint("ClassMenu");
 	}
 
-	BaseClass::ShowPanel( bShow );
-
+	BaseClass::ShowPanel(bShow);
 }
 
 void CTFCClassMenu::Update()
 {
 	// Force them to pick a class if they haven't picked one yet.
-	if ( C_TFCPlayer::GetLocalTFCPlayer()->m_Shared.GetPlayerClass() == PC_UNDEFINED )
+	if(C_TFCPlayer::GetLocalTFCPlayer()->m_Shared.GetPlayerClass() == PC_UNDEFINED)
 	{
-		SetVisibleButton( "CancelButton", false );
+		SetVisibleButton("CancelButton", false);
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", true );
+		SetVisibleButton("CancelButton", true);
 	}
 }

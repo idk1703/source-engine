@@ -19,38 +19,37 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CBuyMenu::CBuyMenu(IViewPort *pViewPort) : WizardPanel( NULL, PANEL_BUY )
+CBuyMenu::CBuyMenu(IViewPort *pViewPort) : WizardPanel(NULL, PANEL_BUY)
 {
 	SetScheme("ClientScheme");
-	SetTitle( "#Cstrike_Buy_Menu", true);
+	SetTitle("#Cstrike_Buy_Menu", true);
 
 	SetMoveable(false);
 	SetSizeable(false);
 	SetProportional(true);
 
 	// hide the system buttons
-	SetTitleBarVisible( false );
+	SetTitleBarVisible(false);
 
-	SetAutoDelete( false ); // we reuse this panel, don't let WizardPanel delete us
+	SetAutoDelete(false); // we reuse this panel, don't let WizardPanel delete us
 
-	LoadControlSettings( "Resource/UI/BuyMenu.res" );
-	ShowButtons( false );
+	LoadControlSettings("Resource/UI/BuyMenu.res");
+	ShowButtons(false);
 
 	m_pViewPort = pViewPort;
 
-	m_pMainMenu = new CBuySubMenu( this, "mainmenu" );
-	m_pMainMenu->LoadControlSettings( "Resource/UI/MainBuyMenu.res" );
-	m_pMainMenu->SetVisible( false );
+	m_pMainMenu = new CBuySubMenu(this, "mainmenu");
+	m_pMainMenu->LoadControlSettings("Resource/UI/MainBuyMenu.res");
+	m_pMainMenu->SetVisible(false);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
 CBuyMenu::~CBuyMenu()
 {
-	if ( m_pMainMenu )
-		m_pMainMenu->DeleteSubPanels();	//?
+	if(m_pMainMenu)
+		m_pMainMenu->DeleteSubPanels(); //?
 }
 
 //-----------------------------------------------------------------------------
@@ -58,74 +57,73 @@ CBuyMenu::~CBuyMenu()
 //-----------------------------------------------------------------------------
 void CBuyMenu::ShowPanel(bool bShow)
 {
-	if ( BaseClass::IsVisible() == bShow )
+	if(BaseClass::IsVisible() == bShow)
 		return;
 
-	if ( bShow )
+	if(bShow)
 	{
 		Update();
 
-		Run( m_pMainMenu );
+		Run(m_pMainMenu);
 
-		SetMouseInputEnabled( true );
+		SetMouseInputEnabled(true);
 
-		engine->ClientCmd_Unrestricted( "gameui_preventescapetoshow\n" );
+		engine->ClientCmd_Unrestricted("gameui_preventescapetoshow\n");
 	}
 	else
 	{
-		engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
+		engine->ClientCmd_Unrestricted("gameui_allowescapetoshow\n");
 
-		SetVisible( false );
-		SetMouseInputEnabled( false );
+		SetVisible(false);
+		SetMouseInputEnabled(false);
 	}
 
-	m_pViewPort->ShowBackGround( bShow );
+	m_pViewPort->ShowBackGround(bShow);
 }
-
 
 void CBuyMenu::Update()
 {
-	//Don't need to do anything, but do need to implement this function as base is pure virtual
+	// Don't need to do anything, but do need to implement this function as base is pure virtual
 }
 void CBuyMenu::OnClose()
 {
-	engine->ClientCmd_Unrestricted( "gameui_allowescapetoshow\n" );
+	engine->ClientCmd_Unrestricted("gameui_allowescapetoshow\n");
 
 	BaseClass::OnClose();
 	ResetHistory();
 }
 
-void CBuyMenu::OnKeyCodePressed( vgui::KeyCode code )
+void CBuyMenu::OnKeyCodePressed(vgui::KeyCode code)
 {
 	int nDir = 0;
 
-	switch ( code )
+	switch(code)
 	{
-	case KEY_XBUTTON_UP:
-	case KEY_XSTICK1_UP:
-	case KEY_XSTICK2_UP:
-	case KEY_UP:
-	case STEAMCONTROLLER_DPAD_UP:
-		nDir = -1;
-		break;
+		case KEY_XBUTTON_UP:
+		case KEY_XSTICK1_UP:
+		case KEY_XSTICK2_UP:
+		case KEY_UP:
+		case STEAMCONTROLLER_DPAD_UP:
+			nDir = -1;
+			break;
 
-	case KEY_XBUTTON_DOWN:
-	case KEY_XSTICK1_DOWN:
-	case KEY_XSTICK2_DOWN:
-	case KEY_DOWN:
-	case STEAMCONTROLLER_DPAD_DOWN:
-		nDir = 1;
-		break;
+		case KEY_XBUTTON_DOWN:
+		case KEY_XSTICK1_DOWN:
+		case KEY_XSTICK2_DOWN:
+		case KEY_DOWN:
+		case STEAMCONTROLLER_DPAD_DOWN:
+			nDir = 1;
+			break;
 	}
 
-	if ( nDir != 0 )
+	if(nDir != 0)
 	{
-		Panel *pSubPanel = ( GetCurrentSubPanel() ? GetCurrentSubPanel() : m_pMainMenu );
+		Panel *pSubPanel = (GetCurrentSubPanel() ? GetCurrentSubPanel() : m_pMainMenu);
 
-		CUtlSortVector< SortedPanel_t, CSortedPanelYLess > vecSortedButtons;
-		VguiPanelGetSortedChildButtonList( pSubPanel, (void*)&vecSortedButtons, "&", 0 );
+		CUtlSortVector<SortedPanel_t, CSortedPanelYLess> vecSortedButtons;
+		VguiPanelGetSortedChildButtonList(pSubPanel, (void *)&vecSortedButtons, "&", 0);
 
-		if ( VguiPanelNavigateSortedChildButtonList( (void*)&vecSortedButtons, nDir ) != -1 )
+		if(VguiPanelNavigateSortedChildButtonList((void *)&vecSortedButtons, nDir) != -1)
 		{
 			// Handled!
 			return;
@@ -133,18 +131,18 @@ void CBuyMenu::OnKeyCodePressed( vgui::KeyCode code )
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
-void CBuyMenu::OnKeyCodeTyped( KeyCode code )
+void CBuyMenu::OnKeyCodeTyped(KeyCode code)
 {
-	if ( code == KEY_ESCAPE	)
+	if(code == KEY_ESCAPE)
 	{
 		OnClose();
 	}
 	else
 	{
-		BaseClass::OnKeyCodeTyped( code );
+		BaseClass::OnKeyCodeTyped(code);
 	}
 }

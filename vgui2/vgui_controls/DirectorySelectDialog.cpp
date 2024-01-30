@@ -69,14 +69,14 @@ public:
 
 		// If some other window was hogging the input focus, then we have to hog it or else we'll never get input.
 		m_PrevAppFocusPanel = vgui::input()->GetAppModalSurface();
-		if ( m_PrevAppFocusPanel )
-			vgui::input()->SetAppModalSurface( GetVPanel() );
+		if(m_PrevAppFocusPanel)
+			vgui::input()->SetAppModalSurface(GetVPanel());
 	}
 
 	~CreateDirectoryDialog()
 	{
-		if ( m_PrevAppFocusPanel )
-			vgui::input()->SetAppModalSurface( m_PrevAppFocusPanel );
+		if(m_PrevAppFocusPanel)
+			vgui::input()->SetAppModalSurface(m_PrevAppFocusPanel);
 	}
 
 	virtual void PerformLayout()
@@ -90,7 +90,7 @@ public:
 
 	virtual void OnCommand(const char *command)
 	{
-		if (!stricmp(command, "OK"))
+		if(!stricmp(command, "OK"))
 		{
 			PostActionSignal(new KeyValues("CreateDirectory", "dir", GetControlString("NameEntry")));
 			Close();
@@ -168,36 +168,36 @@ void DirectorySelectDialog::ApplySchemeSettings(IScheme *pScheme)
 // Purpose: Move the start string forward until we hit a slash and return the
 //			the first character past the trailing slash
 //-----------------------------------------------------------------------------
-inline const char *MoveToNextSubDir( const char *pStart, int *nCount )
+inline const char *MoveToNextSubDir(const char *pStart, int *nCount)
 {
 	int nMoved = 0;
 
 	// Move past pre-pended slash
-	if ( pStart[nMoved] == '\\' )
+	if(pStart[nMoved] == '\\')
 	{
 		nMoved++;
 	}
 
 	// Move past the current block of text until we've hit the next path seperator (or end)
-	while ( pStart[nMoved] != '\\' && pStart[nMoved] != '\0' )
+	while(pStart[nMoved] != '\\' && pStart[nMoved] != '\0')
 	{
 		nMoved++;
 	}
 
 	// Move past trailing slash
-	if ( pStart[nMoved] == '\\' )
+	if(pStart[nMoved] == '\\')
 	{
 		nMoved++;
 	}
 
 	// Give back a count if they've supplied a pointer
-	if ( nCount != NULL )
+	if(nCount != NULL)
 	{
 		*nCount = nMoved;
 	}
 
 	// The beginning of the next string, past slash
-	return (pStart+nMoved);
+	return (pStart + nMoved);
 }
 
 //-----------------------------------------------------------------------------
@@ -205,21 +205,21 @@ inline const char *MoveToNextSubDir( const char *pStart, int *nCount )
 //			and populating the nodes of the tree view to match
 // Input  : *path - path (with drive letter) to show
 //-----------------------------------------------------------------------------
-void DirectorySelectDialog::ExpandTreeToPath( const char *lpszPath, bool bSelectFinalDirectory /*= true*/ )
+void DirectorySelectDialog::ExpandTreeToPath(const char *lpszPath, bool bSelectFinalDirectory /*= true*/)
 {
 	// Make sure our slashes are correct!
 	char workPath[MAX_PATH];
-	Q_strncpy( workPath, lpszPath, sizeof(workPath) );
-	Q_FixSlashes( workPath );
+	Q_strncpy(workPath, lpszPath, sizeof(workPath));
+	Q_FixSlashes(workPath);
 
 	// Set us to the work drive
-	SetStartDirectory( workPath );
+	SetStartDirectory(workPath);
 
 	// Check that the path is valid
-	if ( workPath[0] == '\0' || DoesDirectoryHaveSubdirectories( m_szCurrentDrive, "" ) == false )
+	if(workPath[0] == '\0' || DoesDirectoryHaveSubdirectories(m_szCurrentDrive, "") == false)
 	{
 		// Failing, start in C:
-		SetStartDirectory( "C:\\" );
+		SetStartDirectory("C:\\");
 	}
 
 	// Start at the root of our tree
@@ -227,58 +227,58 @@ void DirectorySelectDialog::ExpandTreeToPath( const char *lpszPath, bool bSelect
 
 	// Move past the drive letter to the first subdir
 	int nPathPos = 0;
-	const char *lpszSubDirName = MoveToNextSubDir( workPath, &nPathPos );
+	const char *lpszSubDirName = MoveToNextSubDir(workPath, &nPathPos);
 	const char *lpszLastSubDirName = NULL;
 	int nPathIncr = 0;
 	char subDirName[MAX_PATH];
 
 	// While there are subdirectory names present, expand and populate the tree with their subdirectories
-	while ( lpszSubDirName[0] != '\0' )
+	while(lpszSubDirName[0] != '\0')
 	{
 		// Move our string pointer forward while keeping where our last subdir started off
 		lpszLastSubDirName = lpszSubDirName;
-		lpszSubDirName = MoveToNextSubDir( lpszSubDirName, &nPathIncr );
+		lpszSubDirName = MoveToNextSubDir(lpszSubDirName, &nPathIncr);
 
 		// Get the span between the last subdir and the new one
-		Q_StrLeft( lpszLastSubDirName, nPathIncr, subDirName, sizeof(subDirName) );
-		Q_StripTrailingSlash( subDirName );
+		Q_StrLeft(lpszLastSubDirName, nPathIncr, subDirName, sizeof(subDirName));
+		Q_StripTrailingSlash(subDirName);
 
 		// Increment where we are in the string for use later
 		nPathPos += nPathIncr;
 
 		// Run through the list and expand to our currently selected directory
-		for ( int i = 0; i < m_pDirTree->GetNumChildren( nItemIndex ); i++ )
+		for(int i = 0; i < m_pDirTree->GetNumChildren(nItemIndex); i++)
 		{
 			// Get the child and data for it
-			int nChild = m_pDirTree->GetChild( nItemIndex, i );
-			KeyValues *pValues = m_pDirTree->GetItemData( nChild );
+			int nChild = m_pDirTree->GetChild(nItemIndex, i);
+			KeyValues *pValues = m_pDirTree->GetItemData(nChild);
 
 			// See if this matches
-			if ( Q_stricmp( pValues->GetString( "Text" ), subDirName ) == 0 )
+			if(Q_stricmp(pValues->GetString("Text"), subDirName) == 0)
 			{
 				// This is the new root item
 				nItemIndex = nChild;
 
 				// Get the full path (starting from the drive letter) up to our current subdir
-				Q_strncpy( subDirName, workPath, nPathPos );
-				Q_AppendSlash( subDirName, sizeof(subDirName) );
+				Q_strncpy(subDirName, workPath, nPathPos);
+				Q_AppendSlash(subDirName, sizeof(subDirName));
 
 				// Expand the tree node and populate its subdirs for our next iteration
-				ExpandTreeNode( subDirName, nItemIndex );
+				ExpandTreeNode(subDirName, nItemIndex);
 				break;
 			}
 		}
 	}
 
 	// Select our last directory if we've been asked to (and it's valid)
-	if ( bSelectFinalDirectory && m_pDirTree->IsItemIDValid( nItemIndex ) )
+	if(bSelectFinalDirectory && m_pDirTree->IsItemIDValid(nItemIndex))
 	{
 		// If we don't call this once before selecting an item, the tree will not be properly expanded
 		// before it calculates how to show the selected item in the view
 		PerformLayout();
 
 		// Select that item
-		m_pDirTree->AddSelectedItem( nItemIndex, true );
+		m_pDirTree->AddSelectedItem(nItemIndex, true);
 	}
 }
 
@@ -291,7 +291,7 @@ void DirectorySelectDialog::SetStartDirectory(const char *path)
 	strncpy(m_szCurrentDrive, path, sizeof(m_szCurrentDrive));
 	m_szCurrentDrive[sizeof(m_szCurrentDrive) - 1] = 0;
 	char *firstSlash = strstr(m_szCurrentDrive, "\\");
-	if (firstSlash)
+	if(firstSlash)
 	{
 		firstSlash[1] = 0;
 	}
@@ -301,7 +301,7 @@ void DirectorySelectDialog::SetStartDirectory(const char *path)
 
 	// update state of create directory button
 	int selectedIndex = m_pDirTree->GetFirstSelectedItem();
-	if (m_pDirTree->IsItemIDValid(selectedIndex))
+	if(m_pDirTree->IsItemIDValid(selectedIndex))
 	{
 		m_pCreateButton->SetEnabled(true);
 	}
@@ -337,15 +337,15 @@ void DirectorySelectDialog::BuildDriveChoices()
 {
 	m_pDriveCombo->DeleteAllItems();
 
-	char drives[256] = { 0 };
+	char drives[256] = {0};
 	int len = system()->GetAvailableDrives(drives, sizeof(drives));
 	char *pBuf = drives;
 	KeyValues *kv = new KeyValues("drive");
-	for (int i = 0; i < len / 4; i++)
+	for(int i = 0; i < len / 4; i++)
 	{
 		kv->SetString("drive", pBuf);
 		int itemID = m_pDriveCombo->AddItem(pBuf, kv);
-		if (!stricmp(pBuf, m_szCurrentDrive))
+		if(!stricmp(pBuf, m_szCurrentDrive))
 		{
 			m_pDriveCombo->ActivateItem(itemID);
 		}
@@ -386,10 +386,10 @@ void DirectorySelectDialog::ExpandTreeNode(const char *path, int parentNodeIndex
 	sprintf(searchString, "%s*.*", path);
 
 	FileFindHandle_t h;
-	const char *pFileName = g_pFullFileSystem->FindFirstEx( searchString, NULL, &h );
-	for ( ; pFileName; pFileName = g_pFullFileSystem->FindNext( h ) )
+	const char *pFileName = g_pFullFileSystem->FindFirstEx(searchString, NULL, &h);
+	for(; pFileName; pFileName = g_pFullFileSystem->FindNext(h))
 	{
-		if ( !Q_stricmp( pFileName, ".." ) || !Q_stricmp( pFileName, "." ) )
+		if(!Q_stricmp(pFileName, "..") || !Q_stricmp(pFileName, "."))
 			continue;
 
 		KeyValues *kv = new KeyValues("item");
@@ -400,7 +400,7 @@ void DirectorySelectDialog::ExpandTreeNode(const char *path, int parentNodeIndex
 		kv->SetInt("Expand", DoesDirectoryHaveSubdirectories(path, pFileName));
 		m_pDirTree->AddItem(kv, parentNodeIndex);
 	}
-	g_pFullFileSystem->FindClose( h );
+	g_pFullFileSystem->FindClose(h);
 }
 
 //-----------------------------------------------------------------------------
@@ -412,19 +412,19 @@ bool DirectorySelectDialog::DoesDirectoryHaveSubdirectories(const char *path, co
 	sprintf(searchString, "%s%s\\*.*", path, dir);
 
 	FileFindHandle_t h;
-	const char *pFileName = g_pFullFileSystem->FindFirstEx( searchString, NULL, &h );
-	for ( ; pFileName; pFileName = g_pFullFileSystem->FindNext( h ) )
+	const char *pFileName = g_pFullFileSystem->FindFirstEx(searchString, NULL, &h);
+	for(; pFileName; pFileName = g_pFullFileSystem->FindNext(h))
 	{
-		char szFullPath[ MAX_PATH ];
-		Q_snprintf( szFullPath, sizeof(szFullPath), "%s\\%s", path, pFileName );
-		Q_FixSlashes( szFullPath );
-		if ( g_pFullFileSystem->IsDirectory( szFullPath ) )
+		char szFullPath[MAX_PATH];
+		Q_snprintf(szFullPath, sizeof(szFullPath), "%s\\%s", path, pFileName);
+		Q_FixSlashes(szFullPath);
+		if(g_pFullFileSystem->IsDirectory(szFullPath))
 		{
-			g_pFullFileSystem->FindClose( h );
+			g_pFullFileSystem->FindClose(h);
 			return true;
 		}
 	}
-	g_pFullFileSystem->FindClose( h );
+	g_pFullFileSystem->FindClose(h);
 	return false;
 }
 
@@ -450,10 +450,10 @@ void DirectorySelectDialog::GenerateFullPathForNode(int nodeIndex, char *path, i
 	CUtlLinkedList<int, int> nodes;
 	nodes.AddToTail(nodeIndex);
 	int parentIndex = nodeIndex;
-	while (1)
+	while(1)
 	{
 		parentIndex = m_pDirTree->GetItemParent(parentIndex);
-		if (parentIndex == -1)
+		if(parentIndex == -1)
 			break;
 		nodes.AddToHead(parentIndex);
 	}
@@ -461,12 +461,12 @@ void DirectorySelectDialog::GenerateFullPathForNode(int nodeIndex, char *path, i
 	// walk the nodes, adding to the path
 	path[0] = 0;
 	bool bFirst = true;
-	FOR_EACH_LL( nodes, i )
+	FOR_EACH_LL(nodes, i)
 	{
-		KeyValues *kv = m_pDirTree->GetItemData( nodes[i] );
+		KeyValues *kv = m_pDirTree->GetItemData(nodes[i]);
 		strcat(path, kv->GetString("Text"));
 
-		if (!bFirst)
+		if(!bFirst)
 		{
 			strcat(path, "\\");
 		}
@@ -480,10 +480,10 @@ void DirectorySelectDialog::GenerateFullPathForNode(int nodeIndex, char *path, i
 void DirectorySelectDialog::OnTextChanged()
 {
 	KeyValues *kv = m_pDriveCombo->GetActiveItemUserData();
-	if (!kv)
+	if(!kv)
 		return;
 	const char *newDrive = kv->GetString("drive");
-	if (stricmp(newDrive, m_szCurrentDrive))
+	if(stricmp(newDrive, m_szCurrentDrive))
 	{
 		// drive changed, reset
 		SetStartDirectory(newDrive);
@@ -496,14 +496,14 @@ void DirectorySelectDialog::OnTextChanged()
 void DirectorySelectDialog::OnCreateDirectory(const char *dir)
 {
 	int selectedIndex = m_pDirTree->GetFirstSelectedItem();
-	if (m_pDirTree->IsItemIDValid(selectedIndex))
+	if(m_pDirTree->IsItemIDValid(selectedIndex))
 	{
 		char fullPath[512];
 		GenerateFullPathForNode(selectedIndex, fullPath, sizeof(fullPath));
 
 		// create the new directory underneath
 		strcat(fullPath, dir);
-		if (_mkdir(fullPath) == 0)
+		if(_mkdir(fullPath) == 0)
 		{
 			// add new path to tree view
 			KeyValues *kv = new KeyValues("item");
@@ -514,7 +514,7 @@ void DirectorySelectDialog::OnCreateDirectory(const char *dir)
 			int itemID = m_pDirTree->AddItem(kv, selectedIndex);
 
 			// select the item
-			m_pDirTree->AddSelectedItem( itemID, true );
+			m_pDirTree->AddSelectedItem(itemID, true);
 		}
 		else
 		{
@@ -539,15 +539,15 @@ void DirectorySelectDialog::OnClose()
 //-----------------------------------------------------------------------------
 void DirectorySelectDialog::OnCommand(const char *command)
 {
-	if (!stricmp(command, "Cancel"))
+	if(!stricmp(command, "Cancel"))
 	{
 		Close();
 	}
-	else if (!stricmp(command, "Select"))
+	else if(!stricmp(command, "Select"))
 	{
 		// path selected
 		int selectedIndex = m_pDirTree->GetFirstSelectedItem();
-		if (m_pDirTree->IsItemIDValid(selectedIndex))
+		if(m_pDirTree->IsItemIDValid(selectedIndex))
 		{
 			char fullPath[512];
 			GenerateFullPathForNode(selectedIndex, fullPath, sizeof(fullPath));
@@ -555,10 +555,10 @@ void DirectorySelectDialog::OnCommand(const char *command)
 			Close();
 		}
 	}
-	else if (!stricmp(command, "Create"))
+	else if(!stricmp(command, "Create"))
 	{
 		int selectedIndex = m_pDirTree->GetFirstSelectedItem();
-		if (m_pDirTree->IsItemIDValid(selectedIndex))
+		if(m_pDirTree->IsItemIDValid(selectedIndex))
 		{
 			CreateDirectoryDialog *dlg = new CreateDirectoryDialog(this, m_szDefaultCreateDirName);
 			dlg->AddActionSignalTarget(this);
@@ -577,7 +577,7 @@ void DirectorySelectDialog::OnCommand(const char *command)
 void DirectorySelectDialog::OnTreeViewItemSelected()
 {
 	int selectedIndex = m_pDirTree->GetFirstSelectedItem();
-	if (!m_pDirTree->IsItemIDValid(selectedIndex))
+	if(!m_pDirTree->IsItemIDValid(selectedIndex))
 	{
 		m_pCreateButton->SetEnabled(false);
 		return;

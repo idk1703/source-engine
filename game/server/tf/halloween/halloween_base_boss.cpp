@@ -9,27 +9,22 @@
 #include "halloween_base_boss.h"
 #include "tf_gamestats.h"
 
-
 //-----------------------------------------------------------------------------------------------------
 CHalloweenBaseBoss::CHalloweenBaseBoss()
 {
 	m_wasSpawnedByCheats = false;
 }
 
+//-----------------------------------------------------------------------------------------------------
+CHalloweenBaseBoss::~CHalloweenBaseBoss() {}
 
 //-----------------------------------------------------------------------------------------------------
-CHalloweenBaseBoss::~CHalloweenBaseBoss()
-{
-}
-
-
-//-----------------------------------------------------------------------------------------------------
-void CHalloweenBaseBoss::Spawn( void )
+void CHalloweenBaseBoss::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	ConVarRef sv_cheats( "sv_cheats" );
-	if ( sv_cheats.IsValid() && sv_cheats.GetBool() )
+	ConVarRef sv_cheats("sv_cheats");
+	if(sv_cheats.IsValid() && sv_cheats.GetBool())
 	{
 		// remember we spawned with a cheat command
 		m_wasSpawnedByCheats = true;
@@ -38,23 +33,23 @@ void CHalloweenBaseBoss::Spawn( void )
 	m_damagePerSecond = 0.0f;
 	m_maxDamagePerSecond = 0.0f;
 
-	if ( TFGameRules() )
+	if(TFGameRules())
 	{
-		TFGameRules()->AddActiveBoss( this );
+		TFGameRules()->AddActiveBoss(this);
 	}
 
 	// track how many players were playing when boss spawned
-	CUtlVector< CTFPlayer * > playerVector;
-	CollectPlayers( &playerVector, TF_TEAM_RED );
-	CollectPlayers( &playerVector, TF_TEAM_BLUE, false, APPEND_PLAYERS );
+	CUtlVector<CTFPlayer *> playerVector;
+	CollectPlayers(&playerVector, TF_TEAM_RED);
+	CollectPlayers(&playerVector, TF_TEAM_BLUE, false, APPEND_PLAYERS);
 
 	// status
-	CTF_GameStats.Event_HalloweenBossEvent( GetBossType(), GetLevel(), HALLOWEEN_EVENT_BOSS_SPAWN, playerVector.Count(), 0.0f );
+	CTF_GameStats.Event_HalloweenBossEvent(GetBossType(), GetLevel(), HALLOWEEN_EVENT_BOSS_SPAWN, playerVector.Count(),
+										   0.0f);
 }
 
-
 //-----------------------------------------------------------------------------------------------------
-void CHalloweenBaseBoss::Update( void )
+void CHalloweenBaseBoss::Update(void)
 {
 	BaseClass::Update();
 
@@ -64,151 +59,151 @@ void CHalloweenBaseBoss::Update( void )
 //-----------------------------------------------------------------------------------------------------
 void CHalloweenBaseBoss::UpdateOnRemove()
 {
-	if ( TFGameRules() )
+	if(TFGameRules())
 	{
-		TFGameRules()->RemoveActiveBoss( this );
+		TFGameRules()->RemoveActiveBoss(this);
 	}
 
 	BaseClass::UpdateOnRemove();
 }
 
 //-----------------------------------------------------------------------------------------------------
-int CHalloweenBaseBoss::OnTakeDamage( const CTakeDamageInfo &info )
+int CHalloweenBaseBoss::OnTakeDamage(const CTakeDamageInfo &info)
 {
-	if ( info.GetDamage() && ( info.GetAttacker() != this ) )
+	if(info.GetDamage() && (info.GetAttacker() != this))
 	{
-		CTFPlayer *pAttacker = ToTFPlayer( info.GetAttacker() );
+		CTFPlayer *pAttacker = ToTFPlayer(info.GetAttacker());
 
-		if ( pAttacker && info.GetWeapon() )
+		if(pAttacker && info.GetWeapon())
 		{
-			CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>( info.GetWeapon() );
-			if ( pWeapon )
+			CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>(info.GetWeapon());
+			if(pWeapon)
 			{
-				pWeapon->ApplyOnHitAttributes( this, pAttacker, info );
+				pWeapon->ApplyOnHitAttributes(this, pAttacker, info);
 			}
 		}
 	}
 
-	return BaseClass::OnTakeDamage( info );
+	return BaseClass::OnTakeDamage(info);
 }
 
 //-----------------------------------------------------------------------------------------------------
-int CHalloweenBaseBoss::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
+int CHalloweenBaseBoss::OnTakeDamage_Alive(const CTakeDamageInfo &rawInfo)
 {
 	CTakeDamageInfo info = rawInfo;
 
-	if ( info.GetAttacker() && info.GetAttacker()->GetTeamNumber() == GetTeamNumber() )
+	if(info.GetAttacker() && info.GetAttacker()->GetTeamNumber() == GetTeamNumber())
 	{
 		return 0;
 	}
 
-	if ( TFGameRules()->RoundHasBeenWon() )
+	if(TFGameRules()->RoundHasBeenWon())
 	{
-		info.SetDamage( 0.0f );
+		info.SetDamage(0.0f);
 	}
 
-	if ( info.GetDamageType() & DMG_CRITICAL )
+	if(info.GetDamageType() & DMG_CRITICAL)
 	{
 		// do the critical damage increase
-		info.SetDamage( info.GetDamage() * GetCritInjuryMultiplier() );
+		info.SetDamage(info.GetDamage() * GetCritInjuryMultiplier());
 	}
 
 	// keep a list of everyone who hurt me, and when
-	CTFPlayer *playerAttacker = ToTFPlayer( info.GetAttacker() );
-	if ( playerAttacker )
+	CTFPlayer *playerAttacker = ToTFPlayer(info.GetAttacker());
+	if(playerAttacker)
 	{
-		CTFWeaponBase *attackerWeapon = assert_cast< CTFWeaponBase * >( info.GetWeapon() );
+		CTFWeaponBase *attackerWeapon = assert_cast<CTFWeaponBase *>(info.GetWeapon());
 		bool isMeleeAttack = attackerWeapon && attackerWeapon->IsMeleeWeapon();
 
-		RememberAttacker( playerAttacker, isMeleeAttack, info.GetDamage() );
+		RememberAttacker(playerAttacker, isMeleeAttack, info.GetDamage());
 
-		for( int i=0; i<playerAttacker->m_Shared.GetNumHealers(); ++i )
+		for(int i = 0; i < playerAttacker->m_Shared.GetNumHealers(); ++i)
 		{
-			CTFPlayer *medic = ToTFPlayer( playerAttacker->m_Shared.GetHealerByIndex( i ) );
-			if ( medic )
+			CTFPlayer *medic = ToTFPlayer(playerAttacker->m_Shared.GetHealerByIndex(i));
+			if(medic)
 			{
 				// medics healing my attacker are also considered attackers
 				// they do zero damage to keep DPS calculations sane
-				RememberAttacker( medic, isMeleeAttack, 0.0f );
+				RememberAttacker(medic, isMeleeAttack, 0.0f);
 			}
 		}
 	}
 
 	// fire event for client combat text, beep, etc.
-	IGameEvent *event = gameeventmanager->CreateEvent( "npc_hurt" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("npc_hurt");
+	if(event)
 	{
-		event->SetInt( "entindex", entindex() );
-		event->SetInt( "health", MAX( 0, GetHealth() ) );
-		event->SetInt( "damageamount", info.GetDamage() );
-		event->SetBool( "crit", ( info.GetDamageType() & DMG_CRITICAL ) ? true : false );
-		event->SetInt( "boss", GetBossType() );
+		event->SetInt("entindex", entindex());
+		event->SetInt("health", MAX(0, GetHealth()));
+		event->SetInt("damageamount", info.GetDamage());
+		event->SetBool("crit", (info.GetDamageType() & DMG_CRITICAL) ? true : false);
+		event->SetInt("boss", GetBossType());
 
-		CTFPlayer *attackerPlayer = ToTFPlayer( info.GetAttacker() );
-		if ( attackerPlayer )
+		CTFPlayer *attackerPlayer = ToTFPlayer(info.GetAttacker());
+		if(attackerPlayer)
 		{
-			event->SetInt( "attacker_player", attackerPlayer->GetUserID() );
+			event->SetInt("attacker_player", attackerPlayer->GetUserID());
 
-			if ( attackerPlayer->GetActiveTFWeapon() )
+			if(attackerPlayer->GetActiveTFWeapon())
 			{
-				event->SetInt( "weaponid", attackerPlayer->GetActiveTFWeapon()->GetWeaponID() );
+				event->SetInt("weaponid", attackerPlayer->GetActiveTFWeapon()->GetWeaponID());
 			}
 			else
 			{
-				event->SetInt( "weaponid", 0 );
+				event->SetInt("weaponid", 0);
 			}
 		}
 		else
 		{
 			// hurt by world
-			event->SetInt( "attacker_player", 0 );
-			event->SetInt( "weaponid", 0 );
+			event->SetInt("attacker_player", 0);
+			event->SetInt("weaponid", 0);
 		}
 
-		gameeventmanager->FireEvent( event );
+		gameeventmanager->FireEvent(event);
 	}
 
-	return BaseClass::OnTakeDamage_Alive( info );
+	return BaseClass::OnTakeDamage_Alive(info);
 }
 
-void CHalloweenBaseBoss::Event_Killed( const CTakeDamageInfo &info )
+void CHalloweenBaseBoss::Event_Killed(const CTakeDamageInfo &info)
 {
-	const CUtlVector< AttackerInfo > &attackerVector = GetAttackerVector();
-	for( int i=0; i<attackerVector.Count(); ++i )
+	const CUtlVector<AttackerInfo> &attackerVector = GetAttackerVector();
+	for(int i = 0; i < attackerVector.Count(); ++i)
 	{
-		if ( attackerVector[i].m_attacker != NULL )
+		if(attackerVector[i].m_attacker != NULL)
 		{
-			IGameEvent *pEvent = gameeventmanager->CreateEvent( "halloween_boss_killed" );
-			if ( pEvent )
+			IGameEvent *pEvent = gameeventmanager->CreateEvent("halloween_boss_killed");
+			if(pEvent)
 			{
-				pEvent->SetInt( "boss", GetBossType() );
-				pEvent->SetInt( "killer", attackerVector[i].m_attacker->GetUserID() );
-				gameeventmanager->FireEvent( pEvent, true );
+				pEvent->SetInt("boss", GetBossType());
+				pEvent->SetInt("killer", attackerVector[i].m_attacker->GetUserID());
+				gameeventmanager->FireEvent(pEvent, true);
 			}
 
 			// Shoot a huge soul at players that have damaged the boss
-			TFGameRules()->DropHalloweenSoulPack( 25, EyePosition(), attackerVector[i].m_attacker, TEAM_SPECTATOR );
+			TFGameRules()->DropHalloweenSoulPack(25, EyePosition(), attackerVector[i].m_attacker, TEAM_SPECTATOR);
 		}
 	}
 
-	BaseClass::Event_Killed( info );
+	BaseClass::Event_Killed(info);
 }
 
 //---------------------------------------------------------------------------------------------
-void CHalloweenBaseBoss::RememberAttacker( CTFPlayer *playerAttacker, bool wasMeleeHit, float damage )
+void CHalloweenBaseBoss::RememberAttacker(CTFPlayer *playerAttacker, bool wasMeleeHit, float damage)
 {
 	// record the damage for dps calculations
 	DamageRateInfo info;
 	info.m_damage = damage;
 	info.m_timestamp = gpGlobals->curtime;
-	m_damageVector.AddToTail( info );
+	m_damageVector.AddToTail(info);
 
 	int i;
 
 	// has this player hurt me before
-	for( i=0; i<m_attackerVector.Count(); ++i )
+	for(i = 0; i < m_attackerVector.Count(); ++i)
 	{
-		if ( m_attackerVector[i].m_attacker && m_attackerVector[i].m_attacker->entindex() == playerAttacker->entindex() )
+		if(m_attackerVector[i].m_attacker && m_attackerVector[i].m_attacker->entindex() == playerAttacker->entindex())
 		{
 			// this player is hurting me again
 			m_attackerVector[i].m_timestamp = gpGlobals->curtime;
@@ -224,23 +219,22 @@ void CHalloweenBaseBoss::RememberAttacker( CTFPlayer *playerAttacker, bool wasMe
 	attackerInfo.m_timestamp = gpGlobals->curtime;
 	attackerInfo.m_wasLastHitFromMeleeWeapon = wasMeleeHit;
 
-	m_attackerVector.AddToTail( attackerInfo );
+	m_attackerVector.AddToTail(attackerInfo);
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CHalloweenBaseBoss::UpdateDamagePerSecond( void )
+void CHalloweenBaseBoss::UpdateDamagePerSecond(void)
 {
 	const float windowDuration = 5.0f;
 	int i;
 
 	m_damagePerSecond = 0.0f;
 
-	for( i=0; i<m_damageVector.Count(); ++i )
+	for(i = 0; i < m_damageVector.Count(); ++i)
 	{
 		float age = gpGlobals->curtime - m_damageVector[i].m_timestamp;
 
-		if ( age > windowDuration )
+		if(age > windowDuration)
 		{
 			// too old
 			continue;
@@ -251,61 +245,61 @@ void CHalloweenBaseBoss::UpdateDamagePerSecond( void )
 
 	m_damagePerSecond /= windowDuration;
 
-	if ( m_damagePerSecond > m_maxDamagePerSecond )
+	if(m_damagePerSecond > m_maxDamagePerSecond)
 	{
 		m_maxDamagePerSecond = m_damagePerSecond;
 	}
 
-// 	if ( m_damagePerSecond > 0.0001f )
-// 	{
-// 		DevMsg( "%3.2f: dps = %3.2f\n", gpGlobals->curtime, m_damagePerSecond );
-// 	}
+	// 	if ( m_damagePerSecond > 0.0001f )
+	// 	{
+	// 		DevMsg( "%3.2f: dps = %3.2f\n", gpGlobals->curtime, m_damagePerSecond );
+	// 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CHalloweenBaseBoss::Break( void )
+void CHalloweenBaseBoss::Break(void)
 {
-	CPVSFilter filter( GetAbsOrigin() );
-	UserMessageBegin( filter, "BreakModel" );
-		WRITE_SHORT( GetModelIndex() );
-		WRITE_VEC3COORD( GetAbsOrigin() );
-		WRITE_ANGLES( GetAbsAngles() );
-		WRITE_SHORT( m_nSkin );
+	CPVSFilter filter(GetAbsOrigin());
+	UserMessageBegin(filter, "BreakModel");
+	WRITE_SHORT(GetModelIndex());
+	WRITE_VEC3COORD(GetAbsOrigin());
+	WRITE_ANGLES(GetAbsAngles());
+	WRITE_SHORT(m_nSkin);
 	MessageEnd();
 }
 
-
 //---------------------------------------------------------------------------------------------
-/*static*/ CHalloweenBaseBoss* CHalloweenBaseBoss::SpawnBossAtPos( HalloweenBossType bossType, const Vector& vSpawnPos, int nTeam /*= TF_TEAM_HALLOWEEN*/, CBaseEntity* pOwner /*= NULL*/ )
+/*static*/ CHalloweenBaseBoss *CHalloweenBaseBoss::SpawnBossAtPos(HalloweenBossType bossType, const Vector &vSpawnPos,
+																  int nTeam /*= TF_TEAM_HALLOWEEN*/,
+																  CBaseEntity *pOwner /*= NULL*/)
 {
-	const char* pszBossType = NULL;
-	switch ( bossType )
+	const char *pszBossType = NULL;
+	switch(bossType)
 	{
-	case HALLOWEEN_BOSS_HHH:
-		pszBossType = "headless_hatman";
-		break;
-	case HALLOWEEN_BOSS_MONOCULUS:
-		pszBossType = "eyeball_boss";
-		break;
-	case HALLOWEEN_BOSS_MERASMUS:
-		pszBossType = "merasmus";
-		break;
-	default:
-		AssertMsg( 0, "Invalid Halloween Boss Type" );
+		case HALLOWEEN_BOSS_HHH:
+			pszBossType = "headless_hatman";
+			break;
+		case HALLOWEEN_BOSS_MONOCULUS:
+			pszBossType = "eyeball_boss";
+			break;
+		case HALLOWEEN_BOSS_MERASMUS:
+			pszBossType = "merasmus";
+			break;
+		default:
+			AssertMsg(0, "Invalid Halloween Boss Type");
 	}
 
 	CHalloweenBaseBoss *pBoss = NULL;
-	if ( pszBossType )
+	if(pszBossType)
 	{
-		pBoss = dynamic_cast< CHalloweenBaseBoss * >( CreateEntityByName( pszBossType ) );
-		if ( pBoss )
+		pBoss = dynamic_cast<CHalloweenBaseBoss *>(CreateEntityByName(pszBossType));
+		if(pBoss)
 		{
-			pBoss->SetAbsOrigin( vSpawnPos + Vector( 0, 0, 10.0f ) );
-			pBoss->ChangeTeam( nTeam );
-			pBoss->SetOwnerEntity( pOwner );
+			pBoss->SetAbsOrigin(vSpawnPos + Vector(0, 0, 10.0f));
+			pBoss->ChangeTeam(nTeam);
+			pBoss->SetOwnerEntity(pOwner);
 
-			DispatchSpawn( pBoss );
+			DispatchSpawn(pBoss);
 		}
 	}
 

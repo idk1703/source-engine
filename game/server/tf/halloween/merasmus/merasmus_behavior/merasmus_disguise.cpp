@@ -16,139 +16,137 @@
 #include "merasmus_disguise.h"
 #include "merasmus_reveal.h"
 
-ConVar tf_merasmus_disguise_debug( "tf_merasmus_disguise_debug", "0", FCVAR_CHEAT );
+ConVar tf_merasmus_disguise_debug("tf_merasmus_disguise_debug", "0", FCVAR_CHEAT);
 
 //---------------------------------------------------------------------------------------------
-ActionResult< CMerasmus >	CMerasmusDisguise::OnStart( CMerasmus *me, Action< CMerasmus > *priorAction )
+ActionResult<CMerasmus> CMerasmusDisguise::OnStart(CMerasmus *me, Action<CMerasmus> *priorAction)
 {
 	m_bSpawnedProps = false;
 
-	TryToDisguiseSpawn( me );
+	TryToDisguiseSpawn(me);
 
 	m_flStartRegenTime = gpGlobals->curtime;
 	m_nStartRegenHealth = me->GetHealth();
 
-	me->PlayHighPrioritySound( "Halloween.MerasmusInitiateHiding" );
+	me->PlayHighPrioritySound("Halloween.MerasmusInitiateHiding");
 	RandomDisguiseTauntTimer();
 
-	m_findPropsFailTimer.Start( 3 );
+	m_findPropsFailTimer.Start(3);
 
 	// set boss inactive
-	g_pMonsterResource->SetBossState( 1 );
+	g_pMonsterResource->SetBossState(1);
 
 	return Continue();
 }
 
-
 //----------------------------------------------------------------------------------
-ActionResult< CMerasmus >	CMerasmusDisguise::Update( CMerasmus *me, float interval )
+ActionResult<CMerasmus> CMerasmusDisguise::Update(CMerasmus *me, float interval)
 {
-	if ( me->ShouldLeave() )
+	if(me->ShouldLeave())
 	{
 		return Done();
 	}
 	me->LeaveWarning();
 
-	if ( !m_bSpawnedProps )
+	if(!m_bSpawnedProps)
 	{
-		if ( m_findPropsFailTimer.HasStarted() && m_findPropsFailTimer.IsElapsed() )
+		if(m_findPropsFailTimer.HasStarted() && m_findPropsFailTimer.IsElapsed())
 		{
 			// Couldn't find props in time - skip
 			return Done();
 		}
 
-		if ( !m_findSpawnPositionTime.IsElapsed() )
+		if(!m_findSpawnPositionTime.IsElapsed())
 		{
 			// not ready yet
 			return Continue();
 		}
 
-		TryToDisguiseSpawn( me );
+		TryToDisguiseSpawn(me);
 
 		return Continue();
 	}
 
-	if ( m_disguiseTauntTimer.IsElapsed() )
+	if(m_disguiseTauntTimer.IsElapsed())
 	{
-		if (RandomInt(0,10) == 0)
+		if(RandomInt(0, 10) == 0)
 		{
-			me->PlayHighPrioritySound( "Halloween.MerasmusHiddenRare" );
+			me->PlayHighPrioritySound("Halloween.MerasmusHiddenRare");
 		}
 		else
 		{
-			me->PlayHighPrioritySound( "Halloween.MerasmusHidden" );
+			me->PlayHighPrioritySound("Halloween.MerasmusHidden");
 		}
 
 		RandomDisguiseTauntTimer();
 	}
 
 	// regen health while disguise
-	if ( me->GetHealth() < me->GetMaxHealth() )
+	if(me->GetHealth() < me->GetMaxHealth())
 	{
-		float flHealthRegenPerSec = tf_merasmus_health_regen_rate.GetFloat() * me->GetMaxHealth() * ( me->GetLevel() - 1 );
-		int nNewHealth = MIN( ( gpGlobals->curtime - m_flStartRegenTime ) * flHealthRegenPerSec + m_nStartRegenHealth, me->GetMaxHealth() );
-		me->SetHealth( nNewHealth );
+		float flHealthRegenPerSec =
+			tf_merasmus_health_regen_rate.GetFloat() * me->GetMaxHealth() * (me->GetLevel() - 1);
+		int nNewHealth = MIN((gpGlobals->curtime - m_flStartRegenTime) * flHealthRegenPerSec + m_nStartRegenHealth,
+							 me->GetMaxHealth());
+		me->SetHealth(nNewHealth);
 
 		// show Boss' health meter on HUD
-		if ( g_pMonsterResource )
+		if(g_pMonsterResource)
 		{
 			float healthPercentage = (float)me->GetHealth() / (float)me->GetMaxHealth();
-			g_pMonsterResource->SetBossHealthPercentage( healthPercentage );
+			g_pMonsterResource->SetBossHealthPercentage(healthPercentage);
 		}
 	}
 
 	// should I come out from disguise?
-	if ( me->ShouldReveal() )
+	if(me->ShouldReveal())
 	{
-		return Done( "Revealed!" );
+		return Done("Revealed!");
 	}
 
 	return Continue();
 }
 
-
-void CMerasmusDisguise::OnEnd( CMerasmus *me, Action< CMerasmus > *nextAction )
+void CMerasmusDisguise::OnEnd(CMerasmus *me, Action<CMerasmus> *nextAction)
 {
-	if ( me->ShouldLeave() )
+	if(me->ShouldLeave())
 	{
 		me->OnLeaveWhileInPropForm();
 	}
 
 	// set boss active
-	g_pMonsterResource->SetBossState( 0 );
+	g_pMonsterResource->SetBossState(0);
 
 	me->OnRevealed();
 }
 
-
-QAngle GetRandomPropAngles( CTFNavArea* pArea )
+QAngle GetRandomPropAngles(CTFNavArea *pArea)
 {
 	Vector vNormal;
-	pArea->ComputeNormal( &vNormal );
+	pArea->ComputeNormal(&vNormal);
 	Vector vForward = pArea->GetRandomPoint() - pArea->GetCenter();
 	QAngle qAngles;
-	VectorAngles( vForward, vNormal, qAngles );
+	VectorAngles(vForward, vNormal, qAngles);
 
 	return qAngles;
 }
 
-
-void CMerasmusDisguise::TryToDisguiseSpawn( CMerasmus *me )
+void CMerasmusDisguise::TryToDisguiseSpawn(CMerasmus *me)
 {
-	m_findSpawnPositionTime.Start( 1 );
+	m_findSpawnPositionTime.Start(1);
 
 	// face towards a nearby player
-	CUtlVector< CTFPlayer * > playerVector;
-	CollectPlayers( &playerVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS );
-	CollectPlayers( &playerVector, TF_TEAM_BLUE, COLLECT_ONLY_LIVING_PLAYERS, APPEND_PLAYERS );
+	CUtlVector<CTFPlayer *> playerVector;
+	CollectPlayers(&playerVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS);
+	CollectPlayers(&playerVector, TF_TEAM_BLUE, COLLECT_ONLY_LIVING_PLAYERS, APPEND_PLAYERS);
 
 	// pick a random spot
-	CUtlVector< CTFNavArea * > candidateAreaVector;
-	for( int i=0; i<TheNavAreas.Count(); ++i )
+	CUtlVector<CTFNavArea *> candidateAreaVector;
+	for(int i = 0; i < TheNavAreas.Count(); ++i)
 	{
 		CTFNavArea *area = (CTFNavArea *)TheNavAreas[i];
 
-		if ( !area->HasFuncNavPrefer() )
+		if(!area->HasFuncNavPrefer())
 		{
 			// don't spawn outside nav prefer
 			continue;
@@ -156,71 +154,71 @@ void CMerasmusDisguise::TryToDisguiseSpawn( CMerasmus *me )
 
 		// don't use small nav areas
 		const float goodSize = 150.f;
-		if ( area->GetSizeX() < goodSize || area->GetSizeY() < goodSize )
+		if(area->GetSizeX() < goodSize || area->GetSizeY() < goodSize)
 		{
 			continue;
 		}
 
 		// don't use area containing player
-		if ( area->GetPlayerCount( TF_TEAM_BLUE ) || area->GetPlayerCount( TF_TEAM_RED ) )
+		if(area->GetPlayerCount(TF_TEAM_BLUE) || area->GetPlayerCount(TF_TEAM_RED))
 		{
 			continue;
 		}
 
 		// don't use slope area
-// 		Vector vNormal;
-// 		area->ComputeNormal( &vNormal );
-// 		if ( vNormal.z < 0.9f )
-// 		{
-// 			continue;
-// 		}
+		// 		Vector vNormal;
+		// 		area->ComputeNormal( &vNormal );
+		// 		if ( vNormal.z < 0.9f )
+		// 		{
+		// 			continue;
+		// 		}
 
-		candidateAreaVector.AddToTail( area );
+		candidateAreaVector.AddToTail(area);
 	}
 
-	if ( candidateAreaVector.Count() == 0 )
+	if(candidateAreaVector.Count() == 0)
 	{
 		// no place to spawn (!)
 		return;
 	}
 
 	// spread out the area
-	CUtlVector< CTFNavArea * > spawnAreaVector;
-	SelectSeparatedShuffleSet< CTFNavArea >( 10, 500.f, candidateAreaVector, &spawnAreaVector );
+	CUtlVector<CTFNavArea *> spawnAreaVector;
+	SelectSeparatedShuffleSet<CTFNavArea>(10, 500.f, candidateAreaVector, &spawnAreaVector);
 
-	if ( spawnAreaVector.Count() == 0 )
+	if(spawnAreaVector.Count() == 0)
 	{
 		// no place to spawn (!)
 		return;
 	}
 
-	if ( tf_merasmus_disguise_debug.GetBool() )
+	if(tf_merasmus_disguise_debug.GetBool())
 	{
-		for ( int i=0; i<spawnAreaVector.Count(); ++i )
+		for(int i = 0; i < spawnAreaVector.Count(); ++i)
 		{
 			// draw all potential areas
-			spawnAreaVector[i]->DrawFilled( 0, 255, 0, 0, 30.f );
+			spawnAreaVector[i]->DrawFilled(0, 255, 0, 0, 30.f);
 		}
 	}
 
 	// spawn random props
 	int nRandomTrickOrTreatProps = spawnAreaVector.Count();
-	for ( int i=0; i<nRandomTrickOrTreatProps; ++i )
+	for(int i = 0; i < nRandomTrickOrTreatProps; ++i)
 	{
-		int propSpawnID = RandomInt( 0, spawnAreaVector.Count()-1 );
+		int propSpawnID = RandomInt(0, spawnAreaVector.Count() - 1);
 
-		CTFMerasmusTrickOrTreatProp* pFakeProp = CTFMerasmusTrickOrTreatProp::Create( spawnAreaVector[ propSpawnID ]->GetCenter(), GetRandomPropAngles( spawnAreaVector[ propSpawnID ] ) );
-		me->AddFakeProp( pFakeProp );
+		CTFMerasmusTrickOrTreatProp *pFakeProp = CTFMerasmusTrickOrTreatProp::Create(
+			spawnAreaVector[propSpawnID]->GetCenter(), GetRandomPropAngles(spawnAreaVector[propSpawnID]));
+		me->AddFakeProp(pFakeProp);
 
-		spawnAreaVector.FastRemove( propSpawnID );
+		spawnAreaVector.FastRemove(propSpawnID);
 	}
 
 	me->OnDisguise();
 	m_bSpawnedProps = true;
 }
 
-
 void CMerasmusDisguise::RandomDisguiseTauntTimer()
 {
-	m_disguiseTauntTimer.Start( RandomFloat( 10.f, 25.f ) );
+	m_disguiseTauntTimer.Start(RandomFloat(10.f, 25.f));
 }

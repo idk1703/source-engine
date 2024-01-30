@@ -25,26 +25,25 @@ using namespace vgui;
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 const int cDialogWidth = 900;
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CAchievementAndStatsSummary::CAchievementAndStatsSummary(vgui::Panel *parent) : BaseClass(parent, "AchievementAndStatsSummary")
+CAchievementAndStatsSummary::CAchievementAndStatsSummary(vgui::Panel *parent)
+	: BaseClass(parent, "AchievementAndStatsSummary")
 {
 	SetDeleteSelfOnClose(false);
-	//SetBounds(0, 0, 640, 384);
+	// SetBounds(0, 0, 640, 384);
 	SetBounds(0, 0, 900, 780);
-	SetMinimumSize( 640, 780 );
-	SetSizeable( false );
+	SetMinimumSize(640, 780);
+	SetSizeable(false);
 
 	SetTitle("#GameUI_CreateAchievementsAndStats", true);
 	SetOKButtonText("#GameUI_Close");
 	SetCancelButtonVisible(false);
 
-	m_pStatsSummary = new CStatsSummary( this, "StatsSummary" );
+	m_pStatsSummary = new CStatsSummary(this, "StatsSummary");
 	m_pAchievementsPage = new CAchievementsPage(this, "AchievementsPage");
 	m_pLifetimeStatsPage = new CLifetimeStatsPage(this, "StatsPage");
 	m_pMatchStatsPage = new CMatchStatsPage(this, "MatchStatsPage");
@@ -58,24 +57,22 @@ CAchievementAndStatsSummary::CAchievementAndStatsSummary(vgui::Panel *parent) : 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CAchievementAndStatsSummary::~CAchievementAndStatsSummary()
-{
-}
+CAchievementAndStatsSummary::~CAchievementAndStatsSummary() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAchievementAndStatsSummary::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CAchievementAndStatsSummary::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	int screenWide, screenTall;
-	surface()->GetScreenSize( screenWide, screenTall );
+	surface()->GetScreenSize(screenWide, screenTall);
 
 	// [smessick] Close the achievements dialog for a low resolution screen.
-	if ( screenWide < cAchievementsDialogMinWidth )
+	if(screenWide < cAchievementsDialogMinWidth)
 	{
-		OnOK( true );
+		OnOK(true);
 		Close();
 	}
 }
@@ -96,9 +93,9 @@ bool CAchievementAndStatsSummary::OnOK(bool applyOnly)
 void CAchievementAndStatsSummary::OnSizeChanged(int newWide, int newTall)
 {
 	// Lock the width, but allow height scaling
-	if ( newWide != cDialogWidth )
+	if(newWide != cDialogWidth)
 	{
-		SetSize( cDialogWidth, newTall );
+		SetSize(cDialogWidth, newTall);
 		return;
 	}
 

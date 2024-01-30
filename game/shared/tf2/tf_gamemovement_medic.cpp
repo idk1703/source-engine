@@ -27,20 +27,20 @@ CTFGameMovementMedic::CTFGameMovementMedic()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameMovementMedic::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData )
+void CTFGameMovementMedic::ProcessClassMovement(CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData)
 {
 	// Get the class specific data from the TFMoveData structure
-	Assert( PlayerClassMedicData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID );
+	Assert(PlayerClassMedicData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID);
 	m_pMedicData = &pTFMoveData->MedicData();
 
 	// to test pass it through!!
-	BaseClass::ProcessMovement( (CBasePlayer *)pPlayer, static_cast<CMoveData*>( pTFMoveData ) );
+	BaseClass::ProcessMovement((CBasePlayer *)pPlayer, static_cast<CMoveData *>(pTFMoveData));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementMedic::GetPlayerMins( bool bDucked ) const
+const Vector &CTFGameMovementMedic::GetPlayerMins(bool bDucked) const
 {
 	return bDucked ? m_vDuckMins : m_vStandMins;
 }
@@ -48,7 +48,7 @@ const Vector &CTFGameMovementMedic::GetPlayerMins( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementMedic::GetPlayerMaxs( bool bDucked ) const
+const Vector &CTFGameMovementMedic::GetPlayerMaxs(bool bDucked) const
 {
 	return bDucked ? m_vDuckMaxs : m_vStandMaxs;
 }
@@ -56,7 +56,7 @@ const Vector &CTFGameMovementMedic::GetPlayerMaxs( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementMedic::GetPlayerViewOffset( bool bDucked ) const
+const Vector &CTFGameMovementMedic::GetPlayerViewOffset(bool bDucked) const
 {
 	return bDucked ? m_vDuckViewOffset : m_vStandViewOffset;
 }

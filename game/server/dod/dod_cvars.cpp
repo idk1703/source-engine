@@ -8,7 +8,6 @@
 #include "cbase.h"
 #include "dod_cvars.h"
 
-
 /*
 // Gameplay
 cvar_t	cvar_forcechasecam			= {"mp_forcechasecam",	"1",	FCVAR_SERVER };
@@ -47,44 +46,45 @@ cvar_t  cvar_alliesclasses			= {"mp_alliesclasses",		"-1"};
 cvar_t  cvar_axisclasses			= {"mp_axisclasses",		"-1"};
 */
 
-	ConVar mp_winlimit( "mp_winlimit", "0", FCVAR_REPLICATED | FCVAR_NOTIFY, "Max score one team can reach before server changes maps", true, 0, false, 0 );
+ConVar mp_winlimit("mp_winlimit", "0", FCVAR_REPLICATED | FCVAR_NOTIFY,
+				   "Max score one team can reach before server changes maps", true, 0, false, 0);
 
-	ConVar mp_clan_restartround( "mp_clan_restartround", "0", FCVAR_GAMEDLL, "If non-zero, the round will restart in the specified number of seconds" );
+ConVar mp_clan_restartround("mp_clan_restartround", "0", FCVAR_GAMEDLL,
+							"If non-zero, the round will restart in the specified number of seconds");
 
-	ConVar mp_limitteams(
-		"mp_limitteams",
-		"2",
-		FCVAR_REPLICATED,
-		"Max # of players 1 team can have over another",
-		true, 1,	// min value
-		true, 20	// max value
-		);
+ConVar mp_limitteams("mp_limitteams", "2", FCVAR_REPLICATED, "Max # of players 1 team can have over another", true,
+					 1,		  // min value
+					 true, 20 // max value
+);
 
-	ConVar mp_autokick(
-		"mp_autokick",
-		"0",
-		FCVAR_REPLICATED,
-		"Kick idle/team-killing players" );
+ConVar mp_autokick("mp_autokick", "0", FCVAR_REPLICATED, "Kick idle/team-killing players");
 
-	ConVar mp_combinemglimits(
-		"mp_combinemglimits",
-		"0",
-		FCVAR_REPLICATED,
-		"Set to 1 to combine the class limit cvars for mg34 and mg42. New limit is sum of two" );
+ConVar mp_combinemglimits("mp_combinemglimits", "0", FCVAR_REPLICATED,
+						  "Set to 1 to combine the class limit cvars for mg34 and mg42. New limit is sum of two");
 
-	// Class limit cvars
-	// welcome to ugly-town
+// Class limit cvars
+// welcome to ugly-town
 
-	ConVar	mp_limitAlliesRifleman(		"mp_limit_allies_rifleman", "-1", FCVAR_REPLICATED, "Class limit for team: Allies class: Rifleman" );
-	ConVar	mp_limitAlliesAssault(		"mp_limit_allies_assault", "-1", FCVAR_REPLICATED, "Class limit for team: Allies class: Assault" );
-	ConVar	mp_limitAlliesSupport(		"mp_limit_allies_support", "-1", FCVAR_REPLICATED, "Class limit for team: Allies class: Support" );
-	ConVar	mp_limitAlliesSniper(		"mp_limit_allies_sniper", "-1", FCVAR_REPLICATED, "Class limit for team: Allies class: Sniper" );
-	ConVar	mp_limitAlliesMachinegun(	"mp_limit_allies_mg", "-1", FCVAR_REPLICATED, "Class limit for team: Allies class: Machinegunner" );
-	ConVar	mp_limitAlliesRocket(		"mp_limit_allies_rocket", "-1", FCVAR_REPLICATED, "Class limit for team: Allies class: Rocket" );
+ConVar mp_limitAlliesRifleman("mp_limit_allies_rifleman", "-1", FCVAR_REPLICATED,
+							  "Class limit for team: Allies class: Rifleman");
+ConVar mp_limitAlliesAssault("mp_limit_allies_assault", "-1", FCVAR_REPLICATED,
+							 "Class limit for team: Allies class: Assault");
+ConVar mp_limitAlliesSupport("mp_limit_allies_support", "-1", FCVAR_REPLICATED,
+							 "Class limit for team: Allies class: Support");
+ConVar mp_limitAlliesSniper("mp_limit_allies_sniper", "-1", FCVAR_REPLICATED,
+							"Class limit for team: Allies class: Sniper");
+ConVar mp_limitAlliesMachinegun("mp_limit_allies_mg", "-1", FCVAR_REPLICATED,
+								"Class limit for team: Allies class: Machinegunner");
+ConVar mp_limitAlliesRocket("mp_limit_allies_rocket", "-1", FCVAR_REPLICATED,
+							"Class limit for team: Allies class: Rocket");
 
-	ConVar	mp_limitAxisRifleman(		"mp_limit_axis_rifleman", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Rifleman" );
-	ConVar	mp_limitAxisAssault(		"mp_limit_axis_assault", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Assault" );
-	ConVar	mp_limitAxisSupport(		"mp_limit_axis_support", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Support" );
-	ConVar	mp_limitAxisSniper(			"mp_limit_axis_sniper", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Sniper" );
-	ConVar	mp_limitAxisMachinegun(		"mp_limit_axis_mg", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Machinegunner" );
-	ConVar	mp_limitAxisRocket(			"mp_limit_axis_rocket", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Rocket" );
+ConVar mp_limitAxisRifleman("mp_limit_axis_rifleman", "-1", FCVAR_REPLICATED,
+							"Class limit for team: Axis class: Rifleman");
+ConVar mp_limitAxisAssault("mp_limit_axis_assault", "-1", FCVAR_REPLICATED,
+						   "Class limit for team: Axis class: Assault");
+ConVar mp_limitAxisSupport("mp_limit_axis_support", "-1", FCVAR_REPLICATED,
+						   "Class limit for team: Axis class: Support");
+ConVar mp_limitAxisSniper("mp_limit_axis_sniper", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Sniper");
+ConVar mp_limitAxisMachinegun("mp_limit_axis_mg", "-1", FCVAR_REPLICATED,
+							  "Class limit for team: Axis class: Machinegunner");
+ConVar mp_limitAxisRocket("mp_limit_axis_rocket", "-1", FCVAR_REPLICATED, "Class limit for team: Axis class: Rocket");

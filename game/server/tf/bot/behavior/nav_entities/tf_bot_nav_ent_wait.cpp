@@ -12,42 +12,40 @@
 extern ConVar tf_bot_path_lookahead_range;
 
 //---------------------------------------------------------------------------------------------
-CTFBotNavEntWait::CTFBotNavEntWait( const CFuncNavPrerequisite *prereq )
+CTFBotNavEntWait::CTFBotNavEntWait(const CFuncNavPrerequisite *prereq)
 {
 	m_prereq = prereq;
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot > CTFBotNavEntWait::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult<CTFBot> CTFBotNavEntWait::OnStart(CTFBot *me, Action<CTFBot> *priorAction)
 {
-	if ( m_prereq == NULL )
+	if(m_prereq == NULL)
 	{
-		return Done( "Prerequisite has been removed before we started" );
+		return Done("Prerequisite has been removed before we started");
 	}
 
-	m_timer.Start( m_prereq->GetTaskValue() );
+	m_timer.Start(m_prereq->GetTaskValue());
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot > CTFBotNavEntWait::Update( CTFBot *me, float interval )
+ActionResult<CTFBot> CTFBotNavEntWait::Update(CTFBot *me, float interval)
 {
-	if ( m_prereq == NULL )
+	if(m_prereq == NULL)
 	{
-		return Done( "Prerequisite has been removed" );
+		return Done("Prerequisite has been removed");
 	}
 
-	if ( !m_prereq->IsEnabled() )
+	if(!m_prereq->IsEnabled())
 	{
-		return Done( "Prerequisite has been disabled" );
+		return Done("Prerequisite has been disabled");
 	}
 
-	if ( m_timer.IsElapsed() )
+	if(m_timer.IsElapsed())
 	{
-		return Done( "Wait time elapsed" );
+		return Done("Wait time elapsed");
 	}
 
 	return Continue();

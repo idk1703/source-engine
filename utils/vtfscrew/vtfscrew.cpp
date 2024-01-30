@@ -12,53 +12,53 @@
 #include "vtf/vtf.h"
 #include "UtlBuffer.h"
 
-int main( int argc, char **argv )
+int main(int argc, char **argv)
 {
-	if( argc != 5 )
+	if(argc != 5)
 	{
-		fprintf( stderr, "Usage: vtfscreen blah.vtf 0 1 2\n" );
-		exit( -1 );
+		fprintf(stderr, "Usage: vtfscreen blah.vtf 0 1 2\n");
+		exit(-1);
 	}
 	const char *pSrcFilename = argv[1];
-	int rOffset = atoi( argv[2] );
-	int gOffset = atoi( argv[3] );
-	int bOffset = atoi( argv[4] );
+	int rOffset = atoi(argv[2]);
+	int gOffset = atoi(argv[3]);
+	int bOffset = atoi(argv[4]);
 	CUtlBuffer srcData;
 
-	struct	_stat buf;
-	if( _stat( pSrcFilename, &buf ) == -1 )
+	struct _stat buf;
+	if(_stat(pSrcFilename, &buf) == -1)
 	{
-		fprintf( stderr, "Couldn't stat %s\n", pSrcFilename );
-		exit( -1 );
+		fprintf(stderr, "Couldn't stat %s\n", pSrcFilename);
+		exit(-1);
 	}
 
 	int srcFileSize = buf.st_size;
 
-	srcData.EnsureCapacity( srcFileSize );
+	srcData.EnsureCapacity(srcFileSize);
 
-	FILE *fp = fopen( pSrcFilename, "rb" );
-	if( !fp )
+	FILE *fp = fopen(pSrcFilename, "rb");
+	if(!fp)
 	{
-		fprintf( stderr, "Couldn't open %s\n", pSrcFilename );
-		exit( -1 );
+		fprintf(stderr, "Couldn't open %s\n", pSrcFilename);
+		exit(-1);
 	}
 
-	int nBytesRead = fread( srcData.Base(), 1, srcFileSize, fp );
-	fclose( fp );
+	int nBytesRead = fread(srcData.Base(), 1, srcFileSize, fp);
+	fclose(fp);
 
-	srcData.SeekPut( CUtlBuffer::SEEK_HEAD, nBytesRead );
+	srcData.SeekPut(CUtlBuffer::SEEK_HEAD, nBytesRead);
 
 	IVTFTexture *pSrcTexture = CreateVTFTexture();
 
-	pSrcTexture->Unserialize( srcData );
+	pSrcTexture->Unserialize(srcData);
 	ImageFormat srcFormat = pSrcTexture->Format();
-	pSrcTexture->ConvertImageFormat( IMAGE_FORMAT_DEFAULT, false );
+	pSrcTexture->ConvertImageFormat(IMAGE_FORMAT_DEFAULT, false);
 
 	int totalSize = pSrcTexture->ComputeTotalSize();
 
 	unsigned char *pImageData = pSrcTexture->ImageData();
 	int i;
-	for( i = 0; i < totalSize; i += 4 )
+	for(i = 0; i < totalSize; i += 4)
 	{
 #if 0
 		// ATI BEFORE E32003
@@ -90,22 +90,22 @@ int main( int argc, char **argv )
 #endif
 		// leave alpha alone
 		int tmpR, tmpG, tmpB;
-		tmpR = pImageData[i+rOffset];
-		tmpG = pImageData[i+gOffset];
-		tmpB = pImageData[i+bOffset];
-		pImageData[i+0] = tmpR;
-		pImageData[i+1] = tmpG;
-		pImageData[i+2] = tmpB;
+		tmpR = pImageData[i + rOffset];
+		tmpG = pImageData[i + gOffset];
+		tmpB = pImageData[i + bOffset];
+		pImageData[i + 0] = tmpR;
+		pImageData[i + 1] = tmpG;
+		pImageData[i + 2] = tmpB;
 	}
 
-	pSrcTexture->ConvertImageFormat( srcFormat, false );
+	pSrcTexture->ConvertImageFormat(srcFormat, false);
 	CUtlBuffer dstData;
 
-	pSrcTexture->Serialize( dstData );
+	pSrcTexture->Serialize(dstData);
 
-	fp = fopen( pSrcFilename, "wb" );
-	fwrite( dstData.Base(), 1, dstData.TellPut(), fp );
-	fclose( fp );
+	fp = fopen(pSrcFilename, "wb");
+	fwrite(dstData.Base(), 1, dstData.TellPut(), fp);
+	fclose(fp);
 
 	return 0;
 }

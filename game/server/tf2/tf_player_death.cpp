@@ -19,104 +19,104 @@
 #include "in_buttons.h"
 #include "globals.h"
 
-int				g_iNumberOfCorpses;
+int g_iNumberOfCorpses;
 
 //-----------------------------------------------------------------------------
 // Purpose: The player was just killed
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::Event_Killed( const CTakeDamageInfo &info )
+void CBaseTFPlayer::Event_Killed(const CTakeDamageInfo &info)
 {
 	// TODO don't use temp entities to transmit messages
-	CPASFilter filter( GetLocalOrigin() );
-	te->KillPlayerAttachments( filter, 0.0, entindex() );
+	CPASFilter filter(GetLocalOrigin());
+	te->KillPlayerAttachments(filter, 0.0, entindex());
 
 	// Remove the player from any vehicle they're in
-	if ( IsInAVehicle() )
+	if(IsInAVehicle())
 	{
 		LeaveVehicle();
 	}
 
 	// Holster weapon immediately, to allow it to cleanup
-	if (GetActiveWeapon())
+	if(GetActiveWeapon())
 	{
-		GetActiveWeapon()->Holster( );
+		GetActiveWeapon()->Holster();
 	}
 
 	// Stop attaching sappers
-	if ( IsAttachingSapper() )
+	if(IsAttachingSapper())
 	{
 		StopAttaching();
 	}
 
 	// stop them touching anything
-	AddFlag( FL_DONTTOUCH );
+	AddFlag(FL_DONTTOUCH);
 
-	g_pGameRules->PlayerKilled( this, info );
+	g_pGameRules->PlayerKilled(this, info);
 
 	ClearUseEntity();
 
 	// If I'm ragdolling due to a knockdown, don't play any animations
-	if ( m_hRagdollShadow == NULL )
+	if(m_hRagdollShadow == NULL)
 	{
-		if ( PlayerClass() != TFCLASS_INFILTRATOR )
+		if(PlayerClass() != TFCLASS_INFILTRATOR)
 		{
 			// Calculate death force
-			Vector forceVector = CalcDamageForceVector( info );
+			Vector forceVector = CalcDamageForceVector(info);
 
-			BecomeRagdollOnClient( forceVector );
+			BecomeRagdollOnClient(forceVector);
 		}
 		else
 		{
-			SetAnimation( PLAYER_DIE );
+			SetAnimation(PLAYER_DIE);
 		}
 	}
 
-	DeathSound( info );
+	DeathSound(info);
 
-	SetViewOffset( VEC_DEAD_VIEWHEIGHT_SCALED( this ) );
-	m_lifeState		= LIFE_DYING;
+	SetViewOffset(VEC_DEAD_VIEWHEIGHT_SCALED(this));
+	m_lifeState = LIFE_DYING;
 	pl.deadflag = true;
 
 	// Enter dying state
-	AddSolidFlags( FSOLID_NOT_SOLID );
-	SetMoveType( MOVETYPE_NONE );
+	AddSolidFlags(FSOLID_NOT_SOLID);
+	SetMoveType(MOVETYPE_NONE);
 	QAngle angles = GetLocalAngles();
 	angles.x = angles.z = 0;
-	SetLocalAngles( angles );
+	SetLocalAngles(angles);
 	m_takedamage = DAMAGE_NO;
 
 	// clear out the suit message cache so we don't keep chattering
 	SetSuitUpdate(NULL, false, 0);
 
 	// reset FOV
-	SetFOV( this, 0 );
+	SetFOV(this, 0);
 
 	// Setup for respawn
 	m_flTimeOfDeath = gpGlobals->curtime;
 
 	SetThink(TFPlayerDeathThink);
-	SetNextThink( gpGlobals->curtime + 0.1f );
+	SetNextThink(gpGlobals->curtime + 0.1f);
 
-	SetPowerup(POWERUP_EMP,false);
+	SetPowerup(POWERUP_EMP, false);
 
 	// Tell the playerclass that the player died
-	if ( GetPlayerClass()  )
+	if(GetPlayerClass())
 	{
-		GetPlayerClass()->PlayerDied( info.GetAttacker() );
+		GetPlayerClass()->PlayerDied(info.GetAttacker());
 	}
 
 	// Tell the attacker's playerclass that he killed someone
-	if ( info.GetAttacker() && info.GetAttacker()->IsPlayer() )
+	if(info.GetAttacker() && info.GetAttacker()->IsPlayer())
 	{
-		CBaseTFPlayer *pPlayerAttacker = (CBaseTFPlayer*)info.GetAttacker();
-		pPlayerAttacker->KilledPlayer( this );
+		CBaseTFPlayer *pPlayerAttacker = (CBaseTFPlayer *)info.GetAttacker();
+		pPlayerAttacker->KilledPlayer(this);
 	}
 
 	DropAllResourceChunks();
 
 	// Tell all teams to update their orders
-	COrderEvent_PlayerKilled order( this );
-	GlobalOrderEvent( &order );
+	COrderEvent_PlayerKilled order(this);
+	GlobalOrderEvent(&order);
 }
 
 //-----------------------------------------------------------------------------
@@ -127,39 +127,39 @@ void CBaseTFPlayer::TFPlayerDeathThink(void)
 {
 	float flForward;
 
-	SetNextThink( gpGlobals->curtime + 0.1f );
+	SetNextThink(gpGlobals->curtime + 0.1f);
 
-	if ( GetFlags() & FL_ONGROUND )
+	if(GetFlags() & FL_ONGROUND)
 	{
 		flForward = GetAbsVelocity().Length() - 20;
-		if (flForward <= 0)
+		if(flForward <= 0)
 		{
-			SetAbsVelocity( vec3_origin );
+			SetAbsVelocity(vec3_origin);
 		}
 		else
 		{
 			Vector vecNewVelocity = GetAbsVelocity();
-			VectorNormalize( vecNewVelocity );
+			VectorNormalize(vecNewVelocity);
 			vecNewVelocity *= flForward;
-			SetAbsVelocity( vecNewVelocity );
+			SetAbsVelocity(vecNewVelocity);
 		}
 	}
 
 	StudioFrameAdvance();
 
-	if (GetModelIndex() && (!IsSequenceFinished()) && (m_lifeState == LIFE_DYING))
+	if(GetModelIndex() && (!IsSequenceFinished()) && (m_lifeState == LIFE_DYING))
 	{
 		m_iRespawnFrames++;
-		if ( m_iRespawnFrames < 60 )  // animations should be no longer than this
+		if(m_iRespawnFrames < 60) // animations should be no longer than this
 			return;
 	}
 
 	// Start looping dying state
-	SetAnimation( PLAYER_DIE );
+	SetAnimation(PLAYER_DIE);
 
 	// ROBIN: Everyone respawns immediately now. Maps will define respawns in the future.
 
-	if ( (gpGlobals->curtime - m_flTimeOfDeath) < 3 )
+	if((gpGlobals->curtime - m_flTimeOfDeath) < 3)
 		return;
 
 	m_lifeState = LIFE_RESPAWNABLE;
@@ -167,7 +167,7 @@ void CBaseTFPlayer::TFPlayerDeathThink(void)
 	// Respawn on button press, but not if they're checking the scores
 	// Also respawn if they're not looking at scores, and they've been dead for over 5 seconds
 	bool bButtonDown = (m_nButtons & ~IN_SCORE) > 0;
-	if ( (bButtonDown || (gpGlobals->curtime - m_flTimeOfDeath) > 5 ) )
+	if((bButtonDown || (gpGlobals->curtime - m_flTimeOfDeath) > 5))
 	{
 		PlayerRespawn();
 	}
@@ -203,10 +203,10 @@ void CBaseTFPlayer::TFPlayerDeathThink(void)
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this player is ready to reinforce
 //-----------------------------------------------------------------------------
-bool CBaseTFPlayer::IsReadyToReinforce( void )
+bool CBaseTFPlayer::IsReadyToReinforce(void)
 {
 	// Only Aliens reinforce in waves, humans respawn normally
-	if ( (GetTeamNumber() == TEAM_ALIENS) && (m_lifeState == LIFE_RESPAWNABLE) )
+	if((GetTeamNumber() == TEAM_ALIENS) && (m_lifeState == LIFE_RESPAWNABLE))
 		return true;
 
 	return false;
@@ -215,11 +215,11 @@ bool CBaseTFPlayer::IsReadyToReinforce( void )
 //-----------------------------------------------------------------------------
 // Purpose: Bring the player back to life in a reinforcement wave
 //-----------------------------------------------------------------------------
-void CBaseTFPlayer::Reinforce( void )
+void CBaseTFPlayer::Reinforce(void)
 {
 	// Tell all teams to update their orders
-	COrderEvent_PlayerRespawned order( this );
-	GlobalOrderEvent( &order );
+	COrderEvent_PlayerRespawned order(this);
+	GlobalOrderEvent(&order);
 
 	StopAnimation();
 	IncrementInterpolationFrame();

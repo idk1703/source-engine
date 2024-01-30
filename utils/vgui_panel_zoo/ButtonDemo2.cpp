@@ -12,20 +12,18 @@
 #include <Keyvalues.h>
 #include <vgui_controls/Button.h>
 
-
 using namespace vgui;
 
-
-class ButtonDemo2: public DemoPage
+class ButtonDemo2 : public DemoPage
 {
-	public:
-		ButtonDemo2(Panel *parent, const char *name);
-		~ButtonDemo2();
+public:
+	ButtonDemo2(Panel *parent, const char *name);
+	~ButtonDemo2();
 
-		void OnCommand(const char *command);
+	void OnCommand(const char *command);
 
-	private:
-		Button *m_pButton;
+private:
+	Button *m_pButton;
 };
 
 //-----------------------------------------------------------------------------
@@ -33,10 +31,10 @@ class ButtonDemo2: public DemoPage
 //-----------------------------------------------------------------------------
 ButtonDemo2::ButtonDemo2(Panel *parent, const char *name) : DemoPage(parent, name)
 {
-	SetPos(0,80);
+	SetPos(0, 80);
 	int wide, tall;
 	GetParent()->GetSize(wide, tall);
-	SetSize (wide, tall - 80);
+	SetSize(wide, tall - 80);
 
 	// Create a button.
 	m_pButton = new Button(this, "AButton", "ClickMe");
@@ -55,24 +53,20 @@ ButtonDemo2::ButtonDemo2(Panel *parent, const char *name) : DemoPage(parent, nam
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ButtonDemo2::~ButtonDemo2()
-{
-}
+ButtonDemo2::~ButtonDemo2() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
 //-----------------------------------------------------------------------------
 void ButtonDemo2::OnCommand(const char *command)
 {
-	if (!strcmp(command, "ButtonClicked") )
+	if(!strcmp(command, "ButtonClicked"))
 	{
 		ivgui()->DPrintf("Button was clicked.\n");
 	}
 }
 
-
-
-Panel* ButtonDemo2_Create(Panel *parent)
+Panel *ButtonDemo2_Create(Panel *parent)
 {
 	return new ButtonDemo2(parent, "ButtonDemo2");
 }

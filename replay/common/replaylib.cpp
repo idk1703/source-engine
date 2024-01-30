@@ -15,9 +15,9 @@ IClientReplayContext *g_pClientReplayContext = NULL;
 
 //----------------------------------------------------------------------------------------
 
-bool ReplayLib_Init( const char *pGameDir, IClientReplayContext *pClientReplayContext )
+bool ReplayLib_Init(const char *pGameDir, IClientReplayContext *pClientReplayContext)
 {
-	Replay_SetGameDir( pGameDir );
+	Replay_SetGameDir(pGameDir);
 
 	g_pClientReplayContext = pClientReplayContext;
 

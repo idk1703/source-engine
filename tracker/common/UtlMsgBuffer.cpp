@@ -14,9 +14,9 @@
 //-----------------------------------------------------------------------------
 enum
 {
-	PACKBIT_CONTROLBIT	= 0x01,		// this must always be set
-	PACKBIT_INTNAME		= 0x02,		// if this is set then it's an int named variable, instead of a string
-	PACKBIT_BINARYDATA  = 0x04,		// signifies the data in this variable is binary, it's not a string
+	PACKBIT_CONTROLBIT = 0x01, // this must always be set
+	PACKBIT_INTNAME = 0x02,	   // if this is set then it's an int named variable, instead of a string
+	PACKBIT_BINARYDATA = 0x04, // signifies the data in this variable is binary, it's not a string
 };
 
 //-----------------------------------------------------------------------------
@@ -46,9 +46,7 @@ CUtlMsgBuffer::CUtlMsgBuffer(unsigned short msgID, void const *data, int dataSiz
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CUtlMsgBuffer::~CUtlMsgBuffer()
-{
-}
+CUtlMsgBuffer::~CUtlMsgBuffer() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Copy
@@ -60,7 +58,7 @@ CUtlMsgBuffer &CUtlMsgBuffer::Copy(const CUtlMsgBuffer &rhs)
 	m_iNextVarPos = rhs.m_iNextVarPos;
 
 	m_Memory.EnsureCapacity(rhs.m_Memory.NumAllocated());
-	if ( rhs.m_Memory.NumAllocated() > 0 )
+	if(rhs.m_Memory.NumAllocated() > 0)
 	{
 		memcpy(Base(), rhs.Base(), rhs.m_Memory.NumAllocated());
 	}
@@ -75,7 +73,7 @@ CUtlMsgBuffer &CUtlMsgBuffer::Copy(const CUtlMsgBuffer &rhs)
 void CUtlMsgBuffer::WriteString(const char *name, const char *data)
 {
 	// write out the variable type
-	unsigned char vtype = PACKBIT_CONTROLBIT;	// stringname var, string data
+	unsigned char vtype = PACKBIT_CONTROLBIT; // stringname var, string data
 	Write(&vtype, 1);
 
 	// write out the variable name
@@ -95,7 +93,7 @@ void CUtlMsgBuffer::WriteString(const char *name, const char *data)
 void CUtlMsgBuffer::WriteBlob(const char *name, const void *data, int dataSize)
 {
 	// write out the variable type
-	unsigned char vtype = PACKBIT_CONTROLBIT | PACKBIT_BINARYDATA;	// stringname var, binary data
+	unsigned char vtype = PACKBIT_CONTROLBIT | PACKBIT_BINARYDATA; // stringname var, binary data
 	Write(&vtype, 1);
 
 	// write out the variable name
@@ -115,14 +113,14 @@ void CUtlMsgBuffer::WriteBlob(const char *name, const void *data, int dataSize)
 void CUtlMsgBuffer::WriteBuffer(const char *name, const CUtlMsgBuffer *buffer)
 {
 	// write out the variable type
-	unsigned char vtype = PACKBIT_CONTROLBIT | PACKBIT_BINARYDATA;	// stringname var, binary data
+	unsigned char vtype = PACKBIT_CONTROLBIT | PACKBIT_BINARYDATA; // stringname var, binary data
 	Write(&vtype, 1);
 
 	// write out the variable name
 	Write(name, strlen(name) + 1);
 
 	// write out the size of the data
-	unsigned short size = (unsigned short) buffer->DataSize();
+	unsigned short size = (unsigned short)buffer->DataSize();
 	Write(&size, 2);
 
 	// write out the data itself
@@ -135,7 +133,7 @@ void CUtlMsgBuffer::WriteBuffer(const char *name, const CUtlMsgBuffer *buffer)
 //-----------------------------------------------------------------------------
 bool CUtlMsgBuffer::Read(void *buffer, int readAmount)
 {
-	if (m_iReadPos + readAmount >= m_iWritePos)
+	if(m_iReadPos + readAmount >= m_iWritePos)
 		return false;
 
 	memcpy(buffer, &m_Memory[m_iReadPos], readAmount);
@@ -151,12 +149,12 @@ bool CUtlMsgBuffer::ReadUntilNull(void *buffer, int bufferSize)
 	int nullPos = m_iReadPos;
 
 	// look through the buffer for the null terminator
-	while (nullPos < m_Memory.NumAllocated() && m_Memory[nullPos] != 0)
+	while(nullPos < m_Memory.NumAllocated() && m_Memory[nullPos] != 0)
 	{
 		nullPos++;
 	}
 
-	if (nullPos >= m_Memory.NumAllocated())
+	if(nullPos >= m_Memory.NumAllocated())
 	{
 		// never found a null terminator
 		((char *)buffer)[0] = 0;
@@ -165,7 +163,7 @@ bool CUtlMsgBuffer::ReadUntilNull(void *buffer, int bufferSize)
 
 	// copy from the null terminator
 	int copySize = nullPos - m_iReadPos;
-	if (copySize > bufferSize)
+	if(copySize > bufferSize)
 	{
 		copySize = bufferSize - 1;
 	}
@@ -173,7 +171,7 @@ bool CUtlMsgBuffer::ReadUntilNull(void *buffer, int bufferSize)
 	// copy out the data and return
 	memcpy(buffer, &m_Memory[m_iReadPos], copySize);
 	((char *)buffer)[copySize] = 0;
-	m_iReadPos += (copySize+1);
+	m_iReadPos += (copySize + 1);
 	return true;
 }
 
@@ -201,14 +199,14 @@ int CUtlMsgBuffer::ReadBlob(const char *name, void *data, int dataBufferSize)
 {
 	int dataSize = 0;
 	char *readData = (char *)FindVar(name, dataSize);
-	if (!readData)
+	if(!readData)
 	{
 		memset(data, 0, dataBufferSize);
 		return 0;
 	}
 
 	// ensure against buffer overflow
-	if (dataSize > dataBufferSize)
+	if(dataSize > dataBufferSize)
 		dataSize = dataBufferSize;
 
 	// copy out data
@@ -223,7 +221,7 @@ bool CUtlMsgBuffer::ReadBuffer(const char *name, CUtlMsgBuffer &buffer)
 {
 	int dataSize = 0;
 	char *readData = (char *)FindVar(name, dataSize);
-	if (!readData)
+	if(!readData)
 	{
 		return false;
 	}
@@ -244,26 +242,26 @@ bool CUtlMsgBuffer::ReadNextVar(char varname[32], bool &stringData, void *data, 
 {
 	// read the type
 	unsigned char vtype = 1;
-	if (!Read(&vtype, 1))
+	if(!Read(&vtype, 1))
 		return false;
 
 	// check for null-termination type
-	if (vtype == 0)
+	if(vtype == 0)
 		return false;
 
 	stringData = !(vtype & PACKBIT_BINARYDATA);
 
 	// read the variable name
-	if (!ReadUntilNull(varname, 31))
+	if(!ReadUntilNull(varname, 31))
 		return false;
 
 	// read the data size
 	unsigned short size = 0;
-	if (!Read(&size, 2))
+	if(!Read(&size, 2))
 		return false;
 
 	// ensure against buffer overflows
-	if (dataSize > size)
+	if(dataSize > size)
 		dataSize = size;
 
 	// copy data
@@ -274,7 +272,6 @@ bool CUtlMsgBuffer::ReadNextVar(char varname[32], bool &stringData, void *data, 
 	m_iNextVarPos = m_iReadPos;
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the read/write position to be at the specified variable
@@ -287,27 +284,27 @@ void *CUtlMsgBuffer::FindVar(const char *name, int &dataSize)
 	int loopCount = 2;
 
 	// loop through looking for the specified variable
-	while (loopCount--)
+	while(loopCount--)
 	{
 		unsigned char vtype = 1;
-		while (Read(&vtype, 1))
+		while(Read(&vtype, 1))
 		{
 			// check for null-termination type
-			if (vtype == 0)
+			if(vtype == 0)
 				break;
 
 			// read the variable name
 			char varname[32];
-			if (!ReadUntilNull(varname, 31))
+			if(!ReadUntilNull(varname, 31))
 				break;
 
 			// read the data size
 			unsigned short size = 0;
-			if (!Read(&size, 2))
+			if(!Read(&size, 2))
 				break;
 
 			// is this our variable?
-			if (!stricmp(varname, name))
+			if(!stricmp(varname, name))
 			{
 				dataSize = size;
 				void *data = &m_Memory[m_iReadPos];
@@ -320,7 +317,7 @@ void *CUtlMsgBuffer::FindVar(const char *name, int &dataSize)
 
 			// skip over the data block to the next variable
 			m_iReadPos += size;
-			if (m_iReadPos >= m_iWritePos)
+			if(m_iReadPos >= m_iWritePos)
 				break;
 		}
 

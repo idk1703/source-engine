@@ -47,7 +47,7 @@ public:
 		((VPanel *)vguiPanel)->GetPos(x, y);
 	}
 
-	virtual void SetSize(VPANEL vguiPanel, int wide,int tall)
+	virtual void SetSize(VPANEL vguiPanel, int wide, int tall)
 	{
 		((VPanel *)vguiPanel)->SetSize(wide, tall);
 	}
@@ -118,14 +118,14 @@ public:
 	}
 
 	// Used by the drag/drop manager to always draw on top
-	virtual bool IsTopmostPopup( VPANEL vguiPanel )
+	virtual bool IsTopmostPopup(VPANEL vguiPanel)
 	{
 		return ((VPanel *)vguiPanel)->IsTopmostPopup();
 	}
 
-	virtual void SetTopmostPopup( VPANEL vguiPanel, bool state )
+	virtual void SetTopmostPopup(VPANEL vguiPanel, bool state)
 	{
-		return ((VPanel *)vguiPanel)->SetTopmostPopup( state );
+		return ((VPanel *)vguiPanel)->SetTopmostPopup(state);
 	}
 
 	virtual void SetParent(VPANEL vguiPanel, VPANEL newParent)
@@ -143,9 +143,9 @@ public:
 		return (VPANEL)((VPanel *)vguiPanel)->GetChild(index);
 	}
 
-	virtual CUtlVector< VPANEL > &GetChildren( VPANEL vguiPanel )
+	virtual CUtlVector<VPANEL> &GetChildren(VPANEL vguiPanel)
 	{
-		return (CUtlVector< VPANEL > &)((VPanel *)vguiPanel)->GetChildren();
+		return (CUtlVector<VPANEL> &)((VPanel *)vguiPanel)->GetChildren();
 	}
 
 	virtual VPANEL GetParent(VPANEL vguiPanel)
@@ -165,7 +165,7 @@ public:
 
 	virtual bool HasParent(VPANEL vguiPanel, VPANEL potentialParent)
 	{
-		if (!vguiPanel)
+		if(!vguiPanel)
 			return false;
 
 		return ((VPanel *)vguiPanel)->HasParent((VPanel *)potentialParent);
@@ -181,7 +181,7 @@ public:
 		((VPanel *)vguiPanel)->SetPopup(state);
 	}
 
-	virtual bool IsFullyVisible( VPANEL vguiPanel )
+	virtual bool IsFullyVisible(VPANEL vguiPanel)
 	{
 		return ((VPanel *)vguiPanel)->IsFullyVisible();
 	}
@@ -310,17 +310,18 @@ public:
 
 	virtual Panel *GetPanel(VPANEL vguiPanel, const char *moduleName)
 	{
-		if (!vguiPanel)
+		if(!vguiPanel)
 			return NULL;
 
-		if (vguiPanel == g_pSurface->GetEmbeddedPanel())
+		if(vguiPanel == g_pSurface->GetEmbeddedPanel())
 			return NULL;
 
 		// assert that the specified vpanel is from the same module as requesting the cast
-		if ( !vguiPanel || V_stricmp(GetModuleName(vguiPanel), moduleName) )
+		if(!vguiPanel || V_stricmp(GetModuleName(vguiPanel), moduleName))
 		{
-			// assert(!("GetPanel() used to retrieve a Panel * from a different dll than which which it was created. This is bad, you can't pass Panel * across dll boundaries else you'll break the versioning.  Please only use a VPANEL."));
-			// this is valid for now
+			// assert(!("GetPanel() used to retrieve a Panel * from a different dll than which which it was created.
+			// This is bad, you can't pass Panel * across dll boundaries else you'll break the versioning.  Please only
+			// use a VPANEL.")); this is valid for now
 			return NULL;
 		}
 		return Client(vguiPanel)->GetPanel();
@@ -331,31 +332,31 @@ public:
 		return Client(vguiPanel)->GetModuleName();
 	}
 
-	virtual void SetKeyBoardInputEnabled( VPANEL vguiPanel, bool state )
+	virtual void SetKeyBoardInputEnabled(VPANEL vguiPanel, bool state)
 	{
 		((VPanel *)vguiPanel)->SetKeyBoardInputEnabled(state);
 	}
 
-	virtual void SetMouseInputEnabled( VPANEL vguiPanel, bool state )
+	virtual void SetMouseInputEnabled(VPANEL vguiPanel, bool state)
 	{
 		((VPanel *)vguiPanel)->SetMouseInputEnabled(state);
 	}
 
-	virtual bool IsMouseInputEnabled( VPANEL vguiPanel )
+	virtual bool IsMouseInputEnabled(VPANEL vguiPanel)
 	{
 		return ((VPanel *)vguiPanel)->IsMouseInputEnabled();
 	}
 
-	virtual bool IsKeyBoardInputEnabled( VPANEL vguiPanel )
+	virtual bool IsKeyBoardInputEnabled(VPANEL vguiPanel)
 	{
 		return ((VPanel *)vguiPanel)->IsKeyBoardInputEnabled();
 	}
 
-	virtual void SetSiblingPin(VPANEL vguiPanel, VPANEL newSibling, byte iMyCornerToPin = 0, byte iSiblingCornerToPinTo = 0 )
+	virtual void SetSiblingPin(VPANEL vguiPanel, VPANEL newSibling, byte iMyCornerToPin = 0,
+							   byte iSiblingCornerToPinTo = 0)
 	{
-		return ((VPanel *)vguiPanel)->SetSiblingPin( (VPanel *)newSibling, iMyCornerToPin, iSiblingCornerToPinTo );
+		return ((VPanel *)vguiPanel)->SetSiblingPin((VPanel *)newSibling, iMyCornerToPin, iSiblingCornerToPinTo);
 	}
-
 };
 
 EXPOSE_SINGLE_INTERFACE(VPanelWrapper, IPanel, VGUI_PANEL_INTERFACE_VERSION);

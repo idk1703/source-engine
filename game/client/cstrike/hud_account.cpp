@@ -14,28 +14,27 @@ using namespace vgui;
 class CHudAccount : public CHudBaseAccount
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudAccount, CHudBaseAccount );
+	DECLARE_CLASS_SIMPLE(CHudAccount, CHudBaseAccount);
 
-	CHudAccount( const char *name );
+	CHudAccount(const char *name);
 
 	virtual bool ShouldDraw();
-	virtual int	GetPlayerAccount( void );
-	virtual vgui::AnimationController *GetAnimationController( void );
+	virtual int GetPlayerAccount(void);
+	virtual vgui::AnimationController *GetAnimationController(void);
 };
 
-DECLARE_HUDELEMENT( CHudAccount );
+DECLARE_HUDELEMENT(CHudAccount);
 
-CHudAccount::CHudAccount( const char *pName ) :
-CHudBaseAccount( "HudAccount" )
+CHudAccount::CHudAccount(const char *pName) : CHudBaseAccount("HudAccount")
 {
-	SetHiddenBits( HIDEHUD_PLAYERDEAD );
-	SetIndent( false ); // don't indent small numbers in the drawing code - we're doing it manually
+	SetHiddenBits(HIDEHUD_PLAYERDEAD);
+	SetIndent(false); // don't indent small numbers in the drawing code - we're doing it manually
 }
 
 bool CHudAccount::ShouldDraw()
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		return !pPlayer->IsObserver();
 	}
@@ -46,21 +45,21 @@ bool CHudAccount::ShouldDraw()
 }
 
 // How much money does the player have
-int	CHudAccount::GetPlayerAccount( void )
+int CHudAccount::GetPlayerAccount(void)
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if( !pPlayer )
+	if(!pPlayer)
 		return 0;
 
 	return (int)pPlayer->GetAccount();
 }
 
-vgui::AnimationController *CHudAccount::GetAnimationController( void )
+vgui::AnimationController *CHudAccount::GetAnimationController(void)
 {
 	vgui::AnimationController *pController = g_pClientMode->GetViewportAnimationController();
 
-	Assert( pController );
+	Assert(pController);
 
 	return pController;
 }

@@ -17,100 +17,93 @@
 class CFuncOccluder : public CBaseEntity
 {
 public:
-	DECLARE_CLASS( CFuncOccluder, CBaseEntity );
+	DECLARE_CLASS(CFuncOccluder, CBaseEntity);
 
-					CFuncOccluder();
+	CFuncOccluder();
 
-	virtual void	Spawn( void );
-	virtual int		UpdateTransmitState( void );
+	virtual void Spawn(void);
+	virtual int UpdateTransmitState(void);
 
 	// Input handlers
-	void InputActivate( inputdata_t &inputdata );
-	void InputDeactivate( inputdata_t &inputdata );
-	void InputToggle( inputdata_t &inputdata );
+	void InputActivate(inputdata_t &inputdata);
+	void InputDeactivate(inputdata_t &inputdata);
+	void InputToggle(inputdata_t &inputdata);
 
 	DECLARE_DATADESC();
 	DECLARE_SERVERCLASS();
 
 private:
-	CNetworkVar( bool, m_bActive );
-	CNetworkVar( int, m_nOccluderIndex );
+	CNetworkVar(bool, m_bActive);
+	CNetworkVar(int, m_nOccluderIndex);
 };
 
-LINK_ENTITY_TO_CLASS( func_occluder, CFuncOccluder );
+LINK_ENTITY_TO_CLASS(func_occluder, CFuncOccluder);
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE(CFuncOccluder, DT_FuncOccluder)
-	SendPropBool( SENDINFO(m_bActive) ),
-	SendPropInt(SENDINFO(m_nOccluderIndex),	10, SPROP_UNSIGNED ),
-END_SEND_TABLE()
+SendPropBool(SENDINFO(m_bActive)), SendPropInt(SENDINFO(m_nOccluderIndex), 10, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
+	BEGIN_DATADESC(CFuncOccluder)
 
-BEGIN_DATADESC( CFuncOccluder )
-
-	DEFINE_KEYFIELD( m_bActive, FIELD_BOOLEAN, "StartActive" ),
+		DEFINE_KEYFIELD(m_bActive, FIELD_BOOLEAN, "StartActive"),
 
 	// NOTE: This keyfield is computed + inserted by VBSP
-	DEFINE_KEYFIELD( m_nOccluderIndex, FIELD_INTEGER, "occludernumber" ),
+	DEFINE_KEYFIELD(m_nOccluderIndex, FIELD_INTEGER, "occludernumber"),
 
 	// Inputs
-	DEFINE_INPUTFUNC( FIELD_VOID, "Deactivate",  InputDeactivate ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Activate", InputActivate ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Toggle",  InputToggle ),
+	DEFINE_INPUTFUNC(FIELD_VOID, "Deactivate", InputDeactivate),
+	DEFINE_INPUTFUNC(FIELD_VOID, "Activate", InputActivate), DEFINE_INPUTFUNC(FIELD_VOID, "Toggle", InputToggle),
 
-END_DATADESC()
+END_DATADESC
+()
 
-
-//------------------------------------------------------------------------------
-// Occluder :
-//------------------------------------------------------------------------------
-CFuncOccluder::CFuncOccluder()
+	//------------------------------------------------------------------------------
+	// Occluder :
+	//------------------------------------------------------------------------------
+	CFuncOccluder::CFuncOccluder()
 {
 	m_bActive = true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CFuncOccluder::Spawn( void )
+void CFuncOccluder::Spawn(void)
 {
-	Precache( );
+	Precache();
 
-	m_takedamage	= DAMAGE_NO;
-	SetSolid( SOLID_NONE );
-	SetMoveType( MOVETYPE_NONE );
+	m_takedamage = DAMAGE_NO;
+	SetSolid(SOLID_NONE);
+	SetMoveType(MOVETYPE_NONE);
 
 	// set size and link into world.
-	SetModel( STRING( GetModelName() ) );
+	SetModel(STRING(GetModelName()));
 }
-
 
 //------------------------------------------------------------------------------
 // Purpose :
 //------------------------------------------------------------------------------
-void CFuncOccluder::InputDeactivate( inputdata_t &inputdata )
+void CFuncOccluder::InputDeactivate(inputdata_t &inputdata)
 {
 	m_bActive = false;
 }
 
-
 //------------------------------------------------------------------------------
 // Purpose :
 //------------------------------------------------------------------------------
-void CFuncOccluder::InputActivate( inputdata_t &inputdata )
+void CFuncOccluder::InputActivate(inputdata_t &inputdata)
 {
 	m_bActive = true;
 }
 
-
 //------------------------------------------------------------------------------
 // Purpose :
 //------------------------------------------------------------------------------
-void CFuncOccluder::InputToggle( inputdata_t &inputdata )
+void CFuncOccluder::InputToggle(inputdata_t &inputdata)
 {
 	m_bActive = !m_bActive;
 }
-
 
 //------------------------------------------------------------------------------
 // We always want to transmit these bad boys
@@ -118,5 +111,5 @@ void CFuncOccluder::InputToggle( inputdata_t &inputdata )
 int CFuncOccluder::UpdateTransmitState()
 {
 	// ALWAYS transmit to all clients.
-	return SetTransmitState( FL_EDICT_ALWAYS );
+	return SetTransmitState(FL_EDICT_ALWAYS);
 }

@@ -10,18 +10,15 @@
 #include <Keyvalues.h>
 #include <vgui_controls/Controls.h>
 
-
 using namespace vgui;
 
-
-class SampleCheckButtons: public DemoPage
+class SampleCheckButtons : public DemoPage
 {
-	public:
-		SampleCheckButtons(Panel *parent, const char *name);
-		~SampleCheckButtons();
+public:
+	SampleCheckButtons(Panel *parent, const char *name);
+	~SampleCheckButtons();
 
-	private:
-
+private:
 };
 
 //-----------------------------------------------------------------------------
@@ -35,14 +32,9 @@ SampleCheckButtons::SampleCheckButtons(Panel *parent, const char *name) : DemoPa
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleCheckButtons::~SampleCheckButtons()
-{
-}
+SampleCheckButtons::~SampleCheckButtons() {}
 
-
-
-
-Panel* SampleCheckButtons_Create(Panel *parent)
+Panel *SampleCheckButtons_Create(Panel *parent)
 {
 	return new SampleCheckButtons(parent, "Check buttons");
 }

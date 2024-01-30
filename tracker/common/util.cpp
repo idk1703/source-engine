@@ -8,27 +8,27 @@
 #include "util.h"
 #include <string.h>
 
-#define NUM_BUFFERS 4
+#define NUM_BUFFERS			  4
 #define MAX_INFO_TOKEN_LENGTH 512
-const char *CUtil::InfoGetValue( const char *s, const char *key )
+const char *CUtil::InfoGetValue(const char *s, const char *key)
 {
-	char	pkey[MAX_INFO_TOKEN_LENGTH];
+	char pkey[MAX_INFO_TOKEN_LENGTH];
 	// Use multiple buffers so compares
 	// work without stomping on each other
-	static	char value[NUM_BUFFERS][MAX_INFO_TOKEN_LENGTH];
-	static	int	valueindex;
-	char	*o;
+	static char value[NUM_BUFFERS][MAX_INFO_TOKEN_LENGTH];
+	static int valueindex;
+	char *o;
 
 	valueindex = (valueindex + 1) % NUM_BUFFERS;
 
-	if (*s == '\\')
+	if(*s == '\\')
 		s++;
-	while (1)
+	while(1)
 	{
 		o = pkey;
-		while (*s != '\\')
+		while(*s != '\\')
 		{
-			if (!*s)
+			if(!*s)
 				return "";
 			*o++ = *s++;
 		}
@@ -37,18 +37,18 @@ const char *CUtil::InfoGetValue( const char *s, const char *key )
 
 		o = value[valueindex];
 
-		while (*s != '\\' && *s)
+		while(*s != '\\' && *s)
 		{
-			if (!*s)
+			if(!*s)
 				return "";
 			*o++ = *s++;
 		}
 		*o = 0;
 
-		if (!strcmp (key, pkey) )
+		if(!strcmp(key, pkey))
 			return value[valueindex];
 
-		if (!*s)
+		if(!*s)
 			return "";
 		s++;
 	}

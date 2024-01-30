@@ -30,7 +30,6 @@
 
 IMPLEMENT_MAPCLASS(CMapLine);
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Used for creating a CMapLine from a set
 //			of string parameters from the FGD file.
@@ -50,19 +49,19 @@ CMapClass *CMapLine::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	unsigned char chBlue = 255;
 
 	const char *pszParam = pHelperInfo->GetParameter(0);
-	if (pszParam != NULL)
+	if(pszParam != NULL)
 	{
 		chRed = atoi(pszParam);
 	}
 
 	pszParam = pHelperInfo->GetParameter(1);
-	if (pszParam != NULL)
+	if(pszParam != NULL)
 	{
 		chGreen = atoi(pszParam);
 	}
 
 	pszParam = pHelperInfo->GetParameter(2);
-	if (pszParam != NULL)
+	if(pszParam != NULL)
 	{
 		chBlue = atoi(pszParam);
 	}
@@ -76,7 +75,7 @@ CMapClass *CMapLine::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	//
 	// Make sure we'll have at least one endpoint to work with.
 	//
-	if ((pszStartKey == NULL) || (pszStartValueKey == NULL))
+	if((pszStartKey == NULL) || (pszStartValueKey == NULL))
 	{
 		return NULL;
 	}
@@ -87,14 +86,13 @@ CMapClass *CMapLine::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	//
 	// If they only specified a start entity, use our parent as the end entity.
 	//
-	if ((pszEndKey == NULL) || (pszEndValueKey == NULL))
+	if((pszEndKey == NULL) || (pszEndValueKey == NULL))
 	{
 		pLine->m_pEndEntity = pParent;
 	}
 
-	return(pLine);
+	return (pLine);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -104,28 +102,29 @@ CMapLine::CMapLine(void)
 	Initialize();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Initializes data members.
-// Input  : pszStartKey - The key to search in other entities for a match against the value of pszStartValueKey, ex 'targetname'.
-//			pszStartValueKey - The key in our parent entity from which to get a search term for the start entity ex 'beamstart01'.
-//			pszEndKey - The key to search in other entities for a match against the value of pszEndValueKey ex 'targetname'.
-//			pszEndValueKey - The key in our parent entity from which to get a search term for the end entity ex 'beamend01'.
+// Input  : pszStartKey - The key to search in other entities for a match against the value of pszStartValueKey, ex
+// 'targetname'.
+//			pszStartValueKey - The key in our parent entity from which to get a search term for the start entity ex
+//'beamstart01'. 			pszEndKey - The key to search in other entities for a match against the value of pszEndValueKey ex
+//'targetname'. 			pszEndValueKey - The key in our parent entity from which to get a search term for the end entity ex
+//'beamend01'.
 //-----------------------------------------------------------------------------
-CMapLine::CMapLine(const char *pszStartKey, const char *pszStartValueKey, const char *pszEndKey, const char *pszEndValueKey)
+CMapLine::CMapLine(const char *pszStartKey, const char *pszStartValueKey, const char *pszEndKey,
+				   const char *pszEndValueKey)
 {
 	Initialize();
 
 	strcpy(m_szStartKey, pszStartKey);
 	strcpy(m_szStartValueKey, pszStartValueKey);
 
-	if ((pszEndKey != NULL) && (pszEndValueKey != NULL))
+	if((pszEndKey != NULL) && (pszEndValueKey != NULL))
 	{
 		strcpy(m_szEndKey, pszEndKey);
 		strcpy(m_szEndValueKey, pszEndValueKey);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets data members to initial values.
@@ -142,21 +141,17 @@ void CMapLine::Initialize(void)
 	m_pEndEntity = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CMapLine::~CMapLine(void)
-{
-}
-
+CMapLine::~CMapLine(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Calculates the midpoint of the line and sets our origin there.
 //-----------------------------------------------------------------------------
 void CMapLine::BuildLine(void)
 {
-	if ((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
+	if((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
 	{
 		//
 		// Set our origin to our midpoint. This moves our selection handle box to the
@@ -173,7 +168,6 @@ void CMapLine::BuildLine(void)
 
 	CalcBounds();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Recalculates our bounding box.
@@ -194,7 +188,7 @@ void CMapLine::CalcBounds(BOOL bFullUpdate)
 	// If our start and end entities are resolved, calcuate our bounds
 	// based on the positions of the start and end entities.
 	//
-	if (m_pStartEntity && m_pEndEntity)
+	if(m_pStartEntity && m_pEndEntity)
 	{
 		//
 		// Update the 3D bounds.
@@ -212,7 +206,6 @@ void CMapLine::CalcBounds(BOOL bFullUpdate)
 	m_BoundingBox = m_CullBox;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : bUpdateDependencies -
@@ -222,14 +215,13 @@ CMapClass *CMapLine::Copy(bool bUpdateDependencies)
 {
 	CMapLine *pCopy = new CMapLine;
 
-	if (pCopy != NULL)
+	if(pCopy != NULL)
 	{
 		pCopy->CopyFrom(this, bUpdateDependencies);
 	}
 
-	return(pCopy);
+	return (pCopy);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Turns 'this' into an exact replica of 'pObject'.
@@ -239,13 +231,13 @@ CMapClass *CMapLine::Copy(bool bUpdateDependencies)
 //-----------------------------------------------------------------------------
 CMapClass *CMapLine::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 {
-	CMapLine *pFrom = dynamic_cast <CMapLine *>(pObject);
+	CMapLine *pFrom = dynamic_cast<CMapLine *>(pObject);
 
-	if (pFrom != NULL)
+	if(pFrom != NULL)
 	{
 		CMapClass::CopyFrom(pObject, bUpdateDependencies);
 
-		if (bUpdateDependencies)
+		if(bUpdateDependencies)
 		{
 			m_pStartEntity = (CMapEntity *)UpdateDependency(m_pStartEntity, pFrom->m_pStartEntity);
 			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pFrom->m_pEndEntity);
@@ -263,9 +255,8 @@ CMapClass *CMapLine::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 		strcpy(m_szEndKey, pFrom->m_szEndKey);
 	}
 
-	return(this);
+	return (this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after this object is added to the world.
@@ -286,7 +277,6 @@ void CMapLine::OnAddToWorld(CMapWorld *pWorld)
 	UpdateDependencies(pWorld, NULL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called just after this object has been removed from the world so
 //			that it can unlink itself from other objects in the world.
@@ -304,7 +294,6 @@ void CMapLine::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 	m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, NULL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Our start or end entity has changed; recalculate our bounds and midpoint.
 // Input  : pObject - Entity that changed.
@@ -317,23 +306,23 @@ void CMapLine::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNotifyT
 	UpdateDependencies(pWorld, NULL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : key -
 //			value -
 //-----------------------------------------------------------------------------
-void CMapLine::OnParentKeyChanged( const char* key, const char* value )
+void CMapLine::OnParentKeyChanged(const char *key, const char *value)
 {
 	CMapWorld *pWorld = (CMapWorld *)GetWorldObject(this);
-	if (pWorld != NULL)
+	if(pWorld != NULL)
 	{
-		if (stricmp(key, m_szStartValueKey) == 0)
+		if(stricmp(key, m_szStartValueKey) == 0)
 		{
-			m_pStartEntity = (CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, value));
+			m_pStartEntity =
+				(CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, value));
 			BuildLine();
 		}
-		else if (stricmp(key, m_szEndValueKey) == 0)
+		else if(stricmp(key, m_szEndValueKey) == 0)
 		{
 			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, value));
 			BuildLine();
@@ -341,14 +330,13 @@ void CMapLine::OnParentKeyChanged( const char* key, const char* value )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Renders the line helper in the 2D view.
 // Input  : pRender - 2D rendering interface.
 //-----------------------------------------------------------------------------
 void CMapLine::Render2D(CRender2D *pRender)
 {
-	if ((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
+	if((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
 	{
 		Vector Start;
 		Vector End;
@@ -356,19 +344,18 @@ void CMapLine::Render2D(CRender2D *pRender)
 		m_pStartEntity->GetOrigin(Start);
 		m_pEndEntity->GetOrigin(End);
 
-		if (IsSelected())
+		if(IsSelected())
 		{
-			pRender->SetDrawColor( SELECT_FACE_RED, SELECT_FACE_GREEN, SELECT_FACE_BLUE );
+			pRender->SetDrawColor(SELECT_FACE_RED, SELECT_FACE_GREEN, SELECT_FACE_BLUE);
 		}
 		else
 		{
-			pRender->SetDrawColor( r, g, b );
+			pRender->SetDrawColor(r, g, b);
 		}
 
 		pRender->DrawLine(Start, End);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -376,7 +363,7 @@ void CMapLine::Render2D(CRender2D *pRender)
 //-----------------------------------------------------------------------------
 void CMapLine::Render3D(CRender3D *pRender)
 {
-	if ( (m_pStartEntity == NULL) || (m_pEndEntity == NULL) )
+	if((m_pStartEntity == NULL) || (m_pEndEntity == NULL))
 		return;
 
 	pRender->BeginRenderHitTarget(this);
@@ -387,18 +374,16 @@ void CMapLine::Render3D(CRender3D *pRender)
 	m_pStartEntity->GetOrigin(Start);
 	m_pEndEntity->GetOrigin(End);
 
-
-
 	CMeshBuilder meshBuilder;
-	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	IMesh* pMesh = pRenderContext->GetDynamicMesh();
+	CMatRenderContextPtr pRenderContext(MaterialSystemInterface());
+	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 
 	// FIXME: Can't do this...! glLineWidth(2);
 
-	meshBuilder.Begin( pMesh, MATERIAL_LINES, 1 );
+	meshBuilder.Begin(pMesh, MATERIAL_LINES, 1);
 
 	unsigned char color[3];
-	if (IsSelected())
+	if(IsSelected())
 	{
 		color[0] = SELECT_EDGE_RED;
 		color[1] = SELECT_EDGE_GREEN;
@@ -411,11 +396,11 @@ void CMapLine::Render3D(CRender3D *pRender)
 		color[2] = b;
 	}
 
-	meshBuilder.Color3ubv( color );
+	meshBuilder.Color3ubv(color);
 	meshBuilder.Position3f(Start.x, Start.y, Start.z);
 	meshBuilder.AdvanceVertex();
 
-	meshBuilder.Color3ubv( color );
+	meshBuilder.Color3ubv(color);
 	meshBuilder.Position3f(End.x, End.y, End.z);
 	meshBuilder.AdvanceVertex();
 
@@ -426,7 +411,6 @@ void CMapLine::Render3D(CRender3D *pRender)
 	pRender->PopRenderMode();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : File -
@@ -435,9 +419,8 @@ void CMapLine::Render3D(CRender3D *pRender)
 //-----------------------------------------------------------------------------
 int CMapLine::SerializeRMF(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -447,9 +430,8 @@ int CMapLine::SerializeRMF(std::fstream &File, BOOL bRMF)
 //-----------------------------------------------------------------------------
 int CMapLine::SerializeMAP(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -470,23 +452,25 @@ void CMapLine::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 {
 	CMapClass::UpdateDependencies(pWorld, pObject);
 
-	if (pWorld == NULL)
+	if(pWorld == NULL)
 	{
 		return;
 	}
 
-	CMapEntity *pEntity = dynamic_cast <CMapEntity *> (m_pParent);
+	CMapEntity *pEntity = dynamic_cast<CMapEntity *>(m_pParent);
 	Assert(pEntity != NULL);
 
-	if (pEntity != NULL)
+	if(pEntity != NULL)
 	{
 		const char *pszValue = pEntity->GetKeyValue(m_szStartValueKey);
-		m_pStartEntity = (CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, pszValue));
+		m_pStartEntity =
+			(CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, pszValue));
 
-		if (m_szEndValueKey[0] != '\0')
+		if(m_szEndValueKey[0] != '\0')
 		{
 			pszValue = pEntity->GetKeyValue(m_szEndValueKey);
-			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, pszValue));
+			m_pEndEntity =
+				(CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, pszValue));
 		}
 		else
 		{
@@ -497,7 +481,6 @@ void CMapLine::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 		BuildLine();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Never select anything because of this helper.

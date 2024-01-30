@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/v1/tf_store_page.h"
 #include "store/v1/tf_store_panel.h"
@@ -19,16 +18,14 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePanel1::CTFStorePanel1( vgui::Panel *parent ) : CTFBaseStorePanel(parent)
-{
-}
+CTFStorePanel1::CTFStorePanel1(vgui::Panel *parent) : CTFBaseStorePanel(parent) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePanel1::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CTFStorePanel1::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
@@ -42,7 +39,7 @@ void CTFStorePanel1::OnThink()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePanel1::PostTransactionCompleted( void )
+void CTFStorePanel1::PostTransactionCompleted(void)
 {
 	BaseClass::PostTransactionCompleted();
 }
@@ -50,20 +47,20 @@ void CTFStorePanel1::PostTransactionCompleted( void )
 //-----------------------------------------------------------------------------
 // Purpose: Static store page factory.
 //-----------------------------------------------------------------------------
-CStorePage *CTFStorePanel1::CreateStorePage( const CEconStoreCategoryManager::StoreCategory_t *pPageData )
+CStorePage *CTFStorePanel1::CreateStorePage(const CEconStoreCategoryManager::StoreCategory_t *pPageData)
 {
-	if ( pPageData )
+	if(pPageData)
 	{
-		if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_SpecialPromo" ) )
-			return new CTFStorePage_SpecialPromo( this, pPageData );
+		if(!Q_strcmp(pPageData->m_pchPageClass, "CStorePage_SpecialPromo"))
+			return new CTFStorePage_SpecialPromo(this, pPageData);
 
-		if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_Maps" ) )
-			return new CTFStorePage_Maps( this, pPageData );
+		if(!Q_strcmp(pPageData->m_pchPageClass, "CStorePage_Maps"))
+			return new CTFStorePage_Maps(this, pPageData);
 
-		if ( !Q_strcmp( pPageData->m_pchPageClass, "CStorePage_Popular" ) )
-			return new CTFStorePage_Popular( this, pPageData );
+		if(!Q_strcmp(pPageData->m_pchPageClass, "CStorePage_Popular"))
+			return new CTFStorePage_Popular(this, pPageData);
 	}
 
 	// Default, standard store page.
-	return new CTFStorePage1( this, pPageData );
+	return new CTFStorePage1(this, pPageData);
 }

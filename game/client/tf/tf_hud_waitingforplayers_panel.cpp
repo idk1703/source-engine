@@ -25,34 +25,34 @@ using namespace vgui;
 class CTFWaitingForPlayersPanel : public EditablePanel, public CHudElement
 {
 private:
-	DECLARE_CLASS_SIMPLE( CTFWaitingForPlayersPanel, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CTFWaitingForPlayersPanel, EditablePanel);
 
 public:
-	CTFWaitingForPlayersPanel( const char *pElementName );
+	CTFWaitingForPlayersPanel(const char *pElementName);
 
 	virtual void LevelInit();
 	virtual void Init();
-	virtual void FireGameEvent( IGameEvent * event );
-	virtual void ApplySchemeSettings( IScheme *pScheme );
+	virtual void FireGameEvent(IGameEvent *event);
+	virtual void ApplySchemeSettings(IScheme *pScheme);
 
-	virtual bool ShouldDraw( void );
+	virtual bool ShouldDraw(void);
 
 private:
-	Label	*m_pWaitingForPlayersLabel;
-	Label	*m_pWaitingForPlayersEndingLabel;
+	Label *m_pWaitingForPlayersLabel;
+	Label *m_pWaitingForPlayersEndingLabel;
 };
 
-DECLARE_HUDELEMENT_DEPTH( CTFWaitingForPlayersPanel, 1 );
+DECLARE_HUDELEMENT_DEPTH(CTFWaitingForPlayersPanel, 1);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFWaitingForPlayersPanel::CTFWaitingForPlayersPanel( const char *pElementName )
-	: EditablePanel( NULL, "WaitingForPlayersPanel" ), CHudElement( pElementName )
+CTFWaitingForPlayersPanel::CTFWaitingForPlayersPanel(const char *pElementName)
+	: EditablePanel(NULL, "WaitingForPlayersPanel"), CHudElement(pElementName)
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetScheme( "ClientScheme" );
+	SetParent(pParent);
+	SetScheme("ClientScheme");
 }
 
 //-----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ CTFWaitingForPlayersPanel::CTFWaitingForPlayersPanel( const char *pElementName )
 //-----------------------------------------------------------------------------
 void CTFWaitingForPlayersPanel::LevelInit()
 {
-	SetVisible( false );
+	SetVisible(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -69,11 +69,11 @@ void CTFWaitingForPlayersPanel::LevelInit()
 void CTFWaitingForPlayersPanel::Init()
 {
 	// listen for events
-	ListenForGameEvent( "teamplay_waiting_begins" );
-	ListenForGameEvent( "teamplay_waiting_ends" );
-	ListenForGameEvent( "teamplay_waiting_abouttoend" );
+	ListenForGameEvent("teamplay_waiting_begins");
+	ListenForGameEvent("teamplay_waiting_ends");
+	ListenForGameEvent("teamplay_waiting_abouttoend");
 
-	SetVisible( false );
+	SetVisible(false);
 
 	CHudElement::Init();
 }
@@ -81,45 +81,45 @@ void CTFWaitingForPlayersPanel::Init()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFWaitingForPlayersPanel::ApplySchemeSettings( IScheme *pScheme )
+void CTFWaitingForPlayersPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings( "resource/UI/WaitingForPlayersPanel.res" );
+	LoadControlSettings("resource/UI/WaitingForPlayersPanel.res");
 
-	m_pWaitingForPlayersLabel = dynamic_cast<Label *>(FindChildByName( "WaitingForPlayersLabel" ));
-	m_pWaitingForPlayersEndingLabel = dynamic_cast<Label *>(FindChildByName( "WaitingForPlayersEndingLabel" ));
+	m_pWaitingForPlayersLabel = dynamic_cast<Label *>(FindChildByName("WaitingForPlayersLabel"));
+	m_pWaitingForPlayersEndingLabel = dynamic_cast<Label *>(FindChildByName("WaitingForPlayersEndingLabel"));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFWaitingForPlayersPanel::FireGameEvent( IGameEvent * event )
+void CTFWaitingForPlayersPanel::FireGameEvent(IGameEvent *event)
 {
 	const char *pEventName = event->GetName();
 
-	if ( Q_strcmp( "teamplay_waiting_ends", pEventName ) == 0 )
+	if(Q_strcmp("teamplay_waiting_ends", pEventName) == 0)
 	{
-		SetVisible( false );
+		SetVisible(false);
 	}
-	else if ( Q_strcmp( "teamplay_waiting_begins", pEventName ) == 0 )
+	else if(Q_strcmp("teamplay_waiting_begins", pEventName) == 0)
 	{
-		SetVisible( true );
-		m_pWaitingForPlayersLabel->SetVisible( true );
-		m_pWaitingForPlayersEndingLabel->SetVisible( false );
+		SetVisible(true);
+		m_pWaitingForPlayersLabel->SetVisible(true);
+		m_pWaitingForPlayersEndingLabel->SetVisible(false);
 	}
-	else if ( Q_strcmp( "teamplay_waiting_abouttoend", pEventName ) == 0 )
+	else if(Q_strcmp("teamplay_waiting_abouttoend", pEventName) == 0)
 	{
-		SetVisible( true );
-		m_pWaitingForPlayersLabel->SetVisible( false );
-		m_pWaitingForPlayersEndingLabel->SetVisible( true );
+		SetVisible(true);
+		m_pWaitingForPlayersLabel->SetVisible(false);
+		m_pWaitingForPlayersEndingLabel->SetVisible(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFWaitingForPlayersPanel::ShouldDraw( void )
+bool CTFWaitingForPlayersPanel::ShouldDraw(void)
 {
-	return ( IsVisible() );
+	return (IsVisible());
 }

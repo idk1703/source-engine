@@ -14,7 +14,7 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY( Divider );
+DECLARE_BUILD_FACTORY(Divider);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -27,9 +27,7 @@ Divider::Divider(Panel *parent, const char *name) : Panel(parent, name)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-Divider::~Divider()
-{
-}
+Divider::~Divider() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: sets up the border as the line to draw as a divider

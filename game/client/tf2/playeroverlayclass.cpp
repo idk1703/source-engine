@@ -20,12 +20,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // Class info. Only load it once.
 //-----------------------------------------------------------------------------
 
-CHudPlayerOverlayClass::CMapClassColors** CHudPlayerOverlayClass::s_ppClassInfo = 0;
+CHudPlayerOverlayClass::CMapClassColors **CHudPlayerOverlayClass::s_ppClassInfo = 0;
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -35,12 +34,12 @@ class CCleanupPlayerOverlayClass : public CAutoGameSystem
 public:
 	virtual void Shutdown()
 	{
-		if ( !CHudPlayerOverlayClass::s_ppClassInfo )
+		if(!CHudPlayerOverlayClass::s_ppClassInfo)
 			return;
 
-		for (int i = 0; i <= MAX_TF_TEAMS; ++i)
+		for(int i = 0; i <= MAX_TF_TEAMS; ++i)
 		{
-			for ( int j = 0; j < TFCLASS_CLASS_COUNT; j++ )
+			for(int j = 0; j < TFCLASS_CLASS_COUNT; j++)
 			{
 				delete CHudPlayerOverlayClass::s_ppClassInfo[i][j].m_pClassImage;
 			}
@@ -56,72 +55,72 @@ static CCleanupPlayerOverlayClass g_CleanupPlayerOverlayClass;
 // Purpose:
 //-----------------------------------------------------------------------------
 
-CHudPlayerOverlayClass::CHudPlayerOverlayClass( CHudPlayerOverlay *baseOverlay )
-: BaseClass( NULL, "CHudPlayerOverlayClass" )
+CHudPlayerOverlayClass::CHudPlayerOverlayClass(CHudPlayerOverlay *baseOverlay)
+	: BaseClass(NULL, "CHudPlayerOverlayClass")
 {
 	m_pBaseOverlay = baseOverlay;
 
 	m_pImage = NULL;
-	SetPaintBackgroundEnabled( false );
+	SetPaintBackgroundEnabled(false);
 
 	// Send mouse inputs (but not cursorenter/exit for now) up to parent
-	SetReflectMouse( true );
+	SetReflectMouse(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 
-CHudPlayerOverlayClass::~CHudPlayerOverlayClass( void )
+CHudPlayerOverlayClass::~CHudPlayerOverlayClass(void)
 {
 	delete m_pImage;
 }
-
 
 //-----------------------------------------------------------------------------
 // Parse class icons
 //-----------------------------------------------------------------------------
 
-bool CHudPlayerOverlayClass::ParseTeamClassInfo( KeyValues *pClassIcons, const char *classname, CMapClassColors *pClassColors )
+bool CHudPlayerOverlayClass::ParseTeamClassInfo(KeyValues *pClassIcons, const char *classname,
+												CMapClassColors *pClassColors)
 {
 	const char *classimage;
 	KeyValues *pClass;
-	pClass = pClassIcons->FindKey( classname );
-	if ( !pClass )
+	pClass = pClassIcons->FindKey(classname);
+	if(!pClass)
 		return false;
 
-	classimage = pClass->GetString( "material" );
-	if ( classimage && classimage[ 0 ] )
+	classimage = pClass->GetString("material");
+	if(classimage && classimage[0])
 	{
-		pClassColors->m_pClassImage = new BitmapImage( NULL, classimage );
+		pClassColors->m_pClassImage = new BitmapImage(NULL, classimage);
 	}
 	else
 	{
-		return( false );
+		return (false);
 	}
 
-	return ParseRGBA( pClass, "color", pClassColors->m_clrClass );
+	return ParseRGBA(pClass, "color", pClassColors->m_clrClass);
 }
 
-bool CHudPlayerOverlayClass::ParseTeamClassIcons( CMapClassColors *pT, KeyValues *pTeam )
+bool CHudPlayerOverlayClass::ParseTeamClassIcons(CMapClassColors *pT, KeyValues *pTeam)
 {
-	if ( !ParseTeamClassInfo( pTeam, "Recon", &pT[ TFCLASS_RECON ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Recon", &pT[TFCLASS_RECON]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Sniper", &pT[ TFCLASS_SNIPER ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Sniper", &pT[TFCLASS_SNIPER]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Commando", &pT[ TFCLASS_COMMANDO ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Commando", &pT[TFCLASS_COMMANDO]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Support", &pT[ TFCLASS_SUPPORT ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Support", &pT[TFCLASS_SUPPORT]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Medic", &pT[ TFCLASS_MEDIC ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Medic", &pT[TFCLASS_MEDIC]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Escort", &pT[ TFCLASS_ESCORT ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Escort", &pT[TFCLASS_ESCORT]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Defender", &pT[ TFCLASS_DEFENDER ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Defender", &pT[TFCLASS_DEFENDER]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Sapper", &pT[ TFCLASS_SAPPER ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Sapper", &pT[TFCLASS_SAPPER]))
 		return false;
-	if ( !ParseTeamClassInfo( pTeam, "Infiltrator", &pT[ TFCLASS_INFILTRATOR ] ) )
+	if(!ParseTeamClassInfo(pTeam, "Infiltrator", &pT[TFCLASS_INFILTRATOR]))
 		return false;
 	return true;
 }
@@ -130,21 +129,21 @@ bool CHudPlayerOverlayClass::ParseTeamClassIcons( CMapClassColors *pT, KeyValues
 // Initialization
 //-----------------------------------------------------------------------------
 
-bool CHudPlayerOverlayClass::InitClassInfo( KeyValues* pKeyValues )
+bool CHudPlayerOverlayClass::InitClassInfo(KeyValues *pKeyValues)
 {
-	if (s_ppClassInfo)
+	if(s_ppClassInfo)
 		return true;
 
-	char teamkey[ 128 ];
-	s_ppClassInfo = new CMapClassColors*[MAX_TF_TEAMS+1];
-	for (int i = 0; i <= MAX_TF_TEAMS; ++i)
+	char teamkey[128];
+	s_ppClassInfo = new CMapClassColors *[MAX_TF_TEAMS + 1];
+	for(int i = 0; i <= MAX_TF_TEAMS; ++i)
 	{
 		s_ppClassInfo[i] = new CMapClassColors[TFCLASS_CLASS_COUNT];
-		Q_snprintf( teamkey, sizeof( teamkey ), "Team%i", i );
-		KeyValues *pTeam = pKeyValues->FindKey( teamkey );
-		if (pTeam)
+		Q_snprintf(teamkey, sizeof(teamkey), "Team%i", i);
+		KeyValues *pTeam = pKeyValues->FindKey(teamkey);
+		if(pTeam)
 		{
-			if (!ParseTeamClassIcons( s_ppClassInfo[i], pTeam ))
+			if(!ParseTeamClassIcons(s_ppClassInfo[i], pTeam))
 				return false;
 		}
 	}
@@ -156,22 +155,22 @@ bool CHudPlayerOverlayClass::InitClassInfo( KeyValues* pKeyValues )
 // Initialization
 //-----------------------------------------------------------------------------
 
-bool CHudPlayerOverlayClass::Init( KeyValues* pKeyValues )
+bool CHudPlayerOverlayClass::Init(KeyValues *pKeyValues)
 {
-	if (!pKeyValues)
+	if(!pKeyValues)
 		return false;
 
 	int x, y, w, h;
-	if (!ParseRect(pKeyValues, "friendlyposition", x, y, w, h ))
+	if(!ParseRect(pKeyValues, "friendlyposition", x, y, w, h))
 		return false;
 
-	if (!InitClassInfo( pKeyValues ))
+	if(!InitClassInfo(pKeyValues))
 		return false;
 
-	SetPos( x, y );
-	SetSize( w, h );
+	SetPos(x, y);
+	SetSize(w, h);
 
-	SetImage( 0 );
+	SetImage(0);
 
 	return true;
 }
@@ -180,29 +179,29 @@ bool CHudPlayerOverlayClass::Init( KeyValues* pKeyValues )
 // Purpose:
 // Input  : pImage - Class specific image
 //-----------------------------------------------------------------------------
-void CHudPlayerOverlayClass::SetImage( BitmapImage *pImage )
+void CHudPlayerOverlayClass::SetImage(BitmapImage *pImage)
 {
 	m_pImage = pImage;
-	if (m_pImage)
+	if(m_pImage)
 	{
 		// Make sure the image size is correct
-		int w,h;
-		GetSize(w,h);
+		int w, h;
+		GetSize(w, h);
 	}
 }
 
-void CHudPlayerOverlayClass::SetTeamAndClass( int team, int playerclass )
+void CHudPlayerOverlayClass::SetTeamAndClass(int team, int playerclass)
 {
-	if (!s_ppClassInfo)
+	if(!s_ppClassInfo)
 		return;
 
-	CMapClassColors *pCC = &s_ppClassInfo[ team ][ playerclass ];
-	if ( pCC )
+	CMapClassColors *pCC = &s_ppClassInfo[team][playerclass];
+	if(pCC)
 	{
 		int r, g, b, a;
-		pCC->m_clrClass.GetColor( r, g, b, a );
-		SetColor( r, g, b, a );
-		SetImage( pCC->m_pClassImage );
+		pCC->m_clrClass.GetColor(r, g, b, a);
+		SetColor(r, g, b, a);
+		SetImage(pCC->m_pClassImage);
 	}
 }
 
@@ -210,10 +209,10 @@ void CHudPlayerOverlayClass::SetTeamAndClass( int team, int playerclass )
 // If this guy changes size, so must the associated image
 //-----------------------------------------------------------------------------
 
-void CHudPlayerOverlayClass::SetSize( int w, int h )
+void CHudPlayerOverlayClass::SetSize(int w, int h)
 {
 	// chain...
-	Panel::SetSize( w, h );
+	Panel::SetSize(w, h);
 }
 
 //-----------------------------------------------------------------------------
@@ -223,7 +222,7 @@ void CHudPlayerOverlayClass::SetSize( int w, int h )
 //			b -
 //			a -
 //-----------------------------------------------------------------------------
-void CHudPlayerOverlayClass::SetColor( int r, int g, int b, int a )
+void CHudPlayerOverlayClass::SetColor(int r, int g, int b, int a)
 {
 	m_r = r;
 	m_g = g;
@@ -234,35 +233,35 @@ void CHudPlayerOverlayClass::SetColor( int r, int g, int b, int a )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudPlayerOverlayClass::Paint( void )
+void CHudPlayerOverlayClass::Paint(void)
 {
 	int w, h;
 
-	m_pBaseOverlay->SetColorLevel( this, m_fgColor, m_bgColor );
+	m_pBaseOverlay->SetColorLevel(this, m_fgColor, m_bgColor);
 
-	GetSize( w, h );
-	vgui::surface()->DrawSetColor( m_r, m_g, m_b, m_a * m_pBaseOverlay->GetAlphaFrac() );
+	GetSize(w, h);
+	vgui::surface()->DrawSetColor(m_r, m_g, m_b, m_a * m_pBaseOverlay->GetAlphaFrac());
 
-	if ( !m_pImage )
+	if(!m_pImage)
 		return;
 
 	Color color;
-	color.SetColor( m_r, m_g, m_b, m_a * m_pBaseOverlay->GetAlphaFrac() );
-	m_pImage->SetColor( color );
-	m_pImage->DoPaint( GetVPanel() );
+	color.SetColor(m_r, m_g, m_b, m_a * m_pBaseOverlay->GetAlphaFrac());
+	m_pImage->SetColor(color);
+	m_pImage->DoPaint(GetVPanel());
 }
 
 void CHudPlayerOverlayClass::OnCursorEntered()
 {
-	if ( m_pBaseOverlay->GetMouseOverText() )
+	if(m_pBaseOverlay->GetMouseOverText())
 	{
-		StatusPrint( TYPE_HINT, "%s", m_pBaseOverlay->GetMouseOverText() );
+		StatusPrint(TYPE_HINT, "%s", m_pBaseOverlay->GetMouseOverText());
 	}
 }
 
 void CHudPlayerOverlayClass::OnCursorExited()
 {
-	if ( m_pBaseOverlay->GetMouseOverText() )
+	if(m_pBaseOverlay->GetMouseOverText())
 	{
 		StatusClear();
 	}

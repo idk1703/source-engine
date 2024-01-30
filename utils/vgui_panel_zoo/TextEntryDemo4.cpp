@@ -27,19 +27,18 @@ static const int TIMEOUT = 1000; // 1 second timeout
 // The scroll bar will appear after a few lines and the scroll bar
 // slider will shrink as even more text is added.
 //-----------------------------------------------------------------------------
-class TextEntryDemo4: public DemoPage
+class TextEntryDemo4 : public DemoPage
 {
-	public:
-		TextEntryDemo4(Panel *parent, const char *name);
-		~TextEntryDemo4();
+public:
+	TextEntryDemo4(Panel *parent, const char *name);
+	~TextEntryDemo4();
 
-		void SetVisible(bool state);
-		void OnTick();
+	void SetVisible(bool state);
+	void OnTick();
 
-	private:
-		TextEntry *m_pTextEntry;
-		int m_iTimeoutTime;
-
+private:
+	TextEntry *m_pTextEntry;
+	int m_iTimeoutTime;
 };
 
 //-----------------------------------------------------------------------------
@@ -52,7 +51,6 @@ TextEntryDemo4::TextEntryDemo4(Panel *parent, const char *name) : DemoPage(paren
 	// Position the window and make it nice and wide.
 	// Make it tall enough to fit several lines of text.
 	m_pTextEntry->SetBounds(100, 100, 400, 200);
-
 
 	// Make this window hold multiple lines of text.
 	// This will turn off horizontal scrolling,
@@ -83,40 +81,35 @@ TextEntryDemo4::TextEntryDemo4(Panel *parent, const char *name) : DemoPage(paren
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-TextEntryDemo4::~TextEntryDemo4()
-{
-}
-
+TextEntryDemo4::~TextEntryDemo4() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: When the page is shown, initialize the time
 //-----------------------------------------------------------------------------
 void TextEntryDemo4::SetVisible(bool state)
 {
-	if (state)
+	if(state)
 	{
 		// Set the timeout time.
 		m_iTimeoutTime = system()->GetTimeMillis() + TIMEOUT;
-
 	}
 	DemoPage::SetVisible(state);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds lines to the text entry every second.
 //-----------------------------------------------------------------------------
 void TextEntryDemo4::OnTick()
 {
-	if (m_iTimeoutTime)
+	if(m_iTimeoutTime)
 	{
 		int currentTime = system()->GetTimeMillis();
 
 		// Check for timeout
-		if (currentTime > m_iTimeoutTime)
+		if(currentTime > m_iTimeoutTime)
 		{
 			char buf[125];
-			sprintf (buf, "Additional Text %d\n", m_iTimeoutTime);
+			sprintf(buf, "Additional Text %d\n", m_iTimeoutTime);
 
 			// Move to the end of the history before we add some new text.
 			// Its important to call this and explicitly move to the
@@ -136,9 +129,7 @@ void TextEntryDemo4::OnTick()
 	}
 }
 
-
-
-Panel* TextEntryDemo4_Create(Panel *parent)
+Panel *TextEntryDemo4_Create(Panel *parent)
 {
 	return new TextEntryDemo4(parent, "TextEntryDemo4");
 }

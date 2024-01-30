@@ -25,39 +25,40 @@ class CModalPreserveMessageBox : public vgui::MessageBox
 {
 public:
 	CModalPreserveMessageBox(const char *title, const char *text, vgui::Panel *parent)
-		: vgui::MessageBox( title, text, parent )
+		: vgui::MessageBox(title, text, parent)
 	{
 		m_PrevAppFocusPanel = vgui::input()->GetAppModalSurface();
 	}
 
 	~CModalPreserveMessageBox()
 	{
-		vgui::input()->SetAppModalSurface( m_PrevAppFocusPanel );
+		vgui::input()->SetAppModalSurface(m_PrevAppFocusPanel);
 	}
 
 public:
-	vgui::VPANEL	m_PrevAppFocusPanel;
+	vgui::VPANEL m_PrevAppFocusPanel;
 };
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CQCGenMain::CQCGenMain( Panel *parent, const char *pszPath, const char *pszScene , const char *name ) : BaseClass( parent, name ), m_bChanged( false )
+CQCGenMain::CQCGenMain(Panel *parent, const char *pszPath, const char *pszScene, const char *name)
+	: BaseClass(parent, name), m_bChanged(false)
 {
-	Assert( !g_pCQCGenMain );
+	Assert(!g_pCQCGenMain);
 	g_pCQCGenMain = this;
 
-	SetMinimizeButtonVisible( true );
+	SetMinimizeButtonVisible(true);
 
-	SetSize( 846, 770 );
+	SetSize(846, 770);
 	SetMinimumSize(846, 770);
 	char szTitle[MAX_PATH];
-	strcpy( szTitle, pszPath );
-	strcat( szTitle, "\\" );
-	strcat( szTitle, pszScene );
-	SetTitle( szTitle, true );
+	strcpy(szTitle, pszPath);
+	strcat(szTitle, "\\");
+	strcat(szTitle, pszScene);
+	SetTitle(szTitle, true);
 
-	m_pQCGenerator = new CQCGenerator( this, pszPath, pszScene );
+	m_pQCGenerator = new CQCGenerator(this, pszPath, pszScene);
 }
 
 //-----------------------------------------------------------------------------
@@ -68,12 +69,10 @@ CQCGenMain::~CQCGenMain()
 	g_pCQCGenMain = NULL;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Purpose: Kills the whole app on close
 //-----------------------------------------------------------------------------
-void CQCGenMain::OnClose( void )
+void CQCGenMain::OnClose(void)
 {
 	BaseClass::OnClose();
 	ivgui()->Stop();
@@ -82,9 +81,9 @@ void CQCGenMain::OnClose( void )
 //-----------------------------------------------------------------------------
 // Purpose: Parse commands coming in from the VGUI dialog
 //-----------------------------------------------------------------------------
-void CQCGenMain::OnCommand( const char *command )
+void CQCGenMain::OnCommand(const char *command)
 {
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 void CQCGenMain::OnRefresh()

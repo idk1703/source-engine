@@ -21,41 +21,46 @@
 //-----------------------------------------------------------------------------
 class CHudHealth : public CHudNumeric
 {
-	DECLARE_CLASS_SIMPLE( CHudHealth, CHudNumeric );
+	DECLARE_CLASS_SIMPLE(CHudHealth, CHudNumeric);
 
 public:
-	CHudHealth( const char *pElementName );
+	CHudHealth(const char *pElementName);
 
-	virtual const char *GetLabelText() { return m_szHealthLabel; }
-	virtual const char *GetPulseEvent( bool increment ) { return increment ? "HealthIncrement" : "HealthDecrement"; }
-	virtual bool		GetValue( char *val, int maxlen );
+	virtual const char *GetLabelText()
+	{
+		return m_szHealthLabel;
+	}
+	virtual const char *GetPulseEvent(bool increment)
+	{
+		return increment ? "HealthIncrement" : "HealthDecrement";
+	}
+	virtual bool GetValue(char *val, int maxlen);
 
 	virtual Color GetColor();
 	virtual Color GetBoxColor();
 
 private:
-	bool				GetHealth( int& value );
+	bool GetHealth(int &value);
 
-	CPanelAnimationStringVar( 128, m_szHealthLabel, "HealthLabel", "Health" );
+	CPanelAnimationStringVar(128, m_szHealthLabel, "HealthLabel", "Health");
 };
 
-DECLARE_HUDELEMENT( CHudHealth );
+DECLARE_HUDELEMENT(CHudHealth);
 
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CHudHealth::CHudHealth( const char *pElementName ) :
-	CHudNumeric( pElementName, "HudHealth" )
+CHudHealth::CHudHealth(const char *pElementName) : CHudNumeric(pElementName, "HudHealth")
 {
-	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT );
+	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_NEEDSUIT);
 }
 
-bool CHudHealth::GetHealth( int& value )
+bool CHudHealth::GetHealth(int &value)
 {
 	C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return false;
 
 	value = pPlayer->GetHealth();
@@ -67,20 +72,20 @@ bool CHudHealth::GetHealth( int& value )
 // Input  : value -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHudHealth::GetValue( char *val, int maxlen )
+bool CHudHealth::GetValue(char *val, int maxlen)
 {
 	int value = 0;
-	if ( !GetHealth( value ) )
+	if(!GetHealth(value))
 		return false;
 
-	Q_snprintf( val, maxlen, "%i", value );
+	Q_snprintf(val, maxlen, "%i", value);
 	return true;
 }
 
 Color CHudHealth::GetColor()
 {
 	int value = 0;
-	if ( !GetHealth( value ) || value > 25  )
+	if(!GetHealth(value) || value > 25)
 		return m_TextColor;
 
 	return m_TextColorCritical;
@@ -89,7 +94,7 @@ Color CHudHealth::GetColor()
 Color CHudHealth::GetBoxColor()
 {
 	int value = 0;
-	if ( !GetHealth( value ) || value > 25  )
+	if(!GetHealth(value) || value > 25)
 		return m_BoxColor;
 	return m_BoxColorCritical;
 }
@@ -99,62 +104,67 @@ Color CHudHealth::GetBoxColor()
 //-----------------------------------------------------------------------------
 class CHudVehicleHealth : public CHudNumeric
 {
-	DECLARE_CLASS_SIMPLE( CHudVehicleHealth, CHudNumeric );
+	DECLARE_CLASS_SIMPLE(CHudVehicleHealth, CHudNumeric);
 
 public:
-	CHudVehicleHealth( const char *pElementName );
+	CHudVehicleHealth(const char *pElementName);
 
-	virtual const char *GetLabelText() { return m_szVehicleHealthLabel; }
-	virtual const char *GetPulseEvent( bool increment ) { return increment ? "HealthVehicleIncrement" : "HealthVehicleDecrement"; }
-	virtual bool		GetValue( char *val, int maxlen );
+	virtual const char *GetLabelText()
+	{
+		return m_szVehicleHealthLabel;
+	}
+	virtual const char *GetPulseEvent(bool increment)
+	{
+		return increment ? "HealthVehicleIncrement" : "HealthVehicleDecrement";
+	}
+	virtual bool GetValue(char *val, int maxlen);
 
 	virtual Color GetColor();
 	virtual Color GetBoxColor();
 
 private:
-	bool				GetHealth( int& value );
+	bool GetHealth(int &value);
 
-	CPanelAnimationVar( float, m_flLingerTime, "exit_vehicle_linger_time", "2.0" );
+	CPanelAnimationVar(float, m_flLingerTime, "exit_vehicle_linger_time", "2.0");
 
-	bool				m_bPrevHealth;
-	float				m_flLingerFinish;
-	int					m_nLastHealth;
+	bool m_bPrevHealth;
+	float m_flLingerFinish;
+	int m_nLastHealth;
 
-	CPanelAnimationStringVar( 128, m_szVehicleHealthLabel, "VehicleHealthLabel", "Vehicle Health" );
+	CPanelAnimationStringVar(128, m_szVehicleHealthLabel, "VehicleHealthLabel", "Vehicle Health");
 };
 
-DECLARE_HUDELEMENT( CHudVehicleHealth );
+DECLARE_HUDELEMENT(CHudVehicleHealth);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CHudVehicleHealth::CHudVehicleHealth( const char *pElementName ) :
-	CHudNumeric( pElementName, "HudVehicleHealth" )
+CHudVehicleHealth::CHudVehicleHealth(const char *pElementName) : CHudNumeric(pElementName, "HudVehicleHealth")
 {
 	m_bPrevHealth = false;
 	m_flLingerFinish = 0.0f;
 	m_flLingerTime = 2.0f;
 	m_nLastHealth = 0;
 
-	SetHiddenBits( HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD );
+	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD);
 }
 
-bool CHudVehicleHealth::GetHealth( int& value )
+bool CHudVehicleHealth::GetHealth(int &value)
 {
 	C_BaseTFPlayer *pPlayer = C_BaseTFPlayer::GetLocalPlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		// Draw the vehicle health:
-		C_BaseTFVehicle *pVehicleEnt = ( C_BaseTFVehicle* )pPlayer->GetVehicle();
-		if( pVehicleEnt )
+		C_BaseTFVehicle *pVehicleEnt = (C_BaseTFVehicle *)pPlayer->GetVehicle();
+		if(pVehicleEnt)
 		{
 			value = pVehicleEnt->GetHealth();
 			m_nLastHealth = value;
 			bool changed = m_bPrevHealth != true;
 
-			if ( changed )
+			if(changed)
 			{
-				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(  "HealthVehicleEnterVehicle" );
+				g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthVehicleEnterVehicle");
 			}
 
 			m_bPrevHealth = true;
@@ -163,15 +173,15 @@ bool CHudVehicleHealth::GetHealth( int& value )
 	}
 
 	bool changed = m_bPrevHealth != false;
-	if ( changed )
+	if(changed)
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HealthVehicleExitVehicle" );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HealthVehicleExitVehicle");
 		m_flLingerFinish = gpGlobals->curtime + m_flLingerTime;
 	}
 
 	m_bPrevHealth = false;
 
-	if ( gpGlobals->curtime < m_flLingerFinish )
+	if(gpGlobals->curtime < m_flLingerFinish)
 	{
 		value = m_nLastHealth;
 		return true;
@@ -186,23 +196,23 @@ bool CHudVehicleHealth::GetHealth( int& value )
 // Input  : value -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHudVehicleHealth::GetValue( char *val, int maxlen )
+bool CHudVehicleHealth::GetValue(char *val, int maxlen)
 {
 	int value = 0;
-	bool show = GetHealth( value );
-	if ( !show )
+	bool show = GetHealth(value);
+	if(!show)
 	{
 		return false;
 	}
 
-	Q_snprintf( val, maxlen,  "%i", value );
+	Q_snprintf(val, maxlen, "%i", value);
 	return true;
 }
 
 Color CHudVehicleHealth::GetColor()
 {
 	int value = 0;
-	if ( !GetHealth( value ) || value > 75 )
+	if(!GetHealth(value) || value > 75)
 		return m_TextColor;
 
 	return m_TextColorCritical;
@@ -211,7 +221,7 @@ Color CHudVehicleHealth::GetColor()
 Color CHudVehicleHealth::GetBoxColor()
 {
 	int value = 0;
-	if ( !GetHealth( value ) || value > 75 )
+	if(!GetHealth(value) || value > 75)
 		return m_BoxColor;
 	return m_BoxColorCritical;
 }

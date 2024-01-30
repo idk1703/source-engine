@@ -20,7 +20,7 @@
 using namespace vgui;
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 vgui::Panel *MessageBox_Factory()
@@ -28,7 +28,7 @@ vgui::Panel *MessageBox_Factory()
 	return new MessageBox("MessageBox", "MessageBoxText");
 }
 
-DECLARE_BUILD_FACTORY_CUSTOM( MessageBox, MessageBox_Factory );
+DECLARE_BUILD_FACTORY_CUSTOM(MessageBox, MessageBox_Factory);
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -66,13 +66,13 @@ void MessageBox::Init()
 	SetSizeable(false);
 
 	m_pOkButton = new Button(this, NULL, "#MessageBox_OK");
-	m_pOkButton->SetCommand( "OnOk" );
+	m_pOkButton->SetCommand("OnOk");
 	m_pOkButton->AddActionSignalTarget(this);
 
 	m_pCancelButton = new Button(this, NULL, "#MessageBox_Cancel");
-	m_pCancelButton->SetCommand( "OnCancel" );
+	m_pCancelButton->SetCommand("OnCancel");
 	m_pCancelButton->AddActionSignalTarget(this);
-	m_pCancelButton->SetVisible( false );
+	m_pCancelButton->SetVisible(false);
 
 	m_OkCommand = m_CancelCommand = NULL;
 	m_bNoAutoClose = false;
@@ -83,57 +83,54 @@ void MessageBox::Init()
 //-----------------------------------------------------------------------------
 MessageBox::~MessageBox()
 {
-	if ( m_OkCommand )
+	if(m_OkCommand)
 	{
 		m_OkCommand->deleteThis();
 	}
-	if ( m_CancelCommand )
+	if(m_CancelCommand)
 	{
 		m_CancelCommand->deleteThis();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Shows the message box over the cursor
 //-----------------------------------------------------------------------------
-void MessageBox::ShowMessageBoxOverCursor( bool bEnable )
+void MessageBox::ShowMessageBoxOverCursor(bool bEnable)
 {
 	m_bShowMessageBoxOverCursor = bEnable;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: size the message label properly
 //-----------------------------------------------------------------------------
-void MessageBox::OnCommand( const char *pCommand )
+void MessageBox::OnCommand(const char *pCommand)
 {
-	if ( vgui::input()->GetAppModalSurface() == GetVPanel() )
+	if(vgui::input()->GetAppModalSurface() == GetVPanel())
 	{
 		vgui::input()->ReleaseAppModalSurface();
 	}
 
-	if ( !Q_stricmp( pCommand, "OnOk" ) )
+	if(!Q_stricmp(pCommand, "OnOk"))
 	{
-		if ( m_OkCommand )
+		if(m_OkCommand)
 		{
 			PostActionSignal(m_OkCommand->MakeCopy());
 		}
 	}
-	else if ( !Q_stricmp( pCommand, "OnCancel" ) )
+	else if(!Q_stricmp(pCommand, "OnCancel"))
 	{
-		if ( m_CancelCommand )
+		if(m_CancelCommand)
 		{
 			PostActionSignal(m_CancelCommand->MakeCopy());
 		}
 	}
 
-	if ( !m_bNoAutoClose )
+	if(!m_bNoAutoClose)
 	{
 		OnShutdownRequest();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: size the message label properly
@@ -150,14 +147,14 @@ void MessageBox::ApplySchemeSettings(IScheme *pScheme)
 	tall += 100;
 	SetSize(wide, tall);
 
-	if ( m_bShowMessageBoxOverCursor )
+	if(m_bShowMessageBoxOverCursor)
 	{
 		PlaceUnderCursor();
 		return;
 	}
 
 	// move to the middle of the screen
-	if ( m_pFrameOver )
+	if(m_pFrameOver)
 	{
 		int frameX, frameY;
 		int frameWide, frameTall;
@@ -175,47 +172,46 @@ void MessageBox::ApplySchemeSettings(IScheme *pScheme)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Put the message box into a modal state
 //			Does not suspend execution - use addActionSignal to get return value
 //-----------------------------------------------------------------------------
-void MessageBox::DoModal(Frame* pFrameOver)
+void MessageBox::DoModal(Frame *pFrameOver)
 {
 	ShowWindow(pFrameOver);
-/*
-	// move to the middle of the screen
-	// get the screen size
-	int wide, tall;
-	// get our dialog size
-	GetSize(wide, tall);
+	/*
+		// move to the middle of the screen
+		// get the screen size
+		int wide, tall;
+		// get our dialog size
+		GetSize(wide, tall);
 
-	if (pFrameOver)
-	{
-		int frameX, frameY;
-		int frameWide, frameTall;
-		pFrameOver->GetPos(frameX, frameY);
-		pFrameOver->GetSize(frameWide, frameTall);
+		if (pFrameOver)
+		{
+			int frameX, frameY;
+			int frameWide, frameTall;
+			pFrameOver->GetPos(frameX, frameY);
+			pFrameOver->GetSize(frameWide, frameTall);
 
-		SetPos((frameWide - wide) / 2 + frameX, (frameTall - tall) / 2 + frameY);
-	}
-	else
-	{
-		int swide, stall;
-		surface()->GetScreenSize(swide, stall);
-		// put the dialog in the middle of the screen
-		SetPos((swide - wide) / 2, (stall - tall) / 2);
-	}
+			SetPos((frameWide - wide) / 2 + frameX, (frameTall - tall) / 2 + frameY);
+		}
+		else
+		{
+			int swide, stall;
+			surface()->GetScreenSize(swide, stall);
+			// put the dialog in the middle of the screen
+			SetPos((swide - wide) / 2, (stall - tall) / 2);
+		}
 
-	SetVisible( true );
-	SetEnabled( true );
-	MoveToFront();
+		SetVisible( true );
+		SetEnabled( true );
+		MoveToFront();
 
-	if (m_pOkButton->IsVisible())
-		m_pOkButton->RequestFocus();
-	else	 // handle message boxes with no button
-		RequestFocus();
-*/
+		if (m_pOkButton->IsVisible())
+			m_pOkButton->RequestFocus();
+		else	 // handle message boxes with no button
+			RequestFocus();
+	*/
 	input()->SetAppModalSurface(GetVPanel());
 }
 
@@ -223,15 +219,15 @@ void MessageBox::ShowWindow(Frame *pFrameOver)
 {
 	m_pFrameOver = pFrameOver;
 
-	SetVisible( true );
-	SetEnabled( true );
+	SetVisible(true);
+	SetEnabled(true);
 	MoveToFront();
 
-	if ( m_pOkButton->IsVisible() )
+	if(m_pOkButton->IsVisible())
 	{
 		m_pOkButton->RequestFocus();
 	}
-	else	 // handle message boxes with no button
+	else // handle message boxes with no button
 	{
 		RequestFocus();
 	}
@@ -262,7 +258,7 @@ void MessageBox::PerformLayout()
 	m_pOkButton->SetSize(btnWide, btnTall);
 
 	int btnWide2 = 0, btnTall2 = 0;
-	if ( m_pCancelButton->IsVisible() )
+	if(m_pCancelButton->IsVisible())
 	{
 		m_pCancelButton->GetSize(oldWide, oldTall);
 
@@ -278,28 +274,27 @@ void MessageBox::PerformLayout()
 
 	GetSize(boxWidth, boxTall);
 
-	m_pMessageLabel->SetPos((wide/2)-(m_pMessageLabel->GetWide()/2) + x, y + 5 );
-	if ( !m_pCancelButton->IsVisible() )
+	m_pMessageLabel->SetPos((wide / 2) - (m_pMessageLabel->GetWide() / 2) + x, y + 5);
+	if(!m_pCancelButton->IsVisible())
 	{
-		m_pOkButton->SetPos((wide/2)-(m_pOkButton->GetWide()/2) + x, tall - m_pOkButton->GetTall() - 15);
+		m_pOkButton->SetPos((wide / 2) - (m_pOkButton->GetWide() / 2) + x, tall - m_pOkButton->GetTall() - 15);
 	}
 	else
 	{
-		m_pOkButton->SetPos((wide/4)-(m_pOkButton->GetWide()/2) + x, tall - m_pOkButton->GetTall() - 15);
-		m_pCancelButton->SetPos((3*wide/4)-(m_pOkButton->GetWide()/2) + x, tall - m_pOkButton->GetTall() - 15);
+		m_pOkButton->SetPos((wide / 4) - (m_pOkButton->GetWide() / 2) + x, tall - m_pOkButton->GetTall() - 15);
+		m_pCancelButton->SetPos((3 * wide / 4) - (m_pOkButton->GetWide() / 2) + x, tall - m_pOkButton->GetTall() - 15);
 	}
 
 	BaseClass::PerformLayout();
 	GetSize(boxWidth, boxTall);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Set a string command to be sent when the OK button is pressed.
 //-----------------------------------------------------------------------------
 void MessageBox::SetCommand(const char *command)
 {
-	if (m_OkCommand)
+	if(m_OkCommand)
 	{
 		m_OkCommand->deleteThis();
 	}
@@ -311,7 +306,7 @@ void MessageBox::SetCommand(const char *command)
 //-----------------------------------------------------------------------------
 void MessageBox::SetCommand(KeyValues *command)
 {
-	if (m_OkCommand)
+	if(m_OkCommand)
 	{
 		m_OkCommand->deleteThis();
 	}
@@ -353,7 +348,6 @@ void MessageBox::SetOKButtonText(const wchar_t *wszButtonText)
 	InvalidateLayout();
 }
 
-
 //-----------------------------------------------------------------------------
 // Cancel button (off by default)
 //-----------------------------------------------------------------------------
@@ -375,15 +369,14 @@ void MessageBox::SetCancelButtonText(const wchar_t *wszButtonText)
 	InvalidateLayout();
 }
 
-void MessageBox::SetCancelCommand( KeyValues *command )
+void MessageBox::SetCancelCommand(KeyValues *command)
 {
-	if (m_CancelCommand)
+	if(m_CancelCommand)
 	{
 		m_CancelCommand->deleteThis();
 	}
 	m_CancelCommand = command;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Toggles visibility of the close box.

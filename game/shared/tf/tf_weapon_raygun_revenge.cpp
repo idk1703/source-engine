@@ -18,33 +18,30 @@
 #include "tf_fx.h"
 #endif
 
-
 //============================
-IMPLEMENT_NETWORKCLASS_ALIASED( TFDRGPomson, DT_WeaponDRGPomson )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFDRGPomson, DT_WeaponDRGPomson)
 
-BEGIN_NETWORK_TABLE( CTFDRGPomson, DT_WeaponDRGPomson )
+BEGIN_NETWORK_TABLE(CTFDRGPomson, DT_WeaponDRGPomson)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFDRGPomson )
+BEGIN_PREDICTION_DATA(CTFDRGPomson)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_drg_pomson, CTFDRGPomson );
-PRECACHE_WEAPON_REGISTER( tf_weapon_drg_pomson );
-
-
+LINK_ENTITY_TO_CLASS(tf_weapon_drg_pomson, CTFDRGPomson);
+PRECACHE_WEAPON_REGISTER(tf_weapon_drg_pomson);
 
 //============================
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFRaygun, DT_WeaponRaygun )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFRaygun, DT_WeaponRaygun)
 
-BEGIN_NETWORK_TABLE( CTFRaygun, DT_WeaponRaygun )
+BEGIN_NETWORK_TABLE(CTFRaygun, DT_WeaponRaygun)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFRaygun )
+BEGIN_PREDICTION_DATA(CTFRaygun)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_raygun, CTFRaygun );
-PRECACHE_WEAPON_REGISTER( tf_weapon_raygun );
+LINK_ENTITY_TO_CLASS(tf_weapon_raygun, CTFRaygun);
+PRECACHE_WEAPON_REGISTER(tf_weapon_raygun);
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -60,9 +57,9 @@ CTFRaygun::CTFRaygun()
 //-----------------------------------------------------------------------------
 void CTFRaygun::Precache()
 {
-	PrecacheParticleSystem( "drg_bison_impact" );
-	PrecacheParticleSystem( "drg_bison_idle" );
-	PrecacheParticleSystem( "drg_bison_muzzleflash" );
+	PrecacheParticleSystem("drg_bison_impact");
+	PrecacheParticleSystem("drg_bison_idle");
+	PrecacheParticleSystem("drg_bison_muzzleflash");
 
 	BaseClass::Precache();
 }
@@ -70,7 +67,7 @@ void CTFRaygun::Precache()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFRaygun::GetMuzzleFlashParticleEffect( void )
+const char *CTFRaygun::GetMuzzleFlashParticleEffect(void)
 {
 	return "drg_bison_muzzleflash";
 }
@@ -78,9 +75,9 @@ const char *CTFRaygun::GetMuzzleFlashParticleEffect( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRaygun::PrimaryAttack( void )
+void CTFRaygun::PrimaryAttack(void)
 {
-	if ( !Energy_HasEnergy() )
+	if(!Energy_HasEnergy())
 		return;
 
 	BaseClass::PrimaryAttack();
@@ -89,7 +86,7 @@ void CTFRaygun::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRaygun::ModifyProjectile( CBaseEntity* pProj )
+void CTFRaygun::ModifyProjectile(CBaseEntity *pProj)
 {
 #ifdef GAME_DLL
 	/*
@@ -108,7 +105,7 @@ void CTFRaygun::ModifyProjectile( CBaseEntity* pProj )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CTFRaygun::GetProgress( void )
+float CTFRaygun::GetProgress(void)
 {
 	return Energy_GetEnergy() / ENERGY_WEAPON_MAX_CHARGE;
 }
@@ -117,32 +114,33 @@ float CTFRaygun::GetProgress( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRaygun::DispatchMuzzleFlash( const char* effectName, C_BaseEntity* pAttachEnt )
+void CTFRaygun::DispatchMuzzleFlash(const char *effectName, C_BaseEntity *pAttachEnt)
 {
-	DispatchParticleEffect( effectName, PATTACH_POINT_FOLLOW, pAttachEnt, "muzzle", GetParticleColor( 1 ), GetParticleColor( 2 ) );
+	DispatchParticleEffect(effectName, PATTACH_POINT_FOLLOW, pAttachEnt, "muzzle", GetParticleColor(1),
+						   GetParticleColor(2));
 }
 #endif
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRaygun::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CTFRaygun::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
 #ifdef CLIENT_DLL
 	m_bEffectsThinking = false;
 #endif
 
-	return BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster(pSwitchingTo);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRaygun::Deploy( void )
+bool CTFRaygun::Deploy(void)
 {
 #ifdef CLIENT_DLL
 	m_bEffectsThinking = true;
-	SetContextThink( &CTFRaygun::ClientEffectsThink, gpGlobals->curtime + rand() % 5, "EFFECTS_THINK" );
+	SetContextThink(&CTFRaygun::ClientEffectsThink, gpGlobals->curtime + rand() % 5, "EFFECTS_THINK");
 #endif
 
 	return BaseClass::Deploy();
@@ -151,16 +149,16 @@ bool CTFRaygun::Deploy( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRaygun::ItemPostFrame( void )
+void CTFRaygun::ItemPostFrame(void)
 {
 	BaseClass::ItemPostFrame();
 
 #ifdef CLIENT_DLL
 
-	if ( !m_bEffectsThinking )
+	if(!m_bEffectsThinking)
 	{
 		m_bEffectsThinking = true;
-		SetContextThink( &CTFRaygun::ClientEffectsThink, gpGlobals->curtime + rand() % 5, "EFFECTS_THINK" );
+		SetContextThink(&CTFRaygun::ClientEffectsThink, gpGlobals->curtime + rand() % 5, "EFFECTS_THINK");
 	}
 #endif
 }
@@ -169,29 +167,29 @@ void CTFRaygun::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRaygun::ClientEffectsThink( void )
+void CTFRaygun::ClientEffectsThink(void)
 {
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	if ( !pPlayer->IsLocalPlayer() )
+	if(!pPlayer->IsLocalPlayer())
 		return;
 
-	if ( !pPlayer->GetViewModel() )
+	if(!pPlayer->GetViewModel())
 		return;
 
-	if ( !m_bEffectsThinking )
+	if(!m_bEffectsThinking)
 		return;
 
-	SetContextThink( &CTFRaygun::ClientEffectsThink, gpGlobals->curtime + 2 + rand() % 5, "EFFECTS_THINK" );
+	SetContextThink(&CTFRaygun::ClientEffectsThink, gpGlobals->curtime + 2 + rand() % 5, "EFFECTS_THINK");
 
-	ParticleProp()->Init( this );
-	CNewParticleEffect* pEffect = ParticleProp()->Create( "drg_bison_idle", PATTACH_POINT_FOLLOW, "muzzle" );
-	if ( pEffect )
+	ParticleProp()->Init(this);
+	CNewParticleEffect *pEffect = ParticleProp()->Create("drg_bison_idle", PATTACH_POINT_FOLLOW, "muzzle");
+	if(pEffect)
 	{
-		pEffect->SetControlPoint( CUSTOM_COLOR_CP1, GetParticleColor( 1 ) );
-		pEffect->SetControlPoint( CUSTOM_COLOR_CP2, GetParticleColor( 2 ) );
+		pEffect->SetControlPoint(CUSTOM_COLOR_CP1, GetParticleColor(1));
+		pEffect->SetControlPoint(CUSTOM_COLOR_CP2, GetParticleColor(2));
 	}
 }
 #endif
@@ -199,7 +197,7 @@ void CTFRaygun::ClientEffectsThink( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CTFRaygun::GetProjectileSpeed( void )
+float CTFRaygun::GetProjectileSpeed(void)
 {
 	return 1200.f;
 }
@@ -207,7 +205,7 @@ float CTFRaygun::GetProjectileSpeed( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CTFRaygun::GetProjectileGravity( void )
+float CTFRaygun::GetProjectileGravity(void)
 {
 	return 0.f;
 }
@@ -215,7 +213,7 @@ float CTFRaygun::GetProjectileGravity( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRaygun::IsViewModelFlipped( void )
+bool CTFRaygun::IsViewModelFlipped(void)
 {
 	return !BaseClass::IsViewModelFlipped();
 }

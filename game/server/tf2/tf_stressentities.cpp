@@ -11,17 +11,16 @@
 #include "tf_shareddefs.h"
 #include "plasmaprojectile.h"
 
-
 // ------------------------------------------------------------------------------------ //
 // Functions to create random entities.
 // ------------------------------------------------------------------------------------ //
 
-CBaseEntity* CreateSignalFlare()
+CBaseEntity *CreateSignalFlare()
 {
 	CBaseEntity *pLocalPlayer = UTIL_GetLocalPlayer();
-	if ( pLocalPlayer )
+	if(pLocalPlayer)
 	{
-		return CSignalFlare::Create( GetRandomSpot(), QAngle( 0, 0, 0 ), pLocalPlayer, 3 );
+		return CSignalFlare::Create(GetRandomSpot(), QAngle(0, 0, 0), pLocalPlayer, 3);
 	}
 	else
 	{
@@ -29,11 +28,10 @@ CBaseEntity* CreateSignalFlare()
 	}
 }
 
-
-CBaseEntity* CreateResourceChunk()
+CBaseEntity *CreateResourceChunk()
 {
-	CBaseEntity *pChunk = MoveToRandomSpot( CreateEntityByName( "resource_chunk" ) );
-	if ( pChunk )
+	CBaseEntity *pChunk = MoveToRandomSpot(CreateEntityByName("resource_chunk"));
+	if(pChunk)
 	{
 		pChunk->Spawn();
 	}
@@ -41,11 +39,10 @@ CBaseEntity* CreateResourceChunk()
 	return pChunk;
 }
 
-
-CBaseEntity* CreateResourceBox()
+CBaseEntity *CreateResourceBox()
 {
-	CBaseEntity *pRet = MoveToRandomSpot( CreateEntityByName( "obj_box" ) );
-	if ( pRet )
+	CBaseEntity *pRet = MoveToRandomSpot(CreateEntityByName("obj_box"));
+	if(pRet)
 	{
 		pRet->Spawn();
 	}
@@ -53,23 +50,19 @@ CBaseEntity* CreateResourceBox()
 	return pRet;
 }
 
-CBaseEntity* CreatePlasmaProjectile()
+CBaseEntity *CreatePlasmaProjectile()
 {
 	CBaseEntity *pLocalPlayer = UTIL_GetLocalPlayer();
-	if ( pLocalPlayer )
+	if(pLocalPlayer)
 	{
 		Vector vForward;
-		vForward.Random(-1,1);
-		VectorNormalize( vForward );
+		vForward.Random(-1, 1);
+		VectorNormalize(vForward);
 
-		CBasePlasmaProjectile *pRet = CBasePlasmaProjectile::Create(
-			Vector(0,0,0),
-			vForward,
-			0,
-			pLocalPlayer );
+		CBasePlasmaProjectile *pRet = CBasePlasmaProjectile::Create(Vector(0, 0, 0), vForward, 0, pLocalPlayer);
 
-		if ( pRet )
-			MoveToRandomSpot( pRet );
+		if(pRet)
+			MoveToRandomSpot(pRet);
 
 		return pRet;
 	}
@@ -77,28 +70,27 @@ CBaseEntity* CreatePlasmaProjectile()
 	return NULL;
 }
 
-CBaseEntity* CreatePlasmaShot()
+CBaseEntity *CreatePlasmaShot()
 {
-	CBaseEntity *pEnt = MoveToRandomSpot( CreateEntityByName( "base_plasmaprojectile" ) );
-	if ( pEnt )
+	CBaseEntity *pEnt = MoveToRandomSpot(CreateEntityByName("base_plasmaprojectile"));
+	if(pEnt)
 	{
-		CBasePlasmaProjectile *pRet = dynamic_cast< CBasePlasmaProjectile* >( pEnt );
-		if ( pRet )
+		CBasePlasmaProjectile *pRet = dynamic_cast<CBasePlasmaProjectile *>(pEnt);
+		if(pRet)
 		{
 			return pRet;
 		}
 		else
 		{
-			UTIL_Remove( pEnt );
+			UTIL_Remove(pEnt);
 		}
 	}
 
 	return NULL;
 }
 
-
-REGISTER_STRESS_ENTITY( CreateResourceChunk );
-REGISTER_STRESS_ENTITY( CreateResourceBox );
-REGISTER_STRESS_ENTITY( CreatePlasmaProjectile );
-REGISTER_STRESS_ENTITY( CreatePlasmaShot );
-REGISTER_STRESS_ENTITY( CreateSignalFlare );
+REGISTER_STRESS_ENTITY(CreateResourceChunk);
+REGISTER_STRESS_ENTITY(CreateResourceBox);
+REGISTER_STRESS_ENTITY(CreatePlasmaProjectile);
+REGISTER_STRESS_ENTITY(CreatePlasmaShot);
+REGISTER_STRESS_ENTITY(CreateSignalFlare);

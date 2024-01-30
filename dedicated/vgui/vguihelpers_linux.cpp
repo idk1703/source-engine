@@ -5,34 +5,18 @@
 //=============================================================================//
 #include "interface.h"
 
-bool InitializeVGui(CreateInterfaceFn *factorylist, int factorycount)
-{
-}
+bool InitializeVGui(CreateInterfaceFn *factorylist, int factorycount) {}
 
-int StartVGUI()
-{
-}
+int StartVGUI() {}
 
-void StopVGUI()
-{
-}
+void StopVGUI() {}
 
-void RunVGUIFrame()
-{
-}
+void RunVGUIFrame() {}
 
-bool VGUIIsRunning()
-{
-}
+bool VGUIIsRunning() {}
 
-bool VGUIIsStopping()
-{
-}
+bool VGUIIsStopping() {}
 
-bool VGUIIsInConfig()
-{
-}
+bool VGUIIsInConfig() {}
 
-void VGUIFinishedConfig()
-{
-}
+void VGUIFinishedConfig() {}

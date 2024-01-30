@@ -13,7 +13,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -38,12 +37,11 @@ void BoundBox::ResetBounds(void)
 	bmaxs[0] = bmaxs[1] = bmaxs[2] = -COORD_NOTINIT;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pt -
 //-----------------------------------------------------------------------------
-void BoundBox::UpdateBounds(const Vector& pt)
+void BoundBox::UpdateBounds(const Vector &pt)
 {
 	if(pt[0] < bmins[0])
 		bmins[0] = pt[0];
@@ -60,13 +58,12 @@ void BoundBox::UpdateBounds(const Vector& pt)
 		bmaxs[2] = pt[2];
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : bmins -
 //			bmaxs -
 //-----------------------------------------------------------------------------
-void BoundBox::UpdateBounds(const Vector& mins, const Vector& maxs)
+void BoundBox::UpdateBounds(const Vector &mins, const Vector &maxs)
 {
 	if(mins[0] < bmins[0])
 		bmins[0] = mins[0];
@@ -83,7 +80,6 @@ void BoundBox::UpdateBounds(const Vector& mins, const Vector& maxs)
 		bmaxs[2] = maxs[2];
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pBox -
@@ -93,34 +89,31 @@ void BoundBox::UpdateBounds(const BoundBox *pBox)
 	UpdateBounds(pBox->bmins, pBox->bmaxs);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : ptdest -
 //-----------------------------------------------------------------------------
-void BoundBox::GetBoundsCenter(Vector& ptdest)
+void BoundBox::GetBoundsCenter(Vector &ptdest)
 {
-	ptdest = (bmins + bmaxs)/2.0f;
+	ptdest = (bmins + bmaxs) / 2.0f;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pt -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool BoundBox::ContainsPoint(const Vector& pt) const
+bool BoundBox::ContainsPoint(const Vector &pt) const
 {
-	for (int i = 0; i < 3; i++)
+	for(int i = 0; i < 3; i++)
 	{
-		if (pt[i] < bmins[i] || pt[i] > bmaxs[i])
+		if(pt[i] < bmins[i] || pt[i] > bmaxs[i])
 		{
-			return(false);
+			return (false);
 		}
 	}
-	return(true);
+	return (true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -128,26 +121,24 @@ bool BoundBox::ContainsPoint(const Vector& pt) const
 //			pfMaxs -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool BoundBox::IsIntersectingBox(const Vector& pfMins, const Vector& pfMaxs) const
+bool BoundBox::IsIntersectingBox(const Vector &pfMins, const Vector &pfMaxs) const
 {
-	if ((bmins[0] >= pfMaxs[0]) || (bmaxs[0] <= pfMins[0]))
+	if((bmins[0] >= pfMaxs[0]) || (bmaxs[0] <= pfMins[0]))
 	{
-		return(false);
-
+		return (false);
 	}
-	if ((bmins[1] >= pfMaxs[1]) || (bmaxs[1] <= pfMins[1]))
+	if((bmins[1] >= pfMaxs[1]) || (bmaxs[1] <= pfMins[1]))
 	{
-		return(false);
-	}
-
-	if ((bmins[2] >= pfMaxs[2]) || (bmaxs[2] <= pfMins[2]))
-	{
-		return(false);
+		return (false);
 	}
 
-	return(true);
+	if((bmins[2] >= pfMaxs[2]) || (bmaxs[2] <= pfMins[2]))
+	{
+		return (false);
+	}
+
+	return (true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -155,55 +146,52 @@ bool BoundBox::IsIntersectingBox(const Vector& pfMins, const Vector& pfMaxs) con
 //			pfMaxs -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool BoundBox::IsInsideBox(const Vector& pfMins, const Vector& pfMaxs) const
+bool BoundBox::IsInsideBox(const Vector &pfMins, const Vector &pfMaxs) const
 {
-	if ((bmins[0] < pfMins[0]) || (bmaxs[0] > pfMaxs[0]))
+	if((bmins[0] < pfMins[0]) || (bmaxs[0] > pfMaxs[0]))
 	{
-		return(false);
+		return (false);
 	}
 
-	if ((bmins[1] < pfMins[1]) || (bmaxs[1] > pfMaxs[1]))
+	if((bmins[1] < pfMins[1]) || (bmaxs[1] > pfMaxs[1]))
 	{
-		return(false);
+		return (false);
 	}
 
-	if ((bmins[2] < pfMins[2]) || (bmaxs[2] > pfMaxs[2]))
+	if((bmins[2] < pfMins[2]) || (bmaxs[2] > pfMaxs[2]))
 	{
-		return(false);
+		return (false);
 	}
 
-	return(true);
+	return (true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether this bounding box is valid, ie maxs >= mins.
 //-----------------------------------------------------------------------------
 bool BoundBox::IsValidBox(void) const
 {
-	for (int i = 0; i < 3; i++)
+	for(int i = 0; i < 3; i++)
 	{
-		if (bmins[i] > bmaxs[i])
+		if(bmins[i] > bmaxs[i])
 		{
-			return(false);
+			return (false);
 		}
 	}
 
-	return(true);
+	return (true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : size -
 //-----------------------------------------------------------------------------
-void BoundBox::GetBoundsSize(Vector& size)
+void BoundBox::GetBoundsSize(Vector &size)
 {
 	size[0] = bmaxs[0] - bmins[0];
 	size[1] = bmaxs[1] - bmins[1];
 	size[2] = bmaxs[2] - bmins[2];
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -213,9 +201,8 @@ void BoundBox::GetBoundsSize(Vector& size)
 //-----------------------------------------------------------------------------
 static int Snap(/*int*/ float iValue, int iGridSize)
 {
-	return (int)(V_rint(iValue/iGridSize) * iGridSize);
+	return (int)(V_rint(iValue / iGridSize) * iGridSize);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -230,11 +217,10 @@ void BoundBox::SnapToGrid(int iGridSize)
 
 	for(int i = 0; i < 3; i++)
 	{
-		bmins[i] = (float)Snap(/* YWB (int)*/bmins[i], iGridSize);
+		bmins[i] = (float)Snap(/* YWB (int)*/ bmins[i], iGridSize);
 		bmaxs[i] = bmins[i] + size[i];
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -250,18 +236,18 @@ void BoundBox::Rotate90(int axis)
 
 	switch(axis)
 	{
-	case AXIS_Z:
-		e1 = AXIS_X;
-		e2 = AXIS_Y;
-		break;
-	case AXIS_X:
-		e1 = AXIS_Y;
-		e2 = AXIS_Z;
-		break;
-	case AXIS_Y:
-		e1 = AXIS_X;
-		e2 = AXIS_Z;
-		break;
+		case AXIS_Z:
+			e1 = AXIS_X;
+			e2 = AXIS_Y;
+			break;
+		case AXIS_X:
+			e1 = AXIS_Y;
+			e2 = AXIS_Z;
+			break;
+		case AXIS_Y:
+			e1 = AXIS_X;
+			e2 = AXIS_Z;
+			break;
 	}
 
 	float tmp1, tmp2;

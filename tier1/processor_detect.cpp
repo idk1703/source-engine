@@ -6,21 +6,33 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#if defined( _X360 ) || defined( WIN64 )
+#if defined(_X360) || defined(WIN64)
 
-bool CheckMMXTechnology(void) { return false; }
-bool CheckSSETechnology(void) { return false; }
-bool CheckSSE2Technology(void) { return false; }
-bool Check3DNowTechnology(void) { return false; }
+bool CheckMMXTechnology(void)
+{
+	return false;
+}
+bool CheckSSETechnology(void)
+{
+	return false;
+}
+bool CheckSSE2Technology(void)
+{
+	return false;
+}
+bool Check3DNowTechnology(void)
+{
+	return false;
+}
 
-#elif defined( _WIN32 ) && !defined( _X360 )
+#elif defined(_WIN32) && !defined(_X360)
 
-#pragma optimize( "", off )
-#pragma warning( disable: 4800 ) //'int' : forcing value to bool 'true' or 'false' (performance warning)
+#pragma optimize("", off)
+#pragma warning(disable : 4800) //'int' : forcing value to bool 'true' or 'false' (performance warning)
 
 // stuff from windows.h
 #ifndef EXCEPTION_EXECUTE_HANDLER
-#define EXCEPTION_EXECUTE_HANDLER       1
+#define EXCEPTION_EXECUTE_HANDLER 1
 #endif
 
 bool CheckMMXTechnology(void)
@@ -37,11 +49,11 @@ bool CheckMMXTechnology(void)
 		_asm
 		{
 #ifdef CPUID
-			xor edx, edx	// Clue the compiler that EDX is about to be used.
+			xor edx, edx // Clue the compiler that EDX is about to be used.
 #endif
-			mov eax, 1      // set up CPUID to return processor version and features
-							//      0 = vendor string, 1 = version info, 2 = cache info
-			CPUID           // code bytes = 0fh,  0a2h
+			mov eax, 1	// set up CPUID to return processor version and features
+			  //      0 = vendor string, 1 = version info, 2 = cache info
+			CPUID // code bytes = 0fh,  0a2h
 			mov RegEDX, edx // features returned in edx
 		}
 	}
@@ -51,9 +63,9 @@ bool CheckMMXTechnology(void)
 	}
 
 	// If CPUID not supported, then certainly no MMX extensions.
-	if (retval)
+	if(retval)
 	{
-		if (RegEDX & 0x800000)          // bit 23 is set for MMX technology
+		if(RegEDX & 0x800000) // bit 23 is set for MMX technology
 		{
 			__try
 			{
@@ -67,7 +79,7 @@ bool CheckMMXTechnology(void)
 		}
 
 		else
-			retval = false;           // processor supports CPUID but does not support MMX technology
+			retval = false; // processor supports CPUID but does not support MMX technology
 
 		// if retval == 0 here, it means the processor has MMX technology but
 		// floating-point emulation is on; so MMX technology is unavailable
@@ -95,12 +107,12 @@ bool CheckSSETechnology(void)
 		_asm
 		{
 #ifdef CPUID
-			xor edx, edx			// Clue the compiler that EDX is about to be used.
+			xor edx, edx // Clue the compiler that EDX is about to be used.
 #endif
-			mov eax, 1				// set up CPUID to return processor version and features
-									//      0 = vendor string, 1 = version info, 2 = cache info
-			CPUID					// code bytes = 0fh,  0a2h
-			mov RegEDX, edx			// features returned in edx
+			mov eax, 1	// set up CPUID to return processor version and features
+			  //      0 = vendor string, 1 = version info, 2 = cache info
+			CPUID // code bytes = 0fh,  0a2h
+			mov RegEDX, edx // features returned in edx
 		}
 	}
 	__except(EXCEPTION_EXECUTE_HANDLER)
@@ -109,10 +121,10 @@ bool CheckSSETechnology(void)
 	}
 
 	// If CPUID not supported, then certainly no SSE extensions.
-	if (retval)
+	if(retval)
 	{
 		// Do we have support for SSE in this processor?
-		if ( RegEDX & 0x2000000L )		// bit 25 is set for SSE technology
+		if(RegEDX & 0x2000000L) // bit 25 is set for SSE technology
 		{
 			// Make sure that SSE is supported by executing an inline SSE instruction
 
@@ -161,12 +173,12 @@ bool CheckSSE2Technology(void)
 		_asm
 		{
 #ifdef CPUID
-			xor edx, edx			// Clue the compiler that EDX is about to be used.
+			xor edx, edx // Clue the compiler that EDX is about to be used.
 #endif
-			mov eax, 1				// set up CPUID to return processor version and features
-									//      0 = vendor string, 1 = version info, 2 = cache info
-			CPUID					// code bytes = 0fh,  0a2h
-			mov RegEDX, edx			// features returned in edx
+			mov eax, 1	// set up CPUID to return processor version and features
+			  //      0 = vendor string, 1 = version info, 2 = cache info
+			CPUID // code bytes = 0fh,  0a2h
+			mov RegEDX, edx // features returned in edx
 		}
 	}
 	__except(EXCEPTION_EXECUTE_HANDLER)
@@ -175,10 +187,10 @@ bool CheckSSE2Technology(void)
 	}
 
 	// If CPUID not supported, then certainly no SSE extensions.
-	if (retval)
+	if(retval)
 	{
 		// Do we have support for SSE in this processor?
-		if ( RegEDX & 0x04000000 )		// bit 26 is set for SSE2 technology
+		if(RegEDX & 0x04000000) // bit 26 is set for SSE2 technology
 		{
 			// Make sure that SSE is supported by executing an inline SSE instruction
 
@@ -223,10 +235,10 @@ bool Check3DNowTechnology(void)
 #ifdef CPUID
 //			xor edx, edx			// Clue the compiler that EDX is about to be used.
 #endif
-			mov eax, 0x80000000     // setup CPUID to return whether AMD >0x80000000 function are supported.
-									// 0x80000000 = Highest 0x80000000+ function, 0x80000001 = 3DNow support
-			CPUID					// code bytes = 0fh,  0a2h
-			mov RegEAX, eax			// result returned in eax
+			mov eax, 0x80000000 // setup CPUID to return whether AMD >0x80000000 function are supported.
+					   // 0x80000000 = Highest 0x80000000+ function, 0x80000001 = 3DNow support
+			CPUID // code bytes = 0fh,  0a2h
+			mov RegEAX, eax		   // result returned in eax
 		}
 	}
 	__except(EXCEPTION_EXECUTE_HANDLER)
@@ -235,19 +247,19 @@ bool Check3DNowTechnology(void)
 	}
 
 	// If CPUID not supported, then there is definitely no 3DNow support
-	if (retval)
+	if(retval)
 	{
 		// Are there any "higher" AMD CPUID functions?
-		if (RegEAX > 0x80000000L )
+		if(RegEAX > 0x80000000L)
 		{
 			__try
 			{
-			_asm
+				_asm
 				{
-					mov			eax, 0x80000001		// setup to test for CPU features
-					CPUID							// code bytes = 0fh,  0a2h
-					shr			edx, 31				// If bit 31 is set, we have 3DNow support!
-					mov			retval, edx			// Save the return value for end of function
+					mov			eax, 0x80000001 // setup to test for CPU features
+					CPUID // code bytes = 0fh,  0a2h
+					shr			edx, 31 // If bit 31 is set, we have 3DNow support!
+					mov			retval, edx // Save the return value for end of function
 				}
 			}
 			__except(EXCEPTION_EXECUTE_HANDLER)
@@ -269,6 +281,6 @@ bool Check3DNowTechnology(void)
 	return retval;
 }
 
-#pragma optimize( "", on )
+#pragma optimize("", on)
 
 #endif // _WIN32

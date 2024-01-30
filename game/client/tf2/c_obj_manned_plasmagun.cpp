@@ -12,15 +12,17 @@
 //-----------------------------------------------------------------------------
 class C_ObjectMannedPlasmagun : public C_ObjectBaseMannedGun
 {
-	DECLARE_CLASS( C_ObjectMannedPlasmagun, C_ObjectBaseMannedGun );
+	DECLARE_CLASS(C_ObjectMannedPlasmagun, C_ObjectBaseMannedGun);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_ObjectMannedPlasmagun() {}
 
 private:
-	C_ObjectMannedPlasmagun( const C_ObjectMannedPlasmagun & ); // not defined, not accessible
+	C_ObjectMannedPlasmagun(const C_ObjectMannedPlasmagun &); // not defined, not accessible
 };
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectMannedPlasmagun, DT_ObjectMannedPlasmagun, CObjectMannedPlasmagun)
-END_RECV_TABLE()
+END_RECV_TABLE
+()

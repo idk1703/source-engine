@@ -14,7 +14,7 @@ void initOSVersion()
 {
 	OSVERSIONINFO versioninfo;
 	versioninfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	if (GetVersionEx(&versioninfo))
+	if(GetVersionEx(&versioninfo))
 	{
 		switch(versioninfo.dwPlatformId)
 		{
@@ -39,7 +39,7 @@ void initOSVersion()
 
 eOSVersion getOSVersion()
 {
-	if (s_OS == eUninitialized)
+	if(s_OS == eUninitialized)
 	{
 		initOSVersion();
 	}

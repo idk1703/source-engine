@@ -18,12 +18,16 @@
 class CViewportClientSystem : public IGameSystem
 {
 public:
-	CViewportClientSystem()
-	{
-	}
+	CViewportClientSystem() {}
 
-	virtual char const *Name() { return "CViewportClientSystem"; }
-	virtual bool IsPerFrame() { return false; }
+	virtual char const *Name()
+	{
+		return "CViewportClientSystem";
+	}
+	virtual bool IsPerFrame()
+	{
+		return false;
+	}
 
 	// Init, shutdown
 	virtual bool Init()
@@ -41,7 +45,6 @@ public:
 
 	virtual void OnSave() {}
 	virtual void OnRestore() {}
-
 };
 
 static CViewportClientSystem g_ViewportClientSystem;

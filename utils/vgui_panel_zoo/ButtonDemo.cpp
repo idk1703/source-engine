@@ -11,22 +11,20 @@
 #include <Keyvalues.h>
 #include <vgui_controls/Button.h>
 
-
 using namespace vgui;
 
-
-class ButtonDemo: public DemoPage
+class ButtonDemo : public DemoPage
 {
-	public:
-		ButtonDemo(Panel *parent, const char *name);
-		~ButtonDemo();
+public:
+	ButtonDemo(Panel *parent, const char *name);
+	~ButtonDemo();
 
-		void OnButtonClicked();
+	void OnButtonClicked();
 
-	private:
-		Button *m_pButton;
+private:
+	Button *m_pButton;
 
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -43,16 +41,13 @@ ButtonDemo::ButtonDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 	// Install a command that will be executed when the button is pressed
 	// Here we use a KeyValues command, this is mapped using the Message map
 	// below to a function.
-	m_pButton->SetCommand(new KeyValues ("ButtonClicked"));
-
+	m_pButton->SetCommand(new KeyValues("ButtonClicked"));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ButtonDemo::~ButtonDemo()
-{
-}
+ButtonDemo::~ButtonDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
@@ -62,18 +57,13 @@ void ButtonDemo::OnButtonClicked()
 	ivgui()->DPrintf("Button was clicked.\n");
 }
 
-
-
-MessageMapItem_t ButtonDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( ButtonDemo, "ButtonClicked", OnButtonClicked ),
+MessageMapItem_t ButtonDemo::m_MessageMap[] = {
+	MAP_MESSAGE(ButtonDemo, "ButtonClicked", OnButtonClicked),
 };
 
 IMPLEMENT_PANELMAP(ButtonDemo, DemoPage);
 
-
-
-Panel* ButtonDemo_Create(Panel *parent)
+Panel *ButtonDemo_Create(Panel *parent)
 {
 	return new ButtonDemo(parent, "ButtonDemo");
 }

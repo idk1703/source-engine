@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/v2/tf_store_page_maps2.h"
 #include "store/v2/tf_store_mapstamps_info_dialog.h"
@@ -16,8 +15,8 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePage_Maps2::CTFStorePage_Maps2( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData )
-:	BaseClass( parent, pPageData, "Resource/UI/econ/store/v2/StorePreviewItemPanel_Maps.res" )
+CTFStorePage_Maps2::CTFStorePage_Maps2(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData)
+	: BaseClass(parent, pPageData, "Resource/UI/econ/store/v2/StorePreviewItemPanel_Maps.res")
 {
 }
 
@@ -28,21 +27,21 @@ void CTFStorePage_Maps2::OnPageShow()
 {
 	BaseClass::OnPageShow();
 
-	SetDetailsVisible( false );
+	SetDetailsVisible(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFStorePage_Maps2::OnCommand( const char *command )
+void CTFStorePage_Maps2::OnCommand(const char *command)
 {
-	if ( !V_strnicmp( command, "maps_learnmore", 14 ) )
+	if(!V_strnicmp(command, "maps_learnmore", 14))
 	{
 		DisplayMapStampsDialog();
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
@@ -51,9 +50,9 @@ void CTFStorePage_Maps2::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 void CTFStorePage_Maps2::DisplayMapStampsDialog()
 {
-	CTFMapStampsInfoDialog *pDlg = vgui::SETUP_PANEL( new CTFMapStampsInfoDialog( EconUI()->GetStorePanel() ) );
-	pDlg->SetVisible( true );
-	pDlg->InvalidateLayout( true, true );
+	CTFMapStampsInfoDialog *pDlg = vgui::SETUP_PANEL(new CTFMapStampsInfoDialog(EconUI()->GetStorePanel()));
+	pDlg->SetVisible(true);
+	pDlg->InvalidateLayout(true, true);
 	pDlg->SetKeyBoardInputEnabled(true);
 	pDlg->SetMouseInputEnabled(true);
 }

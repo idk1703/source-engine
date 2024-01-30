@@ -14,44 +14,44 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void ShellEjectCallback( const CEffectData &data )
+void ShellEjectCallback(const CEffectData &data)
 {
 	// Use the gun angles to orient the shell
 	IClientRenderable *pRenderable = data.GetRenderable();
-	if ( pRenderable )
+	if(pRenderable)
 	{
-		tempents->EjectBrass( data.m_vOrigin, data.m_vAngles, pRenderable->GetRenderAngles(), 0 );
+		tempents->EjectBrass(data.m_vOrigin, data.m_vAngles, pRenderable->GetRenderAngles(), 0);
 	}
 }
 
-DECLARE_CLIENT_EFFECT( "ShellEject", ShellEjectCallback );
+DECLARE_CLIENT_EFFECT("ShellEject", ShellEjectCallback);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void RifleShellEjectCallback( const CEffectData &data )
+void RifleShellEjectCallback(const CEffectData &data)
 {
 	// Use the gun angles to orient the shell
 	IClientRenderable *pRenderable = data.GetRenderable();
-	if ( pRenderable )
+	if(pRenderable)
 	{
-		tempents->EjectBrass( data.m_vOrigin, data.m_vAngles, pRenderable->GetRenderAngles(), 1 );
+		tempents->EjectBrass(data.m_vOrigin, data.m_vAngles, pRenderable->GetRenderAngles(), 1);
 	}
 }
 
-DECLARE_CLIENT_EFFECT( "RifleShellEject", RifleShellEjectCallback );
+DECLARE_CLIENT_EFFECT("RifleShellEject", RifleShellEjectCallback);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void ShotgunShellEjectCallback( const CEffectData &data )
+void ShotgunShellEjectCallback(const CEffectData &data)
 {
 	// Use the gun angles to orient the shell
 	IClientRenderable *pRenderable = data.GetRenderable();
-	if ( pRenderable )
+	if(pRenderable)
 	{
-		tempents->EjectBrass( data.m_vOrigin, data.m_vAngles, pRenderable->GetRenderAngles(), 2 );
+		tempents->EjectBrass(data.m_vOrigin, data.m_vAngles, pRenderable->GetRenderAngles(), 2);
 	}
 }
 
-DECLARE_CLIENT_EFFECT( "ShotgunShellEject", ShotgunShellEjectCallback );
+DECLARE_CLIENT_EFFECT("ShotgunShellEject", ShotgunShellEjectCallback);

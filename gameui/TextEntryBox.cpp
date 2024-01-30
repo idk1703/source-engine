@@ -17,21 +17,23 @@
 #include <tier0/memdbgon.h>
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
 using namespace vgui;
 
 //--------------------------------------------------------------------------------------------------------------
-CTextEntryBox::CTextEntryBox(const char *title, const char *queryText, const char *entryText, bool isCvar, vgui::Panel *parent) : QueryBox(title, queryText,parent)
+CTextEntryBox::CTextEntryBox(const char *title, const char *queryText, const char *entryText, bool isCvar,
+							 vgui::Panel *parent)
+	: QueryBox(title, queryText, parent)
 {
-	if (isCvar)
+	if(isCvar)
 	{
-		m_pEntry = m_pCvarEntry = new CCvarTextEntry( this, "TextEntry", entryText );
+		m_pEntry = m_pCvarEntry = new CCvarTextEntry(this, "TextEntry", entryText);
 	}
 	else
 	{
-		m_pEntry = new TextEntry( this, "TextEntry" );
+		m_pEntry = new TextEntry(this, "TextEntry");
 		m_pCvarEntry = NULL;
 	}
 	m_pEntry->SetTabPosition(3);
@@ -48,7 +50,7 @@ CTextEntryBox::~CTextEntryBox()
 //--------------------------------------------------------------------------------------------------------------
 void CTextEntryBox::ShowWindow(Frame *pFrameOver)
 {
-	BaseClass::ShowWindow( pFrameOver );
+	BaseClass::ShowWindow(pFrameOver);
 
 	m_pEntry->RequestFocus();
 
@@ -69,46 +71,45 @@ void CTextEntryBox::PerformLayout()
 
 	int labelW, labelH;
 	int entryW, entryH;
-	m_pMessageLabel->GetSize( labelW, labelH );
+	m_pMessageLabel->GetSize(labelW, labelH);
 
 	entryW = max(120, wide - borderW - borderW - borderW - labelW);
 	entryH = max(24, labelH);
-	m_pEntry->SetSize( entryW, entryH );
+	m_pEntry->SetSize(entryW, entryH);
 
 	int boxWidth, boxTall;
 	GetSize(boxWidth, boxTall);
-	if (boxWidth < labelW + entryW + borderW*3)
-		SetSize( labelW + entryW + borderW*3, boxTall );
+	if(boxWidth < labelW + entryW + borderW * 3)
+		SetSize(labelW + entryW + borderW * 3, boxTall);
 
-	m_pMessageLabel->GetPos( x, y );
-	m_pMessageLabel->SetPos( borderW, y - (entryH - labelH)/2 );
+	m_pMessageLabel->GetPos(x, y);
+	m_pMessageLabel->SetPos(borderW, y - (entryH - labelH) / 2);
 
-	m_pEntry->SetPos( borderW + m_pMessageLabel->GetWide() + borderW, y - (entryH - labelH) );
+	m_pEntry->SetPos(borderW + m_pMessageLabel->GetWide() + borderW, y - (entryH - labelH));
 }
 
 //--------------------------------------------------------------------------------------------------------------
 void CTextEntryBox::OnCommand(const char *command)
 {
-	if (!stricmp(command, "Ok"))
+	if(!stricmp(command, "Ok"))
 	{
-		if (m_pCvarEntry)
+		if(m_pCvarEntry)
 		{
-			m_pCvarEntry->ApplyChanges( true );
+			m_pCvarEntry->ApplyChanges(true);
 		}
 	}
 
 	BaseClass::OnCommand(command);
-
 }
 
 //--------------------------------------------------------------------------------------------------------------
 void CTextEntryBox::OnKeyCodeTyped(KeyCode code)
 {
-	if (code == KEY_ESCAPE)
+	if(code == KEY_ESCAPE)
 	{
 		OnCommand("Cancel");
 	}
-	if (code == KEY_ENTER)
+	if(code == KEY_ENTER)
 	{
 		OnCommand("Ok");
 	}

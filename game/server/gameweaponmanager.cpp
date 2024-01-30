@@ -17,12 +17,11 @@
 class CGameWeaponManager;
 static CUtlVector<CGameWeaponManager *> g_Managers;
 
-
 //=========================================================
 //=========================================================
 class CGameWeaponManager : public CBaseEntity
 {
-	DECLARE_CLASS( CGameWeaponManager, CBaseEntity );
+	DECLARE_CLASS(CGameWeaponManager, CBaseEntity);
 	DECLARE_DATADESC();
 
 public:
@@ -31,74 +30,72 @@ public:
 	{
 		m_flAmmoMod = 1.0f;
 		m_bExpectingWeapon = false;
-		g_Managers.AddToTail( this );
+		g_Managers.AddToTail(this);
 	}
 
 	~CGameWeaponManager()
 	{
-		g_Managers.FindAndRemove( this );
+		g_Managers.FindAndRemove(this);
 	}
 
 	void Think();
-	void InputSetMaxPieces( inputdata_t &inputdata );
-	void InputSetAmmoModifier( inputdata_t &inputdata );
+	void InputSetMaxPieces(inputdata_t &inputdata);
+	void InputSetAmmoModifier(inputdata_t &inputdata);
 
-	string_t	m_iszWeaponName;
-	int			m_iMaxPieces;
-	float		m_flAmmoMod;
-	bool		m_bExpectingWeapon;
+	string_t m_iszWeaponName;
+	int m_iMaxPieces;
+	float m_flAmmoMod;
+	bool m_bExpectingWeapon;
 
 	CUtlVector<EHANDLE> m_ManagedNonWeapons;
-
 };
 
-BEGIN_DATADESC( CGameWeaponManager )
+BEGIN_DATADESC(CGameWeaponManager)
 
-//fields
-	DEFINE_KEYFIELD( m_iszWeaponName, FIELD_STRING, "weaponname" ),
-	DEFINE_KEYFIELD( m_iMaxPieces, FIELD_INTEGER, "maxpieces" ),
-	DEFINE_KEYFIELD( m_flAmmoMod, FIELD_FLOAT, "ammomod" ),
-	DEFINE_FIELD( m_bExpectingWeapon, FIELD_BOOLEAN ),
-// funcs
-	DEFINE_FUNCTION( Think ),
-// inputs
-	DEFINE_INPUTFUNC( FIELD_INTEGER, "SetMaxPieces", InputSetMaxPieces ),
-	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetAmmoModifier", InputSetAmmoModifier ),
+	// fields
+	DEFINE_KEYFIELD(m_iszWeaponName, FIELD_STRING, "weaponname"),
+		DEFINE_KEYFIELD(m_iMaxPieces, FIELD_INTEGER, "maxpieces"), DEFINE_KEYFIELD(m_flAmmoMod, FIELD_FLOAT, "ammomod"),
+		DEFINE_FIELD(m_bExpectingWeapon, FIELD_BOOLEAN),
+		// funcs
+		DEFINE_FUNCTION(Think),
+		// inputs
+		DEFINE_INPUTFUNC(FIELD_INTEGER, "SetMaxPieces", InputSetMaxPieces),
+		DEFINE_INPUTFUNC(FIELD_FLOAT, "SetAmmoModifier", InputSetAmmoModifier),
 
-	DEFINE_UTLVECTOR( m_ManagedNonWeapons, FIELD_EHANDLE ),
+		DEFINE_UTLVECTOR(m_ManagedNonWeapons, FIELD_EHANDLE),
 
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( game_weapon_manager, CGameWeaponManager );
+LINK_ENTITY_TO_CLASS(game_weapon_manager, CGameWeaponManager);
 
-void CreateWeaponManager( const char *pWeaponName, int iMaxPieces )
+void CreateWeaponManager(const char *pWeaponName, int iMaxPieces)
 {
-	CGameWeaponManager *pManager = (CGameWeaponManager *)CreateEntityByName( "game_weapon_manager");
+	CGameWeaponManager *pManager = (CGameWeaponManager *)CreateEntityByName("game_weapon_manager");
 
-	if( pManager )
+	if(pManager)
 	{
-		pManager->m_iszWeaponName = MAKE_STRING( pWeaponName );
+		pManager->m_iszWeaponName = MAKE_STRING(pWeaponName);
 		pManager->m_iMaxPieces = iMaxPieces;
-		DispatchSpawn( pManager );
+		DispatchSpawn(pManager);
 	}
 }
 
-void WeaponManager_AmmoMod( CBaseCombatWeapon *pWeapon )
+void WeaponManager_AmmoMod(CBaseCombatWeapon *pWeapon)
 {
-	for ( int i = 0; i < g_Managers.Count(); i++ )
+	for(int i = 0; i < g_Managers.Count(); i++)
 	{
-		if ( g_Managers[i]->m_iszWeaponName == pWeapon->m_iClassname )
+		if(g_Managers[i]->m_iszWeaponName == pWeapon->m_iClassname)
 		{
 			int iNewClip = (int)(pWeapon->m_iClip1 * g_Managers[i]->m_flAmmoMod);
-			int iNewRandomClip = iNewClip + RandomInt( -2, 2 );
+			int iNewRandomClip = iNewClip + RandomInt(-2, 2);
 
-			if ( iNewRandomClip > pWeapon->GetMaxClip1() )
+			if(iNewRandomClip > pWeapon->GetMaxClip1())
 			{
 				iNewRandomClip = pWeapon->GetMaxClip1();
 			}
-			else if ( iNewRandomClip <= 0 )
+			else if(iNewRandomClip <= 0)
 			{
-				//Drop at least one bullet.
+				// Drop at least one bullet.
 				iNewRandomClip = 1;
 			}
 
@@ -107,29 +104,30 @@ void WeaponManager_AmmoMod( CBaseCombatWeapon *pWeapon )
 	}
 }
 
-void WeaponManager_AddManaged( CBaseEntity *pWeapon )
+void WeaponManager_AddManaged(CBaseEntity *pWeapon)
 {
-	for ( int i = 0; i < g_Managers.Count(); i++ )
+	for(int i = 0; i < g_Managers.Count(); i++)
 	{
-		if ( g_Managers[i]->m_iszWeaponName == pWeapon->m_iClassname )
+		if(g_Managers[i]->m_iszWeaponName == pWeapon->m_iClassname)
 		{
-			Assert( g_Managers[i]->m_ManagedNonWeapons.Find( pWeapon ) == g_Managers[i]->m_ManagedNonWeapons.InvalidIndex() );
-			g_Managers[i]->m_ManagedNonWeapons.AddToTail( pWeapon );
+			Assert(g_Managers[i]->m_ManagedNonWeapons.Find(pWeapon) ==
+				   g_Managers[i]->m_ManagedNonWeapons.InvalidIndex());
+			g_Managers[i]->m_ManagedNonWeapons.AddToTail(pWeapon);
 			break;
 		}
 	}
 }
 
-void WeaponManager_RemoveManaged( CBaseEntity *pWeapon )
+void WeaponManager_RemoveManaged(CBaseEntity *pWeapon)
 {
-	for ( int i = 0; i < g_Managers.Count(); i++ )
+	for(int i = 0; i < g_Managers.Count(); i++)
 	{
-		if ( g_Managers[i]->m_iszWeaponName == pWeapon->m_iClassname )
+		if(g_Managers[i]->m_iszWeaponName == pWeapon->m_iClassname)
 		{
-			int j = g_Managers[i]->m_ManagedNonWeapons.Find( pWeapon );
-			if ( j != g_Managers[i]->m_ManagedNonWeapons.InvalidIndex() )
+			int j = g_Managers[i]->m_ManagedNonWeapons.Find(pWeapon);
+			if(j != g_Managers[i]->m_ManagedNonWeapons.InvalidIndex())
 			{
-				g_Managers[i]->m_ManagedNonWeapons.FastRemove( j );
+				g_Managers[i]->m_ManagedNonWeapons.FastRemove(j);
 			}
 		}
 	}
@@ -139,17 +137,17 @@ void WeaponManager_RemoveManaged( CBaseEntity *pWeapon )
 //---------------------------------------------------------
 void CGameWeaponManager::Spawn()
 {
-	SetThink( &CGameWeaponManager::Think );
-	SetNextThink( gpGlobals->curtime );
-	CBaseEntity *pEntity = CreateEntityByName( STRING(m_iszWeaponName) );
-	if ( !pEntity )
+	SetThink(&CGameWeaponManager::Think);
+	SetNextThink(gpGlobals->curtime);
+	CBaseEntity *pEntity = CreateEntityByName(STRING(m_iszWeaponName));
+	if(!pEntity)
 	{
-		DevMsg("%s removed itself!\n", GetDebugName() );
+		DevMsg("%s removed itself!\n", GetDebugName());
 		UTIL_Remove(this);
 	}
 	else
 	{
-		m_bExpectingWeapon = ( dynamic_cast<CBaseCombatWeapon *>(pEntity) != NULL );
+		m_bExpectingWeapon = (dynamic_cast<CBaseCombatWeapon *>(pEntity) != NULL);
 		UTIL_Remove(pEntity);
 	}
 }
@@ -183,45 +181,45 @@ void CGameWeaponManager::Think()
 	int i;
 
 	// Don't have to think all that often.
-	SetNextThink( gpGlobals->curtime + 2.0 );
+	SetNextThink(gpGlobals->curtime + 2.0);
 
-	const char *pszWeaponName = STRING( m_iszWeaponName );
+	const char *pszWeaponName = STRING(m_iszWeaponName);
 
-	CUtlVector<CBaseEntity *> candidates( 0, 64 );
+	CUtlVector<CBaseEntity *> candidates(0, 64);
 
-	if ( m_bExpectingWeapon )
+	if(m_bExpectingWeapon)
 	{
 		CBaseCombatWeapon *pWeapon = NULL;
 		// Firstly, count the total number of weapons of this type in the world.
 		// Also count how many of those can potentially be removed.
-		pWeapon = assert_cast<CBaseCombatWeapon *>(gEntList.FindEntityByClassname( pWeapon, pszWeaponName ));
+		pWeapon = assert_cast<CBaseCombatWeapon *>(gEntList.FindEntityByClassname(pWeapon, pszWeaponName));
 
-		while( pWeapon )
+		while(pWeapon)
 		{
-			if( !pWeapon->IsEffectActive( EF_NODRAW ) && pWeapon->IsRemoveable() )
+			if(!pWeapon->IsEffectActive(EF_NODRAW) && pWeapon->IsRemoveable())
 			{
-				candidates.AddToTail( pWeapon );
+				candidates.AddToTail(pWeapon);
 			}
 
-			pWeapon = assert_cast<CBaseCombatWeapon *>(gEntList.FindEntityByClassname( pWeapon, pszWeaponName ));
+			pWeapon = assert_cast<CBaseCombatWeapon *>(gEntList.FindEntityByClassname(pWeapon, pszWeaponName));
 		}
 	}
 	else
 	{
-		for ( i = 0; i < m_ManagedNonWeapons.Count(); i++)
+		for(i = 0; i < m_ManagedNonWeapons.Count(); i++)
 		{
 			CBaseEntity *pEntity = m_ManagedNonWeapons[i];
-			if ( pEntity )
+			if(pEntity)
 			{
-				Assert( pEntity->m_iClassname == m_iszWeaponName );
-				if ( !pEntity->IsEffectActive( EF_NODRAW ) )
+				Assert(pEntity->m_iClassname == m_iszWeaponName);
+				if(!pEntity->IsEffectActive(EF_NODRAW))
 				{
-					candidates.AddToTail( pEntity );
+					candidates.AddToTail(pEntity);
 				}
 			}
 			else
 			{
-				m_ManagedNonWeapons.FastRemove( i-- );
+				m_ManagedNonWeapons.FastRemove(i--);
 			}
 		}
 	}
@@ -232,29 +230,29 @@ void CGameWeaponManager::Think()
 	// Based on what the player can see, try to clean up the world by removing weapons that
 	// the player cannot see right at the moment.
 	CBaseEntity *pCandidate;
-	for ( i = 0; i < candidates.Count() && surplus > 0; i++ )
+	for(i = 0; i < candidates.Count() && surplus > 0; i++)
 	{
 		bool fRemovedOne = false;
 
 		pCandidate = candidates[i];
-		Assert( !pCandidate->IsEffectActive( EF_NODRAW ) );
+		Assert(!pCandidate->IsEffectActive(EF_NODRAW));
 
-		if ( gpGlobals->maxClients == 1 )
+		if(gpGlobals->maxClients == 1)
 		{
 			CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
 			// Nodraw serves as a flag that this weapon is already being removed since
 			// all we're really doing inside this loop is marking them for removal by
 			// the entity system. We don't want to count the same weapon as removed
 			// more than once.
-			if( !UTIL_FindClientInPVS( pCandidate->edict() ) )
+			if(!UTIL_FindClientInPVS(pCandidate->edict()))
 			{
 				fRemovedOne = true;
 			}
-			else if( !pPlayer->FInViewCone( pCandidate ) )
+			else if(!pPlayer->FInViewCone(pCandidate))
 			{
 				fRemovedOne = true;
 			}
-			else if ( UTIL_DistApprox( pPlayer->GetAbsOrigin(), pCandidate->GetAbsOrigin() ) > (30*12) )
+			else if(UTIL_DistApprox(pPlayer->GetAbsOrigin(), pCandidate->GetAbsOrigin()) > (30 * 12))
 			{
 				fRemovedOne = true;
 			}
@@ -264,12 +262,12 @@ void CGameWeaponManager::Think()
 			fRemovedOne = true;
 		}
 
-		if( fRemovedOne )
+		if(fRemovedOne)
 		{
-			pCandidate->AddEffects( EF_NODRAW );
-			UTIL_Remove( pCandidate );
+			pCandidate->AddEffects(EF_NODRAW);
+			UTIL_Remove(pCandidate);
 
-			DevMsg( 2, "Surplus %s removed\n", pszWeaponName);
+			DevMsg(2, "Surplus %s removed\n", pszWeaponName);
 			surplus--;
 		}
 	}
@@ -277,14 +275,14 @@ void CGameWeaponManager::Think()
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-void CGameWeaponManager::InputSetMaxPieces( inputdata_t &inputdata )
+void CGameWeaponManager::InputSetMaxPieces(inputdata_t &inputdata)
 {
 	m_iMaxPieces = inputdata.value.Int();
 }
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-void CGameWeaponManager::InputSetAmmoModifier( inputdata_t &inputdata )
+void CGameWeaponManager::InputSetAmmoModifier(inputdata_t &inputdata)
 {
 	m_flAmmoMod = inputdata.value.Float();
 }

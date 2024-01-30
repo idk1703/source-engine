@@ -21,48 +21,48 @@
 namespace vgui
 {
 
-ISurface *g_pSurface = NULL;
-IPanel *g_pIPanel = NULL;
+	ISurface *g_pSurface = NULL;
+	IPanel *g_pIPanel = NULL;
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-static void *InitializeInterface( char const *interfaceName, CreateInterfaceFn *factoryList, int numFactories )
-{
-	void *retval;
-
-	for ( int i = 0; i < numFactories; i++ )
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	static void *InitializeInterface(char const *interfaceName, CreateInterfaceFn *factoryList, int numFactories)
 	{
-		CreateInterfaceFn factory = factoryList[ i ];
-		if ( !factory )
-			continue;
+		void *retval;
 
-		retval = factory( interfaceName, NULL );
-		if ( retval )
-			return retval;
+		for(int i = 0; i < numFactories; i++)
+		{
+			CreateInterfaceFn factory = factoryList[i];
+			if(!factory)
+				continue;
+
+			retval = factory(interfaceName, NULL);
+			if(retval)
+				return retval;
+		}
+
+		// No provider for requested interface!!!
+		// assert( !"No provider for requested interface!!!" );
+
+		return NULL;
 	}
 
-	// No provider for requested interface!!!
-	// assert( !"No provider for requested interface!!!" );
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	// Output : Returns true on success, false on failure.
+	//-----------------------------------------------------------------------------
+	bool VGui_InternalLoadInterfaces(CreateInterfaceFn *factoryList, int numFactories)
+	{
+		// loads all the interfaces
+		g_pSurface = (ISurface *)InitializeInterface(VGUI_SURFACE_INTERFACE_VERSION, factoryList, numFactories);
+		//	g_pKeyValues = (IKeyValues *)InitializeInterface(KEYVALUES_INTERFACE_VERSION, factoryList, numFactories );
+		g_pIPanel = (IPanel *)InitializeInterface(VGUI_PANEL_INTERFACE_VERSION, factoryList, numFactories);
 
-	return NULL;
-}
+		if(g_pSurface && /*g_pKeyValues &&*/ g_pIPanel)
+			return true;
 
-//-----------------------------------------------------------------------------
-// Purpose:
-// Output : Returns true on success, false on failure.
-//-----------------------------------------------------------------------------
-bool VGui_InternalLoadInterfaces( CreateInterfaceFn *factoryList, int numFactories )
-{
-	// loads all the interfaces
-	g_pSurface = (ISurface *)InitializeInterface(VGUI_SURFACE_INTERFACE_VERSION, factoryList, numFactories );
-//	g_pKeyValues = (IKeyValues *)InitializeInterface(KEYVALUES_INTERFACE_VERSION, factoryList, numFactories );
-	g_pIPanel = (IPanel *)InitializeInterface(VGUI_PANEL_INTERFACE_VERSION, factoryList, numFactories );
-
-	if (g_pSurface && /*g_pKeyValues &&*/ g_pIPanel)
-		return true;
-
-	return false;
-}
+		return false;
+	}
 
 } // namespace vgui

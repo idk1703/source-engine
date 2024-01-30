@@ -25,24 +25,23 @@
 #include "tier1/FmtStr.h"
 #include "tier1/KeyValues.h"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-void SetupModelFlexcontrollerLinks( StudioModel *model );
+void SetupModelFlexcontrollerLinks(StudioModel *model);
 
-IFaceposerModels::CFacePoserModel::CFacePoserModel( char const *modelfile, StudioModel *model )
+IFaceposerModels::CFacePoserModel::CFacePoserModel(char const *modelfile, StudioModel *model)
 {
 	m_pModel = model;
-	m_szActorName[ 0 ] = 0;
-	m_szShortName[ 0 ] = 0;
-	strcpy( m_szModelFileName, modelfile );
-	Q_FixSlashes( m_szModelFileName );
+	m_szActorName[0] = 0;
+	m_szShortName[0] = 0;
+	strcpy(m_szModelFileName, modelfile);
+	Q_FixSlashes(m_szModelFileName);
 
 	CStudioHdr *hdr = model->GetStudioHdr();
-	if ( hdr )
+	if(hdr)
 	{
-		Q_StripExtension( hdr->pszName(), m_szShortName, sizeof( m_szShortName ) );
+		Q_StripExtension(hdr->pszName(), m_szShortName, sizeof(m_szShortName));
 	}
 
 	m_bVisibileIn3DView = false;
@@ -59,9 +58,9 @@ IFaceposerModels::CFacePoserModel::~CFacePoserModel()
 void IFaceposerModels::CFacePoserModel::LoadBitmaps()
 {
 	CStudioHdr *hdr = m_pModel ? m_pModel->GetStudioHdr() : NULL;
-	if ( hdr )
+	if(hdr)
 	{
-		for ( int i = 0 ;i < hdr->GetNumSeq(); i++ )
+		for(int i = 0; i < hdr->GetNumSeq(); i++)
 		{
 			mxbitmapdata_t *bm = new mxbitmapdata_t();
 
@@ -70,86 +69,81 @@ void IFaceposerModels::CFacePoserModel::LoadBitmaps()
 			entry->bitmap = bm;
 
 			// Need to load bitmap from disk image via crc, etc.
-			//Assert( 0 );
+			// Assert( 0 );
 
-			m_AnimationBitmaps.AddToTail( entry );
+			m_AnimationBitmaps.AddToTail(entry);
 		}
 	}
 }
 
-CRC32_t IFaceposerModels::CFacePoserModel::GetBitmapCRC( int sequence )
+CRC32_t IFaceposerModels::CFacePoserModel::GetBitmapCRC(int sequence)
 {
 	CStudioHdr *hdr = m_pModel ? m_pModel->GetStudioHdr() : NULL;
-	if ( !hdr )
+	if(!hdr)
 		return (CRC32_t)-1;
 
-	if ( sequence < 0 || sequence >= hdr->GetNumSeq() )
+	if(sequence < 0 || sequence >= hdr->GetNumSeq())
 		return (CRC32_t)-1;
 
-	mstudioseqdesc_t &seqdesc = hdr->pSeqdesc( sequence );
+	mstudioseqdesc_t &seqdesc = hdr->pSeqdesc(sequence);
 
 	CRC32_t crc;
-	CRC32_Init( &crc );
+	CRC32_Init(&crc);
 
 	// For sequences, we'll checsum a bit of data
 
-	CRC32_ProcessBuffer( &crc, (void *)seqdesc.pszLabel(), Q_strlen( seqdesc.pszLabel() ) );
-	CRC32_ProcessBuffer( &crc, (void *)seqdesc.pszActivityName(), Q_strlen( seqdesc.pszActivityName() ) );
-	CRC32_ProcessBuffer( &crc, (void *)&seqdesc.flags, sizeof( seqdesc.flags ) );
-	//CRC32_ProcessBuffer( &crc, (void *)&seqdesc.numevents, sizeof( seqdesc.numevents ) );
-	CRC32_ProcessBuffer( &crc, (void *)&seqdesc.numblends, sizeof( seqdesc.numblends ) );
-	CRC32_ProcessBuffer( &crc, (void *)seqdesc.groupsize, sizeof( seqdesc.groupsize ) );
+	CRC32_ProcessBuffer(&crc, (void *)seqdesc.pszLabel(), Q_strlen(seqdesc.pszLabel()));
+	CRC32_ProcessBuffer(&crc, (void *)seqdesc.pszActivityName(), Q_strlen(seqdesc.pszActivityName()));
+	CRC32_ProcessBuffer(&crc, (void *)&seqdesc.flags, sizeof(seqdesc.flags));
+	// CRC32_ProcessBuffer( &crc, (void *)&seqdesc.numevents, sizeof( seqdesc.numevents ) );
+	CRC32_ProcessBuffer(&crc, (void *)&seqdesc.numblends, sizeof(seqdesc.numblends));
+	CRC32_ProcessBuffer(&crc, (void *)seqdesc.groupsize, sizeof(seqdesc.groupsize));
 
 	KeyValues *seqKeyValues = new KeyValues("");
-	if ( seqKeyValues->LoadFromBuffer( m_pModel->GetFileName( ), m_pModel->GetKeyValueText( sequence ) ) )
+	if(seqKeyValues->LoadFromBuffer(m_pModel->GetFileName(), m_pModel->GetKeyValueText(sequence)))
 	{
 		// Yuck, but I need it in a contiguous block of memory... oh well...
 		CUtlBuffer buf;
-		seqKeyValues->RecursiveSaveToFile( buf, 0 );
-		CRC32_ProcessBuffer( &crc, ( void * )buf.Base(), buf.TellPut() );
+		seqKeyValues->RecursiveSaveToFile(buf, 0);
+		CRC32_ProcessBuffer(&crc, (void *)buf.Base(), buf.TellPut());
 	}
 
 	seqKeyValues->deleteThis();
 
-	CRC32_Final( &crc );
+	CRC32_Final(&crc);
 
 	return crc;
 }
 
-const char *IFaceposerModels::CFacePoserModel::GetBitmapChecksum( int sequence )
+const char *IFaceposerModels::CFacePoserModel::GetBitmapChecksum(int sequence)
 {
-	CRC32_t crc = GetBitmapCRC( sequence );
+	CRC32_t crc = GetBitmapCRC(sequence);
 
 	// Create string name out of binary data
-	static char filename[ 512 ];
+	static char filename[512];
 
-	char hex[ 16 ];
-	Q_binarytohex( (byte *)&crc, sizeof( crc ), hex, sizeof( hex ) );
+	char hex[16];
+	Q_binarytohex((byte *)&crc, sizeof(crc), hex, sizeof(hex));
 
-	Q_snprintf( filename, sizeof( filename ), "%s", hex );
+	Q_snprintf(filename, sizeof(filename), "%s", hex);
 	return filename;
 }
 
-const char *IFaceposerModels::CFacePoserModel::GetBitmapFilename( int sequence )
+const char *IFaceposerModels::CFacePoserModel::GetBitmapFilename(int sequence)
 {
 	char *in, *out;
-	static char filename[ 256 ];
-	filename[ 0 ] = 0;
+	static char filename[256];
+	filename[0] = 0;
 
 	char modelName[512], modelNameTemp[512];
-	Q_strncpy( modelNameTemp, GetShortModelName(), sizeof( modelNameTemp ) );
+	Q_strncpy(modelNameTemp, GetShortModelName(), sizeof(modelNameTemp));
 
 	in = modelNameTemp;
 	out = modelName;
 
-	while ( *in )
+	while(*in)
 	{
-		if ( V_isalnum( *in ) ||
-			*in == '_' ||
-			*in == '\\' ||
-			*in == '/' ||
-			*in == '.' ||
-			*in == ':' )
+		if(V_isalnum(*in) || *in == '_' || *in == '\\' || *in == '/' || *in == '.' || *in == ':')
 		{
 			*out++ = *in;
 		}
@@ -157,60 +151,59 @@ const char *IFaceposerModels::CFacePoserModel::GetBitmapFilename( int sequence )
 	}
 	*out = 0;
 
+	Q_snprintf(filename, sizeof(filename), "expressions/%s/animation/%s.bmp", modelName, GetBitmapChecksum(sequence));
 
-	Q_snprintf( filename, sizeof( filename ), "expressions/%s/animation/%s.bmp", modelName, GetBitmapChecksum( sequence ) );
+	Q_FixSlashes(filename);
+	strlwr(filename);
 
-	Q_FixSlashes( filename );
-	strlwr( filename );
-
-	CreatePath( filename );
+	CreatePath(filename);
 
 	return filename;
 }
 
 void IFaceposerModels::CFacePoserModel::FreeBitmaps()
 {
-	while ( m_AnimationBitmaps.Count() > 0 )
+	while(m_AnimationBitmaps.Count() > 0)
 	{
-		AnimBitmap *bm = m_AnimationBitmaps[ 0 ];
+		AnimBitmap *bm = m_AnimationBitmaps[0];
 		delete bm->bitmap;
 		delete bm;
-		m_AnimationBitmaps.Remove( 0 );
+		m_AnimationBitmaps.Remove(0);
 	}
 }
 
-void IFaceposerModels::CFacePoserModel::LoadBitmapForSequence( mxbitmapdata_t *bitmap, int sequence )
+void IFaceposerModels::CFacePoserModel::LoadBitmapForSequence(mxbitmapdata_t *bitmap, int sequence)
 {
 	// See if it exists
-	char filename[ 512 ];
-	Q_strncpy( filename, GetBitmapFilename( sequence ), sizeof( filename ) );
+	char filename[512];
+	Q_strncpy(filename, GetBitmapFilename(sequence), sizeof(filename));
 
-	if ( !LoadBitmapFromFile( filename, *bitmap ) )
+	if(!LoadBitmapFromFile(filename, *bitmap))
 	{
-		CreateNewBitmap( filename, sequence, 256, false, NULL, bitmap );
+		CreateNewBitmap(filename, sequence, 256, false, NULL, bitmap);
 	}
 }
 
-static float FindPoseCycle( StudioModel *model, int sequence )
+static float FindPoseCycle(StudioModel *model, int sequence)
 {
 	float cycle = 0.0f;
-	if ( !model->GetStudioHdr() )
+	if(!model->GetStudioHdr())
 		return cycle;
 
 	KeyValues *seqKeyValues = new KeyValues("");
-	if ( seqKeyValues->LoadFromBuffer( model->GetFileName( ), model->GetKeyValueText( sequence ) ) )
+	if(seqKeyValues->LoadFromBuffer(model->GetFileName(), model->GetKeyValueText(sequence)))
 	{
 		// Do we have a build point section?
 		KeyValues *pkvAllFaceposer = seqKeyValues->FindKey("faceposer");
-		if ( pkvAllFaceposer )
+		if(pkvAllFaceposer)
 		{
-			int thumbnail_frame = pkvAllFaceposer->GetInt( "thumbnail_frame", 0 );
-			if ( thumbnail_frame )
+			int thumbnail_frame = pkvAllFaceposer->GetInt("thumbnail_frame", 0);
+			if(thumbnail_frame)
 			{
 				// Convert frame to cycle if we have valid data
-				int maxFrame = model->GetNumFrames( sequence ) - 1;
+				int maxFrame = model->GetNumFrames(sequence) - 1;
 
-				if ( maxFrame > 0 )
+				if(maxFrame > 0)
 				{
 					cycle = thumbnail_frame / (float)maxFrame;
 				}
@@ -223,84 +216,85 @@ static float FindPoseCycle( StudioModel *model, int sequence )
 	return cycle;
 }
 
-
-void EnableStickySnapshotMode( void )
+void EnableStickySnapshotMode(void)
 {
-	g_pMatSysWindow->EnableStickySnapshotMode( );
+	g_pMatSysWindow->EnableStickySnapshotMode();
 }
 
-void DisableStickySnapshotMode( void )
+void DisableStickySnapshotMode(void)
 {
-	g_pMatSysWindow->DisableStickySnapshotMode( );
+	g_pMatSysWindow->DisableStickySnapshotMode();
 }
 
-
-void IFaceposerModels::CreateNewBitmap( int modelindex, char const *pchBitmapFilename, int sequence, int nSnapShotSize, bool bZoomInOnFace, CExpression *pExpression, mxbitmapdata_t *bitmap )
+void IFaceposerModels::CreateNewBitmap(int modelindex, char const *pchBitmapFilename, int sequence, int nSnapShotSize,
+									   bool bZoomInOnFace, CExpression *pExpression, mxbitmapdata_t *bitmap)
 {
-	CFacePoserModel *m = m_Models[ modelindex ];
-	if ( m )
+	CFacePoserModel *m = m_Models[modelindex];
+	if(m)
 	{
-		m->CreateNewBitmap( pchBitmapFilename, sequence, nSnapShotSize, bZoomInOnFace, pExpression, bitmap );
+		m->CreateNewBitmap(pchBitmapFilename, sequence, nSnapShotSize, bZoomInOnFace, pExpression, bitmap);
 	}
 }
 
-void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFilename, int sequence, int nSnapShotSize, bool bZoomInOnFace, CExpression *pExpression, mxbitmapdata_t *bitmap )
+void IFaceposerModels::CFacePoserModel::CreateNewBitmap(char const *pchBitmapFilename, int sequence, int nSnapShotSize,
+														bool bZoomInOnFace, CExpression *pExpression,
+														mxbitmapdata_t *bitmap)
 {
 	MatSysWindow *pWnd = g_pMatSysWindow;
-	if ( !pWnd )
+	if(!pWnd)
 		return;
 
 	StudioModel *model = m_pModel;
-	if ( !model )
+	if(!model)
 		return;
 
 	CStudioHdr *hdr = model->GetStudioHdr();
-	if ( !hdr )
+	if(!hdr)
 		return;
-	if ( sequence < 0 || sequence >= hdr->GetNumSeq() )
+	if(sequence < 0 || sequence >= hdr->GetNumSeq())
 		return;
 
-	mstudioseqdesc_t &seqdesc = hdr->pSeqdesc( sequence );
+	mstudioseqdesc_t &seqdesc = hdr->pSeqdesc(sequence);
 
-	Con_ColorPrintf( FILE_COLOR, "Creating bitmap %s for sequence '%s'\n", pchBitmapFilename, seqdesc.pszLabel() );
+	Con_ColorPrintf(FILE_COLOR, "Creating bitmap %s for sequence '%s'\n", pchBitmapFilename, seqdesc.pszLabel());
 
 	model->ClearOverlaysSequences();
 	int iLayer = model->GetNewAnimationLayer();
-	model->SetOverlaySequence( iLayer, sequence, 1.0 );
-	model->SetOverlayRate( iLayer, FindPoseCycle( model, sequence ), 0.0 );
+	model->SetOverlaySequence(iLayer, sequence, 1.0);
+	model->SetOverlayRate(iLayer, FindPoseCycle(model, sequence), 0.0);
 
-	for (int i = 0; i < hdr->GetNumPoseParameters(); i++)
+	for(int i = 0; i < hdr->GetNumPoseParameters(); i++)
 	{
-		model->SetPoseParameter( i, 0.0 );
+		model->SetPoseParameter(i, 0.0);
 	}
 
-	float flexValues[ GLOBAL_STUDIO_FLEX_CONTROL_COUNT ] = { 0 };
+	float flexValues[GLOBAL_STUDIO_FLEX_CONTROL_COUNT] = {0};
 
-	if ( pExpression )
+	if(pExpression)
 	{
 		float *settings = pExpression->GetSettings();
 		float *weights = pExpression->GetWeights();
 
 		// Save existing settings from model
-		for ( LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); ++i )
+		for(LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); ++i)
 		{
-			int j = hdr->pFlexcontroller( i )->localToGlobal;
-			if ( j == -1 )
+			int j = hdr->pFlexcontroller(i)->localToGlobal;
+			if(j == -1)
 				continue;
-			flexValues[ i ] = model->GetFlexController( i );
+			flexValues[i] = model->GetFlexController(i);
 			// Set Value from passed in settings
-			model->SetFlexController( i, settings[ j ] * weights[ j ] );
+			model->SetFlexController(i, settings[j] * weights[j]);
 		}
 	}
 
-	model->ClearLookTargets( );
+	model->ClearLookTargets();
 
 	QAngle oldrot, oldLight;
 	Vector oldtrans;
 
-	VectorCopy( model->m_angles, oldrot );
-	VectorCopy( model->m_origin, oldtrans );
-	VectorCopy( g_viewerSettings.lightrot, oldLight );
+	VectorCopy(model->m_angles, oldrot);
+	VectorCopy(model->m_origin, oldtrans);
+	VectorCopy(g_viewerSettings.lightrot, oldLight);
 
 	model->m_angles.Init();
 	model->m_origin.Init();
@@ -311,38 +305,38 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 	bool bSaveGround = g_viewerSettings.showGround;
 	g_viewerSettings.showGround = false;
 
-	if ( bZoomInOnFace )
+	if(bZoomInOnFace)
 	{
 		Vector size;
-		VectorSubtract( hdr->hull_max(), hdr->hull_min(), size );
+		VectorSubtract(hdr->hull_max(), hdr->hull_min(), size);
 
 		float eyeheight = hdr->hull_min().z + 0.9 * size.z;
 		//	float width = ( size.x + size.y ) / 2.0f;
 
 		model->m_origin.x = size.z * .6f;
 
-		if ( hdr->GetNumAttachments() > 0 )
+		if(hdr->GetNumAttachments() > 0)
 		{
-			for (int i = 0; i < hdr->GetNumAttachments(); i++)
+			for(int i = 0; i < hdr->GetNumAttachments(); i++)
 			{
-				const mstudioattachment_t &attachment = hdr->pAttachment( i );
-				int iBone = hdr->GetAttachmentBone( i );
+				const mstudioattachment_t &attachment = hdr->pAttachment(i);
+				int iBone = hdr->GetAttachmentBone(i);
 
-				if ( Q_stricmp( attachment.pszName(), "eyes" ) )
+				if(Q_stricmp(attachment.pszName(), "eyes"))
 					continue;
 
-				mstudiobone_t *bone = hdr->pBone( iBone );
-				if ( !bone )
+				mstudiobone_t *bone = hdr->pBone(iBone);
+				if(!bone)
 					continue;
 
 				matrix3x4_t boneToPose;
-				MatrixInvert( bone->poseToBone, boneToPose );
+				MatrixInvert(bone->poseToBone, boneToPose);
 
 				matrix3x4_t attachmentPoseToLocal;
-				ConcatTransforms( boneToPose, attachment.local, attachmentPoseToLocal );
+				ConcatTransforms(boneToPose, attachment.local, attachmentPoseToLocal);
 
 				Vector localSpaceEyePosition;
-				VectorITransform( vec3_origin, attachmentPoseToLocal, localSpaceEyePosition );
+				VectorITransform(vec3_origin, attachmentPoseToLocal, localSpaceEyePosition);
 
 				// Not sure why this must be negative?
 				eyeheight = -localSpaceEyePosition.z + hdr->hull_min().z;
@@ -351,14 +345,14 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 		}
 
 		KeyValues *seqKeyValues = new KeyValues("");
-		if ( seqKeyValues->LoadFromBuffer( model->GetFileName( ), model->GetKeyValueText( sequence ) ) )
+		if(seqKeyValues->LoadFromBuffer(model->GetFileName(), model->GetKeyValueText(sequence)))
 		{
 			// Do we have a build point section?
 			KeyValues *pkvAllFaceposer = seqKeyValues->FindKey("faceposer");
-			if ( pkvAllFaceposer )
+			if(pkvAllFaceposer)
 			{
-				float flEyeheight = pkvAllFaceposer->GetFloat( "eye_height", -9999.0f );
-				if ( flEyeheight != -9999.0f )
+				float flEyeheight = pkvAllFaceposer->GetFloat("eye_height", -9999.0f);
+				if(flEyeheight != -9999.0f)
 				{
 					eyeheight = flEyeheight;
 				}
@@ -372,12 +366,12 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 		Vector mins, maxs;
 		model->ExtractBbox(mins, maxs);
 		Vector size;
-		VectorSubtract( maxs, mins, size );
+		VectorSubtract(maxs, mins, size);
 
 		float maxdim = size.x;
-		if ( size.y > maxdim )
+		if(size.y > maxdim)
 			maxdim = size.y;
-		if ( size.z > maxdim )
+		if(size.z > maxdim)
 			maxdim = size.z;
 
 		float midpoint = mins.z + 0.5 * size.z;
@@ -386,56 +380,56 @@ void IFaceposerModels::CFacePoserModel::CreateNewBitmap( char const *pchBitmapFi
 		model->m_origin.z += midpoint;
 	}
 
-	g_pMatSysWindow->PushSnapshotMode( nSnapShotSize );
+	g_pMatSysWindow->PushSnapshotMode(nSnapShotSize);
 
 	// Snapshots are taken of the back buffer;
 	// we need to render to the back buffer but not move it to the front
-	pWnd->SuppressBufferSwap( true );
+	pWnd->SuppressBufferSwap(true);
 	pWnd->redraw();
-	pWnd->SuppressBufferSwap( false );
+	pWnd->SuppressBufferSwap(false);
 
 	// make it square, assumes w > h
-	char fullpath[ 512 ];
-	Q_snprintf( fullpath, sizeof( fullpath ), "%s%s", GetGameDirectory(), pchBitmapFilename );
-	pWnd->TakeSnapshotRect( fullpath, 0, 0, nSnapShotSize, nSnapShotSize );
+	char fullpath[512];
+	Q_snprintf(fullpath, sizeof(fullpath), "%s%s", GetGameDirectory(), pchBitmapFilename);
+	pWnd->TakeSnapshotRect(fullpath, 0, 0, nSnapShotSize, nSnapShotSize);
 
-	g_pMatSysWindow->PopSnapshotMode( );
+	g_pMatSysWindow->PopSnapshotMode();
 
-	VectorCopy( oldrot, model->m_angles );
-	VectorCopy( oldtrans, model->m_origin );
-	VectorCopy( oldLight, g_viewerSettings.lightrot );
+	VectorCopy(oldrot, model->m_angles);
+	VectorCopy(oldtrans, model->m_origin);
+	VectorCopy(oldLight, g_viewerSettings.lightrot);
 
 	g_viewerSettings.showGround = bSaveGround;
 
-	if ( pExpression )
+	if(pExpression)
 	{
 		// Save existing settings from model
-		for ( LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); ++i )
+		for(LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); ++i)
 		{
-			int j = hdr->pFlexcontroller( i )->localToGlobal;
-			if ( j == -1 )
+			int j = hdr->pFlexcontroller(i)->localToGlobal;
+			if(j == -1)
 				continue;
 
-			model->SetFlexController( i, flexValues[ i ] );
+			model->SetFlexController(i, flexValues[i]);
 		}
 	}
 
 	model->ClearOverlaysSequences();
 
-	if ( bitmap->valid )
+	if(bitmap->valid)
 	{
-		DeleteObject( bitmap->image );
+		DeleteObject(bitmap->image);
 		bitmap->image = 0;
 		bitmap->valid = false;
 	}
 
-	LoadBitmapFromFile( pchBitmapFilename, *bitmap );
+	LoadBitmapFromFile(pchBitmapFilename, *bitmap);
 }
 
-mxbitmapdata_t *IFaceposerModels::CFacePoserModel::GetBitmapForSequence( int sequence )
+mxbitmapdata_t *IFaceposerModels::CFacePoserModel::GetBitmapForSequence(int sequence)
 {
 	static mxbitmapdata_t nullbitmap;
-	if ( sequence < 0 || sequence >= m_AnimationBitmaps.Count() )
+	if(sequence < 0 || sequence >= m_AnimationBitmaps.Count())
 		return &nullbitmap;
 
 	/*
@@ -446,94 +440,93 @@ mxbitmapdata_t *IFaceposerModels::CFacePoserModel::GetBitmapForSequence( int seq
 	}
 	*/
 
-	AnimBitmap *slot = m_AnimationBitmaps[ sequence ];
-	if ( slot->needsload )
+	AnimBitmap *slot = m_AnimationBitmaps[sequence];
+	if(slot->needsload)
 	{
 		slot->needsload = false;
-		LoadBitmapForSequence( slot->bitmap, sequence );
+		LoadBitmapForSequence(slot->bitmap, sequence);
 	}
 
-	return m_AnimationBitmaps[ sequence ]->bitmap;
+	return m_AnimationBitmaps[sequence]->bitmap;
 }
 
-void IFaceposerModels::CFacePoserModel::BuildValidChecksums( CUtlRBTree< CRC32_t > &tree )
+void IFaceposerModels::CFacePoserModel::BuildValidChecksums(CUtlRBTree<CRC32_t> &tree)
 {
 	StudioModel *model = m_pModel;
-	if ( !model )
+	if(!model)
 		return;
 
 	CStudioHdr *hdr = model->GetStudioHdr();
-	if ( !hdr )
+	if(!hdr)
 		return;
 
-	for ( int i = 0; i < hdr->GetNumSeq(); i++ )
+	for(int i = 0; i < hdr->GetNumSeq(); i++)
 	{
-		CRC32_t crc = GetBitmapCRC( i );
-		tree.Insert( crc );
+		CRC32_t crc = GetBitmapCRC(i);
+		tree.Insert(crc);
 	}
 }
 
 void IFaceposerModels::CFacePoserModel::ReconcileAnimationBitmaps()
 {
 	// iterate files in directory and see if each checksum is valid and if not delete the .bmp
-	char path[ 512 ];
-	Q_snprintf( path, sizeof( path ), "expressions/%s/animation/*.bmp", GetShortModelName() );
+	char path[512];
+	Q_snprintf(path, sizeof(path), "expressions/%s/animation/*.bmp", GetShortModelName());
 
 	FileFindHandle_t hFindFile;
 
-	char const *fn = filesystem->FindFirstEx( path, "MOD", &hFindFile );
+	char const *fn = filesystem->FindFirstEx(path, "MOD", &hFindFile);
 
-	g_pProgressDialog->Start( CFmtStr( "%s - Reconcile Animation Thumbnails", GetShortModelName() ), "", true );
+	g_pProgressDialog->Start(CFmtStr("%s - Reconcile Animation Thumbnails", GetShortModelName()), "", true);
 
-	CUtlVector< CUtlString > workList;
+	CUtlVector<CUtlString> workList;
 
-	if ( fn )
+	if(fn)
 	{
-		while ( fn )
+		while(fn)
 		{
 			// Don't do anything with directories
-			if ( !filesystem->FindIsDirectory( hFindFile ) )
+			if(!filesystem->FindIsDirectory(hFindFile))
 			{
 				CUtlString s = fn;
-				workList.AddToTail( s );
+				workList.AddToTail(s);
 			}
 
-			fn = filesystem->FindNext( hFindFile );
+			fn = filesystem->FindNext(hFindFile);
 		}
 
-		filesystem->FindClose( hFindFile );
+		filesystem->FindClose(hFindFile);
 	}
 
-	CUtlRBTree< CRC32_t > tree( 0, 0, DefLessFunc( CRC32_t ) );
-	BuildValidChecksums( tree );
+	CUtlRBTree<CRC32_t> tree(0, 0, DefLessFunc(CRC32_t));
+	BuildValidChecksums(tree);
 
-	for ( int i = 0 ; i < workList.Count(); ++i )
+	for(int i = 0; i < workList.Count(); ++i)
 	{
-		char testname[ 256 ];
-		Q_StripExtension( workList[ i ].String(), testname, sizeof( testname ) );
+		char testname[256];
+		Q_StripExtension(workList[i].String(), testname, sizeof(testname));
 
-		g_pProgressDialog->UpdateText( "%s", testname );
-		g_pProgressDialog->Update( (float)i / (float)workList.Count() );
+		g_pProgressDialog->UpdateText("%s", testname);
+		g_pProgressDialog->Update((float)i / (float)workList.Count());
 
 		CRC32_t check;
-		Q_hextobinary( testname, Q_strlen( testname ), (byte *)&check, sizeof( check ) );
+		Q_hextobinary(testname, Q_strlen(testname), (byte *)&check, sizeof(check));
 
-		if ( tree.Find( check ) == tree.InvalidIndex() )
+		if(tree.Find(check) == tree.InvalidIndex())
 		{
-			Q_snprintf( testname, sizeof( testname ), "expressions/%s/animation/%s", GetShortModelName(), fn );
+			Q_snprintf(testname, sizeof(testname), "expressions/%s/animation/%s", GetShortModelName(), fn);
 
-			char fullpath[ 512 ];
-			filesystem->RelativePathToFullPath( testname, "MOD", fullpath, sizeof( fullpath ) );
+			char fullpath[512];
+			filesystem->RelativePathToFullPath(testname, "MOD", fullpath, sizeof(fullpath));
 			// Delete it
-			Con_ErrorPrintf( "Removing unused bitmap file %s\n",
-				fullpath );
+			Con_ErrorPrintf("Removing unused bitmap file %s\n", fullpath);
 
-			_unlink( fullpath );
+			_unlink(fullpath);
 		}
 
-		if ( g_pProgressDialog->IsCancelled() )
+		if(g_pProgressDialog->IsCancelled())
 		{
-			Msg( "Cancelled\n" );
+			Msg("Cancelled\n");
 			break;
 		}
 	}
@@ -544,27 +537,27 @@ void IFaceposerModels::CFacePoserModel::ReconcileAnimationBitmaps()
 void IFaceposerModels::CFacePoserModel::RecreateAllAnimationBitmaps()
 {
 	StudioModel *model = m_pModel;
-	if ( !model )
+	if(!model)
 		return;
 
 	CStudioHdr *hdr = model->GetStudioHdr();
-	if ( !hdr )
+	if(!hdr)
 		return;
 
-	g_pProgressDialog->Start( CFmtStr( "%s - Animation Thumbnails", GetShortModelName() ), "", true );
+	g_pProgressDialog->Start(CFmtStr("%s - Animation Thumbnails", GetShortModelName()), "", true);
 
-	for ( int i = 0; i < hdr->GetNumSeq(); ++i )
+	for(int i = 0; i < hdr->GetNumSeq(); ++i)
 	{
-		const mstudioseqdesc_t &seq = hdr->pSeqdesc( i );
+		const mstudioseqdesc_t &seq = hdr->pSeqdesc(i);
 
-		g_pProgressDialog->UpdateText( "%s", seq.pszLabel() );
-		g_pProgressDialog->Update( (float)i / (float)hdr->GetNumSeq() );
+		g_pProgressDialog->UpdateText("%s", seq.pszLabel());
+		g_pProgressDialog->Update((float)i / (float)hdr->GetNumSeq());
 
-		RecreateAnimationBitmap( i, false );
+		RecreateAnimationBitmap(i, false);
 
-		if ( g_pProgressDialog->IsCancelled() )
+		if(g_pProgressDialog->IsCancelled())
 		{
-			Msg( "Cancelling\n" );
+			Msg("Cancelling\n");
 			break;
 		}
 	}
@@ -574,63 +567,62 @@ void IFaceposerModels::CFacePoserModel::RecreateAllAnimationBitmaps()
 	ReconcileAnimationBitmaps();
 }
 
-void IFaceposerModels::CFacePoserModel::RecreateAnimationBitmap( int sequence, bool reconcile )
+void IFaceposerModels::CFacePoserModel::RecreateAnimationBitmap(int sequence, bool reconcile)
 {
-	if ( sequence < 0 || sequence >= m_AnimationBitmaps.Count() )
+	if(sequence < 0 || sequence >= m_AnimationBitmaps.Count())
 	{
-		Assert( 0 );
+		Assert(0);
 		return;
 	}
-	AnimBitmap *slot = m_AnimationBitmaps[ sequence ];
+	AnimBitmap *slot = m_AnimationBitmaps[sequence];
 	slot->needsload = true;
-	if ( slot->bitmap->valid )
+	if(slot->bitmap->valid)
 	{
-		DeleteObject( slot->bitmap->image );
+		DeleteObject(slot->bitmap->image);
 		slot->bitmap->image = 0;
 		slot->bitmap->valid = false;
 	}
 
-	char filename[ 512 ];
-	Q_snprintf( filename, sizeof( filename ), "%s", GetBitmapFilename( sequence ) );
+	char filename[512];
+	Q_snprintf(filename, sizeof(filename), "%s", GetBitmapFilename(sequence));
 
-	if ( filesystem->FileExists( filename ) )
+	if(filesystem->FileExists(filename))
 	{
-		char fullpath[ 512 ];
-		filesystem->RelativePathToFullPath( filename, "MOD", fullpath, sizeof( fullpath ) );
-		_unlink( fullpath );
+		char fullpath[512];
+		filesystem->RelativePathToFullPath(filename, "MOD", fullpath, sizeof(fullpath));
+		_unlink(fullpath);
 	}
 
 	// Force recreation
-	GetBitmapForSequence( sequence );
+	GetBitmapForSequence(sequence);
 
-	if ( reconcile )
+	if(reconcile)
 	{
-		ReconcileAnimationBitmaps( );
+		ReconcileAnimationBitmaps();
 	}
 }
 
-void IFaceposerModels::CFacePoserModel::Release( void )
+void IFaceposerModels::CFacePoserModel::Release(void)
 {
-	m_pModel->FreeModel( true );
+	m_pModel->FreeModel(true);
 }
 
-void IFaceposerModels::CFacePoserModel::Restore( void )
+void IFaceposerModels::CFacePoserModel::Restore(void)
 {
 	StudioModel *save = g_pStudioModel;
 
 	g_pStudioModel = m_pModel;
 
-	if (m_pModel->LoadModel( m_pModel->GetFileName() ) )
+	if(m_pModel->LoadModel(m_pModel->GetFileName()))
 	{
-		m_pModel->PostLoadModel( m_pModel->GetFileName() );
-		m_pModel->SetSequence( m_pModel->LookupSequence( "idle_subtle" ) );
+		m_pModel->PostLoadModel(m_pModel->GetFileName());
+		m_pModel->SetSequence(m_pModel->LookupSequence("idle_subtle"));
 	}
 
 	g_pStudioModel = save;
 
-	SetupModelFlexcontrollerLinks( m_pModel );
+	SetupModelFlexcontrollerLinks(m_pModel);
 }
-
 
 IFaceposerModels::IFaceposerModels()
 {
@@ -640,48 +632,48 @@ IFaceposerModels::IFaceposerModels()
 
 IFaceposerModels::~IFaceposerModels()
 {
-	while ( m_Models.Count() > 0 )
+	while(m_Models.Count() > 0)
 	{
-		delete m_Models[ 0 ];
-		m_Models.Remove( 0 );
+		delete m_Models[0];
+		m_Models.Remove(0);
 	}
 }
 
-IFaceposerModels::CFacePoserModel *IFaceposerModels::GetEntry( int index )
+IFaceposerModels::CFacePoserModel *IFaceposerModels::GetEntry(int index)
 {
-	if ( index < 0 || index >= Count() )
+	if(index < 0 || index >= Count())
 		return NULL;
 
-	CFacePoserModel *m = m_Models[ index ];
-	if ( !m )
+	CFacePoserModel *m = m_Models[index];
+	if(!m)
 		return NULL;
 	return m;
 }
 
-int IFaceposerModels::Count( void ) const
+int IFaceposerModels::Count(void) const
 {
 	return m_Models.Count();
 }
 
-char const *IFaceposerModels::GetModelName( int index )
+char const *IFaceposerModels::GetModelName(int index)
 {
-	CFacePoserModel *entry = GetEntry( index );
-	if ( !entry )
+	CFacePoserModel *entry = GetEntry(index);
+	if(!entry)
 		return "";
 
 	return entry->GetShortModelName();
 }
 
-char const *IFaceposerModels::GetModelFileName( int index )
+char const *IFaceposerModels::GetModelFileName(int index)
 {
-	CFacePoserModel *entry = GetEntry( index );
-	if ( !entry )
+	CFacePoserModel *entry = GetEntry(index);
+	if(!entry)
 		return "";
 
 	return entry->GetModelFileName();
 }
 
-void IFaceposerModels::ForceActiveModelIndex( int index )
+void IFaceposerModels::ForceActiveModelIndex(int index)
 {
 	m_nForceModelIndex = index;
 }
@@ -691,67 +683,67 @@ void IFaceposerModels::UnForceActiveModelIndex()
 	m_nForceModelIndex = -1;
 }
 
-int IFaceposerModels::GetActiveModelIndex( void ) const
+int IFaceposerModels::GetActiveModelIndex(void) const
 {
-	if ( !g_MDLViewer )
+	if(!g_MDLViewer)
 		return 0;
 
-	if ( m_nForceModelIndex != -1 )
+	if(m_nForceModelIndex != -1)
 		return m_nForceModelIndex;
 
 	return g_MDLViewer->GetActiveModelTab();
 }
 
-char const *IFaceposerModels::GetActiveModelName( void )
+char const *IFaceposerModels::GetActiveModelName(void)
 {
-	if ( !g_MDLViewer )
+	if(!g_MDLViewer)
 		return NULL;
 
-	return GetModelName( GetActiveModelIndex() );
+	return GetModelName(GetActiveModelIndex());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : StudioModel
 //-----------------------------------------------------------------------------
-StudioModel *IFaceposerModels::GetActiveStudioModel( void )
+StudioModel *IFaceposerModels::GetActiveStudioModel(void)
 {
-	StudioModel *mdl = GetStudioModel( GetActiveModelIndex() );
-	if ( !mdl )
+	StudioModel *mdl = GetStudioModel(GetActiveModelIndex());
+	if(!mdl)
 		return g_pStudioModel;
 	return mdl;
 }
 
-int IFaceposerModels::FindModelByFilename( char const *filename )
+int IFaceposerModels::FindModelByFilename(char const *filename)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
-		if ( !stricmp( m->GetModelFileName(), filename ) )
+		if(!stricmp(m->GetModelFileName(), filename))
 			return i;
 	}
 
 	return -1;
 }
 
-void SetupModelFlexcontrollerLinks( StudioModel *model );
+void SetupModelFlexcontrollerLinks(StudioModel *model);
 
-int IFaceposerModels::LoadModel( char const *filename )
+int IFaceposerModels::LoadModel(char const *filename)
 {
-	MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
+	MDLCACHE_CRITICAL_SECTION_(g_pMDLCache);
 
-	int idx = FindModelByFilename( filename );
-	if ( idx == -1 && Count() < MAX_FP_MODELS )
+	int idx = FindModelByFilename(filename);
+	if(idx == -1 && Count() < MAX_FP_MODELS)
 	{
 		StudioModel *model = new StudioModel();
 
 		StudioModel *save = g_pStudioModel;
 		g_pStudioModel = model;
-		if ( !model->LoadModel( filename ) )
+		if(!model->LoadModel(filename))
 		{
 			delete model;
 			g_pStudioModel = save;
@@ -759,184 +751,182 @@ int IFaceposerModels::LoadModel( char const *filename )
 		}
 		g_pStudioModel = save;
 
-		model->SetSequence( model->LookupSequence( "idle_subtle" ) );
+		model->SetSequence(model->LookupSequence("idle_subtle"));
 		int idx = model->GetSequence();
-		model->SetSequence( idx );
+		model->SetSequence(idx);
 
-		SetupModelFlexcontrollerLinks( model );
+		SetupModelFlexcontrollerLinks(model);
 
-		if (!LoadViewerSettings( filename, model ))
+		if(!LoadViewerSettings(filename, model))
 		{
-			InitViewerSettings( "faceposer" );
+			InitViewerSettings("faceposer");
 		}
 		model->ClearOverlaysSequences();
 
+		CFacePoserModel *newEntry = new CFacePoserModel(filename, model);
 
-		CFacePoserModel *newEntry = new CFacePoserModel( filename, model );
-
-		idx = m_Models.AddToTail( newEntry );
+		idx = m_Models.AddToTail(newEntry);
 
 		g_MDLViewer->InitModelTab();
 
-		g_MDLViewer->SetActiveModelTab( idx );
+		g_MDLViewer->SetActiveModelTab(idx);
 
-		//g_pControlPanel->CenterOnFace();
+		// g_pControlPanel->CenterOnFace();
 	}
 	return idx;
 }
 
-void IFaceposerModels::FreeModel( int index  )
+void IFaceposerModels::FreeModel(int index)
 {
-	CFacePoserModel *entry = GetEntry( index );
-	if ( !entry )
+	CFacePoserModel *entry = GetEntry(index);
+	if(!entry)
 		return;
 
 	StudioModel *m = entry->GetModel();
 
-	SaveViewerSettings( m->GetFileName(), m );
+	SaveViewerSettings(m->GetFileName(), m);
 
-	m->FreeModel( false );
+	m->FreeModel(false);
 	delete m;
 
 	delete entry;
-	m_Models.Remove( index );
+	m_Models.Remove(index);
 
 	g_MDLViewer->InitModelTab();
 }
 
-void IFaceposerModels::CloseAllModels( void )
+void IFaceposerModels::CloseAllModels(void)
 {
 	int c = Count();
-	for ( int i = c - 1; i >= 0; i-- )
+	for(int i = c - 1; i >= 0; i--)
 	{
-		FreeModel( i );
+		FreeModel(i);
 	}
 }
 
-StudioModel *IFaceposerModels::GetStudioModel( int index )
+StudioModel *IFaceposerModels::GetStudioModel(int index)
 {
-	CFacePoserModel *m = GetEntry( index );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(index);
+	if(!m)
 		return NULL;
 
-	if ( !m->GetModel() )
+	if(!m->GetModel())
 		return NULL;
 
 	return m->GetModel();
 }
 
-CStudioHdr *IFaceposerModels::GetStudioHeader( int index )
+CStudioHdr *IFaceposerModels::GetStudioHeader(int index)
 {
-	StudioModel *m = GetStudioModel( index );
-	if ( !m )
+	StudioModel *m = GetStudioModel(index);
+	if(!m)
 		return NULL;
 
 	CStudioHdr *hdr = m->GetStudioHdr();
-	if ( !hdr )
+	if(!hdr)
 		return NULL;
 	return hdr;
 }
 
-int IFaceposerModels::GetModelIndexForActor( char const *actorname )
+int IFaceposerModels::GetModelIndexForActor(char const *actorname)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
-		if ( !stricmp( m->GetActorName(), actorname ) )
+		if(!stricmp(m->GetActorName(), actorname))
 			return i;
 	}
 
 	return 0;
 }
 
-StudioModel *IFaceposerModels::GetModelForActor( char const *actorname )
+StudioModel *IFaceposerModels::GetModelForActor(char const *actorname)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
-		if ( !stricmp( m->GetActorName(), actorname ) )
+		if(!stricmp(m->GetActorName(), actorname))
 			return m->GetModel();
 	}
 
 	return NULL;
 }
 
-char const *IFaceposerModels::GetActorNameForModel( int modelindex )
+char const *IFaceposerModels::GetActorNameForModel(int modelindex)
 {
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return "";
 	return m->GetActorName();
 }
 
-void IFaceposerModels::SetActorNameForModel( int modelindex, char const *actorname )
+void IFaceposerModels::SetActorNameForModel(int modelindex, char const *actorname)
 {
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return;
 
-	m->SetActorName( actorname );
+	m->SetActorName(actorname);
 }
 
-void IFaceposerModels::SaveModelList( void )
+void IFaceposerModels::SaveModelList(void)
 {
-	workspacefiles->StartStoringFiles( IWorkspaceFiles::MODELDATA );
+	workspacefiles->StartStoringFiles(IWorkspaceFiles::MODELDATA);
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
-		workspacefiles->StoreFile( IWorkspaceFiles::MODELDATA, m->GetModelFileName() );
+		workspacefiles->StoreFile(IWorkspaceFiles::MODELDATA, m->GetModelFileName());
 	}
-	workspacefiles->FinishStoringFiles( IWorkspaceFiles::MODELDATA );
+	workspacefiles->FinishStoringFiles(IWorkspaceFiles::MODELDATA);
 }
 
-void IFaceposerModels::LoadModelList( void )
+void IFaceposerModels::LoadModelList(void)
 {
-	int files = workspacefiles->GetNumStoredFiles( IWorkspaceFiles::MODELDATA );
-	for ( int i = 0; i < files; i++ )
+	int files = workspacefiles->GetNumStoredFiles(IWorkspaceFiles::MODELDATA);
+	for(int i = 0; i < files; i++)
 	{
-		char const *filename = workspacefiles->GetStoredFile( IWorkspaceFiles::MODELDATA, i );
-		LoadModel( filename );
+		char const *filename = workspacefiles->GetStoredFile(IWorkspaceFiles::MODELDATA, i);
+		LoadModel(filename);
 	}
 }
 
-void IFaceposerModels::ReleaseModels( void )
+void IFaceposerModels::ReleaseModels(void)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		m->Release();
 	}
 }
 
-void IFaceposerModels::RestoreModels( void )
+void IFaceposerModels::RestoreModels(void)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		m->Restore();
 	}
 }
-
 
 /*
 void IFaceposerModels::RefreshModels( void )
@@ -953,17 +943,17 @@ void IFaceposerModels::RefreshModels( void )
 }
 */
 
-int IFaceposerModels::CountVisibleModels( void )
+int IFaceposerModels::CountVisibleModels(void)
 {
 	int num = 0;
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
-		if ( m->GetVisibleIn3DView() )
+		if(m->GetVisibleIn3DView())
 		{
 			num++;
 		}
@@ -972,114 +962,113 @@ int IFaceposerModels::CountVisibleModels( void )
 	return num;
 }
 
-void IFaceposerModels::ShowModelIn3DView( int modelindex, bool show )
+void IFaceposerModels::ShowModelIn3DView(int modelindex, bool show)
 {
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return;
 
-	m->SetVisibleIn3DView( show );
+	m->SetVisibleIn3DView(show);
 }
 
-bool IFaceposerModels::IsModelShownIn3DView( int modelindex )
+bool IFaceposerModels::IsModelShownIn3DView(int modelindex)
 {
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return false;
 
 	return m->GetVisibleIn3DView();
 }
 
-int IFaceposerModels::GetIndexForStudioModel( StudioModel *model )
+int IFaceposerModels::GetIndexForStudioModel(StudioModel *model)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
-		if ( m->GetModel() == model )
+		if(m->GetModel() == model)
 			return i;
 	}
 	return -1;
 }
 
-void IFaceposerModels::CheckResetFlexes( void )
+void IFaceposerModels::CheckResetFlexes(void)
 {
 	int current_render_frame = g_MDLViewer->GetCurrentFrame();
-	if ( current_render_frame == m_nLastRenderFrame )
+	if(current_render_frame == m_nLastRenderFrame)
 		return;
 
 	m_nLastRenderFrame = current_render_frame;
 
 	// the phoneme editor just adds to the face, so reset the controllers
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		StudioModel *model = m->GetModel();
-		if ( !model )
+		if(!model)
 			continue;
 
 		CStudioHdr *hdr = model->GetStudioHdr();
-		if ( !hdr )
+		if(!hdr)
 			continue;
 
-		for ( LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); i++ )
+		for(LocalFlexController_t i = LocalFlexController_t(0); i < hdr->numflexcontrollers(); i++)
 		{
-			model->SetFlexController( i, 0.0f );
+			model->SetFlexController(i, 0.0f);
 		}
 	}
 }
 
-void IFaceposerModels::ClearOverlaysSequences( void )
+void IFaceposerModels::ClearOverlaysSequences(void)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		StudioModel *model = m->GetModel();
-		if ( !model )
+		if(!model)
 			continue;
 
 		model->ClearOverlaysSequences();
 	}
 }
 
-mxbitmapdata_t *IFaceposerModels::GetBitmapForSequence( int modelindex, int sequence )
+mxbitmapdata_t *IFaceposerModels::GetBitmapForSequence(int modelindex, int sequence)
 {
 	static mxbitmapdata_t nullbitmap;
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return &nullbitmap;
 
-	return m->GetBitmapForSequence( sequence );
+	return m->GetBitmapForSequence(sequence);
 }
 
-void IFaceposerModels::RecreateAllAnimationBitmaps( int modelindex )
+void IFaceposerModels::RecreateAllAnimationBitmaps(int modelindex)
 {
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return;
 
 	m->RecreateAllAnimationBitmaps();
-
 }
 
-void IFaceposerModels::RecreateAnimationBitmap( int modelindex, int sequence )
+void IFaceposerModels::RecreateAnimationBitmap(int modelindex, int sequence)
 {
-	CFacePoserModel *m = GetEntry( modelindex );
-	if ( !m )
+	CFacePoserModel *m = GetEntry(modelindex);
+	if(!m)
 		return;
 
-	m->RecreateAnimationBitmap( sequence, true );
+	m->RecreateAnimationBitmap(sequence, true);
 }
 
 int IFaceposerModels::CountActiveSources()
@@ -1087,14 +1076,14 @@ int IFaceposerModels::CountActiveSources()
 	int count = 0;
 
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		StudioModel *model = m->GetModel();
-		if ( !model )
+		if(!model)
 			continue;
 
 		count += model->m_mouth.GetNumVoiceSources();
@@ -1103,40 +1092,39 @@ int IFaceposerModels::CountActiveSources()
 	return count;
 }
 
-void IFaceposerModels::ClearModelTargets( bool force /*=false*/ )
+void IFaceposerModels::ClearModelTargets(bool force /*=false*/)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		StudioModel *mdl = m->GetModel();
-		if ( !mdl )
+		if(!mdl)
 			continue;
 
 		mdl->ClearLookTargets();
 	}
 }
 
-void IFaceposerModels::SetSolveHeadTurn( int solve )
+void IFaceposerModels::SetSolveHeadTurn(int solve)
 {
 	int c = Count();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CFacePoserModel *m = GetEntry( i );
-		if ( !m )
+		CFacePoserModel *m = GetEntry(i);
+		if(!m)
 			continue;
 
 		StudioModel *mdl = m->GetModel();
-		if ( !mdl )
+		if(!mdl)
 			continue;
 
-		mdl->SetSolveHeadTurn( solve );
+		mdl->SetSolveHeadTurn(solve);
 	}
 }
-
 
 static IFaceposerModels g_ModelManager;
 IFaceposerModels *models = &g_ModelManager;

@@ -14,23 +14,22 @@
 class CTFInput : public CInput
 {
 public:
-	int		GetButtonBits( int );
+	int GetButtonBits(int);
 };
 
 static CTFInput g_Input;
 
 // Expose this interface
-IInput *input = ( IInput * )&g_Input;
-
+IInput *input = (IInput *)&g_Input;
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove Jump from the input bits
 //-----------------------------------------------------------------------------
-int CTFInput::GetButtonBits( int bResetState )
+int CTFInput::GetButtonBits(int bResetState)
 {
-	int iBits = CInput::GetButtonBits( bResetState );
+	int iBits = CInput::GetButtonBits(bResetState);
 
-	//iBits &= ~IN_JUMP;
+	// iBits &= ~IN_JUMP;
 
 	return iBits;
 }

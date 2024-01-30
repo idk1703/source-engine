@@ -9,21 +9,20 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#if defined( GAME_DLL )
+#if defined(GAME_DLL)
 
-	#include "entitylist.h"
+#include "entitylist.h"
 
+void DebugCheckEHandleAccess(void *pEnt)
+{
+	extern bool g_bDisableEhandleAccess;
 
-	void DebugCheckEHandleAccess( void *pEnt )
+	if(g_bDisableEhandleAccess)
 	{
-		extern bool g_bDisableEhandleAccess;
-
-		if ( g_bDisableEhandleAccess )
-		{
-			Msg( "Access of EHANDLE/CHandle for class %s:%p in destructor!\n",
-				STRING(((CBaseEntity*)pEnt)->m_iClassname ), pEnt );
-		}
+		Msg("Access of EHANDLE/CHandle for class %s:%p in destructor!\n", STRING(((CBaseEntity *)pEnt)->m_iClassname),
+			pEnt);
 	}
+}
 
 #else
 

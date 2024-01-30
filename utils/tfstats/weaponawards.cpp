@@ -20,37 +20,36 @@ void CWeaponAward::getWinner()
 {
 	CEventListIterator it;
 
-	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
+	for(it = g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
-		if ((*it)->getType()==CLogEvent::FRAG)
+		if((*it)->getType() == CLogEvent::FRAG)
 		{
-			if (strcmp((*it)->getArgument(2)->getStringValue(),killtype)==0)
+			if(strcmp((*it)->getArgument(2)->getStringValue(), killtype) == 0)
 			{
-				PID pid=(*it)->getArgument(0)->asPlayerGetPID();
+				PID pid = (*it)->getArgument(0)->asPlayerGetPID();
 				accum[pid]++;
-				winnerID=pid;
-				fNoWinner=false;
+				winnerID = pid;
+				fNoWinner = false;
 			}
 		}
 	}
 
-	map<PID,int>::iterator acc_it;
+	map<PID, int>::iterator acc_it;
 
-	for (acc_it=accum.begin();acc_it!=accum.end();++acc_it)
+	for(acc_it = accum.begin(); acc_it != accum.end(); ++acc_it)
 	{
-		int currID=(*acc_it).first;
-		if (accum[currID]>accum[winnerID])
-			winnerID=currID;
+		int currID = (*acc_it).first;
+		if(accum[currID] > accum[winnerID])
+			winnerID = currID;
 	}
 }
-
 
 //------------------------------------------------------------------------------------------------------
 // Function:	CAssaultCannonAward::noWinner
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CAssaultCannonAward::noWinner(CHTMLFile& html)
+void CAssaultCannonAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one was killed with the Assault Cannon during this match.");
 }
@@ -60,12 +59,12 @@ void CAssaultCannonAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CAssaultCannonAward::extendedinfo(CHTMLFile& html)
+void CAssaultCannonAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s got 1 kill with the Assault Cannon!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s got 1 kill with the Assault Cannon!", winnerName.c_str());
 	else
-		html.write("%s got %li kills with the Assault Cannon!",winnerName.c_str(),accum[winnerID]);
+		html.write("%s got %li kills with the Assault Cannon!", winnerName.c_str(), accum[winnerID]);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -73,7 +72,7 @@ void CAssaultCannonAward::extendedinfo(CHTMLFile& html)
 // Purpose: writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CFlamethrowerAward::noWinner(CHTMLFile& html)
+void CFlamethrowerAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one got torched during this match.");
 }
@@ -83,12 +82,12 @@ void CFlamethrowerAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CFlamethrowerAward::extendedinfo(CHTMLFile& html)
+void CFlamethrowerAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s torched 1 person!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s torched 1 person!", winnerName.c_str());
 	else
-		html.write("%s torched %li people!",winnerName.c_str(),accum[winnerID]);
+		html.write("%s torched %li people!", winnerName.c_str(), accum[winnerID]);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -96,7 +95,7 @@ void CFlamethrowerAward::extendedinfo(CHTMLFile& html)
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CKnifeAward::noWinner(CHTMLFile& html)
+void CKnifeAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one got knifed during this match.");
 }
@@ -106,12 +105,12 @@ void CKnifeAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CKnifeAward::extendedinfo(CHTMLFile& html)
+void CKnifeAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s backstabbed 1 person!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s backstabbed 1 person!", winnerName.c_str());
 	else
-		html.write("%s backstabbed %li people!",winnerName.c_str(),accum[winnerID]);
+		html.write("%s backstabbed %li people!", winnerName.c_str(), accum[winnerID]);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -119,7 +118,7 @@ void CKnifeAward::extendedinfo(CHTMLFile& html)
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CRocketryAward::noWinner(CHTMLFile& html)
+void CRocketryAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one was killed by a rocket during this match.");
 }
@@ -129,12 +128,12 @@ void CRocketryAward::noWinner(CHTMLFile& html)
 // Purpose:
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CRocketryAward::extendedinfo(CHTMLFile& html)
+void CRocketryAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s rocketed 1 person to oblivion!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s rocketed 1 person to oblivion!", winnerName.c_str());
 	else
-		html.write("%s rocketed %li people to oblivion!",winnerName.c_str(),accum[winnerID]);
+		html.write("%s rocketed %li people to oblivion!", winnerName.c_str(), accum[winnerID]);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -142,7 +141,7 @@ void CRocketryAward::extendedinfo(CHTMLFile& html)
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CGrenadierAward::noWinner(CHTMLFile& html)
+void CGrenadierAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one was killed by a grenade during this match.");
 }
@@ -152,12 +151,12 @@ void CGrenadierAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CGrenadierAward::extendedinfo(CHTMLFile& html)
+void CGrenadierAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s killed 1 person with a grenade!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s killed 1 person with a grenade!", winnerName.c_str());
 	else
-		html.write("%s got %li people with grenades!",winnerName.c_str(),accum[winnerID]);
+		html.write("%s got %li people with grenades!", winnerName.c_str(), accum[winnerID]);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -165,7 +164,7 @@ void CGrenadierAward::extendedinfo(CHTMLFile& html)
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CDemolitionsAward::noWinner(CHTMLFile& html)
+void CDemolitionsAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one fell victim to a Detpack this match.");
 }
@@ -175,12 +174,12 @@ void CDemolitionsAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CDemolitionsAward::extendedinfo(CHTMLFile& html)
+void CDemolitionsAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s smeared 1 person with a detpack!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s smeared 1 person with a detpack!", winnerName.c_str());
 	else
-		html.write("%s smeared %li people with detpacks!",winnerName.c_str(),accum[winnerID]);
+		html.write("%s smeared %li people with detpacks!", winnerName.c_str(), accum[winnerID]);
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -188,7 +187,7 @@ void CDemolitionsAward::extendedinfo(CHTMLFile& html)
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CBiologicalWarfareAward::noWinner(CHTMLFile& html)
+void CBiologicalWarfareAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one died of infection this match.");
 }
@@ -198,12 +197,12 @@ void CBiologicalWarfareAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CBiologicalWarfareAward::extendedinfo(CHTMLFile& html)
+void CBiologicalWarfareAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s infected 1 person.",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s infected 1 person.", winnerName.c_str());
 	else
-		html.write("%li people succumbed to %s's disease.",accum[winnerID],winnerName.c_str());
+		html.write("%li people succumbed to %s's disease.", accum[winnerID], winnerName.c_str());
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -211,7 +210,7 @@ void CBiologicalWarfareAward::extendedinfo(CHTMLFile& html)
 // Purpose:	 writes out html indicating that no one won this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CBestSentryAward::noWinner(CHTMLFile& html)
+void CBestSentryAward::noWinner(CHTMLFile &html)
 {
 	html.write("No sentries killed anyone this match.");
 }
@@ -221,10 +220,10 @@ void CBestSentryAward::noWinner(CHTMLFile& html)
 // Purpose:	writes out html displaying extra information about the winning of this award
 // Input:	html - the html file to output to
 //------------------------------------------------------------------------------------------------------
-void CBestSentryAward::extendedinfo(CHTMLFile& html)
+void CBestSentryAward::extendedinfo(CHTMLFile &html)
 {
-	if (accum[winnerID]==1)
-		html.write("%s got 1 person with a sentry gun!",winnerName.c_str());
+	if(accum[winnerID] == 1)
+		html.write("%s got 1 person with a sentry gun!", winnerName.c_str());
 	else
-		html.write("%li people were killed by %s's well placed sentries.",accum[winnerID],winnerName.c_str());
+		html.write("%li people were killed by %s's well placed sentries.", accum[winnerID], winnerName.c_str());
 }

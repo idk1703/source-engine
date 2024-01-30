@@ -7,24 +7,22 @@
 #include "cbase.h"
 #include "weapon_csbasegun.h"
 
+#if defined(CLIENT_DLL)
 
-#if defined( CLIENT_DLL )
-
-	#define CWeaponG3SG1 C_WeaponG3SG1
-	#include "c_cs_player.h"
+#define CWeaponG3SG1 C_WeaponG3SG1
+#include "c_cs_player.h"
 
 #else
 
-	#include "cs_player.h"
-	#include "KeyValues.h"
+#include "cs_player.h"
+#include "KeyValues.h"
 
 #endif
-
 
 class CWeaponG3SG1 : public CWeaponCSBaseGun
 {
 public:
-	DECLARE_CLASS( CWeaponG3SG1, CWeaponCSBaseGun );
+	DECLARE_CLASS(CWeaponG3SG1, CWeaponCSBaseGun);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -36,32 +34,33 @@ public:
 	virtual bool Reload();
 	virtual bool Deploy();
 
- 	virtual float GetInaccuracy() const;
+	virtual float GetInaccuracy() const;
 	virtual float GetMaxSpeed();
 
-	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_G3SG1; }
+	virtual CSWeaponID GetWeaponID(void) const
+	{
+		return WEAPON_G3SG1;
+	}
 
 private:
-	CWeaponG3SG1( const CWeaponG3SG1 & );
+	CWeaponG3SG1(const CWeaponG3SG1 &);
 
 	float m_flLastFire;
 };
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponG3SG1, DT_WeaponG3SG1 )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponG3SG1, DT_WeaponG3SG1)
 
-BEGIN_NETWORK_TABLE( CWeaponG3SG1, DT_WeaponG3SG1 )
+BEGIN_NETWORK_TABLE(CWeaponG3SG1, DT_WeaponG3SG1)
 END_NETWORK_TABLE()
 
 #if defined CLIENT_DLL
-BEGIN_PREDICTION_DATA( CWeaponG3SG1 )
-	DEFINE_FIELD( m_flLastFire, FIELD_FLOAT ),
+BEGIN_PREDICTION_DATA(CWeaponG3SG1)
+	DEFINE_FIELD(m_flLastFire, FIELD_FLOAT),
 END_PREDICTION_DATA()
 #endif
 
-LINK_ENTITY_TO_CLASS( weapon_g3sg1, CWeaponG3SG1 );
-PRECACHE_WEAPON_REGISTER( weapon_g3sg1 );
-
-
+LINK_ENTITY_TO_CLASS(weapon_g3sg1, CWeaponG3SG1);
+PRECACHE_WEAPON_REGISTER(weapon_g3sg1);
 
 CWeaponG3SG1::CWeaponG3SG1()
 {
@@ -74,29 +73,28 @@ void CWeaponG3SG1::Spawn()
 	m_flAccuracy = 0.98;
 }
 
-
 void CWeaponG3SG1::SecondaryAttack()
 {
 	const float kZoomTime = 0.10f;
 
 	CCSPlayer *pPlayer = GetPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	if ( pPlayer->GetFOV() == pPlayer->GetDefaultFOV() )
+	if(pPlayer->GetFOV() == pPlayer->GetDefaultFOV())
 	{
-		pPlayer->SetFOV( pPlayer, 40, kZoomTime );
+		pPlayer->SetFOV(pPlayer, 40, kZoomTime);
 		m_weaponMode = Secondary_Mode;
 		m_fAccuracyPenalty += GetCSWpnData().m_fInaccuracyAltSwitch;
 	}
-	else if (pPlayer->GetFOV() == 40)
+	else if(pPlayer->GetFOV() == 40)
 	{
-		pPlayer->SetFOV( pPlayer, 15, kZoomTime );
+		pPlayer->SetFOV(pPlayer, 15, kZoomTime);
 		m_weaponMode = Secondary_Mode;
 	}
-	else if (pPlayer->GetFOV() == 15)
+	else if(pPlayer->GetFOV() == 15)
 	{
-		pPlayer->SetFOV( pPlayer, pPlayer->GetDefaultFOV(), kZoomTime );
+		pPlayer->SetFOV(pPlayer, pPlayer->GetDefaultFOV(), kZoomTime);
 		m_weaponMode = Primary_Mode;
 	}
 
@@ -109,19 +107,19 @@ void CWeaponG3SG1::SecondaryAttack()
 	// HPE_BEGIN:
 	// [tj] Playing this from the player so that we don't try to play the sound outside the level.
 	//=============================================================================
-	if ( GetPlayerOwner() )
+	if(GetPlayerOwner())
 	{
-		GetPlayerOwner()->EmitSound( "Default.Zoom" ); // zoom sound
+		GetPlayerOwner()->EmitSound("Default.Zoom"); // zoom sound
 	}
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
 	// let the bots hear the rifle zoom
-	IGameEvent * event = gameeventmanager->CreateEvent( "weapon_zoom" );
-	if( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("weapon_zoom");
+	if(event)
 	{
-		event->SetInt( "userid", pPlayer->GetUserID() );
-		gameeventmanager->FireEvent( event );
+		event->SetInt("userid", pPlayer->GetUserID());
+		gameeventmanager->FireEvent(event);
 	}
 #endif
 
@@ -131,25 +129,26 @@ void CWeaponG3SG1::SecondaryAttack()
 
 float CWeaponG3SG1::GetInaccuracy() const
 {
-	if ( weapon_accuracy_model.GetInt() == 1 )
+	if(weapon_accuracy_model.GetInt() == 1)
 	{
 		CCSPlayer *pPlayer = GetPlayerOwner();
-		if ( !pPlayer )
+		if(!pPlayer)
 			return 0.0f;
 
 		float fSpread = 0.0f;
 
-		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
+		if(!FBitSet(pPlayer->GetFlags(), FL_ONGROUND))
 			fSpread = 0.45f * (1.0f - m_flAccuracy);
-		else if (pPlayer->GetAbsVelocity().Length2D() > 5)
+		else if(pPlayer->GetAbsVelocity().Length2D() > 5)
 			fSpread = 0.15f;
-		else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )
+		else if(FBitSet(pPlayer->GetFlags(), FL_DUCKING))
 			fSpread = 0.035f * (1.0f - m_flAccuracy);
 		else
 			fSpread = 0.055f * (1.0f - m_flAccuracy);
 
-		// If we are not zoomed in, or we have very recently zoomed and are still transitioning, the bullet diverts more.
-		if (pPlayer->GetFOV() == pPlayer->GetDefaultFOV() || (gpGlobals->curtime < m_zoomFullyActiveTime))
+		// If we are not zoomed in, or we have very recently zoomed and are still transitioning, the bullet diverts
+		// more.
+		if(pPlayer->GetFOV() == pPlayer->GetDefaultFOV() || (gpGlobals->curtime < m_zoomFullyActiveTime))
 			fSpread += 0.025;
 
 		return fSpread;
@@ -161,27 +160,26 @@ float CWeaponG3SG1::GetInaccuracy() const
 void CWeaponG3SG1::PrimaryAttack()
 {
 	CCSPlayer *pPlayer = GetPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	// Mark the time of this shot and determine the accuracy modifier based on the last shot fired...
 	m_flAccuracy = 0.55 + (0.3) * (gpGlobals->curtime - m_flLastFire);
 
-	if (m_flAccuracy > 0.98)
+	if(m_flAccuracy > 0.98)
 		m_flAccuracy = 0.98;
 
 	m_flLastFire = gpGlobals->curtime;
 
-	if ( !CSBaseGunFire( GetCSWpnData().m_flCycleTime, m_weaponMode ) )
+	if(!CSBaseGunFire(GetCSWpnData().m_flCycleTime, m_weaponMode))
 		return;
 
 	// Adjust the punch angle.
 	QAngle angle = pPlayer->GetPunchAngle();
-	angle.x -= SharedRandomFloat("G3SG1PunchAngleX", 0.75, 1.75 ) + ( angle.x / 4 );
-	angle.y += SharedRandomFloat("G3SG1PunchAngleY", -0.75, 0.75 );
-	pPlayer->SetPunchAngle( angle );
+	angle.x -= SharedRandomFloat("G3SG1PunchAngleX", 0.75, 1.75) + (angle.x / 4);
+	angle.y += SharedRandomFloat("G3SG1PunchAngleY", -0.75, 0.75);
+	pPlayer->SetPunchAngle(angle);
 }
-
 
 bool CWeaponG3SG1::Reload()
 {
@@ -206,7 +204,7 @@ bool CWeaponG3SG1::Deploy()
 float CWeaponG3SG1::GetMaxSpeed()
 {
 	CCSPlayer *pPlayer = GetPlayerOwner();
-	if ( pPlayer && pPlayer->GetFOV() == pPlayer->GetDefaultFOV() )
+	if(pPlayer && pPlayer->GetFOV() == pPlayer->GetDefaultFOV())
 		return BaseClass::GetMaxSpeed();
 	else
 		return 150; // zoomed in

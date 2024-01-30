@@ -13,17 +13,16 @@
 
 using namespace vgui;
 
-class ListPanelDemo2: public DemoPage
+class ListPanelDemo2 : public DemoPage
 {
-	public:
-		ListPanelDemo2(Panel *parent, const char *name);
-		~ListPanelDemo2();
+public:
+	ListPanelDemo2(Panel *parent, const char *name);
+	~ListPanelDemo2();
 
-		void onButtonClicked();
+	void onButtonClicked();
 
-	private:
-		ListPanel *m_pListPanel;
-
+private:
+	ListPanel *m_pListPanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ ListPanelDemo2::ListPanelDemo2(Panel *parent, const char *name) : DemoPage(paren
 	m_pListPanel->setSize(400, 250);
 
 	// Add rows of data to the table
-	KeyValues *data = new KeyValues ("item");
+	KeyValues *data = new KeyValues("item");
 	data->SetString("Muppet", "Kermit");
 	data->SetString("Description", "The frog");
 	m_pListPanel->addItem(data);
@@ -86,12 +85,9 @@ ListPanelDemo2::ListPanelDemo2(Panel *parent, const char *name) : DemoPage(paren
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ListPanelDemo2::~ListPanelDemo2()
-{
-}
+ListPanelDemo2::~ListPanelDemo2() {}
 
-
-Panel* ListPanelDemo2_Create(Panel *parent)
+Panel *ListPanelDemo2_Create(Panel *parent)
 {
 	return new ListPanelDemo2(parent, "ListPanelDemo2");
 }

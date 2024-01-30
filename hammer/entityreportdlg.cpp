@@ -20,17 +20,15 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static CEntityReportDlg *s_pDlg = NULL;
 static char *pszIniSection = "EntityReportDlg";
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Static function
 //-----------------------------------------------------------------------------
 void CEntityReportDlg::ShowEntityReport(CMapDoc *pDoc, CWnd *pwndParent)
 {
-	if (!s_pDlg)
+	if(!s_pDlg)
 	{
 		s_pDlg = new CEntityReportDlg(pDoc, pwndParent);
 		s_pDlg->Create(IDD, pwndParent);
@@ -40,12 +38,10 @@ void CEntityReportDlg::ShowEntityReport(CMapDoc *pDoc, CWnd *pwndParent)
 	s_pDlg->GenerateReport();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Private constructor.
 //-----------------------------------------------------------------------------
-CEntityReportDlg::CEntityReportDlg(CMapDoc *pDoc, CWnd* pParent /*=NULL*/)
-	: CDialog(CEntityReportDlg::IDD, pParent)
+CEntityReportDlg::CEntityReportDlg(CMapDoc *pDoc, CWnd *pParent /*=NULL*/) : CDialog(CEntityReportDlg::IDD, pParent)
 {
 	m_pDoc = pDoc;
 
@@ -82,7 +78,7 @@ void CEntityReportDlg::SaveToIni()
 	pApp->WriteProfileString(pszIniSection, "FilterValue", m_szFilterValue);
 }
 
-void CEntityReportDlg::DoDataExchange(CDataExchange* pDX)
+void CEntityReportDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEntityReportDlg)
@@ -106,7 +102,6 @@ void CEntityReportDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_FILTERBYKEYVALUE, m_bFilterByKeyvalue);
 	DDX_Check(pDX, IDC_FILTERBYHIDDEN, m_bFilterByHidden);
 }
-
 
 BEGIN_MESSAGE_MAP(CEntityReportDlg, CDialog)
 	//{{AFX_MSG_MAP(CEntityReportDlg)
@@ -132,13 +127,12 @@ BEGIN_MESSAGE_MAP(CEntityReportDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Deletes the marked objects.
 //-----------------------------------------------------------------------------
 void CEntityReportDlg::OnDelete(void)
 {
-	if (AfxMessageBox("Delete Objects?", MB_YESNO) == IDNO)
+	if(AfxMessageBox("Delete Objects?", MB_YESNO) == IDNO)
 	{
 		return;
 	}
@@ -151,9 +145,9 @@ void CEntityReportDlg::OnDelete(void)
 	// Build a list of objects to delete.
 	//
 	CMapObjectList Objects;
-	for (int i = 0; i < m_cEntities.GetCount(); i++)
+	for(int i = 0; i < m_cEntities.GetCount(); i++)
 	{
-		if (!m_cEntities.GetSel(i))
+		if(!m_cEntities.GetSel(i))
 		{
 			continue;
 		}
@@ -169,13 +163,12 @@ void CEntityReportDlg::OnDelete(void)
 	//
 	// Update the list box selection.
 	//
-	if (iSel >= m_cEntities.GetCount())
+	if(iSel >= m_cEntities.GetCount())
 	{
 		iSel = m_cEntities.GetCount() - 1;
 	}
 	m_cEntities.SetCurSel(iSel);
 }
-
 
 void CEntityReportDlg::OnFilterbyhidden()
 {
@@ -198,7 +191,8 @@ void CEntityReportDlg::OnFilterbytype()
 	// walk all children in group
 	int iButton = 0;
 	HWND hWndCtrl = ::GetDlgItem(m_hWnd, IDC_FILTERBYTYPE);
-	do	{
+	do
+	{
 		// control in group is a radio button
 		if(::SendMessage(hWndCtrl, BM_GETCHECK, 0, 0L) != 0)
 			break;
@@ -226,57 +220,55 @@ void CEntityReportDlg::OnChangeFiltervalue()
 	m_bFilterTextChanged = TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Centers the 2D and 3D views on the selected entities.
 //-----------------------------------------------------------------------------
 void CEntityReportDlg::OnGoto()
 {
-	CMapDoc	*pMapDoc = MarkSelectedEntities();
+	CMapDoc *pMapDoc = MarkSelectedEntities();
 
-	if ( pMapDoc )
+	if(pMapDoc)
 	{
-		pMapDoc->ShowWindow( true );
+		pMapDoc->ShowWindow(true);
 		pMapDoc->CenterViewsOnSelection();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 CMapDoc *CEntityReportDlg::MarkSelectedEntities()
 {
-	CUtlVector< CMapDoc * >	FoundMaps;
+	CUtlVector<CMapDoc *> FoundMaps;
 
 	for(int i = 0; i < m_cEntities.GetCount(); i++)
 	{
 		if(!m_cEntities.GetSel(i))
 			continue;
-		CMapEntity *pEntity = (CMapEntity*) m_cEntities.GetItemDataPtr(i);
+		CMapEntity *pEntity = (CMapEntity *)m_cEntities.GetItemDataPtr(i);
 		CMapClass *pTopMapClass = pEntity;
-		while( pTopMapClass->GetParent() )
+		while(pTopMapClass->GetParent())
 		{
 			pTopMapClass = pTopMapClass->GetParent();
 		}
-		CMapWorld	*pMapWorld = dynamic_cast< CMapWorld * >( pTopMapClass );
-		if ( pMapWorld )
+		CMapWorld *pMapWorld = dynamic_cast<CMapWorld *>(pTopMapClass);
+		if(pMapWorld)
 		{
-			CMapDoc	*pMapDoc = pMapWorld->GetOwningDocument();
+			CMapDoc *pMapDoc = pMapWorld->GetOwningDocument();
 
-			if ( FoundMaps.Find( pMapDoc ) == -1 )
+			if(FoundMaps.Find(pMapDoc) == -1)
 			{
-				FoundMaps.AddToTail( pMapDoc );
-				pMapDoc->SelectObject( NULL, scClear|scSaveChanges );
+				FoundMaps.AddToTail(pMapDoc);
+				pMapDoc->SelectObject(NULL, scClear | scSaveChanges);
 			}
 
-			pMapDoc->SelectObject( pEntity, scSelect );
+			pMapDoc->SelectObject(pEntity, scSelect);
 		}
 	}
 
-	if ( FoundMaps.Count() == 1 )
+	if(FoundMaps.Count() == 1)
 	{
-		return FoundMaps[ 0 ];
+		return FoundMaps[0];
 	}
 
 	return NULL;
@@ -284,11 +276,11 @@ CMapDoc *CEntityReportDlg::MarkSelectedEntities()
 
 void CEntityReportDlg::OnProperties()
 {
-	CMapDoc	*pMapDoc = MarkSelectedEntities();
+	CMapDoc *pMapDoc = MarkSelectedEntities();
 
-	if ( pMapDoc )
+	if(pMapDoc)
 	{
-		pMapDoc->ShowWindow( true );
+		pMapDoc->ShowWindow(true);
 		GetMainWnd()->pObjectProperties->ShowWindow(SW_SHOW);
 	}
 }
@@ -314,7 +306,7 @@ BOOL AddEntityToList(CMapEntity *pEntity, CEntityReportDlg *pDlg)
 	char szString[256];
 
 	// nope.
-	if (!pDlg->m_bFilterByHidden && !pEntity->IsVisible())
+	if(!pDlg->m_bFilterByHidden && !pEntity->IsVisible())
 	{
 		return TRUE;
 	}
@@ -326,51 +318,51 @@ BOOL AddEntityToList(CMapEntity *pEntity, CEntityReportDlg *pDlg)
 	}
 	*/
 
-	if (pDlg->m_iFilterByType)
+	if(pDlg->m_iFilterByType)
 	{
-		if (pDlg->m_iFilterByType == 1 && pEntity->IsPlaceholder())
+		if(pDlg->m_iFilterByType == 1 && pEntity->IsPlaceholder())
 		{
 			return TRUE;
 		}
-		if (pDlg->m_iFilterByType == 2 && !pEntity->IsPlaceholder())
+		if(pDlg->m_iFilterByType == 2 && !pEntity->IsPlaceholder())
 		{
 			return TRUE;
 		}
 	}
 
-	const char* pszClassName = pEntity->GetClassName();
+	const char *pszClassName = pEntity->GetClassName();
 
-	if ( pEntity && stricmp( pszClassName, "func_instance" ) == 0 )
+	if(pEntity && stricmp(pszClassName, "func_instance") == 0)
 	{
-		CMapInstance	*pMapInstance = pEntity->GetChildOfType( ( CMapInstance * )NULL );
-		if ( pMapInstance )
+		CMapInstance *pMapInstance = pEntity->GetChildOfType((CMapInstance *)NULL);
+		if(pMapInstance)
 		{
-			CMapDoc		*pMapDoc = pMapInstance->GetInstancedMap();
-			if ( pMapDoc )
+			CMapDoc *pMapDoc = pMapInstance->GetInstancedMap();
+			if(pMapDoc)
 			{
-				CMapWorld	*pWorld = pMapDoc->GetMapWorld();
+				CMapWorld *pWorld = pMapDoc->GetMapWorld();
 
 				pWorld->EnumChildren(ENUMMAPCHILDRENPROC(AddEntityToList), DWORD(pDlg), MAPCLASS_TYPE(CMapEntity));
 			}
 		}
 	}
 
-	if (pDlg->m_bFilterByClass)
+	if(pDlg->m_bFilterByClass)
 	{
-		if (pDlg->m_szFilterClass.IsEmpty())
+		if(pDlg->m_szFilterClass.IsEmpty())
 		{
-			if (pszClassName[0])
+			if(pszClassName[0])
 			{
-				return(TRUE);
+				return (TRUE);
 			}
 		}
 		else
 		{
-			V_strcpy_safe( szString, pEntity->GetClassName() );
+			V_strcpy_safe(szString, pEntity->GetClassName());
 			strupr(szString);
-			if (!strstr(szString, pDlg->m_szFilterClass))
+			if(!strstr(szString, pDlg->m_szFilterClass))
 			{
-				return(TRUE);
+				return (TRUE);
 			}
 		}
 	}
@@ -383,33 +375,33 @@ BOOL AddEntityToList(CMapEntity *pEntity, CEntityReportDlg *pDlg)
 		bAdd = FALSE;
 
 	MDkeyvalue tmpkv;
-	for (int i = pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i=pEntity->GetNextKeyValue( i ) )
+	for(int i = pEntity->GetFirstKeyValue(); i != pEntity->GetInvalidKeyValue(); i = pEntity->GetNextKeyValue(i))
 	{
 		// if filtering by keyvalue, check!
-		if (pDlg->m_bFilterByKeyvalue && !bAdd && !pDlg->m_szFilterValue.IsEmpty())
+		if(pDlg->m_bFilterByKeyvalue && !bAdd && !pDlg->m_szFilterValue.IsEmpty())
 		{
 			// first, check key
-			if (pDlg->m_szFilterKey.IsEmpty() || !strcmpi(pDlg->m_szFilterKey, pEntity->GetKey(i)))
+			if(pDlg->m_szFilterKey.IsEmpty() || !strcmpi(pDlg->m_szFilterKey, pEntity->GetKey(i)))
 			{
 				// now, check value
 				char szTmp1[128], szTmp2[128];
-				V_strcpy_safe( szTmp1, pEntity->GetKeyValue( i ) );
+				V_strcpy_safe(szTmp1, pEntity->GetKeyValue(i));
 				strupr(szTmp1);
 				strcpy(szTmp2, pDlg->m_szFilterValue);
-				if ((!pDlg->m_bExact && strstr(szTmp1, szTmp2)) || !strcmpi(szTmp1, szTmp2))
+				if((!pDlg->m_bExact && strstr(szTmp1, szTmp2)) || !strcmpi(szTmp1, szTmp2))
 				{
 					bAdd = TRUE;
 				}
 			}
 		}
 
-		const char* pszName = pEntity->GetKey(i);
+		const char *pszName = pEntity->GetKey(i);
 
 		GDclass *pClass = pEntity->GetClass();
-		if (pClass != NULL)
+		if(pClass != NULL)
 		{
 			GDinputvariable *pVar = pClass->VarForName(pEntity->GetKey(i));
-			if (!pVar || !pVar->IsReportable())
+			if(!pVar || !pVar->IsReportable())
 			{
 				continue;
 			}
@@ -418,9 +410,9 @@ BOOL AddEntityToList(CMapEntity *pEntity, CEntityReportDlg *pDlg)
 
 		sprintf(szString + strlen(szString), "\t%s \"%s\"", pszName, pEntity->GetKeyValue(i));
 
-		if (pClass == NULL)
+		if(pClass == NULL)
 		{
-			break;	// just do first if no class
+			break; // just do first if no class
 		}
 	}
 
@@ -432,7 +424,6 @@ BOOL AddEntityToList(CMapEntity *pEntity, CEntityReportDlg *pDlg)
 
 	return TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -459,7 +450,6 @@ void CEntityReportDlg::UpdateEntityList(void)
 	m_cEntities.Invalidate();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -467,7 +457,7 @@ void CEntityReportDlg::GenerateReport()
 {
 	CString str;
 	int nCount = pGD->GetClassCount();
-	for (int i = 0; i < nCount; i++)
+	for(int i = 0; i < nCount; i++)
 	{
 		GDclass *pc = pGD->GetClass(i);
 		if(!pc->IsBaseClass())
@@ -509,7 +499,6 @@ void CEntityReportDlg::OnSelchangeFilterclass()
 	UpdateEntityList();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -518,7 +507,6 @@ void CEntityReportDlg::OnSelChangeEntityList()
 	MarkSelectedEntities();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -526,13 +514,12 @@ void CEntityReportDlg::OnDblClkEntityList()
 {
 	CMapDoc *pMapDoc = MarkSelectedEntities();
 
-	if ( pMapDoc )
+	if(pMapDoc)
 	{
-		pMapDoc->ShowWindow( true );
+		pMapDoc->ShowWindow(true);
 		pMapDoc->CenterViewsOnSelection();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -543,7 +530,6 @@ void CEntityReportDlg::OnExactvalue()
 	UpdateEntityList();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -552,7 +538,6 @@ void CEntityReportDlg::OnOK()
 	DestroyWindow();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -560,7 +545,6 @@ void CEntityReportDlg::OnClose()
 {
 	DestroyWindow();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when our window is being destroyed.

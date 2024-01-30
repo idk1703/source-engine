@@ -21,41 +21,41 @@
 class CItemLongJump : public CItem
 {
 public:
-	DECLARE_CLASS( CItemLongJump, CItem );
+	DECLARE_CLASS(CItemLongJump, CItem);
 
-	void Spawn( void )
+	void Spawn(void)
 	{
-		Precache( );
-		SetModel( "models/w_longjump.mdl" );
-		BaseClass::Spawn( );
+		Precache();
+		SetModel("models/w_longjump.mdl");
+		BaseClass::Spawn();
 	}
-	void Precache( void )
+	void Precache(void)
 	{
-		PrecacheModel ("models/w_longjump.mdl");
+		PrecacheModel("models/w_longjump.mdl");
 	}
-	bool MyTouch( CBasePlayer *pPlayer )
+	bool MyTouch(CBasePlayer *pPlayer)
 	{
-		if ( pPlayer->m_fLongJump )
+		if(pPlayer->m_fLongJump)
 		{
 			return FALSE;
 		}
 
-		if ( pPlayer->IsSuitEquipped() )
+		if(pPlayer->IsSuitEquipped())
 		{
-			pPlayer->m_fLongJump = TRUE;// player now has longjump module
+			pPlayer->m_fLongJump = TRUE; // player now has longjump module
 
-			CSingleUserRecipientFilter user( pPlayer );
+			CSingleUserRecipientFilter user(pPlayer);
 			user.MakeReliable();
 
-			UserMessageBegin( user, "ItemPickup" );
-				WRITE_STRING( STRING(pev->classname) );
+			UserMessageBegin(user, "ItemPickup");
+			WRITE_STRING(STRING(pev->classname));
 			MessageEnd();
 
-			UTIL_EmitSoundSuit( pPlayer->edict(), "!HEV_A1" );	// Play the longjump sound UNDONE: Kelly? correct sound?
+			UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_A1"); // Play the longjump sound UNDONE: Kelly? correct sound?
 			return true;
 		}
 		return false;
 	}
 };
 
-LINK_ENTITY_TO_CLASS( item_longjump, CItemLongJump );
+LINK_ENTITY_TO_CLASS(item_longjump, CItemLongJump);

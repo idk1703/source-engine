@@ -23,31 +23,30 @@
 
 using namespace vgui;
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 COptionsSubVoice::COptionsSubVoice(vgui::Panel *parent) : PropertyPage(parent, NULL)
 {
-#if !defined( NO_VOICE ) //#ifndef _XBOX
+#if !defined(NO_VOICE) //#ifndef _XBOX
 	m_pVoiceTweak = engine->GetVoiceTweakAPI();
 #endif
 	m_pMicMeter = new ImagePanel(this, "MicMeter");
 	m_pMicMeter2 = new ImagePanel(this, "MicMeter2");
 
 	m_pReceiveSliderLabel = new Label(this, "ReceiveLabel", "#GameUI_VoiceReceiveVolume");
-	m_pReceiveVolume = new CCvarSlider( this, "VoiceReceive", "#GameUI_ReceiveVolume",
-		0.0f, 1.0f, "voice_scale" );
+	m_pReceiveVolume = new CCvarSlider(this, "VoiceReceive", "#GameUI_ReceiveVolume", 0.0f, 1.0f, "voice_scale");
 
 	m_pMicrophoneSliderLabel = new Label(this, "MicrophoneLabel", "#GameUI_VoiceTransmitVolume");
-	m_pMicrophoneVolume = new Slider( this, "#GameUI_MicrophoneVolume" );
-	m_pMicrophoneVolume->SetRange( 0, 100 );
-	m_pMicrophoneVolume->AddActionSignalTarget( this );
+	m_pMicrophoneVolume = new Slider(this, "#GameUI_MicrophoneVolume");
+	m_pMicrophoneVolume->SetRange(0, 100);
+	m_pMicrophoneVolume->AddActionSignalTarget(this);
 
-	m_pVoiceEnableCheckButton = new CCvarToggleCheckButton( this, "voice_modenable", "#GameUI_EnableVoice", "voice_modenable" );
+	m_pVoiceEnableCheckButton =
+		new CCvarToggleCheckButton(this, "voice_modenable", "#GameUI_EnableVoice", "voice_modenable");
 
-	m_pMicBoost = new CheckButton(this, "MicBoost", "#GameUI_BoostMicrophone" );
-	m_pMicBoost->AddActionSignalTarget( this );
+	m_pMicBoost = new CheckButton(this, "MicBoost", "#GameUI_BoostMicrophone");
+	m_pMicBoost->AddActionSignalTarget(this);
 
 	m_pTestMicrophoneButton = new Button(this, "TestMicrophone", "#GameUI_TestMicrophone");
 
@@ -56,7 +55,7 @@ COptionsSubVoice::COptionsSubVoice(vgui::Panel *parent) : PropertyPage(parent, N
 	m_bVoiceOn = false;
 	m_pMicMeter2->SetVisible(false);
 	// no voice tweak - then disable all buttons
-	if (!m_pVoiceTweak)
+	if(!m_pVoiceTweak)
 	{
 		m_pReceiveVolume->SetEnabled(false);
 		m_pMicrophoneVolume->SetEnabled(false);
@@ -76,11 +75,10 @@ COptionsSubVoice::COptionsSubVoice(vgui::Panel *parent) : PropertyPage(parent, N
 COptionsSubVoice::~COptionsSubVoice()
 {
 	// turn off voice if it was on, since we're leaving this page
-	if (m_bVoiceOn)
+	if(m_bVoiceOn)
 	{
 		EndTestMicrophone();
 	}
-
 }
 
 //-----------------------------------------------------------------------------
@@ -88,15 +86,15 @@ COptionsSubVoice::~COptionsSubVoice()
 //-----------------------------------------------------------------------------
 void COptionsSubVoice::OnResetData()
 {
-	if (!m_pVoiceTweak)
+	if(!m_pVoiceTweak)
 		return;
 
-	float micVolume = m_pVoiceTweak->GetControlFloat( MicrophoneVolume );
-	m_pMicrophoneVolume->SetValue( (int)( 100.0f * micVolume ) );
+	float micVolume = m_pVoiceTweak->GetControlFloat(MicrophoneVolume);
+	m_pMicrophoneVolume->SetValue((int)(100.0f * micVolume));
 	m_nMicVolumeValue = m_pMicrophoneVolume->GetValue();
 
-	float fMicBoost = m_pVoiceTweak->GetControlFloat( MicBoost );
-	m_pMicBoost->SetSelected( fMicBoost != 0.0f );
+	float fMicBoost = m_pVoiceTweak->GetControlFloat(MicBoost);
+	m_pMicBoost->SetSelected(fMicBoost != 0.0f);
 	m_bMicBoostSelected = m_pMicBoost->IsSelected();
 
 	m_pReceiveVolume->Reset();
@@ -108,11 +106,11 @@ void COptionsSubVoice::OnResetData()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COptionsSubVoice::OnSliderMoved( int position )
+void COptionsSubVoice::OnSliderMoved(int position)
 {
-	if (m_pVoiceTweak)
+	if(m_pVoiceTweak)
 	{
-		if (m_pMicrophoneVolume->GetValue() != m_nMicVolumeValue)
+		if(m_pMicrophoneVolume->GetValue() != m_nMicVolumeValue)
 		{
 			PostActionSignal(new KeyValues("ApplyButtonEnable"));
 		}
@@ -122,12 +120,12 @@ void COptionsSubVoice::OnSliderMoved( int position )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COptionsSubVoice::OnCheckButtonChecked( int state )
+void COptionsSubVoice::OnCheckButtonChecked(int state)
 {
-	if (m_pVoiceTweak)
+	if(m_pVoiceTweak)
 	{
 		// if our state is different
-		if ( m_pMicBoost->IsSelected() != m_bMicBoostSelected)
+		if(m_pMicBoost->IsSelected() != m_bMicBoostSelected)
 		{
 			PostActionSignal(new KeyValues("ApplyButtonEnable"));
 		}
@@ -139,15 +137,15 @@ void COptionsSubVoice::OnCheckButtonChecked( int state )
 //-----------------------------------------------------------------------------
 void COptionsSubVoice::OnApplyChanges()
 {
-	if (!m_pVoiceTweak)
+	if(!m_pVoiceTweak)
 		return;
 
 	m_nMicVolumeValue = m_pMicrophoneVolume->GetValue();
-	float fMicVolume = (float) m_nMicVolumeValue / 100.0f;
-	m_pVoiceTweak->SetControlFloat( MicrophoneVolume, fMicVolume );
+	float fMicVolume = (float)m_nMicVolumeValue / 100.0f;
+	m_pVoiceTweak->SetControlFloat(MicrophoneVolume, fMicVolume);
 
 	m_bMicBoostSelected = m_pMicBoost->IsSelected();
-	m_pVoiceTweak->SetControlFloat( MicBoost, m_bMicBoostSelected ? 1.0f : 0.0f );
+	m_pVoiceTweak->SetControlFloat(MicBoost, m_bMicBoostSelected ? 1.0f : 0.0f);
 
 	m_pReceiveVolume->ApplyChanges();
 	m_fReceiveVolume = m_pReceiveVolume->GetSliderValue();
@@ -160,14 +158,14 @@ void COptionsSubVoice::OnApplyChanges()
 //-----------------------------------------------------------------------------
 void COptionsSubVoice::StartTestMicrophone()
 {
-	if (!m_pVoiceTweak || m_bVoiceOn)
+	if(!m_pVoiceTweak || m_bVoiceOn)
 		return;
 
 	m_bVoiceOn = true;
 
 	UseCurrentVoiceParameters();
 
-	if (m_pVoiceTweak->StartVoiceTweakMode())
+	if(m_pVoiceTweak->StartVoiceTweakMode())
 	{
 		m_pTestMicrophoneButton->SetText("#GameUI_StopTestMicrophone");
 
@@ -196,12 +194,12 @@ void COptionsSubVoice::StartTestMicrophone()
 void COptionsSubVoice::UseCurrentVoiceParameters()
 {
 	int nVal = m_pMicrophoneVolume->GetValue();
-	float val = (float) nVal / 100.0f;
-	m_pVoiceTweak->SetControlFloat( MicrophoneVolume, val );
+	float val = (float)nVal / 100.0f;
+	m_pVoiceTweak->SetControlFloat(MicrophoneVolume, val);
 
 	bool bSelected = m_pMicBoost->IsSelected();
 	val = bSelected ? 1.0f : 0.0f;
-	m_pVoiceTweak->SetControlFloat( MicBoost, val );
+	m_pVoiceTweak->SetControlFloat(MicBoost, val);
 
 	// get where the current slider is
 	m_nReceiveSliderValue = m_pReceiveVolume->GetValue();
@@ -213,13 +211,13 @@ void COptionsSubVoice::UseCurrentVoiceParameters()
 //-----------------------------------------------------------------------------
 void COptionsSubVoice::ResetVoiceParameters()
 {
-	float fMicVolume = (float) m_nMicVolumeValue / 100.0f;
-	m_pVoiceTweak->SetControlFloat( MicrophoneVolume, fMicVolume );
-	m_pVoiceTweak->SetControlFloat( MicBoost, m_bMicBoostSelected ? 1.0f : 0.0f );
+	float fMicVolume = (float)m_nMicVolumeValue / 100.0f;
+	m_pVoiceTweak->SetControlFloat(MicrophoneVolume, fMicVolume);
+	m_pVoiceTweak->SetControlFloat(MicBoost, m_bMicBoostSelected ? 1.0f : 0.0f);
 
 	// restore the old value
-	ConVarRef voice_scale( "voice_scale" );
-	voice_scale.SetValue( m_fReceiveVolume );
+	ConVarRef voice_scale("voice_scale");
+	voice_scale.SetValue(m_fReceiveVolume);
 
 	m_pReceiveVolume->Reset();
 	// set the slider to 'new' value, but we've reset the 'start' value where it was
@@ -231,10 +229,10 @@ void COptionsSubVoice::ResetVoiceParameters()
 //-----------------------------------------------------------------------------
 void COptionsSubVoice::EndTestMicrophone()
 {
-	if (!m_pVoiceTweak || !m_bVoiceOn)
+	if(!m_pVoiceTweak || !m_bVoiceOn)
 		return;
 
-	if ( m_pVoiceTweak->IsStillTweaking() )
+	if(m_pVoiceTweak->IsStillTweaking())
 	{
 		m_pVoiceTweak->EndVoiceTweakMode();
 	}
@@ -254,11 +252,11 @@ void COptionsSubVoice::EndTestMicrophone()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COptionsSubVoice::OnCommand( const char *command)
+void COptionsSubVoice::OnCommand(const char *command)
 {
-	if (!stricmp(command, "TestMicrophone"))
+	if(!stricmp(command, "TestMicrophone"))
 	{
-		if (!m_bVoiceOn)
+		if(!m_bVoiceOn)
 		{
 			StartTestMicrophone();
 		}
@@ -267,11 +265,11 @@ void COptionsSubVoice::OnCommand( const char *command)
 			EndTestMicrophone();
 		}
 	}
-	else if (!stricmp(command, "SteamVoiceSettings"))
+	else if(!stricmp(command, "SteamVoiceSettings"))
 	{
-		if ( steamapicontext && steamapicontext->SteamFriends() )
+		if(steamapicontext && steamapicontext->SteamFriends())
 		{
-			steamapicontext->SteamFriends()->ActivateGameOverlay( "voicesettings" );
+			steamapicontext->SteamFriends()->ActivateGameOverlay("voicesettings");
 		}
 	}
 	else
@@ -286,7 +284,7 @@ void COptionsSubVoice::OnCommand( const char *command)
 void COptionsSubVoice::OnPageHide()
 {
 	// turn off voice if it was on, since we're leaving this page
-	if (m_bVoiceOn)
+	if(m_bVoiceOn)
 	{
 		EndTestMicrophone();
 	}
@@ -301,7 +299,7 @@ void COptionsSubVoice::OnControlModified()
 	PostActionSignal(new KeyValues("ApplyButtonEnable"));
 }
 
-#define BAR_WIDTH 160
+#define BAR_WIDTH	  160
 #define BAR_INCREMENT 8
 
 //-----------------------------------------------------------------------------
@@ -310,20 +308,20 @@ void COptionsSubVoice::OnControlModified()
 void COptionsSubVoice::OnThink()
 {
 	BaseClass::OnThink();
-	if (m_bVoiceOn)
+	if(m_bVoiceOn)
 	{
-		if ( !m_pVoiceTweak->IsStillTweaking() )
+		if(!m_pVoiceTweak->IsStillTweaking())
 		{
-			DevMsg( 1, "Lost Voice Tweak channels, resetting\n" );
+			DevMsg(1, "Lost Voice Tweak channels, resetting\n");
 			EndTestMicrophone();
 		}
 		else
 		{
-			float val = m_pVoiceTweak->GetControlFloat( SpeakingVolume );
-			int nValue = static_cast<int>( val*32768.0f + 0.5f );
+			float val = m_pVoiceTweak->GetControlFloat(SpeakingVolume);
+			int nValue = static_cast<int>(val * 32768.0f + 0.5f);
 
 			int width = (BAR_WIDTH * nValue) / 32768;
-			width = ((width + (BAR_INCREMENT-1)) / BAR_INCREMENT) * BAR_INCREMENT;  // round to nearest BAR_INCREMENT
+			width = ((width + (BAR_INCREMENT - 1)) / BAR_INCREMENT) * BAR_INCREMENT; // round to nearest BAR_INCREMENT
 
 			int wide, tall;
 			m_pMicMeter2->GetSize(wide, tall);

@@ -24,56 +24,56 @@
 //-----------------------------------------------------------------------------
 class CDODHudHintDisplay : public vgui::Panel, public CHudElement
 {
-	DECLARE_CLASS_SIMPLE( CDODHudHintDisplay, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CDODHudHintDisplay, vgui::Panel);
 
 public:
-	CDODHudHintDisplay( const char *pElementName );
+	CDODHudHintDisplay(const char *pElementName);
 
 	void Init();
 	void Reset();
-	void MsgFunc_HintText( bf_read &msg );
-	void FireGameEvent( IGameEvent * event);
+	void MsgFunc_HintText(bf_read &msg);
+	void FireGameEvent(IGameEvent *event);
 
-	bool SetHintText( wchar_t *text );
+	bool SetHintText(wchar_t *text);
 
 	virtual void PerformLayout();
 
-	virtual bool IsVisible( void );
+	virtual bool IsVisible(void);
 
 protected:
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 	virtual void OnThink();
 
 private:
 	vgui::HFont m_hFont;
-	Color		m_bgColor;
+	Color m_bgColor;
 	vgui::Label *m_pLabel;
 	CUtlVector<vgui::Label *> m_Labels;
-	CPanelAnimationVarAliasType( int, m_iTextX, "text_xpos", "8", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iTextY, "text_ypos", "8", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iCenterX, "center_x", "0", "proportional_int" );
-	CPanelAnimationVarAliasType( int, m_iCenterY, "center_y", "0", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iTextX, "text_xpos", "8", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iTextY, "text_ypos", "8", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iCenterX, "center_x", "0", "proportional_int");
+	CPanelAnimationVarAliasType(int, m_iCenterY, "center_y", "0", "proportional_int");
 };
 
-DECLARE_HUDELEMENT( CDODHudHintDisplay );
-DECLARE_HUD_MESSAGE( CDODHudHintDisplay, HintText );
+DECLARE_HUDELEMENT(CDODHudHintDisplay);
+DECLARE_HUD_MESSAGE(CDODHudHintDisplay, HintText);
 
 #define MAX_HINT_STRINGS 5
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODHudHintDisplay::CDODHudHintDisplay( const char *pElementName ) : BaseClass(NULL, "HudHintDisplay"), CHudElement( pElementName )
+CDODHudHintDisplay::CDODHudHintDisplay(const char *pElementName)
+	: BaseClass(NULL, "HudHintDisplay"), CHudElement(pElementName)
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetVisible( false );
-	SetAlpha( 0 );
-	m_pLabel = new vgui::Label( this, "HudHintDisplayLabel", "" );
+	SetParent(pParent);
+	SetVisible(false);
+	SetAlpha(0);
+	m_pLabel = new vgui::Label(this, "HudHintDisplayLabel", "");
 
-	RegisterForRenderGroup( "winpanel" );
-	RegisterForRenderGroup( "freezepanel" );
+	RegisterForRenderGroup("winpanel");
+	RegisterForRenderGroup("freezepanel");
 }
 
 //-----------------------------------------------------------------------------
@@ -81,10 +81,10 @@ CDODHudHintDisplay::CDODHudHintDisplay( const char *pElementName ) : BaseClass(N
 //-----------------------------------------------------------------------------
 void CDODHudHintDisplay::Init()
 {
-	HOOK_HUD_MESSAGE( CDODHudHintDisplay, HintText );
+	HOOK_HUD_MESSAGE(CDODHudHintDisplay, HintText);
 
 	// listen for client side events
-	ListenForGameEvent( "player_hintmessage" );
+	ListenForGameEvent("player_hintmessage");
 }
 
 //-----------------------------------------------------------------------------
@@ -92,30 +92,30 @@ void CDODHudHintDisplay::Init()
 //-----------------------------------------------------------------------------
 void CDODHudHintDisplay::Reset()
 {
-	SetHintText( NULL );
-	SetAlpha( 0 );
+	SetHintText(NULL);
+	SetAlpha(0);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDODHudHintDisplay::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDODHudHintDisplay::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetFgColor( GetSchemeColor("HintMessageFg", pScheme) );
-	m_hFont = pScheme->GetFont( "HudHintText", true );
-	m_pLabel->SetBgColor( GetSchemeColor("HintMessageBg", pScheme) );
-	m_pLabel->SetPaintBackgroundType( 2 );
+	SetFgColor(GetSchemeColor("HintMessageFg", pScheme));
+	m_hFont = pScheme->GetFont("HudHintText", true);
+	m_pLabel->SetBgColor(GetSchemeColor("HintMessageBg", pScheme));
+	m_pLabel->SetPaintBackgroundType(2);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the hint text, replacing variables as necessary
 //-----------------------------------------------------------------------------
-bool CDODHudHintDisplay::SetHintText( wchar_t *text )
+bool CDODHudHintDisplay::SetHintText(wchar_t *text)
 {
 	// clear the existing text
-	for (int i = 0; i < m_Labels.Count(); i++)
+	for(int i = 0; i < m_Labels.Count(); i++)
 	{
 		m_Labels[i]->MarkForDeletion();
 	}
@@ -123,14 +123,14 @@ bool CDODHudHintDisplay::SetHintText( wchar_t *text )
 
 	wchar_t *p = text;
 
-	while ( p )
+	while(p)
 	{
 		wchar_t *line = p;
-		wchar_t *end = wcschr( p, L'\n' );
-		if ( end )
+		wchar_t *end = wcschr(p, L'\n');
+		if(end)
 		{
 			//*end = 0;	//eek
-			p = end+1;
+			p = end + 1;
 		}
 		else
 		{
@@ -143,41 +143,41 @@ bool CDODHudHintDisplay::SetHintText( wchar_t *text )
 		int pos = 0;
 
 		wchar_t *ws = line;
-		while( ws != end && *ws != 0 )
+		while(ws != end && *ws != 0)
 		{
 			// check for variables
-			if ( *ws == '%' )
+			if(*ws == '%')
 			{
 				++ws;
 
-				wchar_t *end = wcschr( ws, '%' );
-				if ( end )
+				wchar_t *end = wcschr(ws, '%');
+				if(end)
 				{
 					wchar_t token[64];
-					wcsncpy( token, ws, end - ws );
+					wcsncpy(token, ws, end - ws);
 					token[end - ws] = 0;
 
 					ws += end - ws;
 
 					// lookup key names
 					char binding[64];
-					g_pVGuiLocalize->ConvertUnicodeToANSI( token, binding, sizeof(binding) );
+					g_pVGuiLocalize->ConvertUnicodeToANSI(token, binding, sizeof(binding));
 
-					const char *key = engine->Key_LookupBinding( *binding == '+' ? binding + 1 : binding );
-					if ( !key )
+					const char *key = engine->Key_LookupBinding(*binding == '+' ? binding + 1 : binding);
+					if(!key)
 					{
 						key = "< not bound >";
 					}
 
 					//!! change some key names into better names
 					char friendlyName[64];
-					Q_snprintf( friendlyName, sizeof(friendlyName), "%s", key );
-					Q_strupr( friendlyName );
+					Q_snprintf(friendlyName, sizeof(friendlyName), "%s", key);
+					Q_strupr(friendlyName);
 
-					g_pVGuiLocalize->ConvertANSIToUnicode( friendlyName, token, sizeof(token) );
+					g_pVGuiLocalize->ConvertANSIToUnicode(friendlyName, token, sizeof(token));
 
 					buf[pos] = '\0';
-					wcscat( buf, token );
+					wcscat(buf, token);
 					pos += wcslen(token);
 				}
 				else
@@ -198,17 +198,17 @@ bool CDODHudHintDisplay::SetHintText( wchar_t *text )
 		buf[pos] = '\0';
 
 		// put it in a label
-		//vgui::Label *label = vgui::SETUP_PANEL(new vgui::Label(this, NULL, line));
+		// vgui::Label *label = vgui::SETUP_PANEL(new vgui::Label(this, NULL, line));
 		vgui::Label *label = vgui::SETUP_PANEL(new vgui::Label(this, NULL, buf));
-		label->SetFont( m_hFont );
-		label->SetPaintBackgroundEnabled( false );
-		label->SetPaintBorderEnabled( false );
+		label->SetFont(m_hFont);
+		label->SetPaintBackgroundEnabled(false);
+		label->SetPaintBorderEnabled(false);
 		label->SizeToContents();
-		label->SetContentAlignment( vgui::Label::a_west );
-		label->SetFgColor( GetFgColor() );
-		m_Labels.AddToTail( vgui::SETUP_PANEL(label) );
+		label->SetContentAlignment(vgui::Label::a_west);
+		label->SetFgColor(GetFgColor());
+		m_Labels.AddToTail(vgui::SETUP_PANEL(label));
 	}
-	InvalidateLayout( true );
+	InvalidateLayout(true);
 
 	return true;
 }
@@ -222,27 +222,27 @@ void CDODHudHintDisplay::PerformLayout()
 	int i;
 
 	int wide, tall;
-	GetSize( wide, tall );
+	GetSize(wide, tall);
 
 	// find the widest line
 	int labelWide = 0;
-	for ( i=0; i<m_Labels.Count(); ++i )
+	for(i = 0; i < m_Labels.Count(); ++i)
 	{
-		labelWide = MAX( labelWide, m_Labels[i]->GetWide() );
+		labelWide = MAX(labelWide, m_Labels[i]->GetWide());
 	}
 
 	// find the total height
-	int fontTall = vgui::surface()->GetFontTall( m_hFont );
+	int fontTall = vgui::surface()->GetFontTall(m_hFont);
 	int labelTall = fontTall * m_Labels.Count();
 
-	labelWide += m_iTextX*2;
-	labelTall += m_iTextY*2;
+	labelWide += m_iTextX * 2;
+	labelTall += m_iTextY * 2;
 	int x, y;
-	if ( m_iCenterX < 0 )
+	if(m_iCenterX < 0)
 	{
 		x = 0;
 	}
-	else if ( m_iCenterX > 0 )
+	else if(m_iCenterX > 0)
 	{
 		x = wide - labelWide;
 	}
@@ -251,11 +251,11 @@ void CDODHudHintDisplay::PerformLayout()
 		x = (wide - labelWide) / 2;
 	}
 
-	if ( m_iCenterY > 0 )
+	if(m_iCenterY > 0)
 	{
 		y = 0;
 	}
-	else if ( m_iCenterY < 0 )
+	else if(m_iCenterY < 0)
 	{
 		y = tall - labelTall;
 	}
@@ -263,13 +263,13 @@ void CDODHudHintDisplay::PerformLayout()
 	{
 		y = (tall - labelTall) / 2;
 	}
-	m_pLabel->SetBounds( x, y, labelWide, labelTall );
+	m_pLabel->SetBounds(x, y, labelWide, labelTall);
 
 	// now lay out the sub-labels
-	for ( i=0; i<m_Labels.Count(); ++i )
+	for(i = 0; i < m_Labels.Count(); ++i)
 	{
-		int xOffset = (labelWide - m_Labels[i]->GetWide())/2;
-		m_Labels[i]->SetPos( x + xOffset, y + m_iTextY + i*fontTall );
+		int xOffset = (labelWide - m_Labels[i]->GetWide()) / 2;
+		m_Labels[i]->SetPos(x + xOffset, y + m_iTextY + i * fontTall);
 	}
 }
 
@@ -279,7 +279,7 @@ void CDODHudHintDisplay::PerformLayout()
 void CDODHudHintDisplay::OnThink()
 {
 	m_pLabel->SetFgColor(GetFgColor());
-	for (int i = 0; i < m_Labels.Count(); i++)
+	for(int i = 0; i < m_Labels.Count(); i++)
 	{
 		m_Labels[i]->SetFgColor(GetFgColor());
 	}
@@ -288,7 +288,7 @@ void CDODHudHintDisplay::OnThink()
 //-----------------------------------------------------------------------------
 // Purpose: Activates the hint display
 //-----------------------------------------------------------------------------
-void CDODHudHintDisplay::MsgFunc_HintText( bf_read &msg )
+void CDODHudHintDisplay::MsgFunc_HintText(bf_read &msg)
 {
 	// read the string(s)
 	char szString[255];
@@ -300,96 +300,96 @@ void CDODHudHintDisplay::MsgFunc_HintText( bf_read &msg )
 	pszBuf = szBuf;
 
 	// read string and localize it
-	msg.ReadString( szString, sizeof(szString) );
+	msg.ReadString(szString, sizeof(szString));
 
-	char *tmpStr = hudtextmessage->LookupString( szString, NULL );
+	char *tmpStr = hudtextmessage->LookupString(szString, NULL);
 
 	// try to localize
-	if ( tmpStr )
+	if(tmpStr)
 	{
-		pszBuf = g_pVGuiLocalize->Find( tmpStr );
+		pszBuf = g_pVGuiLocalize->Find(tmpStr);
 	}
 	else
 	{
-		pszBuf = g_pVGuiLocalize->Find( szString );
+		pszBuf = g_pVGuiLocalize->Find(szString);
 	}
 
-	if ( !pszBuf )
+	if(!pszBuf)
 	{
 		// use plain ASCII string
-		g_pVGuiLocalize->ConvertANSIToUnicode( szString, szBuf, sizeof(szBuf) );
+		g_pVGuiLocalize->ConvertANSIToUnicode(szString, szBuf, sizeof(szBuf));
 		pszBuf = szBuf;
 	}
 
 	// make it visible
-	if ( SetHintText( pszBuf ) )
+	if(SetHintText(pszBuf))
 	{
-		SetVisible( true );
-		//SetAlpha( 255 );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
+		SetVisible(true);
+		// SetAlpha( 255 );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HintMessageShow");
 	}
 	else
 	{
 		// it's being cleared, hide the panel
-		//SetAlpha( 0 );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
+		// SetAlpha( 0 );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HintMessageHide");
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the hint display upon recieving a hint
 //-----------------------------------------------------------------------------
-void CDODHudHintDisplay::FireGameEvent( IGameEvent * event)
+void CDODHudHintDisplay::FireGameEvent(IGameEvent *event)
 {
 	// we sometimes hide the element when it's covered, don't start
 	// a hint during that time
-	if ( !ShouldDraw() )
+	if(!ShouldDraw())
 		return;
 
 	static wchar_t *pszBuf;
 	static wchar_t szBuf[128];
 
-	const char *hintmessage = event->GetString( "hintmessage" );
+	const char *hintmessage = event->GetString("hintmessage");
 
-	char *tmpStr = hudtextmessage->LookupString( hintmessage, NULL );
+	char *tmpStr = hudtextmessage->LookupString(hintmessage, NULL);
 
 	// try to localize
-	if ( tmpStr )
+	if(tmpStr)
 	{
-		pszBuf = g_pVGuiLocalize->Find( tmpStr );
+		pszBuf = g_pVGuiLocalize->Find(tmpStr);
 	}
 	else
 	{
-		pszBuf = g_pVGuiLocalize->Find( hintmessage );
+		pszBuf = g_pVGuiLocalize->Find(hintmessage);
 	}
 
-	if ( !pszBuf )
+	if(!pszBuf)
 	{
 		// its not in titles.txt or dod_english.txt, just print the text of it
 		// use plain ASCII string
-		g_pVGuiLocalize->ConvertANSIToUnicode( hintmessage, szBuf, sizeof(szBuf) );
+		g_pVGuiLocalize->ConvertANSIToUnicode(hintmessage, szBuf, sizeof(szBuf));
 		pszBuf = szBuf;
 	}
 
 	// make it visible
-	if ( SetHintText( pszBuf ) )
+	if(SetHintText(pszBuf))
 	{
-		SetVisible( true );
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageShow" );
+		SetVisible(true);
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HintMessageShow");
 	}
 	else
 	{
 		// it's being cleared, hide the panel
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "HintMessageHide" );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence("HintMessageHide");
 	}
 }
 
-bool CDODHudHintDisplay::IsVisible( void )
+bool CDODHudHintDisplay::IsVisible(void)
 {
-	if ( IsTakingAFreezecamScreenshot() )
+	if(IsTakingAFreezecamScreenshot())
 		return false;
 
-	if ( !ShouldDraw() )
+	if(!ShouldDraw())
 		return false;
 
 	return BaseClass::IsVisible();

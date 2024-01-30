@@ -13,13 +13,9 @@
 
 //----------------------------------------------------------------------------------------
 
-CBaseReplaySerializeable::CBaseReplaySerializeable()
-:	m_hThis( REPLAY_HANDLE_INVALID ),
-	m_bLocked( false )
-{
-}
+CBaseReplaySerializeable::CBaseReplaySerializeable() : m_hThis(REPLAY_HANDLE_INVALID), m_bLocked(false) {}
 
-void CBaseReplaySerializeable::SetHandle( ReplayHandle_t h )
+void CBaseReplaySerializeable::SetHandle(ReplayHandle_t h)
 {
 	m_hThis = h;
 }
@@ -29,16 +25,16 @@ ReplayHandle_t CBaseReplaySerializeable::GetHandle() const
 	return m_hThis;
 }
 
-bool CBaseReplaySerializeable::Read( KeyValues *pIn )
+bool CBaseReplaySerializeable::Read(KeyValues *pIn)
 {
-	m_hThis = (ReplayHandle_t)pIn->GetInt( "handle" );
+	m_hThis = (ReplayHandle_t)pIn->GetInt("handle");
 
 	return true;
 }
 
-void CBaseReplaySerializeable::Write( KeyValues *pOut )
+void CBaseReplaySerializeable::Write(KeyValues *pOut)
 {
-	pOut->SetInt( "handle", (int)m_hThis );
+	pOut->SetInt("handle", (int)m_hThis);
 }
 
 const char *CBaseReplaySerializeable::GetFullFilename() const
@@ -46,15 +42,15 @@ const char *CBaseReplaySerializeable::GetFullFilename() const
 	const char *pPath = GetPath();
 	const char *pFilename = GetFilename();
 
-	if ( !pPath || !pPath[0] || !pFilename || !pFilename[0] )
+	if(!pPath || !pPath[0] || !pFilename || !pFilename[0])
 		return NULL;
 
-	return Replay_va( "%s%s", pPath, pFilename );
+	return Replay_va("%s%s", pPath, pFilename);
 }
 
 const char *CBaseReplaySerializeable::GetFilename() const
 {
-	return Replay_va( "%s.%s", GetSubKeyTitle(), GENERIC_FILE_EXTENSION );
+	return Replay_va("%s.%s", GetSubKeyTitle(), GENERIC_FILE_EXTENSION);
 }
 
 const char *CBaseReplaySerializeable::GetDebugName() const
@@ -62,7 +58,7 @@ const char *CBaseReplaySerializeable::GetDebugName() const
 	return GetSubKeyTitle();
 }
 
-void CBaseReplaySerializeable::SetLocked( bool bLocked )
+void CBaseReplaySerializeable::SetLocked(bool bLocked)
 {
 	m_bLocked = bLocked;
 }
@@ -72,16 +68,10 @@ bool CBaseReplaySerializeable::IsLocked() const
 	return m_bLocked;
 }
 
-void CBaseReplaySerializeable::OnDelete()
-{
-}
+void CBaseReplaySerializeable::OnDelete() {}
 
-void CBaseReplaySerializeable::OnUnload()
-{
-}
+void CBaseReplaySerializeable::OnUnload() {}
 
-void CBaseReplaySerializeable::OnAddedToDirtyList()
-{
-}
+void CBaseReplaySerializeable::OnAddedToDirtyList() {}
 
 //----------------------------------------------------------------------------------------

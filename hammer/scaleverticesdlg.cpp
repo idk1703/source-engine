@@ -20,16 +20,13 @@
 /////////////////////////////////////////////////////////////////////////////
 // CScaleVerticesDlg dialog
 
-
-CScaleVerticesDlg::CScaleVerticesDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CScaleVerticesDlg::IDD, pParent)
+CScaleVerticesDlg::CScaleVerticesDlg(CWnd *pParent /*=NULL*/) : CDialog(CScaleVerticesDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CScaleVerticesDlg)
 	//}}AFX_DATA_INIT
 }
 
-
-void CScaleVerticesDlg::DoDataExchange(CDataExchange* pDX)
+void CScaleVerticesDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CScaleVerticesDlg)
@@ -37,7 +34,6 @@ void CScaleVerticesDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SCALE, m_cScale);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CScaleVerticesDlg, CDialog)
 	//{{AFX_MSG_MAP(CScaleVerticesDlg)
@@ -56,7 +52,7 @@ void CScaleVerticesDlg::OnChangeScale()
 	m_cScale.GetWindowText(str);
 	m_fScale = atof(str);
 
-	if (m_fScale <= 0)
+	if(m_fScale <= 0)
 	{
 		m_fScale = (float)0.005;
 	}
@@ -65,9 +61,9 @@ void CScaleVerticesDlg::OnChangeScale()
 	CMapDoc::GetActiveMapDoc()->OnCmdMsg(ID_VSCALE_CHANGED, CN_COMMAND, NULL, NULL);
 }
 
-void CScaleVerticesDlg::OnDeltaposScalespin(NMHDR* pNMHDR, LRESULT* pResult)
+void CScaleVerticesDlg::OnDeltaposScalespin(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	NM_UPDOWN* pNMUpDown = (NM_UPDOWN*)pNMHDR;
+	NM_UPDOWN *pNMUpDown = (NM_UPDOWN *)pNMHDR;
 
 	CString str;
 	m_cScale.GetWindowText(str);

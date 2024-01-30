@@ -25,10 +25,11 @@ using namespace vgui;
 // Input  : appSystemFactory -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool VGui_Startup( CreateInterfaceFn appSystemFactory )
+bool VGui_Startup(CreateInterfaceFn appSystemFactory)
 {
-	// All of the various tools .dlls expose GetVGuiControlsModuleName() to us to make sure we don't have communication across .dlls
-	if ( !vgui::VGui_InitDmeInterfacesList( GetVGuiControlsModuleName(), &appSystemFactory, 1 ) )
+	// All of the various tools .dlls expose GetVGuiControlsModuleName() to us to make sure we don't have communication
+	// across .dlls
+	if(!vgui::VGui_InitDmeInterfacesList(GetVGuiControlsModuleName(), &appSystemFactory, 1))
 		return false;
 
 	return true;
@@ -46,7 +47,7 @@ bool VGui_PostInit()
 
 	// Make sure we have a panel
 	VPANEL root = VGui_GetToolRootPanel();
-	if ( !root )
+	if(!root)
 	{
 		return false;
 	}

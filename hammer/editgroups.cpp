@@ -18,7 +18,6 @@
 
 static const unsigned int g_uSelChangeMsg = ::RegisterWindowMessage(GROUPLIST_MSG_SEL_CHANGE);
 
-
 BEGIN_MESSAGE_MAP(CEditGroups, CDialog)
 	//{{AFX_MSG_MAP(CEditGroups)
 	ON_BN_CLICKED(IDC_COLOR, OnColor)
@@ -30,32 +29,28 @@ BEGIN_MESSAGE_MAP(CEditGroups, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 // Input  : pParent - Parent window.
 //-----------------------------------------------------------------------------
-CEditGroups::CEditGroups(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditGroups::IDD, pParent)
+CEditGroups::CEditGroups(CWnd *pParent /*=NULL*/) : CDialog(CEditGroups::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditGroups)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Exchanges data between controls and data members.
 // Input  : pDX -
 //-----------------------------------------------------------------------------
-void CEditGroups::DoDataExchange(CDataExchange* pDX)
+void CEditGroups::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditGroups)
 	DDX_Control(pDX, IDC_NAME, m_cName);
 	//}}AFX_DATA_MAP
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the object's color as the visgroup color if the object belongs
@@ -67,9 +62,8 @@ void CEditGroups::DoDataExchange(CDataExchange* pDX)
 static BOOL UpdateObjectColor(CMapClass *pObject, CVisGroup *pGroup)
 {
 	pObject->UpdateObjectColor();
-	return(TRUE);
+	return (TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Invokes the color picker dialog to modify the selected visgroup.
@@ -78,25 +72,25 @@ void CEditGroups::OnColor(void)
 {
 	CVisGroup *pGroup = m_cGroupList.GetSelectedVisGroup();
 
-	if (pGroup != NULL)
+	if(pGroup != NULL)
 	{
 		color32 rgbColor = pGroup->GetColor();
 		CColorDialog dlg(RGB(rgbColor.r, rgbColor.g, rgbColor.b), CC_FULLOPEN);
 
-		if (dlg.DoModal() == IDOK)
+		if(dlg.DoModal() == IDOK)
 		{
 			// change group color
-			pGroup->SetColor(GetRValue(dlg.m_cc.rgbResult), GetGValue(dlg.m_cc.rgbResult), GetBValue(dlg.m_cc.rgbResult));
+			pGroup->SetColor(GetRValue(dlg.m_cc.rgbResult), GetGValue(dlg.m_cc.rgbResult),
+							 GetBValue(dlg.m_cc.rgbResult));
 			m_cColorBox.SetColor(dlg.m_cc.rgbResult, TRUE);
 
 			// change all object colors
 			GetActiveWorld()->EnumChildren(ENUMMAPCHILDRENPROC(UpdateObjectColor), DWORD(pGroup));
 
-			CMapDoc::GetActiveMapDoc()->UpdateAllViews( MAPVIEW_UPDATE_COLOR );
+			CMapDoc::GetActiveMapDoc()->UpdateAllViews(MAPVIEW_UPDATE_COLOR);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the contents of the name edit control changes. Renames
@@ -112,7 +106,6 @@ void CEditGroups::OnChangeName(void)
 	m_cGroupList.UpdateVisGroup(pGroup);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Creates a new visgroup and adds it to the list.
 //-----------------------------------------------------------------------------
@@ -127,7 +120,6 @@ void CEditGroups::OnNew(void)
 	m_cName.SetActiveWindow();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called when the remove button is pressed from the visgroup editor.
 //			Deletes the selected visgroup and removes all references to it.
@@ -135,32 +127,31 @@ void CEditGroups::OnNew(void)
 void CEditGroups::OnRemove(void)
 {
 	CVisGroup *pGroup = m_cGroupList.GetSelectedVisGroup();
-	if (!pGroup)
+	if(!pGroup)
 		return;
-	//Don't allow user to delete autovisgroups.
-	if ( pGroup->IsAutoVisGroup() )
+	// Don't allow user to delete autovisgroups.
+	if(pGroup->IsAutoVisGroup())
 		return;
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		pDoc->VisGroups_RemoveGroup(pGroup);
 
-		if (pGroup->GetVisible() != VISGROUP_SHOWN)
+		if(pGroup->GetVisible() != VISGROUP_SHOWN)
 		{
 			pDoc->VisGroups_UpdateAll();
 			pDoc->UpdateVisibilityAll();
-			pDoc->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );
+			pDoc->UpdateAllViews(MAPVIEW_UPDATE_OBJECTS);
 		}
 		else
 		{
-			pDoc->UpdateAllViews( MAPVIEW_UPDATE_COLOR );
+			pDoc->UpdateAllViews(MAPVIEW_UPDATE_COLOR);
 		}
 	}
 
 	UpdateGroupList();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles selection change in the visgroup list. Updates the static
@@ -169,20 +160,19 @@ void CEditGroups::OnRemove(void)
 LRESULT CEditGroups::OnSelChangeGroupList(WPARAM wParam, LPARAM lParam)
 {
 	CVisGroup *pVisGroup = m_cGroupList.GetSelectedVisGroup();
-	if (!pVisGroup)
+	if(!pVisGroup)
 		return 0;
 
 	UpdateControlsForVisGroup(pVisGroup);
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CEditGroups::UpdateControlsForVisGroup(CVisGroup *pVisGroup)
 {
-	if (!pVisGroup)
+	if(!pVisGroup)
 		return;
 
 	//
@@ -192,7 +182,6 @@ void CEditGroups::UpdateControlsForVisGroup(CVisGroup *pVisGroup)
 	color32 rgbColor = pVisGroup->GetColor();
 	m_cColorBox.SetColor(RGB(rgbColor.r, rgbColor.g, rgbColor.b), TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets up initial state of dialog.
@@ -212,7 +201,7 @@ BOOL CEditGroups::OnInitDialog(void)
 	//
 	// Disable the edit name window if there are no visgroups in the list.
 	//
-	if (m_cGroupList.GetVisGroupCount())
+	if(m_cGroupList.GetVisGroupCount())
 	{
 		CVisGroup *pVisGroup = m_cGroupList.GetVisGroup(0);
 		m_cGroupList.SelectVisGroup(pVisGroup);
@@ -223,16 +212,15 @@ BOOL CEditGroups::OnInitDialog(void)
 		m_cName.EnableWindow(FALSE);
 	}
 
-	return(TRUE);
+	return (TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CEditGroups::UpdateGroupList()
 {
-	if (!IsWindow(m_hWnd))
+	if(!IsWindow(m_hWnd))
 	{
 		return;
 	}
@@ -241,13 +229,13 @@ void CEditGroups::UpdateGroupList()
 	m_cGroupList.DeleteAllItems();
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		int nCount = pDoc->VisGroups_GetCount();
-		for (int i = 0; i < nCount; i++)
+		for(int i = 0; i < nCount; i++)
 		{
 			CVisGroup *pGroup = pDoc->VisGroups_GetVisGroup(i);
-			if (!pGroup->GetParent())
+			if(!pGroup->GetParent())
 			{
 				m_cGroupList.AddVisGroup(pGroup);
 			}
@@ -259,7 +247,6 @@ void CEditGroups::UpdateGroupList()
 	m_cGroupList.Invalidate();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called when the dialog is closing. Sends a message to update the
 //			visgroup dialog bar in case any visgroup changes were made.
@@ -270,7 +257,6 @@ void CEditGroups::OnClose(void)
 	CDialog::OnClose();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called when the dialog is closing. Sends a message to update the
 //			visgroup dialog bar in case any visgroup changes were made.
@@ -278,14 +264,12 @@ void CEditGroups::OnClose(void)
 BOOL CEditGroups::DestroyWindow(void)
 {
 	GetMainWnd()->GlobalNotify(WM_MAPDOC_CHANGED);
-	return(CDialog::DestroyWindow());
+	return (CDialog::DestroyWindow());
 }
-
 
 BEGIN_MESSAGE_MAP(CColorBox, CStatic)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the color of the color box.
@@ -295,12 +279,11 @@ END_MESSAGE_MAP()
 void CColorBox::SetColor(COLORREF c, BOOL bRedraw)
 {
 	m_c = c;
-	if (bRedraw)
+	if(bRedraw)
 	{
 		RedrawWindow(NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Fills the colorbox window with the current color.

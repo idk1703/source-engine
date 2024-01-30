@@ -12,19 +12,16 @@
 
 #include <vgui_controls/TextEntry.h>
 
-
 using namespace vgui;
 
-
-class SampleEditFields: public DemoPage
+class SampleEditFields : public DemoPage
 {
-	public:
-		SampleEditFields(Panel *parent, const char *name);
-		~SampleEditFields();
+public:
+	SampleEditFields(Panel *parent, const char *name);
+	~SampleEditFields();
 
-
-	private:
-		TextEntry *m_pTextEntry;
+private:
+	TextEntry *m_pTextEntry;
 };
 
 //-----------------------------------------------------------------------------
@@ -32,7 +29,7 @@ class SampleEditFields: public DemoPage
 //-----------------------------------------------------------------------------
 SampleEditFields::SampleEditFields(Panel *parent, const char *name) : DemoPage(parent, name)
 {
-	m_pTextEntry = new TextEntry (this, "ATextEntry");
+	m_pTextEntry = new TextEntry(this, "ATextEntry");
 	int wide, tall;
 	m_pTextEntry->GetSize(wide, tall);
 	m_pTextEntry->SetBounds(150, 200, 150, tall);
@@ -40,17 +37,14 @@ SampleEditFields::SampleEditFields(Panel *parent, const char *name) : DemoPage(p
 	m_pTextEntry->SetEnabled(false);
 
 	LoadControlSettings("Demo/SampleEditFields.res");
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleEditFields::~SampleEditFields()
-{
-}
+SampleEditFields::~SampleEditFields() {}
 
-Panel* SampleEditFields_Create(Panel *parent)
+Panel *SampleEditFields_Create(Panel *parent)
 {
 	return new SampleEditFields(parent, "Edit Fields");
 }

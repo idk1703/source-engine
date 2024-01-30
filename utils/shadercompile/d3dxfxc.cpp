@@ -18,14 +18,14 @@
 #include <tier0/icommandline.h>
 #include <tier1/strtools.h>
 
-#define D3DXSHADER_MICROCODE_BACKEND_OLD_DEPRECATED ( 1 << 25 )
+#define D3DXSHADER_MICROCODE_BACKEND_OLD_DEPRECATED (1 << 25)
 
 namespace InterceptFxc
 {
 
 	// The command that is intercepted by this namespace routines
 	static const char *s_pszCommand = "fxc.exe ";
-	static size_t s_uCommandLen = strlen( s_pszCommand );
+	static size_t s_uCommandLen = strlen(s_pszCommand);
 
 	namespace Private
 	{
@@ -35,14 +35,26 @@ namespace InterceptFxc
 		class CResponse : public CmdSink::IResponse
 		{
 		public:
-			explicit CResponse( LPD3DXBUFFER pShader, LPD3DXBUFFER pListing, HRESULT hr );
-			~CResponse( void );
+			explicit CResponse(LPD3DXBUFFER pShader, LPD3DXBUFFER pListing, HRESULT hr);
+			~CResponse(void);
 
 		public:
-			virtual bool Succeeded( void ) { return m_pShader && (m_hr == D3D_OK); }
-			virtual size_t GetResultBufferLen( void ) { return ( Succeeded() ? m_pShader->GetBufferSize() : 0 ); }
-			virtual const void * GetResultBuffer( void ) { return ( Succeeded() ? m_pShader->GetBufferPointer() : NULL ); }
-			virtual const char * GetListing( void ) { return (const char *) ( m_pListing ? m_pListing->GetBufferPointer() : NULL ); }
+			virtual bool Succeeded(void)
+			{
+				return m_pShader && (m_hr == D3D_OK);
+			}
+			virtual size_t GetResultBufferLen(void)
+			{
+				return (Succeeded() ? m_pShader->GetBufferSize() : 0);
+			}
+			virtual const void *GetResultBuffer(void)
+			{
+				return (Succeeded() ? m_pShader->GetBufferPointer() : NULL);
+			}
+			virtual const char *GetListing(void)
+			{
+				return (const char *)(m_pListing ? m_pListing->GetBufferPointer() : NULL);
+			}
 
 		protected:
 			LPD3DXBUFFER m_pShader;
@@ -50,20 +62,18 @@ namespace InterceptFxc
 			HRESULT m_hr;
 		};
 
-		CResponse::CResponse( LPD3DXBUFFER pShader, LPD3DXBUFFER pListing, HRESULT hr ) :
-			m_pShader(pShader),
-			m_pListing(pListing),
-			m_hr(hr)
+		CResponse::CResponse(LPD3DXBUFFER pShader, LPD3DXBUFFER pListing, HRESULT hr)
+			: m_pShader(pShader), m_pListing(pListing), m_hr(hr)
 		{
 			NULL;
 		}
 
-		CResponse::~CResponse( void )
+		CResponse::~CResponse(void)
 		{
-			if ( m_pShader )
+			if(m_pShader)
 				m_pShader->Release();
 
-			if ( m_pListing )
+			if(m_pListing)
 				m_pListing->Release();
 		}
 
@@ -75,9 +85,10 @@ namespace InterceptFxc
 		// @param pMacros			null-terminated array of macro-defines
 		// @param pszModel			shader model for compilation
 		//
-		void FastShaderCompile( const char *pszFilename, const D3DXMACRO *pMacros, const char *pszModel, CmdSink::IResponse **ppResponse )
+		void FastShaderCompile(const char *pszFilename, const D3DXMACRO *pMacros, const char *pszModel,
+							   CmdSink::IResponse **ppResponse)
 		{
-			LPD3DXBUFFER pShader = NULL; // NOTE: Must release the COM interface later
+			LPD3DXBUFFER pShader = NULL;		// NOTE: Must release the COM interface later
 			LPD3DXBUFFER pErrorMessages = NULL; // NOTE: Must release COM interface later
 
 			// DxProxyModule
@@ -85,35 +96,35 @@ namespace InterceptFxc
 
 			// X360TEMP: This needs to be moved to an external semantic (or fixed)
 			bool bIsX360 = false;
-			for ( int i=0; ;i++ )
+			for(int i = 0;; i++)
 			{
-				if ( !pMacros[i].Name )
+				if(!pMacros[i].Name)
 				{
 					break;
 				}
-				if ( V_stristr( pMacros[i].Name, "_X360" ) && atoi( pMacros[i].Definition ) )
+				if(V_stristr(pMacros[i].Name, "_X360") && atoi(pMacros[i].Definition))
 				{
 					bIsX360 = true;
 					break;
 				}
 			}
 
-			HRESULT hr = s_dxModule.D3DXCompileShaderFromFile( pszFilename, pMacros, NULL /* LPD3DXINCLUDE */,
-				"main",	pszModel, 0, &pShader, &pErrorMessages,
-				NULL /* LPD3DXCONSTANTTABLE *ppConstantTable */ );
+			HRESULT hr = s_dxModule.D3DXCompileShaderFromFile(pszFilename, pMacros, NULL /* LPD3DXINCLUDE */, "main",
+															  pszModel, 0, &pShader, &pErrorMessages,
+															  NULL /* LPD3DXCONSTANTTABLE *ppConstantTable */);
 
-			if ( ppResponse )
+			if(ppResponse)
 			{
-				*ppResponse = new CResponse( pShader, pErrorMessages, hr );
+				*ppResponse = new CResponse(pShader, pErrorMessages, hr);
 			}
 			else
 			{
-				if ( pShader )
+				if(pShader)
 				{
 					pShader->Release();
 				}
 
-				if ( pErrorMessages )
+				if(pErrorMessages)
 				{
 					pErrorMessages->Release();
 				}
@@ -127,17 +138,19 @@ namespace InterceptFxc
 	// to shader compilations.
 	//
 	// @param pCommand       the command in form
-	//		"fxc.exe /DSHADERCOMBO=1 /DTOTALSHADERCOMBOS=4 /DCENTROIDMASK=0 /DNUMDYNAMICCOMBOS=4 /DFLAGS=0x0 /DNUM_BONES=1 /Dmain=main /Emain /Tvs_2_0 /DSHADER_MODEL_VS_2_0=1 /D_X360=1 /nologo /Foshader.o debugdrawenvmapmask_vs20.fxc>output.txt 2>&1"
+	//		"fxc.exe /DSHADERCOMBO=1 /DTOTALSHADERCOMBOS=4 /DCENTROIDMASK=0 /DNUMDYNAMICCOMBOS=4 /DFLAGS=0x0 /DNUM_BONES=1
+	///Dmain=main /Emain /Tvs_2_0 /DSHADER_MODEL_VS_2_0=1 /D_X360=1 /nologo /Foshader.o
+	//debugdrawenvmapmask_vs20.fxc>output.txt 2>&1"
 	//
-	void ExecuteCommand( const char *pCommand, CmdSink::IResponse **ppResponse )
+	void ExecuteCommand(const char *pCommand, CmdSink::IResponse **ppResponse)
 	{
 		// Expect that the command passed is exactly "fxc.exe"
-		Assert( !strncmp( pCommand, s_pszCommand, s_uCommandLen ) );
+		Assert(!strncmp(pCommand, s_pszCommand, s_uCommandLen));
 		pCommand += s_uCommandLen;
 
 		// A duplicate portion of memory for modifications
-		void *bufEditableCommand = alloca( strlen( pCommand ) + 1 );
-		char *pEditableCommand = strcpy( (char *) bufEditableCommand, pCommand );
+		void *bufEditableCommand = alloca(strlen(pCommand) + 1);
+		char *pEditableCommand = strcpy((char *)bufEditableCommand, pCommand);
 
 		// Macros to be defined for D3DX
 		CUtlVector<D3DXMACRO> macros;
@@ -146,16 +159,13 @@ namespace InterceptFxc
 		const char *pszShaderModel = NULL;
 
 		// Iterate over the command line and find all "/D...=..." settings
-		for ( char *pszFlag = pEditableCommand;
-			( pszFlag = strstr( pszFlag, "/D" ) ) != NULL;
-			/* advance inside */ )
+		for(char *pszFlag = pEditableCommand; (pszFlag = strstr(pszFlag, "/D")) != NULL;
+			/* advance inside */)
 		{
 			// Make sure this is a command-line flag (basic check for preceding space)
-			if ( pszFlag > pEditableCommand &&
-				pszFlag[-1] &&
-				' ' != pszFlag[-1] )
+			if(pszFlag > pEditableCommand && pszFlag[-1] && ' ' != pszFlag[-1])
 			{
-				++ pszFlag;
+				++pszFlag;
 				continue;
 			}
 
@@ -164,7 +174,7 @@ namespace InterceptFxc
 			// Value will be determined later
 			char *pszValue = "";
 
-			if ( char *pchEq = strchr( pszFlag, '=' ) )
+			if(char *pchEq = strchr(pszFlag, '='))
 			{
 				// Value is after '=' sign
 				*pchEq = 0;
@@ -172,7 +182,7 @@ namespace InterceptFxc
 				pszFlag = pszValue;
 			}
 
-			if ( char *pchSpace = strchr( pszFlag, ' ' ) )
+			if(char *pchSpace = strchr(pszFlag, ' '))
 			{
 				// Space is designating the end of the flag
 				*pchSpace = 0;
@@ -185,7 +195,7 @@ namespace InterceptFxc
 			}
 
 			// Shader model extraction
-			if ( !strncmp(pszFlagName, "SHADER_MODEL_", 13) )
+			if(!strncmp(pszFlagName, "SHADER_MODEL_", 13))
 			{
 				pszShaderModel = pszFlagName + 13;
 			}
@@ -201,50 +211,48 @@ namespace InterceptFxc
 
 		// Add a NULL-terminator
 		{
-			D3DXMACRO nullTerminatorMacro = { NULL, NULL };
-			macros.AddToTail( nullTerminatorMacro );
+			D3DXMACRO nullTerminatorMacro = {NULL, NULL};
+			macros.AddToTail(nullTerminatorMacro);
 		}
 
 		// Convert shader model to lowercase
 		char chShaderModel[20] = {0};
 		if(pszShaderModel)
 		{
-			Q_strncpy( chShaderModel, pszShaderModel, sizeof(chShaderModel) - 1 );
+			Q_strncpy(chShaderModel, pszShaderModel, sizeof(chShaderModel) - 1);
 		}
-		Q_strlower( chShaderModel );
+		Q_strlower(chShaderModel);
 
 		// Determine the file name (at the end of the command line before redirection)
 		char const *pszFilename = "";
-		if ( const char *pchCmdRedirect = strstr( pCommand, ">output.txt " ) )
+		if(const char *pchCmdRedirect = strstr(pCommand, ">output.txt "))
 		{
-			size_t uCmdEndOffset = ( pchCmdRedirect - pCommand );
+			size_t uCmdEndOffset = (pchCmdRedirect - pCommand);
 
 			pEditableCommand[uCmdEndOffset] = 0;
 			pszFilename = &pEditableCommand[uCmdEndOffset];
 
-			while ( pszFilename > pEditableCommand &&
-				pszFilename[-1] &&
-				' ' != pszFilename[-1] )
+			while(pszFilename > pEditableCommand && pszFilename[-1] && ' ' != pszFilename[-1])
 			{
-				-- pszFilename;
+				--pszFilename;
 			}
 		}
 
 		// Compile the stuff
-		Private::FastShaderCompile( pszFilename, macros.Base(), chShaderModel, ppResponse );
+		Private::FastShaderCompile(pszFilename, macros.Base(), chShaderModel, ppResponse);
 	}
 
-	bool TryExecuteCommand( const char *pCommand, CmdSink::IResponse **ppResponse )
+	bool TryExecuteCommand(const char *pCommand, CmdSink::IResponse **ppResponse)
 	{
 		{
-			static bool s_bNoIntercept = ( CommandLine()->FindParm("-nointercept") != 0 );
-			static int s_dummy = ( Msg( s_bNoIntercept ?
-				"[shadercompile] Using old slow technique - runs 'fxc.exe'.\n" :
-				"[shadercompile] Using new faster Vitaliy's implementation.\n" ), 1 );
-			if ( !s_bNoIntercept && !strncmp(pCommand, InterceptFxc::s_pszCommand, InterceptFxc::s_uCommandLen) )
+			static bool s_bNoIntercept = (CommandLine()->FindParm("-nointercept") != 0);
+			static int s_dummy = (Msg(s_bNoIntercept ? "[shadercompile] Using old slow technique - runs 'fxc.exe'.\n"
+													 : "[shadercompile] Using new faster Vitaliy's implementation.\n"),
+								  1);
+			if(!s_bNoIntercept && !strncmp(pCommand, InterceptFxc::s_pszCommand, InterceptFxc::s_uCommandLen))
 			{
 				// Trap "fxc.exe" so that we did not spawn extra process every time
-				InterceptFxc::ExecuteCommand( pCommand, ppResponse );
+				InterceptFxc::ExecuteCommand(pCommand, ppResponse);
 				return true;
 			}
 		}

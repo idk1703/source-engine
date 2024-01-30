@@ -18,12 +18,12 @@
 class C_TETFParticleEffect : public C_BaseTempEntity
 {
 public:
-	DECLARE_CLASS( C_TETFParticleEffect, C_BaseTempEntity );
+	DECLARE_CLASS(C_TETFParticleEffect, C_BaseTempEntity);
 	DECLARE_CLIENTCLASS();
 
-	C_TETFParticleEffect( void );
+	C_TETFParticleEffect(void);
 
-	virtual void	PostDataUpdate( DataUpdateType_t updateType );
+	virtual void PostDataUpdate(DataUpdateType_t updateType);
 
 public:
 	Vector m_vecOrigin;
@@ -39,17 +39,17 @@ public:
 
 	bool m_bResetParticles;
 
-	bool							m_bCustomColors;
-	te_tf_particle_effects_colors_t	m_CustomColors;
+	bool m_bCustomColors;
+	te_tf_particle_effects_colors_t m_CustomColors;
 
-	bool									m_bControlPoint1;
-	te_tf_particle_effects_control_point_t	m_ControlPoint1;
+	bool m_bControlPoint1;
+	te_tf_particle_effects_control_point_t m_ControlPoint1;
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_TETFParticleEffect::C_TETFParticleEffect( void )
+C_TETFParticleEffect::C_TETFParticleEffect(void)
 {
 	m_vecOrigin.Init();
 	m_vecStart.Init();
@@ -76,11 +76,11 @@ C_TETFParticleEffect::C_TETFParticleEffect( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_TETFParticleEffect::PostDataUpdate( DataUpdateType_t updateType )
+void C_TETFParticleEffect::PostDataUpdate(DataUpdateType_t updateType)
 {
-	VPROF( "C_TETFParticleEffect::PostDataUpdate" );
+	VPROF("C_TETFParticleEffect::PostDataUpdate");
 
-	CEffectData	data;
+	CEffectData data;
 
 	data.m_nHitBox = m_iParticleSystemIndex;
 
@@ -88,7 +88,7 @@ void C_TETFParticleEffect::PostDataUpdate( DataUpdateType_t updateType )
 	data.m_vStart = m_vecStart;
 	data.m_vAngles = m_vecAngles;
 
-	if ( m_hEntity != INVALID_EHANDLE_INDEX )
+	if(m_hEntity != INVALID_EHANDLE_INDEX)
 	{
 		data.m_hEntity = m_hEntity;
 		data.m_fFlags |= PARTICLE_DISPATCH_FROM_ENTITY;
@@ -101,7 +101,7 @@ void C_TETFParticleEffect::PostDataUpdate( DataUpdateType_t updateType )
 	data.m_nDamageType = m_iAttachType;
 	data.m_nAttachmentIndex = m_iAttachmentPointIndex;
 
-	if ( m_bResetParticles )
+	if(m_bResetParticles)
 	{
 		data.m_fFlags |= PARTICLE_DISPATCH_RESET_PARTICLES;
 	}
@@ -112,37 +112,31 @@ void C_TETFParticleEffect::PostDataUpdate( DataUpdateType_t updateType )
 	data.m_bControlPoint1 = m_bControlPoint1;
 	data.m_ControlPoint1 = m_ControlPoint1;
 
-	DispatchEffect( "ParticleEffect", data );
+	DispatchEffect("ParticleEffect", data);
 }
 
-static void RecvProxy_ParticleSystemEntIndex( const CRecvProxyData *pData, void *pStruct, void *pOut )
+static void RecvProxy_ParticleSystemEntIndex(const CRecvProxyData *pData, void *pStruct, void *pOut)
 {
 	int nEntIndex = pData->m_Value.m_Int;
 	// The 'new' encoding for INVALID_EHANDLE_INDEX is 2047, but the old encoding
 	// was -1. Old demos and replays will use the old encoding so we have to check
 	// for it. The field is now unsigned so -1 will not be created in new replays.
-	((C_TETFParticleEffect*)pStruct)->m_hEntity = (nEntIndex == kInvalidEHandleParticleEffect || nEntIndex == -1) ? INVALID_EHANDLE_INDEX : ClientEntityList().EntIndexToHandle( nEntIndex );
+	((C_TETFParticleEffect *)pStruct)->m_hEntity = (nEntIndex == kInvalidEHandleParticleEffect || nEntIndex == -1)
+													   ? INVALID_EHANDLE_INDEX
+													   : ClientEntityList().EntIndexToHandle(nEntIndex);
 }
 
-IMPLEMENT_CLIENTCLASS_EVENT_DT( C_TETFParticleEffect, DT_TETFParticleEffect, CTETFParticleEffect )
-	RecvPropFloat( RECVINFO( m_vecOrigin[0] ) ),
-	RecvPropFloat( RECVINFO( m_vecOrigin[1] ) ),
-	RecvPropFloat( RECVINFO( m_vecOrigin[2] ) ),
-	RecvPropFloat( RECVINFO( m_vecStart[0] ) ),
-	RecvPropFloat( RECVINFO( m_vecStart[1] ) ),
-	RecvPropFloat( RECVINFO( m_vecStart[2] ) ),
-	RecvPropQAngles( RECVINFO( m_vecAngles ) ),
-	RecvPropInt( RECVINFO( m_iParticleSystemIndex ) ),
-	RecvPropInt( "entindex", 0, SIZEOF_IGNORE, 0, RecvProxy_ParticleSystemEntIndex ),
-	RecvPropInt( RECVINFO( m_iAttachType ) ),
-	RecvPropInt( RECVINFO( m_iAttachmentPointIndex ) ),
-	RecvPropInt( RECVINFO( m_bResetParticles ) ),
-	RecvPropBool( RECVINFO( m_bCustomColors ) ),
-	RecvPropVector( RECVINFO( m_CustomColors.m_vecColor1 ) ),
-	RecvPropVector( RECVINFO( m_CustomColors.m_vecColor2 ) ),
-	RecvPropBool( RECVINFO( m_bControlPoint1 ) ),
-	RecvPropInt( RECVINFO( m_ControlPoint1.m_eParticleAttachment ) ),
-	RecvPropFloat( RECVINFO( m_ControlPoint1.m_vecOffset[0] ) ),
-	RecvPropFloat( RECVINFO( m_ControlPoint1.m_vecOffset[1] ) ),
-	RecvPropFloat( RECVINFO( m_ControlPoint1.m_vecOffset[2] ) ),
-END_RECV_TABLE()
+IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TETFParticleEffect, DT_TETFParticleEffect, CTETFParticleEffect)
+RecvPropFloat(RECVINFO(m_vecOrigin[0])), RecvPropFloat(RECVINFO(m_vecOrigin[1])),
+	RecvPropFloat(RECVINFO(m_vecOrigin[2])), RecvPropFloat(RECVINFO(m_vecStart[0])),
+	RecvPropFloat(RECVINFO(m_vecStart[1])), RecvPropFloat(RECVINFO(m_vecStart[2])),
+	RecvPropQAngles(RECVINFO(m_vecAngles)), RecvPropInt(RECVINFO(m_iParticleSystemIndex)),
+	RecvPropInt("entindex", 0, SIZEOF_IGNORE, 0, RecvProxy_ParticleSystemEntIndex),
+	RecvPropInt(RECVINFO(m_iAttachType)), RecvPropInt(RECVINFO(m_iAttachmentPointIndex)),
+	RecvPropInt(RECVINFO(m_bResetParticles)), RecvPropBool(RECVINFO(m_bCustomColors)),
+	RecvPropVector(RECVINFO(m_CustomColors.m_vecColor1)), RecvPropVector(RECVINFO(m_CustomColors.m_vecColor2)),
+	RecvPropBool(RECVINFO(m_bControlPoint1)), RecvPropInt(RECVINFO(m_ControlPoint1.m_eParticleAttachment)),
+	RecvPropFloat(RECVINFO(m_ControlPoint1.m_vecOffset[0])), RecvPropFloat(RECVINFO(m_ControlPoint1.m_vecOffset[1])),
+	RecvPropFloat(RECVINFO(m_ControlPoint1.m_vecOffset[2])),
+END_RECV_TABLE
+()

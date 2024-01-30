@@ -13,35 +13,35 @@
 //--------------------------------
 // CPauseDialog
 //--------------------------------
-CPauseDialog::CPauseDialog( vgui::Panel *pParent ) : BaseClass( pParent, "PauseDialog" )
+CPauseDialog::CPauseDialog(vgui::Panel *pParent) : BaseClass(pParent, "PauseDialog")
 {
 	// do nothing
 }
 
-void CPauseDialog::Activate( void )
+void CPauseDialog::Activate(void)
 {
 	BaseClass::Activate();
 
-	SetDeleteSelfOnClose( false );
-	m_Menu.SetFocus( 0 );
+	SetDeleteSelfOnClose(false);
+	m_Menu.SetFocus(0);
 }
 
 //-------------------------------------------------------
 // Keyboard input
 //-------------------------------------------------------
-void CPauseDialog::OnKeyCodePressed( vgui::KeyCode code )
+void CPauseDialog::OnKeyCodePressed(vgui::KeyCode code)
 {
-	switch( code )
+	switch(code)
 	{
-	case KEY_XBUTTON_B:
-		if ( GameUI().IsInLevel() )
-		{
-			m_pParent->OnCommand( "ResumeGame" );
-		}
-		break;
+		case KEY_XBUTTON_B:
+			if(GameUI().IsInLevel())
+			{
+				m_pParent->OnCommand("ResumeGame");
+			}
+			break;
 
-	default:
-		BaseClass::OnKeyCodePressed( code );
-		break;
+		default:
+			BaseClass::OnKeyCodePressed(code);
+			break;
 	}
 }

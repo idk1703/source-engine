@@ -11,48 +11,41 @@
 
 using namespace vgui;
 
-
 //-----------------------------------------------------------------------------
 //
 // TGA Preview panel
 //
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // constructor
 //-----------------------------------------------------------------------------
-CTGAPreviewPanel::CTGAPreviewPanel( vgui::Panel *pParent, const char *pName ) :
-	BaseClass( pParent, pName )
-{
-}
-
+CTGAPreviewPanel::CTGAPreviewPanel(vgui::Panel *pParent, const char *pName) : BaseClass(pParent, pName) {}
 
 //-----------------------------------------------------------------------------
 // Sets the current TGA
 //-----------------------------------------------------------------------------
-void CTGAPreviewPanel::SetTGA( const char *pFullPath )
+void CTGAPreviewPanel::SetTGA(const char *pFullPath)
 {
 	int nWidth, nHeight;
 	ImageFormat format;
 	float flGamma;
 
 	CUtlBuffer buf;
-	if ( !g_pFullFileSystem->ReadFile( pFullPath, NULL, buf ) )
+	if(!g_pFullFileSystem->ReadFile(pFullPath, NULL, buf))
 	{
-		Warning( "Can't open TGA file: %s\n", pFullPath );
+		Warning("Can't open TGA file: %s\n", pFullPath);
 		return;
 	}
 
-	TGALoader::GetInfo( buf, &nWidth, &nHeight, &format, &flGamma );
+	TGALoader::GetInfo(buf, &nWidth, &nHeight, &format, &flGamma);
 
 	Shutdown();
-	Init( nWidth, nHeight, true );
+	Init(nWidth, nHeight, true);
 	m_TGAName = pFullPath;
 
-	buf.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
-	if ( !TGALoader::Load( (unsigned char*)GetImageBuffer(), buf,
-		  nWidth, nHeight, IMAGE_FORMAT_BGRA8888, flGamma, false ) )
+	buf.SeekGet(CUtlBuffer::SEEK_HEAD, 0);
+	if(!TGALoader::Load((unsigned char *)GetImageBuffer(), buf, nWidth, nHeight, IMAGE_FORMAT_BGRA8888, flGamma, false))
 	{
 		Shutdown();
 	}
@@ -61,7 +54,6 @@ void CTGAPreviewPanel::SetTGA( const char *pFullPath )
 		DownloadTexture();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Gets the current TGA

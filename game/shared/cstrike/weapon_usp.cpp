@@ -8,23 +8,21 @@
 #include "weapon_csbase.h"
 #include "fx_cs_shared.h"
 
+#if defined(CLIENT_DLL)
 
-#if defined( CLIENT_DLL )
-
-	#define CWeaponUSP C_WeaponUSP
-	#include "c_cs_player.h"
+#define CWeaponUSP C_WeaponUSP
+#include "c_cs_player.h"
 
 #else
 
-	#include "cs_player.h"
+#include "cs_player.h"
 
 #endif
-
 
 class CWeaponUSP : public CWeaponCSBase
 {
 public:
-	DECLARE_CLASS( CWeaponUSP, CWeaponCSBase );
+	DECLARE_CLASS(CWeaponUSP, CWeaponCSBase);
 	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
@@ -36,73 +34,72 @@ public:
 	virtual void PrimaryAttack();
 	virtual void SecondaryAttack();
 	virtual bool Deploy();
-	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
-	virtual void Drop( const Vector &vecVelocity );
+	virtual bool Holster(CBaseCombatWeapon *pSwitchingTo);
+	virtual void Drop(const Vector &vecVelocity);
 
- 	virtual float GetInaccuracy() const;
+	virtual float GetInaccuracy() const;
 
 	virtual bool Reload();
 	virtual void WeaponIdle();
 
 	// We overload this so we can translate all weapon activities to silenced versions.
-	virtual bool SendWeaponAnim( int iActivity );
+	virtual bool SendWeaponAnim(int iActivity);
 
-	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_USP; }
+	virtual CSWeaponID GetWeaponID(void) const
+	{
+		return WEAPON_USP;
+	}
 
 	// return true if this weapon has a silencer equipped
-	virtual bool IsSilenced( void ) const				{ return m_bSilencerOn; }
+	virtual bool IsSilenced(void) const
+	{
+		return m_bSilencerOn;
+	}
 
-	virtual Activity GetDeployActivity( void );
+	virtual Activity GetDeployActivity(void);
 
 #ifdef CLIENT_DLL
-	virtual int GetMuzzleFlashStyle( void );
+	virtual int GetMuzzleFlashStyle(void);
 #endif
 
-	virtual const char		*GetWorldModel( void ) const;
-	virtual int				GetWorldModelIndex( void );
+	virtual const char *GetWorldModel(void) const;
+	virtual int GetWorldModelIndex(void);
 
 private:
-	CWeaponUSP( const CWeaponUSP & );
+	CWeaponUSP(const CWeaponUSP &);
 
-	CNetworkVar( bool, m_bSilencerOn );
-	CNetworkVar( float, m_flDoneSwitchingSilencer );	// soonest time switching the silencer will be complete
+	CNetworkVar(bool, m_bSilencerOn);
+	CNetworkVar(float, m_flDoneSwitchingSilencer); // soonest time switching the silencer will be complete
 	float m_flLastFire;
 
 	int m_silencedModelIndex;
 	bool m_inPrecache;
 };
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponUSP, DT_WeaponUSP )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponUSP, DT_WeaponUSP)
 
-BEGIN_NETWORK_TABLE( CWeaponUSP, DT_WeaponUSP )
+BEGIN_NETWORK_TABLE(CWeaponUSP, DT_WeaponUSP)
 #ifdef CLIENT_DLL
-	RecvPropBool( RECVINFO( m_bSilencerOn ) ),
-	RecvPropTime( RECVINFO( m_flDoneSwitchingSilencer ) ),
+	RecvPropBool(RECVINFO(m_bSilencerOn)), RecvPropTime(RECVINFO(m_flDoneSwitchingSilencer)),
 #else
-	SendPropBool( SENDINFO( m_bSilencerOn ) ),
-	SendPropTime( SENDINFO( m_flDoneSwitchingSilencer ) ),
+	SendPropBool(SENDINFO(m_bSilencerOn)), SendPropTime(SENDINFO(m_flDoneSwitchingSilencer)),
 #endif
 END_NETWORK_TABLE()
 
 #ifdef CLIENT_DLL
-BEGIN_PREDICTION_DATA( CWeaponUSP )
-	DEFINE_PRED_FIELD( m_bSilencerOn, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-	DEFINE_FIELD( m_flLastFire, FIELD_FLOAT ),
+BEGIN_PREDICTION_DATA(CWeaponUSP)
+	DEFINE_PRED_FIELD(m_bSilencerOn, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE), DEFINE_FIELD(m_flLastFire, FIELD_FLOAT),
 END_PREDICTION_DATA()
 #endif
 
-LINK_ENTITY_TO_CLASS( weapon_usp, CWeaponUSP );
-PRECACHE_WEAPON_REGISTER( weapon_usp );
+LINK_ENTITY_TO_CLASS(weapon_usp, CWeaponUSP);
+PRECACHE_WEAPON_REGISTER(weapon_usp);
 
-
-Activity g_SilencedTranslations[][2] =
-{
-	{ ACT_VM_RELOAD, ACT_VM_RELOAD_SILENCED },
-	{ ACT_VM_PRIMARYATTACK, ACT_VM_PRIMARYATTACK_SILENCED },
-	{ ACT_VM_DRAW, ACT_VM_DRAW_SILENCED },
+Activity g_SilencedTranslations[][2] = {
+	{ACT_VM_RELOAD, ACT_VM_RELOAD_SILENCED},
+	{ACT_VM_PRIMARYATTACK, ACT_VM_PRIMARYATTACK_SILENCED},
+	{ACT_VM_DRAW, ACT_VM_DRAW_SILENCED},
 };
-
-
 
 CWeaponUSP::CWeaponUSP()
 {
@@ -112,33 +109,30 @@ CWeaponUSP::CWeaponUSP()
 	m_inPrecache = false;
 }
 
-
 void CWeaponUSP::Spawn()
 {
-	//m_iDefaultAmmo = 12;
+	// m_iDefaultAmmo = 12;
 	m_flAccuracy = 0.92;
 	m_bSilencerOn = false;
 	m_weaponMode = Primary_Mode;
 	m_flDoneSwitchingSilencer = 0.0f;
 
-	//FallInit();// get ready to fall down.
+	// FallInit();// get ready to fall down.
 	BaseClass::Spawn();
 }
-
 
 void CWeaponUSP::Precache()
 {
 	m_inPrecache = true;
 	BaseClass::Precache();
 
-	m_silencedModelIndex = CBaseEntity::PrecacheModel( GetCSWpnData().m_szSilencerModel );
+	m_silencedModelIndex = CBaseEntity::PrecacheModel(GetCSWpnData().m_szSilencerModel);
 	m_inPrecache = false;
 }
 
-
-int CWeaponUSP::GetWorldModelIndex( void )
+int CWeaponUSP::GetWorldModelIndex(void)
 {
-	if ( !m_bSilencerOn || m_inPrecache )
+	if(!m_bSilencerOn || m_inPrecache)
 	{
 		return m_iWorldModelIndex;
 	}
@@ -148,10 +142,9 @@ int CWeaponUSP::GetWorldModelIndex( void )
 	}
 }
 
-
-const char * CWeaponUSP::GetWorldModel( void ) const
+const char *CWeaponUSP::GetWorldModel(void) const
 {
-	if ( !m_bSilencerOn || m_inPrecache )
+	if(!m_bSilencerOn || m_inPrecache)
 	{
 		return BaseClass::GetWorldModel();
 	}
@@ -161,7 +154,6 @@ const char * CWeaponUSP::GetWorldModel( void ) const
 	}
 }
 
-
 bool CWeaponUSP::Deploy()
 {
 	m_flAccuracy = 0.92;
@@ -170,35 +162,35 @@ bool CWeaponUSP::Deploy()
 	return BaseClass::Deploy();
 }
 
-bool CWeaponUSP::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CWeaponUSP::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
-	if ( gpGlobals->curtime < m_flDoneSwitchingSilencer )
+	if(gpGlobals->curtime < m_flDoneSwitchingSilencer)
 	{
 		// still switching the silencer.  Cancel the switch.
 		m_bSilencerOn = !m_bSilencerOn;
 		m_weaponMode = m_bSilencerOn ? Secondary_Mode : Primary_Mode;
-		SetWeaponModelIndex( GetWorldModel() );
+		SetWeaponModelIndex(GetWorldModel());
 	}
 
-	return BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster(pSwitchingTo);
 }
 
-void CWeaponUSP::Drop( const Vector &vecVelocity )
+void CWeaponUSP::Drop(const Vector &vecVelocity)
 {
-	if ( gpGlobals->curtime < m_flDoneSwitchingSilencer )
+	if(gpGlobals->curtime < m_flDoneSwitchingSilencer)
 	{
 		// still switching the silencer.  Cancel the switch.
 		m_bSilencerOn = !m_bSilencerOn;
 		m_weaponMode = m_bSilencerOn ? Secondary_Mode : Primary_Mode;
-		SetWeaponModelIndex( GetWorldModel() );
+		SetWeaponModelIndex(GetWorldModel());
 	}
 
-	BaseClass::Drop( vecVelocity );
+	BaseClass::Drop(vecVelocity);
 }
 
-Activity CWeaponUSP::GetDeployActivity( void )
+Activity CWeaponUSP::GetDeployActivity(void)
 {
-	if( IsSilenced() )
+	if(IsSilenced())
 	{
 		return ACT_VM_DRAW_SILENCED;
 	}
@@ -210,13 +202,13 @@ Activity CWeaponUSP::GetDeployActivity( void )
 
 void CWeaponUSP::SecondaryAttack()
 {
-	if ( m_bSilencerOn )
+	if(m_bSilencerOn)
 	{
-		SendWeaponAnim( ACT_VM_DETACH_SILENCER );
+		SendWeaponAnim(ACT_VM_DETACH_SILENCER);
 	}
 	else
 	{
-		SendWeaponAnim( ACT_VM_ATTACH_SILENCER );
+		SendWeaponAnim(ACT_VM_ATTACH_SILENCER);
 	}
 	m_bSilencerOn = !m_bSilencerOn;
 	m_weaponMode = m_bSilencerOn ? Secondary_Mode : Primary_Mode;
@@ -224,38 +216,37 @@ void CWeaponUSP::SecondaryAttack()
 
 	m_flNextSecondaryAttack = gpGlobals->curtime + 3;
 	m_flNextPrimaryAttack = gpGlobals->curtime + 3;
-	SetWeaponIdleTime( gpGlobals->curtime + 3 );
+	SetWeaponIdleTime(gpGlobals->curtime + 3);
 
-	SetWeaponModelIndex( GetWorldModel() );
+	SetWeaponModelIndex(GetWorldModel());
 }
-
 
 float CWeaponUSP::GetInaccuracy() const
 {
-	if ( weapon_accuracy_model.GetInt() == 1 )
+	if(weapon_accuracy_model.GetInt() == 1)
 	{
 		CCSPlayer *pPlayer = GetPlayerOwner();
-		if ( !pPlayer )
+		if(!pPlayer)
 			return 0.0f;
 
-		if ( m_bSilencerOn )
+		if(m_bSilencerOn)
 		{
-			if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
+			if(!FBitSet(pPlayer->GetFlags(), FL_ONGROUND))
 				return 1.3f * (1 - m_flAccuracy);
-			else if (pPlayer->GetAbsVelocity().Length2D() > 5)
+			else if(pPlayer->GetAbsVelocity().Length2D() > 5)
 				return 0.25f * (1 - m_flAccuracy);
-			else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )
+			else if(FBitSet(pPlayer->GetFlags(), FL_DUCKING))
 				return 0.125f * (1 - m_flAccuracy);
 			else
 				return 0.15f * (1 - m_flAccuracy);
 		}
 		else
 		{
-			if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
-				return 1.2f * (1 - m_flAccuracy );
-			else if (pPlayer->GetAbsVelocity().Length2D() > 5)
+			if(!FBitSet(pPlayer->GetFlags(), FL_ONGROUND))
+				return 1.2f * (1 - m_flAccuracy);
+			else if(pPlayer->GetAbsVelocity().Length2D() > 5)
 				return 0.225f * (1 - m_flAccuracy);
-			else if ( FBitSet( pPlayer->GetFlags(), FL_DUCKING ) )
+			else if(FBitSet(pPlayer->GetFlags(), FL_DUCKING))
 				return 0.08f * (1 - m_flAccuracy);
 			else
 				return 0.1f * (1 - m_flAccuracy);
@@ -265,28 +256,27 @@ float CWeaponUSP::GetInaccuracy() const
 		return BaseClass::GetInaccuracy();
 }
 
-
 void CWeaponUSP::PrimaryAttack()
 {
 	CCSPlayer *pPlayer = GetPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	float flCycleTime =  GetCSWpnData().m_flCycleTime;
+	float flCycleTime = GetCSWpnData().m_flCycleTime;
 
 	// Mark the time of this shot and determine the accuracy modifier based on the last shot fired...
-	m_flAccuracy -= (0.275)*(0.3 - (gpGlobals->curtime - m_flLastFire));
+	m_flAccuracy -= (0.275) * (0.3 - (gpGlobals->curtime - m_flLastFire));
 
-	if (m_flAccuracy > 0.92)
+	if(m_flAccuracy > 0.92)
 		m_flAccuracy = 0.92;
-	else if (m_flAccuracy < 0.6)
+	else if(m_flAccuracy < 0.6)
 		m_flAccuracy = 0.6;
 
 	m_flLastFire = gpGlobals->curtime;
 
-	if (m_iClip1 <= 0)
+	if(m_iClip1 <= 0)
 	{
-		if ( m_bFireOnEmpty )
+		if(m_bFireOnEmpty)
 		{
 			PlayEmptySound();
 			m_flNextPrimaryAttack = gpGlobals->curtime + 0.2;
@@ -302,47 +292,39 @@ void CWeaponUSP::PrimaryAttack()
 
 	m_iClip1--;
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+	SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 
 	// player "shoot" animation
-	pPlayer->SetAnimation( PLAYER_ATTACK1 );
+	pPlayer->SetAnimation(PLAYER_ATTACK1);
 
-
-	if ( !m_bSilencerOn )
+	if(!m_bSilencerOn)
 	{
 		pPlayer->DoMuzzleFlash();
 	}
 
-	FX_FireBullets(
-		pPlayer->entindex(),
-		pPlayer->Weapon_ShootPosition(),
-		pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(),
-		GetWeaponID(),
-		m_weaponMode,
-		CBaseEntity::GetPredictionRandomSeed() & 255,
-		GetInaccuracy(),
-		GetSpread());
+	FX_FireBullets(pPlayer->entindex(), pPlayer->Weapon_ShootPosition(),
+				   pPlayer->EyeAngles() + 2.0f * pPlayer->GetPunchAngle(), GetWeaponID(), m_weaponMode,
+				   CBaseEntity::GetPredictionRandomSeed() & 255, GetInaccuracy(), GetSpread());
 
-	if (!m_iClip1 && pPlayer->GetAmmoCount( GetPrimaryAmmoType() ) <= 0)
+	if(!m_iClip1 && pPlayer->GetAmmoCount(GetPrimaryAmmoType()) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
 		pPlayer->SetSuitUpdate("!HEV_AMO0", false, 0);
 	}
 
-	SetWeaponIdleTime( gpGlobals->curtime + 2 );
+	SetWeaponIdleTime(gpGlobals->curtime + 2);
 
 	// update accuracy
 	m_fAccuracyPenalty += GetCSWpnData().m_fInaccuracyImpulseFire[m_weaponMode];
 
 	QAngle angle = pPlayer->GetPunchAngle();
 	angle.x -= 2;
-	pPlayer->SetPunchAngle( angle );
+	pPlayer->SetPunchAngle(angle);
 }
-
 
 bool CWeaponUSP::Reload()
 {
-	if ( !DefaultPistolReload() )
+	if(!DefaultPistolReload())
 		return false;
 
 	m_flAccuracy = 0.92;
@@ -351,24 +333,24 @@ bool CWeaponUSP::Reload()
 
 void CWeaponUSP::WeaponIdle()
 {
-	if (m_flTimeWeaponIdle > gpGlobals->curtime)
+	if(m_flTimeWeaponIdle > gpGlobals->curtime)
 		return;
 
 	// only idle if the slid isn't back
-	if (m_iClip1 != 0)
+	if(m_iClip1 != 0)
 	{
-		SetWeaponIdleTime( gpGlobals->curtime + 6.0 );
+		SetWeaponIdleTime(gpGlobals->curtime + 6.0);
 	}
 }
 
-bool CWeaponUSP::SendWeaponAnim( int iActivity )
+bool CWeaponUSP::SendWeaponAnim(int iActivity)
 {
 	// Translate the activity?
-	if ( m_bSilencerOn )
+	if(m_bSilencerOn)
 	{
-		for ( int i=0; i < ARRAYSIZE( g_SilencedTranslations ); i++ )
+		for(int i = 0; i < ARRAYSIZE(g_SilencedTranslations); i++)
 		{
-			if ( g_SilencedTranslations[i][0] == iActivity )
+			if(g_SilencedTranslations[i][0] == iActivity)
 			{
 				iActivity = g_SilencedTranslations[i][1];
 				break;
@@ -376,14 +358,13 @@ bool CWeaponUSP::SendWeaponAnim( int iActivity )
 		}
 	}
 
-	return BaseClass::SendWeaponAnim( iActivity );
+	return BaseClass::SendWeaponAnim(iActivity);
 }
 
-
 #ifdef CLIENT_DLL
-int CWeaponUSP::GetMuzzleFlashStyle( void )
+int CWeaponUSP::GetMuzzleFlashStyle(void)
 {
-	if( m_bSilencerOn )
+	if(m_bSilencerOn)
 	{
 		return CS_MUZZLEFLASH_NONE;
 	}

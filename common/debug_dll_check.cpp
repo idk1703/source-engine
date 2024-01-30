@@ -10,7 +10,7 @@
 #include "tier0/platform.h"
 
 #define _DEBUGONLYSTRING(x) #x
-#define DEBUGONLYSTRING(x) _DEBUGONLYSTRING(x)
+#define DEBUGONLYSTRING(x)	_DEBUGONLYSTRING(x)
 DLL_GLOBAL_EXPORT char const *pDebugString = DEBUGONLYSTRING(DLLNAME) ".dll is built debug!";
 
 #endif

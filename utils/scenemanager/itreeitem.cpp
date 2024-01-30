@@ -21,33 +21,33 @@
 //			*parent -
 // Output : mxTreeViewItem
 //-----------------------------------------------------------------------------
-mxTreeViewItem *ITreeItem::FindItem( mxTreeView *tree, mxTreeViewItem *parent, bool recurse )
+mxTreeViewItem *ITreeItem::FindItem(mxTreeView *tree, mxTreeViewItem *parent, bool recurse)
 {
-	if ( !tree )
+	if(!tree)
 		return NULL;
 
-	mxTreeViewItem *child = tree->getFirstChild( parent );
-	while ( child )
+	mxTreeViewItem *child = tree->getFirstChild(parent);
+	while(child)
 	{
-		ITreeItem *treeItem = (ITreeItem *)tree->getUserData( child );
-		if ( treeItem )
+		ITreeItem *treeItem = (ITreeItem *)tree->getUserData(child);
+		if(treeItem)
 		{
-			if ( treeItem == this )
+			if(treeItem == this)
 			{
 				return child;
 			}
 
-			if ( recurse )
+			if(recurse)
 			{
-				mxTreeViewItem *found = FindItem( tree, child, recurse );
-				if ( found )
+				mxTreeViewItem *found = FindItem(tree, child, recurse);
+				if(found)
 				{
 					return found;
 				}
 			}
 		}
 
-		child = tree->getNextChild( child );
+		child = tree->getNextChild(child);
 	}
 
 	return NULL;
@@ -55,27 +55,27 @@ mxTreeViewItem *ITreeItem::FindItem( mxTreeView *tree, mxTreeViewItem *parent, b
 
 ITreeItem *ITreeItem::GetParentItem()
 {
-	if ( GetSoundEntry() )
+	if(GetSoundEntry())
 	{
 		return GetSoundEntry()->GetOwnerVCDFile();
 	}
 
-	if ( GetVCDFile() )
+	if(GetVCDFile())
 	{
 		return GetVCDFile()->GetOwnerScene();
 	}
 
-	if ( GetScene() )
+	if(GetScene())
 	{
 		return GetScene()->GetOwnerProject();
 	}
 
-	if ( GetProject() )
+	if(GetProject())
 	{
 		return GetProject()->GetOwnerWorkspace();
 	}
 
-	if ( GetWaveFile() )
+	if(GetWaveFile())
 	{
 		return GetWaveFile()->GetOwnerSoundEntry();
 	}

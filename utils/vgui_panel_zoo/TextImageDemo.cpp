@@ -10,23 +10,22 @@
 
 #include <vgui_controls/TextImage.h>
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // A TextImage is an Image that handles drawing of a text string
 // They are not panels.
 //-----------------------------------------------------------------------------
-class TextImageDemo: public DemoPage
+class TextImageDemo : public DemoPage
 {
-	public:
-		TextImageDemo(Panel *parent, const char *name);
-		~TextImageDemo();
+public:
+	TextImageDemo(Panel *parent, const char *name);
+	~TextImageDemo();
 
-		void Paint();
+	void Paint();
 
-	private:
-		TextImage *m_pTextImage;
+private:
+	TextImage *m_pTextImage;
 };
 
 //-----------------------------------------------------------------------------
@@ -36,20 +35,17 @@ TextImageDemo::TextImageDemo(Panel *parent, const char *name) : DemoPage(parent,
 {
 
 	// Create a TextImage object that says "Text Image Text"
-	//m_pTextImage = new TextImage("Text Image Text", GetScheme());
+	// m_pTextImage = new TextImage("Text Image Text", GetScheme());
 	m_pTextImage = new TextImage("Text Image Text");
 
 	// Set the position
 	m_pTextImage->SetPos(100, 100);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-TextImageDemo::~TextImageDemo()
-{
-}
+TextImageDemo::~TextImageDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Paint the image on screen. TextImages are not panels, you must
@@ -60,8 +56,7 @@ void TextImageDemo::Paint()
 	m_pTextImage->Paint();
 }
 
-
-Panel* TextImageDemo_Create(Panel *parent)
+Panel *TextImageDemo_Create(Panel *parent)
 {
 	return new TextImageDemo(parent, "TextImageDemo");
 }

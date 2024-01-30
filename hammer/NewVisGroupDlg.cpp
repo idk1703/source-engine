@@ -13,10 +13,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static const unsigned int g_uSelChangeMsg = ::RegisterWindowMessage(GROUPLIST_MSG_SEL_CHANGE);
 static BOOL s_bLastHideObjects = TRUE;
-
 
 BEGIN_MESSAGE_MAP(CNewVisGroupDlg, CDialog)
 	//{{AFX_MSG_MAP(CNewVisGroupDlg)
@@ -26,13 +24,11 @@ BEGIN_MESSAGE_MAP(CNewVisGroupDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pParent -
 //-----------------------------------------------------------------------------
-CNewVisGroupDlg::CNewVisGroupDlg(CString &str, CWnd *pParent)
-	: CDialog(CNewVisGroupDlg::IDD, pParent)
+CNewVisGroupDlg::CNewVisGroupDlg(CString &str, CWnd *pParent) : CDialog(CNewVisGroupDlg::IDD, pParent)
 {
 	m_pPickedVisGroup = NULL;
 
@@ -41,12 +37,11 @@ CNewVisGroupDlg::CNewVisGroupDlg(CString &str, CWnd *pParent)
 	//}}AFX_DATA_INIT
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pDX -
 //-----------------------------------------------------------------------------
-void CNewVisGroupDlg::DoDataExchange(CDataExchange* pDX)
+void CNewVisGroupDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CNewVisGroupDlg)
@@ -55,7 +50,6 @@ void CNewVisGroupDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_VISGROUP_NAME, m_strName);
 	//}}AFX_DATA_MAP
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -78,7 +72,6 @@ BOOL CNewVisGroupDlg::OnInitDialog(void)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the visgroup name that was entered in the dialog.
 //-----------------------------------------------------------------------------
@@ -86,7 +79,6 @@ void CNewVisGroupDlg::GetName(CString &str)
 {
 	str = m_strName;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -96,7 +88,6 @@ void CNewVisGroupDlg::OnOK()
 	CDialog::OnOK();
 	s_bLastHideObjects = m_bHideObjects;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Switches the mode of the dialog to pick an existing visgroup rather than
@@ -110,7 +101,6 @@ void CNewVisGroupDlg::OnPlaceInExistingVisGroup()
 	pEdit = (CEdit *)GetDlgItem(IDC_GROUP_LIST);
 	pEdit->EnableWindow(TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Switches the mode of the dialog to create a new visgroup rather than
@@ -127,7 +117,6 @@ void CNewVisGroupDlg::OnCreateNewVisGroup()
 	m_pPickedVisGroup = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles selection change in the visgroup list.
 //-----------------------------------------------------------------------------
@@ -136,7 +125,6 @@ LRESULT CNewVisGroupDlg::OnSelChangeGroupList(WPARAM wParam, LPARAM lParam)
 	m_pPickedVisGroup = m_cGroupList.GetSelectedVisGroup();
 	return 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -147,10 +135,10 @@ void CNewVisGroupDlg::UpdateGroupList(void)
 	m_cGroupList.DeleteAllItems();
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		int nCount = pDoc->VisGroups_GetRootCount();
-		for (int i = 0; i < nCount; i++)
+		for(int i = 0; i < nCount; i++)
 		{
 			CVisGroup *pGroup = pDoc->VisGroups_GetRootVisGroup(i);
 			m_cGroupList.AddVisGroup(pGroup);
@@ -161,7 +149,6 @@ void CNewVisGroupDlg::UpdateGroupList(void)
 	m_cGroupList.SetRedraw(true);
 	m_cGroupList.Invalidate();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:

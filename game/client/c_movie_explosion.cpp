@@ -16,10 +16,9 @@
 // ------------------------------------------------------------------------- //
 // Definitions
 // ------------------------------------------------------------------------- //
-#define NUM_MOVIEEXPLOSION_EMITTERS	50
+#define NUM_MOVIEEXPLOSION_EMITTERS 50
 #define EXPLOSION_EMITTER_LIFETIME	3
 #define EMITTED_PARTICLE_LIFETIME	1
-
 
 // ------------------------------------------------------------------------- //
 // Classes
@@ -27,75 +26,69 @@
 class MovieExplosionEmitter
 {
 public:
-	Vector		m_Pos;
-	Vector		m_Velocity;
-	float		m_Lifetime;
-	TimedEvent	m_ParticleSpawn;
+	Vector m_Pos;
+	Vector m_Velocity;
+	float m_Lifetime;
+	TimedEvent m_ParticleSpawn;
 };
-
 
 class C_MovieExplosion : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
 public:
-	DECLARE_CLASS( C_MovieExplosion, C_BaseParticleEntity );
+	DECLARE_CLASS(C_MovieExplosion, C_BaseParticleEntity);
 	DECLARE_CLIENTCLASS();
 
-					C_MovieExplosion();
-					~C_MovieExplosion();
+	C_MovieExplosion();
+	~C_MovieExplosion();
 
-// C_BaseEntity.
+	// C_BaseEntity.
 public:
-	virtual void	OnDataChanged(DataUpdateType_t updateType);
+	virtual void OnDataChanged(DataUpdateType_t updateType);
 
-// IPrototypeAppEffect.
+	// IPrototypeAppEffect.
 public:
-	virtual void	Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs);
+	virtual void Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs);
 
-// IParticleEffect.
+	// IParticleEffect.
 public:
-	virtual void	Update(float fTimeDelta);
-	virtual void RenderParticles( CParticleRenderIterator *pIterator );
-	virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
-
+	virtual void Update(float fTimeDelta);
+	virtual void RenderParticles(CParticleRenderIterator *pIterator);
+	virtual void SimulateParticles(CParticleSimulateIterator *pIterator);
 
 public:
-	MovieExplosionEmitter	m_Emitters[NUM_MOVIEEXPLOSION_EMITTERS];
-	float					m_EmitterLifetime;
+	MovieExplosionEmitter m_Emitters[NUM_MOVIEEXPLOSION_EMITTERS];
+	float m_EmitterLifetime;
 
-	CParticleMgr			*m_pParticleMgr;
-	PMaterialHandle			m_iFireballMaterial;
+	CParticleMgr *m_pParticleMgr;
+	PMaterialHandle m_iFireballMaterial;
 
 	// Setup for temporary usage in SimulateAndRender.
-	float					m_EmitterAlpha;
+	float m_EmitterAlpha;
 
 private:
-					C_MovieExplosion( const C_MovieExplosion & );
-
+	C_MovieExplosion(const C_MovieExplosion &);
 };
 
 // Expose to the particle app.
 EXPOSE_PROTOTYPE_EFFECT(MovieExplosion, C_MovieExplosion);
 
 IMPLEMENT_CLIENTCLASS_DT(C_MovieExplosion, DT_MovieExplosion, MovieExplosion)
-END_RECV_TABLE()
+END_RECV_TABLE
+()
 
-
-
-// ------------------------------------------------------------------------- //
-// C_MovieExplosion
-// ------------------------------------------------------------------------- //
-C_MovieExplosion::C_MovieExplosion()
+	// ------------------------------------------------------------------------- //
+	// C_MovieExplosion
+	// ------------------------------------------------------------------------- //
+	C_MovieExplosion::C_MovieExplosion()
 {
 	m_pParticleMgr = NULL;
 }
 
-
 C_MovieExplosion::~C_MovieExplosion()
 {
 	if(m_pParticleMgr)
-		m_pParticleMgr->RemoveEffect( &m_ParticleEffect );
+		m_pParticleMgr->RemoveEffect(&m_ParticleEffect);
 }
-
 
 void C_MovieExplosion::OnDataChanged(DataUpdateType_t updateType)
 {
@@ -103,10 +96,9 @@ void C_MovieExplosion::OnDataChanged(DataUpdateType_t updateType)
 
 	if(updateType == DATA_UPDATE_CREATED)
 	{
-		Start( ParticleMgr(), NULL );
+		Start(ParticleMgr(), NULL);
 	}
 }
-
 
 void C_MovieExplosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs)
 {
@@ -114,7 +106,7 @@ void C_MovieExplosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pA
 		return;
 
 	// Setup our emitters.
-	for(int iEmitter=0; iEmitter < NUM_MOVIEEXPLOSION_EMITTERS; iEmitter++)
+	for(int iEmitter = 0; iEmitter < NUM_MOVIEEXPLOSION_EMITTERS; iEmitter++)
 	{
 		MovieExplosionEmitter *pEmitter = &m_Emitters[iEmitter];
 		pEmitter->m_Velocity = RandomVector(-1, 1) * 200;
@@ -132,7 +124,6 @@ void C_MovieExplosion::Start(CParticleMgr *pParticleMgr, IPrototypeArgAccess *pA
 	m_pParticleMgr = pParticleMgr;
 }
 
-
 void C_MovieExplosion::Update(float fTimeDelta)
 {
 	if(!m_pParticleMgr)
@@ -145,7 +136,7 @@ void C_MovieExplosion::Update(float fTimeDelta)
 	m_EmitterAlpha = (float)sin(m_EmitterLifetime * 3.14159f / EXPLOSION_EMITTER_LIFETIME);
 
 	// Simulate the emitters and have them spit out particles.
-	for(int iEmitter=0; iEmitter < NUM_MOVIEEXPLOSION_EMITTERS; iEmitter++)
+	for(int iEmitter = 0; iEmitter < NUM_MOVIEEXPLOSION_EMITTERS; iEmitter++)
 	{
 		MovieExplosionEmitter *pEmitter = &m_Emitters[iEmitter];
 
@@ -156,7 +147,7 @@ void C_MovieExplosion::Update(float fTimeDelta)
 		while(pEmitter->m_ParticleSpawn.NextEvent(tempDelta))
 		{
 			StandardParticle_t *pParticle =
-				(StandardParticle_t*)m_ParticleEffect.AddParticle( sizeof(StandardParticle_t), m_iFireballMaterial);
+				(StandardParticle_t *)m_ParticleEffect.AddParticle(sizeof(StandardParticle_t), m_iFireballMaterial);
 
 			if(pParticle)
 			{
@@ -167,11 +158,10 @@ void C_MovieExplosion::Update(float fTimeDelta)
 	}
 }
 
-
-void C_MovieExplosion::RenderParticles( CParticleRenderIterator *pIterator )
+void C_MovieExplosion::RenderParticles(CParticleRenderIterator *pIterator)
 {
-	const StandardParticle_t *pParticle = (const StandardParticle_t*)pIterator->GetFirst();
-	while ( pParticle )
+	const StandardParticle_t *pParticle = (const StandardParticle_t *)pIterator->GetFirst();
+	while(pParticle)
 	{
 		// Draw.
 		Vector tPos;
@@ -183,27 +173,23 @@ void C_MovieExplosion::RenderParticles( CParticleRenderIterator *pIterator )
 		color.x = sin(lifetimePercent * 3.14159);
 		color.y = color.x * 0.5f;
 		color.z = 0;
-		RenderParticle_ColorSize(
-			pIterator->GetParticleDraw(),
-			tPos,
-			color,
-			m_EmitterAlpha * sin(3.14159 * lifetimePercent),
-			10);
+		RenderParticle_ColorSize(pIterator->GetParticleDraw(), tPos, color,
+								 m_EmitterAlpha * sin(3.14159 * lifetimePercent), 10);
 
-		pParticle = (const StandardParticle_t*)pIterator->GetNext( sortKey );
+		pParticle = (const StandardParticle_t *)pIterator->GetNext(sortKey);
 	}
 }
 
-void C_MovieExplosion::SimulateParticles( CParticleSimulateIterator *pIterator )
+void C_MovieExplosion::SimulateParticles(CParticleSimulateIterator *pIterator)
 {
-	StandardParticle_t *pParticle = (StandardParticle_t*)pIterator->GetFirst();
-	while ( pParticle )
+	StandardParticle_t *pParticle = (StandardParticle_t *)pIterator->GetFirst();
+	while(pParticle)
 	{
 		// Update its lifetime.
 		pParticle->m_Lifetime += pIterator->GetTimeDelta();
 		if(pParticle->m_Lifetime > 1)
 		{
-			pIterator->RemoveParticle( pParticle );
+			pIterator->RemoveParticle(pParticle);
 		}
 		else
 		{
@@ -212,6 +198,6 @@ void C_MovieExplosion::SimulateParticles( CParticleSimulateIterator *pIterator )
 			pParticle->m_Pos = pParticle->m_Pos + pParticle->m_Velocity * pIterator->GetTimeDelta();
 		}
 
-		pParticle = (StandardParticle_t*)pIterator->GetNext();
+		pParticle = (StandardParticle_t *)pIterator->GetNext();
 	}
 }

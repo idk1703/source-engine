@@ -37,9 +37,9 @@ int CheckButtonList::AddItem(const char *itemText, bool startsSelected, KeyValue
 {
 	CheckItem_t newItem;
 	newItem.checkButton = new vgui::CheckButton(this, NULL, itemText);
-	newItem.checkButton->SetSilentMode( true );
+	newItem.checkButton->SetSilentMode(true);
 	newItem.checkButton->SetSelected(startsSelected);
-	newItem.checkButton->SetSilentMode( false );
+	newItem.checkButton->SetSilentMode(false);
 	newItem.checkButton->AddActionSignalTarget(this);
 	newItem.userData = userData;
 	InvalidateLayout();
@@ -51,10 +51,10 @@ int CheckButtonList::AddItem(const char *itemText, bool startsSelected, KeyValue
 //-----------------------------------------------------------------------------
 void CheckButtonList::RemoveAll()
 {
-	for (int i = 0; i < m_CheckItems.Count(); i++)
+	for(int i = 0; i < m_CheckItems.Count(); i++)
 	{
 		m_CheckItems[i].checkButton->MarkForDeletion();
-		if (m_CheckItems[i].userData)
+		if(m_CheckItems[i].userData)
 		{
 			m_CheckItems[i].userData->deleteThis();
 		}
@@ -69,9 +69,9 @@ void CheckButtonList::RemoveAll()
 int CheckButtonList::GetCheckedItemCount()
 {
 	int count = 0;
-	for (int i = 0; i < m_CheckItems.Count(); i++)
+	for(int i = 0; i < m_CheckItems.Count(); i++)
 	{
-		if (m_CheckItems[i].checkButton->IsSelected())
+		if(m_CheckItems[i].checkButton->IsSelected())
 		{
 			count++;
 		}
@@ -92,7 +92,7 @@ void CheckButtonList::PerformLayout()
 
 	// set scrollbar
 	int totalHeight = y + (m_CheckItems.Count() * tall);
-	if (totalHeight > GetTall())
+	if(totalHeight > GetTall())
 	{
 		m_pScrollBar->SetRange(0, totalHeight + 1);
 		m_pScrollBar->SetRangeWindow(GetTall());
@@ -108,7 +108,7 @@ void CheckButtonList::PerformLayout()
 	}
 
 	// position the items
-	for (int i = 0; i < m_CheckItems.Count(); i++)
+	for(int i = 0; i < m_CheckItems.Count(); i++)
 	{
 		CheckButton *btn = m_CheckItems[i].checkButton;
 		btn->SetBounds(x, y, wide, tall);
@@ -176,17 +176,17 @@ void CheckButtonList::SetItemCheckable(int itemID, bool state)
 //-----------------------------------------------------------------------------
 // Purpose: Forwards up check button selected message
 //-----------------------------------------------------------------------------
-void CheckButtonList::OnCheckButtonChecked( KeyValues *pParams )
+void CheckButtonList::OnCheckButtonChecked(KeyValues *pParams)
 {
-	vgui::Panel *pPanel = (vgui::Panel *)pParams->GetPtr( "panel" );
+	vgui::Panel *pPanel = (vgui::Panel *)pParams->GetPtr("panel");
 	int c = m_CheckItems.Count();
-	for ( int i = 0; i < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
-		if ( pPanel == m_CheckItems[i].checkButton )
+		if(pPanel == m_CheckItems[i].checkButton)
 		{
-			KeyValues *kv = new KeyValues( "CheckButtonChecked", "itemid", i );
-			kv->SetInt( "state", pParams->GetInt( "state" ) );
-			PostActionSignal( kv );
+			KeyValues *kv = new KeyValues("CheckButtonChecked", "itemid", i);
+			kv->SetInt("state", pParams->GetInt("state"));
+			PostActionSignal(kv);
 			break;
 		}
 	}

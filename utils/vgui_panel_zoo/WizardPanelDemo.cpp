@@ -50,13 +50,16 @@ class CSomeSelections : public WizardSubPanel
 {
 public:
 	CSomeSelections(Panel *parent, const char *panelName);
-	~CSomeSelections(){};
+	~CSomeSelections() {};
 
 	virtual WizardSubPanel *GetNextSubPanel();
 	virtual void OnDisplayAsPrev();
 	// Called when the wizard 'next' button is pressed.
 	// Return true if the wizard should advance.
-	virtual bool OnNextButton()	{ return true;}
+	virtual bool OnNextButton()
+	{
+		return true;
+	}
 	virtual void PerformLayout();
 
 private:
@@ -64,17 +67,16 @@ private:
 	TextEntry *m_pLastNameEdit;
 	TextEntry *m_pUserNameEdit;
 	TextEntry *m_pEmailEdit;
-	};
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CSomeSelections::CSomeSelections(Panel *parent, const char *panelName) :
-WizardSubPanel(parent, panelName)
+CSomeSelections::CSomeSelections(Panel *parent, const char *panelName) : WizardSubPanel(parent, panelName)
 {
 	// create the controls
 	m_pUserNameEdit = new TextEntry(this, "UserNameEdit");
-	m_pUserNameEdit->SetPos(100,100);
+	m_pUserNameEdit->SetPos(100, 100);
 	m_pFirstNameEdit = new TextEntry(this, "FirstNameEdit");
 	m_pLastNameEdit = new TextEntry(this, "LastNameEdit");
 	m_pEmailEdit = new TextEntry(this, "EmailEdit");
@@ -82,7 +84,6 @@ WizardSubPanel(parent, panelName)
 	// The layout of the controls is loaded from a resource file.
 	LoadControlSettings("Demo/WizardPanelDemo.res");
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Return a pointer to the next subpanel that should be displayed
@@ -118,7 +119,6 @@ void CSomeSelections::PerformLayout()
 	GetWizardPanel()->SetFinishButtonEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 // CMoreSelections: Second and last sub panel of the Wonderful wizard
@@ -129,11 +129,14 @@ class CMoreSelections : public WizardSubPanel
 {
 public:
 	CMoreSelections(Panel *parent, const char *panelName);
-	~CMoreSelections(){};
+	~CMoreSelections() {};
 
 	virtual WizardSubPanel *GetNextSubPanel();
 	virtual void OnDisplayAsNext();
-	virtual bool OnPrevButton() { return true;}
+	virtual bool OnPrevButton()
+	{
+		return true;
+	}
 	virtual void PerformLayout();
 	void OnRadioButtonChecked(Panel *panel);
 
@@ -146,14 +149,13 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMoreSelections::CMoreSelections(Panel *parent, const char *panelName) :
-WizardSubPanel(parent, panelName)
+CMoreSelections::CMoreSelections(Panel *parent, const char *panelName) : WizardSubPanel(parent, panelName)
 {
 	// create the controls
 	// a radio button
 	m_pDoneRadio = new RadioButton(this, "DoneRadio", "Are you done?");
 	m_pDoneRadio->SizeToContents();
-	m_pDoneRadio->SetPos(100,100);
+	m_pDoneRadio->SetPos(100, 100);
 }
 
 //-----------------------------------------------------------------------------
@@ -186,11 +188,10 @@ void CMoreSelections::PerformLayout()
 	GetWizardPanel()->SetTitle("All finished?", false);
 
 	// Check if the radio button is selected.
-	if ( m_pDoneRadio->IsSelected())
+	if(m_pDoneRadio->IsSelected())
 	{
 		// If it is, we will enable the 'finish' button.
 		GetWizardPanel()->SetFinishButtonEnabled(true);
-
 	}
 	GetWizardPanel()->SetNextButtonEnabled(false);
 }
@@ -200,23 +201,19 @@ void CMoreSelections::PerformLayout()
 //-----------------------------------------------------------------------------
 void CMoreSelections::OnRadioButtonChecked(Panel *panel)
 {
-	if ( m_pDoneRadio->IsSelected())
+	if(m_pDoneRadio->IsSelected())
 	{
 		GetWizardPanel()->SetFinishButtonEnabled(true);
-
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
-MessageMapItem_t CMoreSelections::m_MessageMap[] =
-{
-	MAP_MESSAGE_PTR( CMoreSelections, "RadioButtonChecked", OnRadioButtonChecked, "panel" ),	// custom message
+MessageMapItem_t CMoreSelections::m_MessageMap[] = {
+	MAP_MESSAGE_PTR(CMoreSelections, "RadioButtonChecked", OnRadioButtonChecked, "panel"), // custom message
 };
 IMPLEMENT_PANELMAP(CMoreSelections, Panel);
-
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -227,7 +224,7 @@ class CWonderfulWizard : public WizardPanel
 {
 public:
 	CWonderfulWizard();
-	~CWonderfulWizard(){};
+	~CWonderfulWizard() {};
 
 	void Run(void);
 	void Open();
@@ -241,7 +238,7 @@ private:
 CWonderfulWizard::CWonderfulWizard() : WizardPanel(NULL, "WonderfulWizard")
 {
 	// The size of the Wizard.
-	//SetBounds(0, 0, 480, 360);
+	// SetBounds(0, 0, 480, 360);
 
 	// The first panel to be displayed.
 	WizardSubPanel *subPanel = new CSomeSelections(this, "CSomeSelections");
@@ -255,7 +252,7 @@ CWonderfulWizard::CWonderfulWizard() : WizardPanel(NULL, "WonderfulWizard")
 //-----------------------------------------------------------------------------
 // Purpose: Start the wizard, starting with the startPanel
 //-----------------------------------------------------------------------------
-void CWonderfulWizard::Run( void )
+void CWonderfulWizard::Run(void)
 {
 	SetVisible(true);
 
@@ -276,17 +273,16 @@ void CWonderfulWizard::Open()
 	surface()->SetMinimized(this->GetVPanel(), false);
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 // Purpose: A demonstration of a wizard panel containing two
 // wizard sub panels
 //-----------------------------------------------------------------------------
-class WizardPanelDemo: public DemoPage
+class WizardPanelDemo : public DemoPage
 {
 public:
 	WizardPanelDemo(Panel *parent, const char *name);
-	~WizardPanelDemo(){};
+	~WizardPanelDemo() {};
 
 	void SetVisible(bool status);
 
@@ -294,25 +290,22 @@ private:
 	// We use a handle because the window could be destroyed if someone
 	// closed the wizard.
 	DHANDLE<CWonderfulWizard> m_hWizardPanel;
-
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-WizardPanelDemo::WizardPanelDemo(Panel *parent, const char *name) : DemoPage(parent, name)
-{
-}
+WizardPanelDemo::WizardPanelDemo(Panel *parent, const char *name) : DemoPage(parent, name) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: When we make this this demo page visible we make the wizard visible.
 //-----------------------------------------------------------------------------
 void WizardPanelDemo::SetVisible(bool status)
 {
-	if (status)
+	if(status)
 	{
 		// Pop up the dialog
-		if (m_hWizardPanel.Get())
+		if(m_hWizardPanel.Get())
 		{
 			m_hWizardPanel->Open();
 		}
@@ -329,7 +322,7 @@ void WizardPanelDemo::SetVisible(bool status)
 	}
 	else
 	{
-		if (m_hWizardPanel.Get())
+		if(m_hWizardPanel.Get())
 		{
 			m_hWizardPanel->SetVisible(false);
 		}
@@ -338,9 +331,7 @@ void WizardPanelDemo::SetVisible(bool status)
 	DemoPage::SetVisible(status);
 }
 
-
-
-Panel* WizardPanelDemo_Create(Panel *parent)
+Panel *WizardPanelDemo_Create(Panel *parent)
 {
 	return new WizardPanelDemo(parent, "WizardPanelDemo");
 }

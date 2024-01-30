@@ -27,11 +27,9 @@ COPTView2D::COPTView2D() : CPropertyPage(COPTView2D::IDD)
 	//}}AFX_DATA_INIT
 }
 
-COPTView2D::~COPTView2D()
-{
-}
+COPTView2D::~COPTView2D() {}
 
-void COPTView2D::DoDataExchange(CDataExchange* pDX)
+void COPTView2D::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 
@@ -65,7 +63,7 @@ void COPTView2D::DoDataExchange(CDataExchange* pDX)
 	CString strTemp;
 	strTemp.Format("%d", Options.view2d.iDefaultGrid);
 	DDX_CBString(pDX, IDC_GRID, strTemp);
-	if(pDX->m_bSaveAndValidate)	// converting back
+	if(pDX->m_bSaveAndValidate) // converting back
 	{
 		Options.view2d.iDefaultGrid = atoi(strTemp);
 		Options.view2d.iGridIntensity = m_cGridIntensity.GetPos();
@@ -75,7 +73,6 @@ void COPTView2D::DoDataExchange(CDataExchange* pDX)
 		m_cGridIntensity.SetPos(Options.view2d.iGridIntensity);
 	}
 }
-
 
 BEGIN_MESSAGE_MAP(COPTView2D, CPropertyPage)
 	//{{AFX_MSG_MAP(COPTView2D)
@@ -88,7 +85,7 @@ END_MESSAGE_MAP()
 BOOL COPTView2D::OnInitDialog()
 {
 	CWnd *pwnd = GetDlgItem(IDC_GRIDHIGH1024);
-	if (pwnd != NULL)
+	if(pwnd != NULL)
 	{
 		pwnd->EnableWindow(FALSE);
 		pwnd->ShowWindow(SW_HIDE);

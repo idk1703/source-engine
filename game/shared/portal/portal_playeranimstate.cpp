@@ -21,15 +21,15 @@
 #include "weapon_portalgun.h"
 #endif
 
-#define PORTAL_RUN_SPEED			320.0f
-#define PORTAL_CROUCHWALK_SPEED		110.0f
+#define PORTAL_RUN_SPEED		320.0f
+#define PORTAL_CROUCHWALK_SPEED 110.0f
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pPlayer -
 // Output : CMultiPlayerAnimState*
 //-----------------------------------------------------------------------------
-CPortalPlayerAnimState* CreatePortalPlayerAnimState( CPortal_Player *pPlayer )
+CPortalPlayerAnimState *CreatePortalPlayerAnimState(CPortal_Player *pPlayer)
 {
 	// Setup the movement data.
 	MultiPlayerMovementData_t movementData;
@@ -39,10 +39,10 @@ CPortalPlayerAnimState* CreatePortalPlayerAnimState( CPortal_Player *pPlayer )
 	movementData.m_flSprintSpeed = -1.0f;
 
 	// Create animation state for this player.
-	CPortalPlayerAnimState *pRet = new CPortalPlayerAnimState( pPlayer, movementData );
+	CPortalPlayerAnimState *pRet = new CPortalPlayerAnimState(pPlayer, movementData);
 
 	// Specific Portal player initialization.
-	pRet->InitPortal( pPlayer );
+	pRet->InitPortal(pPlayer);
 
 	return pRet;
 }
@@ -63,8 +63,8 @@ CPortalPlayerAnimState::CPortalPlayerAnimState()
 // Input  : *pPlayer -
 //			&movementData -
 //-----------------------------------------------------------------------------
-CPortalPlayerAnimState::CPortalPlayerAnimState( CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData )
-: CMultiPlayerAnimState( pPlayer, movementData )
+CPortalPlayerAnimState::CPortalPlayerAnimState(CBasePlayer *pPlayer, MultiPlayerMovementData_t &movementData)
+	: CMultiPlayerAnimState(pPlayer, movementData)
 {
 	m_pPortalPlayer = NULL;
 
@@ -75,15 +75,13 @@ CPortalPlayerAnimState::CPortalPlayerAnimState( CBasePlayer *pPlayer, MultiPlaye
 // Purpose:
 // Input  :  -
 //-----------------------------------------------------------------------------
-CPortalPlayerAnimState::~CPortalPlayerAnimState()
-{
-}
+CPortalPlayerAnimState::~CPortalPlayerAnimState() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Initialize Portal specific animation state.
 // Input  : *pPlayer -
 //-----------------------------------------------------------------------------
-void CPortalPlayerAnimState::InitPortal( CPortal_Player *pPlayer )
+void CPortalPlayerAnimState::InitPortal(CPortal_Player *pPlayer)
 {
 	m_pPortalPlayer = pPlayer;
 	m_bInAirWalk = false;
@@ -93,7 +91,7 @@ void CPortalPlayerAnimState::InitPortal( CPortal_Player *pPlayer )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPortalPlayerAnimState::ClearAnimationState( void )
+void CPortalPlayerAnimState::ClearAnimationState(void)
 {
 	m_bInAirWalk = false;
 
@@ -105,13 +103,13 @@ void CPortalPlayerAnimState::ClearAnimationState( void )
 // Input  : actDesired -
 // Output : Activity
 //-----------------------------------------------------------------------------
-Activity CPortalPlayerAnimState::TranslateActivity( Activity actDesired )
+Activity CPortalPlayerAnimState::TranslateActivity(Activity actDesired)
 {
-	Activity translateActivity = BaseClass::TranslateActivity( actDesired );
+	Activity translateActivity = BaseClass::TranslateActivity(actDesired);
 
-	if ( GetPortalPlayer()->GetActiveWeapon() )
+	if(GetPortalPlayer()->GetActiveWeapon())
 	{
-		translateActivity = GetPortalPlayer()->GetActiveWeapon()->ActivityOverride( translateActivity, NULL );
+		translateActivity = GetPortalPlayer()->GetActiveWeapon()->ActivityOverride(translateActivity, NULL);
 	}
 
 	return translateActivity;
@@ -121,58 +119,57 @@ Activity CPortalPlayerAnimState::TranslateActivity( Activity actDesired )
 // Purpose:
 // Input  : event -
 //-----------------------------------------------------------------------------
-void CPortalPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
+void CPortalPlayerAnimState::DoAnimationEvent(PlayerAnimEvent_t event, int nData)
 {
 	Activity iWeaponActivity = ACT_INVALID;
 
-	switch( event )
+	switch(event)
 	{
-	case PLAYERANIMEVENT_ATTACK_PRIMARY:
-	case PLAYERANIMEVENT_ATTACK_SECONDARY:
+		case PLAYERANIMEVENT_ATTACK_PRIMARY:
+		case PLAYERANIMEVENT_ATTACK_SECONDARY:
 		{
 			CPortal_Player *pPlayer = GetPortalPlayer();
-			if ( !pPlayer )
+			if(!pPlayer)
 				return;
 
 			CWeaponPortalBase *pWpn = pPlayer->GetActivePortalWeapon();
 
-			if ( pWpn )
+			if(pWpn)
 			{
 				// Weapon primary fire.
-				if ( GetBasePlayer()->GetFlags() & FL_DUCKING )
+				if(GetBasePlayer()->GetFlags() & FL_DUCKING)
 				{
-					RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE );
+					RestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE);
 				}
 				else
 				{
-					RestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE );
+					RestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE);
 				}
 
 				iWeaponActivity = ACT_VM_PRIMARYATTACK;
 			}
-			else	// unarmed player
+			else // unarmed player
 			{
-
 			}
 
 			break;
 		}
 
-	default:
+		default:
 		{
-			BaseClass::DoAnimationEvent( event, nData );
+			BaseClass::DoAnimationEvent(event, nData);
 			break;
 		}
 	}
 
 #ifdef CLIENT_DLL
 	// Make the weapon play the animation as well
-	if ( iWeaponActivity != ACT_INVALID )
+	if(iWeaponActivity != ACT_INVALID)
 	{
 		CBaseCombatWeapon *pWeapon = GetPortalPlayer()->GetActiveWeapon();
-		if ( pWeapon )
+		if(pWeapon)
 		{
-			pWeapon->SendWeaponAnim( iWeaponActivity );
+			pWeapon->SendWeaponAnim(iWeaponActivity);
 		}
 	}
 #endif
@@ -181,45 +178,42 @@ void CPortalPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nDat
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPortalPlayerAnimState::Teleport( const Vector *pNewOrigin, const QAngle *pNewAngles, CPortal_Player* pPlayer )
+void CPortalPlayerAnimState::Teleport(const Vector *pNewOrigin, const QAngle *pNewAngles, CPortal_Player *pPlayer)
 {
 	QAngle absangles = pPlayer->GetAbsAngles();
 	m_angRender = absangles;
 	m_angRender.x = m_angRender.z = 0.0f;
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		// Snap the yaw pose parameter lerping variables to face new angles.
 		m_flCurrentFeetYaw = m_flGoalFeetYaw = m_flEyeYaw = pPlayer->EyeAngles()[YAW];
 	}
 }
 
-
-
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CPortalPlayerAnimState::HandleMoving( Activity &idealActivity )
+bool CPortalPlayerAnimState::HandleMoving(Activity &idealActivity)
 {
 	float flSpeed = GetOuterXYSpeed();
 
 	// If we move, cancel the deployed anim hold
-	if ( flSpeed > MOVING_MINIMUM_SPEED )
+	if(flSpeed > MOVING_MINIMUM_SPEED)
 	{
 		m_flHoldDeployedPoseUntilTime = 0.0;
 		idealActivity = ACT_MP_RUN;
 	}
 
-	else if ( m_flHoldDeployedPoseUntilTime > gpGlobals->curtime )
+	else if(m_flHoldDeployedPoseUntilTime > gpGlobals->curtime)
 	{
 		// Unless we move, hold the deployed pose for a number of seconds after being deployed
 		idealActivity = ACT_MP_DEPLOYED_IDLE;
 	}
 	else
 	{
-		return BaseClass::HandleMoving( idealActivity );
+		return BaseClass::HandleMoving(idealActivity);
 	}
 
 	return true;
@@ -230,11 +224,11 @@ bool CPortalPlayerAnimState::HandleMoving( Activity &idealActivity )
 // Input  : *idealActivity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CPortalPlayerAnimState::HandleDucking( Activity &idealActivity )
+bool CPortalPlayerAnimState::HandleDucking(Activity &idealActivity)
 {
-	if ( GetBasePlayer()->m_Local.m_bDucking || GetBasePlayer()->m_Local.m_bDucked )
+	if(GetBasePlayer()->m_Local.m_bDucking || GetBasePlayer()->m_Local.m_bDucked)
 	{
-		if ( GetOuterXYSpeed() < MOVING_MINIMUM_SPEED )
+		if(GetOuterXYSpeed() < MOVING_MINIMUM_SPEED)
 		{
 			idealActivity = ACT_MP_CROUCH_IDLE;
 		}
@@ -251,19 +245,19 @@ bool CPortalPlayerAnimState::HandleDucking( Activity &idealActivity )
 
 //-----------------------------------------------------------------------------
 // Purpose:
-bool CPortalPlayerAnimState::HandleJumping( Activity &idealActivity )
+bool CPortalPlayerAnimState::HandleJumping(Activity &idealActivity)
 {
 	Vector vecVelocity;
-	GetOuterAbsVelocity( vecVelocity );
+	GetOuterAbsVelocity(vecVelocity);
 
-	if ( ( vecVelocity.z > 300.0f || m_bInAirWalk ) )
+	if((vecVelocity.z > 300.0f || m_bInAirWalk))
 	{
 		// Check to see if we were in an airwalk and now we are basically on the ground.
-		if ( GetBasePlayer()->GetFlags() & FL_ONGROUND )
+		if(GetBasePlayer()->GetFlags() & FL_ONGROUND)
 		{
 			m_bInAirWalk = false;
 			RestartMainSequence();
-			RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );
+			RestartGesture(GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND);
 		}
 		else
 		{
@@ -275,35 +269,35 @@ bool CPortalPlayerAnimState::HandleJumping( Activity &idealActivity )
 	// Jumping.
 	else
 	{
-		if ( m_bJumping )
+		if(m_bJumping)
 		{
-			if ( m_bFirstJumpFrame )
+			if(m_bFirstJumpFrame)
 			{
 				m_bFirstJumpFrame = false;
-				RestartMainSequence();	// Reset the animation.
+				RestartMainSequence(); // Reset the animation.
 			}
 
 			// Don't check if he's on the ground for a sec.. sometimes the client still has the
 			// on-ground flag set right when the message comes in.
-			else if ( gpGlobals->curtime - m_flJumpStartTime > 0.2f )
+			else if(gpGlobals->curtime - m_flJumpStartTime > 0.2f)
 			{
-				if ( GetBasePlayer()->GetFlags() & FL_ONGROUND )
+				if(GetBasePlayer()->GetFlags() & FL_ONGROUND)
 				{
 					m_bJumping = false;
 					RestartMainSequence();
-					RestartGesture( GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND );
+					RestartGesture(GESTURE_SLOT_JUMP, ACT_MP_JUMP_LAND);
 				}
 			}
 
 			// if we're still jumping
-			if ( m_bJumping )
+			if(m_bJumping)
 			{
 				idealActivity = ACT_MP_JUMP_START;
 			}
 		}
 	}
 
-	if ( m_bJumping || m_bInAirWalk )
+	if(m_bJumping || m_bInAirWalk)
 		return true;
 
 	return false;

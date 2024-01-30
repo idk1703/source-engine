@@ -34,33 +34,34 @@ CFacePoserVGui::CFacePoserVGui(void)
 //-----------------------------------------------------------------------------
 // Setup the base vgui panels
 //-----------------------------------------------------------------------------
-bool CFacePoserVGui::Init( HWND hWindow )
+bool CFacePoserVGui::Init(HWND hWindow)
 {
 	// initialize vgui_control interfaces
-	if (!vgui::VGui_InitInterfacesList( "FACEPOSER", &g_Factory, 1 ))
+	if(!vgui::VGui_InitInterfacesList("FACEPOSER", &g_Factory, 1))
 		return false;
 
-//	if ( !vgui::VGui_InitMatSysInterfacesList( "FACEPOSER", &g_Factory, 1 ) )
-//		return false;
+	//	if ( !vgui::VGui_InitMatSysInterfacesList( "FACEPOSER", &g_Factory, 1 ) )
+	//		return false;
 
-	// All of the various tools .dlls expose GetVGuiControlsModuleName() to us to make sure we don't have communication across .dlls
-//	if ( !vgui::VGui_InitDmeInterfacesList( "FACEPOSER", &g_Factory, 1 ) )
-//		return false;
+	// All of the various tools .dlls expose GetVGuiControlsModuleName() to us to make sure we don't have communication
+	// across .dlls
+	//	if ( !vgui::VGui_InitDmeInterfacesList( "FACEPOSER", &g_Factory, 1 ) )
+	//		return false;
 
-	if ( !g_pMatSystemSurface )
+	if(!g_pMatSystemSurface)
 		return false;
 
 	// configuration settings
 	vgui::system()->SetUserConfigFile("faceposer.vdf", "EXECUTABLE_PATH");
 
 	// Are we trapping input?
-	g_pMatSystemSurface->EnableWindowsMessages( true );
+	g_pMatSystemSurface->EnableWindowsMessages(true);
 
 	// Need to be able to play sounds through vgui
 	// g_pMatSystemSurface->InstallPlaySoundFunc( VGui_PlaySound );
 
 	// load scheme
-	if (!vgui::scheme()->LoadSchemeFromFile("Resource/SourceScheme.res", "FacePoser"))
+	if(!vgui::scheme()->LoadSchemeFromFile("Resource/SourceScheme.res", "FacePoser"))
 	{
 		return false;
 	}
@@ -74,34 +75,34 @@ bool CFacePoserVGui::Init( HWND hWindow )
 	return true;
 }
 
-void CFacePoserVGui::SetFocus( CVGuiWnd *pVGuiWnd )
+void CFacePoserVGui::SetFocus(CVGuiWnd *pVGuiWnd)
 {
-	if ( pVGuiWnd == m_pActiveWindow )
+	if(pVGuiWnd == m_pActiveWindow)
 		return;
 
 	g_pInputSystem->PollInputState();
 	vgui::ivgui()->RunFrame();
 
-	g_pMatSystemSurface->AttachToWindow( NULL, false );
-	g_pInputSystem->DetachFromWindow( );
+	g_pMatSystemSurface->AttachToWindow(NULL, false);
+	g_pInputSystem->DetachFromWindow();
 
-	if ( pVGuiWnd )
+	if(pVGuiWnd)
 	{
 		HWND hWnd = (HWND)pVGuiWnd->GetParentWnd()->getHandle();
 
 		m_pActiveWindow = pVGuiWnd;
-		g_pInputSystem->AttachToWindow( hWnd );
-		g_pMatSystemSurface->AttachToWindow( hWnd, false );
-		vgui::ivgui()->ActivateContext( pVGuiWnd->GetVGuiContext() );
+		g_pInputSystem->AttachToWindow(hWnd);
+		g_pMatSystemSurface->AttachToWindow(hWnd, false);
+		vgui::ivgui()->ActivateContext(pVGuiWnd->GetVGuiContext());
 	}
 	else
 	{
 		m_pActiveWindow = NULL;
-		vgui::ivgui()->ActivateContext( vgui::DEFAULT_VGUI_CONTEXT );
+		vgui::ivgui()->ActivateContext(vgui::DEFAULT_VGUI_CONTEXT);
 	}
 }
 
-bool CFacePoserVGui::HasFocus( CVGuiWnd *pWnd )
+bool CFacePoserVGui::HasFocus(CVGuiWnd *pWnd)
 {
 	return m_pActiveWindow == pWnd;
 }
@@ -110,14 +111,14 @@ void CFacePoserVGui::Simulate()
 {
 	// VPROF( "CFacePoserVGui::Simulate" );
 
-	if ( !IsInitialized() )
+	if(!IsInitialized())
 		return;
 
 	g_pInputSystem->PollInputState();
 	vgui::ivgui()->RunFrame();
 
 	// run vgui animations
-	vgui::GetAnimationController()->UpdateAnimations( vgui::system()->GetCurrentTime() );
+	vgui::GetAnimationController()->UpdateAnimations(vgui::system()->GetCurrentTime());
 }
 
 void CFacePoserVGui::Shutdown()
@@ -125,7 +126,7 @@ void CFacePoserVGui::Shutdown()
 	// Give panels a chance to settle so things
 	//  Marked for deletion will actually get deleted
 
-	if ( !IsInitialized() )
+	if(!IsInitialized())
 		return;
 
 	g_pInputSystem->PollInputState();
@@ -135,6 +136,4 @@ void CFacePoserVGui::Shutdown()
 	vgui::ivgui()->Stop();
 }
 
-CFacePoserVGui::~CFacePoserVGui(void)
-{
-}
+CFacePoserVGui::~CFacePoserVGui(void) {}

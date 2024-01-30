@@ -30,7 +30,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
@@ -39,21 +38,20 @@ Cordon3D::Cordon3D(void)
 	SetDrawColors(RGB(0, 255, 255), RGB(255, 0, 0));
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called when the tool is activated.
 // Input  : eOldTool - The ID of the previously active tool.
 //-----------------------------------------------------------------------------
 void Cordon3D::OnActivate()
 {
-	if (!IsActiveTool())
+	if(!IsActiveTool())
 	{
-		Vector mins,maxs;
-		m_pDocument->GetCordon( mins, maxs );
-		SetBounds( mins,maxs );
+		Vector mins, maxs;
+		m_pDocument->GetCordon(mins, maxs);
+		SetBounds(mins, maxs);
 
 		m_bEmpty = !IsValidBox();
-		EnableHandles( true );
+		EnableHandles(true);
 	}
 }
 
@@ -69,11 +67,11 @@ bool Cordon3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 	Vector vecWorld;
 	pView->ClientToWorld(vecWorld, vPoint);
 
-	unsigned int uConstraints = GetConstraints( nFlags );
+	unsigned int uConstraints = GetConstraints(nFlags);
 
-	if ( HitTest(pView, vPoint, true) )
+	if(HitTest(pView, vPoint, true))
 	{
-		StartTranslation( pView, vPoint, m_LastHitTestHandle );
+		StartTranslation(pView, vPoint, m_LastHitTestHandle);
 	}
 	else
 	{
@@ -82,15 +80,14 @@ bool Cordon3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 		m_pDocument->GetBestVisiblePoint(vecWorld);
 
 		// snap starting position to grid
-		if ( uConstraints & constrainSnap )
-			m_pDocument->Snap(vecWorld,uConstraints);
+		if(uConstraints & constrainSnap)
+			m_pDocument->Snap(vecWorld, uConstraints);
 
-		StartNew( pView, vPoint, vecWorld, Vector(0,0,0) );
+		StartNew(pView, vPoint, vecWorld, Vector(0, 0, 0));
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles left mouse button up events in the 2D view.
@@ -99,19 +96,18 @@ bool Cordon3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 //-----------------------------------------------------------------------------
 bool Cordon3D::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	Tool3D::OnLMouseUp2D(pView, nFlags, vPoint) ;
+	Tool3D::OnLMouseUp2D(pView, nFlags, vPoint);
 
-	if ( IsTranslating() )
+	if(IsTranslating())
 	{
-		FinishTranslation( true );
-		m_pDocument->SetCordon( bmins, bmaxs );
+		FinishTranslation(true);
+		m_pDocument->SetCordon(bmins, bmaxs);
 	}
 
 	m_pDocument->UpdateStatusbar();
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles mouse move events in the 2D view.
@@ -122,9 +118,9 @@ bool Cordon3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 {
 	vgui::HCursor hCursor = vgui::dc_arrow;
 
-	Tool3D::OnMouseMove2D(pView, nFlags, vPoint) ;
+	Tool3D::OnMouseMove2D(pView, nFlags, vPoint);
 
-	unsigned int uConstraints = GetConstraints( nFlags );
+	unsigned int uConstraints = GetConstraints(nFlags);
 
 	// Convert to world coords.
 	Vector vecWorld;
@@ -134,38 +130,37 @@ bool Cordon3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 	//
 	char szBuf[128];
 
-	m_pDocument->Snap(vecWorld,uConstraints);
+	m_pDocument->Snap(vecWorld, uConstraints);
 
 	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert]);
 	SetStatusText(SBI_COORDS, szBuf);
 
-	if ( IsTranslating() )
+	if(IsTranslating())
 	{
 		// cursor is cross here
-		Tool3D::UpdateTranslation( pView, vPoint, uConstraints );
+		Tool3D::UpdateTranslation(pView, vPoint, uConstraints);
 
 		hCursor = vgui::dc_none;
 	}
-	else if ( HitTest(pView, vPoint, true) )
+	else if(HitTest(pView, vPoint, true))
 	{
-		hCursor = UpdateCursor( pView, m_LastHitTestHandle, m_TranslateMode );
+		hCursor = UpdateCursor(pView, m_LastHitTestHandle, m_TranslateMode);
 	}
 
-	if ( hCursor != vgui::dc_none  )
-		pView->SetCursor( hCursor );
+	if(hCursor != vgui::dc_none)
+		pView->SetCursor(hCursor);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the escape key in the 2D or 3D views.
 //-----------------------------------------------------------------------------
 void Cordon3D::OnEscape(void)
 {
-	if ( IsTranslating() )
+	if(IsTranslating())
 	{
-		FinishTranslation( false );
+		FinishTranslation(false);
 	}
 	else
 	{
@@ -173,14 +168,13 @@ void Cordon3D::OnEscape(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output :
 //-----------------------------------------------------------------------------
 bool Cordon3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_ESCAPE)
+	if(nChar == VK_ESCAPE)
 	{
 		OnEscape();
 		return true;
@@ -189,14 +183,13 @@ bool Cordon3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFl
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output :
 //-----------------------------------------------------------------------------
 bool Cordon3D::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_ESCAPE)
+	if(nChar == VK_ESCAPE)
 	{
 		OnEscape();
 		return true;

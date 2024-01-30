@@ -8,4 +8,4 @@
 #include "pid.h"
 #include <map>
 
-std::map<int,PID> pidMap;
+std::map<int, PID> pidMap;

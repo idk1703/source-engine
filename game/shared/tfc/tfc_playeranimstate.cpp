@@ -13,20 +13,17 @@
 #include "apparent_velocity_helper.h"
 #include "utldict.h"
 
-
 #ifdef CLIENT_DLL
-	#include "c_tfc_player.h"
+#include "c_tfc_player.h"
 #else
-	#include "tfc_player.h"
+#include "tfc_player.h"
 #endif
 
-
 // When moving this fast, he plays run anim.
-#define ARBITRARY_RUN_SPEED		175.0f
+#define ARBITRARY_RUN_SPEED 175.0f
 
-#define MAX_STANDING_RUN_SPEED	320
-#define MAX_CROUCHED_RUN_SPEED	110
-
+#define MAX_STANDING_RUN_SPEED 320
+#define MAX_CROUCHED_RUN_SPEED 110
 
 // ------------------------------------------------------------------------------------------------ //
 // CPlayerAnimState declaration.
@@ -35,32 +32,27 @@
 class CTFCPlayerAnimState : public ITFCPlayerAnimState, public CBasePlayerAnimState
 {
 public:
-
-	DECLARE_CLASS( CTFCPlayerAnimState, CBasePlayerAnimState );
+	DECLARE_CLASS(CTFCPlayerAnimState, CBasePlayerAnimState);
 
 	CTFCPlayerAnimState();
-	void InitTFC( CTFCPlayer *pPlayer );
+	void InitTFC(CTFCPlayer *pPlayer);
 
 	// This is called by both the client and the server in the same way to trigger events for
 	// players firing, jumping, throwing grenades, etc.
-	virtual void DoAnimationEvent( PlayerAnimEvent_t event, int nData );
-	virtual int CalcAimLayerSequence( float *flCycle, float *flAimSequenceWeight );
-	virtual float SetOuterBodyYaw( float flValue );
+	virtual void DoAnimationEvent(PlayerAnimEvent_t event, int nData);
+	virtual int CalcAimLayerSequence(float *flCycle, float *flAimSequenceWeight);
+	virtual float SetOuterBodyYaw(float flValue);
 	virtual Activity CalcMainActivity();
 	virtual float GetCurrentMaxGroundSpeed();
 	virtual void ClearAnimationState();
 	virtual bool ShouldUpdateAnimState();
 
-
 private:
-
-	const char* GetWeaponSuffix();
+	const char *GetWeaponSuffix();
 	bool HandleJumping();
-	bool HandleDeath( Activity *deathActivity );
-
+	bool HandleDeath(Activity *deathActivity);
 
 private:
-
 	CTFCPlayer *m_pOuterTFC;
 
 	bool m_bJumping;
@@ -74,14 +66,12 @@ private:
 	Activity m_DeathActivity;
 };
 
-
-ITFCPlayerAnimState* CreatePlayerAnimState( CTFCPlayer *pPlayer )
+ITFCPlayerAnimState *CreatePlayerAnimState(CTFCPlayer *pPlayer)
 {
 	CTFCPlayerAnimState *pRet = new CTFCPlayerAnimState;
-	pRet->InitTFC( pPlayer );
+	pRet->InitTFC(pPlayer);
 	return pRet;
 }
-
 
 // ----------------------------------------------------------------------------- //
 // CTFCPlayerAnimState implementation.
@@ -95,8 +85,7 @@ CTFCPlayerAnimState::CTFCPlayerAnimState()
 	m_bFiring = false;
 }
 
-
-void CTFCPlayerAnimState::InitTFC( CTFCPlayer *pPlayer )
+void CTFCPlayerAnimState::InitTFC(CTFCPlayer *pPlayer)
 {
 	m_pOuterTFC = pPlayer;
 
@@ -105,42 +94,40 @@ void CTFCPlayerAnimState::InitTFC( CTFCPlayer *pPlayer )
 	config.m_LegAnimType = LEGANIM_GOLDSRC;
 	config.m_bUseAimSequences = true;
 
-	BaseClass::Init( pPlayer, config );
+	BaseClass::Init(pPlayer, config);
 }
 
-
-const char* CTFCPlayerAnimState::GetWeaponSuffix()
+const char *CTFCPlayerAnimState::GetWeaponSuffix()
 {
 	CBaseCombatWeapon *pWeapon = m_pOuterTFC->GetActiveWeapon();
-	if ( pWeapon )
+	if(pWeapon)
 		return pWeapon->GetWpnData().szAnimationPrefix;
 	else
 		return "shotgun";
 }
 
-
-int CTFCPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSequenceWeight )
+int CTFCPlayerAnimState::CalcAimLayerSequence(float *flCycle, float *flAimSequenceWeight)
 {
 	const char *pWeaponSuffix = GetWeaponSuffix();
-	if ( !pWeaponSuffix )
+	if(!pWeaponSuffix)
 		return 0;
 
 	// Are we aiming or firing?
 	const char *pAimOrShoot = "aim";
-	if ( m_bFiring )
+	if(m_bFiring)
 		pAimOrShoot = "shoot";
 
 	// Are we standing or crouching?
 	int iSequence = 0;
 	const char *pPrefix = "ref";
-	if ( m_bDying )
+	if(m_bDying)
 	{
 		// While dying, only play the main sequence.. don't layer this one on top.
 		*flAimSequenceWeight = 0;
 	}
 	else
 	{
-		switch ( GetCurrentMainSequenceActivity() )
+		switch(GetCurrentMainSequenceActivity())
 		{
 			case ACT_CROUCHIDLE:
 			case ACT_RUN_CROUCH:
@@ -149,14 +136,14 @@ int CTFCPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSeque
 		}
 	}
 
-	iSequence = CalcSequenceIndex( "%s_%s_%s", pPrefix, pAimOrShoot, pWeaponSuffix );
+	iSequence = CalcSequenceIndex("%s_%s_%s", pPrefix, pAimOrShoot, pWeaponSuffix);
 
 	// Check if we're done firing.
-	if ( m_bFiring )
+	if(m_bFiring)
 	{
-		float dur = m_pOuterTFC->SequenceDuration( iSequence );
+		float dur = m_pOuterTFC->SequenceDuration(iSequence);
 		*flCycle = (gpGlobals->curtime - m_flFireStartTime) / dur;
-		if ( *flCycle >= 1 )
+		if(*flCycle >= 1)
 		{
 			*flCycle = 1;
 			m_bFiring = false;
@@ -166,67 +153,57 @@ int CTFCPlayerAnimState::CalcAimLayerSequence( float *flCycle, float *flAimSeque
 	return iSequence;
 }
 
-
-void CTFCPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
+void CTFCPlayerAnimState::DoAnimationEvent(PlayerAnimEvent_t event, int nData)
 {
-	if ( event == PLAYERANIMEVENT_JUMP )
+	if(event == PLAYERANIMEVENT_JUMP)
 	{
 		// Main animation goes to ACT_HOP.
 		m_bJumping = true;
 		m_bFirstJumpFrame = true;
 		m_flJumpStartTime = gpGlobals->curtime;
 	}
-	else if ( event == PLAYERANIMEVENT_FIRE_GUN )
+	else if(event == PLAYERANIMEVENT_FIRE_GUN)
 	{
 		// The middle part of the aim layer sequence becomes "shoot" until that animation is complete.
 		m_bFiring = true;
 		m_flFireStartTime = gpGlobals->curtime;
 	}
-	else if ( event == PLAYERANIMEVENT_DIE )
+	else if(event == PLAYERANIMEVENT_DIE)
 	{
 		m_bFiring = m_bJumping = false;
 		m_bDying = true;
 
-		Activity acts[] =
-		{
-			ACT_DIESIMPLE,
-			ACT_DIEBACKWARD,
-			ACT_DIEFORWARD,
-			ACT_DIE_HEADSHOT,
-			ACT_DIE_GUTSHOT
-		};
+		Activity acts[] = {ACT_DIESIMPLE, ACT_DIEBACKWARD, ACT_DIEFORWARD, ACT_DIE_HEADSHOT, ACT_DIE_GUTSHOT};
 
-		m_DeathActivity = acts[ RandomInt( 0, ARRAYSIZE( acts ) - 1 ) ];
-		RestartMainSequence();	// Play a death animation.
+		m_DeathActivity = acts[RandomInt(0, ARRAYSIZE(acts) - 1)];
+		RestartMainSequence(); // Play a death animation.
 	}
 }
 
-
-float CTFCPlayerAnimState::SetOuterBodyYaw( float flValue )
+float CTFCPlayerAnimState::SetOuterBodyYaw(float flValue)
 {
-	m_pOuterTFC->SetBoneController( 0, flValue );
+	m_pOuterTFC->SetBoneController(0, flValue);
 	return flValue;
 }
 
-
 bool CTFCPlayerAnimState::HandleJumping()
 {
-	if ( m_bJumping )
+	if(m_bJumping)
 	{
-		if ( m_bFirstJumpFrame )
+		if(m_bFirstJumpFrame)
 		{
 			m_bFirstJumpFrame = false;
-			RestartMainSequence();	// Reset the animation.
+			RestartMainSequence(); // Reset the animation.
 		}
 
 		// Don't check if he's on the ground for a sec.. sometimes the client still has the
 		// on-ground flag set right when the message comes in.
-		if ( gpGlobals->curtime - m_flJumpStartTime > 0.2f )
+		if(gpGlobals->curtime - m_flJumpStartTime > 0.2f)
 		{
-			if ( m_pOuterTFC->GetFlags() & FL_ONGROUND )
+			if(m_pOuterTFC->GetFlags() & FL_ONGROUND)
 			{
 				m_bJumping = false;
-				RestartMainSequence();	// Reset the animation.
+				RestartMainSequence(); // Reset the animation.
 			}
 		}
 	}
@@ -235,12 +212,11 @@ bool CTFCPlayerAnimState::HandleJumping()
 	return m_bJumping;
 }
 
-
-bool CTFCPlayerAnimState::HandleDeath( Activity *deathActivity )
+bool CTFCPlayerAnimState::HandleDeath(Activity *deathActivity)
 {
-	if ( m_bDying )
+	if(m_bDying)
 	{
-		if ( m_pOuterTFC->IsAlive() )
+		if(m_pOuterTFC->IsAlive())
 		{
 			m_bDying = false;
 		}
@@ -252,15 +228,14 @@ bool CTFCPlayerAnimState::HandleDeath( Activity *deathActivity )
 	return m_bDying;
 }
 
-
 Activity CTFCPlayerAnimState::CalcMainActivity()
 {
 	Activity deathActivity = ACT_IDLE;
-	if ( HandleDeath( &deathActivity ) )
+	if(HandleDeath(&deathActivity))
 	{
 		return deathActivity;
 	}
-	else if ( HandleJumping() )
+	else if(HandleJumping())
 	{
 		return ACT_HOP;
 	}
@@ -269,18 +244,18 @@ Activity CTFCPlayerAnimState::CalcMainActivity()
 		Activity idealActivity = ACT_IDLE;
 		float flOuterSpeed = GetOuterXYSpeed();
 
-		if ( m_pOuterTFC->GetFlags() & FL_DUCKING )
+		if(m_pOuterTFC->GetFlags() & FL_DUCKING)
 		{
-			if ( flOuterSpeed > 0.1f )
+			if(flOuterSpeed > 0.1f)
 				idealActivity = ACT_RUN_CROUCH;
 			else
 				idealActivity = ACT_CROUCHIDLE;
 		}
 		else
 		{
-			if ( flOuterSpeed > 0.1f )
+			if(flOuterSpeed > 0.1f)
 			{
-				if ( flOuterSpeed > ARBITRARY_RUN_SPEED )
+				if(flOuterSpeed > ARBITRARY_RUN_SPEED)
 					idealActivity = ACT_RUN;
 				else
 					idealActivity = ACT_WALK;
@@ -295,16 +270,14 @@ Activity CTFCPlayerAnimState::CalcMainActivity()
 	}
 }
 
-
 float CTFCPlayerAnimState::GetCurrentMaxGroundSpeed()
 {
 	Activity act = GetCurrentMainSequenceActivity();
-	if ( act == ACT_CROUCHIDLE || act == ACT_RUN_CROUCH )
+	if(act == ACT_CROUCHIDLE || act == ACT_RUN_CROUCH)
 		return MAX_CROUCHED_RUN_SPEED;
 	else
 		return MAX_STANDING_RUN_SPEED;
 }
-
 
 void CTFCPlayerAnimState::ClearAnimationState()
 {
@@ -314,7 +287,6 @@ void CTFCPlayerAnimState::ClearAnimationState()
 
 	BaseClass::ClearAnimationState();
 }
-
 
 bool CTFCPlayerAnimState::ShouldUpdateAnimState()
 {

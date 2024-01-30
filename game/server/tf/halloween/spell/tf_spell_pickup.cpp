@@ -10,15 +10,14 @@
 #include "halloween/tf_weapon_spellbook.h"
 #include "tf_gamerules.h"
 
-LINK_ENTITY_TO_CLASS( tf_spell_pickup, CSpellPickup );
+LINK_ENTITY_TO_CLASS(tf_spell_pickup, CSpellPickup);
 
-BEGIN_DATADESC( CSpellPickup )
+BEGIN_DATADESC(CSpellPickup)
 
 	// Keyfields.
-	DEFINE_KEYFIELD( m_nTier, FIELD_INTEGER, "tier" ),
+	DEFINE_KEYFIELD(m_nTier, FIELD_INTEGER, "tier"),
 
 END_DATADESC();
-
 
 //-----------------------------------------------------------------------------
 CSpellPickup::CSpellPickup()
@@ -27,61 +26,63 @@ CSpellPickup::CSpellPickup()
 }
 
 //-----------------------------------------------------------------------------
-void CSpellPickup::Spawn( void )
+void CSpellPickup::Spawn(void)
 {
 	BaseClass::Spawn();
 	m_nSkin = m_nTier;
 }
 
 //-----------------------------------------------------------------------------
-void CSpellPickup::Precache( void )
+void CSpellPickup::Precache(void)
 {
 	BaseClass::Precache();
 
-	PrecacheScriptSound( "Halloween.spell_pickup" );
-	PrecacheScriptSound( "Halloween.spell_pickup_rare" );
+	PrecacheScriptSound("Halloween.spell_pickup");
+	PrecacheScriptSound("Halloween.spell_pickup_rare");
 }
 
 //-----------------------------------------------------------------------------
-bool CSpellPickup::MyTouch( CBasePlayer *pPlayer )
+bool CSpellPickup::MyTouch(CBasePlayer *pPlayer)
 {
-	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
-	if ( pTFPlayer )
+	CTFPlayer *pTFPlayer = ToTFPlayer(pPlayer);
+	if(pTFPlayer)
 	{
-		CTFSpellBook *pSpellBook = dynamic_cast< CTFSpellBook* >( pTFPlayer->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
-		if ( pSpellBook )
+		CTFSpellBook *pSpellBook =
+			dynamic_cast<CTFSpellBook *>(pTFPlayer->GetEntityForLoadoutSlot(LOADOUT_POSITION_ACTION));
+		if(pSpellBook)
 		{
-			pSpellBook->RollNewSpell( m_nTier );
+			pSpellBook->RollNewSpell(m_nTier);
 
-			CSingleUserRecipientFilter filter( pPlayer );
-			const char *pszSoundName = ( m_nTier > 0 ) ? "Halloween.spell_pickup_rare" : "Halloween.spell_pickup";
-			EmitSound( filter, entindex(), pszSoundName );
+			CSingleUserRecipientFilter filter(pPlayer);
+			const char *pszSoundName = (m_nTier > 0) ? "Halloween.spell_pickup_rare" : "Halloween.spell_pickup";
+			EmitSound(filter, entindex(), pszSoundName);
 		}
 	}
 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
-bool CSpellPickup::ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer )
+bool CSpellPickup::ItemCanBeTouchedByPlayer(CBasePlayer *pPlayer)
 {
-	if ( IsDisabled() )
+	if(IsDisabled())
 		return false;
 
 	// Dont let them pick up new spells if they already have a spell unless its a tier 1 spell
-	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
-	if ( pTFPlayer && m_nTier == 0 )
+	CTFPlayer *pTFPlayer = ToTFPlayer(pPlayer);
+	if(pTFPlayer && m_nTier == 0)
 	{
-		CTFSpellBook *pSpellBook = dynamic_cast< CTFSpellBook* >( pTFPlayer->GetEntityForLoadoutSlot( LOADOUT_POSITION_ACTION ) );
-		if ( !pSpellBook )
+		CTFSpellBook *pSpellBook =
+			dynamic_cast<CTFSpellBook *>(pTFPlayer->GetEntityForLoadoutSlot(LOADOUT_POSITION_ACTION));
+		if(!pSpellBook)
 		{
 			// TEMP
-			ClientPrint( pPlayer, HUD_PRINTCENTER, "Equip a SpellBook in your ActionSlot to pick this up.", pPlayer->GetPlayerName() );
+			ClientPrint(pPlayer, HUD_PRINTCENTER, "Equip a SpellBook in your ActionSlot to pick this up.",
+						pPlayer->GetPlayerName());
 			return false;
 		}
 
-		if ( pSpellBook->HasASpellWithCharges() )
+		if(pSpellBook->HasASpellWithCharges())
 		{
 			return false;
 		}
@@ -91,18 +92,18 @@ bool CSpellPickup::ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-const char *CSpellPickup::GetPowerupModel( void )
+const char *CSpellPickup::GetPowerupModel(void)
 {
-	if ( TFGameRules() && TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY ) )
+	if(TFGameRules() && TFGameRules()->IsHalloweenScenario(CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY))
 	{
-		if ( m_nTier == 1 )
+		if(m_nTier == 1)
 		{
 			return "models/items/crystal_ball_pickup_major.mdl";
 		}
 		return "models/items/crystal_ball_pickup.mdl";
 	}
 
-	if ( m_nTier == 1 )
+	if(m_nTier == 1)
 	{
 		return "models/props_halloween/hwn_spellbook_upright_major.mdl";
 	}

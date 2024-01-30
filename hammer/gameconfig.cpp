@@ -25,20 +25,16 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#pragma warning(disable:4244)
-
+#pragma warning(disable : 4244)
 
 const int MAX_ERRORS = 5;
-
 
 GameData *pGD;
 CGameConfig g_DefaultGameConfig;
 CGameConfig *g_pGameConfig = &g_DefaultGameConfig;
 
-
 float g_MAX_MAP_COORD = 4096;
 float g_MIN_MAP_COORD = -4096;
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -48,19 +44,18 @@ CGameConfig *CGameConfig::GetActiveGame(void)
 	return g_pGameConfig;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pGame -
 //-----------------------------------------------------------------------------
 void CGameConfig::SetActiveGame(CGameConfig *pGame)
 {
-	if (pGame != NULL)
+	if(pGame != NULL)
 	{
 		g_pGameConfig = pGame;
 		pGD = &pGame->GD;
 
-		if (pGame->mapformat == mfHalfLife)
+		if(pGame->mapformat == mfHalfLife)
 		{
 			g_MAX_MAP_COORD = 4096;
 			g_MIN_MAP_COORD = -4096;
@@ -80,7 +75,6 @@ void CGameConfig::SetActiveGame(CGameConfig *pGame)
 		g_MIN_MAP_COORD = -4096;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Maintains a static	counter uniquely identifying each
@@ -114,22 +108,21 @@ CGameConfig::CGameConfig(void)
 	dwID = __dwID++;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Imports an old binary GameCfg.wc file.
 // Input  : file -
 //			fVersion -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL CGameConfig::Import(std::fstream& file, float fVersion)
+BOOL CGameConfig::Import(std::fstream &file, float fVersion)
 {
 	file.read(szName, sizeof szName);
-	file.read((char*)&nGDFiles, sizeof nGDFiles);
-	file.read((char*)&textureformat, sizeof textureformat);
+	file.read((char *)&nGDFiles, sizeof nGDFiles);
+	file.read((char *)&textureformat, sizeof textureformat);
 
-	if (fVersion >= 1.1f)
+	if(fVersion >= 1.1f)
 	{
-		file.read((char*)&mapformat, sizeof mapformat);
+		file.read((char *)&mapformat, sizeof mapformat);
 	}
 	else
 	{
@@ -140,7 +133,7 @@ BOOL CGameConfig::Import(std::fstream& file, float fVersion)
 	// If reading an old (pre 1.4) format file, skip past the obselete palette
 	// file path.
 	//
-	if (fVersion < 1.4f)
+	if(fVersion < 1.4f)
 	{
 		char szPalette[128];
 		file.read(szPalette, sizeof szPalette);
@@ -150,7 +143,7 @@ BOOL CGameConfig::Import(std::fstream& file, float fVersion)
 	file.read(szDefaultSolid, sizeof szDefaultSolid);
 	file.read(szDefaultPoint, sizeof szDefaultPoint);
 
-	if (fVersion >= 1.2f)
+	if(fVersion >= 1.2f)
 	{
 		file.read(szBSP, sizeof szBSP);
 		file.read(szLIGHT, sizeof szLIGHT);
@@ -159,12 +152,12 @@ BOOL CGameConfig::Import(std::fstream& file, float fVersion)
 		file.read(szMapDir, sizeof szMapDir);
 	}
 
-	if (fVersion >= 1.3f)
+	if(fVersion >= 1.3f)
 	{
 		file.read(szBSPDir, sizeof(szBSPDir));
 	}
 
-	if (fVersion >= 1.4f)
+	if(fVersion >= 1.4f)
 	{
 		// CSG setting is gone now.
 		char szTempCSG[128];
@@ -190,7 +183,6 @@ BOOL CGameConfig::Import(std::fstream& file, float fVersion)
 	return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Loads this game configuration from a keyvalue block.
 // Output : Returns true on success, false on failure.
@@ -205,7 +197,7 @@ bool CGameConfig::Load(KeyValues *pkv)
 
 	// Try to get the Hammer settings.
 	KeyValues *pkvHammer = pkv->FindKey("Hammer");
-	if (!pkvHammer)
+	if(!pkvHammer)
 		return true;
 
 	//
@@ -217,7 +209,7 @@ bool CGameConfig::Load(KeyValues *pkv)
 	{
 		sprintf(szKey, "GameData%d", nGDFiles);
 		const char *pszGameData = pkvHammer->GetString(szKey);
-		if (pszGameData[0] != '\0')
+		if(pszGameData[0] != '\0')
 		{
 			GDFiles.Add(pszGameData);
 			nGDFiles++;
@@ -227,13 +219,13 @@ bool CGameConfig::Load(KeyValues *pkv)
 			bAdded = false;
 		}
 
-	} while (bAdded);
+	} while(bAdded);
 
 	textureformat = (TEXTUREFORMAT)pkvHammer->GetInt("TextureFormat", tfVMT);
 	mapformat = (MAPFORMAT)pkvHammer->GetInt("MapFormat", mfHalfLife2);
 
 	m_fDefaultTextureScale = pkvHammer->GetFloat("DefaultTextureScale", DEFAULT_TEXTURE_SCALE);
-	if (m_fDefaultTextureScale == 0)
+	if(m_fDefaultTextureScale == 0)
 	{
 		m_fDefaultTextureScale = DEFAULT_TEXTURE_SCALE;
 	}
@@ -251,24 +243,24 @@ bool CGameConfig::Load(KeyValues *pkv)
 	Q_strncpy(szMapDir, pkvHammer->GetString("MapDir"), sizeof(szMapDir));
 	Q_strncpy(szBSPDir, pkvHammer->GetString("BSPDir"), sizeof(szBSPDir));
 
-	SetCordonTexture( pkvHammer->GetString("CordonTexture", "BLACK") );
+	SetCordonTexture(pkvHammer->GetString("CordonTexture", "BLACK"));
 
 	char szExcludeDir[MAX_PATH];
-	m_MaterialExcludeCount = pkvHammer->GetInt( "MaterialExcludeCount" );
-	for ( int i = 0; i < m_MaterialExcludeCount; i++ )
+	m_MaterialExcludeCount = pkvHammer->GetInt("MaterialExcludeCount");
+	for(int i = 0; i < m_MaterialExcludeCount; i++)
 	{
-		sprintf( szExcludeDir, "-MaterialExcludeDir%d", i );
+		sprintf(szExcludeDir, "-MaterialExcludeDir%d", i);
 		int index = m_MaterialExclusions.AddToTail();
-		Q_strncpy( m_MaterialExclusions[index].szDirectory, pkvHammer->GetString( szExcludeDir ), sizeof( m_MaterialExclusions[index].szDirectory ) );
-		Q_StripTrailingSlash( m_MaterialExclusions[index].szDirectory );
+		Q_strncpy(m_MaterialExclusions[index].szDirectory, pkvHammer->GetString(szExcludeDir),
+				  sizeof(m_MaterialExclusions[index].szDirectory));
+		Q_StripTrailingSlash(m_MaterialExclusions[index].szDirectory);
 		m_MaterialExclusions[index].bUserGenerated = true;
 	}
 
 	LoadGDFiles();
 
-	return(true);
+	return (true);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Saves this config's data into a keyvalues object.
@@ -279,17 +271,16 @@ bool CGameConfig::Save(KeyValues *pkv)
 	pkv->SetName(szName);
 	pkv->SetString("GameDir", m_szModDir);
 
-
 	// Try to get the Hammer settings.
 	KeyValues *pkvHammer = pkv->FindKey("Hammer");
-	if (pkvHammer)
+	if(pkvHammer)
 	{
 		pkv->RemoveSubKey(pkvHammer);
 		pkvHammer->deleteThis();
 	}
 
 	pkvHammer = pkv->CreateNewKey();
-	if (!pkvHammer)
+	if(!pkvHammer)
 		return false;
 
 	pkvHammer->SetName("Hammer");
@@ -297,7 +288,7 @@ bool CGameConfig::Save(KeyValues *pkv)
 	//
 	// Load the game data filenames from the "GameData0..GameDataN" keys.
 	//
-	for (int i = 0; i < nGDFiles; i++)
+	for(int i = 0; i < nGDFiles; i++)
 	{
 		char szKey[MAX_PATH];
 		sprintf(szKey, "GameData%d", i);
@@ -324,15 +315,14 @@ bool CGameConfig::Save(KeyValues *pkv)
 
 	char szExcludeDir[MAX_PATH];
 	pkvHammer->SetInt("MaterialExcludeCount", m_MaterialExcludeCount);
-	for (int i = 0; i < m_MaterialExcludeCount; i++)
+	for(int i = 0; i < m_MaterialExcludeCount; i++)
 	{
-		sprintf(szExcludeDir, "-MaterialExcludeDir%d", i );
+		sprintf(szExcludeDir, "-MaterialExcludeDir%d", i);
 		pkvHammer->SetString(szExcludeDir, m_MaterialExclusions[i].szDirectory);
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -341,9 +331,9 @@ bool CGameConfig::Save(KeyValues *pkv)
 void CGameConfig::Save(std::fstream &file)
 {
 	file.write(szName, sizeof szName);
-	file.write((char*)&nGDFiles, sizeof nGDFiles);
-	file.write((char*)&textureformat, sizeof textureformat);
-	file.write((char*)&mapformat, sizeof mapformat);
+	file.write((char *)&nGDFiles, sizeof nGDFiles);
+	file.write((char *)&textureformat, sizeof textureformat);
+	file.write((char *)&mapformat, sizeof mapformat);
 	file.write(szExecutable, sizeof szExecutable);
 	file.write(szDefaultSolid, sizeof szDefaultSolid);
 	file.write(szDefaultPoint, sizeof szDefaultPoint);
@@ -376,7 +366,6 @@ void CGameConfig::Save(std::fstream &file)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pConfig -
@@ -401,12 +390,11 @@ void CGameConfig::CopyFrom(CGameConfig *pConfig)
 	strcpy(m_szModDir, pConfig->m_szModDir);
 
 	pConfig->m_MaterialExcludeCount = m_MaterialExcludeCount;
-	for( int i = 0; i < m_MaterialExcludeCount; i++ )
+	for(int i = 0; i < m_MaterialExcludeCount; i++)
 	{
-		strcpy( m_MaterialExclusions[i].szDirectory, pConfig->m_MaterialExclusions[i].szDirectory );
+		strcpy(m_MaterialExclusions[i].szDirectory, pConfig->m_MaterialExclusions[i].szDirectory);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -418,9 +406,8 @@ static BOOL UpdateClassPointer(CMapEntity *pEntity, GameData *pGDIn)
 {
 	GDclass *pClass = pGDIn->ClassForName(pEntity->GetClassName());
 	pEntity->SetClass(pClass);
-	return(TRUE);
+	return (TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -431,29 +418,29 @@ void CGameConfig::LoadGDFiles(void)
 
 	// Save the old working directory
 	char szOldDir[MAX_PATH];
-	_getcwd( szOldDir, sizeof(szOldDir) );
+	_getcwd(szOldDir, sizeof(szOldDir));
 
 	// Set our working directory properly
 	char szAppDir[MAX_PATH];
-	APP()->GetDirectory( DIR_PROGRAM, szAppDir );
-	_chdir( szAppDir );
+	APP()->GetDirectory(DIR_PROGRAM, szAppDir);
+	_chdir(szAppDir);
 
-	for (int i = 0; i < nGDFiles; i++)
+	for(int i = 0; i < nGDFiles; i++)
 	{
 		GD.Load(GDFiles[i]);
 	}
 
 	// Reset our old working directory
-	_chdir( szOldDir );
+	_chdir(szOldDir);
 
 	// All the class pointers have changed - now we have to
 	// reset all the class pointers in each map doc that
 	// uses this game.
-	for ( int i=0; i<CMapDoc::GetDocumentCount(); i++ )
+	for(int i = 0; i < CMapDoc::GetDocumentCount(); i++)
 	{
 		CMapDoc *pDoc = CMapDoc::GetDocument(i);
 
-		if (pDoc->GetGame() == this)
+		if(pDoc->GetGame() == this)
 		{
 			CMapWorld *pWorld = pDoc->GetMapWorld();
 			pWorld->SetClass(GD.ClassForName(pWorld->GetClassName()));
@@ -461,7 +448,6 @@ void CGameConfig::LoadGDFiles(void)
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Searches for the given filename, starting in szStartDir and looking
@@ -474,7 +460,7 @@ void CGameConfig::LoadGDFiles(void)
 //-----------------------------------------------------------------------------
 bool FindFileInTree(const char *szFile, const char *szStartDir, char *szFoundPath)
 {
-	if ((szFile == NULL) || (szStartDir == NULL) || (szFoundPath == NULL))
+	if((szFile == NULL) || (szStartDir == NULL) || (szFoundPath == NULL))
 	{
 		return false;
 	}
@@ -489,18 +475,17 @@ bool FindFileInTree(const char *szFile, const char *szStartDir, char *szFoundPat
 		strcpy(szTemp, szRoot);
 		strcat(szTemp, szFile);
 
-		if (!_access(szTemp, 0))
+		if(!_access(szTemp, 0))
 		{
 			strcpy(szFoundPath, szRoot);
 			Q_StripTrailingSlash(szFoundPath);
 			return true;
 		}
 
-	} while (Q_StripLastDir(szRoot, sizeof(szRoot)));
+	} while(Q_StripLastDir(szRoot, sizeof(szRoot)));
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -511,24 +496,24 @@ bool FindFileInTree(const char *szFile, const char *szStartDir, char *szFoundPat
 //-----------------------------------------------------------------------------
 bool FindSteamUserDir(const char *szAppDir, const char *szSteamDir, char *szSteamUserDir)
 {
-	if ((szAppDir == NULL) || (szSteamDir == NULL) || (szSteamUserDir == NULL))
+	if((szAppDir == NULL) || (szSteamDir == NULL) || (szSteamUserDir == NULL))
 	{
 		return false;
 	}
 
 	// If the szAppDir was run from within the steam tree, we should be able to find the steam user dir.
 	int nSteamDirLen = strlen(szSteamDir);
-	if (!Q_strnicmp(szAppDir, szSteamDir, nSteamDirLen ) && (szAppDir[nSteamDirLen] == '\\'))
+	if(!Q_strnicmp(szAppDir, szSteamDir, nSteamDirLen) && (szAppDir[nSteamDirLen] == '\\'))
 	{
 		strcpy(szSteamUserDir, szAppDir);
 
 		char *pszSlash = strchr(&szSteamUserDir[nSteamDirLen + 1], '\\');
-		if (pszSlash)
+		if(pszSlash)
 		{
 			pszSlash++;
 
 			pszSlash = strchr(pszSlash, '\\');
-			if (pszSlash)
+			if(pszSlash)
 			{
 				*pszSlash = '\0';
 				return true;
@@ -550,40 +535,39 @@ bool FindSteamUserDir(const char *szAppDir, const char *szSteamDir, char *szStea
 void CGameConfig::ParseGameInfo()
 {
 	KeyValues *pkv = new KeyValues("gameinfo.txt");
-	if (!pkv->LoadFromFile(g_pFileSystem, "gameinfo.txt", "GAME"))
+	if(!pkv->LoadFromFile(g_pFileSystem, "gameinfo.txt", "GAME"))
 	{
 		pkv->deleteThis();
 		return;
 	}
 
 	KeyValues *pKey = pkv->FindKey("FileSystem");
-	if (pKey)
+	if(pKey)
 	{
-		V_strcpy_safe( m_szSteamAppID, pKey->GetString( "SteamAppId", "" ) );
+		V_strcpy_safe(m_szSteamAppID, pKey->GetString("SteamAppId", ""));
 	}
 
-	const char *InstancePath = pkv->GetString( "InstancePath", NULL );
-	if ( InstancePath )
+	const char *InstancePath = pkv->GetString("InstancePath", NULL);
+	if(InstancePath)
 	{
-		CMapInstance::SetInstancePath( InstancePath );
+		CMapInstance::SetInstancePath(InstancePath);
 	}
 
 	pkv->deleteThis();
 
 	char szAppDir[MAX_PATH];
 	APP()->GetDirectory(DIR_PROGRAM, szAppDir);
-	if (!FindFileInTree("steam.exe", szAppDir, m_szSteamDir))
+	if(!FindFileInTree("steam.exe", szAppDir, m_szSteamDir))
 	{
 		// Couldn't find steam.exe in the hammer tree
 		m_szSteamDir[0] = '\0';
 	}
 
-	if (!FindSteamUserDir(szAppDir, m_szSteamDir, m_szSteamUserDir))
+	if(!FindSteamUserDir(szAppDir, m_szSteamDir, m_szSteamUserDir))
 	{
 		m_szSteamUserDir[0] = '\0';
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Accessor methods to get at the mod + the game (*not* full paths)
@@ -593,14 +577,14 @@ const char *CGameConfig::GetMod()
 	// Strip path from modDir
 	char szModPath[MAX_PATH];
 	static char szMod[MAX_PATH];
-	Q_strncpy( szModPath, m_szModDir, MAX_PATH );
-	Q_StripTrailingSlash( szModPath );
-	if ( !szModPath[0] )
+	Q_strncpy(szModPath, m_szModDir, MAX_PATH);
+	Q_StripTrailingSlash(szModPath);
+	if(!szModPath[0])
 	{
-		Q_strcpy( szModPath, "hl2" );
+		Q_strcpy(szModPath, "hl2");
 	}
 
-	Q_FileBase( szModPath, szMod, MAX_PATH );
+	Q_FileBase(szModPath, szMod, MAX_PATH);
 
 	return szMod;
 }
@@ -609,12 +593,12 @@ const char *CGameConfig::GetGame()
 {
 	return "hl2";
 
-//	// Strip path from modDir
-//	char szGamePath[MAX_PATH];
-//	static char szGame[MAX_PATH];
-//	Q_strncpy( szGamePath, m_szGameDir, MAX_PATH );
-//	Q_StripTrailingSlash( szGamePath );
-//	Q_FileBase( szGamePath, szGame, MAX_PATH );
+	//	// Strip path from modDir
+	//	char szGamePath[MAX_PATH];
+	//	static char szGame[MAX_PATH];
+	//	Q_strncpy( szGamePath, m_szGameDir, MAX_PATH );
+	//	Q_StripTrailingSlash( szGamePath );
+	//	Q_FileBase( szGamePath, szGame, MAX_PATH );
 
-//	return szGame;
+	//	return szGame;
 }

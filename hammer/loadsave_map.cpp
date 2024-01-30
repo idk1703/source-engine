@@ -27,25 +27,22 @@
 
 #pragma optimize("g", off)
 
-#pragma warning(disable: 4748)		// buffer overrung with optimizations off	 - remove if we turn "g" back on
+#pragma warning(disable : 4748) // buffer overrung with optimizations off	 - remove if we turn "g" back on
 
 #define TEXTURE_NAME_LEN 128
 
 // All files are opened in binary, and we want to save CR/LF
 #define ENDLINE "\r\n"
 
-
 enum
 {
-	fileOsError = -1,	// big error!
-	fileError = -2,		// problem
-	fileOk = -3,		// loaded ok
-	fileDone = -4		// got not-my-kind of line
+	fileOsError = -1, // big error!
+	fileError = -2,	  // problem
+	fileOk = -3,	  // loaded ok
+	fileDone = -4	  // got not-my-kind of line
 };
 
-
 BOOL bSaveVisiblesOnly;
-
 
 static BOOL bErrors;
 static int nInvalidSolids;
@@ -58,25 +55,23 @@ static char szStuffed[255];
 
 static UINT uMapVersion = 0;
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : buf -
 //-----------------------------------------------------------------------------
-static void StuffLine(char * buf)
+static void StuffLine(char *buf)
 {
 	Assert(!bStuffed);
 	V_strcpy_safe(szStuffed, buf);
 	bStuffed = TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			buf -
 //-----------------------------------------------------------------------------
-static void GetLine(std::fstream& file, char *buf)
+static void GetLine(std::fstream &file, char *buf)
 {
 	if(bStuffed)
 	{
@@ -99,17 +94,16 @@ static void GetLine(std::fstream& file, char *buf)
 		file >> std::ws;
 		if(buf)
 		{
-//			char *p = strchr(szBuf, '\n');
-//			if(p) p[0] = 0;
-//			p = strchr(szBuf, '\r');
-//			if(p) p[0] = 0;
+			//			char *p = strchr(szBuf, '\n');
+			//			if(p) p[0] = 0;
+			//			p = strchr(szBuf, '\r');
+			//			if(p) p[0] = 0;
 			strcpy(buf, szBuf);
 		}
 		return;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pObject -
@@ -117,58 +111,56 @@ static void GetLine(std::fstream& file, char *buf)
 //			pIntersecting -
 // Output : int
 //-----------------------------------------------------------------------------
-static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox *pIntersecting = NULL)
+static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream &file, BoundBox *pIntersecting = NULL)
 {
-	CMapWorld *pWorld = (CMapWorld*) CMapClass::GetWorldObject(pObject);
+	CMapWorld *pWorld = (CMapWorld *)CMapClass::GetWorldObject(pObject);
 
 	//
 	// If we are only saving visible objects and this object isn't visible, don't save it.
 	//
-	if (bSaveVisiblesOnly && (pObject != pWorld) && !pObject->IsVisible())
+	if(bSaveVisiblesOnly && (pObject != pWorld) && !pObject->IsVisible())
 	{
-		return fileOk;	// not an error - return ok
+		return fileOk; // not an error - return ok
 	}
 
 	//
 	// If we are only saving objects within a particular bounding box and this object isn't, don't save it.
 	//
-	if (pIntersecting && !pObject->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
+	if(pIntersecting && !pObject->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
 	{
 		return fileOk;
 	}
 
-
 	const CMapObjectList *pChildren = pObject->GetChildren();
-	FOR_EACH_OBJ( *pChildren, pos )
+	FOR_EACH_OBJ(*pChildren, pos)
 	{
 		int iRvl = -1;
 		CMapClass *pChild = pChildren->Element(pos);
 
-		if (!pIntersecting || pChild->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
+		if(!pIntersecting || pChild->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
 		{
-			if (pChild->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
+			if(pChild->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
 			{
-				if (!bSaveVisiblesOnly || pChild->IsVisible())
+				if(!bSaveVisiblesOnly || pChild->IsVisible())
 				{
 					iRvl = pChild->SerializeMAP(file, TRUE);
 				}
 			}
-			else if (pChild->IsMapClass(MAPCLASS_TYPE(CMapGroup)))
+			else if(pChild->IsMapClass(MAPCLASS_TYPE(CMapGroup)))
 			{
 				iRvl = SaveSolidChildrenOf(pChild, file, pIntersecting);
 			}
 
 			// return error if there is an error
-			if (iRvl != -1 && iRvl != fileOk)
+			if(iRvl != -1 && iRvl != fileOk)
 			{
 				return iRvl;
 			}
 		}
 	}
 
-	return fileOk;	// ok.
+	return fileOk; // ok.
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -177,53 +169,51 @@ static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox 
 //			pIntersecting -
 // Output : int
 //-----------------------------------------------------------------------------
-static int SaveEntityChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox *pIntersecting)
+static int SaveEntityChildrenOf(CMapClass *pObject, std::fstream &file, BoundBox *pIntersecting)
 {
 	CMapWorld *pWorld = (CMapWorld *)CMapClass::GetWorldObject(pObject);
 
-	if (bSaveVisiblesOnly && pObject != pWorld && !pObject->IsVisible())
+	if(bSaveVisiblesOnly && pObject != pWorld && !pObject->IsVisible())
 	{
-		return fileOk;	// no error
+		return fileOk; // no error
 	}
 
-	if (pIntersecting && !pObject->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
+	if(pIntersecting && !pObject->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
 	{
 		return fileOk;
 	}
 
-
 	const CMapObjectList *pChildren = pObject->GetChildren();
-	FOR_EACH_OBJ( *pChildren, pos )
+	FOR_EACH_OBJ(*pChildren, pos)
 	{
 		int iRvl = -1;
 
 		CMapClass *pChild = pChildren->Element(pos);
 
-		if (!pIntersecting || pChild->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
+		if(!pIntersecting || pChild->IsIntersectingBox(pIntersecting->bmins, pIntersecting->bmaxs))
 		{
-			if (pChild->IsMapClass(MAPCLASS_TYPE(CMapEntity)))
+			if(pChild->IsMapClass(MAPCLASS_TYPE(CMapEntity)))
 			{
-				if (!bSaveVisiblesOnly || pChild->IsVisible())
+				if(!bSaveVisiblesOnly || pChild->IsVisible())
 				{
 					iRvl = pChild->SerializeMAP(file, TRUE);
 				}
 			}
-			else if (pChild->IsMapClass(MAPCLASS_TYPE(CMapGroup)))
+			else if(pChild->IsMapClass(MAPCLASS_TYPE(CMapGroup)))
 			{
 				iRvl = SaveEntityChildrenOf(pChild, file, pIntersecting);
 			}
 
 			// return error if there is an error
-			if (iRvl != -1 && iRvl != fileOk)
+			if(iRvl != -1 && iRvl != fileOk)
 			{
 				return iRvl;
 			}
 		}
 	}
 
-	return fileOk;	// ok.
+	return fileOk; // ok.
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -231,7 +221,7 @@ static int SaveEntityChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox
 //			file -
 // Output : int
 //-----------------------------------------------------------------------------
-static int ReadSolids(CMapClass *pObject, std::fstream& file)
+static int ReadSolids(CMapClass *pObject, std::fstream &file)
 {
 	int nSolids = 0;
 	char szBuf[128];
@@ -268,15 +258,14 @@ static int ReadSolids(CMapClass *pObject, std::fstream& file)
 	return nSolids;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 // Output : int
 //-----------------------------------------------------------------------------
-static int PeekChar(std::fstream& file)
+static int PeekChar(std::fstream &file)
 {
-	if(bStuffed)	// stuffed.. return first char
+	if(bStuffed) // stuffed.. return first char
 		return szStuffed[0];
 	char szBuf[1024];
 	szBuf[0] = 0;
@@ -293,7 +282,6 @@ static int PeekChar(std::fstream& file)
 	return szBuf[0];
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the MAP format for saving.
 // Input  : mf - MAP format to use when saving.
@@ -304,47 +292,45 @@ void SetMapFormat(MAPFORMAT mf)
 	MapFormat = mf;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
-int CMapClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
+int CMapClass::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 {
 	// no info stored in MAPs ..
 	return fileOk;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
-int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
+int CMapFace::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 {
 	char szBuf[512];
 
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		char *pszTexture;
-		char szTexture[sizeof(texture.texture)+1];
+		char szTexture[sizeof(texture.texture) + 1];
 		szTexture[sizeof(texture.texture)] = 0;
 		memcpy(szTexture, texture.texture, sizeof texture.texture);
 		strlwr(szTexture);
 
-		if (MapFormat == mfQuake2)
+		if(MapFormat == mfQuake2)
 		{
 			pszTexture = strstr(szTexture, ".");
-			if (pszTexture)
+			if(pszTexture)
 			{
 				*pszTexture = 0;
 			}
 			pszTexture = strstr(szTexture, "textures\\");
-			if (pszTexture == NULL)
+			if(pszTexture == NULL)
 			{
 				pszTexture = szTexture;
 			}
@@ -360,20 +346,19 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 
 		strupr(szTexture);
 
-
 		//
 		// Reverse the slashes -- thank you id.
 		//
-		for (int i = strlen(pszTexture) - 1; i >= 0; i--)
+		for(int i = strlen(pszTexture) - 1; i >= 0; i--)
 		{
-			if (pszTexture[i] == '\\')
+			if(pszTexture[i] == '\\')
 				pszTexture[i] = '/';
 		}
 
 		//
 		// Convert the plane points to integers.
 		//
-		for (int nPlane = 0; nPlane < 3; nPlane++)
+		for(int nPlane = 0; nPlane < 3; nPlane++)
 		{
 			plane.planepts[nPlane][0] = V_rint(plane.planepts[nPlane][0]);
 			plane.planepts[nPlane][1] = V_rint(plane.planepts[nPlane][1]);
@@ -384,30 +369,28 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		// Check for duplicate plane points. All three plane points must be unique
 		// or it isn't a valid plane. Try to fix it if it isn't valid.
 		//
-		if (!CheckFace())
+		if(!CheckFace())
 		{
 			Fix();
 		}
 
 		sprintf(szBuf,
-			"( %.0f %.0f %.0f ) ( %.0f %.0f %.0f ) ( %.0f %.0f %.0f ) "
-			"%s "
-			"[ %g %g %g %g ] "
-			"[ %g %g %g %g ] "
-			"%g %g %g ",
+				"( %.0f %.0f %.0f ) ( %.0f %.0f %.0f ) ( %.0f %.0f %.0f ) "
+				"%s "
+				"[ %g %g %g %g ] "
+				"[ %g %g %g %g ] "
+				"%g %g %g ",
 
-			plane.planepts[0][0], plane.planepts[0][1], plane.planepts[0][2],
-			plane.planepts[1][0], plane.planepts[1][1], plane.planepts[1][2],
-			plane.planepts[2][0], plane.planepts[2][1], plane.planepts[2][2],
+				plane.planepts[0][0], plane.planepts[0][1], plane.planepts[0][2], plane.planepts[1][0],
+				plane.planepts[1][1], plane.planepts[1][2], plane.planepts[2][0], plane.planepts[2][1],
+				plane.planepts[2][2],
 
-			pszTexture,
+				pszTexture,
 
-			(double)texture.UAxis[0], (double)texture.UAxis[1], (double)texture.UAxis[2], (double)texture.UAxis[3],
-			(double)texture.VAxis[0], (double)texture.VAxis[1], (double)texture.VAxis[2], (double)texture.VAxis[3],
+				(double)texture.UAxis[0], (double)texture.UAxis[1], (double)texture.UAxis[2], (double)texture.UAxis[3],
+				(double)texture.VAxis[0], (double)texture.VAxis[1], (double)texture.VAxis[2], (double)texture.VAxis[3],
 
-			(double)texture.rotate,
-			(double)texture.scale[0],
-			(double)texture.scale[1]);
+				(double)texture.rotate, (double)texture.scale[0], (double)texture.scale[1]);
 
 		file << szBuf << ENDLINE;
 
@@ -431,47 +414,43 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		int nDummy;
 		int nRead;
 
-		if( uMapVersion >= 340 )
+		if(uMapVersion >= 340)
 		{
-			COMPILE_TIME_ASSERT( ARRAYSIZE(szTexName) == 128 );
+			COMPILE_TIME_ASSERT(ARRAYSIZE(szTexName) == 128);
 			nRead = sscanf(szBuf,
-				"( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
-				"%127s "
-				"[ %f %f %f %f ] "
-				"[ %f %f %f %f ] "
-				"%f %f %f "
-				"%u %u %u",
+						   "( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
+						   "%127s "
+						   "[ %f %f %f %f ] "
+						   "[ %f %f %f %f ] "
+						   "%f %f %f "
+						   "%u %u %u",
 
-				&plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2],
-				&plane.planepts[1][0], &plane.planepts[1][1], &plane.planepts[1][2],
-				&plane.planepts[2][0], &plane.planepts[2][1], &plane.planepts[2][2],
+						   &plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2], &plane.planepts[1][0],
+						   &plane.planepts[1][1], &plane.planepts[1][2], &plane.planepts[2][0], &plane.planepts[2][1],
+						   &plane.planepts[2][2],
 
-				szTexName,
+						   szTexName,
 
-				&texture.UAxis[0], &texture.UAxis[1], &texture.UAxis[2], &texture.UAxis[3],
-				&texture.VAxis[0], &texture.VAxis[1], &texture.VAxis[2], &texture.VAxis[3],
+						   &texture.UAxis[0], &texture.UAxis[1], &texture.UAxis[2], &texture.UAxis[3],
+						   &texture.VAxis[0], &texture.VAxis[1], &texture.VAxis[2], &texture.VAxis[3],
 
-				&texture.rotate,
-				&texture.scale[0],
-				&texture.scale[1],
+						   &texture.rotate, &texture.scale[0], &texture.scale[1],
 
-				&q2contents,
-				&q2surface,
-				&nLightmapScale);
+						   &q2contents, &q2surface, &nLightmapScale);
 			// Guarantee null-termination to keep /analyze happy.
-			szTexName[ ARRAYSIZE(szTexName) - 1 ] = 0;
+			szTexName[ARRAYSIZE(szTexName) - 1] = 0;
 
-			if (nRead < 21)
+			if(nRead < 21)
 			{
 				bErrors = TRUE;
 			}
-			else if (nRead == 24)
+			else if(nRead == 24)
 			{
 				// got q2 values - set them here
 				texture.q2contents = q2contents;
 				texture.q2surface = q2surface;
 				texture.nLightmapScale = nLightmapScale;
-				if (texture.nLightmapScale == 0)
+				if(texture.nLightmapScale == 0)
 				{
 					texture.nLightmapScale = g_pGameConfig->GetDefaultLightmapScale();
 				}
@@ -480,53 +459,50 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 			//
 			// very cheesy HACK!!! -- this will be better when we have chunks
 			//
-			if( uMapVersion <= 350 )
+			if(uMapVersion <= 350)
 			{
-				if( ( file.peek() != '(' ) && ( file.peek() != '}' ) )
+				if((file.peek() != '(') && (file.peek() != '}'))
 				{
 					EditDispHandle_t handle = EditDispMgr()->Create();
-					SetDisp( handle );
+					SetDisp(handle);
 
-					CMapDisp *pDisp = EditDispMgr()->GetDisp( handle );
-					pDisp->SerializedLoadMAP( file, this, uMapVersion );
+					CMapDisp *pDisp = EditDispMgr()->GetDisp(handle);
+					pDisp->SerializedLoadMAP(file, this, uMapVersion);
 				}
 			}
 		}
-		else if (uMapVersion >= 220 )
+		else if(uMapVersion >= 220)
 		{
-			COMPILE_TIME_ASSERT( ARRAYSIZE(szTexName) == 128 );
+			COMPILE_TIME_ASSERT(ARRAYSIZE(szTexName) == 128);
 			nRead = sscanf(szBuf,
-				"( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
-				"%127s "
-				"[ %f %f %f %f ] "
-				"[ %f %f %f %f ] "
-				"%f %f %f "
-				"%u %u %u",
+						   "( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
+						   "%127s "
+						   "[ %f %f %f %f ] "
+						   "[ %f %f %f %f ] "
+						   "%f %f %f "
+						   "%u %u %u",
 
-				&plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2],
-				&plane.planepts[1][0], &plane.planepts[1][1], &plane.planepts[1][2],
-				&plane.planepts[2][0], &plane.planepts[2][1], &plane.planepts[2][2],
+						   &plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2], &plane.planepts[1][0],
+						   &plane.planepts[1][1], &plane.planepts[1][2], &plane.planepts[2][0], &plane.planepts[2][1],
+						   &plane.planepts[2][2],
 
-				szTexName,
+						   szTexName,
 
-				&texture.UAxis[0], &texture.UAxis[1], &texture.UAxis[2], &texture.UAxis[3],
-				&texture.VAxis[0], &texture.VAxis[1], &texture.VAxis[2], &texture.VAxis[3],
+						   &texture.UAxis[0], &texture.UAxis[1], &texture.UAxis[2], &texture.UAxis[3],
+						   &texture.VAxis[0], &texture.VAxis[1], &texture.VAxis[2], &texture.VAxis[3],
 
-				&texture.rotate,
-				&texture.scale[0],
-				&texture.scale[1],
+						   &texture.rotate, &texture.scale[0], &texture.scale[1],
 
-				&q2contents,
-				&q2surface,
-				&nDummy);		// Pre-340 didn't have lightmap scale.
+						   &q2contents, &q2surface,
+						   &nDummy); // Pre-340 didn't have lightmap scale.
 			// Guarantee null-termination to keep /analyze happy.
-			szTexName[ ARRAYSIZE(szTexName) - 1 ] = 0;
+			szTexName[ARRAYSIZE(szTexName) - 1] = 0;
 
-			if (nRead < 21)
+			if(nRead < 21)
 			{
 				bErrors = TRUE;
 			}
-			else if (nRead == 24)
+			else if(nRead == 24)
 			{
 				// got q2 values - set them here
 				texture.q2contents = q2contents;
@@ -535,36 +511,31 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		}
 		else
 		{
-			COMPILE_TIME_ASSERT( ARRAYSIZE(szTexName) == 128 );
+			COMPILE_TIME_ASSERT(ARRAYSIZE(szTexName) == 128);
 			nRead = sscanf(szBuf,
-				"( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
-				"%127s "
-				"%f %f %f "
-				"%f %f %u %u %u",
+						   "( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
+						   "%127s "
+						   "%f %f %f "
+						   "%f %f %u %u %u",
 
-				&plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2],
-				&plane.planepts[1][0], &plane.planepts[1][1], &plane.planepts[1][2],
-				&plane.planepts[2][0], &plane.planepts[2][1], &plane.planepts[2][2],
+						   &plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2], &plane.planepts[1][0],
+						   &plane.planepts[1][1], &plane.planepts[1][2], &plane.planepts[2][0], &plane.planepts[2][1],
+						   &plane.planepts[2][2],
 
-				szTexName,
+						   szTexName,
 
-				&texture.UAxis[3],
-				&texture.VAxis[3],
-				&texture.rotate,
-				&texture.scale[0],
-				&texture.scale[1],
+						   &texture.UAxis[3], &texture.VAxis[3], &texture.rotate, &texture.scale[0], &texture.scale[1],
 
-				&q2contents,
-				&q2surface,
-				&nDummy);		// Pre-340 didn't have lightmap scale.
+						   &q2contents, &q2surface,
+						   &nDummy); // Pre-340 didn't have lightmap scale.
 			// Guarantee null-termination to keep /analyze happy.
-			szTexName[ ARRAYSIZE(szTexName) - 1 ] = 0;
+			szTexName[ARRAYSIZE(szTexName) - 1] = 0;
 
-			if (nRead < 15)
+			if(nRead < 15)
 			{
 				bErrors = TRUE;
 			}
-			else if (nRead == 18)
+			else if(nRead == 18)
 			{
 				// got q2 values - set them here
 				texture.q2contents = q2contents;
@@ -572,12 +543,12 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 			}
 		}
 
-		if (g_pGameConfig->GetTextureFormat() != tfVMT)
+		if(g_pGameConfig->GetTextureFormat() != tfVMT)
 		{
 			// reverse the slashes -- thank you id
-			for (int i = strlen(szTexName) - 1; i >= 0; i--)
+			for(int i = strlen(szTexName) - 1; i >= 0; i--)
 			{
-				if (szTexName[i] == '/')
+				if(szTexName[i] == '/')
 					szTexName[i] = '\\';
 			}
 		}
@@ -585,13 +556,12 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		SetTexture(szTexName);
 	}
 
-	if (file.fail())
+	if(file.fail())
 	{
 		return fileOsError;
 	}
 	return fileOk;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -599,7 +569,7 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 //			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
-int MDkeyvalue::SerializeMAP(std::fstream& file, BOOL fIsStoring)
+int MDkeyvalue::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 {
 	// load/save a keyvalue
 	char szBuf[1024];
@@ -607,10 +577,9 @@ int MDkeyvalue::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 	if(fIsStoring)
 	{
 		// save a keyvalue
-		sprintf( szBuf,
-			"\"%s\" \"%s\"",
+		sprintf(szBuf, "\"%s\" \"%s\"",
 
-			Key(), Value() );
+				Key(), Value());
 
 		file << szBuf << ENDLINE;
 	}
@@ -623,18 +592,18 @@ int MDkeyvalue::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 			return fileDone;
 		}
 		char *p = strchr(szBuf, '\"');
-		p = strchr(p+1, '\"');
+		p = strchr(p + 1, '\"');
 		if(!p)
 			return fileError;
 		p[0] = 0;
-		V_strcpy_safe(szKey, szBuf+1);
+		V_strcpy_safe(szKey, szBuf + 1);
 
 		// advance to start of value string
-		p = strchr(p+1, '\"');
+		p = strchr(p + 1, '\"');
 		if(!p)
 			return fileError;
 		// ocpy in value
-		strcpy(szValue, p+1);
+		strcpy(szValue, p + 1);
 		// kill trailing "
 		p = strchr(szValue, '\"');
 		if(!p)
@@ -645,19 +614,18 @@ int MDkeyvalue::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 	return file.fail() ? fileOsError : fileOk;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
-int CMapSolid::SerializeMAP(std::fstream& file, BOOL fIsStoring)
+int CMapSolid::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 {
 	CMapClass::SerializeMAP(file, fIsStoring);
 
 	// load/save a brush
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		// save the brush
 		file << "{" << ENDLINE;
@@ -681,10 +649,10 @@ int CMapSolid::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		Faces.SetCount(0);
 
 		// read Faces
-		for(int i = 0; ; i++)
+		for(int i = 0;; i++)
 		{
 			// extract plane
-			if (Faces[i].SerializeMAP(file, fIsStoring) == fileDone)
+			if(Faces[i].SerializeMAP(file, fIsStoring) == fileDone)
 			{
 				// when fileDone is returned, no face was loaded
 				break;
@@ -693,31 +661,31 @@ int CMapSolid::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 			Faces[i].CalcPlane();
 		}
 
-		GetLine(file, NULL);	// ignore line
+		GetLine(file, NULL); // ignore line
 
-		if (!file.fail())
+		if(!file.fail())
 		{
 			//
 			// Create the solid using the planes that were read from the MAP file.
 			//
-			if (CreateFromPlanes() == FALSE)
+			if(CreateFromPlanes() == FALSE)
 			{
 				bErrors = TRUE;
-				return(fileError);
+				return (fileError);
 			}
 
 			//
 			// If we are reading from an old map file, the texture axes will need to be set up.
 			// Leave the rotation and shifts alone; they were read from the MAP file.
 			//
-			if (uMapVersion < 220)
+			if(uMapVersion < 220)
 			{
 				InitializeTextureAxes(TEXTURE_ALIGN_QUAKE, INIT_TEXTURE_AXES | INIT_TEXTURE_FORCE);
 			}
 		}
 		else
 		{
-			return(fileOsError);
+			return (fileOsError);
 		}
 
 		CalcBounds();
@@ -728,9 +696,8 @@ int CMapSolid::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		m_eSolidType = HL1SolidTypeFromTextureName(Faces[0].texture.texture);
 	}
 
-	return(file.fail() ? fileOsError : fileOk);
+	return (file.fail() ? fileOsError : fileOk);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -743,15 +710,15 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 	CMapClass::SerializeMAP(file, fIsStoring);
 
 	// load/save an object
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		//
 		// If it's a solidentity but it doesn't have any solids,
 		// don't save it.
 		//
-		if (!IsPlaceholder() && !m_Children.Count())
+		if(!IsPlaceholder() && !m_Children.Count())
 		{
-			return(fileOk);
+			return (fileOk);
 		}
 
 		//
@@ -768,7 +735,7 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 		// If this is a placeholder and either has no class or is not a solid class,
 		// save our origin.
 		//
-		if (IsPlaceholder() && (!IsClass() || !IsSolidClass()))
+		if(IsPlaceholder() && (!IsClass() || !IsSolidClass()))
 		{
 			MDkeyvalue tmpkv;
 			strcpy(tmpkv.szKey, "origin");
@@ -779,7 +746,7 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 			tmpkv.SerializeMAP(file, fIsStoring);
 		}
 
-		if (!(IsPlaceholder()))
+		if(!(IsPlaceholder()))
 		{
 			SaveSolidChildrenOf(this, file);
 		}
@@ -792,7 +759,7 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 		CEditGameClass::SerializeMAP(file, fIsStoring);
 
 		// solids
-		if (!ReadSolids(this, file))
+		if(!ReadSolids(this, file))
 		{
 			flags |= flagPlaceholder;
 		}
@@ -804,41 +771,40 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 	return file.fail() ? fileOsError : fileOk;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
-int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
+int CEditGameClass::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 {
 	int iRvl;
 
-	if (!fIsStoring)
+	if(!fIsStoring)
 	{
 		// loading
-		if (PeekChar(file) == '\"')
+		if(PeekChar(file) == '\"')
 		{
 			// read kv pairs
 			MDkeyvalue newkv;
-			while (1)
+			while(1)
 			{
-				if (newkv.SerializeMAP(file, fIsStoring) != fileOk)
+				if(newkv.SerializeMAP(file, fIsStoring) != fileOk)
 				{
 					// fileDone means the keyvalue was not loaded
 					break;
 				}
 
-				if (!strcmp(newkv.szKey, "classname"))
+				if(!strcmp(newkv.szKey, "classname"))
 				{
 					m_KeyValues.SetValue(newkv.szKey, newkv.szValue);
 				}
-				else if (!strcmp(newkv.szKey, "angle"))
+				else if(!strcmp(newkv.szKey, "angle"))
 				{
 					ImportAngle(atoi(newkv.szValue));
 				}
-				else if (strcmp(newkv.szKey, "wad"))
+				else if(strcmp(newkv.szKey, "wad"))
 				{
 					//
 					// All other keys are simply added to the keyvalue list.
@@ -853,7 +819,7 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		// save keyvalues
 		MDkeyvalue tmpkv;
 
-		if (GetKeyValue("classname") == NULL)
+		if(GetKeyValue("classname") == NULL)
 		{
 			tmpkv.Set("classname", m_szClass);
 			tmpkv.SerializeMAP(file, fIsStoring);
@@ -864,7 +830,7 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		// to write.
 		//
 		GDclass *pGameDataClass = NULL;
-		if (pGD != NULL)
+		if(pGD != NULL)
 		{
 			pGameDataClass = pGD->ClassForName(m_szClass);
 		}
@@ -872,14 +838,14 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		//
 		// Consider all the keyvalues in this object for serialization.
 		//
-		for ( int z=m_KeyValues.GetFirst(); z != m_KeyValues.GetInvalidIndex(); z=m_KeyValues.GetNext( z ) )
+		for(int z = m_KeyValues.GetFirst(); z != m_KeyValues.GetInvalidIndex(); z = m_KeyValues.GetNext(z))
 		{
 			MDkeyvalue &KeyValue = m_KeyValues.GetKeyValue(z);
 
 			iRvl = KeyValue.SerializeMAP(file, fIsStoring);
-			if (iRvl != fileOk)
+			if(iRvl != fileOk)
 			{
-				return(iRvl);
+				return (iRvl);
 			}
 		}
 
@@ -887,18 +853,18 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		// If we have a base class, for each keyvalue in the class definition, write out all keys
 		// that are not present in the object and whose defaults are nonzero in the class definition.
 		//
-		if (pGameDataClass != NULL)
+		if(pGameDataClass != NULL)
 		{
 			//
 			// For each variable from the base class...
 			//
 			int nVariableCount = pGameDataClass->GetVariableCount();
-			for (int i = 0; i < nVariableCount; i++)
+			for(int i = 0; i < nVariableCount; i++)
 			{
 				GDinputvariable *pVar = pGameDataClass->GetVariableAt(i);
 				Assert(pVar != NULL);
 
-				if (pVar != NULL)
+				if(pVar != NULL)
 				{
 					int iIndex;
 					MDkeyvalue *pKey;
@@ -907,7 +873,7 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 					//
 					// If the variable is not present in this object, write out the default value.
 					//
-					if (p == NULL)
+					if(p == NULL)
 					{
 						pKey = &tmpkv;
 						pVar->ResetDefaults();
@@ -916,12 +882,12 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 						//
 						// Only write the key value if it is non-zero.
 						//
-						if ((pKey->szKey[0] != 0) && (pKey->szValue[0] != 0) && (stricmp(pKey->szValue, "0")))
+						if((pKey->szKey[0] != 0) && (pKey->szValue[0] != 0) && (stricmp(pKey->szValue, "0")))
 						{
 							iRvl = pKey->SerializeMAP(file, fIsStoring);
-							if (iRvl != fileOk)
+							if(iRvl != fileOk)
 							{
-								return(iRvl);
+								return (iRvl);
 							}
 						}
 					}
@@ -930,9 +896,8 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		}
 	}
 
-	return(file.fail() ? fileOsError : fileOk);
+	return (file.fail() ? fileOsError : fileOk);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -950,14 +915,14 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 	nInvalidSolids = 0;
 
 	// load/save a world
-	if (fIsStoring)
+	if(fIsStoring)
 	{
 		file << "{" << ENDLINE;
 
 		// save worldobject
 		CEditGameClass::SerializeMAP(file, fIsStoring);
 
-		if (MapFormat != mfQuake2)
+		if(MapFormat != mfQuake2)
 		{
 			MDkeyvalue tmpkv;
 
@@ -972,7 +937,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 			tmpkv.szValue[0] = 0;
 			BOOL bFirst = TRUE;
 			int nGraphicsFiles = g_Textures.FilesGetCount();
-			for (int i = 0; i < nGraphicsFiles; i++)
+			for(int i = 0; i < nGraphicsFiles; i++)
 			{
 				char szFile[MAX_PATH];
 				GRAPHICSFILESTRUCT gf;
@@ -982,13 +947,13 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 				//
 				// Don't save WAL files - they're never used.
 				//
-				if (gf.format != tfWAL)
+				if(gf.format != tfWAL)
 				{
 					//
 					// Also make sure this is the right kind of WAD file
 					// based on the game we're using.
 					//
-					if (gf.format == g_pGameConfig->GetTextureFormat())
+					if(gf.format == g_pGameConfig->GetTextureFormat())
 					{
 						//
 						// Append this WAD file to the WAD list.
@@ -1016,13 +981,13 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 						char *pszSlash = szFile;
 
 						// Strip off any drive letter.
-						if (pszSlash[1] == ':')
+						if(pszSlash[1] == ':')
 						{
 							pszSlash += 2;
 						}
 
 						// WAD names are semicolon delimited.
-						if (!bFirst)
+						if(!bFirst)
 						{
 							strcat(tmpkv.szValue, ";");
 						}
@@ -1033,7 +998,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 				}
 			}
 
-			if ( tmpkv.szValue[0] != '\0' )
+			if(tmpkv.szValue[0] != '\0')
 			{
 				tmpkv.SerializeMAP(file, fIsStoring);
 			}
@@ -1042,7 +1007,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		//
 		// Save the brushes.
 		//
-		if (SaveSolidChildrenOf(this, file, pIntersecting) == fileOsError)
+		if(SaveSolidChildrenOf(this, file, pIntersecting) == fileOsError)
 		{
 			goto FatalError;
 		}
@@ -1052,7 +1017,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		//
 		// Save the entities.
 		//
-		if (SaveEntityChildrenOf(this, file, pIntersecting) == fileOsError)
+		if(SaveEntityChildrenOf(this, file, pIntersecting) == fileOsError)
 		{
 			goto FatalError;
 		}
@@ -1060,7 +1025,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		//
 		// Save paths (if paths are visible).
 		//
-		FOR_EACH_OBJ( m_Paths, pos )
+		FOR_EACH_OBJ(m_Paths, pos)
 		{
 			CMapPath *pPath = m_Paths.Element(pos);
 			pPath->SerializeMAP(file, TRUE, pIntersecting);
@@ -1079,13 +1044,13 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		m_Render2DBox.ResetBounds();
 
 		// load world
-		GetLine(file, NULL);	// ignore delimiter
+		GetLine(file, NULL); // ignore delimiter
 		CEditGameClass::SerializeMAP(file, fIsStoring);
 
-		const char* pszMapVersion;
+		const char *pszMapVersion;
 
 		pszMapVersion = m_KeyValues.GetValue("mapversion");
-		if (pszMapVersion != NULL)
+		if(pszMapVersion != NULL)
 		{
 			uMapVersion = atoi(pszMapVersion);
 		}
@@ -1095,7 +1060,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		}
 
 		// read solids
-		if (ReadSolids(this, file) == fileOsError)
+		if(ReadSolids(this, file) == fileOsError)
 		{
 			goto FatalError;
 		}
@@ -1106,16 +1071,16 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		char szBuf[128];
 
 		// read entities
-		while (1)
+		while(1)
 		{
 			GetLine(file, szBuf);
-			if (szBuf[0] != '{')
+			if(szBuf[0] != '{')
 			{
 				StuffLine(szBuf);
 				break;
 			}
 
-			if (PeekChar(file) == EOF)
+			if(PeekChar(file) == EOF)
 			{
 				break;
 			}
@@ -1126,27 +1091,29 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 			iRvl = pEntity->SerializeMAP(file, fIsStoring);
 			AddChild(pEntity);
 
-			if (iRvl == fileError)
+			if(iRvl == fileError)
 			{
 				bErrors = TRUE;
 			}
-			else if (iRvl == fileOsError)
+			else if(iRvl == fileOsError)
 			{
 				goto FatalError;
 			}
 		}
 
-		if (bErrors)
+		if(bErrors)
 		{
-			if (nInvalidSolids)
+			if(nInvalidSolids)
 			{
 				CString str;
 				str.Format("For your information, %d solids were not loaded\n"
-					"due to errors in the file.", nInvalidSolids);
+						   "due to errors in the file.",
+						   nInvalidSolids);
 				AfxMessageBox(str);
 			}
-			else if (AfxMessageBox("There was a problem loading the MAP file. Do you\n"
-				"want to view the error report?", MB_YESNO) == IDYES)
+			else if(AfxMessageBox("There was a problem loading the MAP file. Do you\n"
+								  "want to view the error report?",
+								  MB_YESNO) == IDYES)
 			{
 				CMapErrorsDlg dlg;
 				dlg.DoModal();
@@ -1155,24 +1122,24 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 
 		PostloadWorld();
 
-		if (g_pGameConfig->GetTextureFormat() == tfVMT)
+		if(g_pGameConfig->GetTextureFormat() == tfVMT)
 		{
 			// do batch search and replace of textures from trans.txt if it exists.
 			char translationFilename[MAX_PATH];
-			Q_snprintf( translationFilename, sizeof( translationFilename ), "materials/trans.txt" );
-			if( CMapDoc::GetActiveMapDoc() )
+			Q_snprintf(translationFilename, sizeof(translationFilename), "materials/trans.txt");
+			if(CMapDoc::GetActiveMapDoc())
 			{
-				FileHandle_t searchReplaceFP = g_pFileSystem->Open( translationFilename, "r" );
-				if( searchReplaceFP )
+				FileHandle_t searchReplaceFP = g_pFileSystem->Open(translationFilename, "r");
+				if(searchReplaceFP)
 				{
-					CMapDoc::GetActiveMapDoc()->BatchReplaceTextures( searchReplaceFP );
-					g_pFileSystem->Close( searchReplaceFP );
+					CMapDoc::GetActiveMapDoc()->BatchReplaceTextures(searchReplaceFP);
+					g_pFileSystem->Close(searchReplaceFP);
 				}
 			}
 		}
 	}
 
-	if (pProgDlg)
+	if(pProgDlg)
 	{
 		pProgDlg->DestroyWindow();
 		delete pProgDlg;
@@ -1188,7 +1155,7 @@ FatalError:
 	str.Format("The OS reported an error %s the file: %s", fIsStoring ? "saving" : "loading", strerror(errno));
 	AfxMessageBox(str);
 
-	if (pProgDlg != NULL)
+	if(pProgDlg != NULL)
 	{
 		pProgDlg->DestroyWindow();
 		delete pProgDlg;

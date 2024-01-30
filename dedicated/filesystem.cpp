@@ -21,26 +21,25 @@
 #include "appframework/AppFramework.h"
 #include "tier2/tier2.h"
 
-
 extern IFileSystem *g_pFileSystem;
 extern IBaseFileSystem *g_pBaseFileSystem;
 
 // implement our own special factory that we don't export outside of the DLL, to stop
 // people being able to get a pointer to a FILESYSTEM_INTERFACE_VERSION stdio interface
-void* FileSystemFactory(const char *pName, int *pReturnCode)
+void *FileSystemFactory(const char *pName, int *pReturnCode)
 {
 	{
-		if ( !Q_stricmp(pName, FILESYSTEM_INTERFACE_VERSION ) )
+		if(!Q_stricmp(pName, FILESYSTEM_INTERFACE_VERSION))
 		{
-			if ( pReturnCode )
+			if(pReturnCode)
 			{
 				*pReturnCode = IFACE_OK;
 			}
 			return g_pFileSystem;
 		}
-		if ( !Q_stricmp(pName, BASEFILESYSTEM_INTERFACE_VERSION ) )
+		if(!Q_stricmp(pName, BASEFILESYSTEM_INTERFACE_VERSION))
 		{
-			if ( pReturnCode )
+			if(pReturnCode)
 			{
 				*pReturnCode = IFACE_OK;
 			}
@@ -48,7 +47,7 @@ void* FileSystemFactory(const char *pName, int *pReturnCode)
 		}
 	}
 
-	if ( pReturnCode )
+	if(pReturnCode)
 	{
 		*pReturnCode = IFACE_FAILED;
 	}

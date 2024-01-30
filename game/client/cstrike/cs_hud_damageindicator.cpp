@@ -31,114 +31,113 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CHudDamageIndicator : public CHudElement, public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CHudDamageIndicator, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudDamageIndicator, vgui::Panel);
 
 public:
-	CHudDamageIndicator( const char *pElementName );
+	CHudDamageIndicator(const char *pElementName);
 
-	void	Init( void );
-	void	Reset( void );
-	bool	ShouldDraw( void );
+	void Init(void);
+	void Reset(void);
+	bool ShouldDraw(void);
 
 	// Handler for our message
-	void	MsgFunc_Damage( bf_read &msg );
+	void MsgFunc_Damage(bf_read &msg);
 
 private:
-	void	Paint();
-	void	ApplySchemeSettings(vgui::IScheme *pScheme);
+	void Paint();
+	void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-	void	CalcDamageDirection( const Vector &vecFrom );
-	void	DrawDamageIndicatorFront( float flFade );
-	void	DrawDamageIndicatorRear( float flFade );
-	void	DrawDamageIndicatorLeft( float flFade );
-	void	DrawDamageIndicatorRight( float flFade );
+	void CalcDamageDirection(const Vector &vecFrom);
+	void DrawDamageIndicatorFront(float flFade);
+	void DrawDamageIndicatorRear(float flFade);
+	void DrawDamageIndicatorLeft(float flFade);
+	void DrawDamageIndicatorRight(float flFade);
 
 private:
-	float	m_flAttackFront;
-	float	m_flAttackRear;
-	float	m_flAttackLeft;
-	float	m_flAttackRight;
+	float m_flAttackFront;
+	float m_flAttackRear;
+	float m_flAttackLeft;
+	float m_flAttackRight;
 
-	Color	m_clrIndicator;
+	Color m_clrIndicator;
 
-	CHudTexture	*icon_up;
-	CHudTexture	*icon_down;
-	CHudTexture	*icon_left;
-	CHudTexture	*icon_right;
+	CHudTexture *icon_up;
+	CHudTexture *icon_down;
+	CHudTexture *icon_left;
+	CHudTexture *icon_right;
 
-	float m_flFadeCompleteTime;	//don't draw past this time
+	float m_flFadeCompleteTime; // don't draw past this time
 };
 
-DECLARE_HUDELEMENT( CHudDamageIndicator );
-DECLARE_HUD_MESSAGE( CHudDamageIndicator, Damage );
-
+DECLARE_HUDELEMENT(CHudDamageIndicator);
+DECLARE_HUD_MESSAGE(CHudDamageIndicator, Damage);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudDamageIndicator::CHudDamageIndicator( const char *pElementName ) : CHudElement( pElementName ), BaseClass(NULL, "HudDamageIndicator")
+CHudDamageIndicator::CHudDamageIndicator(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudDamageIndicator")
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( HIDEHUD_HEALTH );
+	SetHiddenBits(HIDEHUD_HEALTH);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudDamageIndicator::Reset( void )
+void CHudDamageIndicator::Reset(void)
 {
-	m_flAttackFront	= 0.0;
-	m_flAttackRear	= 0.0;
-	m_flAttackRight	= 0.0;
-	m_flAttackLeft	= 0.0;
+	m_flAttackFront = 0.0;
+	m_flAttackRear = 0.0;
+	m_flAttackRight = 0.0;
+	m_flAttackLeft = 0.0;
 
 	m_flFadeCompleteTime = 0.0;
 
-	m_clrIndicator.SetColor( 250, 0, 0, 255 );
+	m_clrIndicator.SetColor(250, 0, 0, 255);
 }
 
-void CHudDamageIndicator::Init( void )
+void CHudDamageIndicator::Init(void)
 {
-	HOOK_HUD_MESSAGE( CHudDamageIndicator, Damage );
+	HOOK_HUD_MESSAGE(CHudDamageIndicator, Damage);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CHudDamageIndicator::ShouldDraw( void )
+bool CHudDamageIndicator::ShouldDraw(void)
 {
-	if ( !CHudElement::ShouldDraw() )
+	if(!CHudElement::ShouldDraw())
 		return false;
 
-	if ( ( m_flAttackFront <= 0.0 ) && ( m_flAttackRear <= 0.0 ) && ( m_flAttackLeft <= 0.0 ) && ( m_flAttackRight <= 0.0 ) )
+	if((m_flAttackFront <= 0.0) && (m_flAttackRear <= 0.0) && (m_flAttackLeft <= 0.0) && (m_flAttackRight <= 0.0))
 		return false;
 
 	return true;
 }
 
-void CHudDamageIndicator::DrawDamageIndicatorFront( float flFade )
+void CHudDamageIndicator::DrawDamageIndicatorFront(float flFade)
 {
-	if ( m_flAttackFront > 0.4 )
+	if(m_flAttackFront > 0.4)
 	{
-		if ( !icon_up )
+		if(!icon_up)
 		{
-			icon_up = gHUD.GetIcon( "pain_up" );
+			icon_up = gHUD.GetIcon("pain_up");
 		}
 
-		if ( !icon_up )
+		if(!icon_up)
 		{
 			return;
 		}
 
-		int	x = ( ScreenWidth() / 2 ) - icon_up->Width() / 2;
-		int	y = ( ScreenHeight() / 2 ) - icon_up->Height() * 3;
-		icon_up->DrawSelf( x, y, m_clrIndicator );
+		int x = (ScreenWidth() / 2) - icon_up->Width() / 2;
+		int y = (ScreenHeight() / 2) - icon_up->Height() * 3;
+		icon_up->DrawSelf(x, y, m_clrIndicator);
 
-		m_flAttackFront = MAX( 0.0, m_flAttackFront - flFade );
+		m_flAttackFront = MAX(0.0, m_flAttackFront - flFade);
 	}
 	else
 	{
@@ -146,25 +145,25 @@ void CHudDamageIndicator::DrawDamageIndicatorFront( float flFade )
 	}
 }
 
-void CHudDamageIndicator::DrawDamageIndicatorRear( float flFade )
+void CHudDamageIndicator::DrawDamageIndicatorRear(float flFade)
 {
-	if ( m_flAttackRear > 0.4 )
+	if(m_flAttackRear > 0.4)
 	{
-		if ( !icon_down )
+		if(!icon_down)
 		{
-			icon_down = gHUD.GetIcon( "pain_down" );
+			icon_down = gHUD.GetIcon("pain_down");
 		}
 
-		if ( !icon_down )
+		if(!icon_down)
 		{
 			return;
 		}
 
-		int	x = ( ScreenWidth() / 2 ) - icon_down->Width() / 2;
-		int	y = ( ScreenHeight() / 2 ) + icon_down->Height() * 2;
-		icon_down->DrawSelf( x, y, m_clrIndicator );
+		int x = (ScreenWidth() / 2) - icon_down->Width() / 2;
+		int y = (ScreenHeight() / 2) + icon_down->Height() * 2;
+		icon_down->DrawSelf(x, y, m_clrIndicator);
 
-		m_flAttackRear = MAX( 0.0, m_flAttackRear - flFade );
+		m_flAttackRear = MAX(0.0, m_flAttackRear - flFade);
 	}
 	else
 	{
@@ -172,26 +171,25 @@ void CHudDamageIndicator::DrawDamageIndicatorRear( float flFade )
 	}
 }
 
-
-void CHudDamageIndicator::DrawDamageIndicatorLeft( float flFade )
+void CHudDamageIndicator::DrawDamageIndicatorLeft(float flFade)
 {
-	if ( m_flAttackLeft > 0.4 )
+	if(m_flAttackLeft > 0.4)
 	{
-		if ( !icon_left )
+		if(!icon_left)
 		{
-			icon_left = gHUD.GetIcon( "pain_left" );
+			icon_left = gHUD.GetIcon("pain_left");
 		}
 
-		if ( !icon_left )
+		if(!icon_left)
 		{
 			return;
 		}
 
-		int	x = ( ScreenWidth() / 2 ) - icon_left->Width() * 3;
-		int	y = ( ScreenHeight() / 2 ) - icon_left->Height() / 2;
-		icon_left->DrawSelf( x, y, m_clrIndicator );
+		int x = (ScreenWidth() / 2) - icon_left->Width() * 3;
+		int y = (ScreenHeight() / 2) - icon_left->Height() / 2;
+		icon_left->DrawSelf(x, y, m_clrIndicator);
 
-		m_flAttackLeft = MAX( 0.0, m_flAttackLeft - flFade );
+		m_flAttackLeft = MAX(0.0, m_flAttackLeft - flFade);
 	}
 	else
 	{
@@ -199,26 +197,25 @@ void CHudDamageIndicator::DrawDamageIndicatorLeft( float flFade )
 	}
 }
 
-
-void CHudDamageIndicator::DrawDamageIndicatorRight( float flFade )
+void CHudDamageIndicator::DrawDamageIndicatorRight(float flFade)
 {
-	if ( m_flAttackRight > 0.4 )
+	if(m_flAttackRight > 0.4)
 	{
-		if ( !icon_right )
+		if(!icon_right)
 		{
-			icon_right = gHUD.GetIcon( "pain_right" );
+			icon_right = gHUD.GetIcon("pain_right");
 		}
 
-		if ( !icon_right )
+		if(!icon_right)
 		{
 			return;
 		}
 
-		int	x = ( ScreenWidth() / 2 ) + icon_right->Width() * 2;
-		int	y = ( ScreenHeight() / 2 ) - icon_right->Height() / 2;
-		icon_right->DrawSelf( x, y, m_clrIndicator );
+		int x = (ScreenWidth() / 2) + icon_right->Width() * 2;
+		int y = (ScreenHeight() / 2) - icon_right->Height() / 2;
+		icon_right->DrawSelf(x, y, m_clrIndicator);
 
-		m_flAttackRight = MAX( 0.0, m_flAttackRight - flFade );
+		m_flAttackRight = MAX(0.0, m_flAttackRight - flFade);
 	}
 	else
 	{
@@ -226,20 +223,19 @@ void CHudDamageIndicator::DrawDamageIndicatorRight( float flFade )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Paints the damage display
 //-----------------------------------------------------------------------------
 void CHudDamageIndicator::Paint()
 {
-	if( m_flFadeCompleteTime > gpGlobals->curtime )
+	if(m_flFadeCompleteTime > gpGlobals->curtime)
 	{
 		float flFade = gpGlobals->frametime * 2;
 		// draw damage indicators
-		DrawDamageIndicatorFront( flFade );
-		DrawDamageIndicatorRear( flFade );
-		DrawDamageIndicatorLeft( flFade );
-		DrawDamageIndicatorRight( flFade );
+		DrawDamageIndicatorFront(flFade);
+		DrawDamageIndicatorRear(flFade);
+		DrawDamageIndicatorLeft(flFade);
+		DrawDamageIndicatorRight(flFade);
 	}
 }
 // NVNT static to pass damage
@@ -248,105 +244,103 @@ static float hap_damage_amount = 0;
 //-----------------------------------------------------------------------------
 // Purpose: Message handler for Damage message
 //-----------------------------------------------------------------------------
-void CHudDamageIndicator::MsgFunc_Damage( bf_read &msg )
+void CHudDamageIndicator::MsgFunc_Damage(bf_read &msg)
 {
-	int damageTaken	= msg.ReadByte();
+	int damageTaken = msg.ReadByte();
 
 	Vector vecFrom;
-	msg.ReadBitVec3Coord( vecFrom );
+	msg.ReadBitVec3Coord(vecFrom);
 
 	// NVNT pass damage to static holder
 	hap_damage_amount = damageTaken;
 
-	if ( damageTaken > 0 )
+	if(damageTaken > 0)
 	{
 		m_flFadeCompleteTime = gpGlobals->curtime + 1.0;
-		CalcDamageDirection( vecFrom );
+		CalcDamageDirection(vecFrom);
 	}
-//=============================================================================
-// HPE_BEGIN:
-// [menglish] Added reads for the added location based parameters to this message
-//=============================================================================
+	//=============================================================================
+	// HPE_BEGIN:
+	// [menglish] Added reads for the added location based parameters to this message
+	//=============================================================================
 	msg.ReadLong();
-	msg.ReadBitVec3Coord( vecFrom );
-//=============================================================================
-// HPE_END
-//=============================================================================
+	msg.ReadBitVec3Coord(vecFrom);
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 }
 
-void CHudDamageIndicator::CalcDamageDirection( const Vector &vecFrom )
+void CHudDamageIndicator::CalcDamageDirection(const Vector &vecFrom)
 {
-	if ( vecFrom == vec3_origin )
+	if(vecFrom == vec3_origin)
 	{
-		m_flAttackFront	= 0.0;
-		m_flAttackRear	= 0.0;
-		m_flAttackRight	= 0.0;
-		m_flAttackLeft	= 0.0;
+		m_flAttackFront = 0.0;
+		m_flAttackRear = 0.0;
+		m_flAttackRight = 0.0;
+		m_flAttackLeft = 0.0;
 
 		return;
 	}
 
 	C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-	if ( !pLocalPlayer )
+	if(!pLocalPlayer)
 	{
 		return;
 	}
 
-	Vector vecDelta = ( vecFrom - pLocalPlayer->GetRenderOrigin() );
+	Vector vecDelta = (vecFrom - pLocalPlayer->GetRenderOrigin());
 
-	if ( vecDelta.Length() <= 50 )
+	if(vecDelta.Length() <= 50)
 	{
-		m_flAttackFront	= 1.0;
-		m_flAttackRear	= 1.0;
-		m_flAttackRight	= 1.0;
-		m_flAttackLeft	= 1.0;
+		m_flAttackFront = 1.0;
+		m_flAttackRear = 1.0;
+		m_flAttackRight = 1.0;
+		m_flAttackLeft = 1.0;
 
 		return;
 	}
 
-	VectorNormalize( vecDelta );
+	VectorNormalize(vecDelta);
 
 	Vector forward;
 	Vector right;
 	Vector up;
-	AngleVectors( MainViewAngles(), &forward, &right, &up );
+	AngleVectors(MainViewAngles(), &forward, &right, &up);
 
+	float flFront = DotProduct(vecDelta, forward);
+	float flSide = DotProduct(vecDelta, right);
+	float flUp = DotProduct(vecDelta, up);
 
-	float flFront	= DotProduct( vecDelta, forward );
-	float flSide	= DotProduct( vecDelta, right );
-	float flUp      = DotProduct( vecDelta, up);
-
-	if ( flFront > 0 )
+	if(flFront > 0)
 	{
-		if ( flFront > 0.3 )
-			m_flAttackFront = MAX( m_flAttackFront, flFront );
+		if(flFront > 0.3)
+			m_flAttackFront = MAX(m_flAttackFront, flFront);
 	}
 	else
 	{
-		float f = fabs( flFront );
-		if ( f > 0.3 )
-			m_flAttackRear = MAX( m_flAttackRear, f );
+		float f = fabs(flFront);
+		if(f > 0.3)
+			m_flAttackRear = MAX(m_flAttackRear, f);
 	}
 
-	if ( flSide > 0 )
+	if(flSide > 0)
 	{
-		if ( flSide > 0.3 )
-			m_flAttackRight = MAX( m_flAttackRight, flSide );
+		if(flSide > 0.3)
+			m_flAttackRight = MAX(m_flAttackRight, flSide);
 	}
 	else
 	{
-		float f = fabs( flSide );
-		if ( f > 0.3 )
-			m_flAttackLeft = MAX( m_flAttackLeft, f );
+		float f = fabs(flSide);
+		if(f > 0.3)
+			m_flAttackLeft = MAX(m_flAttackLeft, f);
 	}
 
 	// NVNT pass damage. (use hap_damage amount to apply)
 	// do rotation
-	Vector hapDir(-flSide,-flUp,flFront);
-	if ( haptics )
+	Vector hapDir(-flSide, -flUp, flFront);
+	if(haptics)
 		haptics->ApplyDamageEffect(hap_damage_amount, 0, hapDir);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: hud scheme settings

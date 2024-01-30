@@ -17,40 +17,39 @@
 //-----------------------------------------------------------------------------
 class CEnvStarfield : public CBaseEntity
 {
-	DECLARE_CLASS( CEnvStarfield, CBaseEntity );
+	DECLARE_CLASS(CEnvStarfield, CBaseEntity);
+
 public:
 	DECLARE_SERVERCLASS();
 	DECLARE_DATADESC();
 
 	virtual void Precache();
-	virtual void Spawn( void );
-	virtual int  UpdateTransmitState(void);
+	virtual void Spawn(void);
+	virtual int UpdateTransmitState(void);
 
 	// Inputs
-	void InputTurnOn( inputdata_t &inputdata );
-	void InputTurnOff( inputdata_t &inputdata );
-	void InputSetDensity( inputdata_t &inputdata );
+	void InputTurnOn(inputdata_t &inputdata);
+	void InputTurnOff(inputdata_t &inputdata);
+	void InputSetDensity(inputdata_t &inputdata);
 
 private:
-	CNetworkVar( bool, m_bOn );
-	CNetworkVar( float, m_flDensity );
+	CNetworkVar(bool, m_bOn);
+	CNetworkVar(float, m_flDensity);
 };
 
-BEGIN_DATADESC( CEnvStarfield )
-	DEFINE_FIELD( m_bOn, FIELD_BOOLEAN ),
-	DEFINE_FIELD( m_flDensity, FIELD_FLOAT ),
+BEGIN_DATADESC(CEnvStarfield)
+	DEFINE_FIELD(m_bOn, FIELD_BOOLEAN), DEFINE_FIELD(m_flDensity, FIELD_FLOAT),
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "TurnOff", InputTurnOff ),
-	DEFINE_INPUTFUNC( FIELD_FLOAT, "SetDensity", InputSetDensity ),
+		DEFINE_INPUTFUNC(FIELD_VOID, "TurnOn", InputTurnOn), DEFINE_INPUTFUNC(FIELD_VOID, "TurnOff", InputTurnOff),
+		DEFINE_INPUTFUNC(FIELD_FLOAT, "SetDensity", InputSetDensity),
 END_DATADESC()
 
-IMPLEMENT_SERVERCLASS_ST( CEnvStarfield, DT_EnvStarfield )
-	SendPropInt( SENDINFO(m_bOn), 1, SPROP_UNSIGNED ),
-	SendPropFloat( SENDINFO(m_flDensity), 0, SPROP_NOSCALE),
-END_SEND_TABLE()
+IMPLEMENT_SERVERCLASS_ST(CEnvStarfield, DT_EnvStarfield)
+SendPropInt(SENDINFO(m_bOn), 1, SPROP_UNSIGNED), SendPropFloat(SENDINFO(m_flDensity), 0, SPROP_NOSCALE),
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( env_starfield, CEnvStarfield );
+	LINK_ENTITY_TO_CLASS(env_starfield, CEnvStarfield);
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -69,7 +68,7 @@ void CEnvStarfield::Precache()
 {
 	BaseClass::Precache();
 
-	PrecacheMaterial( "effects/spark_noz" );
+	PrecacheMaterial("effects/spark_noz");
 }
 
 //-----------------------------------------------------------------------------
@@ -77,13 +76,13 @@ void CEnvStarfield::Precache()
 //-----------------------------------------------------------------------------
 int CEnvStarfield::UpdateTransmitState()
 {
-	return SetTransmitState( FL_EDICT_ALWAYS );
+	return SetTransmitState(FL_EDICT_ALWAYS);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEnvStarfield::InputTurnOn( inputdata_t &inputdata )
+void CEnvStarfield::InputTurnOn(inputdata_t &inputdata)
 {
 	m_bOn = true;
 }
@@ -92,7 +91,7 @@ void CEnvStarfield::InputTurnOn( inputdata_t &inputdata )
 // Purpose:
 // Input  : &inputdata -
 //-----------------------------------------------------------------------------
-void CEnvStarfield::InputTurnOff( inputdata_t &inputdata )
+void CEnvStarfield::InputTurnOff(inputdata_t &inputdata)
 {
 	m_bOn = false;
 }
@@ -101,7 +100,7 @@ void CEnvStarfield::InputTurnOff( inputdata_t &inputdata )
 // Purpose:
 // Input  : &inputdata -
 //-----------------------------------------------------------------------------
-void CEnvStarfield::InputSetDensity( inputdata_t &inputdata )
+void CEnvStarfield::InputSetDensity(inputdata_t &inputdata)
 {
 	m_flDensity = inputdata.value.Float();
 }

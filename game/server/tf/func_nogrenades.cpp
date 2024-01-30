@@ -9,7 +9,7 @@
 #include "tf_item.h"
 #include "func_nogrenades.h"
 
-LINK_ENTITY_TO_CLASS( func_nogrenades, CNoGrenadesZone );
+LINK_ENTITY_TO_CLASS(func_nogrenades, CNoGrenadesZone);
 
 //=============================================================================
 //
@@ -27,52 +27,52 @@ CNoGrenadesZone::CNoGrenadesZone()
 //-----------------------------------------------------------------------------
 // Purpose: Spawn function for the entity
 //-----------------------------------------------------------------------------
-void CNoGrenadesZone::Spawn( void )
+void CNoGrenadesZone::Spawn(void)
 {
 	Precache();
 	BaseClass::Spawn();
 	InitTrigger();
 
-	AddSpawnFlags( SF_TRIGGER_ALLOW_ALL ); // so we can keep track of who is touching us
-	AddEffects( EF_NODRAW );
+	AddSpawnFlags(SF_TRIGGER_ALLOW_ALL); // so we can keep track of who is touching us
+	AddEffects(EF_NODRAW);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CNoGrenadesZone::Precache( void )
+void CNoGrenadesZone::Precache(void)
 {
-	PrecacheModel( NOGRENADE_SPRITE );
+	PrecacheModel(NOGRENADE_SPRITE);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified entity is touching this zone
 //-----------------------------------------------------------------------------
-bool CNoGrenadesZone::IsTouching( const CBaseEntity *pEntity ) const
+bool CNoGrenadesZone::IsTouching(const CBaseEntity *pEntity) const
 {
-	return BaseClass::IsTouching( pEntity );
+	return BaseClass::IsTouching(pEntity);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CNoGrenadesZone::InputEnable( inputdata_t &inputdata )
+void CNoGrenadesZone::InputEnable(inputdata_t &inputdata)
 {
-	SetDisabled( false );
+	SetDisabled(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CNoGrenadesZone::InputDisable( inputdata_t &inputdata )
+void CNoGrenadesZone::InputDisable(inputdata_t &inputdata)
 {
-	SetDisabled( true );
+	SetDisabled(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CNoGrenadesZone::IsDisabled( void )
+bool CNoGrenadesZone::IsDisabled(void)
 {
 	return m_bDisabled;
 }
@@ -80,22 +80,22 @@ bool CNoGrenadesZone::IsDisabled( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CNoGrenadesZone::InputToggle( inputdata_t &inputdata )
+void CNoGrenadesZone::InputToggle(inputdata_t &inputdata)
 {
-	if ( m_bDisabled )
+	if(m_bDisabled)
 	{
-		SetDisabled( false );
+		SetDisabled(false);
 	}
 	else
 	{
-		SetDisabled( true );
+		SetDisabled(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CNoGrenadesZone::SetDisabled( bool bDisabled )
+void CNoGrenadesZone::SetDisabled(bool bDisabled)
 {
 	m_bDisabled = bDisabled;
 }
@@ -103,19 +103,19 @@ void CNoGrenadesZone::SetDisabled( bool bDisabled )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified entity is in a NoGrenades zone
 //-----------------------------------------------------------------------------
-bool InNoGrenadeZone( CBaseEntity *pEntity )
+bool InNoGrenadeZone(CBaseEntity *pEntity)
 {
-	if ( pEntity )
+	if(pEntity)
 	{
 		CBaseEntity *pTempEnt = NULL;
-		while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_nogrenades" ) ) != NULL )
+		while((pTempEnt = gEntList.FindEntityByClassname(pTempEnt, "func_nogrenades")) != NULL)
 		{
-			CNoGrenadesZone *pZone = dynamic_cast<CNoGrenadesZone *>( pTempEnt );
+			CNoGrenadesZone *pZone = dynamic_cast<CNoGrenadesZone *>(pTempEnt);
 
-			if ( !pZone->IsDisabled() && pZone->PointIsWithin( pEntity->GetAbsOrigin() ) )
+			if(!pZone->IsDisabled() && pZone->PointIsWithin(pEntity->GetAbsOrigin()))
 			{
 				int iTeam = pZone->GetTeamNumber();
-				if ( !iTeam || ( iTeam && ( pEntity->GetTeamNumber() == iTeam ) ) )
+				if(!iTeam || (iTeam && (pEntity->GetTeamNumber() == iTeam)))
 				{
 					return true;
 				}

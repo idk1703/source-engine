@@ -17,15 +17,15 @@ C_TF2RootPanel *g_pTF2RootPanel = NULL;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_CreateClientDLLRootPanel( void )
+void VGUI_CreateClientDLLRootPanel(void)
 {
-	g_pTF2RootPanel = new C_TF2RootPanel( enginevgui->GetPanel( PANEL_CLIENTDLL ) );
+	g_pTF2RootPanel = new C_TF2RootPanel(enginevgui->GetPanel(PANEL_CLIENTDLL));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_DestroyClientDLLRootPanel( void )
+void VGUI_DestroyClientDLLRootPanel(void)
 {
 	delete g_pTF2RootPanel;
 	g_pTF2RootPanel = NULL;
@@ -35,7 +35,7 @@ void VGUI_DestroyClientDLLRootPanel( void )
 // Purpose: Game specific root panel
 // Output : vgui::Panel
 //-----------------------------------------------------------------------------
-vgui::VPANEL VGui_GetClientDLLRootPanel( void )
+vgui::VPANEL VGui_GetClientDLLRootPanel(void)
 {
 	return g_pTF2RootPanel->GetVPanel();
 }

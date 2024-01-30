@@ -22,61 +22,57 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-BEGIN_DATADESC( CWeapon_Tripwire )
+BEGIN_DATADESC(CWeapon_Tripwire)
 
-	DEFINE_FIELD( m_bNeedReload, FIELD_BOOLEAN ),
-	DEFINE_FIELD( m_bClearReload, FIELD_BOOLEAN ),
-	DEFINE_FIELD( m_bAttachTripwire, FIELD_BOOLEAN ),
+	DEFINE_FIELD(m_bNeedReload, FIELD_BOOLEAN), DEFINE_FIELD(m_bClearReload, FIELD_BOOLEAN),
+		DEFINE_FIELD(m_bAttachTripwire, FIELD_BOOLEAN),
 
-	// Function Pointers
-	DEFINE_FUNCTION( TripwireTouch ),
+		// Function Pointers
+		DEFINE_FUNCTION(TripwireTouch),
 
 END_DATADESC()
 
-
 IMPLEMENT_SERVERCLASS_ST(CWeapon_Tripwire, DT_Weapon_Tripwire)
-END_SEND_TABLE()
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( weapon_tripwire, CWeapon_Tripwire );
+	LINK_ENTITY_TO_CLASS(weapon_tripwire, CWeapon_Tripwire);
 
 // BUGBUG: Enable this when the script & resources are checked in.
-//PRECACHE_WEAPON_REGISTER(weapon_tripwire);
+// PRECACHE_WEAPON_REGISTER(weapon_tripwire);
 
-acttable_t	CWeapon_Tripwire::m_acttable[] =
-{
-	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_TRIPWIRE, true },
+acttable_t CWeapon_Tripwire::m_acttable[] = {
+	{ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_TRIPWIRE, true},
 };
 
 IMPLEMENT_ACTTABLE(CWeapon_Tripwire);
 
-
-void CWeapon_Tripwire::Spawn( )
+void CWeapon_Tripwire::Spawn()
 {
 	UTIL_Remove(this);
 	return;
 
 	BaseClass::Spawn();
 
-	Precache( );
+	Precache();
 
-	UTIL_SetSize(this, Vector(-4,-4,-2),Vector(4,4,2));
+	UTIL_SetSize(this, Vector(-4, -4, -2), Vector(4, 4, 2));
 
+	FallInit(); // get ready to fall down
 
-	FallInit();// get ready to fall down
-
-	SetThink( NULL );
+	SetThink(NULL);
 
 	// Give one piece of default ammo when first picked up
 	m_iClip2 = 1;
 }
 
-void CWeapon_Tripwire::Precache( void )
+void CWeapon_Tripwire::Precache(void)
 {
 	BaseClass::Precache();
 
-	PrecacheScriptSound( "Weapon_Tripwire.Attach" );
+	PrecacheScriptSound("Weapon_Tripwire.Attach");
 
-	UTIL_PrecacheOther( "npc_tripwire" );
+	UTIL_PrecacheOther("npc_tripwire");
 }
 
 //------------------------------------------------------------------------------
@@ -84,7 +80,7 @@ void CWeapon_Tripwire::Precache( void )
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-void CWeapon_Tripwire::SetPickupTouch( void )
+void CWeapon_Tripwire::SetPickupTouch(void)
 {
 	SetTouch(TripwireTouch);
 }
@@ -94,7 +90,7 @@ void CWeapon_Tripwire::SetPickupTouch( void )
 // Input  : pOther - the entity that touched me
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::TripwireTouch( CBaseEntity *pOther )
+void CWeapon_Tripwire::TripwireTouch(CBaseEntity *pOther)
 {
 	// ---------------------------------------------------
 	//  First give weapon to touching entity if allowed
@@ -104,20 +100,20 @@ void CWeapon_Tripwire::TripwireTouch( CBaseEntity *pOther )
 	// ----------------------------------------------------
 	//  Give ammo if touching client
 	// ----------------------------------------------------
-	if (pOther->GetFlags() & FL_CLIENT)
+	if(pOther->GetFlags() & FL_CLIENT)
 	{
 		// ------------------------------------------------
 		//  If already owned weapon of this type remove me
 		// ------------------------------------------------
-		CBaseCombatCharacter* pBCC = ToBaseCombatCharacter( pOther );
-		CWeapon_Tripwire* oldWeapon = (CWeapon_Tripwire*)pBCC->Weapon_OwnsThisType( GetClassname() );
-		if (oldWeapon != this)
+		CBaseCombatCharacter *pBCC = ToBaseCombatCharacter(pOther);
+		CWeapon_Tripwire *oldWeapon = (CWeapon_Tripwire *)pBCC->Weapon_OwnsThisType(GetClassname());
+		if(oldWeapon != this)
 		{
-			UTIL_Remove( this );
+			UTIL_Remove(this);
 		}
 		else
 		{
-			pBCC->GiveAmmo( 1, m_iSecondaryAmmoType );
+			pBCC->GiveAmmo(1, m_iSecondaryAmmoType);
 			SetThink(NULL);
 		}
 	}
@@ -128,7 +124,7 @@ void CWeapon_Tripwire::TripwireTouch( CBaseEntity *pOther )
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-bool CWeapon_Tripwire::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CWeapon_Tripwire::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
 	SetThink(NULL);
 	return BaseClass::Holster(pSwitchingTo);
@@ -139,9 +135,9 @@ bool CWeapon_Tripwire::Holster( CBaseCombatWeapon *pSwitchingTo )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-bool CWeapon_Tripwire::Reload( void )
+bool CWeapon_Tripwire::Reload(void)
 {
-	WeaponIdle( );
+	WeaponIdle();
 	return true;
 }
 
@@ -150,20 +146,20 @@ bool CWeapon_Tripwire::Reload( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::PrimaryAttack( void )
+void CWeapon_Tripwire::PrimaryAttack(void)
 {
-	CBaseCombatCharacter *pOwner  = GetOwner();
-	if (!pOwner)
+	CBaseCombatCharacter *pOwner = GetOwner();
+	if(!pOwner)
 	{
 		return;
 	}
 
-	if (pOwner->GetAmmoCount(m_iSecondaryAmmoType) <= 0)
+	if(pOwner->GetAmmoCount(m_iSecondaryAmmoType) <= 0)
 	{
 		return;
 	}
 
-	if (CanAttachTripwire())
+	if(CanAttachTripwire())
 	{
 		StartTripwireAttach();
 	}
@@ -174,49 +170,47 @@ void CWeapon_Tripwire::PrimaryAttack( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::SecondaryAttack( void )
-{
-}
+void CWeapon_Tripwire::SecondaryAttack(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::TripwireAttach( void )
+void CWeapon_Tripwire::TripwireAttach(void)
 {
-	CBaseCombatCharacter *pOwner  = GetOwner();
-	if (!pOwner)
+	CBaseCombatCharacter *pOwner = GetOwner();
+	if(!pOwner)
 	{
 		return;
 	}
 
 	m_bAttachTripwire = false;
 
-	Vector vecSrc	 = pOwner->Weapon_ShootPosition();
-	Vector vecAiming = pOwner->BodyDirection2D( );
+	Vector vecSrc = pOwner->Weapon_ShootPosition();
+	Vector vecAiming = pOwner->BodyDirection2D();
 
 	trace_t tr;
 
-	UTIL_TraceLine( vecSrc, vecSrc + (vecAiming * 128), MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
+	UTIL_TraceLine(vecSrc, vecSrc + (vecAiming * 128), MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr);
 
-	if (tr.fraction < 1.0)
+	if(tr.fraction < 1.0)
 	{
 		CBaseEntity *pEntity = tr.m_pEnt;
-		if (pEntity && !(pEntity->GetFlags() & FL_CONVEYOR))
+		if(pEntity && !(pEntity->GetFlags() & FL_CONVEYOR))
 		{
 			QAngle angles;
 			VectorAngles(tr.plane.normal, angles);
 			angles.x += 90;
 
-			CBaseEntity *pEnt = CBaseEntity::Create( "npc_tripwire", tr.endpos + tr.plane.normal * 3, angles, NULL );
+			CBaseEntity *pEnt = CBaseEntity::Create("npc_tripwire", tr.endpos + tr.plane.normal * 3, angles, NULL);
 
 			CTripwireGrenade *pMine = (CTripwireGrenade *)pEnt;
-			pMine->SetThrower( GetOwner() );
+			pMine->SetThrower(GetOwner());
 
-			pOwner->RemoveAmmo( 1, m_iSecondaryAmmoType );
+			pOwner->RemoveAmmo(1, m_iSecondaryAmmoType);
 
-			EmitSound( "Weapon_Tripwire.Attach" );
+			EmitSound("Weapon_Tripwire.Attach");
 		}
 	}
 }
@@ -226,48 +220,48 @@ void CWeapon_Tripwire::TripwireAttach( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::StartTripwireAttach( void )
+void CWeapon_Tripwire::StartTripwireAttach(void)
 {
 	// Only the player fires this way so we can cast
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	if (!pPlayer)
+	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
+	if(!pPlayer)
 	{
 		return;
 	}
 
-	Vector vecSrc	 = pPlayer->Weapon_ShootPosition();
-	Vector vecAiming = pPlayer->BodyDirection3D( );
+	Vector vecSrc = pPlayer->Weapon_ShootPosition();
+	Vector vecAiming = pPlayer->BodyDirection3D();
 
 	trace_t tr;
 
-	UTIL_TraceLine( vecSrc, vecSrc + (vecAiming * 128), MASK_SOLID, pPlayer, COLLISION_GROUP_NONE, &tr );
+	UTIL_TraceLine(vecSrc, vecSrc + (vecAiming * 128), MASK_SOLID, pPlayer, COLLISION_GROUP_NONE, &tr);
 
-	if (tr.fraction < 1.0)
+	if(tr.fraction < 1.0)
 	{
 		// ALERT( at_console, "hit %f\n", tr.flFraction );
 
 		CBaseEntity *pEntity = tr.m_pEnt;
-		if (pEntity && !(pEntity->GetFlags() & FL_CONVEYOR))
+		if(pEntity && !(pEntity->GetFlags() & FL_CONVEYOR))
 		{
 			// player "shoot" animation
-			pPlayer->SetAnimation( PLAYER_ATTACK1 );
+			pPlayer->SetAnimation(PLAYER_ATTACK1);
 
 			// -----------------------------------------
 			//  Play attach animation
 			// -----------------------------------------
 			SendWeaponAnim(ACT_SLAM_TRIPMINE_ATTACH);
 
-			m_bNeedReload		= true;
-			m_bAttachTripwire	= true;
+			m_bNeedReload = true;
+			m_bAttachTripwire = true;
 		}
 		else
 		{
 			// ALERT( at_console, "no deploy\n" );
 		}
 	}
-	m_flNextPrimaryAttack	= gpGlobals->curtime + SequenceDuration();
-	m_flNextSecondaryAttack	= gpGlobals->curtime + SequenceDuration();
-//	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
+	m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+	//	SetWeaponIdleTime( gpGlobals->curtime + SequenceDuration() );
 }
 
 //-----------------------------------------------------------------------------
@@ -275,30 +269,30 @@ void CWeapon_Tripwire::StartTripwireAttach( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-bool CWeapon_Tripwire::CanAttachTripwire( void )
+bool CWeapon_Tripwire::CanAttachTripwire(void)
 {
-	CBaseCombatCharacter *pOwner  = GetOwner();
-	if (!pOwner)
+	CBaseCombatCharacter *pOwner = GetOwner();
+	if(!pOwner)
 	{
 		return false;
 	}
 
-	Vector vecSrc	 = pOwner->Weapon_ShootPosition();
-	Vector vecAiming = pOwner->BodyDirection2D( );
+	Vector vecSrc = pOwner->Weapon_ShootPosition();
+	Vector vecAiming = pOwner->BodyDirection2D();
 
 	trace_t tr;
 
-	Vector	vecEnd = vecSrc + (vecAiming * 42);
-	UTIL_TraceLine( vecSrc, vecEnd, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
+	Vector vecEnd = vecSrc + (vecAiming * 42);
+	UTIL_TraceLine(vecSrc, vecEnd, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr);
 
-	if (tr.fraction < 1.0)
+	if(tr.fraction < 1.0)
 	{
 		// Don't attach to a living creature
-		if (tr.m_pEnt)
+		if(tr.m_pEnt)
 		{
 			CBaseEntity *pEntity = tr.m_pEnt;
-			CBaseCombatCharacter *pBCC		= ToBaseCombatCharacter( pEntity );
-			if (pBCC)
+			CBaseCombatCharacter *pBCC = ToBaseCombatCharacter(pEntity);
+			if(pBCC)
 			{
 				return false;
 			}
@@ -316,19 +310,19 @@ bool CWeapon_Tripwire::CanAttachTripwire( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::ItemPostFrame( void )
+void CWeapon_Tripwire::ItemPostFrame(void)
 {
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	if (!pOwner)
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if(!pOwner)
 	{
 		return;
 	}
 
-	if ((pOwner->m_nButtons & IN_ATTACK2) && (m_flNextSecondaryAttack <= gpGlobals->curtime))
+	if((pOwner->m_nButtons & IN_ATTACK2) && (m_flNextSecondaryAttack <= gpGlobals->curtime))
 	{
 		SecondaryAttack();
 	}
-	else if (!m_bNeedReload && (pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
+	else if(!m_bNeedReload && (pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
 		PrimaryAttack();
 	}
@@ -338,7 +332,7 @@ void CWeapon_Tripwire::ItemPostFrame( void )
 	// -----------------------
 	else
 	{
-		WeaponIdle( );
+		WeaponIdle();
 		return;
 	}
 }
@@ -348,46 +342,46 @@ void CWeapon_Tripwire::ItemPostFrame( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CWeapon_Tripwire::WeaponIdle( void )
+void CWeapon_Tripwire::WeaponIdle(void)
 {
 	// Ready to switch animations?
- 	if ( HasWeaponIdleTimeElapsed() )
+	if(HasWeaponIdleTimeElapsed())
 	{
-		if (m_bClearReload)
+		if(m_bClearReload)
 		{
-			m_bNeedReload  = false;
+			m_bNeedReload = false;
 			m_bClearReload = false;
 		}
-		CBaseCombatCharacter *pOwner  = GetOwner();
-		if (!pOwner)
+		CBaseCombatCharacter *pOwner = GetOwner();
+		if(!pOwner)
 		{
 			return;
 		}
 
 		int iAnim = 0;
 
-		if (m_bAttachTripwire)
+		if(m_bAttachTripwire)
 		{
 			TripwireAttach();
 			iAnim = ACT_SLAM_TRIPMINE_ATTACH2;
 		}
-		else if (m_bNeedReload)
+		else if(m_bNeedReload)
 		{
 			// If owner had ammo draw the correct tripwire type
-			if (pOwner->GetAmmoCount(m_iSecondaryAmmoType) > 0)
+			if(pOwner->GetAmmoCount(m_iSecondaryAmmoType) > 0)
 			{
 				iAnim = ACT_SLAM_TRIPMINE_DRAW;
-				m_bClearReload			= true;
+				m_bClearReload = true;
 			}
 			else
 			{
-				pOwner->Weapon_Drop( this );
+				pOwner->Weapon_Drop(this);
 				UTIL_Remove(this);
 			}
 		}
-		else if (pOwner->GetAmmoCount(m_iSecondaryAmmoType) <= 0)
+		else if(pOwner->GetAmmoCount(m_iSecondaryAmmoType) <= 0)
 		{
-			pOwner->Weapon_Drop( this );
+			pOwner->Weapon_Drop(this);
 			UTIL_Remove(this);
 		}
 
@@ -396,19 +390,19 @@ void CWeapon_Tripwire::WeaponIdle( void )
 		{
 			iAnim = ACT_SLAM_TRIPMINE_IDLE;
 		}
-		SendWeaponAnim( iAnim );
+		SendWeaponAnim(iAnim);
 	}
 }
 
-bool CWeapon_Tripwire::Deploy( void )
+bool CWeapon_Tripwire::Deploy(void)
 {
-	CBaseCombatCharacter *pOwner  = GetOwner();
-	if (!pOwner)
+	CBaseCombatCharacter *pOwner = GetOwner();
+	if(!pOwner)
 	{
 		return false;
 	}
 
-	SetModel( GetViewModel() );
+	SetModel(GetViewModel());
 
 	// ------------------------------
 	// Pick the right draw animation
@@ -418,7 +412,7 @@ bool CWeapon_Tripwire::Deploy( void )
 	// If detonator is already armed
 	m_bNeedReload = false;
 	iActivity = ACT_SLAM_STICKWALL_ND_DRAW;
-	return DefaultDeploy( (char*)GetViewModel(), (char*)GetWorldModel(), iActivity, (char*)GetAnimPrefix() );
+	return DefaultDeploy((char *)GetViewModel(), (char *)GetWorldModel(), iActivity, (char *)GetAnimPrefix());
 }
 
 //-----------------------------------------------------------------------------
@@ -428,7 +422,7 @@ bool CWeapon_Tripwire::Deploy( void )
 //-----------------------------------------------------------------------------
 CWeapon_Tripwire::CWeapon_Tripwire(void)
 {
-	m_bNeedReload			= true;
-	m_bClearReload			= false;
-	m_bAttachTripwire		= false;
+	m_bNeedReload = true;
+	m_bClearReload = false;
+	m_bAttachTripwire = false;
 }

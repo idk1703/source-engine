@@ -18,7 +18,7 @@
 // Input  : *pString -
 // Output : interval_t
 //-----------------------------------------------------------------------------
-interval_t ReadInterval( const char *pString )
+interval_t ReadInterval(const char *pString)
 {
 	interval_t tmp;
 
@@ -26,16 +26,16 @@ interval_t ReadInterval( const char *pString )
 	tmp.range = 0;
 
 	char tempString[128];
-	Q_strncpy( tempString, pString, sizeof(tempString) );
+	Q_strncpy(tempString, pString, sizeof(tempString));
 
-	char *token = strtok( tempString, "," );
-	if ( token )
+	char *token = strtok(tempString, ",");
+	if(token)
 	{
-		tmp.start = atof( token );
-		token = strtok( NULL, "," );
-		if ( token )
+		tmp.start = atof(token);
+		token = strtok(NULL, ",");
+		if(token)
 		{
-			tmp.range = atof( token ) - tmp.start;
+			tmp.range = atof(token) - tmp.start;
 		}
 	}
 
@@ -47,12 +47,12 @@ interval_t ReadInterval( const char *pString )
 // Input  : &interval -
 // Output : float
 //-----------------------------------------------------------------------------
-float RandomInterval( const interval_t &interval )
+float RandomInterval(const interval_t &interval)
 {
 	float out = interval.start;
-	if ( interval.range != 0 )
+	if(interval.range != 0)
 	{
-		out += RandomFloat( 0, interval.range );
+		out += RandomFloat(0, interval.range);
 	}
 
 	return out;

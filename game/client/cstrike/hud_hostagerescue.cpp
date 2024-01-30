@@ -14,36 +14,34 @@
 class CHudHostageRescueZone : public CHudElement, public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudHostageRescueZone, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudHostageRescueZone, vgui::Panel);
 
-	CHudHostageRescueZone( const char *name );
+	CHudHostageRescueZone(const char *name);
 
 	virtual bool ShouldDraw();
 	virtual void Paint();
 
 private:
-	CPanelAnimationVar( Color, m_clrIcon, "IconColor", "IconColor" );
+	CPanelAnimationVar(Color, m_clrIcon, "IconColor", "IconColor");
 
 	CHudTexture *m_pIcon;
 };
 
+DECLARE_HUDELEMENT(CHudHostageRescueZone);
 
-DECLARE_HUDELEMENT( CHudHostageRescueZone );
-
-
-CHudHostageRescueZone::CHudHostageRescueZone( const char *pName ) :
-	vgui::Panel( NULL, "HudHostageRescueZone" ), CHudElement( pName )
+CHudHostageRescueZone::CHudHostageRescueZone(const char *pName)
+	: vgui::Panel(NULL, "HudHostageRescueZone"), CHudElement(pName)
 {
-	SetParent( g_pClientMode->GetViewport() );
+	SetParent(g_pClientMode->GetViewport());
 	m_pIcon = NULL;
 
-	SetHiddenBits( HIDEHUD_PLAYERDEAD );
+	SetHiddenBits(HIDEHUD_PLAYERDEAD);
 
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Add this to the render group that disappears when the scoreboard is up
 	//=============================================================================
-	RegisterForRenderGroup( "hide_for_scoreboard" );
+	RegisterForRenderGroup("hide_for_scoreboard");
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -56,7 +54,7 @@ bool CHudHostageRescueZone::ShouldDraw()
 	// HPE_BEGIN:
 	// [tj] Added base class call
 	//=============================================================================
-	return ( pPlayer &&	pPlayer->IsInHostageRescueZone() && CHudElement::ShouldDraw());
+	return (pPlayer && pPlayer->IsInHostageRescueZone() && CHudElement::ShouldDraw());
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -64,16 +62,16 @@ bool CHudHostageRescueZone::ShouldDraw()
 
 void CHudHostageRescueZone::Paint()
 {
-	if ( !m_pIcon )
+	if(!m_pIcon)
 	{
-		m_pIcon = gHUD.GetIcon( "hostage_rescue" );
+		m_pIcon = gHUD.GetIcon("hostage_rescue");
 	}
 
-	if ( m_pIcon )
+	if(m_pIcon)
 	{
 		int x, y, w, h;
-		GetBounds( x, y, w, h );
+		GetBounds(x, y, w, h);
 
-		m_pIcon->DrawSelf( 0, 0, w, h, m_clrIcon );
+		m_pIcon->DrawSelf(0, 0, w, h, m_clrIcon);
 	}
 }

@@ -13,7 +13,6 @@
 
 #include "vkeyeditDoc.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CVkeyeditDoc
 
@@ -21,8 +20,8 @@ IMPLEMENT_DYNCREATE(CVkeyeditDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CVkeyeditDoc, CDocument)
 	//{{AFX_MSG_MAP(CVkeyeditDoc)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
+	// NOTE - the ClassWizard will add and remove mapping macros here.
+	//    DO NOT EDIT what you see in these blocks of generated code!
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -42,7 +41,7 @@ CVkeyeditDoc::~CVkeyeditDoc()
 
 BOOL CVkeyeditDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
+	if(!CDocument::OnNewDocument())
 		return FALSE;
 
 	// TODO: add reinitialization code here
@@ -51,14 +50,12 @@ BOOL CVkeyeditDoc::OnNewDocument()
 	return TRUE;
 }
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // CVkeyeditDoc serialization
 
-void CVkeyeditDoc::Serialize(CArchive& ar)
+void CVkeyeditDoc::Serialize(CArchive &ar)
 {
-	if (ar.IsStoring())
+	if(ar.IsStoring())
 	{
 		// TODO: add storing code here
 	}
@@ -77,7 +74,7 @@ void CVkeyeditDoc::AssertValid() const
 	CDocument::AssertValid();
 }
 
-void CVkeyeditDoc::Dump(CDumpContext& dc) const
+void CVkeyeditDoc::Dump(CDumpContext &dc) const
 {
 	CDocument::Dump(dc);
 }
@@ -88,21 +85,21 @@ void CVkeyeditDoc::Dump(CDumpContext& dc) const
 
 BOOL CVkeyeditDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	if (!CDocument::OnOpenDocument(lpszPathName))
+	if(!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
 
-	if ( m_pKeyValues != NULL )
+	if(m_pKeyValues != NULL)
 	{
 		m_pKeyValues->deleteThis();
 	}
 
 	const char *filename = lpszPathName;
 
-	m_pKeyValues = new KeyValues( filename );
+	m_pKeyValues = new KeyValues(filename);
 
-	m_pKeyValues->LoadFromFile( g_pFileSystem, filename );
+	m_pKeyValues->LoadFromFile(g_pFileSystem, filename);
 
-	UpdateAllViews( NULL, 1, (CObject*)m_pKeyValues );
+	UpdateAllViews(NULL, 1, (CObject *)m_pKeyValues);
 
 	// TODO: Add your specialized creation code here
 

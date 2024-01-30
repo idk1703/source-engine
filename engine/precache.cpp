@@ -15,33 +15,33 @@
 // Input  : flags -
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *GetFlagString( int flags )
+char const *GetFlagString(int flags)
 {
-	static char ret[ 512 ];
-	ret[ 0 ] = 0;
+	static char ret[512];
+	ret[0] = 0;
 
 	bool first = true;
 
-	if ( !flags )
+	if(!flags)
 		return "None";
 
-	if ( flags & RES_FATALIFMISSING )
+	if(flags & RES_FATALIFMISSING)
 	{
-		if ( !first )
+		if(!first)
 		{
-			Q_strncat( ret, " | ", sizeof( ret ), COPY_ALL_CHARACTERS );
+			Q_strncat(ret, " | ", sizeof(ret), COPY_ALL_CHARACTERS);
 		}
-		Q_strncat( ret, "RES_FATALIFMISSING", sizeof( ret ), COPY_ALL_CHARACTERS );
+		Q_strncat(ret, "RES_FATALIFMISSING", sizeof(ret), COPY_ALL_CHARACTERS);
 		first = false;
 	}
 
-	if ( flags & RES_PRELOAD )
+	if(flags & RES_PRELOAD)
 	{
-		if ( !first )
+		if(!first)
 		{
-			Q_strncat( ret, " | ", sizeof( ret ), COPY_ALL_CHARACTERS );
+			Q_strncat(ret, " | ", sizeof(ret), COPY_ALL_CHARACTERS);
 		}
-		Q_strncat( ret, "RES_PRELOAD", sizeof( ret ), COPY_ALL_CHARACTERS );
+		Q_strncat(ret, "RES_PRELOAD", sizeof(ret), COPY_ALL_CHARACTERS);
 		first = false;
 	}
 
@@ -51,16 +51,16 @@ char const *GetFlagString( int flags )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CPrecacheItem::CPrecacheItem( void )
+CPrecacheItem::CPrecacheItem(void)
 {
-	Init( TYPE_UNK, NULL );
+	Init(TYPE_UNK, NULL);
 	ResetStats();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPrecacheItem::ResetStats( void )
+void CPrecacheItem::ResetStats(void)
 {
 	m_uiRefcount = 0;
 #if DEBUG_PRECACHE
@@ -72,12 +72,12 @@ void CPrecacheItem::ResetStats( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPrecacheItem::Reference( void )
+void CPrecacheItem::Reference(void)
 {
 	m_uiRefcount++;
 #if DEBUG_PRECACHE
 	m_flMostRecent = realtime;
-	if ( !m_flFirst )
+	if(!m_flFirst)
 	{
 		m_flFirst = realtime;
 	}
@@ -89,11 +89,11 @@ void CPrecacheItem::Reference( void )
 // Input  : type -
 //			*ptr -
 //-----------------------------------------------------------------------------
-void CPrecacheItem::Init( int type, void const *ptr )
+void CPrecacheItem::Init(int type, void const *ptr)
 {
 	m_nType = type;
-	u.model = ( model_t * )ptr;
-	if ( ptr )
+	u.model = (model_t *)ptr;
+	if(ptr)
 	{
 		ResetStats();
 	}
@@ -103,12 +103,12 @@ void CPrecacheItem::Init( int type, void const *ptr )
 // Purpose:
 // Output : model_t
 //-----------------------------------------------------------------------------
-model_t *CPrecacheItem::GetModel( void )
+model_t *CPrecacheItem::GetModel(void)
 {
-	if ( !u.model )
+	if(!u.model)
 		return NULL;
 
-	Assert( m_nType == TYPE_MODEL );
+	Assert(m_nType == TYPE_MODEL);
 
 	Reference();
 
@@ -119,12 +119,12 @@ model_t *CPrecacheItem::GetModel( void )
 // Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CPrecacheItem::GetGeneric( void )
+char const *CPrecacheItem::GetGeneric(void)
 {
-	if ( !u.generic )
+	if(!u.generic)
 		return NULL;
 
-	Assert( m_nType == TYPE_GENERIC );
+	Assert(m_nType == TYPE_GENERIC);
 
 	Reference();
 
@@ -135,12 +135,12 @@ char const *CPrecacheItem::GetGeneric( void )
 // Purpose:
 // Output : CSfxTable
 //-----------------------------------------------------------------------------
-CSfxTable *CPrecacheItem::GetSound( void )
+CSfxTable *CPrecacheItem::GetSound(void)
 {
-	if ( !u.sound )
+	if(!u.sound)
 		return NULL;
 
-	Assert( m_nType == TYPE_SOUND );
+	Assert(m_nType == TYPE_SOUND);
 
 	Reference();
 
@@ -151,12 +151,12 @@ CSfxTable *CPrecacheItem::GetSound( void )
 // Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CPrecacheItem::GetName( void )
+char const *CPrecacheItem::GetName(void)
 {
-	if ( !u.name )
+	if(!u.name)
 		return NULL;
 
-	Assert( m_nType == TYPE_SOUND );
+	Assert(m_nType == TYPE_SOUND);
 
 	Reference();
 
@@ -167,12 +167,12 @@ char const *CPrecacheItem::GetName( void )
 // Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-char const *CPrecacheItem::GetDecal( void )
+char const *CPrecacheItem::GetDecal(void)
 {
-	if ( !u.name )
+	if(!u.name)
 		return NULL;
 
-	Assert( m_nType == TYPE_DECAL );
+	Assert(m_nType == TYPE_DECAL);
 
 	Reference();
 
@@ -183,52 +183,52 @@ char const *CPrecacheItem::GetDecal( void )
 // Purpose:
 // Input  : *pmodel -
 //-----------------------------------------------------------------------------
-void CPrecacheItem::SetModel( model_t const *pmodel )
+void CPrecacheItem::SetModel(model_t const *pmodel)
 {
-	Init( TYPE_MODEL, pmodel );
+	Init(TYPE_MODEL, pmodel);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pname -
 //-----------------------------------------------------------------------------
-void CPrecacheItem::SetGeneric( char const *pname )
+void CPrecacheItem::SetGeneric(char const *pname)
 {
-	Init( TYPE_GENERIC, pname );
+	Init(TYPE_GENERIC, pname);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *psound -
 //-----------------------------------------------------------------------------
-void CPrecacheItem::SetSound( CSfxTable const *psound )
+void CPrecacheItem::SetSound(CSfxTable const *psound)
 {
-	Init( TYPE_SOUND, psound );
+	Init(TYPE_SOUND, psound);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-void CPrecacheItem::SetName( char const *name )
+void CPrecacheItem::SetName(char const *name)
 {
-	Init( TYPE_SOUND, name );
+	Init(TYPE_SOUND, name);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *decalname -
 //-----------------------------------------------------------------------------
-void CPrecacheItem::SetDecal( char const *decalname )
+void CPrecacheItem::SetDecal(char const *decalname)
 {
-	Init( TYPE_DECAL, decalname );
+	Init(TYPE_DECAL, decalname);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
-float CPrecacheItem::GetFirstReference( void )
+float CPrecacheItem::GetFirstReference(void)
 {
 #if DEBUG_PRECACHE
 	return m_flFirst;
@@ -241,7 +241,7 @@ float CPrecacheItem::GetFirstReference( void )
 // Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
-float CPrecacheItem::GetMostRecentReference( void )
+float CPrecacheItem::GetMostRecentReference(void)
 {
 #if DEBUG_PRECACHE
 	return m_flMostRecent;
@@ -254,7 +254,7 @@ float CPrecacheItem::GetMostRecentReference( void )
 // Purpose:
 // Output : unsigned int
 //-----------------------------------------------------------------------------
-unsigned int CPrecacheItem::GetReferenceCount( void )
+unsigned int CPrecacheItem::GetReferenceCount(void)
 {
 	return m_uiRefcount;
 }

@@ -18,7 +18,7 @@ using namespace vgui;
 // An Image is an class that handles drawing of a tga image
 // They are not panels.
 //-----------------------------------------------------------------------------
-class ImageDemo: public DemoPage
+class ImageDemo : public DemoPage
 {
 	typedef DemoPage BaseClass;
 
@@ -45,16 +45,14 @@ ImageDemo::ImageDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ImageDemo::~ImageDemo()
-{
-}
+ImageDemo::~ImageDemo() {}
 
 //-----------------------------------------------------------------------------
 // Scheme settings
 //-----------------------------------------------------------------------------
 void ImageDemo::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// now insert an image
 	m_pImage = scheme()->GetImage("Resource/valve_logo", false);
@@ -71,8 +69,7 @@ void ImageDemo::Paint()
 	m_pImage->Paint();
 }
 
-
-Panel* ImageDemo_Create(Panel *parent)
+Panel *ImageDemo_Create(Panel *parent)
 {
 	return new ImageDemo(parent, "ImageDemo");
 }

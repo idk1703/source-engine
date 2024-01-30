@@ -9,20 +9,17 @@
 #include "CRagdollMagnet.h"
 #include "cplane.h"
 
-ConVar ai_debug_ragdoll_magnets( "ai_debug_ragdoll_magnets", "0");
+ConVar ai_debug_ragdoll_magnets("ai_debug_ragdoll_magnets", "0");
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LINK_ENTITY_TO_CLASS( phys_ragdollmagnet, CRagdollMagnet );
-BEGIN_DATADESC( CRagdollMagnet )
-	DEFINE_KEYFIELD( m_radius,		FIELD_FLOAT, "radius" ),
-	DEFINE_KEYFIELD( m_force,		FIELD_FLOAT, "force" ),
-	DEFINE_KEYFIELD( m_axis,		FIELD_VECTOR, "axis" ),
-	DEFINE_KEYFIELD( m_bDisabled,	FIELD_BOOLEAN,	"StartDisabled" ),
+LINK_ENTITY_TO_CLASS(phys_ragdollmagnet, CRagdollMagnet);
+BEGIN_DATADESC(CRagdollMagnet)
+	DEFINE_KEYFIELD(m_radius, FIELD_FLOAT, "radius"), DEFINE_KEYFIELD(m_force, FIELD_FLOAT, "force"),
+		DEFINE_KEYFIELD(m_axis, FIELD_VECTOR, "axis"), DEFINE_KEYFIELD(m_bDisabled, FIELD_BOOLEAN, "StartDisabled"),
 
-	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
-	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
+		DEFINE_INPUTFUNC(FIELD_VOID, "Enable", InputEnable), DEFINE_INPUTFUNC(FIELD_VOID, "Disable", InputDisable),
 
 END_DATADESC()
 
@@ -30,18 +27,18 @@ END_DATADESC()
 // Purpose:
 // Input  : &inputdata -
 //-----------------------------------------------------------------------------
-void CRagdollMagnet::InputEnable( inputdata_t &inputdata )
+void CRagdollMagnet::InputEnable(inputdata_t &inputdata)
 {
-	Enable( true );
+	Enable(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : &inputdata -
 //-----------------------------------------------------------------------------
-void CRagdollMagnet::InputDisable( inputdata_t &inputdata )
+void CRagdollMagnet::InputDisable(inputdata_t &inputdata)
 {
-	Enable( false );
+	Enable(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -58,12 +55,12 @@ void CRagdollMagnet::InputDisable( inputdata_t &inputdata )
 //  - LATER: I'm not flagged to ignore ragdoll magnets
 //	- LATER: The magnet is not turned OFF
 //-----------------------------------------------------------------------------
-CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
+CRagdollMagnet *CRagdollMagnet::FindBestMagnet(CBaseEntity *pNPC)
 {
-	CRagdollMagnet	*pMagnet = NULL;
-	CRagdollMagnet	*pBestMagnet;
+	CRagdollMagnet *pMagnet = NULL;
+	CRagdollMagnet *pBestMagnet;
 
-	float			flClosestDist;
+	float flClosestDist;
 
 	// Assume we won't find one.
 	pBestMagnet = NULL;
@@ -71,14 +68,14 @@ CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
 
 	do
 	{
-		pMagnet = (CRagdollMagnet *)gEntList.FindEntityByClassname( pMagnet, "phys_ragdollmagnet" );
+		pMagnet = (CRagdollMagnet *)gEntList.FindEntityByClassname(pMagnet, "phys_ragdollmagnet");
 
-		if( pMagnet && pMagnet->IsEnabled() )
+		if(pMagnet && pMagnet->IsEnabled())
 		{
-			if( pMagnet->m_target != NULL_STRING )
+			if(pMagnet->m_target != NULL_STRING)
 			{
 				// if this magnet has a target, only affect that target!
-				if( pNPC->GetEntityName() == pMagnet->m_target )
+				if(pNPC->GetEntityName() == pMagnet->m_target)
 				{
 					return pMagnet;
 				}
@@ -89,9 +86,9 @@ CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
 			}
 
 			float flDist;
-			flDist = pMagnet->DistToPoint( pNPC->WorldSpaceCenter() );
+			flDist = pMagnet->DistToPoint(pNPC->WorldSpaceCenter());
 
-			if( flDist < flClosestDist && flDist <= pMagnet->GetRadius() )
+			if(flDist < flClosestDist && flDist <= pMagnet->GetRadius())
 			{
 				// This is the closest magnet that can pull this npc.
 				flClosestDist = flDist;
@@ -99,7 +96,7 @@ CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
 			}
 		}
 
-	} while( pMagnet );
+	} while(pMagnet);
 
 	return pBestMagnet;
 }
@@ -111,20 +108,20 @@ CRagdollMagnet *CRagdollMagnet::FindBestMagnet( CBaseEntity *pNPC )
 //
 // NOTE: This function assumes pNPC is within this magnet's radius.
 //-----------------------------------------------------------------------------
-Vector CRagdollMagnet::GetForceVector( CBaseEntity *pNPC )
+Vector CRagdollMagnet::GetForceVector(CBaseEntity *pNPC)
 {
 	Vector vecForceToApply;
 
-	if( IsBarMagnet() )
+	if(IsBarMagnet())
 	{
 		CPlane axis;
 		Vector vecForceDir;
 		Vector vecClosest;
 
-		CalcClosestPointOnLineSegment( pNPC->WorldSpaceCenter(), GetAbsOrigin(), m_axis, vecClosest, NULL );
+		CalcClosestPointOnLineSegment(pNPC->WorldSpaceCenter(), GetAbsOrigin(), m_axis, vecClosest, NULL);
 
-		vecForceDir = (vecClosest - pNPC->WorldSpaceCenter() );
-		VectorNormalize( vecForceDir );
+		vecForceDir = (vecClosest - pNPC->WorldSpaceCenter());
+		VectorNormalize(vecForceDir);
 
 		vecForceToApply = vecForceDir * m_force;
 	}
@@ -133,20 +130,20 @@ Vector CRagdollMagnet::GetForceVector( CBaseEntity *pNPC )
 		Vector vecForce;
 
 		vecForce = GetAbsOrigin() - pNPC->WorldSpaceCenter();
-		VectorNormalize( vecForce );
+		VectorNormalize(vecForce);
 
 		vecForceToApply = vecForce * m_force;
 	}
 
-	if( ai_debug_ragdoll_magnets.GetBool() )
+	if(ai_debug_ragdoll_magnets.GetBool())
 	{
 		IPhysicsObject *pPhysObject;
 
 		pPhysObject = pNPC->VPhysicsGetObject();
 
-		if( pPhysObject )
+		if(pPhysObject)
 		{
-			Msg("Ragdoll magnet adding %f inches/sec to %s\n", m_force/pPhysObject->GetMass(), pNPC->GetClassname() );
+			Msg("Ragdoll magnet adding %f inches/sec to %s\n", m_force / pPhysObject->GetMass(), pNPC->GetClassname());
 		}
 	}
 
@@ -158,9 +155,9 @@ Vector CRagdollMagnet::GetForceVector( CBaseEntity *pNPC )
 // Input  : &vecPoint - the point
 // Output : float - the dist
 //-----------------------------------------------------------------------------
-float CRagdollMagnet::DistToPoint( const Vector &vecPoint )
+float CRagdollMagnet::DistToPoint(const Vector &vecPoint)
 {
-	if( IsBarMagnet() )
+	if(IsBarMagnet())
 	{
 		// I'm a bar magnet, so the point's distance is really the plane constant.
 		// A bar magnet is a cylinder who's length is AbsOrigin() to m_axis, and whose
@@ -175,14 +172,14 @@ float CRagdollMagnet::DistToPoint( const Vector &vecPoint )
 		Vector vecAxis;
 
 		vecAxis = GetAxisVector();
-		VectorNormalize( vecAxis );
+		VectorNormalize(vecAxis);
 
 		CPlane top, bottom;
 
-		bottom.InitializePlane( -vecAxis, m_axis );
-		top.InitializePlane( vecAxis, GetAbsOrigin() );
+		bottom.InitializePlane(-vecAxis, m_axis);
+		top.InitializePlane(vecAxis, GetAbsOrigin());
 
-		if( top.PointInFront( vecPoint ) && bottom.PointInFront( vecPoint ) )
+		if(top.PointInFront(vecPoint) && bottom.PointInFront(vecPoint))
 		{
 			// This point is between the two caps, so calculate the distance
 			// of vecPoint from the axis of the bar magnet
@@ -194,20 +191,20 @@ float CRagdollMagnet::DistToPoint( const Vector &vecPoint )
 			float hDist, vDist;
 
 			// Need to get a vector that's right-hand to m_axis
-			VectorVectors( vecAxis, vecRight, vecUp );
+			VectorVectors(vecAxis, vecRight, vecUp);
 
-			//CrossProduct( vecAxis, vecUp, vecRight );
-			//VectorNormalize( vecRight );
-			//VectorNormalize( vecUp );
+			// CrossProduct( vecAxis, vecUp, vecRight );
+			// VectorNormalize( vecRight );
+			// VectorNormalize( vecUp );
 
 			// Set up the plane to measure horizontal dist.
-			axis.InitializePlane( vecRight, GetAbsOrigin() );
-			hDist = fabs( axis.PointDist( vecPoint ) );
+			axis.InitializePlane(vecRight, GetAbsOrigin());
+			hDist = fabs(axis.PointDist(vecPoint));
 
-			axis.InitializePlane( vecUp, GetAbsOrigin() );
-			vDist = fabs( axis.PointDist( vecPoint ) );
+			axis.InitializePlane(vecUp, GetAbsOrigin());
+			vDist = fabs(axis.PointDist(vecPoint));
 
-			return MAX( hDist, vDist );
+			return MAX(hDist, vDist);
 		}
 		else
 		{
@@ -217,6 +214,6 @@ float CRagdollMagnet::DistToPoint( const Vector &vecPoint )
 	else
 	{
 		// I'm a point magnet. Just return dist
-		return ( GetAbsOrigin() - vecPoint ).Length();
+		return (GetAbsOrigin() - vecPoint).Length();
 	}
 }

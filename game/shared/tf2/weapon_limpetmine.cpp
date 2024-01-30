@@ -17,7 +17,7 @@
 #include "beam_shared.h"
 #include "tf_gamerules.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 #else
 #include "grenade_limpetmine.h"
 #include "tf_obj_sentrygun.h"
@@ -26,38 +26,39 @@
 #endif
 
 // Damage CVars
-ConVar	weapon_laserdesignator_range( "weapon_laserdesignator_range","2048", FCVAR_REPLICATED, "Laser Designator maximum range" );
-ConVar	weapon_limpetmine_max_deployed( "weapon_limpetmine_max_deployed","0", FCVAR_REPLICATED, "Maximum number of Limpet Mines that can be deployed at a single time" );
-ConVar	weapon_limpetmine_max_distance_off_trace( "weapon_limpetmine_max_distance_off_trace","25", FCVAR_REPLICATED, "Maximum distance off of the trace that a limpet can be." );
+ConVar weapon_laserdesignator_range("weapon_laserdesignator_range", "2048", FCVAR_REPLICATED,
+									"Laser Designator maximum range");
+ConVar weapon_limpetmine_max_deployed("weapon_limpetmine_max_deployed", "0", FCVAR_REPLICATED,
+									  "Maximum number of Limpet Mines that can be deployed at a single time");
+ConVar weapon_limpetmine_max_distance_off_trace("weapon_limpetmine_max_distance_off_trace", "25", FCVAR_REPLICATED,
+												"Maximum distance off of the trace that a limpet can be.");
 
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponLimpetmine, DT_WeaponLimpetmine )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponLimpetmine, DT_WeaponLimpetmine)
 
-BEGIN_NETWORK_TABLE( CWeaponLimpetmine, DT_WeaponLimpetmine )
-#if !defined( CLIENT_DLL )
-	SendPropInt( SENDINFO( m_iDeployedLimpets ), 5, SPROP_UNSIGNED ),
-	SendPropEHandle( SENDINFO( m_hDesignatedEntity ) ),
+BEGIN_NETWORK_TABLE(CWeaponLimpetmine, DT_WeaponLimpetmine)
+#if !defined(CLIENT_DLL)
+	SendPropInt(SENDINFO(m_iDeployedLimpets), 5, SPROP_UNSIGNED), SendPropEHandle(SENDINFO(m_hDesignatedEntity)),
 #else
-	RecvPropInt( RECVINFO( m_iDeployedLimpets ) ),
-	RecvPropEHandle( RECVINFO(m_hDesignatedEntity) ),
+	RecvPropInt(RECVINFO(m_iDeployedLimpets)), RecvPropEHandle(RECVINFO(m_hDesignatedEntity)),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponLimpetmine  )
+BEGIN_PREDICTION_DATA(CWeaponLimpetmine)
 
-	DEFINE_PRED_FIELD( m_iDeployedLimpets, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_hDesignatedEntity, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD(m_iDeployedLimpets, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
+		DEFINE_PRED_FIELD(m_hDesignatedEntity, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE),
 
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( weapon_limpetmine, CWeaponLimpetmine );
+LINK_ENTITY_TO_CLASS(weapon_limpetmine, CWeaponLimpetmine);
 PRECACHE_WEAPON_REGISTER(weapon_limpetmine);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CWeaponLimpetmine::CWeaponLimpetmine( void )
+CWeaponLimpetmine::CWeaponLimpetmine(void)
 {
-	SetPredictionEligible( true );
+	SetPredictionEligible(true);
 
 	m_hDesignatedEntity = NULL;
 	m_flNextBuzzTime = 0;
@@ -67,30 +68,30 @@ CWeaponLimpetmine::CWeaponLimpetmine( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::Precache( void )
+void CWeaponLimpetmine::Precache(void)
 {
 	BaseClass::Precache();
 
 #ifndef CLIENT_DLL
-	UTIL_PrecacheOther( "grenade_limpetmine" );
+	UTIL_PrecacheOther("grenade_limpetmine");
 #endif
 
-	PrecacheScriptSound( "WeaponLimpetmine.Deny" );
+	PrecacheScriptSound("WeaponLimpetmine.Deny");
 
-	PrecacheModel( "sprites/laserbeam.vmt" );
+	PrecacheModel("sprites/laserbeam.vmt");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::UpdateOnRemove( void )
+void CWeaponLimpetmine::UpdateOnRemove(void)
 {
 #ifndef CLIENT_DLL
 	RemoveDeployedLimpets();
 
-	if ( m_hLaserDesignation )
+	if(m_hLaserDesignation)
 	{
-		UTIL_Remove( m_hLaserDesignation );
+		UTIL_Remove(m_hLaserDesignation);
 	}
 #endif
 
@@ -101,7 +102,7 @@ void CWeaponLimpetmine::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::CleanupOnActStart( void )
+void CWeaponLimpetmine::CleanupOnActStart(void)
 {
 #ifndef CLIENT_DLL
 	RemoveDeployedLimpets();
@@ -111,7 +112,7 @@ void CWeaponLimpetmine::CleanupOnActStart( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CWeaponLimpetmine::GetFireRate( void )
+float CWeaponLimpetmine::GetFireRate(void)
 {
 	return 0.5;
 }
@@ -119,7 +120,7 @@ float CWeaponLimpetmine::GetFireRate( void )
 //-----------------------------------------------------------------------------
 // Purpose: Limpetmine considers itself as having ammo at all times, because it contains the designator
 //-----------------------------------------------------------------------------
-bool CWeaponLimpetmine::HasAnyAmmo( void )
+bool CWeaponLimpetmine::HasAnyAmmo(void)
 {
 	return true;
 }
@@ -127,40 +128,39 @@ bool CWeaponLimpetmine::HasAnyAmmo( void )
 //-----------------------------------------------------------------------------
 // Purpose: Stop thinking and holster
 //-----------------------------------------------------------------------------
-bool CWeaponLimpetmine::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CWeaponLimpetmine::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
 	StopDesignating();
 	return BaseClass::Holster(pSwitchingTo);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::ItemPostFrame( void )
+void CWeaponLimpetmine::ItemPostFrame(void)
 {
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	if ( !pPlayer )
+	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
 #ifndef CLIENT_DLL
 	// If we don't have a laser designator yet, create one
-	if ( !m_hLaserDesignation )
+	if(!m_hLaserDesignation)
 	{
-		m_hLaserDesignation = CEnvLaserDesignation::Create( pPlayer );
+		m_hLaserDesignation = CEnvLaserDesignation::Create(pPlayer);
 	}
 #endif
 
 	// Is the player trying to designate?
-	if ( pPlayer->m_nButtons & IN_ATTACK )
+	if(pPlayer->m_nButtons & IN_ATTACK)
 	{
-		if ( m_bDesignating )
+		if(m_bDesignating)
 		{
 #ifndef CLIENT_DLL
 			ActivateBeam();
 #endif
 		}
-		else if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
+		else if(m_flNextPrimaryAttack <= gpGlobals->curtime)
 		{
 			StartDesignating();
 #ifndef CLIENT_DLL
@@ -168,17 +168,19 @@ void CWeaponLimpetmine::ItemPostFrame( void )
 #endif
 		}
 	}
-	else if ( m_bDesignating )
+	else if(m_bDesignating)
 	{
 		StopDesignating();
 	}
-	else if ( (pPlayer->m_nButtons & IN_ATTACK2) && !m_flStartedLaunchingAt && (m_flNextPrimaryAttack <= gpGlobals->curtime) )
+	else if((pPlayer->m_nButtons & IN_ATTACK2) && !m_flStartedLaunchingAt &&
+			(m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
 		m_flStartedLaunchingAt = gpGlobals->curtime;
 
-		SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+		SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 	}
-	else if ( (pPlayer->m_afButtonReleased & IN_ATTACK2) && (m_flNextPrimaryAttack <= gpGlobals->curtime) && m_flStartedLaunchingAt )
+	else if((pPlayer->m_afButtonReleased & IN_ATTACK2) && (m_flNextPrimaryAttack <= gpGlobals->curtime) &&
+			m_flStartedLaunchingAt)
 	{
 		m_flNextPrimaryAttack = gpGlobals->curtime;
 		PrimaryAttack();
@@ -194,58 +196,58 @@ void CWeaponLimpetmine::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::PrimaryAttack( void )
+void CWeaponLimpetmine::PrimaryAttack(void)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
 	// Don't allow anymore limpets to be placed if we've reached the max
-	if ( m_iDeployedLimpets >= weapon_limpetmine_max_deployed.GetInt() )
+	if(m_iDeployedLimpets >= weapon_limpetmine_max_deployed.GetInt())
 	{
 #ifdef CLIENT_DLL
 		// We should flash the limpet mine count on the weapon at this point
 		CLocalPlayerFilter filter;
-		EmitSound( filter, entindex(), "WeaponLimpetmine.Deny" );
-		m_flNextBuzzTime = gpGlobals->curtime + 0.5f;	// only buzz every so often.
+		EmitSound(filter, entindex(), "WeaponLimpetmine.Deny");
+		m_flNextBuzzTime = gpGlobals->curtime + 0.5f; // only buzz every so often.
 #endif
 		return;
 	}
 
-	if ( IsOwnerEMPed() )
+	if(IsOwnerEMPed())
 		return;
 
 	trace_t tr;
 	// Get an aim vector. Don't use GetAimVector() because we don't want autoaiming.
-	Vector vecSrc = pPlayer->Weapon_ShootPosition( );
+	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	Vector vecAiming;
-	pPlayer->EyeVectors( &vecAiming );
+	pPlayer->EyeVectors(&vecAiming);
 
 	// Calculate launch velocity (3 seconds for max distance)
-	float flThrowTime = MIN( (gpGlobals->curtime - m_flStartedLaunchingAt), 3.0 );
+	float flThrowTime = MIN((gpGlobals->curtime - m_flStartedLaunchingAt), 3.0);
 	float flSpeed = 600 + (300 * flThrowTime);
 	vecAiming *= flSpeed;
 
-	WeaponSound( WPN_DOUBLE );
+	WeaponSound(WPN_DOUBLE);
 #ifndef CLIENT_DLL
-	ThrowLimpet( pPlayer, vecSrc, vecAiming );
+	ThrowLimpet(pPlayer, vecSrc, vecAiming);
 #endif
-	SendWeaponAnim( ACT_VM_SECONDARYATTACK );
+	SendWeaponAnim(ACT_VM_SECONDARYATTACK);
 
 	m_flNextPrimaryAttack = gpGlobals->curtime + GetFireRate();
 	m_flNextSecondaryAttack = gpGlobals->curtime + GetFireRate();
 
-	pPlayer->RemoveAmmo( 1, m_iPrimaryAmmoType );
+	pPlayer->RemoveAmmo(1, m_iPrimaryAmmoType);
 }
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::ThrowLimpet( CBasePlayer *pPlayer, Vector vecSrc, Vector vecAiming )
+void CWeaponLimpetmine::ThrowLimpet(CBasePlayer *pPlayer, Vector vecSrc, Vector vecAiming)
 {
 	CLimpetMine *pLimpet = CLimpetMine::Create(vecSrc, vecAiming, pPlayer);
-	pLimpet->SetLauncher( this );
+	pLimpet->SetLauncher(this);
 
 	// Increase the limpet count
 	m_iDeployedLimpets += 1;
@@ -254,15 +256,15 @@ void CWeaponLimpetmine::ThrowLimpet( CBasePlayer *pPlayer, Vector vecSrc, Vector
 //-----------------------------------------------------------------------------
 // Purpose: Detonates all deployed limpets for this weapon
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::DetonateDeployedLimpets( void )
+void CWeaponLimpetmine::DetonateDeployedLimpets(void)
 {
 	CBaseEntity *pEntity = NULL;
-	while ((pEntity = gEntList.FindEntityByClassname( pEntity, "grenade_limpetmine" )) != NULL)
+	while((pEntity = gEntList.FindEntityByClassname(pEntity, "grenade_limpetmine")) != NULL)
 	{
-		CLimpetMine* pLimpet = (CLimpetMine*)pEntity;
-		if ( pLimpet->IsLive() && pLimpet->GetThrower() == GetOwner() )
+		CLimpetMine *pLimpet = (CLimpetMine *)pEntity;
+		if(pLimpet->IsLive() && pLimpet->GetThrower() == GetOwner())
 		{
-			pLimpet->Use( GetOwner(), this, USE_ON, 0 );
+			pLimpet->Use(GetOwner(), this, USE_ON, 0);
 		}
 	}
 }
@@ -270,15 +272,15 @@ void CWeaponLimpetmine::DetonateDeployedLimpets( void )
 //-----------------------------------------------------------------------------
 // Purpose: Quietly removes all deployed limpets for this weapon
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::RemoveDeployedLimpets( void )
+void CWeaponLimpetmine::RemoveDeployedLimpets(void)
 {
 	CBaseEntity *pEntity = NULL;
-	while ((pEntity = gEntList.FindEntityByClassname( pEntity, "grenade_limpetmine" )) != NULL)
+	while((pEntity = gEntList.FindEntityByClassname(pEntity, "grenade_limpetmine")) != NULL)
 	{
-		CLimpetMine* pLimpet = (CLimpetMine*)pEntity;
-		if ( pLimpet->GetThrower() == GetOwner() )
+		CLimpetMine *pLimpet = (CLimpetMine *)pEntity;
+		if(pLimpet->GetThrower() == GetOwner())
 		{
-			pLimpet->Use( GetOwner(), this, USE_SET, 0 );
+			pLimpet->Use(GetOwner(), this, USE_SET, 0);
 		}
 	}
 }
@@ -286,37 +288,37 @@ void CWeaponLimpetmine::RemoveDeployedLimpets( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::ActivateBeam( void )
+void CWeaponLimpetmine::ActivateBeam(void)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
-	Assert( m_pBeam );
-	if( m_hDesignatedEntity != NULL )
+	Assert(m_pBeam);
+	if(m_hDesignatedEntity != NULL)
 	{
-		CBaseEntity* pEntity = m_hDesignatedEntity.Get();
+		CBaseEntity *pEntity = m_hDesignatedEntity.Get();
 
 		// If we hit a player, and it's an enemy, tell my sentryguns to attack it
-		if ( pEntity->IsPlayer() && !pPlayer->InSameTeam(pEntity) )
+		if(pEntity->IsPlayer() && !pPlayer->InSameTeam(pEntity))
 		{
-			DesignateSentriesToAttack( pEntity );
+			DesignateSentriesToAttack(pEntity);
 		}
-		else if ( pEntity->GetFlags() & FL_NPC )
+		else if(pEntity->GetFlags() & FL_NPC)
 		{
 			// If it's an enemy NPC, tell my sentryguns to attack it
-			if ( !pPlayer->InSameTeam( pEntity ) )
+			if(!pPlayer->InSameTeam(pEntity))
 			{
-				DesignateSentriesToAttack( pEntity );
+				DesignateSentriesToAttack(pEntity);
 			}
 		}
 		else
 		{
 			// Is it a sentrygun? If so, tell it to toggle it's sunken state.
-			if ( pEntity->Classify() == CLASS_MILITARY )
+			if(pEntity->Classify() == CLASS_MILITARY)
 			{
 				CObjectSentrygun *pSentry = dynamic_cast<CObjectSentrygun *>(pEntity);
-				if ( pSentry && pSentry->GetBuilder() == pPlayer )
+				if(pSentry && pSentry->GetBuilder() == pPlayer)
 				{
 					pSentry->ToggleTurtle();
 					return;
@@ -324,9 +326,9 @@ void CWeaponLimpetmine::ActivateBeam( void )
 				else
 				{
 					// If it's an enemy object, tell my sentryguns to attack it
-					if ( !pPlayer->InSameTeam( pEntity ) )
+					if(!pPlayer->InSameTeam(pEntity))
 					{
-						DesignateSentriesToAttack( pEntity );
+						DesignateSentriesToAttack(pEntity);
 						return;
 					}
 				}
@@ -334,11 +336,10 @@ void CWeaponLimpetmine::ActivateBeam( void )
 
 			// Is it a limpet mine? If so, detonate it
 			CLimpetMine *pLimpet = dynamic_cast<CLimpetMine *>(pEntity);
-			if ( pLimpet && pLimpet->IsLive() && pLimpet->GetThrower() == pPlayer )
+			if(pLimpet && pLimpet->IsLive() && pLimpet->GetThrower() == pPlayer)
 			{
-				pLimpet->Use( pPlayer, this, USE_ON, 0 );
+				pLimpet->Use(pPlayer, this, USE_ON, 0);
 			}
-
 		}
 	}
 }
@@ -346,39 +347,39 @@ void CWeaponLimpetmine::ActivateBeam( void )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified entity is a valid one for designation
 //-----------------------------------------------------------------------------
-bool CWeaponLimpetmine::ValidDesignationTarget( CBaseEntity *pEntity )
+bool CWeaponLimpetmine::ValidDesignationTarget(CBaseEntity *pEntity)
 {
-	if( !pEntity )
+	if(!pEntity)
 		return false;
 
 	// Ignore the world
-	if ((!pEntity) || ( pEntity->entindex() == 0 ))
+	if((!pEntity) || (pEntity->entindex() == 0))
 		return false;
 
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
 	Assert(pPlayer);
 	if(!pPlayer)
 		return false;
 
 	// Ignore players on my team
-	if ( pEntity->IsPlayer() )
+	if(pEntity->IsPlayer())
 	{
-		if( pEntity->InSameTeam(GetOwner()) )
+		if(pEntity->InSameTeam(GetOwner()))
 			return false;
 		else
 			return true;
 	}
 
 	// can either target my own sentry guns to turtle, or enemy buildings to target for sentries:
-	if ( pEntity->Classify() == CLASS_MILITARY )
+	if(pEntity->Classify() == CLASS_MILITARY)
 	{
 		// Is it a sentry gun I built?
-		if ( dynamic_cast<CObjectSentrygun *>(pEntity) && ((CObjectSentrygun*)pEntity)->GetBuilder() == pPlayer )
+		if(dynamic_cast<CObjectSentrygun *>(pEntity) && ((CObjectSentrygun *)pEntity)->GetBuilder() == pPlayer)
 		{
 			return true;
 		}
 		// Is it an enemy object?
-		else if ( !pPlayer->InSameTeam( pEntity ) )
+		else if(!pPlayer->InSameTeam(pEntity))
 		{
 			return true;
 		}
@@ -386,11 +387,11 @@ bool CWeaponLimpetmine::ValidDesignationTarget( CBaseEntity *pEntity )
 
 	// My limpet mines are valid
 	CLimpetMine *pLimpet = dynamic_cast<CLimpetMine *>(pEntity);
-	if ( pLimpet && pLimpet->IsLive() && pLimpet->GetThrower() == GetOwner() )
+	if(pLimpet && pLimpet->IsLive() && pLimpet->GetThrower() == GetOwner())
 		return true;
 
 	// NPCs are valid
-	if ( pEntity->GetFlags() & FL_NPC )
+	if(pEntity->GetFlags() & FL_NPC)
 		return true;
 
 	return false;
@@ -399,23 +400,23 @@ bool CWeaponLimpetmine::ValidDesignationTarget( CBaseEntity *pEntity )
 //-----------------------------------------------------------------------------
 // Purpose: Set the player's sentryguns to all attack the specified target
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::DesignateSentriesToAttack( CBaseEntity *pEntity )
+void CWeaponLimpetmine::DesignateSentriesToAttack(CBaseEntity *pEntity)
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
 	// Tell all this player's sentryguns
-	for ( int i = 0; i < pPlayer->GetObjectCount(); i++ )
+	for(int i = 0; i < pPlayer->GetObjectCount(); i++)
 	{
 		CBaseObject *pObj = pPlayer->GetObject(i);
-		if ( !pObj )
+		if(!pObj)
 			continue;
 
-		if ( pObj->IsSentrygun() )
+		if(pObj->IsSentrygun())
 		{
 			CObjectSentrygun *pSentry = static_cast<CObjectSentrygun *>(pObj);
-			pSentry->DesignateTarget( pEntity );
+			pSentry->DesignateTarget(pEntity);
 		}
 	}
 }
@@ -423,35 +424,35 @@ void CWeaponLimpetmine::DesignateSentriesToAttack( CBaseEntity *pEntity )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
+CBaseEntity *CWeaponLimpetmine::GetDesignatedEntity(CBaseTFPlayer *pPlayer)
 {
 	// Construct the start and end vectors.
-	Vector vecSrc = pPlayer->Weapon_ShootPosition( );
+	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	Vector vecAiming;
-	pPlayer->EyeVectors( &vecAiming );
+	pPlayer->EyeVectors(&vecAiming);
 	Vector vecEnd = vecSrc + vecAiming * weapon_laserdesignator_range.GetFloat();
 
 	float fBestDistanceSq = FLT_MAX;
-	CBaseEntity* pBestEntity = NULL;
+	CBaseEntity *pBestEntity = NULL;
 	float fMaxDist = weapon_limpetmine_max_distance_off_trace.GetFloat();
 	float fMaxDistSq = fMaxDist * fMaxDist;
 
 	// Check all limpets against a cylinder:
-	if( CLimpetMine::allLimpets )
+	if(CLimpetMine::allLimpets)
 	{
-		for ( CLimpetMine *pLimpet = CLimpetMine::allLimpets ;pLimpet; pLimpet = pLimpet->nextLimpet)
+		for(CLimpetMine *pLimpet = CLimpetMine::allLimpets; pLimpet; pLimpet = pLimpet->nextLimpet)
 		{
 			// Find the closest limpet to the center of the cylinder:
-			if( pLimpet->IsLive() && pLimpet->GetThrower() != NULL && pLimpet->GetThrower() == pPlayer )
+			if(pLimpet->IsLive() && pLimpet->GetThrower() != NULL && pLimpet->GetThrower() == pPlayer)
 			{
-				Vector vecNearestPoint = PointOnLineNearestPoint( vecSrc, vecEnd, pLimpet->GetAbsOrigin() );
+				Vector vecNearestPoint = PointOnLineNearestPoint(vecSrc, vecEnd, pLimpet->GetAbsOrigin());
 
-				float fDistSq = ( pLimpet->GetAbsOrigin() - vecNearestPoint ).LengthSqr();
+				float fDistSq = (pLimpet->GetAbsOrigin() - vecNearestPoint).LengthSqr();
 
-				if (( fDistSq > fMaxDistSq ) || ( fDistSq >= fBestDistanceSq ))
+				if((fDistSq > fMaxDistSq) || (fDistSq >= fBestDistanceSq))
 					continue;
 
-				if (TFGameRules()->IsBlockedByEnemyShields( vecSrc, pLimpet->GetAbsOrigin(), GetOwner()->GetTeamNumber() ))
+				if(TFGameRules()->IsBlockedByEnemyShields(vecSrc, pLimpet->GetAbsOrigin(), GetOwner()->GetTeamNumber()))
 					continue;
 
 				pBestEntity = pLimpet;
@@ -459,26 +460,26 @@ CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
 			}
 		}
 
-		if( pBestEntity )
+		if(pBestEntity)
 			return pBestEntity;
 	}
 
 	// Check to see if we are designating a combat object:
-	for ( int i = 0; i < pPlayer->GetObjectCount(); i++ )
+	for(int i = 0; i < pPlayer->GetObjectCount(); i++)
 	{
 		CBaseObject *pObj = pPlayer->GetObject(i);
-		if ( !pObj || !pObj->IsSentrygun() )
+		if(!pObj || !pObj->IsSentrygun())
 			continue;
 
 		Vector vecObjCenter = pObj->WorldSpaceCenter();
-		Vector vecNearestPoint = PointOnLineNearestPoint( vecSrc, vecEnd, vecObjCenter );
+		Vector vecNearestPoint = PointOnLineNearestPoint(vecSrc, vecEnd, vecObjCenter);
 
-		float fDistSq = ( vecObjCenter - vecNearestPoint ).LengthSqr();
+		float fDistSq = (vecObjCenter - vecNearestPoint).LengthSqr();
 
-		if (( fDistSq > fMaxDistSq ) || ( fDistSq >= fBestDistanceSq ))
+		if((fDistSq > fMaxDistSq) || (fDistSq >= fBestDistanceSq))
 			continue;
 
-		if (TFGameRules()->IsBlockedByEnemyShields( vecSrc, vecObjCenter, GetOwner()->GetTeamNumber() ))
+		if(TFGameRules()->IsBlockedByEnemyShields(vecSrc, vecObjCenter, GetOwner()->GetTeamNumber()))
 			continue;
 
 		pBestEntity = pObj;
@@ -494,50 +495,50 @@ CBaseEntity* CWeaponLimpetmine::GetDesignatedEntity( CBaseTFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::WeaponIdle( void )
+void CWeaponLimpetmine::WeaponIdle(void)
 {
-	if ( HasWeaponIdleTimeElapsed() )
+	if(HasWeaponIdleTimeElapsed())
 	{
-		if ( m_bDesignating || m_flStartedLaunchingAt )
+		if(m_bDesignating || m_flStartedLaunchingAt)
 		{
-			SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+			SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 		}
 		else
 		{
-			SendWeaponAnim( ACT_VM_IDLE );
+			SendWeaponAnim(ACT_VM_IDLE);
 		}
-		SetWeaponIdleTime( gpGlobals->curtime + 0.2 );
+		SetWeaponIdleTime(gpGlobals->curtime + 0.2);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Start designating with the laser
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::StartDesignating( void )
+void CWeaponLimpetmine::StartDesignating(void)
 {
 	m_bDesignating = true;
 
 	// Add myself to the designated target list
-	Vector vecOrigin(0,0,0);
+	Vector vecOrigin(0, 0, 0);
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+	SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 
 #ifndef CLIENT_DLL
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
-	if ( !m_pBeam )
+	if(!m_pBeam)
 	{
-		m_pBeam = CBeam::BeamCreate( "sprites/laserbeam.vmt", 5 );
+		m_pBeam = CBeam::BeamCreate("sprites/laserbeam.vmt", 5);
 
-		m_pBeam->PointEntInit( vec3_origin, this );
-		m_pBeam->SetEndAttachment( 1 );
-		m_pBeam->SetColor( 255, 32, 32 );
-		m_pBeam->SetBrightness( 255 );
-		m_pBeam->SetNoise( 0 );
-		m_pBeam->SetWidth( 0.5 );
-		m_pBeam->SetEndWidth( 0.5 );
+		m_pBeam->PointEntInit(vec3_origin, this);
+		m_pBeam->SetEndAttachment(1);
+		m_pBeam->SetColor(255, 32, 32);
+		m_pBeam->SetBrightness(255);
+		m_pBeam->SetNoise(0);
+		m_pBeam->SetWidth(0.5);
+		m_pBeam->SetEndWidth(0.5);
 	}
 #endif
 }
@@ -545,26 +546,26 @@ void CWeaponLimpetmine::StartDesignating( void )
 //-----------------------------------------------------------------------------
 // Purpose: Stop designating with the laser
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::StopDesignating( void )
+void CWeaponLimpetmine::StopDesignating(void)
 {
-	SendWeaponAnim( ACT_VM_IDLE );
+	SendWeaponAnim(ACT_VM_IDLE);
 
 	m_bDesignating = false;
 
 #ifndef CLIENT_DLL
-	if ( m_pBeam )
+	if(m_pBeam)
 	{
-		UTIL_Remove( m_pBeam );
+		UTIL_Remove(m_pBeam);
 		m_pBeam = NULL;
 	}
 
-	if ( m_hLaserDesignation )
+	if(m_hLaserDesignation)
 	{
-		m_hLaserDesignation->SetActive( false );
+		m_hLaserDesignation->SetActive(false);
 	}
 
 	// Remove any designated target:
-	m_hDesignatedEntity.Set( NULL );
+	m_hDesignatedEntity.Set(NULL);
 #endif
 }
 
@@ -573,14 +574,14 @@ void CWeaponLimpetmine::StopDesignating( void )
 //-----------------------------------------------------------------------------
 void CWeaponLimpetmine::UpdateBeamTarget()
 {
-	CBaseTFPlayer *pPlayer = ToBaseTFPlayer( GetOwner() );
-	if ( !pPlayer )
+	CBaseTFPlayer *pPlayer = ToBaseTFPlayer(GetOwner());
+	if(!pPlayer)
 		return;
 
 	// "Fire" the designator beam
-	Vector vecSrc = pPlayer->Weapon_ShootPosition( );
+	Vector vecSrc = pPlayer->Weapon_ShootPosition();
 	Vector vecAiming;
-	pPlayer->EyeVectors( &vecAiming );
+	pPlayer->EyeVectors(&vecAiming);
 	Vector vecEnd = vecSrc + vecAiming * weapon_laserdesignator_range.GetFloat();
 
 	trace_t tr;
@@ -588,54 +589,54 @@ void CWeaponLimpetmine::UpdateBeamTarget()
 
 	// Only update our designated target point if we hit something
 #ifndef CLIENT_DLL
-	if ( tr.fraction != 1.0 && m_bDesignating )
+	if(tr.fraction != 1.0 && m_bDesignating)
 	{
-		m_hLaserDesignation->SetActive( true );
-		m_hLaserDesignation->SetAbsOrigin( tr.endpos );
+		m_hLaserDesignation->SetActive(true);
+		m_hLaserDesignation->SetAbsOrigin(tr.endpos);
 	}
 	else
 	{
-		m_hLaserDesignation->SetActive( false );
+		m_hLaserDesignation->SetActive(false);
 	}
 
 	// Update beam visual
-	if( m_pBeam )
+	if(m_pBeam)
 	{
-		m_pBeam->SetStartPos( tr.endpos );
+		m_pBeam->SetStartPos(tr.endpos);
 		m_pBeam->RelinkBeam();
 	}
 
-	CBaseEntity* pEntity= NULL;
+	CBaseEntity *pEntity = NULL;
 
 	// Perform designator functions
 	// Did we hit something?
-	//pEntity = CBaseEntity::Instance( tr.u.ent );
+	// pEntity = CBaseEntity::Instance( tr.u.ent );
 
 	// If we hit a target we don't care about, try and grab the nearest valid target to our crosshair
-	//if ( !ValidDesignationTarget( pEntity ) )
+	// if ( !ValidDesignationTarget( pEntity ) )
 	{
 		// Get the designated entity, ignoring trace information:
-		pEntity = GetDesignatedEntity( pPlayer );
+		pEntity = GetDesignatedEntity(pPlayer);
 
-		if( !ValidDesignationTarget( pEntity ) )
+		if(!ValidDesignationTarget(pEntity))
 		{
-			m_hDesignatedEntity.Set( NULL );
+			m_hDesignatedEntity.Set(NULL);
 			return;
 		}
 	}
 
 	// We have a valid entity, light it up.
-	m_hDesignatedEntity.Set( pEntity );
+	m_hDesignatedEntity.Set(pEntity);
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CWeaponLimpetmine::DecrementLimpets( void )
+void CWeaponLimpetmine::DecrementLimpets(void)
 {
 #ifndef CLIENT_DLL
-	if ( m_iDeployedLimpets )
+	if(m_iDeployedLimpets)
 	{
 		m_iDeployedLimpets -= 1;
 	}
@@ -646,41 +647,41 @@ void CWeaponLimpetmine::DecrementLimpets( void )
 //-----------------------------------------------------------------------------
 // Purpose: Limpet mine's always selectable, because the laser designator can always fire
 //-----------------------------------------------------------------------------
-bool C_WeaponLimpetmine::CanBeSelected( void )
+bool C_WeaponLimpetmine::CanBeSelected(void)
 {
 	return true;
 }
 
-void C_WeaponLimpetmine::PreDataUpdate( DataUpdateType_t updateType )
+void C_WeaponLimpetmine::PreDataUpdate(DataUpdateType_t updateType)
 {
-	BaseClass::PreDataUpdate( updateType );
+	BaseClass::PreDataUpdate(updateType);
 
 	m_hOldDesignatedEntity = m_hDesignatedEntity;
 }
 
-void C_WeaponLimpetmine::PostDataUpdate( DataUpdateType_t updateType )
+void C_WeaponLimpetmine::PostDataUpdate(DataUpdateType_t updateType)
 {
-	BaseClass::PostDataUpdate( updateType );
+	BaseClass::PostDataUpdate(updateType);
 
-	if ( GetOwner() == C_BaseTFPlayer::GetLocalPlayer() )
+	if(GetOwner() == C_BaseTFPlayer::GetLocalPlayer())
 	{
 		// Old target isn't valid anymore, so reset it's render properties
-		if ( m_hOldDesignatedEntity.Get() && m_hOldDesignatedEntity != m_hDesignatedEntity )
+		if(m_hOldDesignatedEntity.Get() && m_hOldDesignatedEntity != m_hDesignatedEntity)
 		{
 			m_hOldDesignatedEntity->m_nRenderFX = m_eDesignatedEntityOriginalRenderFx;
-			m_hOldDesignatedEntity->SetRenderMode( (RenderMode_t)m_eDesignatedEntityOriginalRenderMode );
+			m_hOldDesignatedEntity->SetRenderMode((RenderMode_t)m_eDesignatedEntityOriginalRenderMode);
 		}
 
 		// New target? Set it's render properties
-		if ( m_hDesignatedEntity != NULL && m_hOldDesignatedEntity != m_hDesignatedEntity )
+		if(m_hDesignatedEntity != NULL && m_hOldDesignatedEntity != m_hDesignatedEntity)
 		{
 			// Store off original info for designated entity
-			m_eDesignatedEntityOriginalRenderFx		= m_hDesignatedEntity->m_nRenderFX;
-			m_eDesignatedEntityOriginalRenderMode	= m_hDesignatedEntity->GetRenderMode();
+			m_eDesignatedEntityOriginalRenderFx = m_hDesignatedEntity->m_nRenderFX;
+			m_eDesignatedEntityOriginalRenderMode = m_hDesignatedEntity->GetRenderMode();
 
 			// Set up alpha blended pulsefast renderer
-			m_hDesignatedEntity->m_nRenderFX	= kRenderFxPulseFastWider;
-			m_hDesignatedEntity->SetRenderMode( kRenderTransAlpha );
+			m_hDesignatedEntity->m_nRenderFX = kRenderFxPulseFastWider;
+			m_hDesignatedEntity->SetRenderMode(kRenderTransAlpha);
 		}
 	}
 }

@@ -26,40 +26,40 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CDoDHudFireSelect::CDoDHudFireSelect( vgui::Panel *parent, const char *name ) : vgui::EditablePanel( parent, name )
+CDoDHudFireSelect::CDoDHudFireSelect(vgui::Panel *parent, const char *name) : vgui::EditablePanel(parent, name)
 {
-	m_pBackground = new CDoDCutEditablePanel( this, "FireSelectBackground" );
+	m_pBackground = new CDoDCutEditablePanel(this, "FireSelectBackground");
 
-	m_pIconMP44 = new CIconPanel( this, "Icon_MP44" );
-	m_pIconBAR = new CIconPanel( this, "Icon_BAR" );
+	m_pIconMP44 = new CIconPanel(this, "Icon_MP44");
+	m_pIconBAR = new CIconPanel(this, "Icon_BAR");
 
-	m_pBulletLeft = new CIconPanel( this, "Bullet_Left" );
-	m_pBulletCenter = new CIconPanel( this, "Bullet_Center" );
-	m_pBulletRight = new CIconPanel( this, "Bullet_Right" );
+	m_pBulletLeft = new CIconPanel(this, "Bullet_Left");
+	m_pBulletCenter = new CIconPanel(this, "Bullet_Center");
+	m_pBulletRight = new CIconPanel(this, "Bullet_Right");
 
-	m_pBulletRight->SetVisible( true );
+	m_pBulletRight->SetVisible(true);
 }
 
-void CDoDHudFireSelect::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDoDHudFireSelect::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	LoadControlSettings( "resource/UI/HudPlayerStatusFireSelect.res" );
+	LoadControlSettings("resource/UI/HudPlayerStatusFireSelect.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDoDHudFireSelect::SetVisible( bool state )
+void CDoDHudFireSelect::SetVisible(bool state)
 {
-	if ( m_pBackground && m_pBackground->IsVisible() != state )
+	if(m_pBackground && m_pBackground->IsVisible() != state)
 	{
-		m_pBackground->SetVisible( state );
+		m_pBackground->SetVisible(state);
 	}
 
-	m_pBulletLeft->SetVisible( state );
-	m_pBulletCenter->SetVisible( state );
-	m_pBulletRight->SetVisible( state );
+	m_pBulletLeft->SetVisible(state);
+	m_pBulletCenter->SetVisible(state);
+	m_pBulletRight->SetVisible(state);
 }
 
 //-----------------------------------------------------------------------------
@@ -70,53 +70,53 @@ void CDoDHudFireSelect::OnThink()
 	BaseClass::OnThink();
 
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		CWeaponDODBase *pWeapon = pPlayer->GetActiveDODWeapon();
-		if ( pWeapon )
+		if(pWeapon)
 		{
 			bool bSemiAutoWpn = false;
 
-			if ( pWeapon->IsA( WEAPON_MP44 ) )
+			if(pWeapon->IsA(WEAPON_MP44))
 			{
-				m_pIconBAR->SetVisible( false );
-				m_pIconMP44->SetVisible( true );
+				m_pIconBAR->SetVisible(false);
+				m_pIconMP44->SetVisible(true);
 
 				bSemiAutoWpn = true;
 			}
-			else if ( pWeapon->IsA( WEAPON_BAR ) )
+			else if(pWeapon->IsA(WEAPON_BAR))
 			{
-				m_pIconBAR->SetVisible( true );
-				m_pIconMP44->SetVisible( false );
+				m_pIconBAR->SetVisible(true);
+				m_pIconMP44->SetVisible(false);
 
 				bSemiAutoWpn = true;
 			}
 			else
 			{
-				m_pIconBAR->SetVisible( false );
-				m_pIconMP44->SetVisible( false );
+				m_pIconBAR->SetVisible(false);
+				m_pIconMP44->SetVisible(false);
 			}
 
-			if ( bSemiAutoWpn )
+			if(bSemiAutoWpn)
 			{
-				SetVisible( true );
+				SetVisible(true);
 
 				CDODFireSelectWeapon *pFireSelect = dynamic_cast<CDODFireSelectWeapon *>(pWeapon);
 
-				if ( pFireSelect && pFireSelect->IsSemiAuto() )
+				if(pFireSelect && pFireSelect->IsSemiAuto())
 				{
-					m_pBulletLeft->SetVisible( false );
-					m_pBulletCenter->SetVisible( false );
+					m_pBulletLeft->SetVisible(false);
+					m_pBulletCenter->SetVisible(false);
 				}
 				else
 				{
-					m_pBulletLeft->SetVisible( true );
-					m_pBulletCenter->SetVisible( true );
+					m_pBulletLeft->SetVisible(true);
+					m_pBulletCenter->SetVisible(true);
 				}
 			}
 			else
 			{
-				SetVisible( false );
+				SetVisible(false);
 			}
 		}
 	}

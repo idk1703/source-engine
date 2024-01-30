@@ -31,9 +31,7 @@ using namespace vgui;
 class CInlineEditPanel : public vgui::Panel
 {
 public:
-	CInlineEditPanel() : vgui::Panel(NULL, "InlineEditPanel")
-	{
-	}
+	CInlineEditPanel() : vgui::Panel(NULL, "InlineEditPanel") {}
 
 	virtual void Paint()
 	{
@@ -41,14 +39,14 @@ public:
 		GetSize(wide, tall);
 
 		// Draw a white rectangle around that cell
-		vgui::surface()->DrawSetColor( 255, 165, 0, 255 );
-		vgui::surface()->DrawFilledRect( x, y, x + wide, y + tall );
+		vgui::surface()->DrawSetColor(255, 165, 0, 255);
+		vgui::surface()->DrawFilledRect(x, y, x + wide, y + tall);
 	}
 
 	virtual void OnKeyCodeTyped(KeyCode code)
 	{
 		// forward up
-		if (GetParent())
+		if(GetParent())
 		{
 			GetParent()->OnKeyCodeTyped(code);
 		}
@@ -63,7 +61,7 @@ public:
 	void OnMousePressed(vgui::MouseCode code)
 	{
 		// forward up mouse pressed messages to be handled by the key options
-		if (GetParent())
+		if(GetParent())
 		{
 			GetParent()->OnMousePressed(code);
 		}
@@ -73,10 +71,11 @@ public:
 //-----------------------------------------------------------------------------
 // Purpose: Construction
 //-----------------------------------------------------------------------------
-VControlsListPanel::VControlsListPanel( vgui::Panel *parent, const char *listName )	: vgui::SectionedListPanel( parent, listName )
+VControlsListPanel::VControlsListPanel(vgui::Panel *parent, const char *listName)
+	: vgui::SectionedListPanel(parent, listName)
 {
-	m_bCaptureMode	= false;
-	m_nClickRow		= 0;
+	m_bCaptureMode = false;
+	m_nClickRow = 0;
 	m_pInlineEditPanel = new CInlineEditPanel();
 	m_hFont = INVALID_FONT;
 }
@@ -92,16 +91,16 @@ VControlsListPanel::~VControlsListPanel()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VControlsListPanel::ApplySchemeSettings(IScheme *pScheme )
+void VControlsListPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	m_hFont	= pScheme->GetFont("Default", IsProportional() );
+	BaseClass::ApplySchemeSettings(pScheme);
+	m_hFont = pScheme->GetFont("Default", IsProportional());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Start capture prompt display
 //-----------------------------------------------------------------------------
-void VControlsListPanel::StartCaptureMode( HCursor hCursor )
+void VControlsListPanel::StartCaptureMode(HCursor hCursor)
 {
 	m_bCaptureMode = true;
 	EnterEditMode(m_nClickRow, 1, m_pInlineEditPanel);
@@ -113,19 +112,19 @@ void VControlsListPanel::StartCaptureMode( HCursor hCursor )
 
 	engine->StartKeyTrapMode();
 
-	if (hCursor)
+	if(hCursor)
 	{
 		m_pInlineEditPanel->SetCursor(hCursor);
 
 		// save off the cursor position so we can restore it
-		vgui::input()->GetCursorPos( m_iMouseX, m_iMouseY );
+		vgui::input()->GetCursorPos(m_iMouseX, m_iMouseY);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Finish capture prompt display
 //-----------------------------------------------------------------------------
-void VControlsListPanel::EndCaptureMode( HCursor hCursor )
+void VControlsListPanel::EndCaptureMode(HCursor hCursor)
 {
 	m_bCaptureMode = false;
 	input()->SetMouseCapture(NULL);
@@ -135,13 +134,13 @@ void VControlsListPanel::EndCaptureMode( HCursor hCursor )
 	// NVNT tell the input system that novint devices
 	// should be allowed to do menu mouse emulation.
 	g_pInputSystem->SetNovintPure(false);
-	if (hCursor)
+	if(hCursor)
 	{
 		m_pInlineEditPanel->SetCursor(hCursor);
 		surface()->SetCursor(hCursor);
-		if ( hCursor != dc_none )
+		if(hCursor != dc_none)
 		{
-			vgui::input()->SetCursorPos ( m_iMouseX, m_iMouseY );
+			vgui::input()->SetCursorPos(m_iMouseX, m_iMouseY);
 		}
 	}
 }
@@ -151,7 +150,7 @@ void VControlsListPanel::EndCaptureMode( HCursor hCursor )
 //-----------------------------------------------------------------------------
 void VControlsListPanel::SetItemOfInterest(int itemID)
 {
-	m_nClickRow	= itemID;
+	m_nClickRow = itemID;
 }
 
 //-----------------------------------------------------------------------------
@@ -165,7 +164,7 @@ int VControlsListPanel::GetItemOfInterest()
 //-----------------------------------------------------------------------------
 // Purpose: returns true if we're currently waiting to capture a key
 //-----------------------------------------------------------------------------
-bool VControlsListPanel::IsCapturing( void )
+bool VControlsListPanel::IsCapturing(void)
 {
 	return m_bCaptureMode;
 }
@@ -175,10 +174,10 @@ bool VControlsListPanel::IsCapturing( void )
 //-----------------------------------------------------------------------------
 void VControlsListPanel::OnMousePressed(vgui::MouseCode code)
 {
-	if (IsCapturing())
+	if(IsCapturing())
 	{
 		// forward up mouse pressed messages to be handled by the key options
-		if (GetParent())
+		if(GetParent())
 		{
 			GetParent()->OnMousePressed(code);
 		}
@@ -189,13 +188,12 @@ void VControlsListPanel::OnMousePressed(vgui::MouseCode code)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: input handler
 //-----------------------------------------------------------------------------
-void VControlsListPanel::OnMouseDoublePressed( vgui::MouseCode code )
+void VControlsListPanel::OnMouseDoublePressed(vgui::MouseCode code)
 {
-	if (IsItemIDValid(GetSelectedItem()))
+	if(IsItemIDValid(GetSelectedItem()))
 	{
 		// enter capture mode
 		OnKeyCodePressed(KEY_ENTER);

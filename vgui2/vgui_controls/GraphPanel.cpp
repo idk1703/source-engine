@@ -16,7 +16,7 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY( GraphPanel );
+DECLARE_BUILD_FACTORY(GraphPanel);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -44,7 +44,7 @@ void GraphPanel::SetDisplayDomainSize(float size)
 	m_flDomainSize = size;
 
 	// set the max domain size if it hasn't been set yet
-	if (!m_bMaxDomainSizeSet)
+	if(!m_bMaxDomainSizeSet)
 	{
 		SetMaxDomainSize(size);
 	}
@@ -100,7 +100,7 @@ void GraphPanel::GetDisplayedRange(float &lowRange, float &highRange)
 //-----------------------------------------------------------------------------
 void GraphPanel::AddItem(float sampleEnd, float sampleValue)
 {
-	if (m_Samples.Count() && m_Samples[m_Samples.Tail()].value == sampleValue)
+	if(m_Samples.Count() && m_Samples[m_Samples.Tail()].value == sampleValue)
 	{
 		// collapse identical samples
 		m_Samples[m_Samples.Tail()].sampleEnd = sampleEnd;
@@ -115,61 +115,62 @@ void GraphPanel::AddItem(float sampleEnd, float sampleValue)
 	}
 
 	// see if this frees up any samples past the end
-	if (m_bMaxDomainSizeSet)
+	if(m_bMaxDomainSizeSet)
 	{
 		float freePoint = sampleEnd - m_flMaxDomainSize;
-		while (m_Samples[m_Samples.Head()].sampleEnd < freePoint)
+		while(m_Samples[m_Samples.Head()].sampleEnd < freePoint)
 		{
 			m_Samples.Remove(m_Samples.Head());
 		}
 	}
 
-/*
-	// see the max number of samples necessary to display this information reasonably precisely
-	static const int MAX_LIKELY_GRAPH_WIDTH = 800;
-	int maxSamplesNeeded = 2 * MAX_LIKELY_GRAPH_WIDTH / (m_iGraphBarWidth + m_iGraphBarGapWidth);
-	if (m_Samples.Count() > 2)
-	{
-		// see if we can collapse some items
-		float highestSample = m_Samples[m_Samples.Tail()].sampleEnd;
-
-		// iterate the items
-		// always keep the head around so we have something to go against
-		int sampleIndex = m_Samples.Next(m_Samples.Head());
-		int nextSampleIndex = m_Samples.Next(sampleIndex);
-
-		while (m_Samples.IsInList(nextSampleIndex))
+	/*
+		// see the max number of samples necessary to display this information reasonably precisely
+		static const int MAX_LIKELY_GRAPH_WIDTH = 800;
+		int maxSamplesNeeded = 2 * MAX_LIKELY_GRAPH_WIDTH / (m_iGraphBarWidth + m_iGraphBarGapWidth);
+		if (m_Samples.Count() > 2)
 		{
-			// calculate what sampling precision is actually needed to display this data
-			float distanceFromEnd = highestSample - m_Samples[sampleIndex].sampleEnd;
+			// see if we can collapse some items
+			float highestSample = m_Samples[m_Samples.Tail()].sampleEnd;
 
-//			if (distanceFromEnd < m_flDomainSize)
-//				break;
+			// iterate the items
+			// always keep the head around so we have something to go against
+			int sampleIndex = m_Samples.Next(m_Samples.Head());
+			int nextSampleIndex = m_Samples.Next(sampleIndex);
 
-			//!! this calculation is very incorrect
-			float minNeededSampleSize = distanceFromEnd / (m_flMinDomainSize * maxSamplesNeeded);
-			float sampleSize = m_Samples[nextSampleIndex].sampleEnd - m_Samples[sampleIndex].sampleEnd;
-
-			if (sampleSize < minNeededSampleSize)
+			while (m_Samples.IsInList(nextSampleIndex))
 			{
-				// collapse the item into the next index
-				m_Samples[nextSampleIndex].value = 0.5f * (m_Samples[nextSampleIndex].value + m_Samples[sampleIndex].value);
+				// calculate what sampling precision is actually needed to display this data
+				float distanceFromEnd = highestSample - m_Samples[sampleIndex].sampleEnd;
 
-				// remove the item from the list
-				m_Samples.Remove(sampleIndex);
+	//			if (distanceFromEnd < m_flDomainSize)
+	//				break;
 
-				// move to the next item
-				sampleIndex = nextSampleIndex;
-				nextSampleIndex = m_Samples.Next(sampleIndex);
-			}
-			else
-			{
-				// this item didn't need collapsing, so assume the next item won't
-				break;
+				//!! this calculation is very incorrect
+				float minNeededSampleSize = distanceFromEnd / (m_flMinDomainSize * maxSamplesNeeded);
+				float sampleSize = m_Samples[nextSampleIndex].sampleEnd - m_Samples[sampleIndex].sampleEnd;
+
+				if (sampleSize < minNeededSampleSize)
+				{
+					// collapse the item into the next index
+					m_Samples[nextSampleIndex].value = 0.5f * (m_Samples[nextSampleIndex].value +
+	m_Samples[sampleIndex].value);
+
+					// remove the item from the list
+					m_Samples.Remove(sampleIndex);
+
+					// move to the next item
+					sampleIndex = nextSampleIndex;
+					nextSampleIndex = m_Samples.Next(sampleIndex);
+				}
+				else
+				{
+					// this item didn't need collapsing, so assume the next item won't
+					break;
+				}
 			}
 		}
-	}
-*/
+	*/
 
 	InvalidateLayout();
 	Repaint();
@@ -196,7 +197,7 @@ void GraphPanel::PerformLayout()
 //-----------------------------------------------------------------------------
 void GraphPanel::Paint()
 {
-	if (!m_Samples.Count())
+	if(!m_Samples.Count())
 		return;
 
 	// walk from right to left drawing the resampled data
@@ -222,7 +223,7 @@ void GraphPanel::Paint()
 	float flMaxValue = m_Samples[m_Samples.Head()].value;
 
 	// iterate the bars to draw
-	while (x > 0 && m_Samples.IsInList(sampleIndex))
+	while(x > 0 && m_Samples.IsInList(sampleIndex))
 	{
 		// move back the drawing point
 		x -= (m_iGraphBarWidth + m_iGraphBarGapWidth);
@@ -232,27 +233,27 @@ void GraphPanel::Paint()
 		float maxValue = 0.0f;
 		int samplesTouched = 0;
 		int prevSampleIndex = m_Samples.Previous(sampleIndex);
-		while (m_Samples.IsInList(prevSampleIndex))
+		while(m_Samples.IsInList(prevSampleIndex))
 		{
 			// take the value
 			value += m_Samples[sampleIndex].value;
 			samplesTouched++;
 
 			// do some work to calculate the sample range
-			if (m_Samples[sampleIndex].value < flMinValue)
+			if(m_Samples[sampleIndex].value < flMinValue)
 			{
 				flMinValue = m_Samples[sampleIndex].value;
 			}
-			if (m_Samples[sampleIndex].value > flMaxValue)
+			if(m_Samples[sampleIndex].value > flMaxValue)
 			{
 				flMaxValue = m_Samples[sampleIndex].value;
 			}
-			if (m_Samples[sampleIndex].value > maxValue)
+			if(m_Samples[sampleIndex].value > maxValue)
 			{
 				maxValue = m_Samples[sampleIndex].value;
 			}
 
-			if (resampleStart < m_Samples[prevSampleIndex].sampleEnd)
+			if(resampleStart < m_Samples[prevSampleIndex].sampleEnd)
 			{
 				// we're out of the sampling range, we need to move on to the next sample
 				sampleIndex = prevSampleIndex;
@@ -271,19 +272,19 @@ void GraphPanel::Paint()
 		// draw the item
 		// show the max value in the sample, not the average
 		int size = (int)(maxValue * barSizeMultiplier);
-//		int size = (int)((value * barSizeMultiplier) / samplesTouched);
+		//		int size = (int)((value * barSizeMultiplier) / samplesTouched);
 		surface()->DrawFilledRect(x, GetTall() - size, x + m_iGraphBarWidth, GetTall());
 	}
 
 	// calculate our final range (for use next frame)
-	if (m_bUseDynamicRange)
+	if(m_bUseDynamicRange)
 	{
 		flMinValue = 0;
 
 		// find the range that fits
-		for (int i = 0; i < m_RangeList.Count(); i++)
+		for(int i = 0; i < m_RangeList.Count(); i++)
 		{
-			if (m_RangeList[i] > flMaxValue)
+			if(m_RangeList[i] > flMaxValue)
 			{
 				flMaxValue = m_RangeList[i];
 				break;

@@ -20,16 +20,11 @@ extern int gmsgBotVoice;
  * Returns true if the radio message is an order to do something
  * NOTE: "Report in" is not considered a "command" because it doesnt ask the bot to go somewhere, or change its mind
  */
-bool CCSBot::IsRadioCommand( RadioType event ) const
+bool CCSBot::IsRadioCommand(RadioType event) const
 {
-	if (event == RADIO_AFFIRMATIVE ||
-		event == RADIO_NEGATIVE ||
-		event == RADIO_ENEMY_SPOTTED ||
-		event == RADIO_SECTOR_CLEAR ||
-		event == RADIO_REPORTING_IN ||
-		event == RADIO_REPORT_IN_TEAM ||
-		event == RADIO_ENEMY_DOWN ||
-		event == RADIO_INVALID )
+	if(event == RADIO_AFFIRMATIVE || event == RADIO_NEGATIVE || event == RADIO_ENEMY_SPOTTED ||
+	   event == RADIO_SECTOR_CLEAR || event == RADIO_REPORTING_IN || event == RADIO_REPORT_IN_TEAM ||
+	   event == RADIO_ENEMY_DOWN || event == RADIO_INVALID)
 		return false;
 
 	return true;
@@ -39,32 +34,31 @@ bool CCSBot::IsRadioCommand( RadioType event ) const
 /**
  * Respond to radio commands from HUMAN players
  */
-void CCSBot::RespondToRadioCommands( void )
+void CCSBot::RespondToRadioCommands(void)
 {
 	// bots use the chatter system to respond to each other
-	if (m_radioSubject != NULL && m_radioSubject->IsPlayer())
+	if(m_radioSubject != NULL && m_radioSubject->IsPlayer())
 	{
 		CCSPlayer *player = m_radioSubject;
-		if (player->IsBot())
+		if(player->IsBot())
 		{
 			m_lastRadioCommand = RADIO_INVALID;
 			return;
 		}
 	}
 
-	if (m_lastRadioCommand == RADIO_INVALID)
+	if(m_lastRadioCommand == RADIO_INVALID)
 		return;
 
 	// a human player has issued a radio command
 	GetChatter()->ResetRadioSilenceDuration();
 
-
 	// if we are doing something important, ignore the radio
 	// unless it is a "report in" request - we can do that while we continue to do other things
 	/// @todo Create "uninterruptable" flag
-	if (m_lastRadioCommand != RADIO_REPORT_IN_TEAM)
+	if(m_lastRadioCommand != RADIO_REPORT_IN_TEAM)
 	{
-		if (IsBusy())
+		if(IsBusy())
 		{
 			// consume command
 			m_lastRadioCommand = RADIO_INVALID;
@@ -75,16 +69,16 @@ void CCSBot::RespondToRadioCommands( void )
 	// wait for reaction time before responding
 	// delay needs to be long enough for the radio message we're responding to to finish
 	float respondTime = 1.0f + 2.0f * GetProfile()->GetReactionTime();
-	if (IsRogue())
+	if(IsRogue())
 		respondTime += 2.0f;
 
-	if (gpGlobals->curtime - m_lastRadioRecievedTimestamp < respondTime)
+	if(gpGlobals->curtime - m_lastRadioRecievedTimestamp < respondTime)
 		return;
 
 	// rogues won't follow commands, unless already following the player
-	if (!IsFollowing() && IsRogue())
+	if(!IsFollowing() && IsRogue())
 	{
-		if (IsRadioCommand( m_lastRadioCommand ))
+		if(IsRadioCommand(m_lastRadioCommand))
 		{
 			GetChatter()->Negative();
 		}
@@ -95,13 +89,13 @@ void CCSBot::RespondToRadioCommands( void )
 	}
 
 	CCSPlayer *player = m_radioSubject;
-	if (player == NULL)
+	if(player == NULL)
 		return;
 
 	// respond to command
 	bool canDo = false;
 	const float inhibitAutoFollowDuration = 60.0f;
-	switch( m_lastRadioCommand )
+	switch(m_lastRadioCommand)
 	{
 		case RADIO_REPORT_IN_TEAM:
 		{
@@ -114,9 +108,9 @@ void CCSBot::RespondToRadioCommands( void )
 		case RADIO_STICK_TOGETHER_TEAM:
 		case RADIO_REGROUP_TEAM:
 		{
-			if (!IsFollowing())
+			if(!IsFollowing())
 			{
-				Follow( player );
+				Follow(player);
 				player->AllowAutoFollow();
 				canDo = true;
 			}
@@ -126,10 +120,10 @@ void CCSBot::RespondToRadioCommands( void )
 		case RADIO_ENEMY_SPOTTED:
 		case RADIO_NEED_BACKUP:
 		case RADIO_TAKING_FIRE:
-			if (!IsFollowing())
+			if(!IsFollowing())
 			{
-				Follow( player );
-				GetChatter()->Say( "OnMyWay" );
+				Follow(player);
+				GetChatter()->Say("OnMyWay");
 				player->AllowAutoFollow();
 				canDo = false;
 			}
@@ -137,7 +131,7 @@ void CCSBot::RespondToRadioCommands( void )
 
 		case RADIO_TEAM_FALL_BACK:
 		{
-			if (TryToRetreat())
+			if(TryToRetreat())
 				canDo = true;
 			break;
 		}
@@ -145,10 +139,10 @@ void CCSBot::RespondToRadioCommands( void )
 		case RADIO_HOLD_THIS_POSITION:
 		{
 			// find the leader's area
-			SetTask( HOLD_POSITION );
+			SetTask(HOLD_POSITION);
 			StopFollowing();
-			player->InhibitAutoFollow( inhibitAutoFollowDuration );
-			Hide( TheNavMesh->GetNearestNavArea( m_radioPosition ) );
+			player->InhibitAutoFollow(inhibitAutoFollowDuration);
+			Hide(TheNavMesh->GetNearestNavArea(m_radioPosition));
 			canDo = true;
 			break;
 		}
@@ -158,14 +152,14 @@ void CCSBot::RespondToRadioCommands( void )
 			StopFollowing();
 			Hunt();
 			canDo = true;
-			player->InhibitAutoFollow( inhibitAutoFollowDuration );
+			player->InhibitAutoFollow(inhibitAutoFollowDuration);
 			break;
 
 		case RADIO_GET_OUT_OF_THERE:
-			if (TheCSBots()->IsBombPlanted())
+			if(TheCSBots()->IsBombPlanted())
 			{
 				EscapeFromBomb();
-				player->InhibitAutoFollow( inhibitAutoFollowDuration );
+				player->InhibitAutoFollow(inhibitAutoFollowDuration);
 				canDo = true;
 			}
 			break;
@@ -174,18 +168,18 @@ void CCSBot::RespondToRadioCommands( void )
 		{
 			// if this is a defusal scenario, and the bomb is planted,
 			// and a human player cleared a bombsite, check it off our list too
-			if (TheCSBots()->GetScenario() == CCSBotManager::SCENARIO_DEFUSE_BOMB)
+			if(TheCSBots()->GetScenario() == CCSBotManager::SCENARIO_DEFUSE_BOMB)
 			{
-				if (GetTeamNumber() == TEAM_CT && TheCSBots()->IsBombPlanted())
+				if(GetTeamNumber() == TEAM_CT && TheCSBots()->IsBombPlanted())
 				{
-					const CCSBotManager::Zone *zone = TheCSBots()->GetClosestZone( player );
+					const CCSBotManager::Zone *zone = TheCSBots()->GetClosestZone(player);
 
-					if (zone)
+					if(zone)
 					{
-						GetGameState()->ClearBombsite( zone->m_index );
+						GetGameState()->ClearBombsite(zone->m_index);
 
 						// if we are huting for the planted bomb, re-select bombsite
-						if (GetTask() == FIND_TICKING_BOMB)
+						if(GetTask() == FIND_TICKING_BOMB)
 							Idle();
 
 						canDo = true;
@@ -200,13 +194,13 @@ void CCSBot::RespondToRadioCommands( void )
 			return;
 	}
 
-	if (canDo)
+	if(canDo)
 	{
 		// affirmative
 		GetChatter()->Affirmative();
 
 		// if we agreed to follow a new command, put away our grenade
-		if (IsRadioCommand( m_lastRadioCommand ) && IsUsingGrenade())
+		if(IsRadioCommand(m_lastRadioCommand) && IsUsingGrenade())
 		{
 			EquipBestWeapon();
 		}
@@ -220,123 +214,120 @@ void CCSBot::RespondToRadioCommands( void )
 /**
  * Decide if we should move to help the player, return true if we will
  */
-bool CCSBot::RespondToHelpRequest( CCSPlayer *them, Place place, float maxRange )
+bool CCSBot::RespondToHelpRequest(CCSPlayer *them, Place place, float maxRange)
 {
-	if (IsRogue())
+	if(IsRogue())
 		return false;
 
 	// if we're busy, ignore
-	if (IsBusy())
+	if(IsBusy())
 		return false;
 
-	Vector themOrigin = GetCentroid( them );
+	Vector themOrigin = GetCentroid(them);
 
 	// if we are too far away, ignore
-	if (maxRange > 0.0f)
+	if(maxRange > 0.0f)
 	{
 		// compute actual travel distance
 		PathCost cost(this);
-		float travelDistance = NavAreaTravelDistance( m_lastKnownArea, TheNavMesh->GetNearestNavArea( themOrigin ), cost );
-		if (travelDistance < 0.0f)
+		float travelDistance = NavAreaTravelDistance(m_lastKnownArea, TheNavMesh->GetNearestNavArea(themOrigin), cost);
+		if(travelDistance < 0.0f)
 			return false;
 
-		if (travelDistance > maxRange)
+		if(travelDistance > maxRange)
 			return false;
 	}
 
-
-	if (place == UNDEFINED_PLACE)
+	if(place == UNDEFINED_PLACE)
 	{
 		// if we have no "place" identifier, go directly to them
 
 		// if we are already there, ignore
 		float rangeSq = (them->GetAbsOrigin() - GetAbsOrigin()).LengthSqr();
 		const float close = 750.0f * 750.0f;
-		if (rangeSq < close)
+		if(rangeSq < close)
 			return true;
 
-		MoveTo( themOrigin, FASTEST_ROUTE );
+		MoveTo(themOrigin, FASTEST_ROUTE);
 	}
 	else
 	{
 		// if we are already there, ignore
-		if (GetPlace() == place)
+		if(GetPlace() == place)
 			return true;
 
 		// go to where help is needed
-		const Vector *pos = GetRandomSpotAtPlace( place );
-		if (pos)
+		const Vector *pos = GetRandomSpotAtPlace(place);
+		if(pos)
 		{
-			MoveTo( *pos, FASTEST_ROUTE );
+			MoveTo(*pos, FASTEST_ROUTE);
 		}
 		else
 		{
-			MoveTo( themOrigin, FASTEST_ROUTE );
+			MoveTo(themOrigin, FASTEST_ROUTE);
 		}
 	}
 
 	// acknowledge
-	GetChatter()->Say( "OnMyWay" );
+	GetChatter()->Say("OnMyWay");
 
 	return true;
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Send a radio message
  */
-void CCSBot::SendRadioMessage( RadioType event )
+void CCSBot::SendRadioMessage(RadioType event)
 {
 	// make sure this is a radio event
-	if (event <= RADIO_START_1 || event >= RADIO_END)
+	if(event <= RADIO_START_1 || event >= RADIO_END)
 		return;
 
-	PrintIfWatched( "%3.1f: SendRadioMessage( %s )\n", gpGlobals->curtime, RadioEventName[ event ] );
+	PrintIfWatched("%3.1f: SendRadioMessage( %s )\n", gpGlobals->curtime, RadioEventName[event]);
 
 	// note the time the message was sent
-	TheCSBots()->SetRadioMessageTimestamp( event, GetTeamNumber() );
+	TheCSBots()->SetRadioMessageTimestamp(event, GetTeamNumber());
 
 	m_lastRadioSentTimestamp = gpGlobals->curtime;
 
 	char slot[2];
 	slot[1] = '\000';
 
-	if (event > RADIO_START_1 && event < RADIO_START_2)
+	if(event > RADIO_START_1 && event < RADIO_START_2)
 	{
-		HandleMenu_Radio1( event - RADIO_START_1 );
+		HandleMenu_Radio1(event - RADIO_START_1);
 	}
-	else if (event > RADIO_START_2 && event < RADIO_START_3)
+	else if(event > RADIO_START_2 && event < RADIO_START_3)
 	{
-		HandleMenu_Radio2( event - RADIO_START_2 );
+		HandleMenu_Radio2(event - RADIO_START_2);
 	}
 	else
 	{
-		HandleMenu_Radio3( event - RADIO_START_3 );
+		HandleMenu_Radio3(event - RADIO_START_3);
 	}
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**
  * Send voice chatter.  Also sends the entindex and duration for voice feedback.
  */
-void CCSBot::SpeakAudio( const char *voiceFilename, float duration, int pitch )
+void CCSBot::SpeakAudio(const char *voiceFilename, float duration, int pitch)
 {
-	if( !IsAlive() )
+	if(!IsAlive())
 		return;
 
-	if ( IsObserver() )
+	if(IsObserver())
 		return;
 
 	CRecipientFilter filter;
-	ConstructRadioFilter( filter );
+	ConstructRadioFilter(filter);
 
-	UserMessageBegin ( filter, "RawAudio" );
-		WRITE_BYTE( pitch );
-		WRITE_BYTE( entindex() );
-		WRITE_FLOAT( duration );
-		WRITE_STRING( voiceFilename );
+	UserMessageBegin(filter, "RawAudio");
+	WRITE_BYTE(pitch);
+	WRITE_BYTE(entindex());
+	WRITE_FLOAT(duration);
+	WRITE_STRING(voiceFilename);
 	MessageEnd();
 
 	GetChatter()->ResetRadioSilenceDuration();

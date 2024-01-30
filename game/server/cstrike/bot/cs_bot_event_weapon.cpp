@@ -17,21 +17,21 @@
 #include "tier0/memdbgon.h"
 
 //--------------------------------------------------------------------------------------------------------------
-void CCSBot::OnWeaponFire( IGameEvent *event )
+void CCSBot::OnWeaponFire(IGameEvent *event)
 {
-	if ( !IsAlive() )
+	if(!IsAlive())
 		return;
 
 	// don't react to our own events
-	CBasePlayer *player = UTIL_PlayerByUserId( event->GetInt( "userid" ) );
-	if ( player == this )
+	CBasePlayer *player = UTIL_PlayerByUserId(event->GetInt("userid"));
+	if(player == this)
 		return;
 
 	// for knife fighting - if our victim is attacking or reloading, rush him
 	/// @todo Propagate events into active state
-	if (GetEnemy() == player && IsUsingKnife())
+	if(GetEnemy() == player && IsUsingKnife())
 	{
-		ForceRun( 5.0f );
+		ForceRun(5.0f);
 	}
 
 	const float ShortRange = 1000.0f;
@@ -41,12 +41,12 @@ void CCSBot::OnWeaponFire( IGameEvent *event )
 
 	/// @todo Check weapon type (knives are pretty quiet)
 	/// @todo Use actual volume, account for silencers, etc.
-	CWeaponCSBase *weapon = (CWeaponCSBase *)((player)?player->GetActiveWeapon():NULL);
+	CWeaponCSBase *weapon = (CWeaponCSBase *)((player) ? player->GetActiveWeapon() : NULL);
 
-	if (weapon == NULL)
+	if(weapon == NULL)
 		return;
 
-	switch( weapon->GetWeaponID() )
+	switch(weapon->GetWeaponID())
 	{
 		// silent "firing"
 		case WEAPON_HEGRENADE:
@@ -65,7 +65,7 @@ void CCSBot::OnWeaponFire( IGameEvent *event )
 		// M4A1 - check for silencer
 		case WEAPON_M4A1:
 		{
-			if (weapon->IsSilenced())
+			if(weapon->IsSilenced())
 			{
 				range = ShortRange;
 			}
@@ -79,7 +79,7 @@ void CCSBot::OnWeaponFire( IGameEvent *event )
 		// USP - check for silencer
 		case WEAPON_USP:
 		{
-			if (weapon->IsSilenced())
+			if(weapon->IsSilenced())
 			{
 				range = ShortRange;
 			}
@@ -101,64 +101,61 @@ void CCSBot::OnWeaponFire( IGameEvent *event )
 			break;
 	}
 
-	OnAudibleEvent( event, player, range, PRIORITY_HIGH, true ); // weapon_fire
+	OnAudibleEvent(event, player, range, PRIORITY_HIGH, true); // weapon_fire
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
-void CCSBot::OnWeaponFireOnEmpty( IGameEvent *event )
+void CCSBot::OnWeaponFireOnEmpty(IGameEvent *event)
 {
-	if ( !IsAlive() )
+	if(!IsAlive())
 		return;
 
 	// don't react to our own events
-	CBasePlayer *player = UTIL_PlayerByUserId( event->GetInt( "userid" ) );
-	if ( player == this )
+	CBasePlayer *player = UTIL_PlayerByUserId(event->GetInt("userid"));
+	if(player == this)
 		return;
 
 	// for knife fighting - if our victim is attacking or reloading, rush him
 	/// @todo Propagate events into active state
-	if (GetEnemy() == player && IsUsingKnife())
+	if(GetEnemy() == player && IsUsingKnife())
 	{
-		ForceRun( 5.0f );
+		ForceRun(5.0f);
 	}
 
-	OnAudibleEvent( event, player, 1100.0f, PRIORITY_LOW, false ); // weapon_fire_on_empty
+	OnAudibleEvent(event, player, 1100.0f, PRIORITY_LOW, false); // weapon_fire_on_empty
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
-void CCSBot::OnWeaponReload( IGameEvent *event )
+void CCSBot::OnWeaponReload(IGameEvent *event)
 {
-	if ( !IsAlive() )
+	if(!IsAlive())
 		return;
 
 	// don't react to our own events
-	CBasePlayer *player = UTIL_PlayerByUserId( event->GetInt( "userid" ) );
-	if ( player == this )
+	CBasePlayer *player = UTIL_PlayerByUserId(event->GetInt("userid"));
+	if(player == this)
 		return;
 
 	// for knife fighting - if our victim is attacking or reloading, rush him
 	/// @todo Propagate events into active state
-	if (GetEnemy() == player && IsUsingKnife())
+	if(GetEnemy() == player && IsUsingKnife())
 	{
-		ForceRun( 5.0f );
+		ForceRun(5.0f);
 	}
 
-	OnAudibleEvent( event, player, 1100.0f, PRIORITY_LOW, false ); // weapon_reload
+	OnAudibleEvent(event, player, 1100.0f, PRIORITY_LOW, false); // weapon_reload
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
-void CCSBot::OnWeaponZoom( IGameEvent *event )
+void CCSBot::OnWeaponZoom(IGameEvent *event)
 {
-	if ( !IsAlive() )
+	if(!IsAlive())
 		return;
 
 	// don't react to our own events
-	CBasePlayer *player = UTIL_PlayerByUserId( event->GetInt( "userid" ) );
-	if ( player == this )
+	CBasePlayer *player = UTIL_PlayerByUserId(event->GetInt("userid"));
+	if(player == this)
 		return;
 
-	OnAudibleEvent( event, player, 1100.0f, PRIORITY_LOW, false ); // weapon_zoom
+	OnAudibleEvent(event, player, 1100.0f, PRIORITY_LOW, false); // weapon_zoom
 }

@@ -26,12 +26,10 @@ enum
 	TIMER_GROUP_DRAG_SCROLL = 1,
 };
 
-
 static const unsigned int g_uToggleStateMsg = ::RegisterWindowMessage(GROUPLIST_MSG_TOGGLE_STATE);
 static const unsigned int g_uLeftDragDropMsg = ::RegisterWindowMessage(GROUPLIST_MSG_LEFT_DRAG_DROP);
 static const unsigned int g_uRightDragDropMsg = ::RegisterWindowMessage(GROUPLIST_MSG_RIGHT_DRAG_DROP);
 static const unsigned int g_uSelChangeMsg = ::RegisterWindowMessage(GROUPLIST_MSG_SEL_CHANGE);
-
 
 BEGIN_MESSAGE_MAP(CGroupList, CTreeCtrl)
 	//{{AFX_MSG_MAP(CGroupList)
@@ -49,7 +47,6 @@ BEGIN_MESSAGE_MAP(CGroupList, CTreeCtrl)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -60,21 +57,17 @@ CGroupList::CGroupList(void)
 	m_bRButtonDown = false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CGroupList::~CGroupList(void)
-{
-}
-
+CGroupList::~CGroupList(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::EnableChecks(void)
 {
-	if (!m_cNormalImageList.GetSafeHandle())
+	if(!m_cNormalImageList.GetSafeHandle())
 	{
 		m_cNormalImageList.Create(IDB_VISGROUPSTATUS, 16, 1, RGB(255, 255, 255));
 		m_cNormalImageList.SetOverlayImage(1, 1);
@@ -84,7 +77,6 @@ void CGroupList::EnableChecks(void)
 	CTreeCtrl::SetImageList(&m_cNormalImageList, TVSIL_NORMAL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pVisGroup -
@@ -93,26 +85,25 @@ void CGroupList::EnableChecks(void)
 void CGroupList::AddVisGroupRecursive(CVisGroup *pVisGroup, HTREEITEM hItemParent)
 {
 	HTREEITEM hItem = InsertItem(pVisGroup->GetName(), hItemParent, TVI_LAST);
-	if (hItem != NULL)
+	if(hItem != NULL)
 	{
 		SetItemData(hItem, (DWORD)pVisGroup);
 
 		// Add the item to our flattened list.
-//		VisGroupTreeItem_t item;
-//		item.pVisGroup = pVisGroup;
-//		item.hItem = hItem;
-//		m_TreeItems.AddToTail(item);
+		//		VisGroupTreeItem_t item;
+		//		item.pVisGroup = pVisGroup;
+		//		item.hItem = hItem;
+		//		m_TreeItems.AddToTail(item);
 		m_VisGroups.AddToTail(pVisGroup);
 
 		int nCount = pVisGroup->GetChildCount();
-		for (int i = 0; i < nCount; i++)
+		for(int i = 0; i < nCount; i++)
 		{
 			CVisGroup *pChild = pVisGroup->GetChild(i);
 			AddVisGroupRecursive(pChild, hItem);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -123,20 +114,18 @@ void CGroupList::AddVisGroup(CVisGroup *pGroup)
 	AddVisGroupRecursive(pGroup, TVI_ROOT);
 }
 
-
-static void UnsetItemData_R( CTreeCtrl *pCtrl, HTREEITEM hItem )
+static void UnsetItemData_R(CTreeCtrl *pCtrl, HTREEITEM hItem)
 {
-	pCtrl->SetItemData( hItem, 0 );
+	pCtrl->SetItemData(hItem, 0);
 
-	HTREEITEM hChildItem = pCtrl->GetChildItem( hItem );
+	HTREEITEM hChildItem = pCtrl->GetChildItem(hItem);
 
-	while( hChildItem != NULL )
+	while(hChildItem != NULL)
 	{
-		UnsetItemData_R( pCtrl, hChildItem );
+		UnsetItemData_R(pCtrl, hChildItem);
 		hChildItem = pCtrl->GetNextItem(hChildItem, TVGN_NEXT);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -145,43 +134,41 @@ void CGroupList::DeleteAllItems(void)
 {
 	// Un-set all item data because sometimes during a delete it'll trigger selection change notifications
 	// which might crash things later.
-	if ( GetSafeHwnd() && m_VisGroups.Count() > 0 )
+	if(GetSafeHwnd() && m_VisGroups.Count() > 0)
 	{
-		UnsetItemData_R( this, TVI_ROOT );
+		UnsetItemData_R(this, TVI_ROOT);
 	}
 
 	DeleteItem(TVI_ROOT);
 	m_VisGroups.RemoveAll();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::EnsureVisible(CVisGroup *pVisGroup)
 {
-	//DBG("EnsureVisible: %s\n", pVisGroup->GetName());
+	// DBG("EnsureVisible: %s\n", pVisGroup->GetName());
 	HTREEITEM hItem = FindVisGroupItem(pVisGroup);
-	if (hItem)
+	if(hItem)
 	{
 		CTreeCtrl::EnsureVisible(hItem);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::ExpandRecursive(HTREEITEM hItem)
 {
-	if (hItem)
+	if(hItem)
 	{
 		Expand(hItem, TVE_EXPAND);
 
-		if (ItemHasChildren(hItem))
+		if(ItemHasChildren(hItem))
 		{
 			HTREEITEM hChildItem = GetChildItem(hItem);
-			while (hChildItem != NULL)
+			while(hChildItem != NULL)
 			{
 				ExpandRecursive(hChildItem);
 				hChildItem = GetNextItem(hChildItem, TVGN_NEXT);
@@ -190,20 +177,18 @@ void CGroupList::ExpandRecursive(HTREEITEM hItem)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::ExpandAll(void)
 {
 	HTREEITEM hItem = GetRootItem();
-	while (hItem)
+	while(hItem)
 	{
 		ExpandRecursive(hItem);
 		hItem = GetNextItem(hItem, TVGN_NEXT);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the tree item in the given subtree associated with the given
@@ -211,21 +196,21 @@ void CGroupList::ExpandAll(void)
 //-----------------------------------------------------------------------------
 HTREEITEM CGroupList::FindVisGroupItemRecursive(HTREEITEM hItem, CVisGroup *pVisGroup)
 {
-	if (hItem)
+	if(hItem)
 	{
 		CVisGroup *pVisGroupCheck = (CVisGroup *)GetItemData(hItem);
-		if (pVisGroupCheck == pVisGroup)
+		if(pVisGroupCheck == pVisGroup)
 		{
 			return hItem;
 		}
 
-		if (ItemHasChildren(hItem))
+		if(ItemHasChildren(hItem))
 		{
 			HTREEITEM hChildItem = GetChildItem(hItem);
-			while (hChildItem != NULL)
+			while(hChildItem != NULL)
 			{
 				HTREEITEM hFoundItem = FindVisGroupItemRecursive(hChildItem, pVisGroup);
-				if (hFoundItem)
+				if(hFoundItem)
 				{
 					return hFoundItem;
 				}
@@ -238,17 +223,16 @@ HTREEITEM CGroupList::FindVisGroupItemRecursive(HTREEITEM hItem, CVisGroup *pVis
 	return NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the tree item associated with the given visgroup, NULL if none.
 //-----------------------------------------------------------------------------
 HTREEITEM CGroupList::FindVisGroupItem(CVisGroup *pVisGroup)
 {
 	HTREEITEM hItem = GetRootItem();
-	while (hItem)
+	while(hItem)
 	{
 		HTREEITEM hFound = FindVisGroupItemRecursive(hItem, pVisGroup);
-		if (hFound)
+		if(hFound)
 		{
 			return hFound;
 		}
@@ -259,21 +243,19 @@ HTREEITEM CGroupList::FindVisGroupItem(CVisGroup *pVisGroup)
 	return NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the currently selected visgroup in the tree control.
 //-----------------------------------------------------------------------------
 CVisGroup *CGroupList::GetSelectedVisGroup(void)
 {
 	HTREEITEM hItem = GetSelectedItem();
-	if (hItem)
+	if(hItem)
 	{
 		return (CVisGroup *)GetItemData(hItem);
 	}
 
 	return NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -284,9 +266,9 @@ void CGroupList::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	unsigned int uFlags;
 	HTREEITEM hItemHit = HitTest(point, &uFlags);
-	if (hItemHit != NULL)
+	if(hItemHit != NULL)
 	{
-		if (uFlags & TVHT_ONITEMICON)
+		if(uFlags & TVHT_ONITEMICON)
 		{
 			// Don't forward to the base if they clicked on the check box.
 			// This prevents undesired expansion/collapse of tree.
@@ -296,7 +278,6 @@ void CGroupList::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CTreeCtrl::OnLButtonDown(nFlags, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -308,22 +289,22 @@ void CGroupList::OnLButtonUp(UINT nFlags, CPoint point)
 	KillTimer(TIMER_GROUP_DRAG_SCROLL);
 	ReleaseCapture();
 
-	if (!m_hDragItem)
+	if(!m_hDragItem)
 	{
 		unsigned int uFlags;
 		HTREEITEM hItemHit = HitTest(point, &uFlags);
-		if (hItemHit != NULL)
+		if(hItemHit != NULL)
 		{
-			if (uFlags & TVHT_ONITEMICON)
+			if(uFlags & TVHT_ONITEMICON)
 			{
 				//
 				// Notify our parent window that this item's state has changed.
 				//
 				CWnd *pwndParent = GetParent();
-				if (pwndParent != NULL)
+				if(pwndParent != NULL)
 				{
 					int nCheckState = GetCheck(hItemHit);
-					if (!nCheckState)
+					if(!nCheckState)
 					{
 						nCheckState = 1;
 					}
@@ -349,7 +330,6 @@ void CGroupList::OnLButtonUp(UINT nFlags, CPoint point)
 	Drop(DROP_LEFT, nFlags, point);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : nFlags -
@@ -359,9 +339,9 @@ void CGroupList::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	unsigned int uFlags;
 	HTREEITEM hItemHit = HitTest(point, &uFlags);
-	if (hItemHit != NULL)
+	if(hItemHit != NULL)
 	{
-		if (uFlags & TVHT_ONITEMICON)
+		if(uFlags & TVHT_ONITEMICON)
 		{
 			// Don't forward to the base if they clicked on the check box.
 			// This prevents undesired expansion/collapse of tree.
@@ -372,7 +352,6 @@ void CGroupList::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CTreeCtrl::OnLButtonDblClk(nFlags, point);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Forwards selection change notifications to our parent window.
 // Input  : pNMHDR -
@@ -381,12 +360,11 @@ void CGroupList::OnLButtonDblClk(UINT nFlags, CPoint point)
 void CGroupList::OnSelChange(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	CWnd *pwndParent = GetParent();
-	if (pwndParent != NULL)
+	if(pwndParent != NULL)
 	{
 		pwndParent->PostMessage(g_uSelChangeMsg, 0, 0);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -396,18 +374,17 @@ void CGroupList::OnSelChange(NMHDR *pNMHDR, LRESULT *pResult)
 void CGroupList::OnEndlabeledit(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	NMTVDISPINFO *pInfo = (NMTVDISPINFO *)pNMHDR;
-	if (!pInfo->item.pszText)
+	if(!pInfo->item.pszText)
 		return;
 
 	CVisGroup *pVisGroup = (CVisGroup *)GetItemData(pInfo->item.hItem);
 	Assert(pVisGroup);
-	if (!pVisGroup)
+	if(!pVisGroup)
 		return;
 
 	pVisGroup->SetName(pInfo->item.pszText);
 	pResult[0] = TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Begins dragging an item in the visgroup list. The drag image is
@@ -422,7 +399,6 @@ void CGroupList::OnBegindrag(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pt -
@@ -431,10 +407,10 @@ void CGroupList::OnBegindrag(NMHDR *pNMHDR, LRESULT *pResult)
 void CGroupList::BeginDrag(CPoint point, HTREEITEM hItem)
 {
 	m_hDragItem = hItem;
-	if (m_hDragItem)
+	if(m_hDragItem)
 	{
 		m_pDragImageList = CreateDragImage(m_hDragItem);
-		if (m_pDragImageList)
+		if(m_pDragImageList)
 		{
 			CPoint ptHotSpot(0, 0);
 			m_pDragImageList->BeginDrag(0, ptHotSpot);
@@ -448,7 +424,6 @@ void CGroupList::BeginDrag(CPoint point, HTREEITEM hItem)
 		SetCapture();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -464,9 +439,8 @@ void CGroupList::OnRButtonDown(UINT nFlags, CPoint point)
 
 	// Chaining to the base class causes us never to receive the button up message
 	// for a right click without drag, so we don't do that.
-	//CTreeCtrl::OnRButtonDown(nFlags, point);
+	// CTreeCtrl::OnRButtonDown(nFlags, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -480,7 +454,7 @@ void CGroupList::OnContextMenu(CWnd *pWnd, CPoint point)
 
 	m_bRButtonDown = false;
 
-	if (!m_hDragItem)
+	if(!m_hDragItem)
 	{
 		CTreeCtrl::OnContextMenu(pWnd, point);
 		return;
@@ -488,7 +462,6 @@ void CGroupList::OnContextMenu(CWnd *pWnd, CPoint point)
 
 	Drop(DROP_RIGHT, 0, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -502,7 +475,7 @@ void CGroupList::OnRButtonUp(UINT nFlags, CPoint point)
 
 	m_bRButtonDown = false;
 
-	if (!m_hDragItem)
+	if(!m_hDragItem)
 	{
 		CTreeCtrl::OnRButtonUp(nFlags, point);
 		return;
@@ -510,7 +483,6 @@ void CGroupList::OnRButtonUp(UINT nFlags, CPoint point)
 
 	Drop(DROP_RIGHT, nFlags, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -528,7 +500,7 @@ void CGroupList::Drop(DropType_t eDropType, UINT nFlags, CPoint point)
 	//
 	// We are dragging. Drop!
 	//
-	if (m_pDragImageList)
+	if(m_pDragImageList)
 	{
 		m_pDragImageList->DragLeave(this);
 		m_pDragImageList->EndDrag();
@@ -545,27 +517,27 @@ void CGroupList::Drop(DropType_t eDropType, UINT nFlags, CPoint point)
 	// Determine what group was dropped onto.
 	//
 	HTREEITEM hDropItem = HitTest(point);
-	if (hDropItem == hDragItem)
+	if(hDropItem == hDragItem)
 	{
 		return;
 	}
 
 	CVisGroup *pDropGroup = NULL;
-	if (hDropItem)
+	if(hDropItem)
 	{
 		pDropGroup = (CVisGroup *)GetItemData(hDropItem);
 	}
 
-	if (pDragGroup == pDropGroup)
+	if(pDragGroup == pDropGroup)
 	{
 		// Shouldn't happen, but just in case.
 		return;
 	}
 
 	CWnd *pwndParent = GetParent();
-	if (pwndParent != NULL)
+	if(pwndParent != NULL)
 	{
-		if (eDropType == DROP_LEFT)
+		if(eDropType == DROP_LEFT)
 		{
 			pwndParent->PostMessage(g_uLeftDragDropMsg, (WPARAM)pDragGroup, (LPARAM)pDropGroup);
 		}
@@ -576,15 +548,14 @@ void CGroupList::Drop(DropType_t eDropType, UINT nFlags, CPoint point)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : nIDEvent -
 //-----------------------------------------------------------------------------
 void CGroupList::OnTimer(UINT nIDEvent)
 {
-	//DBG("OnTimer\n");
-	switch (nIDEvent)
+	// DBG("OnTimer\n");
+	switch(nIDEvent)
 	{
 		case TIMER_GROUP_DRAG_SCROLL:
 		{
@@ -594,30 +565,30 @@ void CGroupList::OnTimer(UINT nIDEvent)
 			CRect rect;
 			GetWindowRect(&rect);
 
-			if (!rect.PtInRect(point))
+			if(!rect.PtInRect(point))
 			{
-				if (point.y > rect.bottom)
+				if(point.y > rect.bottom)
 				{
 					// scroll down
 					int nCount = GetVisibleCount();
 					HTREEITEM hItem = GetFirstVisibleItem();
-					for (int i = 1; i < nCount; i++)
+					for(int i = 1; i < nCount; i++)
 					{
 						hItem = GetNextVisibleItem(hItem);
 					}
 
 					hItem = GetNextVisibleItem(hItem);
 
-					if (hItem)
+					if(hItem)
 					{
 						CTreeCtrl::EnsureVisible(hItem);
 					}
 				}
-				else if (point.y < rect.top)
+				else if(point.y < rect.top)
 				{
 					HTREEITEM hItem = GetFirstVisibleItem();
 					HTREEITEM hPrevVisible = this->GetPrevVisibleItem(hItem);
-					if (hPrevVisible)
+					if(hPrevVisible)
 					{
 						// scroll up
 						CTreeCtrl::EnsureVisible(hPrevVisible);
@@ -635,7 +606,6 @@ void CGroupList::OnTimer(UINT nIDEvent)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : nFlags -
@@ -645,19 +615,19 @@ void CGroupList::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CTreeCtrl::OnMouseMove(nFlags, point);
 
-	if (m_bRButtonDown && !m_hDragItem && (point.x != m_ptRButtonDown.x) && (point.y != m_ptRButtonDown.y))
+	if(m_bRButtonDown && !m_hDragItem && (point.x != m_ptRButtonDown.x) && (point.y != m_ptRButtonDown.y))
 	{
 		// First mouse move since a right button down. Start dragging.
 		HTREEITEM hItem = HitTest(m_ptRButtonDown);
 		BeginDrag(point, hItem);
 	}
 
-	if (!m_hDragItem)
+	if(!m_hDragItem)
 	{
 		return;
 	}
 
-	if (m_pDragImageList)
+	if(m_pDragImageList)
 	{
 		m_pDragImageList->DragMove(point);
 	}
@@ -666,13 +636,13 @@ void CGroupList::OnMouseMove(UINT nFlags, CPoint point)
 	// Highlight the item we hit.
 	//
 	HTREEITEM hItem = HitTest(point);
-	if (hItem == GetDropHilightItem())
+	if(hItem == GetDropHilightItem())
 	{
 		return;
 	}
 
 	// hide image first
-	if (m_pDragImageList)
+	if(m_pDragImageList)
 	{
 		m_pDragImageList->DragLeave(this);
 		m_pDragImageList->DragShowNolock(FALSE);
@@ -680,26 +650,24 @@ void CGroupList::OnMouseMove(UINT nFlags, CPoint point)
 
 	SelectDropTarget(hItem);
 
-	if (m_pDragImageList)
+	if(m_pDragImageList)
 	{
 		m_pDragImageList->DragEnter(this, point);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CGroupList::SelectVisGroup(CVisGroup *pVisGroup)
 {
-	//DBG("SelectVisGroup: %s\n", pVisGroup->GetName());
+	// DBG("SelectVisGroup: %s\n", pVisGroup->GetName());
 	HTREEITEM hItem = FindVisGroupItem(pVisGroup);
-	if (hItem)
+	if(hItem)
 	{
 		Select(hItem, TVGN_CARET);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the check status for the given group.
@@ -709,14 +677,14 @@ void CGroupList::SelectVisGroup(CVisGroup *pVisGroup)
 void CGroupList::SetCheck(CVisGroup *pVisGroup, int nCheckState)
 {
 	HTREEITEM hItem = FindVisGroupItem(pVisGroup);
-	if (hItem)
+	if(hItem)
 	{
 		UINT uState = INDEXTOOVERLAYMASK(0);
-		if (nCheckState == 1)
+		if(nCheckState == 1)
 		{
 			uState = INDEXTOOVERLAYMASK(1);
 		}
-		else if (nCheckState != 0)
+		else if(nCheckState != 0)
 		{
 			uState = INDEXTOOVERLAYMASK(2);
 		}
@@ -725,7 +693,6 @@ void CGroupList::SetCheck(CVisGroup *pVisGroup, int nCheckState)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the check state for the given visgroup.
 // Input  : pVisGroup -
@@ -733,7 +700,7 @@ void CGroupList::SetCheck(CVisGroup *pVisGroup, int nCheckState)
 int CGroupList::GetCheck(CVisGroup *pVisGroup)
 {
 	HTREEITEM hItem = FindVisGroupItem(pVisGroup);
-	if (hItem)
+	if(hItem)
 	{
 		return GetCheck(hItem);
 	}
@@ -741,25 +708,23 @@ int CGroupList::GetCheck(CVisGroup *pVisGroup)
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 int CGroupList::GetCheck(HTREEITEM hItem)
 {
 	UINT uState = (GetItemState(hItem, TVIS_OVERLAYMASK) & TVIS_OVERLAYMASK);
-	if (uState == INDEXTOOVERLAYMASK(1))
+	if(uState == INDEXTOOVERLAYMASK(1))
 	{
 		return 1;
 	}
-	else if (uState == INDEXTOOVERLAYMASK(0))
+	else if(uState == INDEXTOOVERLAYMASK(0))
 	{
 		return 0;
 	}
 
 	return -1;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the number of visgroups in the whole tree.
@@ -769,7 +734,6 @@ int CGroupList::GetVisGroupCount()
 	return m_VisGroups.Count();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -778,14 +742,13 @@ CVisGroup *CGroupList::GetVisGroup(int nIndex)
 	return m_VisGroups.Element(nIndex);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Updates the tree control item text with the new group name.
 //-----------------------------------------------------------------------------
 void CGroupList::UpdateVisGroup(CVisGroup *pVisGroup)
 {
 	HTREEITEM hItem = FindVisGroupItem(pVisGroup);
-	if (hItem)
+	if(hItem)
 	{
 		SetItemText(hItem, pVisGroup->GetName());
 	}
@@ -798,47 +761,47 @@ int CGroupList::GetGroupPairCount(void)
 
 void CGroupList::SaveVisGroupExpandStates()
 {
-	for ( int i = 0; i < GetVisGroupCount(); i++ )
+	for(int i = 0; i < GetVisGroupCount(); i++)
 	{
 		CVisGroup *thisGroup = GetVisGroup(i);
 		GroupListPair newPair;
-		for ( int j = 0; j < GetGroupPairCount(); j++ )
+		for(int j = 0; j < GetGroupPairCount(); j++)
 		{
-			GroupListPair thisPair = m_GroupPairs.Element( j );
-			if ( thisGroup == thisPair.pVisGroup )
+			GroupListPair thisPair = m_GroupPairs.Element(j);
+			if(thisGroup == thisPair.pVisGroup)
 			{
-				m_GroupPairs.Remove( j );
+				m_GroupPairs.Remove(j);
 				break;
 			}
 		}
 
-		HTREEITEM thisItem = FindVisGroupItem( thisGroup );
+		HTREEITEM thisItem = FindVisGroupItem(thisGroup);
 		newPair.pVisGroup = thisGroup;
 		newPair.bExpanded = false;
-		if ( thisItem && (GetItemState( thisItem, TVIS_EXPANDED) & TVIS_EXPANDED) )
+		if(thisItem && (GetItemState(thisItem, TVIS_EXPANDED) & TVIS_EXPANDED))
 		{
 			newPair.bExpanded = true;
 		}
-		m_GroupPairs.AddToTail( newPair );
+		m_GroupPairs.AddToTail(newPair);
 	}
 }
 
 void CGroupList::RestoreVisGroupExpandStates()
 {
 	ExpandAll();
-	for ( int i = 0; i <  GetGroupPairCount(); i++ )
+	for(int i = 0; i < GetGroupPairCount(); i++)
 	{
-		GroupListPair thisPair = m_GroupPairs.Element( i );
-		HTREEITEM thisItem = FindVisGroupItem( thisPair.pVisGroup );
-		if ( thisItem )
+		GroupListPair thisPair = m_GroupPairs.Element(i);
+		HTREEITEM thisItem = FindVisGroupItem(thisPair.pVisGroup);
+		if(thisItem)
 		{
-			if ( thisPair.bExpanded )
+			if(thisPair.bExpanded)
 			{
 				Expand(thisItem, TVE_EXPAND);
 			}
 			else
 			{
-				Expand( thisItem, TVE_COLLAPSE );
+				Expand(thisItem, TVE_COLLAPSE);
 			}
 		}
 	}

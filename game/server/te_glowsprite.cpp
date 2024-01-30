@@ -16,7 +16,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-extern short	g_sModelIndexSmoke;			// (in combatweapon.cpp) holds the index for the smoke cloud
+extern short g_sModelIndexSmoke; // (in combatweapon.cpp) holds the index for the smoke cloud
 
 //-----------------------------------------------------------------------------
 // Purpose: Dispatches Sprite tempentity
@@ -24,29 +24,28 @@ extern short	g_sModelIndexSmoke;			// (in combatweapon.cpp) holds the index for 
 class CTEGlowSprite : public CBaseTempEntity
 {
 public:
-	DECLARE_CLASS( CTEGlowSprite, CBaseTempEntity );
+	DECLARE_CLASS(CTEGlowSprite, CBaseTempEntity);
 
-					CTEGlowSprite( const char *name );
-	virtual			~CTEGlowSprite( void );
+	CTEGlowSprite(const char *name);
+	virtual ~CTEGlowSprite(void);
 
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
+	virtual void Test(const Vector &current_origin, const QAngle &current_angles);
 
 	DECLARE_SERVERCLASS();
 
 public:
-	CNetworkVector( m_vecOrigin );
-	CNetworkVar( int, m_nModelIndex );
-	CNetworkVar( float, m_fScale );
-	CNetworkVar( float, m_fLife );
-	CNetworkVar( int, m_nBrightness );
+	CNetworkVector(m_vecOrigin);
+	CNetworkVar(int, m_nModelIndex);
+	CNetworkVar(float, m_fScale);
+	CNetworkVar(float, m_fLife);
+	CNetworkVar(int, m_nBrightness);
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-CTEGlowSprite::CTEGlowSprite( const char *name ) :
-	CBaseTempEntity( name )
+CTEGlowSprite::CTEGlowSprite(const char *name) : CBaseTempEntity(name)
 {
 	m_vecOrigin.Init();
 	m_nModelIndex = 0;
@@ -58,16 +57,14 @@ CTEGlowSprite::CTEGlowSprite( const char *name ) :
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTEGlowSprite::~CTEGlowSprite( void )
-{
-}
+CTEGlowSprite::~CTEGlowSprite(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *current_origin -
 //			*current_angles -
 //-----------------------------------------------------------------------------
-void CTEGlowSprite::Test( const Vector& current_origin, const QAngle& current_angles )
+void CTEGlowSprite::Test(const Vector &current_origin, const QAngle &current_angles)
 {
 	// Fill in data
 	m_nModelIndex = g_sModelIndexSmoke;
@@ -80,29 +77,27 @@ void CTEGlowSprite::Test( const Vector& current_origin, const QAngle& current_an
 
 	m_vecOrigin.GetForModify()[2] += 24;
 
-	AngleVectors( current_angles, &forward, &right, NULL );
+	AngleVectors(current_angles, &forward, &right, NULL);
 	forward[2] = 0.0;
-	VectorNormalize( forward );
+	VectorNormalize(forward);
 
-	VectorMA( m_vecOrigin, 50.0, forward, m_vecOrigin.GetForModify() );
-	VectorMA( m_vecOrigin, -25.0, right, m_vecOrigin.GetForModify() );
+	VectorMA(m_vecOrigin, 50.0, forward, m_vecOrigin.GetForModify());
+	VectorMA(m_vecOrigin, -25.0, right, m_vecOrigin.GetForModify());
 
 	CBroadcastRecipientFilter filter;
-	Create( filter, 0.0 );
+	Create(filter, 0.0);
 }
 
-
 IMPLEMENT_SERVERCLASS_ST(CTEGlowSprite, DT_TEGlowSprite)
-	SendPropVector( SENDINFO(m_vecOrigin), -1, SPROP_COORD),
-	SendPropModelIndex( SENDINFO(m_nModelIndex) ),
-	SendPropFloat( SENDINFO(m_fScale ), 8, SPROP_ROUNDDOWN, 0.0, 25.6 ),
-	SendPropFloat( SENDINFO(m_fLife ), 8, SPROP_ROUNDDOWN, 0.0, 25.6 ),
-	SendPropInt( SENDINFO(m_nBrightness), 8, SPROP_UNSIGNED ),
-END_SEND_TABLE()
+SendPropVector(SENDINFO(m_vecOrigin), -1, SPROP_COORD), SendPropModelIndex(SENDINFO(m_nModelIndex)),
+	SendPropFloat(SENDINFO(m_fScale), 8, SPROP_ROUNDDOWN, 0.0, 25.6),
+	SendPropFloat(SENDINFO(m_fLife), 8, SPROP_ROUNDDOWN, 0.0, 25.6),
+	SendPropInt(SENDINFO(m_nBrightness), 8, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
-
-// Singleton to fire TEGlowSprite objects
-static CTEGlowSprite g_TEGlowSprite( "GlowSprite" );
+	// Singleton to fire TEGlowSprite objects
+	static CTEGlowSprite g_TEGlowSprite("GlowSprite");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -116,15 +111,15 @@ static CTEGlowSprite g_TEGlowSprite( "GlowSprite" );
 //			size -
 //			brightness -
 //-----------------------------------------------------------------------------
-void TE_GlowSprite( IRecipientFilter& filter, float delay,
-	const Vector* pos, int modelindex, float life, float size, int brightness )
+void TE_GlowSprite(IRecipientFilter &filter, float delay, const Vector *pos, int modelindex, float life, float size,
+				   int brightness)
 {
-	g_TEGlowSprite.m_vecOrigin		= *pos;
-	g_TEGlowSprite.m_nModelIndex	= modelindex;
-	g_TEGlowSprite.m_fLife			= life;
-	g_TEGlowSprite.m_fScale			= size;
-	g_TEGlowSprite.m_nBrightness	= brightness;
+	g_TEGlowSprite.m_vecOrigin = *pos;
+	g_TEGlowSprite.m_nModelIndex = modelindex;
+	g_TEGlowSprite.m_fLife = life;
+	g_TEGlowSprite.m_fScale = size;
+	g_TEGlowSprite.m_nBrightness = brightness;
 
 	// Send it over the wire
-	g_TEGlowSprite.Create( filter, delay );
+	g_TEGlowSprite.Create(filter, delay);
 }

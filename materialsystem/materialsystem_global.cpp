@@ -15,6 +15,6 @@
 
 int g_FrameNum;
 IShaderAPI *g_pShaderAPI = 0;
-IShaderDeviceMgr* g_pShaderDeviceMgr = 0;
+IShaderDeviceMgr *g_pShaderDeviceMgr = 0;
 IShaderDevice *g_pShaderDevice = 0;
-IShaderShadow* g_pShaderShadow = 0;
+IShaderShadow *g_pShaderShadow = 0;

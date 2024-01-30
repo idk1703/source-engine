@@ -14,56 +14,42 @@
 #include <mx/mxToggleButton.h>
 #include <windows.h>
 
-
-
 class mxToggleButton_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxToggleButton::mxToggleButton (mxWindow *parent, int x, int y, int w, int h, const char *label, int id)
-: mxWidget (parent, x, y, w, h, label)
+mxToggleButton::mxToggleButton(mxWindow *parent, int x, int y, int w, int h, const char *label, int id)
+	: mxWidget(parent, x, y, w, h, label)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	void *handle = (void *) CreateWindowEx (0, "BUTTON", label, WS_VISIBLE | WS_CHILD | BS_PUSHLIKE | BS_AUTOCHECKBOX | WS_TABSTOP,
-				x, y, w, h, hwndParent,
-				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
+	void *handle =
+		(void *)CreateWindowEx(0, "BUTTON", label, WS_VISIBLE | WS_CHILD | BS_PUSHLIKE | BS_AUTOCHECKBOX | WS_TABSTOP,
+							   x, y, w, h, hwndParent, (HMENU)id, (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
-	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+	SetWindowLong((HWND)handle, GWL_USERDATA, (LONG)this);
 
-	setHandle (handle);
-	setType (MX_TOGGLEBUTTON);
-	setParent (parent);
-	setId (id);
-	setChecked (false);
+	setHandle(handle);
+	setType(MX_TOGGLEBUTTON);
+	setParent(parent);
+	setId(id);
+	setChecked(false);
 }
 
+mxToggleButton::~mxToggleButton() {}
 
-
-mxToggleButton::~mxToggleButton ()
+void mxToggleButton::setChecked(bool b)
 {
+	SendMessage((HWND)getHandle(), BM_SETCHECK, (WPARAM)b ? BST_CHECKED : BST_UNCHECKED, 0L);
 }
 
-
-
-void
-mxToggleButton::setChecked (bool b)
+bool mxToggleButton::isChecked() const
 {
-	SendMessage ((HWND) getHandle (), BM_SETCHECK, (WPARAM) b ? BST_CHECKED:BST_UNCHECKED, 0L);
-}
-
-
-
-bool
-mxToggleButton::isChecked () const
-{
-	return (SendMessage ((HWND) getHandle (), BM_GETCHECK, 0, 0L) == BST_CHECKED);
+	return (SendMessage((HWND)getHandle(), BM_GETCHECK, 0, 0L) == BST_CHECKED);
 }

@@ -26,76 +26,68 @@
 #include "bot_npc_minion.h"
 #include "player_vs_environment/monster_resource.h"
 
-
 extern ConVar tf_bot_npc_reaction_time;
 extern ConVar tf_bot_npc_grenade_interval;
-extern float ModifyBossDamage( const CTakeDamageInfo &info );
+extern float ModifyBossDamage(const CTakeDamageInfo &info);
 
-
-ConVar tf_raid_mini_rocket_boss_health( "tf_raid_mini_rocket_boss_health", "5000", 0/*FCVAR_CHEAT*/ );
-
+ConVar tf_raid_mini_rocket_boss_health("tf_raid_mini_rocket_boss_health", "5000", 0 /*FCVAR_CHEAT*/);
 
 //-----------------------------------------------------------------------------------------------------
 // The Bot NPC mini-boss
 //-----------------------------------------------------------------------------------------------------
-LINK_ENTITY_TO_CLASS( bot_boss_mini_rockets, CBotNPCMiniRockets );
-PRECACHE_REGISTER( bot_boss_mini_rockets );
-
+LINK_ENTITY_TO_CLASS(bot_boss_mini_rockets, CBotNPCMiniRockets);
+PRECACHE_REGISTER(bot_boss_mini_rockets);
 
 //-----------------------------------------------------------------------------------------------------
 void CBotNPCMiniRockets::Precache()
 {
 	BaseClass::Precache();
 
-	int model = PrecacheModel( "models/bots/knight/knight_mini.mdl" );
-	PrecacheGibsForModel( model );
+	int model = PrecacheModel("models/bots/knight/knight_mini.mdl");
+	PrecacheGibsForModel(model);
 
-	PrecacheScriptSound( "RobotMiniBoss.LaunchRocket" );
+	PrecacheScriptSound("RobotMiniBoss.LaunchRocket");
 }
 
-
 //-----------------------------------------------------------------------------------------------------
-void CBotNPCMiniRockets::Spawn( void )
+void CBotNPCMiniRockets::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	SetModel( "models/bots/knight/knight_mini.mdl" );
+	SetModel("models/bots/knight/knight_mini.mdl");
 
 	int health = tf_raid_mini_rocket_boss_health.GetInt();
-	SetHealth( health );
-	SetMaxHealth( health );
+	SetHealth(health);
+	SetMaxHealth(health);
 }
-
 
 //-----------------------------------------------------------------------------------------------------
 // The Bot NPC mini-boss
 //-----------------------------------------------------------------------------------------------------
-LINK_ENTITY_TO_CLASS( bot_boss_mini_nuker, CBotNPCMiniNuker );
-PRECACHE_REGISTER( bot_boss_mini_nuker );
+LINK_ENTITY_TO_CLASS(bot_boss_mini_nuker, CBotNPCMiniNuker);
+PRECACHE_REGISTER(bot_boss_mini_nuker);
 
-ConVar tf_raid_mini_nuker_boss_health( "tf_raid_mini_nuker_boss_health", "5000", 0/*FCVAR_CHEAT*/ );
-
+ConVar tf_raid_mini_nuker_boss_health("tf_raid_mini_nuker_boss_health", "5000", 0 /*FCVAR_CHEAT*/);
 
 //-----------------------------------------------------------------------------------------------------
 void CBotNPCMiniNuker::Precache()
 {
 	BaseClass::Precache();
 
-	int model = PrecacheModel( "models/bots/knight/knight_mini.mdl" );
-	PrecacheGibsForModel( model );
+	int model = PrecacheModel("models/bots/knight/knight_mini.mdl");
+	PrecacheGibsForModel(model);
 }
 
-
 //-----------------------------------------------------------------------------------------------------
-void CBotNPCMiniNuker::Spawn( void )
+void CBotNPCMiniNuker::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	SetModel( "models/bots/knight/knight_mini.mdl" );
+	SetModel("models/bots/knight/knight_mini.mdl");
 
 	int health = tf_raid_mini_nuker_boss_health.GetInt();
-	SetHealth( health );
-	SetMaxHealth( health );
+	SetHealth(health);
+	SetMaxHealth(health);
 }
 
 #endif // TF_RAID_MODE

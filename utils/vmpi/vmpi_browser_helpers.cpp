@@ -8,9 +8,7 @@
 #include "tier1/strtools.h"
 #include "vmpi_browser_helpers.h"
 
-
-
-void FormatTimeString( unsigned long nInputSeconds, char *timeStr, int outLen )
+void FormatTimeString(unsigned long nInputSeconds, char *timeStr, int outLen)
 {
 	// Make a string to say how long the thing has been running.
 	unsigned long minutes = nInputSeconds / 60;
@@ -22,20 +20,20 @@ void FormatTimeString( unsigned long nInputSeconds, char *timeStr, int outLen )
 	unsigned long days = hours / 24;
 	hours -= days * 24;
 
-	if ( days && hours )
+	if(days && hours)
 	{
-		Q_snprintf( timeStr, outLen, "%dd %dh %dm", days, hours, minutes );
+		Q_snprintf(timeStr, outLen, "%dd %dh %dm", days, hours, minutes);
 	}
-	else if ( hours )
+	else if(hours)
 	{
-		Q_snprintf( timeStr, outLen, "%dh %dm", hours, minutes );
+		Q_snprintf(timeStr, outLen, "%dh %dm", hours, minutes);
 	}
-	else if ( minutes )
+	else if(minutes)
 	{
-		Q_snprintf( timeStr, outLen, "%dm %ds", minutes, nSeconds );
+		Q_snprintf(timeStr, outLen, "%dm %ds", minutes, nSeconds);
 	}
 	else
 	{
-		Q_snprintf( timeStr, outLen, "%d seconds", nSeconds );
+		Q_snprintf(timeStr, outLen, "%d seconds", nSeconds);
 	}
 }

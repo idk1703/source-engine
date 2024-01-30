@@ -19,10 +19,10 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Cosntructor
 //-----------------------------------------------------------------------------
-CCreateTokenDialog::CCreateTokenDialog( CLocalizationDialog *pLocalizationDialog ) : Frame(NULL, "CreateTokenDialog"),
-	m_pLocalizationDialog( m_pLocalizationDialog )
+CCreateTokenDialog::CCreateTokenDialog(CLocalizationDialog *pLocalizationDialog)
+	: Frame(NULL, "CreateTokenDialog"), m_pLocalizationDialog(m_pLocalizationDialog)
 {
-	Assert( m_pLocalizationDialog );
+	Assert(m_pLocalizationDialog);
 
 	MakePopup();
 
@@ -44,9 +44,7 @@ CCreateTokenDialog::CCreateTokenDialog( CLocalizationDialog *pLocalizationDialog
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CCreateTokenDialog::~CCreateTokenDialog()
-{
-}
+CCreateTokenDialog::~CCreateTokenDialog() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: prompts user to create a single token
@@ -86,12 +84,13 @@ void CCreateTokenDialog::OnOK()
 {
 	// get the data
 	char tokenName[1024], tokenValue[1024];
-	m_pTokenName->GetText( tokenName, sizeof( tokenName ) );
-	m_pTokenValue->GetText( tokenValue, sizeof( tokenValue ) );
+	m_pTokenName->GetText(tokenName, sizeof(tokenName));
+	m_pTokenValue->GetText(tokenValue, sizeof(tokenValue));
 
-	if ( Q_strlen( tokenName ) < 4 )
+	if(Q_strlen(tokenName) < 4)
 	{
-		MessageBox *box = new MessageBox("Create Token Error", "Could not create token.\nToken names need to be at least 4 characters long.");
+		MessageBox *box = new MessageBox("Create Token Error",
+										 "Could not create token.\nToken names need to be at least 4 characters long.");
 		box->DoModal();
 	}
 	else
@@ -99,13 +98,13 @@ void CCreateTokenDialog::OnOK()
 		// create the token
 		wchar_t unicodeString[1024];
 		g_pVGuiLocalize->ConvertANSIToUnicode(tokenValue, unicodeString, sizeof(unicodeString) / sizeof(wchar_t));
-		g_pVGuiLocalize->AddString(tokenName, unicodeString, m_pLocalizationDialog->GetFileName() );
+		g_pVGuiLocalize->AddString(tokenName, unicodeString, m_pLocalizationDialog->GetFileName());
 
 		// notify the dialog creator
 		PostActionSignal(new KeyValues("TokenCreated", "name", tokenName));
 
 		// close
-		if (!m_bMultiToken)
+		if(!m_bMultiToken)
 		{
 			PostMessage(this, new KeyValues("Close"));
 		}
@@ -115,9 +114,7 @@ void CCreateTokenDialog::OnOK()
 //-----------------------------------------------------------------------------
 // Purpose: skips the current token in the multitoken edit mode
 //-----------------------------------------------------------------------------
-void CCreateTokenDialog::OnSkip()
-{
-}
+void CCreateTokenDialog::OnSkip() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: handles a button command
@@ -125,11 +122,11 @@ void CCreateTokenDialog::OnSkip()
 //-----------------------------------------------------------------------------
 void CCreateTokenDialog::OnCommand(const char *command)
 {
-	if (!stricmp(command, "OK"))
+	if(!stricmp(command, "OK"))
 	{
 		OnOK();
 	}
-	else if (!stricmp(command, "SkipToken"))
+	else if(!stricmp(command, "SkipToken"))
 	{
 		OnSkip();
 	}

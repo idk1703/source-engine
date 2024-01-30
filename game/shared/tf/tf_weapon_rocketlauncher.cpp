@@ -31,9 +31,9 @@
 //
 // Weapon Rocket Launcher tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher, DT_WeaponRocketLauncher )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFRocketLauncher, DT_WeaponRocketLauncher)
 
-BEGIN_NETWORK_TABLE( CTFRocketLauncher, DT_WeaponRocketLauncher )
+BEGIN_NETWORK_TABLE(CTFRocketLauncher, DT_WeaponRocketLauncher)
 #ifndef CLIENT_DLL
 //	SendPropInt( SENDINFO( m_iSecondaryShotsFired ) ),
 #else
@@ -41,15 +41,15 @@ BEGIN_NETWORK_TABLE( CTFRocketLauncher, DT_WeaponRocketLauncher )
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFRocketLauncher )
+BEGIN_PREDICTION_DATA(CTFRocketLauncher)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_rocketlauncher, CTFRocketLauncher );
-PRECACHE_WEAPON_REGISTER( tf_weapon_rocketlauncher );
+LINK_ENTITY_TO_CLASS(tf_weapon_rocketlauncher, CTFRocketLauncher);
+PRECACHE_WEAPON_REGISTER(tf_weapon_rocketlauncher);
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFRocketLauncher )
+BEGIN_DATADESC(CTFRocketLauncher)
 END_DATADESC()
 #endif
 
@@ -57,29 +57,29 @@ END_DATADESC()
 //
 // Direct Hit tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_DirectHit, DT_WeaponRocketLauncher_DirectHit )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFRocketLauncher_DirectHit, DT_WeaponRocketLauncher_DirectHit)
 
-BEGIN_NETWORK_TABLE( CTFRocketLauncher_DirectHit, DT_WeaponRocketLauncher_DirectHit )
+BEGIN_NETWORK_TABLE(CTFRocketLauncher_DirectHit, DT_WeaponRocketLauncher_DirectHit)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFRocketLauncher_DirectHit )
+BEGIN_PREDICTION_DATA(CTFRocketLauncher_DirectHit)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_rocketlauncher_directhit, CTFRocketLauncher_DirectHit );
-PRECACHE_WEAPON_REGISTER( tf_weapon_rocketlauncher_directhit );
+LINK_ENTITY_TO_CLASS(tf_weapon_rocketlauncher_directhit, CTFRocketLauncher_DirectHit);
+PRECACHE_WEAPON_REGISTER(tf_weapon_rocketlauncher_directhit);
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFRocketLauncher_DirectHit )
+BEGIN_DATADESC(CTFRocketLauncher_DirectHit)
 END_DATADESC()
 #endif
 
 //=============================================================================
 //
 // AIRSTRIKE BEGIN
-IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStrike )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStrike)
 
-BEGIN_NETWORK_TABLE( CTFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStrike )
+BEGIN_NETWORK_TABLE(CTFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStrike)
 #ifndef CLIENT_DLL
 //	SendPropInt( SENDINFO( m_iRocketKills ) ),
 #else
@@ -87,41 +87,41 @@ BEGIN_NETWORK_TABLE( CTFRocketLauncher_AirStrike, DT_WeaponRocketLauncher_AirStr
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFRocketLauncher_AirStrike )
+BEGIN_PREDICTION_DATA(CTFRocketLauncher_AirStrike)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_rocketlauncher_airstrike, CTFRocketLauncher_AirStrike );
-PRECACHE_WEAPON_REGISTER( tf_weapon_rocketlauncher_airstrike );
+LINK_ENTITY_TO_CLASS(tf_weapon_rocketlauncher_airstrike, CTFRocketLauncher_AirStrike);
+PRECACHE_WEAPON_REGISTER(tf_weapon_rocketlauncher_airstrike);
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFRocketLauncher_AirStrike )
+BEGIN_DATADESC(CTFRocketLauncher_AirStrike)
 END_DATADESC()
 #endif
 // AIRSTRIKE END
 
-//CREATE_SIMPLE_WEAPON_TABLE( TFRocketLauncher_AirStrike, tf_weapon_rocketlauncher_airstrike )
-//CREATE_SIMPLE_WEAPON_TABLE( TFRocketLauncher_Mortar, tf_weapon_rocketlauncher_mortar )
+// CREATE_SIMPLE_WEAPON_TABLE( TFRocketLauncher_AirStrike, tf_weapon_rocketlauncher_airstrike )
+// CREATE_SIMPLE_WEAPON_TABLE( TFRocketLauncher_Mortar, tf_weapon_rocketlauncher_mortar )
 //=============================================================================
 //
-// Mortar tables.
+//  Mortar tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFRocketLauncher_Mortar, DT_WeaponRocketLauncher_Mortar )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFRocketLauncher_Mortar, DT_WeaponRocketLauncher_Mortar)
 
-BEGIN_NETWORK_TABLE( CTFRocketLauncher_Mortar, DT_WeaponRocketLauncher_Mortar )
+BEGIN_NETWORK_TABLE(CTFRocketLauncher_Mortar, DT_WeaponRocketLauncher_Mortar)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFRocketLauncher_Mortar )
+BEGIN_PREDICTION_DATA(CTFRocketLauncher_Mortar)
 END_PREDICTION_DATA()
 
 #ifdef STAGING_ONLY
-LINK_ENTITY_TO_CLASS( tf_weapon_rocketlauncher_mortar, CTFRocketLauncher_Mortar );
-PRECACHE_WEAPON_REGISTER( tf_weapon_rocketlauncher_mortar );
+LINK_ENTITY_TO_CLASS(tf_weapon_rocketlauncher_mortar, CTFRocketLauncher_Mortar);
+PRECACHE_WEAPON_REGISTER(tf_weapon_rocketlauncher_mortar);
 #endif // STAGING_ONLY
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFRocketLauncher_Mortar )
+BEGIN_DATADESC(CTFRocketLauncher_Mortar)
 END_DATADESC()
 #endif
 
@@ -129,33 +129,34 @@ END_DATADESC()
 //
 // Crossbow tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFCrossbow, DT_Crossbow )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFCrossbow, DT_Crossbow)
 
-BEGIN_NETWORK_TABLE( CTFCrossbow, DT_Crossbow )
+BEGIN_NETWORK_TABLE(CTFCrossbow, DT_Crossbow)
 #ifdef CLIENT_DLL
-	RecvPropFloat( RECVINFO( m_flRegenerateDuration ) ),
-	RecvPropFloat( RECVINFO( m_flLastUsedTimestamp ) ),
+	RecvPropFloat(RECVINFO(m_flRegenerateDuration)), RecvPropFloat(RECVINFO(m_flLastUsedTimestamp)),
 #else
-	SendPropFloat( SENDINFO( m_flRegenerateDuration ), 0, SPROP_NOSCALE ),
-	SendPropFloat( SENDINFO( m_flLastUsedTimestamp ), 0, SPROP_NOSCALE ),
+	SendPropFloat(SENDINFO(m_flRegenerateDuration), 0, SPROP_NOSCALE),
+		SendPropFloat(SENDINFO(m_flLastUsedTimestamp), 0, SPROP_NOSCALE),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFCrossbow )
+BEGIN_PREDICTION_DATA(CTFCrossbow)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_crossbow, CTFCrossbow );
-PRECACHE_WEAPON_REGISTER( tf_weapon_crossbow );
+LINK_ENTITY_TO_CLASS(tf_weapon_crossbow, CTFCrossbow);
+PRECACHE_WEAPON_REGISTER(tf_weapon_crossbow);
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFCrossbow )
+BEGIN_DATADESC(CTFCrossbow)
 END_DATADESC()
 #endif
 
 #ifdef STAGING_ONLY
-ConVar  tf_airstrike_dmg_scale( "tf_airstrike_dmg_scale", "0.65", FCVAR_REPLICATED, "How much damage the mini rockets do compared to regular rocket" );
-ConVar  tf_mortar_allow_fulltracking( "tf_mortar_allow_fulltracking", "0.0", FCVAR_REPLICATED, "Enable to allow full tracking / infinte redirects for Mortar Launcher" );
+ConVar tf_airstrike_dmg_scale("tf_airstrike_dmg_scale", "0.65", FCVAR_REPLICATED,
+							  "How much damage the mini rockets do compared to regular rocket");
+ConVar tf_mortar_allow_fulltracking("tf_mortar_allow_fulltracking", "0.0", FCVAR_REPLICATED,
+									"Enable to allow full tracking / infinte redirects for Mortar Launcher");
 #endif // STAGING_ONLY
 
 //-----------------------------------------------------------------------------
@@ -169,16 +170,14 @@ CTFRocketLauncher::CTFRocketLauncher()
 
 #ifdef GAME_DLL
 	m_bIsOverloading = false;
-#endif //GAME_DLL
+#endif // GAME_DLL
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  :  -
 //-----------------------------------------------------------------------------
-CTFRocketLauncher::~CTFRocketLauncher()
-{
-}
+CTFRocketLauncher::~CTFRocketLauncher() {}
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
@@ -187,29 +186,29 @@ CTFRocketLauncher::~CTFRocketLauncher()
 void CTFRocketLauncher::Precache()
 {
 	BaseClass::Precache();
-	PrecacheParticleSystem( "rocketbackblast" );
+	PrecacheParticleSystem("rocketbackblast");
 
 	// FIXME: DO WE STILL NEED THESE??
-	PrecacheScriptSound( "MVM.GiantSoldierRocketShoot" );
-	PrecacheScriptSound( "MVM.GiantSoldierRocketShootCrit" );
-	PrecacheScriptSound( "MVM.GiantSoldierRocketExplode" );
+	PrecacheScriptSound("MVM.GiantSoldierRocketShoot");
+	PrecacheScriptSound("MVM.GiantSoldierRocketShootCrit");
+	PrecacheScriptSound("MVM.GiantSoldierRocketExplode");
 
-	PrecacheScriptSound( "Weapon_Airstrike.AltFire" );
-	PrecacheScriptSound( "Weapon_Airstrike.Fail" );
-	//Building_Sentrygun.FireRocket
+	PrecacheScriptSound("Weapon_Airstrike.AltFire");
+	PrecacheScriptSound("Weapon_Airstrike.Fail");
+	// Building_Sentrygun.FireRocket
 }
 #endif
 
-void CTFRocketLauncher::ModifyEmitSoundParams( EmitSound_t &params )
+void CTFRocketLauncher::ModifyEmitSoundParams(EmitSound_t &params)
 {
-	bool bBaseReloadSound = V_strcmp( params.m_pSoundName, "Weapon_RPG.Reload" ) == 0;
-	if ( AutoFiresFullClip() && ( bBaseReloadSound || V_strcmp( params.m_pSoundName, "Weapon_DumpsterRocket.Reload" ) == 0 ) )
+	bool bBaseReloadSound = V_strcmp(params.m_pSoundName, "Weapon_RPG.Reload") == 0;
+	if(AutoFiresFullClip() && (bBaseReloadSound || V_strcmp(params.m_pSoundName, "Weapon_DumpsterRocket.Reload") == 0))
 	{
 		float fMaxAmmoInClip = GetMaxClip1();
-		float fAmmoPercentage = static_cast< float >( m_nReloadPitchStep ) / fMaxAmmoInClip;
+		float fAmmoPercentage = static_cast<float>(m_nReloadPitchStep) / fMaxAmmoInClip;
 
 		// Play a sound that gets higher pitched as more ammo is added
-		if ( bBaseReloadSound )
+		if(bBaseReloadSound)
 		{
 			params.m_pSoundName = "Weapon_DumpsterRocket.Reload_FP";
 		}
@@ -218,10 +217,10 @@ void CTFRocketLauncher::ModifyEmitSoundParams( EmitSound_t &params )
 			params.m_pSoundName = "Weapon_DumpsterRocket.Reload";
 		}
 
-		params.m_nPitch *= RemapVal( fAmmoPercentage, 0.0f, ( fMaxAmmoInClip - 1.0f ) / fMaxAmmoInClip, 0.79f, 1.19f );
+		params.m_nPitch *= RemapVal(fAmmoPercentage, 0.0f, (fMaxAmmoInClip - 1.0f) / fMaxAmmoInClip, 0.79f, 1.19f);
 		params.m_nFlags |= SND_CHANGE_PITCH;
 
-		m_nReloadPitchStep = MIN( GetMaxClip1() - 1, m_nReloadPitchStep + 1 );
+		m_nReloadPitchStep = MIN(GetMaxClip1() - 1, m_nReloadPitchStep + 1);
 
 		// The last rocket goes in right when this sound happens so that you can launch it before a misfire
 		IncrementAmmo();
@@ -229,40 +228,41 @@ void CTFRocketLauncher::ModifyEmitSoundParams( EmitSound_t &params )
 	}
 }
 
-void CTFRocketLauncher::Misfire( void )
+void CTFRocketLauncher::Misfire(void)
 {
 	BaseClass::Misfire();
 
 #ifdef GAME_DLL
-	if ( CanOverload() )
+	if(CanOverload())
 	{
-		CTFPlayer *pPlayer = ToTFPlayer( GetPlayerOwner() );
-		if ( !pPlayer )
+		CTFPlayer *pPlayer = ToTFPlayer(GetPlayerOwner());
+		if(!pPlayer)
 			return;
 
-		CTFBaseRocket *pRocket = dynamic_cast< CTFBaseRocket* >( BaseClass::FireProjectile( pPlayer ) );
-		if ( pRocket )
+		CTFBaseRocket *pRocket = dynamic_cast<CTFBaseRocket *>(BaseClass::FireProjectile(pPlayer));
+		if(pRocket)
 		{
 			trace_t tr;
-			UTIL_TraceLine( pRocket->GetAbsOrigin(), pPlayer->EyePosition(), MASK_SOLID, pRocket, COLLISION_GROUP_NONE, &tr );
-			pRocket->Explode( &tr, pPlayer );
+			UTIL_TraceLine(pRocket->GetAbsOrigin(), pPlayer->EyePosition(), MASK_SOLID, pRocket, COLLISION_GROUP_NONE,
+						   &tr);
+			pRocket->Explode(&tr, pPlayer);
 		}
 	}
 #endif
 }
 
 //-----------------------------------------------------------------------------
-bool CTFRocketLauncher::CheckReloadMisfire( void )
+bool CTFRocketLauncher::CheckReloadMisfire(void)
 {
-	if ( !CanOverload() )
+	if(!CanOverload())
 		return false;
 
 #ifdef GAME_DLL
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
 
-	if ( m_bIsOverloading )
+	if(m_bIsOverloading)
 	{
-		if ( Clip1() > 0 )
+		if(Clip1() > 0)
 		{
 			Misfire();
 			return true;
@@ -272,7 +272,7 @@ bool CTFRocketLauncher::CheckReloadMisfire( void )
 			m_bIsOverloading = false;
 		}
 	}
-	else if ( Clip1() >= GetMaxClip1() || ( Clip1() > 0 && pPlayer && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) == 0 ) )
+	else if(Clip1() >= GetMaxClip1() || (Clip1() > 0 && pPlayer && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) == 0))
 	{
 		Misfire();
 		m_bIsOverloading = true;
@@ -281,7 +281,6 @@ bool CTFRocketLauncher::CheckReloadMisfire( void )
 #endif // GAME_DLL
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 bool CTFRocketLauncher::ShouldBlockPrimaryFire()
@@ -292,27 +291,28 @@ bool CTFRocketLauncher::ShouldBlockPrimaryFire()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CTFRocketLauncher::FireProjectile( CTFPlayer *pPlayer )
+CBaseEntity *CTFRocketLauncher::FireProjectile(CTFPlayer *pPlayer)
 {
 	m_flShowReloadHintAt = gpGlobals->curtime + 30;
-	CBaseEntity *pRocket = BaseClass::FireProjectile( pPlayer );
+	CBaseEntity *pRocket = BaseClass::FireProjectile(pPlayer);
 
-	m_nReloadPitchStep = MAX( 0, m_nReloadPitchStep - 1 );
+	m_nReloadPitchStep = MAX(0, m_nReloadPitchStep - 1);
 
 #ifdef GAME_DLL
 	int iProjectile = 0;
-	CALL_ATTRIB_HOOK_INT( iProjectile, override_projectile_type );
-	if ( iProjectile == 0 )
+	CALL_ATTRIB_HOOK_INT(iProjectile, override_projectile_type);
+	if(iProjectile == 0)
 	{
 		iProjectile = GetWeaponProjectileType();
 	}
-	if ( pPlayer->IsPlayerClass( TF_CLASS_SOLDIER ) && IsCurrentAttackARandomCrit() && ( iProjectile == TF_PROJECTILE_ROCKET ) )
+	if(pPlayer->IsPlayerClass(TF_CLASS_SOLDIER) && IsCurrentAttackARandomCrit() &&
+	   (iProjectile == TF_PROJECTILE_ROCKET))
 	{
 		// Track consecutive crit shots for achievements
 		m_iConsecutiveCrits++;
-		if ( m_iConsecutiveCrits == 2 )
+		if(m_iConsecutiveCrits == 2)
 		{
-			pPlayer->AwardAchievement( ACHIEVEMENT_TF_SOLDIER_SHOOT_MULT_CRITS );
+			pPlayer->AwardAchievement(ACHIEVEMENT_TF_SOLDIER_SHOOT_MULT_CRITS);
 		}
 	}
 	else
@@ -322,35 +322,35 @@ CBaseEntity *CTFRocketLauncher::FireProjectile( CTFPlayer *pPlayer )
 	m_bIsOverloading = false;
 #endif
 
-	if ( TFGameRules()->GameModeUsesUpgrades() )
+	if(TFGameRules()->GameModeUsesUpgrades())
 	{
-		PlayUpgradedShootSound( "Weapon_Upgrade.DamageBonus" );
+		PlayUpgradedShootSound("Weapon_Upgrade.DamageBonus");
 	}
 
 #ifdef STAGING_ONLY
 #ifdef GAME_DLL
-	if ( pRocket && pPlayer && pPlayer->RocketJumped() )
+	if(pRocket && pPlayer && pPlayer->RocketJumped())
 	{
 		int iRocketsApplyImpuse = 0;
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pPlayer, iRocketsApplyImpuse, mod_rocket_launch_impulse );
-		if ( iRocketsApplyImpuse )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pPlayer, iRocketsApplyImpuse, mod_rocket_launch_impulse);
+		if(iRocketsApplyImpuse)
 		{
 			// Apply force in opposite direction of rocket
 			Vector vecDir = pRocket->GetAbsVelocity();
 			Vector vecFlightDir = -vecDir;
-			VectorNormalize( vecFlightDir );
+			VectorNormalize(vecFlightDir);
 
 			// Apply more force if looking down
 			QAngle angEye = EyeAngles();
-			float flForce = ( angEye.x > 60.f ) ? 700.f : 400.f;
+			float flForce = (angEye.x > 60.f) ? 700.f : 400.f;
 			Vector vecForce = vecFlightDir * flForce;
 
 			// DevMsg( "x.Ang: %f\tForce: %f\n", angEye.x, flForce );
 
 			// Prevent insane speeds
 			float flSpeed = vecForce.NormalizeInPlace();
-			const float flLimit = Min( 800.f, flSpeed );
-			pPlayer->ApplyAbsVelocityImpulse( flLimit * vecForce );
+			const float flLimit = Min(800.f, flSpeed);
+			pPlayer->ApplyAbsVelocityImpulse(flLimit * vecForce);
 		}
 	}
 #endif // GAME_DLL
@@ -362,21 +362,21 @@ CBaseEntity *CTFRocketLauncher::FireProjectile( CTFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRocketLauncher::ItemPostFrame( void )
+void CTFRocketLauncher::ItemPostFrame(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwnerEntity());
+	if(!pOwner)
 		return;
 
 	BaseClass::ItemPostFrame();
 
 #ifdef GAME_DLL
 
-	if ( m_flShowReloadHintAt && m_flShowReloadHintAt < gpGlobals->curtime )
+	if(m_flShowReloadHintAt && m_flShowReloadHintAt < gpGlobals->curtime)
 	{
-		if ( Clip1() < GetMaxClip1() )
+		if(Clip1() < GetMaxClip1())
 		{
-			pOwner->HintMessage( HINT_SOLDIER_RPG_RELOAD );
+			pOwner->HintMessage(HINT_SOLDIER_RPG_RELOAD);
 		}
 		m_flShowReloadHintAt = 0;
 	}
@@ -386,35 +386,34 @@ void CTFRocketLauncher::ItemPostFrame( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFRocketLauncher::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
+bool CTFRocketLauncher::DefaultReload(int iClipSize1, int iClipSize2, int iActivity)
 {
 	m_flShowReloadHintAt = 0;
-	return BaseClass::DefaultReload( iClipSize1, iClipSize2, iActivity );
+	return BaseClass::DefaultReload(iClipSize1, iClipSize2, iActivity);
 }
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFRocketLauncher::CreateMuzzleFlashEffects( C_BaseEntity *pAttachEnt, int nIndex )
+void CTFRocketLauncher::CreateMuzzleFlashEffects(C_BaseEntity *pAttachEnt, int nIndex)
 {
-	BaseClass::CreateMuzzleFlashEffects( pAttachEnt, nIndex );
+	BaseClass::CreateMuzzleFlashEffects(pAttachEnt, nIndex);
 
 	// Don't do backblast effects in first person
-	C_TFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
-	if ( pOwner->IsLocalPlayer() )
+	C_TFPlayer *pOwner = ToTFPlayer(GetOwnerEntity());
+	if(pOwner->IsLocalPlayer())
 		return;
 
-	ParticleProp()->Init( this );
-	ParticleProp()->Create( "rocketbackblast", PATTACH_POINT_FOLLOW, "backblast" );
+	ParticleProp()->Init(this);
+	ParticleProp()->Create("rocketbackblast", PATTACH_POINT_FOLLOW, "backblast");
 }
 #endif
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int	CTFRocketLauncher::GetWeaponProjectileType( void ) const
+int CTFRocketLauncher::GetWeaponProjectileType(void) const
 {
 	return BaseClass::GetWeaponProjectileType();
 }
@@ -424,48 +423,48 @@ int	CTFRocketLauncher::GetWeaponProjectileType( void ) const
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 CTFRocketLauncher_AirStrike::CTFRocketLauncher_AirStrike()
 {
-	//m_iSecondaryShotsFired = 0;
+	// m_iSecondaryShotsFired = 0;
 }
 
 #ifdef GAME_DLL
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-void CTFRocketLauncher_AirStrike::OnPlayerKill( CTFPlayer *pVictim, const CTakeDamageInfo &info )
+void CTFRocketLauncher_AirStrike::OnPlayerKill(CTFPlayer *pVictim, const CTakeDamageInfo &info)
 {
-	BaseClass::OnPlayerKill( pVictim, info );
+	BaseClass::OnPlayerKill(pVictim, info);
 
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return;
 
 	int iDecap = pOwner->m_Shared.GetDecapitations() + 1;
-	if ( pVictim )
+	if(pVictim)
 	{
 		iDecap += pVictim->m_Shared.GetDecapitations();
 	}
-	pOwner->m_Shared.SetDecapitations( iDecap );
+	pOwner->m_Shared.SetDecapitations(iDecap);
 
 	int iClipSizeOnKills = 0;
-	CALL_ATTRIB_HOOK_INT( iClipSizeOnKills, clipsize_increase_on_kill );
-	if ( iClipSizeOnKills && ( iDecap >= iClipSizeOnKills ) )
+	CALL_ATTRIB_HOOK_INT(iClipSizeOnKills, clipsize_increase_on_kill);
+	if(iClipSizeOnKills && (iDecap >= iClipSizeOnKills))
 	{
-		pOwner->AwardAchievement( ACHIEVEMENT_TF_SOLDIER_AIRSTRIKE_MAX_CLIP );
+		pOwner->AwardAchievement(ACHIEVEMENT_TF_SOLDIER_AIRSTRIKE_MAX_CLIP);
 	}
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 #endif
 
 //-----------------------------------------------------------------------------
-int CTFRocketLauncher_AirStrike::GetCount( void )
+int CTFRocketLauncher_AirStrike::GetCount(void)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetOwner() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwner());
+	if(!pOwner)
 		return 0;
 
 	return pOwner->m_Shared.GetDecapitations();
 }
 
 ////----------------------------------------------------------------------------------------------------------------------------------------------------------
-//void CTFRocketLauncher_AirStrike::PrimaryAttack( void )
+// void CTFRocketLauncher_AirStrike::PrimaryAttack( void )
 //{
 //	CTFPlayer *pPlayer = GetTFPlayerOwner();
 //	if ( !pPlayer )
@@ -480,32 +479,32 @@ int CTFRocketLauncher_AirStrike::GetCount( void )
 //	{
 //		BaseClass::PrimaryAttack();
 //	}
-//}
+// }
 ////----------------------------------------------------------------------------------------------------------------------------------------------------------
-//bool CTFRocketLauncher_AirStrike::CanHolster( void )
+// bool CTFRocketLauncher_AirStrike::CanHolster( void )
 //{
 //	if ( m_iSecondaryShotsFired > 0 )
 //		return false;
 //
 //	return BaseClass::CanHolster();
-//}
+// }
 ////-----------------------------------------------------------------------------
-//void CTFRocketLauncher_AirStrike::ItemPostFrame( void )
+// void CTFRocketLauncher_AirStrike::ItemPostFrame( void )
 //{
 //	// If allowed
 //	FireSecondaryRockets();
 //	BaseClass::ItemPostFrame();
-//}
+// }
 ////-----------------------------------------------------------------------------
-//void CTFRocketLauncher_AirStrike::ItemBusyFrame( void )
+// void CTFRocketLauncher_AirStrike::ItemBusyFrame( void )
 //{
 //	// If allowed
 //	FireSecondaryRockets();
 //	BaseClass::ItemBusyFrame();
-//}
+// }
 //
 ////-----------------------------------------------------------------------------
-//void CTFRocketLauncher_AirStrike::FireSecondaryRockets()
+// void CTFRocketLauncher_AirStrike::FireSecondaryRockets()
 //{
 //#ifdef STAGING_ONLY
 //	if ( m_flNextPrimaryAttack >= gpGlobals->curtime )
@@ -587,38 +586,38 @@ int CTFRocketLauncher_AirStrike::GetCount( void )
 //#endif
 //
 //#endif
-//}
+// }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 // CTFRocketLauncher_Mortar BEGIN
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-//CTFRocketLauncher_Mortar::CTFRocketLauncher_Mortar()
+// CTFRocketLauncher_Mortar::CTFRocketLauncher_Mortar()
 //{
 //
 //}
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-CBaseEntity *CTFRocketLauncher_Mortar::FireProjectile( CTFPlayer *pPlayer )
+CBaseEntity *CTFRocketLauncher_Mortar::FireProjectile(CTFPlayer *pPlayer)
 {
 	// Fire the rocket
-	CBaseEntity* pRocket = BaseClass::FireProjectile( pPlayer );
+	CBaseEntity *pRocket = BaseClass::FireProjectile(pPlayer);
 	// Add it to my list
 #ifdef GAME_DLL
-	m_vecRockets.AddToTail( pRocket );
+	m_vecRockets.AddToTail(pRocket);
 #endif
 
 	return pRocket;
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-void CTFRocketLauncher_Mortar::SecondaryAttack( void )
+void CTFRocketLauncher_Mortar::SecondaryAttack(void)
 {
 	RedirectRockets();
 }
 //-----------------------------------------------------------------------------
-void CTFRocketLauncher_Mortar::ItemPostFrame( void )
+void CTFRocketLauncher_Mortar::ItemPostFrame(void)
 {
 #ifdef GAME_DLL
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	if ( pOwner && pOwner->m_nButtons & IN_ATTACK2 )
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if(pOwner && pOwner->m_nButtons & IN_ATTACK2)
 	{
 		// If allowed
 		RedirectRockets();
@@ -628,11 +627,11 @@ void CTFRocketLauncher_Mortar::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-void CTFRocketLauncher_Mortar::ItemBusyFrame( void )
+void CTFRocketLauncher_Mortar::ItemBusyFrame(void)
 {
 #ifdef GAME_DLL
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	if ( pOwner && pOwner->m_nButtons & IN_ATTACK2 )
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if(pOwner && pOwner->m_nButtons & IN_ATTACK2)
 	{
 		// If allowed
 		RedirectRockets();
@@ -641,56 +640,55 @@ void CTFRocketLauncher_Mortar::ItemBusyFrame( void )
 	BaseClass::ItemBusyFrame();
 }
 
-
 //-----------------------------------------------------------------------------
-void CTFRocketLauncher_Mortar::RedirectRockets( void )
+void CTFRocketLauncher_Mortar::RedirectRockets(void)
 {
 #ifdef GAME_DLL
-	if ( m_vecRockets.Count() <= 0 )
+	if(m_vecRockets.Count() <= 0)
 		return;
 
-	CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetOwnerEntity());
+	if(!pOwner)
 		return;
 
 	Vector vecEye = pOwner->EyePosition();
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( pOwner->EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors(pOwner->EyeAngles(), &vecForward, &vecRight, &vecUp);
 
 	trace_t tr;
-	UTIL_TraceLine( vecEye, vecEye + vecForward * MAX_TRACE_LENGTH, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr );
+	UTIL_TraceLine(vecEye, vecEye + vecForward * MAX_TRACE_LENGTH, MASK_SOLID, pOwner, COLLISION_GROUP_NONE, &tr);
 	float flVel = 1100.0f;
 
-	FOR_EACH_VEC_BACK( m_vecRockets, i )
+	FOR_EACH_VEC_BACK(m_vecRockets, i)
 	{
-		CBaseEntity* pRocket = m_vecRockets[i].Get();
+		CBaseEntity *pRocket = m_vecRockets[i].Get();
 		// Remove targets that have disappeared
-		if ( !pRocket || pRocket->GetOwnerEntity() != GetOwnerEntity() )
+		if(!pRocket || pRocket->GetOwnerEntity() != GetOwnerEntity())
 		{
-			m_vecRockets.Remove( i );
+			m_vecRockets.Remove(i);
 			continue;
 		}
 
 		// Give the rocket a new target
 		Vector vecDir = pRocket->WorldSpaceCenter() - tr.endpos;
-		VectorNormalize( vecDir );
+		VectorNormalize(vecDir);
 
 		Vector vecVel = pRocket->GetAbsVelocity();
 		vecVel = -flVel * vecDir;
-		pRocket->SetAbsVelocity( vecVel );
+		pRocket->SetAbsVelocity(vecVel);
 
 		QAngle newAngles;
-		VectorAngles( -vecDir, newAngles );
-		pRocket->SetAbsAngles( newAngles );
+		VectorAngles(-vecDir, newAngles);
+		pRocket->SetAbsAngles(newAngles);
 
 #ifdef STAGING_ONLY
-		if ( !tf_mortar_allow_fulltracking.GetBool() )
+		if(!tf_mortar_allow_fulltracking.GetBool())
 		{
 			// only allow a single redirect
-			m_vecRockets.Remove( i );
+			m_vecRockets.Remove(i);
 		}
 #else
-		m_vecRockets.Remove( i );
+		m_vecRockets.Remove(i);
 #endif
 	}
 #endif
@@ -699,51 +697,52 @@ void CTFRocketLauncher_Mortar::RedirectRockets( void )
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 // CROSSBOW BEGIN
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-bool CTFCrossbow::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CTFCrossbow::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
 	// Allow Crossbow to silently reload like the flaregun
-	if ( m_iClip1 == 0 )
+	if(m_iClip1 == 0)
 	{
-		// These Values need to match the anim times since all this stuff is actually driven by animation sequence time in the base code
-		float flFireDelay = ApplyFireDelay( m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_flTimeFireDelay );
+		// These Values need to match the anim times since all this stuff is actually driven by animation sequence time
+		// in the base code
+		float flFireDelay = ApplyFireDelay(m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_flTimeFireDelay);
 
-		float flReloadTime = m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_flTimeReload;
-		CALL_ATTRIB_HOOK_FLOAT( flReloadTime, mult_reload_time );
-		CALL_ATTRIB_HOOK_FLOAT( flReloadTime, mult_reload_time_hidden );
-		CALL_ATTRIB_HOOK_FLOAT( flReloadTime, fast_reload );
+		float flReloadTime = m_pWeaponInfo->GetWeaponData(m_iWeaponMode).m_flTimeReload;
+		CALL_ATTRIB_HOOK_FLOAT(flReloadTime, mult_reload_time);
+		CALL_ATTRIB_HOOK_FLOAT(flReloadTime, mult_reload_time_hidden);
+		CALL_ATTRIB_HOOK_FLOAT(flReloadTime, fast_reload);
 
 		float flIdleTime = GetLastPrimaryAttackTime() + flFireDelay + flReloadTime;
-		if ( GetWeaponIdleTime() < flIdleTime )
+		if(GetWeaponIdleTime() < flIdleTime)
 		{
-			SetWeaponIdleTime( flIdleTime );
+			SetWeaponIdleTime(flIdleTime);
 			m_flNextPrimaryAttack = flIdleTime;
 		}
 
 		IncrementAmmo();
 	}
 
-	return BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster(pSwitchingTo);
 }
 //-----------------------------------------------------------------------------
-void CTFCrossbow::SecondaryAttack( void )
+void CTFCrossbow::SecondaryAttack(void)
 {
 	// If this is the jarate bolt crossbow, make sure we are allowed to do it
 	int iMilkBolt = 0;
-	CALL_ATTRIB_HOOK_INT( iMilkBolt, fires_milk_bolt );
-	if ( iMilkBolt )
+	CALL_ATTRIB_HOOK_INT(iMilkBolt, fires_milk_bolt);
+	if(iMilkBolt)
 	{
 		CTFPlayer *pPlayer = GetTFPlayerOwner();
-		if ( !pPlayer )
+		if(!pPlayer)
 			return;
 
-		if ( !CanAttack() )
+		if(!CanAttack())
 			return;
 
-		if ( m_flNextPrimaryAttack > gpGlobals->curtime )
+		if(m_flNextPrimaryAttack > gpGlobals->curtime)
 			return;
 
 		// Can we attack
-		if ( GetProgress() >= 1.0f )
+		if(GetProgress() >= 1.0f)
 		{
 			// Call Primary Attack and modify the projectile
 			m_bMilkNextAttack = true;
@@ -755,13 +754,13 @@ void CTFCrossbow::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-void CTFCrossbow::ModifyProjectile( CBaseEntity* pProj )
+void CTFCrossbow::ModifyProjectile(CBaseEntity *pProj)
 {
 #ifdef GAME_DLL
-	if ( m_bMilkNextAttack )
+	if(m_bMilkNextAttack)
 	{
-		CTFProjectile_Arrow* pMainArrow = assert_cast<CTFProjectile_Arrow*>( pProj );
-		if ( pMainArrow )
+		CTFProjectile_Arrow *pMainArrow = assert_cast<CTFProjectile_Arrow *>(pProj);
+		if(pMainArrow)
 		{
 			pMainArrow->SetApplyMilkOnHit();
 		}
@@ -771,44 +770,44 @@ void CTFCrossbow::ModifyProjectile( CBaseEntity* pProj )
 	m_bMilkNextAttack = false;
 }
 //-----------------------------------------------------------------------------
-void CTFCrossbow::ItemPostFrame( void )
+void CTFCrossbow::ItemPostFrame(void)
 {
 	BaseClass::ItemPostFrame();
 	m_bMilkNextAttack = false;
 }
 //-----------------------------------------------------------------------------
-float CTFCrossbow::GetProjectileSpeed( void )
+float CTFCrossbow::GetProjectileSpeed(void)
 {
-	return RemapValClamped( 0.75f, 0.0f, 1.f, 1800, 2600 ); // Temp, if we want to ramp.
+	return RemapValClamped(0.75f, 0.0f, 1.f, 1800, 2600); // Temp, if we want to ramp.
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CTFCrossbow::GetProjectileGravity( void )
+float CTFCrossbow::GetProjectileGravity(void)
 {
-	return RemapValClamped( 0.75f, 0.0f, 1.f, 0.5, 0.1 ); // Temp, if we want to ramp.
+	return RemapValClamped(0.75f, 0.0f, 1.f, 0.5, 0.1); // Temp, if we want to ramp.
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFCrossbow::IsViewModelFlipped( void )
+bool CTFCrossbow::IsViewModelFlipped(void)
 {
 	return !BaseClass::IsViewModelFlipped(); // Invert because arrows are backwards by default.
 }
 //-----------------------------------------------------------------------------
-void CTFCrossbow::WeaponRegenerate( void )
+void CTFCrossbow::WeaponRegenerate(void)
 {
 	BaseClass::WeaponRegenerate();
 	m_flLastUsedTimestamp = 0;
 }
 //-----------------------------------------------------------------------------
-inline float CTFCrossbow::GetProgress( void )
+inline float CTFCrossbow::GetProgress(void)
 {
 	int iMilkBolt = 0;
-	CALL_ATTRIB_HOOK_INT( iMilkBolt, fires_milk_bolt );
-	if ( iMilkBolt == 0 )
+	CALL_ATTRIB_HOOK_INT(iMilkBolt, fires_milk_bolt);
+	if(iMilkBolt == 0)
 		return 0;
 
 	float meltedTime = gpGlobals->curtime - m_flLastUsedTimestamp;

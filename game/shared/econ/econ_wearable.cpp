@@ -27,30 +27,30 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-LINK_ENTITY_TO_CLASS( wearable_item, CEconWearable );
-IMPLEMENT_NETWORKCLASS_ALIASED( EconWearable, DT_WearableItem )
+LINK_ENTITY_TO_CLASS(wearable_item, CEconWearable);
+IMPLEMENT_NETWORKCLASS_ALIASED(EconWearable, DT_WearableItem)
 
 // Network Table --
-BEGIN_NETWORK_TABLE( CEconWearable, DT_WearableItem )
+BEGIN_NETWORK_TABLE(CEconWearable, DT_WearableItem)
 END_NETWORK_TABLE()
 // -- Network Table
 
 // Data Desc --
-BEGIN_DATADESC( CEconWearable )
+BEGIN_DATADESC(CEconWearable)
 END_DATADESC()
 // -- Data Desc
 
-PRECACHE_REGISTER( wearable_item );
+PRECACHE_REGISTER(wearable_item);
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFWearableItem, DT_TFWearableItem )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFWearableItem, DT_TFWearableItem)
 
 // Network Table --
-BEGIN_NETWORK_TABLE( CTFWearableItem, DT_TFWearableItem )
+BEGIN_NETWORK_TABLE(CTFWearableItem, DT_TFWearableItem)
 END_NETWORK_TABLE()
 // -- Network Table
 
 // Data Desc --
-BEGIN_DATADESC( CTFWearableItem )
+BEGIN_DATADESC(CTFWearableItem)
 END_DATADESC()
 // -- Data Desc
 
@@ -63,14 +63,14 @@ CEconWearable::CEconWearable()
 	m_bAlwaysAllow = false;
 };
 
-void CEconWearable::InternalSetPlayerDisplayModel( void )
+void CEconWearable::InternalSetPlayerDisplayModel(void)
 {
 	int iClass = 0;
 	int iTeam = 0;
 
-#if defined( TF_DLL ) || defined( TF_CLIENT_DLL )
-	CTFPlayer *pTFPlayer = ToTFPlayer( GetOwnerEntity() );
-	if ( pTFPlayer )
+#if defined(TF_DLL) || defined(TF_CLIENT_DLL)
+	CTFPlayer *pTFPlayer = ToTFPlayer(GetOwnerEntity());
+	if(pTFPlayer)
 	{
 		iClass = pTFPlayer->GetPlayerClass()->GetClassIndex();
 		iTeam = pTFPlayer->GetTeamNumber();
@@ -79,21 +79,21 @@ void CEconWearable::InternalSetPlayerDisplayModel( void )
 
 	// Set our model to the player model
 	CEconItemView *pItem = GetAttributeContainer()->GetItem();
-	if ( pItem && pItem->IsValid() )
+	if(pItem && pItem->IsValid())
 	{
-		const char *pszPlayerDisplayModel = pItem->GetPlayerDisplayModel( iClass, iTeam );
-		if ( pszPlayerDisplayModel )
+		const char *pszPlayerDisplayModel = pItem->GetPlayerDisplayModel(iClass, iTeam);
+		if(pszPlayerDisplayModel)
 		{
-			if ( pItem->GetStaticData()->IsContentStreamable() )
+			if(pItem->GetStaticData()->IsContentStreamable())
 			{
-				modelinfo->RegisterDynamicModel( pszPlayerDisplayModel, IsClient() );
+				modelinfo->RegisterDynamicModel(pszPlayerDisplayModel, IsClient());
 
-				if ( pItem->GetVisionFilteredDisplayModel() && pItem->GetVisionFilteredDisplayModel()[ 0 ] != '\0' )
+				if(pItem->GetVisionFilteredDisplayModel() && pItem->GetVisionFilteredDisplayModel()[0] != '\0')
 				{
-					modelinfo->RegisterDynamicModel( pItem->GetVisionFilteredDisplayModel(), IsClient() );
+					modelinfo->RegisterDynamicModel(pItem->GetVisionFilteredDisplayModel(), IsClient());
 				}
 			}
-			SetModel( pszPlayerDisplayModel );
+			SetModel(pszPlayerDisplayModel);
 		}
 	}
 }
@@ -102,7 +102,7 @@ void CEconWearable::InternalSetPlayerDisplayModel( void )
 // Purpose: Set up the item. GC data may not be available here depending on
 // where we're called from.
 //-----------------------------------------------------------------------------
-void CEconWearable::Spawn( void )
+void CEconWearable::Spawn(void)
 {
 	InitializeAttributes();
 
@@ -112,12 +112,12 @@ void CEconWearable::Spawn( void )
 
 	BaseClass::Spawn();
 
-	AddEffects( EF_BONEMERGE );
-	AddEffects( EF_BONEMERGE_FASTCULL );
+	AddEffects(EF_BONEMERGE);
+	AddEffects(EF_BONEMERGE_FASTCULL);
 
-#if !defined( CLIENT_DLL )
-	SetCollisionGroup( COLLISION_GROUP_WEAPON );
-	SetBlocksLOS( false );
+#if !defined(CLIENT_DLL)
+	SetCollisionGroup(COLLISION_GROUP_WEAPON);
+	SetBlocksLOS(false);
 #endif
 }
 
@@ -125,102 +125,101 @@ void CEconWearable::Spawn( void )
 // Purpose: Player touches the item. Currently wearables don't appear in the
 // world, so this is only called directly during equipment assignment.
 //-----------------------------------------------------------------------------
-void CEconWearable::GiveTo( CBaseEntity *pOther )
+void CEconWearable::GiveTo(CBaseEntity *pOther)
 {
 	CBasePlayer *pPlayer = ToBasePlayer(pOther);
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-#if !defined( CLIENT_DLL )
-	pPlayer->EquipWearable( this );
+#if !defined(CLIENT_DLL)
+	pPlayer->EquipWearable(this);
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEconWearable::RemoveFrom( CBaseEntity *pOther )
+void CEconWearable::RemoveFrom(CBaseEntity *pOther)
 {
 	CBasePlayer *pPlayer = ToBasePlayer(pOther);
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-#if !defined( CLIENT_DLL )
-	pPlayer->RemoveWearable( this );
+#if !defined(CLIENT_DLL)
+	pPlayer->RemoveWearable(this);
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CEconWearable::GetSkin( void )
+int CEconWearable::GetSkin(void)
 {
 	CEconItemView *pItem = GetAttributeContainer()->GetItem(); // Safe. Checked in base class call.
-	if ( pItem )
+	if(pItem)
 	{
-		int iSkin = pItem->GetSkin( GetTeamNumber() );
-		if ( iSkin > -1 )
+		int iSkin = pItem->GetSkin(GetTeamNumber());
+		if(iSkin > -1)
 		{
 			return iSkin;
 		}
 	}
 
-	return ( GetTeamNumber() == (LAST_SHARED_TEAM+1) ) ? 0 : 1;
+	return (GetTeamNumber() == (LAST_SHARED_TEAM + 1)) ? 0 : 1;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Attaches the item to the player.
 //-----------------------------------------------------------------------------
-void CEconWearable::Equip( CBasePlayer* pOwner )
+void CEconWearable::Equip(CBasePlayer *pOwner)
 {
-	if ( !CanEquip( pOwner ) )
+	if(!CanEquip(pOwner))
 	{
-		RemoveFrom( pOwner );
+		RemoveFrom(pOwner);
 		return;
 	}
 
-	SetTouch( NULL );
-	SetAbsVelocity( vec3_origin );
+	SetTouch(NULL);
+	SetAbsVelocity(vec3_origin);
 
 	CBaseEntity *pFollowEntity = pOwner;
 
-	if ( IsViewModelWearable() )
+	if(IsViewModelWearable())
 	{
 		pFollowEntity = pOwner->GetViewModel();
 	}
 
-	FollowEntity( pFollowEntity, true );
+	FollowEntity(pFollowEntity, true);
 
-	SetOwnerEntity( pOwner );
+	SetOwnerEntity(pOwner);
 
 	ReapplyProvision();
 
-	ChangeTeam( pOwner->GetTeamNumber() );
+	ChangeTeam(pOwner->GetTeamNumber());
 	m_nSkin = GetSkin();
 
 #ifdef GAME_DLL
 	UpdateModelToClass();
-	UpdateBodygroups( pOwner, true );
-	PlayAnimForPlaybackEvent( WAP_ON_SPAWN );
+	UpdateBodygroups(pOwner, true);
+	PlayAnimForPlaybackEvent(WAP_ON_SPAWN);
 #endif
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove item from the player.
 //-----------------------------------------------------------------------------
-void CEconWearable::UnEquip( CBasePlayer* pOwner )
+void CEconWearable::UnEquip(CBasePlayer *pOwner)
 {
 #ifdef CLIENT_DLL
-	SetParticleSystemsVisible( PARTICLE_SYSTEM_STATE_NOT_VISIBLE );
+	SetParticleSystemsVisible(PARTICLE_SYSTEM_STATE_NOT_VISIBLE);
 #endif
 
 #ifdef GAME_DLL
-	UpdateBodygroups( pOwner, false );
+	UpdateBodygroups(pOwner, false);
 #endif
 
 	StopFollowingEntity();
-	SetOwnerEntity( NULL );
+	SetOwnerEntity(NULL);
 
 	ReapplyProvision();
 }
@@ -261,7 +260,7 @@ bool CEconWearable::UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEconWearable::OnWearerDeath( void )
+void CEconWearable::OnWearerDeath(void)
 {
 #ifdef CLIENT_DLL
 	UpdateParticleSystems();
@@ -274,11 +273,11 @@ void CEconWearable::OnWearerDeath( void )
 int CEconWearable::GetDropType()
 {
 	CAttributeContainer *pCont = GetAttributeContainer();
-	if ( !pCont )
+	if(!pCont)
 		return 0;
 
 	CEconItemView *pItem = pCont->GetItem();
-	if ( pItem )
+	if(pItem)
 		return pItem->GetDropType();
 	else
 		return 0;
@@ -287,30 +286,30 @@ int CEconWearable::GetDropType()
 //-----------------------------------------------------------------------------
 // Purpose: Ensures that a player's correct body groups are enabled on client respawn.
 //-----------------------------------------------------------------------------
-void CEconWearable::UpdateWearableBodyGroups( CBasePlayer* pPlayer )
+void CEconWearable::UpdateWearableBodyGroups(CBasePlayer *pPlayer)
 {
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	for ( int i=0; i<pPlayer->GetNumWearables(); ++i )
+	for(int i = 0; i < pPlayer->GetNumWearables(); ++i)
 	{
-		CEconWearable* pItem = pPlayer->GetWearable(i);
-		if ( !pItem )
+		CEconWearable *pItem = pPlayer->GetWearable(i);
+		if(!pItem)
 			continue;
 
 		// Dynamic models which are not yet rendering do not modify bodygroups
-		if ( pItem->IsDynamicModelLoading() )
+		if(pItem->IsDynamicModelLoading())
 			continue;
 
-		// On the client, ignore items that aren't valid.
+			// On the client, ignore items that aren't valid.
 #ifdef TF_CLIENT_DLL
-		if ( pItem->EntityDeemedInvalid() )
+		if(pItem->EntityDeemedInvalid())
 			continue;
 #endif
 
 		int nVisibleState = 1;
 #ifdef TF_CLIENT_DLL
-		if ( pItem->ShouldHideForVisionFilterFlags() )
+		if(pItem->ShouldHideForVisionFilterFlags())
 		{
 			// Items that shouldn't draw (pyro-vision filtered) shouldn't change any body group states
 			// unless they have no model (hatless hats)
@@ -318,22 +317,20 @@ void CEconWearable::UpdateWearableBodyGroups( CBasePlayer* pPlayer )
 		}
 #endif
 
-		pItem->UpdateBodygroups( pPlayer, nVisibleState );
+		pItem->UpdateBodygroups(pPlayer, nVisibleState);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWearableItem::CTFWearableItem()
-{
-}
+CTFWearableItem::CTFWearableItem() {}
 
 //-----------------------------------------------------------------------------
 // SERVER ONLY CODE
 //-----------------------------------------------------------------------------
 
-#if defined( GAME_DLL )
+#if defined(GAME_DLL)
 
 #endif
 
@@ -341,14 +338,14 @@ CTFWearableItem::CTFWearableItem()
 // CLIENT ONLY CODE
 //-----------------------------------------------------------------------------
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
 //-----------------------------------------------------------------------------
 // Purpose: Mirror should draw logic.
 //-----------------------------------------------------------------------------
 ShadowType_t CEconWearable::ShadowCastType()
 {
-	if ( ShouldDraw() )
+	if(ShouldDraw())
 	{
 		return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC;
 	}
@@ -359,10 +356,10 @@ ShadowType_t CEconWearable::ShadowCastType()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CEconWearable::ShouldDraw( void )
+bool CEconWearable::ShouldDraw(void)
 {
-	CBasePlayer *pPlayerOwner = ToBasePlayer( GetOwnerEntity() );
-	if ( !pPlayerOwner )
+	CBasePlayer *pPlayerOwner = ToBasePlayer(GetOwnerEntity());
+	if(!pPlayerOwner)
 	{
 		return false;
 	}
@@ -370,10 +367,10 @@ bool CEconWearable::ShouldDraw( void )
 	bool bUseViewModel = !pPlayerOwner->ShouldDrawThisPlayer();
 
 	// Don't show view models if we're drawing the real player, and don't show non view models if using view models.
-	if ( bUseViewModel )
+	if(bUseViewModel)
 	{
 		// VM mode.
-		if ( !IsViewModelWearable() )
+		if(!IsViewModelWearable())
 		{
 			return false;
 		}
@@ -381,18 +378,18 @@ bool CEconWearable::ShouldDraw( void )
 	else
 	{
 		// Non-viewmodel mode.
-		if ( IsViewModelWearable() )
+		if(IsViewModelWearable())
 		{
 			return false;
 		}
 	}
 
-	if ( !ShouldDrawWhenPlayerIsDead() && !pPlayerOwner->IsAlive() )
+	if(!ShouldDrawWhenPlayerIsDead() && !pPlayerOwner->IsAlive())
 	{
 		return false;
 	}
 
-	if ( pPlayerOwner->GetTeamNumber() == TEAM_SPECTATOR )
+	if(pPlayerOwner->GetTeamNumber() == TEAM_SPECTATOR)
 	{
 		return false;
 	}
@@ -403,13 +400,13 @@ bool CEconWearable::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEconWearable::OnDataChanged( DataUpdateType_t updateType )
+void CEconWearable::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
-	if ( updateType == DATA_UPDATE_CREATED )
+	if(updateType == DATA_UPDATE_CREATED)
 	{
-		SetNextClientThink( CLIENT_THINK_ALWAYS );
+		SetNextClientThink(CLIENT_THINK_ALWAYS);
 	}
 
 	// Update our visibility in case our parents' has changed.
@@ -420,7 +417,7 @@ void CEconWearable::OnDataChanged( DataUpdateType_t updateType )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEconWearable::ClientThink( void )
+void CEconWearable::ClientThink(void)
 {
 	BaseClass::ClientThink();
 
@@ -430,16 +427,16 @@ void CEconWearable::ClientThink( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CEconWearable::ShouldDrawParticleSystems( void )
+bool CEconWearable::ShouldDrawParticleSystems(void)
 {
 	// Make sure the entity we're attaching to is being drawn
-	CBasePlayer *pPlayerOwner = ToBasePlayer( GetOwnerEntity() );
-	if ( !pPlayerOwner )
+	CBasePlayer *pPlayerOwner = ToBasePlayer(GetOwnerEntity());
+	if(!pPlayerOwner)
 	{
-		Assert ( "CEconWearable has no owner?" );		// Not sure what this means - is is visible or not?
+		Assert("CEconWearable has no owner?"); // Not sure what this means - is is visible or not?
 		return false;
 	}
-	if ( pPlayerOwner->ShouldDrawThisPlayer() )
+	if(pPlayerOwner->ShouldDrawThisPlayer())
 	{
 		return true;
 	}
@@ -448,7 +445,7 @@ bool CEconWearable::ShouldDrawParticleSystems( void )
 
 RenderGroup_t CEconWearable::GetRenderGroup()
 {
-	if ( IsViewModelWearable() )
+	if(IsViewModelWearable())
 		return RENDER_GROUP_VIEW_MODEL_TRANSLUCENT;
 
 	return BaseClass::GetRenderGroup();
@@ -460,30 +457,30 @@ RenderGroup_t CEconWearable::GetRenderGroup()
 class CProxyItemTintColor : public CResultProxy
 {
 public:
-	void OnBind( void *pC_BaseEntity )
+	void OnBind(void *pC_BaseEntity)
 	{
-		Assert( m_pResult );
-		Vector vResult = Vector( 0, 0, 0 );
+		Assert(m_pResult);
+		Vector vResult = Vector(0, 0, 0);
 
-		if ( pC_BaseEntity )
+		if(pC_BaseEntity)
 		{
 			CEconItemView *pScriptItem = NULL;
 
 			IClientRenderable *pRend = (IClientRenderable *)pC_BaseEntity;
 			C_BaseEntity *pEntity = pRend->GetIClientUnknown()->GetBaseEntity();
-			if ( pEntity )
+			if(pEntity)
 			{
-				CEconEntity *pItem = dynamic_cast< CEconEntity* >( pEntity );
-				if ( pItem )
+				CEconEntity *pItem = dynamic_cast<CEconEntity *>(pEntity);
+				if(pItem)
 				{
 					pScriptItem = pItem->GetAttributeContainer()->GetItem();
 				}
-				else if ( pEntity->GetOwnerEntity() )
+				else if(pEntity->GetOwnerEntity())
 				{
 					// Try the owner (for viewmodels, etc).
 					pEntity = pEntity->GetOwnerEntity();
-					pItem = dynamic_cast< CEconEntity* >( pEntity );
-					if ( pItem )
+					pItem = dynamic_cast<CEconEntity *>(pEntity);
+					if(pItem)
 					{
 						pScriptItem = pItem->GetAttributeContainer()->GetItem();
 					}
@@ -492,55 +489,53 @@ public:
 			else
 			{
 				// Proxy data can be a script created item itself, if we're in a vgui CModelPanel
-				pScriptItem = dynamic_cast< CEconItemView* >( pRend );
+				pScriptItem = dynamic_cast<CEconItemView *>(pRend);
 			}
 
 #ifdef TF_CLIENT_DLL
-			if ( !pScriptItem )
+			if(!pScriptItem)
 			{
 				// Might be a throwable
-				CTFWeaponBaseGrenadeProj *pProjectile = dynamic_cast< CTFWeaponBaseGrenadeProj* >( pEntity );
-				if ( pProjectile )
+				CTFWeaponBaseGrenadeProj *pProjectile = dynamic_cast<CTFWeaponBaseGrenadeProj *>(pEntity);
+				if(pProjectile)
 				{
-					CEconEntity *pItem = dynamic_cast< CEconEntity* >( pProjectile->GetLauncher() );
-					if ( pItem )
+					CEconEntity *pItem = dynamic_cast<CEconEntity *>(pProjectile->GetLauncher());
+					if(pItem)
 					{
 						pScriptItem = pItem->GetAttributeContainer()->GetItem();
 					}
 				}
 			}
 
-			if ( pScriptItem && pScriptItem->IsValid() )
+			if(pScriptItem && pScriptItem->IsValid())
 			{
 				const bool bAltColor = pEntity && pEntity->GetTeam() > 0
-									 ? pEntity->GetTeam()->GetTeamNumber() == TF_TEAM_BLUE
-									 : pScriptItem->GetFlags() & kEconItemFlagClient_ForceBlueTeam
-									 ? true
-									 : false;
+										   ? pEntity->GetTeam()->GetTeamNumber() == TF_TEAM_BLUE
+									   : pScriptItem->GetFlags() & kEconItemFlagClient_ForceBlueTeam ? true
+																									 : false;
 
-				int iModifiedRGB = pScriptItem->GetModifiedRGBValue( bAltColor );
-				if ( iModifiedRGB )
+				int iModifiedRGB = pScriptItem->GetModifiedRGBValue(bAltColor);
+				if(iModifiedRGB)
 				{
 					// The attrib returns a packed RGB with values between 0 & 255 packed into the bottom 3 bytes.
-					Color clr = Color( ((iModifiedRGB & 0xFF0000) >> 16), ((iModifiedRGB & 0xFF00) >> 8), (iModifiedRGB & 0xFF) );
+					Color clr =
+						Color(((iModifiedRGB & 0xFF0000) >> 16), ((iModifiedRGB & 0xFF00) >> 8), (iModifiedRGB & 0xFF));
 
-					vResult.x = clamp( clr.r() * (1.f / 255.0f), 0.f, 1.0f );
-					vResult.y = clamp( clr.g() * (1.f / 255.0f), 0.f, 1.0f );
-					vResult.z = clamp( clr.b() * (1.f / 255.0f), 0.f, 1.0f );
+					vResult.x = clamp(clr.r() * (1.f / 255.0f), 0.f, 1.0f);
+					vResult.y = clamp(clr.g() * (1.f / 255.0f), 0.f, 1.0f);
+					vResult.z = clamp(clr.b() * (1.f / 255.0f), 0.f, 1.0f);
 				}
 			}
 #endif // TF_CLIENT_DLL
 		}
 
-		m_pResult->SetVecValue( vResult.x, vResult.y, vResult.z );
+		m_pResult->SetVecValue(vResult.x, vResult.y, vResult.z);
 	}
 };
-EXPOSE_INTERFACE( CProxyItemTintColor, IMaterialProxy, "ItemTintColor" IMATERIAL_PROXY_INTERFACE_VERSION );
-
-
+EXPOSE_INTERFACE(CProxyItemTintColor, IMaterialProxy, "ItemTintColor" IMATERIAL_PROXY_INTERFACE_VERSION);
 
 //============================================================================================================================
-extern ConVar	r_propsmaxdist;
+extern ConVar r_propsmaxdist;
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -555,26 +550,26 @@ C_EconWearableGib::C_EconWearableGib()
 
 C_EconWearableGib::~C_EconWearableGib()
 {
-	PhysCleanupFrictionSounds( this );
+	PhysCleanupFrictionSounds(this);
 	VPhysicsDestroyObject();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool C_EconWearableGib::Initialize( bool bWillBeParented )
+bool C_EconWearableGib::Initialize(bool bWillBeParented)
 {
 	m_bParented = bWillBeParented;
-	return InitializeAsClientEntity( STRING( GetModelName() ), RENDER_GROUP_OPAQUE_ENTITY );
+	return InitializeAsClientEntity(STRING(GetModelName()), RENDER_GROUP_OPAQUE_ENTITY);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CStudioHdr* C_EconWearableGib::OnNewModel()
+CStudioHdr *C_EconWearableGib::OnNewModel()
 {
-	CStudioHdr* pCStudioHdr = BaseClass::OnNewModel();
-	if ( m_bDelayedInit && !IsDynamicModelLoading() )
+	CStudioHdr *pCStudioHdr = BaseClass::OnNewModel();
+	if(m_bDelayedInit && !IsDynamicModelLoading())
 	{
 		FinishModelInitialization();
 	}
@@ -584,9 +579,9 @@ CStudioHdr* C_EconWearableGib::OnNewModel()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_EconWearableGib::SpawnClientEntity( void )
+void C_EconWearableGib::SpawnClientEntity(void)
 {
-	if ( !IsDynamicModelLoading() )
+	if(!IsDynamicModelLoading())
 	{
 		FinishModelInitialization();
 	}
@@ -599,35 +594,37 @@ void C_EconWearableGib::SpawnClientEntity( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool C_EconWearableGib::FinishModelInitialization( void )
+bool C_EconWearableGib::FinishModelInitialization(void)
 {
 	UpdateThinkState();
 
 	const model_t *mod = GetModel();
-	if ( mod )
+	if(mod)
 	{
 		Vector mins, maxs;
-		modelinfo->GetModelBounds( mod, mins, maxs );
-		SetCollisionBounds( mins, maxs );
+		modelinfo->GetModelBounds(mod, mins, maxs);
+		SetCollisionBounds(mins, maxs);
 	}
 
-	if ( !m_bParented )
+	if(!m_bParented)
 	{
 		// Create the object in the physics system
 		solid_t tmpSolid;
-		if ( !PhysModelParseSolid( tmpSolid, this, GetModelIndex() ) )
+		if(!PhysModelParseSolid(tmpSolid, this, GetModelIndex()))
 		{
-			DevMsg("C_EconWearableGib::FinishModelInitialization: PhysModelParseSolid failed for entity %i.\n", GetModelIndex() );
+			DevMsg("C_EconWearableGib::FinishModelInitialization: PhysModelParseSolid failed for entity %i.\n",
+				   GetModelIndex());
 			return false;
 		}
 		else
 		{
-			m_pPhysicsObject = VPhysicsInitNormal( SOLID_VPHYSICS, 0, false, &tmpSolid );
+			m_pPhysicsObject = VPhysicsInitNormal(SOLID_VPHYSICS, 0, false, &tmpSolid);
 
-			if ( !m_pPhysicsObject )
+			if(!m_pPhysicsObject)
 			{
 				// failed to create a physics object
-				DevMsg(" C_EconWearableGib::FinishModelInitialization: VPhysicsInitNormal() failed for %s.\n", STRING(GetModelName()) );
+				DevMsg(" C_EconWearableGib::FinishModelInitialization: VPhysicsInitNormal() failed for %s.\n",
+					   STRING(GetModelName()));
 				return false;
 			}
 		}
@@ -635,20 +632,20 @@ bool C_EconWearableGib::FinishModelInitialization( void )
 
 	Spawn();
 
-	if ( m_fadeMinDist < 0 )
+	if(m_fadeMinDist < 0)
 	{
 		// start fading out at 75% of r_propsmaxdist
 		m_fadeMaxDist = r_propsmaxdist.GetFloat();
 		m_fadeMinDist = r_propsmaxdist.GetFloat() * 0.75f;
 	}
 
-	SetCollisionGroup( COLLISION_GROUP_DEBRIS );
+	SetCollisionGroup(COLLISION_GROUP_DEBRIS);
 
 	UpdatePartitionListEntry();
 
 	CollisionProp()->UpdatePartition();
 
-	SetBlocksLOS( false ); // this should be a small object
+	SetBlocksLOS(false); // this should be a small object
 
 	// Set up shadows; do it here so that objects can change shadowcasting state
 	CreateShadow();
@@ -670,7 +667,7 @@ void C_EconWearableGib::Spawn()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool C_EconWearableGib::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
+bool C_EconWearableGib::ValidateEntityAttachedToPlayer(bool &bShouldRetry)
 {
 	bShouldRetry = false;
 
@@ -678,39 +675,39 @@ bool C_EconWearableGib::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
 	return (GetMoveParent() == NULL);
 }
 
-#define WEARABLE_FADEOUT_TIME	1.0f
+#define WEARABLE_FADEOUT_TIME 1.0f
 
 //-----------------------------------------------------------------------------
 // Purpose: Figure out if we need to think or not
 //-----------------------------------------------------------------------------
-bool C_EconWearableGib::UpdateThinkState( void )
+bool C_EconWearableGib::UpdateThinkState(void)
 {
-	if ( m_fDeathTime > 0 )
+	if(m_fDeathTime > 0)
 	{
 		// If we're in the active fadeout portion, think rapidly. Otherwise, wait for that time.
-		if ( (m_fDeathTime - gpGlobals->curtime) > WEARABLE_FADEOUT_TIME )
+		if((m_fDeathTime - gpGlobals->curtime) > WEARABLE_FADEOUT_TIME)
 		{
-			SetNextClientThink( m_fDeathTime - WEARABLE_FADEOUT_TIME );
+			SetNextClientThink(m_fDeathTime - WEARABLE_FADEOUT_TIME);
 		}
 		else
 		{
-			SetNextClientThink( CLIENT_THINK_ALWAYS );
+			SetNextClientThink(CLIENT_THINK_ALWAYS);
 		}
 		return true;
 	}
 
-	SetNextClientThink( CLIENT_THINK_NEVER );
+	SetNextClientThink(CLIENT_THINK_NEVER);
 	return false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_EconWearableGib::ClientThink( void )
+void C_EconWearableGib::ClientThink(void)
 {
-	if ( (m_fDeathTime > 0) && ((m_fDeathTime - gpGlobals->curtime) <= WEARABLE_FADEOUT_TIME) )
+	if((m_fDeathTime > 0) && ((m_fDeathTime - gpGlobals->curtime) <= WEARABLE_FADEOUT_TIME))
 	{
-		if ( m_fDeathTime <= gpGlobals->curtime )
+		if(m_fDeathTime <= gpGlobals->curtime)
 		{
 			Release(); // Die
 			return;
@@ -718,8 +715,8 @@ void C_EconWearableGib::ClientThink( void )
 
 		// fade out
 		float alpha = (m_fDeathTime - gpGlobals->curtime) / WEARABLE_FADEOUT_TIME;
-		SetRenderMode( kRenderTransTexture );
-		SetRenderColorA( alpha * 256 );
+		SetRenderMode(kRenderTransTexture);
+		SetRenderColorA(alpha * 256);
 	}
 
 	UpdateThinkState();
@@ -728,7 +725,7 @@ void C_EconWearableGib::ClientThink( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_EconWearableGib::StartFadeOut( float fDelay )
+void C_EconWearableGib::StartFadeOut(float fDelay)
 {
 	m_fDeathTime = gpGlobals->curtime + fDelay + WEARABLE_FADEOUT_TIME;
 	UpdateThinkState();
@@ -737,33 +734,33 @@ void C_EconWearableGib::StartFadeOut( float fDelay )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_EconWearableGib::ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName )
+void C_EconWearableGib::ImpactTrace(trace_t *pTrace, int iDamageType, const char *pCustomImpactName)
 {
 	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
 
-	if( !pPhysicsObject )
+	if(!pPhysicsObject)
 		return;
 
 	Vector dir = pTrace->endpos - pTrace->startpos;
 	int iDamage = 0;
 
-	if ( iDamageType & DMG_BLAST )
+	if(iDamageType & DMG_BLAST)
 	{
-		iDamage = VectorLength( dir );
-		dir *= 500;  // adjust impact strenght
+		iDamage = VectorLength(dir);
+		dir *= 500; // adjust impact strenght
 
 		// apply force at object mass center
-		pPhysicsObject->ApplyForceCenter( dir );
+		pPhysicsObject->ApplyForceCenter(dir);
 	}
 	else
 	{
 		Vector hitpos;
 
-		VectorMA( pTrace->startpos, pTrace->fraction, dir, hitpos );
-		VectorNormalize( dir );
+		VectorMA(pTrace->startpos, pTrace->fraction, dir, hitpos);
+		VectorNormalize(dir);
 
 		// guess avg damage
-		if ( iDamageType == DMG_BULLET )
+		if(iDamageType == DMG_BULLET)
 		{
 			iDamage = 30;
 		}
@@ -772,10 +769,10 @@ void C_EconWearableGib::ImpactTrace( trace_t *pTrace, int iDamageType, const cha
 			iDamage = 50;
 		}
 
-		dir *= 4000;  // adjust impact strenght
+		dir *= 4000; // adjust impact strenght
 
 		// apply force where we hit it
-		pPhysicsObject->ApplyForceOffset( dir, hitpos );
+		pPhysicsObject->ApplyForceOffset(dir, hitpos);
 	}
 }
 

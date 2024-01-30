@@ -13,25 +13,22 @@
 
 #include <vgui_controls/CheckButton.h>
 
-
 using namespace vgui;
 
-
-class CheckButtonDemo: public DemoPage
+class CheckButtonDemo : public DemoPage
 {
-	public:
-		CheckButtonDemo(Panel *parent, const char *name);
-		~CheckButtonDemo();
+public:
+	CheckButtonDemo(Panel *parent, const char *name);
+	~CheckButtonDemo();
 
-		void OnCheckButton1Checked();
-		void OnCheckButton2Checked();
+	void OnCheckButton1Checked();
+	void OnCheckButton2Checked();
 
+private:
+	CheckButton *m_pCheckButton1;
+	CheckButton *m_pCheckButton2;
 
-	private:
-		CheckButton *m_pCheckButton1;
-		CheckButton *m_pCheckButton2;
-
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -63,8 +60,6 @@ CheckButtonDemo::CheckButtonDemo(Panel *parent, const char *name) : DemoPage(par
 	// Install a command to be sent when the box is checked or unchecked
 	m_pCheckButton1->SetCommand(new KeyValues("Check1"));
 
-
-
 	// Create another check button.
 	m_pCheckButton2 = new CheckButton(this, "AnotherCheckButton", "ClickMe");
 
@@ -79,22 +74,19 @@ CheckButtonDemo::CheckButtonDemo(Panel *parent, const char *name) : DemoPage(par
 
 	// Install a command to be sent when the box is checked or unchecked
 	m_pCheckButton2->SetCommand(new KeyValues("Check2"));
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CheckButtonDemo::~CheckButtonDemo()
-{
-}
+CheckButtonDemo::~CheckButtonDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
 //-----------------------------------------------------------------------------
 void CheckButtonDemo::OnCheckButton1Checked()
 {
-	if (m_pCheckButton1->IsSelected())
+	if(m_pCheckButton1->IsSelected())
 	{
 		ivgui()->DPrintf("Check box one is checked.\n");
 	}
@@ -102,7 +94,6 @@ void CheckButtonDemo::OnCheckButton1Checked()
 	{
 		ivgui()->DPrintf("Check box one is unchecked.\n");
 	}
-
 }
 
 //-----------------------------------------------------------------------------
@@ -110,7 +101,7 @@ void CheckButtonDemo::OnCheckButton1Checked()
 //-----------------------------------------------------------------------------
 void CheckButtonDemo::OnCheckButton2Checked()
 {
-	if (m_pCheckButton2->IsSelected())
+	if(m_pCheckButton2->IsSelected())
 	{
 		ivgui()->DPrintf("Check box two is checked.\n");
 	}
@@ -120,20 +111,14 @@ void CheckButtonDemo::OnCheckButton2Checked()
 	}
 }
 
-
-
-
-MessageMapItem_t CheckButtonDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( CheckButtonDemo, "Check1", OnCheckButton1Checked ),
-	MAP_MESSAGE( CheckButtonDemo, "Check2", OnCheckButton2Checked ),
+MessageMapItem_t CheckButtonDemo::m_MessageMap[] = {
+	MAP_MESSAGE(CheckButtonDemo, "Check1", OnCheckButton1Checked),
+	MAP_MESSAGE(CheckButtonDemo, "Check2", OnCheckButton2Checked),
 };
 
 IMPLEMENT_PANELMAP(CheckButtonDemo, DemoPage);
 
-
-
-Panel* CheckButtonDemo_Create(Panel *parent)
+Panel *CheckButtonDemo_Create(Panel *parent)
 {
 	return new CheckButtonDemo(parent, "CheckButtonDemo");
 }

@@ -26,7 +26,7 @@
 class C_PropJeepEpisodic : public C_PropJeep
 {
 
-	DECLARE_CLASS( C_PropJeepEpisodic, C_PropJeep );
+	DECLARE_CLASS(C_PropJeepEpisodic, C_PropJeep);
 
 public:
 	DECLARE_CLIENTCLASS();
@@ -34,44 +34,45 @@ public:
 public:
 	C_PropJeepEpisodic();
 
-	void OnEnteredVehicle( C_BasePlayer *pPlayer );
-	void Simulate( void );
+	void OnEnteredVehicle(C_BasePlayer *pPlayer);
+	void Simulate(void);
 
 public:
-	int		m_iNumRadarContacts;
-	Vector	m_vecRadarContactPos[ RADAR_MAX_CONTACTS ];
-	int		m_iRadarContactType[ RADAR_MAX_CONTACTS ];
+	int m_iNumRadarContacts;
+	Vector m_vecRadarContactPos[RADAR_MAX_CONTACTS];
+	int m_iRadarContactType[RADAR_MAX_CONTACTS];
 };
 C_PropJeepEpisodic *g_pJalopy = NULL;
 
-IMPLEMENT_CLIENTCLASS_DT( C_PropJeepEpisodic, DT_CPropJeepEpisodic, CPropJeepEpisodic )
-	//CNetworkVar( int, m_iNumRadarContacts );
-	RecvPropInt( RECVINFO(m_iNumRadarContacts) ),
+IMPLEMENT_CLIENTCLASS_DT(C_PropJeepEpisodic, DT_CPropJeepEpisodic, CPropJeepEpisodic)
+// CNetworkVar( int, m_iNumRadarContacts );
+RecvPropInt(RECVINFO(m_iNumRadarContacts)),
 
-	//CNetworkArray( Vector, m_vecRadarContactPos, RADAR_MAX_CONTACTS );
-	RecvPropArray( RecvPropVector(RECVINFO(m_vecRadarContactPos[0])), m_vecRadarContactPos ),
+	// CNetworkArray( Vector, m_vecRadarContactPos, RADAR_MAX_CONTACTS );
+	RecvPropArray(RecvPropVector(RECVINFO(m_vecRadarContactPos[0])), m_vecRadarContactPos),
 
-	//CNetworkArray( int, m_iRadarContactType, RADAR_MAX_CONTACTS );
-	RecvPropArray( RecvPropInt( RECVINFO(m_iRadarContactType[0] ) ), m_iRadarContactType ),
+	// CNetworkArray( int, m_iRadarContactType, RADAR_MAX_CONTACTS );
+	RecvPropArray(RecvPropInt(RECVINFO(m_iRadarContactType[0])), m_iRadarContactType),
 
-END_RECV_TABLE()
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
 {
 	// Radar code here!
-	if( !GetHudRadar() )
+	if(!GetHudRadar())
 		return;
 
 	// Sometimes we update more quickly when we need to track something in high resolution.
 	// Usually we do not, so default to false.
 	GetHudRadar()->m_bUseFastUpdate = false;
 
-	for( int i = 0 ; i < g_pJalopy->m_iNumRadarContacts ; i++ )
+	for(int i = 0; i < g_pJalopy->m_iNumRadarContacts; i++)
 	{
-		if( g_pJalopy->m_iRadarContactType[i] == RADAR_CONTACT_DOG )
+		if(g_pJalopy->m_iRadarContactType[i] == RADAR_CONTACT_DOG)
 		{
 			GetHudRadar()->m_bUseFastUpdate = true;
 			break;
@@ -80,7 +81,7 @@ void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
 
 	float flContactTimeToLive;
 
-	if( GetHudRadar()->m_bUseFastUpdate )
+	if(GetHudRadar()->m_bUseFastUpdate)
 	{
 		flContactTimeToLive = RADAR_UPDATE_FREQUENCY_FAST;
 	}
@@ -89,9 +90,10 @@ void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
 		flContactTimeToLive = RADAR_UPDATE_FREQUENCY;
 	}
 
-	for( int i = 0 ; i < g_pJalopy->m_iNumRadarContacts ; i++ )
+	for(int i = 0; i < g_pJalopy->m_iNumRadarContacts; i++)
 	{
-		GetHudRadar()->AddRadarContact( g_pJalopy->m_vecRadarContactPos[i], g_pJalopy->m_iRadarContactType[i], flContactTimeToLive );
+		GetHudRadar()->AddRadarContact(g_pJalopy->m_vecRadarContactPos[i], g_pJalopy->m_iRadarContactType[i],
+									   flContactTimeToLive);
 	}
 }
 
@@ -99,9 +101,9 @@ void __MsgFunc_UpdateJalopyRadar(bf_read &msg)
 //-----------------------------------------------------------------------------
 C_PropJeepEpisodic::C_PropJeepEpisodic()
 {
-	if( g_pJalopy == NULL )
+	if(g_pJalopy == NULL)
 	{
-		usermessages->HookMessage( "UpdateJalopyRadar", __MsgFunc_UpdateJalopyRadar );
+		usermessages->HookMessage("UpdateJalopyRadar", __MsgFunc_UpdateJalopyRadar);
 	}
 
 	g_pJalopy = this;
@@ -110,15 +112,15 @@ C_PropJeepEpisodic::C_PropJeepEpisodic()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_PropJeepEpisodic::Simulate( void )
+void C_PropJeepEpisodic::Simulate(void)
 {
 	// Keep trying to hook to the radar.
-	if( GetHudRadar() != NULL )
+	if(GetHudRadar() != NULL)
 	{
 		// This is not our ideal long-term solution. This will only work if you only have
 		// one jalopy in a given level. The Jalopy and the Radar Screen are currently both
 		// assumed to be singletons. This is appropriate for EP2, however. (sjb)
-		GetHudRadar()->SetVehicle( this );
+		GetHudRadar()->SetVehicle(this);
 	}
 
 	BaseClass::Simulate();
@@ -127,7 +129,7 @@ void C_PropJeepEpisodic::Simulate( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_PropJeepEpisodic::OnEnteredVehicle( C_BasePlayer *pPlayer )
+void C_PropJeepEpisodic::OnEnteredVehicle(C_BasePlayer *pPlayer)
 {
-	BaseClass::OnEnteredVehicle( pPlayer );
+	BaseClass::OnEnteredVehicle(pPlayer);
 }

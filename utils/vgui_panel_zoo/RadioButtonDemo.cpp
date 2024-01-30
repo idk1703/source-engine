@@ -12,24 +12,21 @@
 
 #include <vgui_controls/RadioButton.h>
 
-
 using namespace vgui;
 
-
-class RadioButtonDemo: public DemoPage
+class RadioButtonDemo : public DemoPage
 {
-	public:
-		RadioButtonDemo(Panel *parent, const char *name);
-		~RadioButtonDemo();
+public:
+	RadioButtonDemo(Panel *parent, const char *name);
+	~RadioButtonDemo();
 
-		void OnRadioButtonHit();
+	void OnRadioButtonHit();
 
+private:
+	RadioButton *m_pRadioButton1;
+	RadioButton *m_pRadioButton2;
 
-	private:
-		RadioButton *m_pRadioButton1;
-		RadioButton *m_pRadioButton2;
-
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -61,7 +58,6 @@ RadioButtonDemo::RadioButtonDemo(Panel *parent, const char *name) : DemoPage(par
 	// determines the order to move through the buttons when arrow keys are hit
 	m_pRadioButton1->SetSubTabPosition(0);
 
-
 	// Create another radio button.
 	m_pRadioButton2 = new RadioButton(this, "AnotherRadioButton", "ClickMe");
 
@@ -82,22 +78,19 @@ RadioButtonDemo::RadioButtonDemo(Panel *parent, const char *name) : DemoPage(par
 	// Don't install a command to be sent when the box is checked or unchecked,
 	// Because all buttons respons when a new one is checked (they uncheck themselves if checked)
 	// In this case when a button is selected a RadioButtonChecked message gets sent
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-RadioButtonDemo::~RadioButtonDemo()
-{
-}
+RadioButtonDemo::~RadioButtonDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
 //-----------------------------------------------------------------------------
 void RadioButtonDemo::OnRadioButtonHit()
 {
-		if (m_pRadioButton1->IsSelected())
+	if(m_pRadioButton1->IsSelected())
 	{
 		ivgui()->DPrintf("Radio button one is checked.\n");
 	}
@@ -106,7 +99,7 @@ void RadioButtonDemo::OnRadioButtonHit()
 		ivgui()->DPrintf("Radio button one is unchecked.\n");
 	}
 
-	if (m_pRadioButton2->IsSelected())
+	if(m_pRadioButton2->IsSelected())
 	{
 		ivgui()->DPrintf("Radio button two is checked.\n");
 	}
@@ -116,18 +109,13 @@ void RadioButtonDemo::OnRadioButtonHit()
 	}
 }
 
-
-
-MessageMapItem_t RadioButtonDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( RadioButtonDemo, "RadioButtonChecked", OnRadioButtonHit ),
+MessageMapItem_t RadioButtonDemo::m_MessageMap[] = {
+	MAP_MESSAGE(RadioButtonDemo, "RadioButtonChecked", OnRadioButtonHit),
 };
 
 IMPLEMENT_PANELMAP(RadioButtonDemo, DemoPage);
 
-
-
-Panel* RadioButtonDemo_Create(Panel *parent)
+Panel *RadioButtonDemo_Create(Panel *parent)
 {
 	return new RadioButtonDemo(parent, "RadioButtonDemo");
 }

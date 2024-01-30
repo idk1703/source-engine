@@ -20,7 +20,8 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-WizardSubPanel::WizardSubPanel(Panel *parent, const char *panelName) : EditablePanel(parent, panelName), _wizardPanel(NULL)
+WizardSubPanel::WizardSubPanel(Panel *parent, const char *panelName)
+	: EditablePanel(parent, panelName), _wizardPanel(NULL)
 {
 	SetVisible(false);
 	m_iDesiredWide = 0;
@@ -31,9 +32,7 @@ WizardSubPanel::WizardSubPanel(Panel *parent, const char *panelName) : EditableP
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-WizardSubPanel::~WizardSubPanel()
-{
-}
+WizardSubPanel::~WizardSubPanel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -41,13 +40,13 @@ WizardSubPanel::~WizardSubPanel()
 void WizardSubPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	SetBgColor(GetSchemeColor("WizardSubPanel.BgColor",pScheme));
+	SetBgColor(GetSchemeColor("WizardSubPanel.BgColor", pScheme));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void WizardSubPanel::GetSettings( KeyValues *outResourceData )
+void WizardSubPanel::GetSettings(KeyValues *outResourceData)
 {
 	BaseClass::GetSettings(outResourceData);
 
@@ -68,7 +67,7 @@ void WizardSubPanel::ApplySettings(KeyValues *inResourceData)
 	m_iDesiredWide = inResourceData->GetInt("WizardWide", 0);
 	m_iDesiredTall = inResourceData->GetInt("WizardTall", 0);
 
-	if (GetWizardPanel() && m_iDesiredWide && m_iDesiredTall)
+	if(GetWizardPanel() && m_iDesiredWide && m_iDesiredTall)
 	{
 		GetWizardPanel()->SetSize(m_iDesiredWide, m_iDesiredTall);
 	}

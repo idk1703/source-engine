@@ -15,20 +15,20 @@
 
 //----------------------------------------------------------------------------------------
 
-#define TESTMANAGER_VERSION		0
-#define SUBDIR_TEST				"test"
+#define TESTMANAGER_VERSION 0
+#define SUBDIR_TEST			"test"
 
 //----------------------------------------------------------------------------------------
 
 const char *Test_GetPath()
 {
-	return Replay_va( "%s%c%s%c%s%c", g_pEngine->GetGameDir(), CORRECT_PATH_SEPARATOR, SUBDIR_REPLAY, CORRECT_PATH_SEPARATOR, SUBDIR_TEST, CORRECT_PATH_SEPARATOR );
+	return Replay_va("%s%c%s%c%s%c", g_pEngine->GetGameDir(), CORRECT_PATH_SEPARATOR, SUBDIR_REPLAY,
+					 CORRECT_PATH_SEPARATOR, SUBDIR_TEST, CORRECT_PATH_SEPARATOR);
 }
 
 //----------------------------------------------------------------------------------------
 
-CTestObj::CTestObj()
-:	m_nTest( -1 )
+CTestObj::CTestObj() : m_nTest(-1)
 {
 	m_strTest = "";
 
@@ -42,7 +42,7 @@ CTestObj::~CTestObj()
 
 const char *CTestObj::GetSubKeyTitle() const
 {
-	return Replay_va( "test_%i", GetHandle() );
+	return Replay_va("test_%i", GetHandle());
 }
 
 const char *CTestObj::GetPath() const
@@ -50,26 +50,24 @@ const char *CTestObj::GetPath() const
 	return Test_GetPath();
 }
 
-void CTestObj::OnDelete()
-{
-}
+void CTestObj::OnDelete() {}
 
-bool CTestObj::Read( KeyValues *pIn )
+bool CTestObj::Read(KeyValues *pIn)
 {
-	if ( !BaseClass::Read( pIn ) )
+	if(!BaseClass::Read(pIn))
 		return false;
 
-	m_nTest = pIn->GetInt( "int_test", -1 );
-	m_strTest = pIn->GetString( "int_test" );
+	m_nTest = pIn->GetInt("int_test", -1);
+	m_strTest = pIn->GetString("int_test");
 
 	return true;
 }
 
-void CTestObj::Write( KeyValues *pOut )
+void CTestObj::Write(KeyValues *pOut)
 {
-	BaseClass::Write( pOut );
-	pOut->SetInt( "int_test", m_nTest );
-	pOut->SetString( "str_test", m_strTest.Get() );
+	BaseClass::Write(pOut);
+	pOut->SetInt("int_test", m_nTest);
+	pOut->SetString("str_test", m_strTest.Get());
 }
 
 //----------------------------------------------------------------------------------------
@@ -93,9 +91,7 @@ void CTestObj::Write( KeyValues *pOut )
 #endif
 }
 
-CTestManager::CTestManager()
-{
-}
+CTestManager::CTestManager() {}
 
 const char *CTestManager::GetIndexPath() const
 {

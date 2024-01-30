@@ -9,10 +9,8 @@
 #include "bsplib.h"
 #include "cmdlib.h"
 
-
 CMapError g_MapError;
 int g_nMapFileVersion;
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -23,49 +21,48 @@ int g_nMapFileVersion;
 //-----------------------------------------------------------------------------
 ChunkFileResult_t LoadEntityKeyCallback(const char *szKey, const char *szValue, LoadEntity_t *pLoadEntity)
 {
-	if (!stricmp(szKey, "classname"))
+	if(!stricmp(szKey, "classname"))
 	{
-		if (!stricmp(szValue, "func_detail"))
+		if(!stricmp(szValue, "func_detail"))
 		{
 			pLoadEntity->nBaseContents = CONTENTS_DETAIL;
 		}
-		else if (!stricmp(szValue, "func_ladder"))
+		else if(!stricmp(szValue, "func_ladder"))
 		{
 			pLoadEntity->nBaseContents = CONTENTS_LADDER;
 		}
-		else if (!stricmp(szValue, "func_water"))
+		else if(!stricmp(szValue, "func_water"))
 		{
 			pLoadEntity->nBaseContents = CONTENTS_WATER;
 		}
 	}
-	else if (!stricmp(szKey, "id"))
+	else if(!stricmp(szKey, "id"))
 	{
 		// UNDONE: flag entity errors by ID instead of index
-		//g_MapError.EntityState( atoi( szValue ) );
+		// g_MapError.EntityState( atoi( szValue ) );
 		// rename this field since DME code uses this name
-		SetKeyValue( pLoadEntity->pEntity, "hammerid", szValue );
-		return(ChunkFile_Ok);
+		SetKeyValue(pLoadEntity->pEntity, "hammerid", szValue);
+		return (ChunkFile_Ok);
 	}
-	else if( !stricmp( szKey, "mapversion" ) )
+	else if(!stricmp(szKey, "mapversion"))
 	{
 		// .vmf map revision number
-		g_MapRevision = atoi( szValue );
-		SetKeyValue( pLoadEntity->pEntity, szKey, szValue );
-		return ( ChunkFile_Ok );
+		g_MapRevision = atoi(szValue);
+		SetKeyValue(pLoadEntity->pEntity, szKey, szValue);
+		return (ChunkFile_Ok);
 	}
 
-	SetKeyValue( pLoadEntity->pEntity, szKey, szValue );
+	SetKeyValue(pLoadEntity->pEntity, szKey, szValue);
 
-	return(ChunkFile_Ok);
+	return (ChunkFile_Ok);
 }
 
-
-static ChunkFileResult_t LoadEntityCallback( CChunkFile *pFile, int nParam )
+static ChunkFileResult_t LoadEntityCallback(CChunkFile *pFile, int nParam)
 {
-	if (num_entities == MAX_MAP_ENTITIES)
+	if(num_entities == MAX_MAP_ENTITIES)
 	{
 		// Exits.
-		g_MapError.ReportError ("num_entities == MAX_MAP_ENTITIES");
+		g_MapError.ReportError("num_entities == MAX_MAP_ENTITIES");
 	}
 
 	entity_t *mapent = &entities[num_entities];
@@ -88,8 +85,7 @@ static ChunkFileResult_t LoadEntityCallback( CChunkFile *pFile, int nParam )
 	return eResult;
 }
 
-
-bool LoadEntsFromMapFile( char const *pFilename )
+bool LoadEntsFromMapFile(char const *pFilename)
 {
 	//
 	// Dummy this up for the texture handling. This can be removed when old .MAP file
@@ -101,7 +97,7 @@ bool LoadEntsFromMapFile( char const *pFilename )
 	// Open the file.
 	//
 	CChunkFile File;
-	ChunkFileResult_t eResult = File.Open( pFilename, ChunkFile_Read );
+	ChunkFileResult_t eResult = File.Open(pFilename, ChunkFile_Read);
 
 	if(eResult == ChunkFile_Ok)
 	{
@@ -118,7 +114,7 @@ bool LoadEntsFromMapFile( char const *pFilename )
 		//
 		// Read the sub-chunks. We ignore keys in the root of the file.
 		//
-		while (eResult == ChunkFile_Ok)
+		while(eResult == ChunkFile_Ok)
 		{
 			eResult = File.ReadChunk();
 		}

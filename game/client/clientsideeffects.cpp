@@ -23,7 +23,7 @@ bool g_FXCreationAllowed = false;
 // Purpose:
 // Input  : state -
 //-----------------------------------------------------------------------------
-void SetFXCreationAllowed( bool state )
+void SetFXCreationAllowed(bool state)
 {
 	g_FXCreationAllowed = state;
 }
@@ -32,7 +32,7 @@ void SetFXCreationAllowed( bool state )
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool FXCreationAllowed( void )
+bool FXCreationAllowed(void)
 {
 	return g_FXCreationAllowed;
 }
@@ -44,10 +44,10 @@ bool FXCreationAllowed( void )
 // Purpose: Construct and activate effect
 // Input  : *name -
 //-----------------------------------------------------------------------------
-CClientSideEffect::CClientSideEffect( const char *name )
+CClientSideEffect::CClientSideEffect(const char *name)
 {
 	m_pszName = name;
-	Assert( name );
+	Assert(name);
 
 	m_bActive = true;
 }
@@ -55,15 +55,13 @@ CClientSideEffect::CClientSideEffect( const char *name )
 //-----------------------------------------------------------------------------
 // Purpose: Destroy effect
 //-----------------------------------------------------------------------------
-CClientSideEffect::~CClientSideEffect( void )
-{
-}
+CClientSideEffect::~CClientSideEffect(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Get name of effect
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CClientSideEffect::GetName( void )
+const char *CClientSideEffect::GetName(void)
 {
 	return m_pszName;
 }
@@ -72,7 +70,7 @@ const char *CClientSideEffect::GetName( void )
 // Purpose: Set the name of effect
 // Input : const char
 //-----------------------------------------------------------------------------
-void CClientSideEffect::SetEffectName( const char *pszName )
+void CClientSideEffect::SetEffectName(const char *pszName)
 {
 	m_pszName = pszName;
 }
@@ -81,7 +79,7 @@ void CClientSideEffect::SetEffectName( const char *pszName )
 // Purpose: Is effect still active?
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CClientSideEffect::IsActive( void )
+bool CClientSideEffect::IsActive(void)
 {
 	return m_bActive;
 }
@@ -89,7 +87,7 @@ bool CClientSideEffect::IsActive( void )
 //-----------------------------------------------------------------------------
 // Purpose: Mark effect for destruction
 //-----------------------------------------------------------------------------
-void CClientSideEffect::Destroy( void )
+void CClientSideEffect::Destroy(void)
 {
 	m_bActive = false;
 }
@@ -102,49 +100,46 @@ void CClientSideEffect::Destroy( void )
 class CEffectsList : public IEffectsList
 {
 public:
-					CEffectsList( void );
-	virtual			~CEffectsList( void );
+	CEffectsList(void);
+	virtual ~CEffectsList(void);
 
 	//	Add an effect to the effects list
-	void			AddEffect( CClientSideEffect *effect );
+	void AddEffect(CClientSideEffect *effect);
 	// Remove the specified effect
-	void			RemoveEffect( CClientSideEffect *effect );
+	void RemoveEffect(CClientSideEffect *effect);
 	// Draw/update all effects in the current list
-	void			DrawEffects( double frametime );
+	void DrawEffects(double frametime);
 	// Flush out all effects from the list
-	void			Flush( void );
+	void Flush(void);
+
 private:
-	void			RemoveEffect( int effectIndex );
+	void RemoveEffect(int effectIndex);
 	// Current number of effects
-	int				m_nEffects;
+	int m_nEffects;
 	// Pointers to current effects
-	CClientSideEffect *m_rgEffects[ MAX_EFFECTS ];
+	CClientSideEffect *m_rgEffects[MAX_EFFECTS];
 };
 
 // Implements effects list and exposes interface
 static CEffectsList g_EffectsList;
 // Public interface
-IEffectsList *clienteffects = ( IEffectsList * )&g_EffectsList;
+IEffectsList *clienteffects = (IEffectsList *)&g_EffectsList;
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CEffectsList::CEffectsList( void )
-{
-}
+CEffectsList::CEffectsList(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CEffectsList::~CEffectsList( void )
-{
-}
+CEffectsList::~CEffectsList(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Add effect to effects list
 // Input  : *effect -
 //-----------------------------------------------------------------------------
-void CEffectsList::AddEffect( CClientSideEffect *effect )
+void CEffectsList::AddEffect(CClientSideEffect *effect)
 {
 #if 0
 	if ( FXCreationAllowed() == false )
@@ -158,48 +153,48 @@ void CEffectsList::AddEffect( CClientSideEffect *effect )
 	}
 #endif
 
-	if ( effect == NULL )
+	if(effect == NULL)
 		return;
 
-	if ( m_nEffects >= MAX_EFFECTS )
+	if(m_nEffects >= MAX_EFFECTS)
 	{
-		DevWarning( 1, "No room for effect %s\n", effect->GetName() );
+		DevWarning(1, "No room for effect %s\n", effect->GetName());
 		return;
 	}
 
-	m_rgEffects[ m_nEffects++ ] = effect;
+	m_rgEffects[m_nEffects++] = effect;
 }
 
 //-----------------------------------------------------------------------------
-void CEffectsList::RemoveEffect( CClientSideEffect *effect )
+void CEffectsList::RemoveEffect(CClientSideEffect *effect)
 {
-	Assert( effect );
+	Assert(effect);
 	CClientSideEffect **end = &m_rgEffects[m_nEffects];
-	for( CClientSideEffect **p = &m_rgEffects[0]; p < end; ++p)
+	for(CClientSideEffect **p = &m_rgEffects[0]; p < end; ++p)
 	{
-		if ( *p == effect )
+		if(*p == effect)
 		{
-			RemoveEffect( p - &m_rgEffects[0] ); // todo remove this crutch
+			RemoveEffect(p - &m_rgEffects[0]); // todo remove this crutch
 			return;
 		}
 	}
 
-	Assert( false ); // don't know this effect
+	Assert(false); // don't know this effect
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove specified effect by index
 // Input  : effectIndex -
 //-----------------------------------------------------------------------------
-void CEffectsList::RemoveEffect( int effectIndex )
+void CEffectsList::RemoveEffect(int effectIndex)
 {
-	if ( effectIndex >= m_nEffects || effectIndex < 0 )
+	if(effectIndex >= m_nEffects || effectIndex < 0)
 		return;
 
 	CClientSideEffect *pEffect = m_rgEffects[effectIndex];
 	m_nEffects--;
 
-	if ( m_nEffects > 0 && effectIndex != m_nEffects )
+	if(m_nEffects > 0 && effectIndex != m_nEffects)
 	{
 		// move the last one down to fill the empty slot
 		m_rgEffects[effectIndex] = m_rgEffects[m_nEffects];
@@ -207,33 +202,33 @@ void CEffectsList::RemoveEffect( int effectIndex )
 
 	pEffect->Destroy();
 
-	delete pEffect;	//FIXME: Yes, no?
+	delete pEffect; // FIXME: Yes, no?
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterate through list and simulate/draw stuff
 // Input  : frametime -
 //-----------------------------------------------------------------------------
-void CEffectsList::DrawEffects( double frametime )
+void CEffectsList::DrawEffects(double frametime)
 {
-	VPROF_BUDGET( "CEffectsList::DrawEffects", VPROF_BUDGETGROUP_PARTICLE_RENDERING );
+	VPROF_BUDGET("CEffectsList::DrawEffects", VPROF_BUDGETGROUP_PARTICLE_RENDERING);
 	int i;
 	CClientSideEffect *effect;
 
 	// Go backwards so deleting effects doesn't screw up
-	for ( i = m_nEffects - 1 ; i >= 0; i-- )
+	for(i = m_nEffects - 1; i >= 0; i--)
 	{
-		effect = m_rgEffects[ i ];
-		if ( !effect )
+		effect = m_rgEffects[i];
+		if(!effect)
 			continue;
 
 		// Simulate
-		effect->Draw( frametime );
+		effect->Draw(frametime);
 
 		// Remove it if needed
-		if ( !effect->IsActive() )
+		if(!effect->IsActive())
 		{
-			RemoveEffect( i );
+			RemoveEffect(i);
 		}
 	}
 }
@@ -243,19 +238,19 @@ void CEffectsList::DrawEffects( double frametime )
 // Input:
 //==================================================
 
-void CEffectsList::Flush( void )
+void CEffectsList::Flush(void)
 {
 	int i;
 	CClientSideEffect *effect;
 
 	// Go backwards so deleting effects doesn't screw up
-	for ( i = m_nEffects - 1 ; i >= 0; i-- )
+	for(i = m_nEffects - 1; i >= 0; i--)
 	{
-		effect = m_rgEffects[ i ];
+		effect = m_rgEffects[i];
 
-		if ( effect == NULL )
+		if(effect == NULL)
 			continue;
 
-		RemoveEffect( i );
+		RemoveEffect(i);
 	}
 }

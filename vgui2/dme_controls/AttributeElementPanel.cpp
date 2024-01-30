@@ -16,17 +16,16 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 using namespace vgui;
 
 // ----------------------------------------------------------------------------
-CAttributeElementPanel::CAttributeElementPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info ) :
-	BaseClass( parent, info ), m_pData( 0 )
+CAttributeElementPanel::CAttributeElementPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info)
+	: BaseClass(parent, info), m_pData(0)
 {
-	m_pData = new CAttributeTextEntry( this, "AttributeValue" );
-	m_pData->SetEnabled( !HasFlag( READONLY ) );
+	m_pData = new CAttributeTextEntry(this, "AttributeValue");
+	m_pData->SetEnabled(!HasFlag(READONLY));
 	m_pData->AddActionSignalTarget(this);
-	m_pType->SetText( "element" );
+	m_pType->SetText("element");
 
 	m_bShowMemoryUsage = info.m_bShowMemoryUsage;
 }
@@ -34,43 +33,42 @@ CAttributeElementPanel::CAttributeElementPanel( vgui::Panel *parent, const Attri
 void CAttributeElementPanel::Apply()
 {
 	// FIXME: Implement when needed
-	Assert( 0 );
+	Assert(0);
 }
 
 vgui::Panel *CAttributeElementPanel::GetDataPanel()
 {
-	return static_cast< vgui::Panel * >( m_pData );
+	return static_cast<vgui::Panel *>(m_pData);
 }
 
-void CAttributeElementPanel::OnCreateDragData( KeyValues *msg )
+void CAttributeElementPanel::OnCreateDragData(KeyValues *msg)
 {
-	if ( GetPanelElement() )
+	if(GetPanelElement())
 	{
-		char txt[ 256 ];
-		m_pData->GetText( txt, sizeof( txt ) );
+		char txt[256];
+		m_pData->GetText(txt, sizeof(txt));
 
-		msg->SetString( "text", txt );
+		msg->SetString("text", txt);
 		CDmElement *element = NULL;
-		if ( GetPanelElement()->HasAttribute( GetAttributeName() ) )
+		if(GetPanelElement()->HasAttribute(GetAttributeName()))
 		{
-			element = GetElement<CDmElement>( GetAttributeValue<DmElementHandle_t>( ) );
-			msg->SetInt( "dmeelement", element->GetHandle() );
+			element = GetElement<CDmElement>(GetAttributeValue<DmElementHandle_t>());
+			msg->SetInt("dmeelement", element->GetHandle());
 		}
-
 	}
 }
 
 void CAttributeElementPanel::Refresh()
 {
-	char elemText[ 512 ];
+	char elemText[512];
 	elemText[0] = 0;
 
 	CDmElement *element = NULL;
-	if ( !GetEditorInfo() || !GetEditorInfo()->GetValue<bool>( "hideText" ) )
+	if(!GetEditorInfo() || !GetEditorInfo()->GetValue<bool>("hideText"))
 	{
-		if ( HasAttribute( ) )
+		if(HasAttribute())
 		{
-			element = GetAttributeValueElement( );
+			element = GetAttributeValueElement();
 		}
 		else
 		{
@@ -78,21 +76,22 @@ void CAttributeElementPanel::Refresh()
 		}
 	}
 
-	if ( element )
+	if(element)
 	{
-		char idstr[ 37 ];
-		UniqueIdToString( element->GetId(), idstr, sizeof( idstr ) );
-		if ( m_bShowMemoryUsage )
+		char idstr[37];
+		UniqueIdToString(element->GetId(), idstr, sizeof(idstr));
+		if(m_bShowMemoryUsage)
 		{
-			Q_snprintf( elemText, sizeof( elemText ), "%s %s %.3fMB", element->GetTypeString(), idstr, element->EstimateMemoryUsage() / float( 1 << 20 ) );
+			Q_snprintf(elemText, sizeof(elemText), "%s %s %.3fMB", element->GetTypeString(), idstr,
+					   element->EstimateMemoryUsage() / float(1 << 20));
 		}
 		else
 		{
-			Q_snprintf( elemText, sizeof( elemText ), "%s %s", element->GetTypeString(), idstr );
+			Q_snprintf(elemText, sizeof(elemText), "%s %s", element->GetTypeString(), idstr);
 		}
 	}
 
-	m_pData->SetText( elemText );
+	m_pData->SetText(elemText);
 	m_pData->SetEnabled(false);
 }
 

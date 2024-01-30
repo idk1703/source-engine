@@ -22,25 +22,26 @@
 //			0 -
 //			0 -
 //-----------------------------------------------------------------------------
-mxBitmapWindow::mxBitmapWindow(mxWindow *parent, int x, int y, int w, int h, int style /*= 0*/, const char *bitmap /*=0*/ )
-: mxWindow( parent, x, y, w, h, "", style )
+mxBitmapWindow::mxBitmapWindow(mxWindow *parent, int x, int y, int w, int h, int style /*= 0*/,
+							   const char *bitmap /*=0*/)
+	: mxWindow(parent, x, y, w, h, "", style)
 {
 	m_Bitmap.valid = false;
 
-	if ( bitmap && bitmap[ 0 ] )
+	if(bitmap && bitmap[0])
 	{
-		Load( bitmap );
+		Load(bitmap);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-mxBitmapWindow::~mxBitmapWindow( void )
+mxBitmapWindow::~mxBitmapWindow(void)
 {
-	if ( m_Bitmap.valid )
+	if(m_Bitmap.valid)
 	{
-		DeleteObject( m_Bitmap.image );
+		DeleteObject(m_Bitmap.image);
 		m_Bitmap.valid = NULL;
 	}
 }
@@ -50,16 +51,16 @@ mxBitmapWindow::~mxBitmapWindow( void )
 // Input  : *bitmap -
 // Output : virtual void
 //-----------------------------------------------------------------------------
-void mxBitmapWindow::setImage( const char *bitmap )
+void mxBitmapWindow::setImage(const char *bitmap)
 {
-	if ( m_Bitmap.valid )
+	if(m_Bitmap.valid)
 	{
-		DeleteObject( m_Bitmap.image );
+		DeleteObject(m_Bitmap.image);
 		m_Bitmap.valid = NULL;
 	}
-	if ( bitmap && bitmap[ 0 ] )
+	if(bitmap && bitmap[0])
 	{
-		Load( bitmap );
+		Load(bitmap);
 	}
 }
 
@@ -68,17 +69,17 @@ void mxBitmapWindow::setImage( const char *bitmap )
 // Input  : *bitmap -
 // Output : mxImage
 //-----------------------------------------------------------------------------
-bool mxBitmapWindow::Load( const char *bitmap )
+bool mxBitmapWindow::Load(const char *bitmap)
 {
-	Assert( !m_Bitmap.valid );
-	return LoadBitmapFromFile( bitmap, m_Bitmap );
+	Assert(!m_Bitmap.valid);
+	return LoadBitmapFromFile(bitmap, m_Bitmap);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : void mxBitmapWindow::redraw
 //-----------------------------------------------------------------------------
-void mxBitmapWindow::redraw ()
+void mxBitmapWindow::redraw()
 {
-	DrawBitmapToWindow( this, 0, 0, w(), h(), m_Bitmap );
+	DrawBitmapToWindow(this, 0, 0, w(), h(), m_Bitmap);
 }

@@ -8,22 +8,16 @@
 #include "ClickableTabbedPanel.h"
 #include <vgui/KeyValues.h>
 
-
 using namespace vgui;
 
-CClickableTabbedPanel::CClickableTabbedPanel(vgui2::Panel *parent, const char *panelName) : vgui2::PropertySheet(parent,panelName)
+CClickableTabbedPanel::CClickableTabbedPanel(vgui2::Panel *parent, const char *panelName)
+	: vgui2::PropertySheet(parent, panelName)
 {
 
-	//PropertySheet::onTabPressed
-
+	// PropertySheet::onTabPressed
 }
 
-CClickableTabbedPanel::~CClickableTabbedPanel()
-{
-
-
-}
-
+CClickableTabbedPanel::~CClickableTabbedPanel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:

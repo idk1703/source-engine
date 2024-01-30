@@ -5,7 +5,6 @@
 // $NoKeywords: $
 //===========================================================================//
 
-
 #include "IRunGameEngine.h"
 #include "EngineInterface.h"
 #include "tier1/strtools.h"
@@ -14,7 +13,6 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Interface to running the engine from the UI dlls
@@ -48,7 +46,7 @@ public:
 		return false;
 	}
 
-	virtual ERunResult RunEngine( int iAppID, const char *gameDir, const char *commandLineParams )
+	virtual ERunResult RunEngine(int iAppID, const char *gameDir, const char *commandLineParams)
 	{
 		return k_ERunResultOkay;
 	}
@@ -72,8 +70,8 @@ public:
 		gameuifuncs->SetFriendsID(trackerID, trackerName);
 
 		// update the player's name if necessary
-		ConVarRef name( "name" );
-		if ( name.IsValid() && trackerName && *trackerName && !Q_strcmp( name.GetString(), "unnamed" ) )
+		ConVarRef name("name");
+		if(name.IsValid() && trackerName && *trackerName && !Q_strcmp(name.GetString(), "unnamed"))
 		{
 			name.SetValue(trackerName);
 		}
@@ -92,7 +90,7 @@ public:
 	{
 		player_info_t pi;
 
-		if  ( engine->GetPlayerInfo(playerIndex, &pi ) )
+		if(engine->GetPlayerInfo(playerIndex, &pi))
 			return pi.friendsID;
 
 		return 0;
@@ -103,13 +101,13 @@ public:
 	{
 		// find the player by their friendsID
 		player_info_t pi;
-		for (int i = 0; i < engine->GetMaxClients(); i++)
+		for(int i = 0; i < engine->GetMaxClients(); i++)
 		{
-			if  (engine->GetPlayerInfo(i, &pi ))
+			if(engine->GetPlayerInfo(i, &pi))
 			{
-				if (pi.friendsID == (uint)trackerID)
+				if(pi.friendsID == (uint)trackerID)
 				{
-					Q_strncpy( name, pi.name, namelen );
+					Q_strncpy(name, pi.name, namelen);
 					return name;
 				}
 			}
@@ -122,13 +120,13 @@ public:
 	{
 		// find the player by their friendsID
 		player_info_t pi;
-		for (int i = 0; i < engine->GetMaxClients(); i++)
+		for(int i = 0; i < engine->GetMaxClients(); i++)
 		{
-			if  (engine->GetPlayerInfo(i, &pi ))
+			if(engine->GetPlayerInfo(i, &pi))
 			{
-				if (pi.friendsID == (uint)trackerID)
+				if(pi.friendsID == (uint)trackerID)
 				{
-					Q_strncpy( name, pi.friendsName, namelen );
+					Q_strncpy(name, pi.friendsName, namelen);
 					return name;
 				}
 			}
@@ -152,14 +150,14 @@ public:
 
 EXPOSE_SINGLE_INTERFACE(CRunGameEngine, IRunGameEngine, RUNGAMEENGINE_INTERFACE_VERSION);
 
-//namespace
+// namespace
 //{
 ////-----------------------------------------------------------------------------
 //// Purpose: Interface to running the game engine
 ////-----------------------------------------------------------------------------
-//abstract_class IRunGameEngine_Old : public IBaseInterface
+// abstract_class IRunGameEngine_Old : public IBaseInterface
 //{
-//public:
+// public:
 //	// Returns true if the engine is running, false otherwise.
 //	virtual bool IsRunning() = 0;
 //
@@ -194,11 +192,11 @@ EXPOSE_SINGLE_INTERFACE(CRunGameEngine, IRunGameEngine, RUNGAMEENGINE_INTERFACE_
 //
 //	// gets the friends name of a player
 //	virtual const char *GetPlayerFriendsName(int friendsID) = 0;
-//};
+// };
 //
 //#define RUNGAMEENGINE_INTERFACE_VERSION_OLD "RunGameEngine004"
 //
 //#ifndef _XBOX
-//EXPOSE_SINGLE_INTERFACE(CRunGameEngine, IRunGameEngine_Old, RUNGAMEENGINE_INTERFACE_VERSION_OLD);
+// EXPOSE_SINGLE_INTERFACE(CRunGameEngine, IRunGameEngine_Old, RUNGAMEENGINE_INTERFACE_VERSION_OLD);
 //#endif
-//}
+// }

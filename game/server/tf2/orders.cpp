@@ -11,14 +11,12 @@
 #include "tf_team.h"
 #include "tf_obj_resourcepump.h"
 
-
 IMPLEMENT_SERVERCLASS_ST(COrder, DT_Order)
-	SendPropInt( SENDINFO(m_iOrderType), 4, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO(m_iTargetEntIndex), 16, SPROP_UNSIGNED ),
-END_SEND_TABLE()
+SendPropInt(SENDINFO(m_iOrderType), 4, SPROP_UNSIGNED), SendPropInt(SENDINFO(m_iTargetEntIndex), 16, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( tf_order, COrder );
-
+	LINK_ENTITY_TO_CLASS(tf_order, COrder);
 
 COrder::COrder()
 {
@@ -30,11 +28,10 @@ COrder::COrder()
 	m_flDieTime = 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COrder::UpdateOnRemove( void )
+void COrder::UpdateOnRemove(void)
 {
 	DetachFromPlayer();
 	// Chain at end to mimic destructor unwind order
@@ -44,47 +41,45 @@ void COrder::UpdateOnRemove( void )
 //-----------------------------------------------------------------------------
 // Purpose: Transmit weapon data
 //-----------------------------------------------------------------------------
-int COrder::ShouldTransmit( const CCheckTransmitInfo *pInfo )
+int COrder::ShouldTransmit(const CCheckTransmitInfo *pInfo)
 {
-	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
+	CBaseEntity *pRecipientEntity = CBaseEntity::Instance(pInfo->m_pClientEnt);
 
 	// If this is a personal order, only send to it's owner
-	if ( GetOwner() )
+	if(GetOwner())
 	{
-		if ( GetOwner() == pRecipientEntity )
+		if(GetOwner() == pRecipientEntity)
 			return FL_EDICT_ALWAYS;
 
 		return FL_EDICT_DONTSEND;
 	}
 
 	// Otherwise, only send to players on our team
-	if ( InSameTeam( pRecipientEntity ) )
+	if(InSameTeam(pRecipientEntity))
 		return FL_EDICT_ALWAYS;
 
 	return FL_EDICT_DONTSEND;
 }
 
-
 void COrder::DetachFromPlayer()
 {
 	// Detach from our owner.
-	if ( m_hOwningPlayer )
+	if(m_hOwningPlayer)
 	{
-		m_hOwningPlayer->SetOrder( NULL );
+		m_hOwningPlayer->SetOrder(NULL);
 		m_hOwningPlayer = NULL;
 
-		if ( GetTeam() )
+		if(GetTeam())
 		{
-			((CTFTeam*)GetTeam())->RemoveOrder( this );
+			((CTFTeam *)GetTeam())->RemoveOrder(this);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int COrder::GetType( void )
+int COrder::GetType(void)
 {
 	return m_iOrderType;
 }
@@ -92,7 +87,7 @@ int COrder::GetType( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *COrder::GetTargetEntity( void )
+CBaseEntity *COrder::GetTargetEntity(void)
 {
 	return m_hTarget;
 }
@@ -100,7 +95,7 @@ CBaseEntity *COrder::GetTargetEntity( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COrder::SetType( int iOrderType )
+void COrder::SetType(int iOrderType)
 {
 	m_iOrderType = iOrderType;
 }
@@ -108,10 +103,10 @@ void COrder::SetType( int iOrderType )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COrder::SetTarget( CBaseEntity *pTarget )
+void COrder::SetTarget(CBaseEntity *pTarget)
 {
 	m_hTarget = pTarget;
-	if ( m_hTarget )
+	if(m_hTarget)
 	{
 		m_iTargetEntIndex = m_hTarget->entindex();
 	}
@@ -124,40 +119,38 @@ void COrder::SetTarget( CBaseEntity *pTarget )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COrder::SetDistance( float flDistance )
+void COrder::SetDistance(float flDistance)
 {
 	m_flDistanceToRemove = flDistance;
 }
 
-
-void COrder::SetLifetime( float flLifetime )
+void COrder::SetLifetime(float flLifetime)
 {
 	m_flDieTime = gpGlobals->curtime + flLifetime;
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 // Purpose: for updates on the order. Return true if the order should be removed.
 //-----------------------------------------------------------------------------
-bool COrder::Update( void )
+bool COrder::Update(void)
 {
 	// Orders with no targets & no owners don't go away on their own
-	if ( !GetOwner() )
+	if(!GetOwner())
 		return false;
 
 	// Has it timed out?
-	if( gpGlobals->curtime > m_flDieTime )
+	if(gpGlobals->curtime > m_flDieTime)
 		return true;
 
 	// Check to make sure we're still within the correct distance
-	if ( m_flDistanceToRemove )
+	if(m_flDistanceToRemove)
 	{
 		CBaseEntity *pTarget = GetTargetEntity();
-		if ( pTarget )
+		if(pTarget)
 		{
 			// Have the player and the target moved away from each other?
-			if ( (m_hOwningPlayer->GetAbsOrigin() - pTarget->GetAbsOrigin()).Length() > (m_flDistanceToRemove * 1.25) )
+			if((m_hOwningPlayer->GetAbsOrigin() - pTarget->GetAbsOrigin()).Length() > (m_flDistanceToRemove * 1.25))
 				return true;
 		}
 	}
@@ -168,14 +161,14 @@ bool COrder::Update( void )
 //-----------------------------------------------------------------------------
 // Purpose: An event for this order's target has arrived. Return true if this order should be removed.
 //-----------------------------------------------------------------------------
-bool COrder::UpdateOnEvent( COrderEvent_Base *pEvent )
+bool COrder::UpdateOnEvent(COrderEvent_Base *pEvent)
 {
 	// Default behavior is to get rid of the order if the object we're referencing
 	// gets destroyed.
-	if ( pEvent->GetType() == ORDER_EVENT_OBJECT_DESTROYED )
+	if(pEvent->GetType() == ORDER_EVENT_OBJECT_DESTROYED)
 	{
-		COrderEvent_ObjectDestroyed *pObjDestroyed = (COrderEvent_ObjectDestroyed*)pEvent;
-		if ( pObjDestroyed->m_pObject == GetTargetEntity() )
+		COrderEvent_ObjectDestroyed *pObjDestroyed = (COrderEvent_ObjectDestroyed *)pEvent;
+		if(pObjDestroyed->m_pObject == GetTargetEntity())
 			return true;
 	}
 
@@ -185,7 +178,7 @@ bool COrder::UpdateOnEvent( COrderEvent_Base *pEvent )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseTFPlayer *COrder::GetOwner( void )
+CBaseTFPlayer *COrder::GetOwner(void)
 {
 	return m_hOwningPlayer;
 }
@@ -193,16 +186,16 @@ CBaseTFPlayer *COrder::GetOwner( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void COrder::SetOwner( CBaseTFPlayer *pPlayer )
+void COrder::SetOwner(CBaseTFPlayer *pPlayer)
 {
 	// Null out our m_hOwningPlayer so we don't recurse infinitely.
 	CHandle<CBaseTFPlayer> hPlayer = m_hOwningPlayer;
 	m_hOwningPlayer = 0;
 
-	if ( hPlayer.Get() && (hPlayer != pPlayer) )
+	if(hPlayer.Get() && (hPlayer != pPlayer))
 	{
-		Assert( hPlayer->GetOrder() == this );
-		hPlayer->SetOrder( NULL );
+		Assert(hPlayer->GetOrder() == this);
+		hPlayer->SetOrder(NULL);
 	}
 
 	m_hOwningPlayer = pPlayer;

@@ -21,19 +21,19 @@
 class CItemSecurity : public CItem
 {
 public:
-	DECLARE_CLASS( CItemSecurity, CItem );
+	DECLARE_CLASS(CItemSecurity, CItem);
 
-	void Spawn( void )
+	void Spawn(void)
 	{
-		Precache( );
-		SetModel( "models/w_security.mdl" );
-		BaseClass::Spawn( );
+		Precache();
+		SetModel("models/w_security.mdl");
+		BaseClass::Spawn();
 	}
-	void Precache( void )
+	void Precache(void)
 	{
-		PrecacheModel ("models/w_security.mdl");
+		PrecacheModel("models/w_security.mdl");
 	}
-	bool MyTouch( CBasePlayer *pPlayer )
+	bool MyTouch(CBasePlayer *pPlayer)
 	{
 		pPlayer->m_rgItems[ITEM_SECURITY] += 1;
 		return true;

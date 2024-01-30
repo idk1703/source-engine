@@ -45,12 +45,12 @@ CEntityConnection::CEntityConnection(void)
 // Purpose: Copy Constructor.
 //-----------------------------------------------------------------------------
 
-CEntityConnection::CEntityConnection( const CEntityConnection &Other )
+CEntityConnection::CEntityConnection(const CEntityConnection &Other)
 {
 	m_pSourceEntityList = new CMapEntityList;
 	m_pTargetEntityList = new CMapEntityList;
 
-	*this = Other;	// Invoke the Operator= to complete the construction job
+	*this = Other; // Invoke the Operator= to complete the construction job
 }
 
 //-----------------------------------------------------------------------------
@@ -58,13 +58,13 @@ CEntityConnection::CEntityConnection( const CEntityConnection &Other )
 //-----------------------------------------------------------------------------
 CEntityConnection::~CEntityConnection()
 {
-	if ( m_pSourceEntityList )
+	if(m_pSourceEntityList)
 	{
-	m_pSourceEntityList->RemoveAll();
+		m_pSourceEntityList->RemoveAll();
 		delete m_pSourceEntityList;
 		m_pSourceEntityList = NULL;
 	}
-	if ( m_pTargetEntityList )
+	if(m_pTargetEntityList)
 	{
 		m_pTargetEntityList->RemoveAll();
 		delete m_pTargetEntityList;
@@ -75,7 +75,7 @@ CEntityConnection::~CEntityConnection()
 //-----------------------------------------------------------------------------
 // Purpose: Operator= overload. Makes 'this' identical to 'Other'.
 //-----------------------------------------------------------------------------
-CEntityConnection &CEntityConnection::operator =(const CEntityConnection &Other)
+CEntityConnection &CEntityConnection::operator=(const CEntityConnection &Other)
 {
 	strcpy(m_szSourceEntity, Other.m_szSourceEntity);
 	strcpy(m_szTargetEntity, Other.m_szTargetEntity);
@@ -89,7 +89,7 @@ CEntityConnection &CEntityConnection::operator =(const CEntityConnection &Other)
 	*m_pSourceEntityList = *Other.m_pSourceEntityList;
 	*m_pTargetEntityList = *Other.m_pTargetEntityList;
 
-	return(*this);
+	return (*this);
 }
 
 //-----------------------------------------------------------------------------
@@ -102,7 +102,8 @@ void CEntityConnection::SetSourceName(const char *pszName)
 	lstrcpyn(m_szSourceEntity, pszName ? pszName : "<<null>>", sizeof(m_szSourceEntity));
 
 	// Update the source entity list
-	// LinkSourceEntities(); // Changing the entity connection source name shouldnt change the source entity linkage, right?
+	// LinkSourceEntities(); // Changing the entity connection source name shouldnt change the source entity linkage,
+	// right?
 }
 
 //-----------------------------------------------------------------------------
@@ -129,26 +130,26 @@ void CEntityConnection::LinkSourceEntities()
 	// Get a list of all the entities in the world
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 
-	if (pDoc)
+	if(pDoc)
 	{
 		CMapWorld *pWorld = pDoc->GetMapWorld();
 
-		if (pWorld)
+		if(pWorld)
 		{
 			CMapEntityList matches;
-			pWorld->FindEntitiesByName( matches, m_szSourceEntity, false );
+			pWorld->FindEntitiesByName(matches, m_szSourceEntity, false);
 
-			for ( int i = 0; i < matches.Count(); i++ )
+			for(int i = 0; i < matches.Count(); i++)
 			{
-				CMapEntity *pEntity = matches.Element( i );
+				CMapEntity *pEntity = matches.Element(i);
 
-				m_pSourceEntityList->AddToTail( pEntity );
-				//pEntity->Connection_Add( this ); // This should already be true on creation, investigate need for this func
+				m_pSourceEntityList->AddToTail(pEntity);
+				// pEntity->Connection_Add( this ); // This should already be true on creation, investigate need for
+				// this func
 			}
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Links to any matching Target entities
@@ -156,10 +157,10 @@ void CEntityConnection::LinkSourceEntities()
 void CEntityConnection::LinkTargetEntities()
 {
 	// Unlink us from the downstream entities.
-	FOR_EACH_OBJ( *m_pTargetEntityList, pos )
+	FOR_EACH_OBJ(*m_pTargetEntityList, pos)
 	{
-		CMapEntity *pEntity = m_pTargetEntityList->Element( pos );
-		pEntity->Upstream_Remove( this );
+		CMapEntity *pEntity = m_pTargetEntityList->Element(pos);
+		pEntity->Upstream_Remove(this);
 	}
 
 	// Empty out the existing entity list
@@ -168,28 +169,27 @@ void CEntityConnection::LinkTargetEntities()
 	// Get a list of all the entities in the world
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 
-	if (pDoc)
+	if(pDoc)
 	{
 		CMapWorld *pWorld = pDoc->GetMapWorld();
 
-		if (pWorld)
+		if(pWorld)
 		{
 			CMapEntityList matches;
-			pWorld->FindEntitiesByName( matches, m_szTargetEntity, false );
+			pWorld->FindEntitiesByName(matches, m_szTargetEntity, false);
 
-			for ( int i = 0; i < matches.Count(); i++ )
+			for(int i = 0; i < matches.Count(); i++)
 			{
-				CMapEntity *pEntity = matches.Element( i );
+				CMapEntity *pEntity = matches.Element(i);
 
-				m_pTargetEntityList->AddToTail( pEntity );
+				m_pTargetEntityList->AddToTail(pEntity);
 
 				// Special -- Add this connection to the target entity connection list
-				pEntity->Upstream_Add( this );
+				pEntity->Upstream_Add(this);
 			}
 		}
 	}
 }
-
 
 //------------------------------------------------------------------------------
 // Purpose: Tells if any of the target entities are visible.
@@ -197,30 +197,29 @@ void CEntityConnection::LinkTargetEntities()
 bool CEntityConnection::AreAnyTargetEntitiesVisible()
 {
 	CMapEntityList *pList = GetTargetEntityList();
-	for ( int iTarget=0; iTarget < pList->Count(); iTarget++ )
+	for(int iTarget = 0; iTarget < pList->Count(); iTarget++)
 	{
-		if ( pList->Element( iTarget )->IsVisible() )
+		if(pList->Element(iTarget)->IsVisible())
 			return true;
 	}
 
 	return false;
 }
 
-
 //------------------------------------------------------------------------------
 // Purpose: Returns true if output string is valid for all this entity
 //------------------------------------------------------------------------------
-bool CEntityConnection::ValidateOutput(CMapEntity *pEntity, const char* pszOutput)
+bool CEntityConnection::ValidateOutput(CMapEntity *pEntity, const char *pszOutput)
 {
-	if (!pEntity)
+	if(!pEntity)
 	{
 		return false;
 	}
 
-	GDclass*	pClass	= pEntity->GetClass();
-	if (pClass != NULL)
+	GDclass *pClass = pEntity->GetClass();
+	if(pClass != NULL)
 	{
-		if (pClass->FindOutput(pszOutput) == NULL)
+		if(pClass->FindOutput(pszOutput) == NULL)
 		{
 			return false;
 		}
@@ -234,17 +233,17 @@ bool CEntityConnection::ValidateOutput(CMapEntity *pEntity, const char* pszOutpu
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-bool CEntityConnection::ValidateOutput(const CMapEntityList *pEntityList, const char* pszOutput)
+bool CEntityConnection::ValidateOutput(const CMapEntityList *pEntityList, const char *pszOutput)
 {
-	if (!pEntityList)
+	if(!pEntityList)
 	{
 		return false;
 	}
 
-	FOR_EACH_OBJ( *pEntityList, pos )
+	FOR_EACH_OBJ(*pEntityList, pos)
 	{
-		CMapEntity*	pEntity = pEntityList->Element(pos);
-		if (!ValidateOutput(pEntity,pszOutput))
+		CMapEntity *pEntity = pEntityList->Element(pos);
+		if(!ValidateOutput(pEntity, pszOutput))
 		{
 			return false;
 		}
@@ -252,43 +251,43 @@ bool CEntityConnection::ValidateOutput(const CMapEntityList *pEntityList, const 
 	return true;
 }
 
-
 //------------------------------------------------------------------------------
 // Purpose: Returns true if the given entity list contains an entity of the
 //			given target name
 //------------------------------------------------------------------------------
-bool CEntityConnection::ValidateTarget( const CMapEntityList *pEntityList, bool bVisibilityCheck, const char *pszTarget)
+bool CEntityConnection::ValidateTarget(const CMapEntityList *pEntityList, bool bVisibilityCheck, const char *pszTarget)
 {
-	if (!pEntityList || !pszTarget)
+	if(!pEntityList || !pszTarget)
 		return false;
 
 	// These procedural names are always assumed to exist.
-	if (!stricmp(pszTarget, "!activator") || !stricmp(pszTarget, "!caller") || !stricmp(pszTarget, "!player") || !stricmp(pszTarget, "!self"))
+	if(!stricmp(pszTarget, "!activator") || !stricmp(pszTarget, "!caller") || !stricmp(pszTarget, "!player") ||
+	   !stricmp(pszTarget, "!self"))
 		return true;
 
-	FOR_EACH_OBJ( *pEntityList, pos )
+	FOR_EACH_OBJ(*pEntityList, pos)
 	{
 		CMapEntity *pEntity = pEntityList->Element(pos);
-		if ( bVisibilityCheck && !pEntity->IsVisible() )
+		if(bVisibilityCheck && !pEntity->IsVisible())
 			continue;
 
-		if (pEntity->NameMatches(pszTarget))
+		if(pEntity->NameMatches(pszTarget))
 			return true;
 	}
 
 	return false;
 }
 
-
 //------------------------------------------------------------------------------
 // Purpose: Returns true if all entities with the given target name
 //			have an input of the given input name
 //------------------------------------------------------------------------------
-bool CEntityConnection::ValidateInput(const char* pszTarget, const char *pszInput, bool bVisiblesOnly)
+bool CEntityConnection::ValidateInput(const char *pszTarget, const char *pszInput, bool bVisiblesOnly)
 {
 	// Allow any input into !activator and !player.
 	// dvs: TODO: pass in the entity to resolve !self and check input list
-	if (!stricmp(pszTarget, "!activator") || !stricmp(pszTarget, "!caller") || !stricmp(pszTarget, "!player") || !stricmp(pszTarget, "!self"))
+	if(!stricmp(pszTarget, "!activator") || !stricmp(pszTarget, "!caller") || !stricmp(pszTarget, "!player") ||
+	   !stricmp(pszTarget, "!self"))
 	{
 		return true;
 	}
@@ -297,19 +296,18 @@ bool CEntityConnection::ValidateInput(const char* pszTarget, const char *pszInpu
 	CMapEntityList EntityList;
 	pDoc->FindEntitiesByName(EntityList, pszTarget, bVisiblesOnly);
 
-	if (EntityList.Count() == 0)
+	if(EntityList.Count() == 0)
 	{
 		return false;
 	}
 
-	if (!MapEntityList_HasInput( &EntityList, pszInput))
+	if(!MapEntityList_HasInput(&EntityList, pszInput))
 	{
 		return false;
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Finds any output connections from this entity that are bad.
@@ -321,11 +319,13 @@ bool CEntityConnection::ValidateInput(const char* pszTarget, const char *pszInpu
 //
 // Input  : pEntity - The entity to check for bad connections.
 //-----------------------------------------------------------------------------
-void CEntityConnection::FindBadConnections(CMapEntity *pEntity, bool bVisibilityCheck, CUtlVector<CEntityConnection *> &BadConnectionList, bool bIgnoreHiddenTargets)
+void CEntityConnection::FindBadConnections(CMapEntity *pEntity, bool bVisibilityCheck,
+										   CUtlVector<CEntityConnection *> &BadConnectionList,
+										   bool bIgnoreHiddenTargets)
 {
 	BadConnectionList.RemoveAll();
 
-	if ((!pEntity) || (pEntity->Connections_GetCount() == 0))
+	if((!pEntity) || (pEntity->Connections_GetCount() == 0))
 	{
 		return;
 	}
@@ -333,10 +333,10 @@ void CEntityConnection::FindBadConnections(CMapEntity *pEntity, bool bVisibility
 	// Get a list of all the entities in the world
 	const CMapEntityList *pAllWorldEntities = NULL;
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc)
+	if(pDoc)
 	{
 		CMapWorld *pWorld = pDoc->GetMapWorld();
-		if (pWorld)
+		if(pWorld)
 		{
 			pAllWorldEntities = pWorld->EntityList_GetList();
 		}
@@ -344,36 +344,36 @@ void CEntityConnection::FindBadConnections(CMapEntity *pEntity, bool bVisibility
 
 	// For each connection
 	int nConnCount = pEntity->Connections_GetCount();
-	for (int i = 0; i < nConnCount; i++)
+	for(int i = 0; i < nConnCount; i++)
 	{
 		CEntityConnection *pConnection = pEntity->Connections_Get(i);
-		if (pConnection != NULL)
+		if(pConnection != NULL)
 		{
-			if ( bIgnoreHiddenTargets )
+			if(bIgnoreHiddenTargets)
 			{
-				if ( pConnection->GetTargetEntityList()->Count() > 0 && !pConnection->AreAnyTargetEntitiesVisible() )
+				if(pConnection->GetTargetEntityList()->Count() > 0 && !pConnection->AreAnyTargetEntitiesVisible())
 					continue;
 			}
 
 			// Check validity of output for this entity
-			if (!CEntityConnection::ValidateOutput(pEntity, pConnection->GetOutputName()))
+			if(!CEntityConnection::ValidateOutput(pEntity, pConnection->GetOutputName()))
 			{
 				BadConnectionList.AddToTail(pConnection);
 			}
 			// Check validity of target entity (is it in the map?)
-			else if (!CEntityConnection::ValidateTarget(pAllWorldEntities, bVisibilityCheck, pConnection->GetTargetName()))
+			else if(!CEntityConnection::ValidateTarget(pAllWorldEntities, bVisibilityCheck,
+													   pConnection->GetTargetName()))
 			{
 				BadConnectionList.AddToTail(pConnection);
 			}
 			// Check validity of input
-			else if (!CEntityConnection::ValidateInput(pConnection->GetTargetName(), pConnection->GetInputName(), true))
+			else if(!CEntityConnection::ValidateInput(pConnection->GetTargetName(), pConnection->GetInputName(), true))
 			{
 				BadConnectionList.AddToTail(pConnection);
 			}
 		}
 	}
 }
-
 
 //------------------------------------------------------------------------------
 // Purpose: Check if all the output connections in the given entity are valid.
@@ -383,12 +383,12 @@ void CEntityConnection::FindBadConnections(CMapEntity *pEntity, bool bVisibility
 //------------------------------------------------------------------------------
 int CEntityConnection::ValidateOutputConnections(CMapEntity *pEntity, bool bVisibilityCheck, bool bIgnoreHiddenTargets)
 {
-	if (!pEntity)
+	if(!pEntity)
 	{
 		return CONNECTION_NONE;
 	}
 
-	if (pEntity->Connections_GetCount() == 0)
+	if(pEntity->Connections_GetCount() == 0)
 	{
 		return CONNECTION_NONE;
 	}
@@ -396,7 +396,7 @@ int CEntityConnection::ValidateOutputConnections(CMapEntity *pEntity, bool bVisi
 	CUtlVector<CEntityConnection *> BadConnectionList;
 	FindBadConnections(pEntity, bVisibilityCheck, BadConnectionList, bIgnoreHiddenTargets);
 
-	if (BadConnectionList.Count() > 0)
+	if(BadConnectionList.Count() > 0)
 	{
 		return CONNECTION_BAD;
 	}
@@ -404,40 +404,38 @@ int CEntityConnection::ValidateOutputConnections(CMapEntity *pEntity, bool bVisi
 	return CONNECTION_GOOD;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Fixes any output connections from this entity that are bad.
 // Input  : pEntity - The entity to fix.
 //-----------------------------------------------------------------------------
-void CEntityConnection::FixBadConnections(CMapEntity *pEntity, bool bVisibilityCheck )
+void CEntityConnection::FixBadConnections(CMapEntity *pEntity, bool bVisibilityCheck)
 {
 	CUtlVector<CEntityConnection *> BadConnectionList;
 	FindBadConnections(pEntity, bVisibilityCheck, BadConnectionList);
 
 	// Remove the bad connections.
 	int nBadConnCount = BadConnectionList.Count();
-	for (int i = 0; i < nBadConnCount; i++)
+	for(int i = 0; i < nBadConnCount; i++)
 	{
 		CEntityConnection *pConnection = BadConnectionList.Element(i);
-		pEntity->Connections_Remove( pConnection );
+		pEntity->Connections_Remove(pConnection);
 
 		//
 		// Remove the connection from the upstream list of all entities it targets.
 		//
 		CMapEntityList *pTargetList = pConnection->GetTargetEntityList();
-		if ( pTargetList )
+		if(pTargetList)
 		{
-			FOR_EACH_OBJ( *pTargetList, pos )
+			FOR_EACH_OBJ(*pTargetList, pos)
 			{
-				pEntity = pTargetList->Element( pos );
-				pEntity->Upstream_Remove( pConnection );
+				pEntity = pTargetList->Element(pos);
+				pEntity->Upstream_Remove(pConnection);
 			}
 		}
 
 		delete pConnection;
 	}
 }
-
 
 //------------------------------------------------------------------------------
 // Purpose: Check if all the output connections in the given entity are valid.
@@ -447,31 +445,31 @@ void CEntityConnection::FixBadConnections(CMapEntity *pEntity, bool bVisibilityC
 //------------------------------------------------------------------------------
 int CEntityConnection::ValidateInputConnections(CMapEntity *pEntity, bool bVisibilityCheck)
 {
-	if (!pEntity)
+	if(!pEntity)
 	{
 		return CONNECTION_NONE;
 	}
 
 	// No inputs if entity doesn't have a target name
 	const char *pszTargetName = pEntity->GetKeyValue("targetname");
-	if (!pszTargetName)
+	if(!pszTargetName)
 	{
 		return CONNECTION_NONE;
 	}
 
 	GDclass *pClass = pEntity->GetClass();
-	if (!pClass)
+	if(!pClass)
 	{
 		return CONNECTION_NONE;
 	}
 
 	// Get a list of all the entities in the world
 	const CMapEntityList *pAllWorldEntities = NULL;
-	CMapDoc	*pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc)
+	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
+	if(pDoc)
 	{
 		CMapWorld *pWorld = pDoc->GetMapWorld();
-		if (pWorld)
+		if(pWorld)
 		{
 			pAllWorldEntities = pWorld->EntityList_GetList();
 		}
@@ -480,42 +478,41 @@ int CEntityConnection::ValidateInputConnections(CMapEntity *pEntity, bool bVisib
 	// Look at outputs from each entity in the world
 
 	bool bHaveConnection = false;
-	FOR_EACH_OBJ( *pAllWorldEntities, pos )
+	FOR_EACH_OBJ(*pAllWorldEntities, pos)
 	{
 		CMapEntity *pTestEntity = pAllWorldEntities->Element(pos);
-		if (pTestEntity == NULL)
+		if(pTestEntity == NULL)
 			continue;
 
-		if ( bVisibilityCheck && !pTestEntity->IsVisible() )
+		if(bVisibilityCheck && !pTestEntity->IsVisible())
 			continue;
 
 		int nConnCount = pTestEntity->Connections_GetCount();
-		for (int i = 0; i < nConnCount; i++)
+		for(int i = 0; i < nConnCount; i++)
 		{
 			// If the connection targets me
 			CEntityConnection *pConnection = pTestEntity->Connections_Get(i);
-			if ( pConnection && pEntity->NameMatches( pConnection->GetTargetName() ) )
+			if(pConnection && pEntity->NameMatches(pConnection->GetTargetName()))
 			{
 				// Validate output
-				if (!ValidateOutput(pTestEntity, pConnection->GetOutputName()))
+				if(!ValidateOutput(pTestEntity, pConnection->GetOutputName()))
 				{
 					return CONNECTION_BAD;
 				}
 
 				// Validate input
-				if (pClass->FindInput(pConnection->GetInputName()) == NULL)
+				if(pClass->FindInput(pConnection->GetInputName()) == NULL)
 				{
 					return CONNECTION_BAD;
 				}
 
-	// FIXME -- Validate the upstream connections the target entities.
+				// FIXME -- Validate the upstream connections the target entities.
 				bHaveConnection = true;
 			}
 		}
 	}
 
-
-	if (bHaveConnection)
+	if(bHaveConnection)
 	{
 		return CONNECTION_GOOD;
 	}
@@ -525,12 +522,13 @@ int CEntityConnection::ValidateInputConnections(CMapEntity *pEntity, bool bVisib
 //-----------------------------------------------------------------------------
 // Purpose: Compares by delays. Used as a secondary sort by all other columns.
 //-----------------------------------------------------------------------------
-int CALLBACK CEntityConnection::CompareDelaysSecondary(CEntityConnection *pConn1, CEntityConnection *pConn2, SortDirection_t eDirection)
+int CALLBACK CEntityConnection::CompareDelaysSecondary(CEntityConnection *pConn1, CEntityConnection *pConn2,
+													   SortDirection_t eDirection)
 {
 	float fDelay1;
 	float fDelay2;
 
-	if (eDirection == Sort_Ascending)
+	if(eDirection == Sort_Ascending)
 	{
 		fDelay1 = pConn1->GetDelay();
 		fDelay2 = pConn2->GetDelay();
@@ -541,44 +539,45 @@ int CALLBACK CEntityConnection::CompareDelaysSecondary(CEntityConnection *pConn1
 		fDelay2 = pConn1->GetDelay();
 	}
 
-	if (fDelay1 < fDelay2)
+	if(fDelay1 < fDelay2)
 	{
-		return(-1);
+		return (-1);
 	}
-	else if (fDelay1 > fDelay2)
+	else if(fDelay1 > fDelay2)
 	{
-		return(1);
+		return (1);
 	}
 
-	return(0);
+	return (0);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by delays, does a secondary compare by output name.
 //-----------------------------------------------------------------------------
-int CALLBACK CEntityConnection::CompareDelays(CEntityConnection *pConn1, CEntityConnection *pConn2, SortDirection_t eDirection)
+int CALLBACK CEntityConnection::CompareDelays(CEntityConnection *pConn1, CEntityConnection *pConn2,
+											  SortDirection_t eDirection)
 {
 	int nReturn = CompareDelaysSecondary(pConn1, pConn2, eDirection);
-	if (nReturn != 0)
+	if(nReturn != 0)
 	{
-		return(nReturn);
+		return (nReturn);
 	}
 
 	//
 	// Always do a secondary sort by output name.
 	//
-	return(CompareOutputNames(pConn1, pConn2, Sort_Ascending));
+	return (CompareOutputNames(pConn1, pConn2, Sort_Ascending));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by output name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-int CALLBACK CEntityConnection::CompareOutputNames(CEntityConnection *pConn1, CEntityConnection *pConn2, SortDirection_t eDirection)
+int CALLBACK CEntityConnection::CompareOutputNames(CEntityConnection *pConn1, CEntityConnection *pConn2,
+												   SortDirection_t eDirection)
 {
 	int nReturn = 0;
 
-	if (eDirection == Sort_Ascending)
+	if(eDirection == Sort_Ascending)
 	{
 		nReturn = stricmp(pConn1->GetOutputName(), pConn2->GetOutputName());
 	}
@@ -590,23 +589,23 @@ int CALLBACK CEntityConnection::CompareOutputNames(CEntityConnection *pConn1, CE
 	//
 	// Always do a secondary sort by delay.
 	//
-	if (nReturn == 0)
+	if(nReturn == 0)
 	{
 		nReturn = CompareDelaysSecondary(pConn1, pConn2, Sort_Ascending);
 	}
 
-	return(nReturn);
+	return (nReturn);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by input name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-int CALLBACK CEntityConnection::CompareInputNames(CEntityConnection *pConn1, CEntityConnection *pConn2, SortDirection_t eDirection)
+int CALLBACK CEntityConnection::CompareInputNames(CEntityConnection *pConn1, CEntityConnection *pConn2,
+												  SortDirection_t eDirection)
 {
 	int nReturn = 0;
 
-	if (eDirection == Sort_Ascending)
+	if(eDirection == Sort_Ascending)
 	{
 		nReturn = stricmp(pConn1->GetInputName(), pConn2->GetInputName());
 	}
@@ -618,22 +617,23 @@ int CALLBACK CEntityConnection::CompareInputNames(CEntityConnection *pConn1, CEn
 	//
 	// Always do a secondary sort by delay.
 	//
-	if (nReturn == 0)
+	if(nReturn == 0)
 	{
 		nReturn = CompareDelaysSecondary(pConn1, pConn2, Sort_Ascending);
 	}
 
-	return(nReturn);
+	return (nReturn);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by source name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-int CALLBACK CEntityConnection::CompareSourceNames(CEntityConnection *pConn1, CEntityConnection *pConn2, SortDirection_t eDirection)
+int CALLBACK CEntityConnection::CompareSourceNames(CEntityConnection *pConn1, CEntityConnection *pConn2,
+												   SortDirection_t eDirection)
 {
 	int nReturn = 0;
 
-	if (eDirection == Sort_Ascending)
+	if(eDirection == Sort_Ascending)
 	{
 		nReturn = CompareEntityNames(pConn1->GetSourceName(), pConn2->GetSourceName());
 	}
@@ -645,22 +645,23 @@ int CALLBACK CEntityConnection::CompareSourceNames(CEntityConnection *pConn1, CE
 	//
 	// Always do a secondary sort by delay.
 	//
-	if (nReturn == 0)
+	if(nReturn == 0)
 	{
 		nReturn = CompareDelaysSecondary(pConn1, pConn2, Sort_Ascending);
 	}
 
-	return(nReturn);
+	return (nReturn);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by target name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-int CALLBACK CEntityConnection::CompareTargetNames(CEntityConnection *pConn1, CEntityConnection *pConn2, SortDirection_t eDirection)
+int CALLBACK CEntityConnection::CompareTargetNames(CEntityConnection *pConn1, CEntityConnection *pConn2,
+												   SortDirection_t eDirection)
 {
 	int nReturn = 0;
 
-	if (eDirection == Sort_Ascending)
+	if(eDirection == Sort_Ascending)
 	{
 		nReturn = CompareEntityNames(pConn1->GetTargetName(), pConn2->GetTargetName());
 	}
@@ -672,10 +673,10 @@ int CALLBACK CEntityConnection::CompareTargetNames(CEntityConnection *pConn1, CE
 	//
 	// Always do a secondary sort by delay.
 	//
-	if (nReturn == 0)
+	if(nReturn == 0)
 	{
 		nReturn = CompareDelaysSecondary(pConn1, pConn2, Sort_Ascending);
 	}
 
-	return(nReturn);
+	return (nReturn);
 }

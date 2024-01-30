@@ -17,30 +17,28 @@ public:
 	virtual ~CHL1EventLog() {};
 
 public:
-	bool PrintEvent( IGameEvent * event )	// override virtual function
+	bool PrintEvent(IGameEvent *event) // override virtual function
 	{
-		if ( BaseClass::PrintEvent( event ) )
+		if(BaseClass::PrintEvent(event))
 		{
 			return true;
 		}
 
-		if ( Q_strcmp(event->GetName(), "hl1_") == 0 )
+		if(Q_strcmp(event->GetName(), "hl1_") == 0)
 		{
-			return PrintHL1Event( event );
+			return PrintHL1Event(event);
 		}
 
 		return false;
 	}
 
 protected:
-
-	bool PrintHL1Event( IGameEvent * event )	// print Mod specific logs
+	bool PrintHL1Event(IGameEvent *event) // print Mod specific logs
 	{
-	//	const char * name = event->GetName() + Q_strlen("hl1_"); // remove prefix
+		//	const char * name = event->GetName() + Q_strlen("hl1_"); // remove prefix
 
 		return false;
 	}
-
 };
 
 CHL1EventLog g_HL1EventLog;
@@ -48,7 +46,7 @@ CHL1EventLog g_HL1EventLog;
 //-----------------------------------------------------------------------------
 // Singleton access
 //-----------------------------------------------------------------------------
-IGameSystem* GameLogSystem()
+IGameSystem *GameLogSystem()
 {
 	return &g_HL1EventLog;
 }

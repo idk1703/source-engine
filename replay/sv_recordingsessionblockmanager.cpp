@@ -11,14 +11,14 @@
 
 //----------------------------------------------------------------------------------------
 
-CServerRecordingSessionBlockManager::CServerRecordingSessionBlockManager( IReplayContext *pContext )
-:	CBaseRecordingSessionBlockManager( pContext )
+CServerRecordingSessionBlockManager::CServerRecordingSessionBlockManager(IReplayContext *pContext)
+	: CBaseRecordingSessionBlockManager(pContext)
 {
 }
 
 CBaseRecordingSessionBlock *CServerRecordingSessionBlockManager::Create()
 {
-	return new CServerRecordingSessionBlock( m_pContext );
+	return new CServerRecordingSessionBlock(m_pContext);
 }
 
 IReplayContext *CServerRecordingSessionBlockManager::GetReplayContext() const
@@ -29,7 +29,7 @@ IReplayContext *CServerRecordingSessionBlockManager::GetReplayContext() const
 
 void CServerRecordingSessionBlockManager::PreLoad()
 {
-	ConMsg( "Loading recording session blocks - this may take a minute...\n" );
+	ConMsg("Loading recording session blocks - this may take a minute...\n");
 }
 
 //----------------------------------------------------------------------------------------

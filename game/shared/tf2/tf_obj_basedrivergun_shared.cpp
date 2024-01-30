@@ -8,18 +8,18 @@
 #include "tf_obj_basedrivergun_shared.h"
 #include "basetfvehicle.h"
 
-IMPLEMENT_NETWORKCLASS_ALIASED( BaseObjectDriverGun, DT_BaseObjectDriverGun )
+IMPLEMENT_NETWORKCLASS_ALIASED(BaseObjectDriverGun, DT_BaseObjectDriverGun)
 
-BEGIN_NETWORK_TABLE( CBaseObjectDriverGun, DT_BaseObjectDriverGun )
-#if !defined( CLIENT_DLL )
-	SendPropVector( SENDINFO(m_vecGunAngles), -1, SPROP_COORD ),
+BEGIN_NETWORK_TABLE(CBaseObjectDriverGun, DT_BaseObjectDriverGun)
+#if !defined(CLIENT_DLL)
+	SendPropVector(SENDINFO(m_vecGunAngles), -1, SPROP_COORD),
 #else
-	RecvPropVector( RECVINFO(m_vecGunAngles) ),
+	RecvPropVector(RECVINFO(m_vecGunAngles)),
 #endif
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CBaseObjectDriverGun )
-	DEFINE_PRED_FIELD_TOL( m_vecGunAngles, FIELD_VECTOR, FTYPEDESC_INSENDTABLE, 1.0f ),
+BEGIN_PREDICTION_DATA(CBaseObjectDriverGun)
+	DEFINE_PRED_FIELD_TOL(m_vecGunAngles, FIELD_VECTOR, FTYPEDESC_INSENDTABLE, 1.0f),
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ END_PREDICTION_DATA()
 //-----------------------------------------------------------------------------
 CBaseObjectDriverGun::CBaseObjectDriverGun()
 {
-	m_vecGunAngles = QAngle(0,0,0);
+	m_vecGunAngles = QAngle(0, 0, 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -41,22 +41,22 @@ void CBaseObjectDriverGun::Spawn()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseObjectDriverGun::FinishedBuilding( void )
+void CBaseObjectDriverGun::FinishedBuilding(void)
 {
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 	BaseClass::FinishedBuilding();
 
-	CBaseTFVehicle *pVehicle = dynamic_cast<CBaseTFVehicle*>(GetParentObject());
-	Assert( pVehicle );
+	CBaseTFVehicle *pVehicle = dynamic_cast<CBaseTFVehicle *>(GetParentObject());
+	Assert(pVehicle);
 
-	pVehicle->SetDriverGun( this );
+	pVehicle->SetDriverGun(this);
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseObjectDriverGun::SetTargetAngles( const QAngle &vecAngles )
+void CBaseObjectDriverGun::SetTargetAngles(const QAngle &vecAngles)
 {
 	m_vecGunAngles = vecAngles;
 }
@@ -64,7 +64,7 @@ void CBaseObjectDriverGun::SetTargetAngles( const QAngle &vecAngles )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const QAngle &CBaseObjectDriverGun::GetCurrentAngles( void )
+const QAngle &CBaseObjectDriverGun::GetCurrentAngles(void)
 {
 	return m_vecGunAngles.Get();
 }
@@ -72,7 +72,7 @@ const QAngle &CBaseObjectDriverGun::GetCurrentAngles( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-Vector CBaseObjectDriverGun::GetFireOrigin( void )
+Vector CBaseObjectDriverGun::GetFireOrigin(void)
 {
 	return GetAbsOrigin();
 }
@@ -81,10 +81,10 @@ Vector CBaseObjectDriverGun::GetFireOrigin( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseObjectDriverGun::ShouldPredict( void )
+bool CBaseObjectDriverGun::ShouldPredict(void)
 {
-	CBaseTFVehicle *pVehicle = dynamic_cast<CBaseTFVehicle*>(GetParentObject());
-	if ( pVehicle && pVehicle->GetDriverPlayer() == C_BasePlayer::GetLocalPlayer() )
+	CBaseTFVehicle *pVehicle = dynamic_cast<CBaseTFVehicle *>(GetParentObject());
+	if(pVehicle && pVehicle->GetDriverPlayer() == C_BasePlayer::GetLocalPlayer())
 		return true;
 
 	return BaseClass::ShouldPredict();

@@ -19,15 +19,13 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 CPlayerContextMenu::CPlayerContextMenu(Panel *parent) : Menu(parent, "ServerContextMenu")
 {
-	CPlayerContextMenu::parent=parent;
+	CPlayerContextMenu::parent = parent;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CPlayerContextMenu::~CPlayerContextMenu()
-{
-}
+CPlayerContextMenu::~CPlayerContextMenu() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Activates the menu
@@ -38,7 +36,8 @@ void CPlayerContextMenu::ShowMenu(Panel *target, unsigned int playerID)
 
 	AddMenuItem("Kick", "#Player_Menu_Kick", new KeyValues("Kick", "playerID", playerID), CPlayerContextMenu::parent);
 	AddMenuItem("Ban", "#Player_Menu_Ban", new KeyValues("Ban", "playerID", playerID), CPlayerContextMenu::parent);
-	//addMenuItem("Status", "&Player Status", new KeyValues("Status", "playerID", playerID), CPlayerContextMenu::parent);
+	// addMenuItem("Status", "&Player Status", new KeyValues("Status", "playerID", playerID),
+	// CPlayerContextMenu::parent);
 
 	MakePopup();
 	int x, y, gx, gy;

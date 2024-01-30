@@ -11,20 +11,20 @@
 #include "c_tfcarrier.h"
 
 IMPLEMENT_CLIENTCLASS_DT(C_TFCarrier, DT_TFCarrier, CTFCarrier)
-	RecvPropInt(RECVINFO(m_iHealth)),
-	RecvPropInt(RECVINFO(m_iMaxHealth)),
-END_RECV_TABLE()
+RecvPropInt(RECVINFO(m_iHealth)), RecvPropInt(RECVINFO(m_iMaxHealth)),
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-C_TFCarrier::C_TFCarrier()
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_TFCarrier::C_TFCarrier()
 {
-	CONSTRUCT_MINIMAP_PANEL( "minimap_helicopter", MINIMAP_COLLECTORS );
+	CONSTRUCT_MINIMAP_PANEL("minimap_helicopter", MINIMAP_COLLECTORS);
 }
 
-void C_TFCarrier::SetDormant( bool inside )
+void C_TFCarrier::SetDormant(bool inside)
 {
-	BaseClass::SetDormant( bDormant );
-	ENTITY_PANEL_ACTIVATE( "helicopter", !bDormant );
+	BaseClass::SetDormant(bDormant);
+	ENTITY_PANEL_ACTIVATE("helicopter", !bDormant);
 }

@@ -12,25 +12,23 @@
 
 #include <vgui_controls/ToggleButton.h>
 
-
 using namespace vgui;
 
 // Toggle buttons are a buttons that stay down when you click them.
 // Clicking again toggles the button back up.
 
-class ToggleButtonDemo: public DemoPage
+class ToggleButtonDemo : public DemoPage
 {
-	public:
-		ToggleButtonDemo(Panel *parent, const char *name);
-		~ToggleButtonDemo();
+public:
+	ToggleButtonDemo(Panel *parent, const char *name);
+	~ToggleButtonDemo();
 
-		void OnToggleButtonToggled();
+	void OnToggleButtonToggled();
 
+private:
+	ToggleButton *m_pToggleButton;
 
-	private:
-		ToggleButton *m_pToggleButton;
-
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -51,26 +49,22 @@ ToggleButtonDemo::ToggleButtonDemo(Panel *parent, const char *name) : DemoPage(p
 	m_pToggleButton->GetContentSize(wide, tall);
 	m_pToggleButton->SetSize(wide + Label::Content, tall + Label::Content);
 
-
 	// Toggle buttons are Buttons, and can send a command when clicked.
 	// Install a command to be sent when the button is toggled.
 	m_pToggleButton->SetCommand(new KeyValues("Toggle"));
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ToggleButtonDemo::~ToggleButtonDemo()
-{
-}
+ToggleButtonDemo::~ToggleButtonDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
 //-----------------------------------------------------------------------------
 void ToggleButtonDemo::OnToggleButtonToggled()
 {
-	if (m_pToggleButton->IsDepressed())
+	if(m_pToggleButton->IsDepressed())
 	{
 		ivgui()->DPrintf("Toggle button is down.\n");
 	}
@@ -80,18 +74,13 @@ void ToggleButtonDemo::OnToggleButtonToggled()
 	}
 }
 
-
-
-MessageMapItem_t ToggleButtonDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( ToggleButtonDemo, "Toggle", OnToggleButtonToggled ),
+MessageMapItem_t ToggleButtonDemo::m_MessageMap[] = {
+	MAP_MESSAGE(ToggleButtonDemo, "Toggle", OnToggleButtonToggled),
 };
 
 IMPLEMENT_PANELMAP(ToggleButtonDemo, DemoPage);
 
-
-
-Panel* ToggleButtonDemo_Create(Panel *parent)
+Panel *ToggleButtonDemo_Create(Panel *parent)
 {
 	return new ToggleButtonDemo(parent, "ToggleButtonDemo");
 }

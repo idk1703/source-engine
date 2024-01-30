@@ -18,12 +18,11 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-static AFX_EXTENSION_MODULE ValvelibDLL = { NULL, NULL };
+static AFX_EXTENSION_MODULE ValvelibDLL = {NULL, NULL};
 
-extern "C" int APIENTRY
-DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+extern "C" int APIENTRY DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-	if (dwReason == DLL_PROCESS_ATTACH)
+	if(dwReason == DLL_PROCESS_ATTACH)
 	{
 		TRACE0("VALVELIB.AWX Initializing!\n");
 
@@ -36,12 +35,12 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 		// Register this custom AppWizard with MFCAPWZ.DLL
 		SetCustomAppWizClass(&Valvelibaw);
 	}
-	else if (dwReason == DLL_PROCESS_DETACH)
+	else if(dwReason == DLL_PROCESS_DETACH)
 	{
 		TRACE0("VALVELIB.AWX Terminating!\n");
 
 		// Terminate the library before destructors are called
 		AfxTermExtensionModule(ValvelibDLL);
 	}
-	return 1;   // ok
+	return 1; // ok
 }

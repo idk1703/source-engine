@@ -10,7 +10,6 @@
 #include "tier1/KeyValues.h"
 #include <vgui_controls/Label.h>
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
@@ -18,14 +17,14 @@ using namespace vgui;
 // Here we demonstrate a simple text only label.
 //-----------------------------------------------------------------------------
 
-class LabelDemo: public DemoPage
+class LabelDemo : public DemoPage
 {
-	public:
-		LabelDemo(Panel *parent, const char *name);
-		~LabelDemo();
+public:
+	LabelDemo(Panel *parent, const char *name);
+	~LabelDemo();
 
-	private:
-		Label *m_pLabel;
+private:
+	Label *m_pLabel;
 };
 
 //-----------------------------------------------------------------------------
@@ -40,12 +39,9 @@ LabelDemo::LabelDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-LabelDemo::~LabelDemo()
-{
-}
+LabelDemo::~LabelDemo() {}
 
-
-Panel* LabelDemo_Create(Panel *parent)
+Panel *LabelDemo_Create(Panel *parent)
 {
 	return new LabelDemo(parent, "LabelDemo");
 }

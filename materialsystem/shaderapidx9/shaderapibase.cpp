@@ -6,11 +6,10 @@
 //
 //===========================================================================//
 
-#undef PROTECTED_THINGS_ENABLE   // prevent warnings when windows.h gets included
+#undef PROTECTED_THINGS_ENABLE // prevent warnings when windows.h gets included
 
 #include "shaderapibase.h"
 #include "shaderapi/ishaderutil.h"
-
 
 //-----------------------------------------------------------------------------
 //
@@ -18,23 +17,17 @@
 //
 //-----------------------------------------------------------------------------
 
-
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
-CShaderAPIBase::CShaderAPIBase()
-{
-}
+CShaderAPIBase::CShaderAPIBase() {}
 
-CShaderAPIBase::~CShaderAPIBase()
-{
-}
-
+CShaderAPIBase::~CShaderAPIBase() {}
 
 //-----------------------------------------------------------------------------
 // Methods of IShaderDynamicAPI
 //-----------------------------------------------------------------------------
-void CShaderAPIBase::GetCurrentColorCorrection( ShaderColorCorrectionInfo_t* pInfo )
+void CShaderAPIBase::GetCurrentColorCorrection(ShaderColorCorrectionInfo_t *pInfo)
 {
-	g_pShaderUtil->GetCurrentColorCorrection( pInfo );
+	g_pShaderUtil->GetCurrentColorCorrection(pInfo);
 }

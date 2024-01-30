@@ -16,8 +16,8 @@
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CMasterMsgHandler::CMasterMsgHandler( IGameList *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ )
-	: CMsgHandler( type, typeinfo )
+CMasterMsgHandler::CMasterMsgHandler(IGameList *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/)
+	: CMsgHandler(type, typeinfo)
 {
 	m_pGameList = baseobject;
 }
@@ -25,7 +25,7 @@ CMasterMsgHandler::CMasterMsgHandler( IGameList *baseobject, HANDLERTYPE type, v
 //-----------------------------------------------------------------------------
 // Purpose: Process cracked message
 //-----------------------------------------------------------------------------
-bool CMasterMsgHandler::Process( netadr_t *from, CMsgBuffer *msg )
+bool CMasterMsgHandler::Process(netadr_t *from, CMsgBuffer *msg)
 {
 	// Skip the control character
 	msg->ReadByte();
@@ -36,16 +36,16 @@ bool CMasterMsgHandler::Process( netadr_t *from, CMsgBuffer *msg )
 	int unique = msg->ReadLong();
 
 	// Remainder of message length is 6 byte IP addresses
-	int nNumAddresses =  msg->GetCurSize() - msg->GetReadCount();
-	assert( !( nNumAddresses % 6 ) );
+	int nNumAddresses = msg->GetCurSize() - msg->GetReadCount();
+	assert(!(nNumAddresses % 6));
 	// Each address is 6 bytes long
 	nNumAddresses /= 6;
 
-	while (nNumAddresses-- > 0)
+	while(nNumAddresses-- > 0)
 	{
 		serveritem_t server;
 		memset(&server, 0, sizeof(server));
-		for (int i = 0; i < 4; i++)
+		for(int i = 0; i < 4; i++)
 		{
 			server.ip[i] = msg->ReadByte();
 		}
@@ -61,7 +61,7 @@ bool CMasterMsgHandler::Process( netadr_t *from, CMsgBuffer *msg )
 		m_pGameList->AddNewServer(server);
 	}
 
-	if (!unique)
+	if(!unique)
 	{
 		m_pGameList->ListReceived(false, 0);
 	}

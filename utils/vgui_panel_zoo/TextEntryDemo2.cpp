@@ -10,7 +10,6 @@
 
 #include <vgui_controls/TextEntry.h>
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
@@ -19,13 +18,13 @@ using namespace vgui;
 // of text. We initialize it with some starting text and add a scroll bar to the
 // window.
 //-----------------------------------------------------------------------------
-class TextEntryDemo2: public DemoPage
+class TextEntryDemo2 : public DemoPage
 {
-	public:
-		TextEntryDemo2(Panel *parent, const char *name);
-		~TextEntryDemo2();
-	private:
+public:
+	TextEntryDemo2(Panel *parent, const char *name);
+	~TextEntryDemo2();
 
+private:
 };
 
 //-----------------------------------------------------------------------------
@@ -38,7 +37,6 @@ TextEntryDemo2::TextEntryDemo2(Panel *parent, const char *name) : DemoPage(paren
 	// Position the window and make it nice and wide.
 	// Make it tall enough to fit several lines of text.
 	pTextEntry->SetBounds(100, 100, 200, 100);
-
 
 	// Make this window hold multiple lines of text.
 	// This will turn off horizontal scrolling,
@@ -62,12 +60,9 @@ TextEntryDemo2::TextEntryDemo2(Panel *parent, const char *name) : DemoPage(paren
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-TextEntryDemo2::~TextEntryDemo2()
-{
-}
+TextEntryDemo2::~TextEntryDemo2() {}
 
-
-Panel* TextEntryDemo2_Create(Panel *parent)
+Panel *TextEntryDemo2_Create(Panel *parent)
 {
 	return new TextEntryDemo2(parent, "TextEntryDemo2");
 }

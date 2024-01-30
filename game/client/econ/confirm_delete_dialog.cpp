@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "confirm_delete_dialog.h"
 #include "vgui_controls/TextImage.h"
@@ -16,22 +15,19 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CConfirmDeleteDialog::CConfirmDeleteDialog( vgui::Panel *parent )
-:	BaseClass(parent)
-{
-}
+CConfirmDeleteDialog::CConfirmDeleteDialog(vgui::Panel *parent) : BaseClass(parent) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDeleteDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CConfirmDeleteDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
 	// Set the X to be bright, and the rest dull
-	if ( m_pConfirmButton )
+	if(m_pConfirmButton)
 	{
-		m_pConfirmButton->SetText( "#X_DeleteConfirmButton" );
-		SetXToRed( m_pConfirmButton );
+		m_pConfirmButton->SetText("#X_DeleteConfirmButton");
+		SetXToRed(m_pConfirmButton);
 	}
 }

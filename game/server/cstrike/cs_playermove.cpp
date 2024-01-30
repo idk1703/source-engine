@@ -13,24 +13,22 @@
 #include "iservervehicle.h"
 #include "cs_player.h"
 
-
 static CMoveData g_MoveData;
 CMoveData *g_pMoveData = &g_MoveData;
 
 IPredictionSystem *IPredictionSystem::g_pPredictionSystems = NULL;
-
 
 //-----------------------------------------------------------------------------
 // Sets up the move data for TF2
 //-----------------------------------------------------------------------------
 class CCSPlayerMove : public CPlayerMove
 {
-DECLARE_CLASS( CCSPlayerMove, CPlayerMove );
+	DECLARE_CLASS(CCSPlayerMove, CPlayerMove);
 
 public:
-	virtual void	StartCommand( CBasePlayer *player, CUserCmd *cmd );
-	virtual void	SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
-	virtual void	FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move );
+	virtual void StartCommand(CBasePlayer *player, CUserCmd *cmd);
+	virtual void SetupMove(CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move);
+	virtual void FinishMove(CBasePlayer *player, CUserCmd *ucmd, CMoveData *move);
 };
 
 // PlayerMove Interface
@@ -48,16 +46,16 @@ CPlayerMove *PlayerMove()
 // Main setup, finish
 //-----------------------------------------------------------------------------
 
-void CCSPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
+void CCSPlayerMove::StartCommand(CBasePlayer *player, CUserCmd *cmd)
 {
-	CCSPlayer *pPlayer = ToCSPlayer( player );
+	CCSPlayer *pPlayer = ToCSPlayer(player);
 
 	// Reset this.. it gets reset each frame that we're in a bomb zone.
 	pPlayer->m_bInBombZone = false;
 	pPlayer->m_bInBuyZone = false;
 	pPlayer->m_bInHostageRescueZone = false;
 
-	BaseClass::StartCommand( player, cmd );
+	BaseClass::StartCommand(player, cmd);
 }
 
 //-----------------------------------------------------------------------------
@@ -65,19 +63,18 @@ void CCSPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
 //          from the player for movement. (Server-side, the client-side version
 //          of this code can be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
-void CCSPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
+void CCSPlayerMove::SetupMove(CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move)
 {
-	player->AvoidPhysicsProps( ucmd );
+	player->AvoidPhysicsProps(ucmd);
 
-	BaseClass::SetupMove( player, ucmd, pHelper, move );
+	BaseClass::SetupMove(player, ucmd, pHelper, move);
 
 	IServerVehicle *pVehicle = player->GetVehicle();
-	if (pVehicle && gpGlobals->frametime != 0)
+	if(pVehicle && gpGlobals->frametime != 0)
 	{
-		pVehicle->SetupMove( player, ucmd, pHelper, move );
+		pVehicle->SetupMove(player, ucmd, pHelper, move);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: This is called post player movement to copy back all data that
@@ -85,14 +82,14 @@ void CCSPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 //          movement. (Server-side, the client-side version of this code can
 //          be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
-void CCSPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
+void CCSPlayerMove::FinishMove(CBasePlayer *player, CUserCmd *ucmd, CMoveData *move)
 {
 	// Call the default FinishMove code.
-	BaseClass::FinishMove( player, ucmd, move );
+	BaseClass::FinishMove(player, ucmd, move);
 
 	IServerVehicle *pVehicle = player->GetVehicle();
-	if (pVehicle && gpGlobals->frametime != 0)
+	if(pVehicle && gpGlobals->frametime != 0)
 	{
-		pVehicle->FinishMove( player, ucmd, move );
+		pVehicle->FinishMove(player, ucmd, move);
 	}
 }

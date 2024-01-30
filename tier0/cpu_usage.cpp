@@ -16,9 +16,9 @@
 
 #include <windows.h>
 
-#define SystemBasicInformation 0
+#define SystemBasicInformation		 0
 #define SystemPerformanceInformation 2
-#define SystemTimeInformation 3
+#define SystemTimeInformation		 3
 
 #define Li2Double(x) ((double)((x).HighPart) * 4.294967296E9 + (double)((x).LowPart))
 
@@ -54,7 +54,7 @@ typedef struct
 	DWORD dwReserved;
 } SYSTEM_TIME_INFORMATION;
 
-typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
+typedef LONG(WINAPI *PROCNTQSI)(UINT, PVOID, ULONG, PULONG);
 
 static PROCNTQSI NtQuerySystemInformation;
 
@@ -66,34 +66,34 @@ float GetCPUUsage()
 	double dbIdleTime;
 	double dbSystemTime;
 	LONG status;
-	static LARGE_INTEGER liOldIdleTime = {0,0};
-	static LARGE_INTEGER liOldSystemTime = {0,0};
+	static LARGE_INTEGER liOldIdleTime = {0, 0};
+	static LARGE_INTEGER liOldSystemTime = {0, 0};
 
-	if ( !NtQuerySystemInformation)
+	if(!NtQuerySystemInformation)
 	{
-		NtQuerySystemInformation = (PROCNTQSI)GetProcAddress( GetModuleHandle("ntdll"), "NtQuerySystemInformation" );
+		NtQuerySystemInformation = (PROCNTQSI)GetProcAddress(GetModuleHandle("ntdll"), "NtQuerySystemInformation");
 
-		if ( !NtQuerySystemInformation )
-			return(0);
+		if(!NtQuerySystemInformation)
+			return (0);
 	}
 
 	// get number of processors in the system
-	status = NtQuerySystemInformation( SystemBasicInformation,&SysBaseInfo,sizeof(SysBaseInfo),NULL );
-	if ( status != NO_ERROR )
-		return(0);
+	status = NtQuerySystemInformation(SystemBasicInformation, &SysBaseInfo, sizeof(SysBaseInfo), NULL);
+	if(status != NO_ERROR)
+		return (0);
 
 	// get new system time
-	status = NtQuerySystemInformation( SystemTimeInformation,&SysTimeInfo,sizeof(SysTimeInfo),0 );
-	if ( status!=NO_ERROR )
-		return(0);
+	status = NtQuerySystemInformation(SystemTimeInformation, &SysTimeInfo, sizeof(SysTimeInfo), 0);
+	if(status != NO_ERROR)
+		return (0);
 
 	// get new CPU's idle time
-	status = NtQuerySystemInformation( SystemPerformanceInformation,&SysPerfInfo,sizeof(SysPerfInfo),NULL );
-	if ( status != NO_ERROR )
-		return(0);
+	status = NtQuerySystemInformation(SystemPerformanceInformation, &SysPerfInfo, sizeof(SysPerfInfo), NULL);
+	if(status != NO_ERROR)
+		return (0);
 
 	// if it's a first call - skip it
-	if ( liOldIdleTime.QuadPart != 0 )
+	if(liOldIdleTime.QuadPart != 0)
 	{
 		// CurrentValue = NewValue - OldValue
 		dbIdleTime = Li2Double(SysPerfInfo.liIdleTime) - Li2Double(liOldIdleTime);
@@ -126,7 +126,7 @@ float GetCPUUsage()
 {
 	double loadavg[3];
 
-	getloadavg( loadavg, 3 );
+	getloadavg(loadavg, 3);
 	return loadavg[0];
 }
-#endif //POSIX
+#endif // POSIX

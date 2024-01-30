@@ -19,39 +19,32 @@
 #include "vgui/Cursor.h"
 #include "Selection.h"
 
-
 class CToolBlockMessageWnd : public CWnd
 {
-	public:
+public:
+	bool Create(void);
+	void PreMenu2D(CToolBlock *pTool, CMapView2D *pView);
 
-		bool Create(void);
-		void PreMenu2D(CToolBlock *pTool, CMapView2D *pView);
+protected:
+	//{{AFX_MSG_MAP(CToolBlockMessageWnd)
+	afx_msg void OnCreateObject();
+	//}}AFX_MSG
 
-	protected:
+	DECLARE_MESSAGE_MAP()
 
-		//{{AFX_MSG_MAP(CToolBlockMessageWnd)
-		afx_msg void OnCreateObject();
-		//}}AFX_MSG
-
-		DECLARE_MESSAGE_MAP()
-
-	private:
-
-		CToolBlock *m_pToolBlock;
-		CMapView2D *m_pView2D;
+private:
+	CToolBlock *m_pToolBlock;
+	CMapView2D *m_pView2D;
 };
-
 
 static CToolBlockMessageWnd s_wndToolMessage;
 static const char *g_pszClassName = "ValveEditor_BlockToolWnd";
-
 
 BEGIN_MESSAGE_MAP(CToolBlockMessageWnd, CWnd)
 	//{{AFX_MSG_MAP(CToolMessageWnd)
 	ON_COMMAND(ID_CREATEOBJECT, OnCreateObject)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates the hidden window that receives context menu commands for the
@@ -62,18 +55,17 @@ bool CToolBlockMessageWnd::Create(void)
 {
 	WNDCLASS wndcls;
 	memset(&wndcls, 0, sizeof(WNDCLASS));
-	wndcls.lpfnWndProc   = AfxWndProc;
-	wndcls.hInstance     = AfxGetInstanceHandle();
+	wndcls.lpfnWndProc = AfxWndProc;
+	wndcls.hInstance = AfxGetInstanceHandle();
 	wndcls.lpszClassName = g_pszClassName;
 
-	if (!AfxRegisterClass(&wndcls))
+	if(!AfxRegisterClass(&wndcls))
 	{
-		return(false);
+		return (false);
 	}
 
-	return(CWnd::CreateEx(0, g_pszClassName, g_pszClassName, 0, CRect(0, 0, 10, 10), NULL, 0) == TRUE);
+	return (CWnd::CreateEx(0, g_pszClassName, g_pszClassName, 0, CRect(0, 0, 10, 10), NULL, 0) == TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Attaches the block tool to this window before activating the context
@@ -86,7 +78,6 @@ void CToolBlockMessageWnd::PreMenu2D(CToolBlock *pToolBlock, CMapView2D *pView)
 	m_pView2D = pView;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -94,7 +85,6 @@ void CToolBlockMessageWnd::OnCreateObject()
 {
 	m_pToolBlock->CreateMapObject(m_pView2D);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -106,14 +96,10 @@ CToolBlock::CToolBlock(void)
 	SetDrawColors(Options.colors.clrToolHandle, Options.colors.clrToolBlock);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CToolBlock::~CToolBlock(void)
-{
-}
-
+CToolBlock::~CToolBlock(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles key down events in the 2D view.
@@ -122,11 +108,11 @@ CToolBlock::~CToolBlock(void)
 //-----------------------------------------------------------------------------
 bool CToolBlock::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	switch (nChar)
+	switch(nChar)
 	{
 		case VK_RETURN:
 		{
-			if ( !IsEmpty() )
+			if(!IsEmpty())
 			{
 				CreateMapObject(pView);
 			}
@@ -144,7 +130,6 @@ bool CToolBlock::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT n
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles context menu events in the 2D view.
 // Input  : Per CWnd::OnContextMenu.
@@ -155,7 +140,7 @@ bool CToolBlock::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2D 
 	static CMenu menu, menuCreate;
 	static bool bInit = false;
 
-	if (!bInit)
+	if(!bInit)
 	{
 		bInit = true;
 
@@ -167,20 +152,21 @@ bool CToolBlock::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2D 
 		s_wndToolMessage.Create();
 	}
 
-	if ( !pView->PointInClientRect(vPoint) )
+	if(!pView->PointInClientRect(vPoint))
 	{
 		return false;
 	}
 
-	if ( !IsEmpty() )
+	if(!IsEmpty())
 	{
-		if ( HitTest(pView, vPoint, false) )
+		if(HitTest(pView, vPoint, false))
 		{
-			CPoint ptScreen( vPoint.x,vPoint.y);
+			CPoint ptScreen(vPoint.x, vPoint.y);
 			pView->ClientToScreen(&ptScreen);
 
 			s_wndToolMessage.PreMenu2D(this, pView);
-			menuCreate.TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN, ptScreen.x, ptScreen.y, &s_wndToolMessage);
+			menuCreate.TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_LEFTALIGN, ptScreen.x, ptScreen.y,
+									  &s_wndToolMessage);
 		}
 	}
 
@@ -199,12 +185,12 @@ bool CToolBlock::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &
 	//
 	// If we have a box, see if they clicked on any part of it.
 	//
-	if ( !IsEmpty() )
+	if(!IsEmpty())
 	{
-		if ( HitTest( pView, vPoint, true ) )
+		if(HitTest(pView, vPoint, true))
 		{
 			// just update current block
-			StartTranslation( pView, vPoint, m_LastHitTestHandle );
+			StartTranslation(pView, vPoint, m_LastHitTestHandle);
 			return true;
 		}
 	}
@@ -222,12 +208,12 @@ bool CToolBlock::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &
 	Tool3D::OnLMouseDown2D(pView, nFlags, vPoint);
 
 	// If we have a box, see if they clicked on any part of it.
-	if ( !IsEmpty() )
+	if(!IsEmpty())
 	{
-		if ( HitTest( pView, vPoint, true ) )
+		if(HitTest(pView, vPoint, true))
 		{
 			// just update current block
-			StartTranslation( pView, vPoint, m_LastHitTestHandle );
+			StartTranslation(pView, vPoint, m_LastHitTestHandle);
 			return true;
 		}
 	}
@@ -244,7 +230,7 @@ bool CToolBlock::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 {
 	Tool3D::OnLMouseUp2D(pView, nFlags, vPoint);
 
-	if (IsTranslating())
+	if(IsTranslating())
 	{
 		FinishTranslation(true);
 	}
@@ -263,7 +249,7 @@ bool CToolBlock::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vP
 {
 	Tool3D::OnLMouseUp3D(pView, nFlags, vPoint);
 
-	if (IsTranslating())
+	if(IsTranslating())
 	{
 		FinishTranslation(true);
 	}
@@ -272,7 +258,6 @@ bool CToolBlock::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vP
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles mouse move events in the 2D view.
@@ -284,7 +269,7 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 	vgui::HCursor hCursor = vgui::dc_arrow;
 
 	// Snap it to the grid.
-	unsigned int uConstraints = GetConstraints( nFlags );
+	unsigned int uConstraints = GetConstraints(nFlags);
 
 	Tool3D::OnMouseMove2D(pView, nFlags, vPoint);
 
@@ -300,29 +285,29 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 	//
 	char szBuf[128];
 
-	if ( uConstraints & constrainSnap )
-		m_pDocument->Snap(vecWorld,uConstraints);
+	if(uConstraints & constrainSnap)
+		m_pDocument->Snap(vecWorld, uConstraints);
 
 	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert]);
 	SetStatusText(SBI_COORDS, szBuf);
 
-	if ( IsTranslating() )
+	if(IsTranslating())
 	{
-		Tool3D::UpdateTranslation( pView, vPoint, uConstraints);
+		Tool3D::UpdateTranslation(pView, vPoint, uConstraints);
 
-		hCursor =  vgui::dc_none;
+		hCursor = vgui::dc_none;
 	}
-	else if ( m_bMouseDragged[MOUSE_LEFT] )
+	else if(m_bMouseDragged[MOUSE_LEFT])
 	{
 		// Starting a new box. Build a starting point for the drag.
-		pView->SetCursor( "Resource/block.cur" );
+		pView->SetCursor("Resource/block.cur");
 
 		Vector vecStart;
-		pView->ClientToWorld(vecStart, m_vMouseStart[MOUSE_LEFT] );
+		pView->ClientToWorld(vecStart, m_vMouseStart[MOUSE_LEFT]);
 
 		// Snap it to the grid.
-		if ( uConstraints & constrainSnap )
-			m_pDocument->Snap( vecStart, uConstraints);
+		if(uConstraints & constrainSnap)
+			m_pDocument->Snap(vecStart, uConstraints);
 
 		// Start the new box with the extents of the last selected thing.
 
@@ -330,20 +315,19 @@ bool CToolBlock::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &v
 
 		vecStart[pView->axThird] = bmins[pView->axThird];
 
-		StartNew(pView, vPoint, vecStart, pView->GetViewAxis() * (bmaxs-bmins) );
+		StartNew(pView, vPoint, vecStart, pView->GetViewAxis() * (bmaxs - bmins));
 	}
-	else if ( !IsEmpty() )
+	else if(!IsEmpty())
 	{
 		// If the cursor is on a handle, set it to a cross.
-		if ( HitTest(pView, vPoint, true) )
+		if(HitTest(pView, vPoint, true))
 		{
-			hCursor = UpdateCursor( pView, m_LastHitTestHandle, m_TranslateMode );
+			hCursor = UpdateCursor(pView, m_LastHitTestHandle, m_TranslateMode);
 		}
 	}
 
-
-	if ( hCursor !=  vgui::dc_none )
-		pView->SetCursor( hCursor );
+	if(hCursor != vgui::dc_none)
+		pView->SetCursor(hCursor);
 
 	return true;
 }
@@ -352,17 +336,16 @@ bool CToolBlock::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &v
 {
 	Tool3D::OnMouseMove3D(pView, nFlags, vPoint);
 
-	if ( IsTranslating() )
+	if(IsTranslating())
 	{
-		unsigned int uConstraints = GetConstraints( nFlags );
+		unsigned int uConstraints = GetConstraints(nFlags);
 
 		// If they are dragging with a valid handle, update the views.
-		Tool3D::UpdateTranslation( pView, vPoint, uConstraints );
+		Tool3D::UpdateTranslation(pView, vPoint, uConstraints);
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles key down events in the 3D view.
@@ -371,11 +354,11 @@ bool CToolBlock::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &v
 //-----------------------------------------------------------------------------
 bool CToolBlock::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	switch (nChar)
+	switch(nChar)
 	{
 		case VK_RETURN:
 		{
-			if ( !IsEmpty() )
+			if(!IsEmpty())
 			{
 				CreateMapObject(pView);
 			}
@@ -393,7 +376,6 @@ bool CToolBlock::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT n
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the escape key in the 2D or 3D views.
 //-----------------------------------------------------------------------------
@@ -402,7 +384,7 @@ void CToolBlock::OnEscape(void)
 	//
 	// If we have nothing blocked, go back to the pointer tool.
 	//
-	if ( IsEmpty() )
+	if(IsEmpty())
 	{
 		ToolManager()->SetTool(TOOL_POINTER);
 	}
@@ -415,7 +397,6 @@ void CToolBlock::OnEscape(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Creates a solid in the given view.
 //-----------------------------------------------------------------------------
@@ -423,7 +404,7 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 {
 	CMapWorld *pWorld = m_pDocument->GetMapWorld();
 
-	if (!(bmaxs[0] - bmins[0]) || !(bmaxs[1] - bmins[1]) || !(bmaxs[2] - bmins[2]))
+	if(!(bmaxs[0] - bmins[0]) || !(bmaxs[1] - bmins[1]) || !(bmaxs[2] - bmins[2]))
 	{
 		AfxMessageBox("The box is empty.");
 		SetEmpty();
@@ -431,9 +412,9 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 	}
 
 	BoundBox NewBox = *this;
-	if (Options.view2d.bOrientPrimitives)
+	if(Options.view2d.bOrientPrimitives)
 	{
-		switch (pView->GetDrawType())
+		switch(pView->GetDrawType())
 		{
 			case VIEW2D_XY:
 			{
@@ -456,7 +437,7 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 
 	// Create the object within the given bounding box.
 	CMapClass *pObject = GetMainWnd()->m_ObjectBar.CreateInBox(&NewBox, pView);
-	if (pObject == NULL)
+	if(pObject == NULL)
 	{
 		SetEmpty();
 		return;
@@ -471,13 +452,13 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 	//
 	// Do we need to rotate this object based on the view we created it in?
 	//
-	if (Options.view2d.bOrientPrimitives)
+	if(Options.view2d.bOrientPrimitives)
 	{
 		Vector center;
-		pObject->GetBoundsCenter( center );
+		pObject->GetBoundsCenter(center);
 
 		QAngle angles(0, 0, 0);
-		switch (pView->GetDrawType())
+		switch(pView->GetDrawType())
 		{
 			case VIEW2D_XY:
 			{
@@ -503,7 +484,7 @@ void CToolBlock::CreateMapObject(CMapView *pView)
 	GetHistory()->KeepNew(pObject);
 
 	// Select the new object.
-	m_pDocument->SelectObject(pObject, scClear|scSelect|scSaveChanges);
+	m_pDocument->SelectObject(pObject, scClear | scSelect | scSaveChanges);
 
 	m_pDocument->SetModifiedFlag();
 

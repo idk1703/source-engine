@@ -17,63 +17,55 @@
 class CTEMuzzleFlash : public CBaseTempEntity
 {
 public:
-	DECLARE_CLASS( CTEMuzzleFlash, CBaseTempEntity );
+	DECLARE_CLASS(CTEMuzzleFlash, CBaseTempEntity);
 
 	DECLARE_SERVERCLASS();
 
-	CTEMuzzleFlash( const char *name );
-	virtual			~CTEMuzzleFlash( void );
+	CTEMuzzleFlash(const char *name);
+	virtual ~CTEMuzzleFlash(void);
 
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
+	virtual void Test(const Vector &current_origin, const QAngle &current_angles);
 
 public:
-
-	CNetworkVector( m_vecOrigin );
-	CNetworkQAngle( m_vecAngles );
-	CNetworkVar( float, m_flScale );
-	CNetworkVar( int, m_nType );
+	CNetworkVector(m_vecOrigin);
+	CNetworkQAngle(m_vecAngles);
+	CNetworkVar(float, m_flScale);
+	CNetworkVar(int, m_nType);
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-CTEMuzzleFlash::CTEMuzzleFlash( const char *name ) :
-	CBaseTempEntity( name )
+CTEMuzzleFlash::CTEMuzzleFlash(const char *name) : CBaseTempEntity(name)
 {
 	m_vecOrigin.Init();
 	m_vecAngles.Init();
 
-	m_flScale	= 1.0f;
-	m_nType		= 0;
+	m_flScale = 1.0f;
+	m_nType = 0;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTEMuzzleFlash::~CTEMuzzleFlash( void )
-{
-}
+CTEMuzzleFlash::~CTEMuzzleFlash(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *current_origin -
 //			*current_angles -
 //-----------------------------------------------------------------------------
-void CTEMuzzleFlash::Test( const Vector& current_origin, const QAngle& current_angles )
-{
-}
+void CTEMuzzleFlash::Test(const Vector &current_origin, const QAngle &current_angles) {}
 
+IMPLEMENT_SERVERCLASS_ST(CTEMuzzleFlash, DT_TEMuzzleFlash)
+SendPropVector(SENDINFO(m_vecOrigin), -1, SPROP_COORD), SendPropVector(SENDINFO(m_vecAngles), -1, SPROP_COORD),
+	SendPropFloat(SENDINFO(m_flScale), -1, SPROP_NOSCALE), SendPropInt(SENDINFO(m_nType), 32, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
-IMPLEMENT_SERVERCLASS_ST( CTEMuzzleFlash, DT_TEMuzzleFlash )
-	SendPropVector( SENDINFO(m_vecOrigin), -1, SPROP_COORD ),
-	SendPropVector( SENDINFO(m_vecAngles), -1, SPROP_COORD ),
-	SendPropFloat( SENDINFO(m_flScale), -1, SPROP_NOSCALE ),
-	SendPropInt( SENDINFO(m_nType), 32, SPROP_UNSIGNED ),
-END_SEND_TABLE()
-
-// Singleton to fire TEMuzzleFlash objects
-static CTEMuzzleFlash g_TEMuzzleFlash( "MuzzleFlash" );
+	// Singleton to fire TEMuzzleFlash objects
+	static CTEMuzzleFlash g_TEMuzzleFlash("MuzzleFlash");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -86,14 +78,14 @@ static CTEMuzzleFlash g_TEMuzzleFlash( "MuzzleFlash" );
 //			scale -
 //			type -
 //-----------------------------------------------------------------------------
-void TE_MuzzleFlash( IRecipientFilter& filter, float delay,
-	const Vector &start, const QAngle &angles, float scale, int type )
+void TE_MuzzleFlash(IRecipientFilter &filter, float delay, const Vector &start, const QAngle &angles, float scale,
+					int type)
 {
-	g_TEMuzzleFlash.m_vecOrigin		= start;
-	g_TEMuzzleFlash.m_vecAngles		= angles;
-	g_TEMuzzleFlash.m_flScale		= scale;
-	g_TEMuzzleFlash.m_nType			= type;
+	g_TEMuzzleFlash.m_vecOrigin = start;
+	g_TEMuzzleFlash.m_vecAngles = angles;
+	g_TEMuzzleFlash.m_flScale = scale;
+	g_TEMuzzleFlash.m_nType = type;
 
 	// Send it over the wire
-	g_TEMuzzleFlash.Create( filter, delay );
+	g_TEMuzzleFlash.Create(filter, delay);
 }

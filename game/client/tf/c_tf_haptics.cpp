@@ -14,16 +14,17 @@ C_TFHaptics::C_TFHaptics()
 	memset(this, 0, sizeof(C_TFHaptics));
 }
 
-void C_TFHaptics::Revert() {
-	if ( haptics )
+void C_TFHaptics::Revert()
+{
+	if(haptics)
 	{
 		if(wasBeingHealed)
 		{
-			haptics->ProcessHapticEvent(2,"Game","being_healed_stop");
+			haptics->ProcessHapticEvent(2, "Game", "being_healed_stop");
 		}
 		if(wasHealing)
 		{
-			haptics->ProcessHapticEvent(2,"Game","healing_stop");
+			haptics->ProcessHapticEvent(2, "Game", "healing_stop");
 		}
 		if(wasUber)
 		{
@@ -43,7 +44,7 @@ void C_TFHaptics::Revert() {
 		}
 	}
 	memset(this, 0, sizeof(C_TFHaptics));
-	if ( haptics )
+	if(haptics)
 	{
 		haptics->LocalPlayerReset();
 		haptics->SetNavigationClass("on_foot");
@@ -52,14 +53,14 @@ void C_TFHaptics::Revert() {
 
 void C_TFHaptics::HapticsThink(C_TFPlayer *player)
 {
-	if ( !haptics )
+	if(!haptics)
 		return;
-	Assert(player!=C_TFPlayer::GetLocalPlayer());
+	Assert(player != C_TFPlayer::GetLocalPlayer());
 
-	{// being healed check
+	{ // being healed check
 		C_TFPlayer *pHealer = NULL;
 		float uberCharge = 0.0f;
-		player->GetHealer(&pHealer,&uberCharge);
+		player->GetHealer(&pHealer, &uberCharge);
 		if(pHealer)
 		{
 			if(!wasBeingHealedMedic && !healingDispenserCount)
@@ -70,62 +71,66 @@ void C_TFHaptics::HapticsThink(C_TFPlayer *player)
 			if(wasBeingHealedMedic && !healingDispenserCount)
 				isBeingHealed = false;
 		}
-		wasBeingHealedMedic = pHealer!=NULL;
-		if(isBeingHealed&&!wasBeingHealed&&haptics)
-			haptics->ProcessHapticEvent(2,"Game","being_healed_start");
-		else if(!isBeingHealed&&wasBeingHealed&&haptics)
-			haptics->ProcessHapticEvent(2,"Game","being_healed_stop");
+		wasBeingHealedMedic = pHealer != NULL;
+		if(isBeingHealed && !wasBeingHealed && haptics)
+			haptics->ProcessHapticEvent(2, "Game", "being_healed_start");
+		else if(!isBeingHealed && wasBeingHealed && haptics)
+			haptics->ProcessHapticEvent(2, "Game", "being_healed_stop");
 
 		wasBeingHealed = isBeingHealed;
 	}
-	{// healing check
+	{ // healing check
 		C_BaseEntity *pHealTarget = player->MedicGetHealTarget();
 		if(pHealTarget)
 		{
-			if(!wasHealing&&haptics)
-				haptics->ProcessHapticEvent(2,"Game","healing_start");
+			if(!wasHealing && haptics)
+				haptics->ProcessHapticEvent(2, "Game", "healing_start");
 		}
 		else
 		{
-			if(wasHealing&&haptics)
-				haptics->ProcessHapticEvent(2,"Game","healing_stop");
+			if(wasHealing && haptics)
+				haptics->ProcessHapticEvent(2, "Game", "healing_stop");
 		}
-		wasHealing = pHealTarget!=NULL;
+		wasHealing = pHealTarget != NULL;
 	}
-	//uber
-	if(player->m_Shared.InCond( TF_COND_INVULNERABLE ) && !player->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+	// uber
+	if(player->m_Shared.InCond(TF_COND_INVULNERABLE) && !player->m_Shared.InCond(TF_COND_INVULNERABLE_WEARINGOFF))
 	{
-		if(!wasUber&&haptics)
+		if(!wasUber && haptics)
 		{
 			haptics->ProcessHapticEvent(2, "Game", "uber_start");
 		}
-	}else{
-		if(wasUber&&haptics)
+	}
+	else
+	{
+		if(wasUber && haptics)
 		{
 			haptics->ProcessHapticEvent(2, "Game", "uber_stop");
 		}
 	}
-	//burning
-	if(player->m_Shared.InCond( TF_COND_BURNING ) )
+	// burning
+	if(player->m_Shared.InCond(TF_COND_BURNING))
 	{
-		if(!wasBurning&&haptics)
+		if(!wasBurning && haptics)
 		{
 			haptics->ProcessHapticEvent(2, "Game", "burning_start");
 			wasBurning = true;
 		}
-	}else{
+	}
+	else
+	{
 		if(wasBurning)
 		{
 			haptics->ProcessHapticEvent(2, "Game", "burning_stop");
 			wasBurning = false;
 		}
 	}
-	//cloak
-	// note: theres some weird stuff going on here.
+	// cloak
+	//  note: theres some weird stuff going on here.
 	float cloakLevel = player->GetPercentInvisible();
 	if(readyForCloak)
 	{
-		if(cloakLevel>0.0f)
+		if(cloakLevel > 0.0f)
 		{
 			if(!wasCloaked)
 			{
@@ -148,7 +153,9 @@ void C_TFHaptics::HapticsThink(C_TFPlayer *player)
 					wasFullyCloaked = false;
 				}
 			}
-		}else{
+		}
+		else
+		{
 			if(wasFullyCloaked)
 			{
 				haptics->ProcessHapticEvent(2, "Game", "cloak_full_stop");
@@ -160,13 +167,17 @@ void C_TFHaptics::HapticsThink(C_TFPlayer *player)
 				wasCloaked = false;
 			}
 		}
-	}else{
+	}
+	else
+	{
 		if(skippedFirstCloak)
 		{
-			if(cloakLevel==0.0f)
+			if(cloakLevel == 0.0f)
 				readyForCloak = true;
-		}else{
-			if(cloakLevel!=0.0f)
+		}
+		else
+		{
+			if(cloakLevel != 0.0f)
 			{
 				skippedFirstCloak = true;
 			}
@@ -182,4 +193,4 @@ public:
 
 static C_TFHapticsInternal tfInternalHaptics;
 
-C_TFHaptics &tfHaptics = *((C_TFHaptics*)&tfInternalHaptics);
+C_TFHaptics &tfHaptics = *((C_TFHaptics *)&tfInternalHaptics);

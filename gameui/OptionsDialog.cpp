@@ -46,29 +46,29 @@ COptionsDialog::COptionsDialog(vgui::Panel *parent) : PropertyDialog(parent, "Op
 {
 	SetDeleteSelfOnClose(true);
 	SetBounds(0, 0, 512, 406);
-	SetSizeable( false );
+	SetSizeable(false);
 
 	SetTitle("#GameUI_Options", true);
 
 	// debug timing code, this function takes too long
-//	double s4 = system()->GetCurrentTime();
+	//	double s4 = system()->GetCurrentTime();
 
-#if defined( WIN32 ) && !defined( _X360 )
+#if defined(WIN32) && !defined(_X360)
 	// NVNT START see if the user has a haptic device via convar. if so create haptics dialog.
 	ConVarRef checkHap("hap_HasDevice");
-	checkHap.Init("hap_HasDevice",true);
+	checkHap.Init("hap_HasDevice", true);
 	if(checkHap.GetBool())
 	{
 		AddPage(new COptionsSubHaptics(this), "#GameUI_Haptics_TabTitle");
 	}
 	// NVNT END
 #endif
-	if (ModInfo().IsSinglePlayerOnly() && !ModInfo().NoDifficulty())
+	if(ModInfo().IsSinglePlayerOnly() && !ModInfo().NoDifficulty())
 	{
 		AddPage(new COptionsSubDifficulty(this), "#GameUI_Difficulty");
 	}
 
-	if (ModInfo().HasPortals())
+	if(ModInfo().HasPortals())
 	{
 		AddPage(new COptionsSubPortal(this), "#GameUI_Portal");
 	}
@@ -81,21 +81,21 @@ COptionsDialog::COptionsDialog(vgui::Panel *parent) : PropertyDialog(parent, "Op
 	m_pOptionsSubVideo = new COptionsSubVideo(this);
 	AddPage(m_pOptionsSubVideo, "#GameUI_Video");
 
-	if ( !ModInfo().IsSinglePlayerOnly() )
+	if(!ModInfo().IsSinglePlayerOnly())
 	{
 		AddPage(new COptionsSubVoice(this), "#GameUI_Voice");
 	}
 
 	// add the multiplay page last, if we're combo single/multi or just multi
-	if ( (ModInfo().IsMultiplayerOnly() && !ModInfo().IsSinglePlayerOnly()) ||
-		 (!ModInfo().IsMultiplayerOnly() && !ModInfo().IsSinglePlayerOnly()) )
+	if((ModInfo().IsMultiplayerOnly() && !ModInfo().IsSinglePlayerOnly()) ||
+	   (!ModInfo().IsMultiplayerOnly() && !ModInfo().IsSinglePlayerOnly()))
 	{
 		m_pOptionsSubMultiplayer = new COptionsSubMultiplayer(this);
 		AddPage(m_pOptionsSubMultiplayer, "#GameUI_Multiplayer");
 	}
 
-//	double s5 = system()->GetCurrentTime();
-//	Msg("COptionsDialog::COptionsDialog(): %.3fms\n", (float)(s5 - s4) * 1000.0f);
+	//	double s5 = system()->GetCurrentTime();
+	//	Msg("COptionsDialog::COptionsDialog(): %.3fms\n", (float)(s5 - s4) * 1000.0f);
 
 	SetApplyButtonVisible(true);
 	GetPropertySheet()->SetTabWidth(84);
@@ -104,9 +104,7 @@ COptionsDialog::COptionsDialog(vgui::Panel *parent) : PropertyDialog(parent, "Op
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-COptionsDialog::~COptionsDialog()
-{
-}
+COptionsDialog::~COptionsDialog() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Brings the dialog to the fore
@@ -117,16 +115,16 @@ void COptionsDialog::Activate()
 	EnableApplyButton(false);
 }
 
-void COptionsDialog::OnKeyCodePressed( KeyCode code )
+void COptionsDialog::OnKeyCodePressed(KeyCode code)
 {
-	switch ( GetBaseButtonCode( code ) )
+	switch(GetBaseButtonCode(code))
 	{
-	case KEY_XBUTTON_B:
-		OnCommand( "Cancel" );
-		return;
+		case KEY_XBUTTON_B:
+			OnCommand("Cancel");
+			return;
 	}
 
-	BaseClass::OnKeyCodePressed( code );
+	BaseClass::OnKeyCodePressed(code);
 }
 
 //-----------------------------------------------------------------------------
@@ -144,12 +142,12 @@ void COptionsDialog::Run()
 void COptionsDialog::OnGameUIHidden()
 {
 	// tell our children about it
-	for ( int i = 0 ; i < GetChildCount() ; i++ )
+	for(int i = 0; i < GetChildCount(); i++)
 	{
-		Panel *pChild = GetChild( i );
-		if ( pChild )
+		Panel *pChild = GetChild(i);
+		if(pChild)
 		{
-			PostMessage( pChild, new KeyValues( "GameUIHidden" ) );
+			PostMessage(pChild, new KeyValues("GameUIHidden"));
 		}
 	}
 }

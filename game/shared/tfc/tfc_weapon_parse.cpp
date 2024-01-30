@@ -8,19 +8,14 @@
 #include <KeyValues.h>
 #include "tfc_weapon_parse.h"
 
-
-FileWeaponInfo_t* CreateWeaponInfo()
+FileWeaponInfo_t *CreateWeaponInfo()
 {
 	return new CTFCWeaponInfo;
 }
 
+CTFCWeaponInfo::CTFCWeaponInfo() {}
 
-CTFCWeaponInfo::CTFCWeaponInfo()
+void CTFCWeaponInfo::Parse(KeyValues *pKeyValuesData, const char *szWeaponName)
 {
-}
-
-
-void CTFCWeaponInfo::Parse( KeyValues *pKeyValuesData, const char *szWeaponName )
-{
-	BaseClass::Parse( pKeyValuesData, szWeaponName );
+	BaseClass::Parse(pKeyValuesData, szWeaponName);
 }

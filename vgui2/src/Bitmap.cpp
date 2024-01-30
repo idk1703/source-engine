@@ -29,14 +29,14 @@ Bitmap::Bitmap(const char *filename, bool hardwareFiltered)
 	_filtered = hardwareFiltered;
 
 	int size = strlen(filename) + 1;
-	_filename = (char *)malloc( size );
-	Assert( _filename );
+	_filename = (char *)malloc(size);
+	Assert(_filename);
 
-	Q_snprintf( _filename, size, "%s", filename );
+	Q_snprintf(_filename, size, "%s", filename);
 
 	_bProcedural = false;
 
-	if ( Q_stristr( filename, ".pic" ) )
+	if(Q_stristr(filename, ".pic"))
 	{
 		_bProcedural = true;
 	}
@@ -61,9 +61,9 @@ Bitmap::~Bitmap()
 {
 	Evict();
 
-	if ( _filename )
+	if(_filename)
 	{
-		free( _filename );
+		free(_filename);
 	}
 }
 
@@ -75,14 +75,13 @@ void Bitmap::GetSize(int &wide, int &tall)
 	wide = 0;
 	tall = 0;
 
-	if ( !_valid )
+	if(!_valid)
 		return;
 
 	// if a size has not been set, get it from the texture
-	if ( 0 == _wide && 0 ==_tall )
+	if(0 == _wide && 0 == _tall)
 	{
 		g_pSurface->DrawGetTextureSize(_id, _wide, _tall);
-
 	}
 	wide = _wide;
 	tall = _tall;
@@ -101,7 +100,8 @@ void Bitmap::GetContentSize(int &wide, int &tall)
 //-----------------------------------------------------------------------------
 void Bitmap::SetSize(int x, int y)
 {
-//	AssertMsg( _filtered, "Bitmap::SetSize called on non-hardware filtered texture.  Bitmap can't be scaled; you don't want to be calling this." );
+	//	AssertMsg( _filtered, "Bitmap::SetSize called on non-hardware filtered texture.  Bitmap can't be scaled; you
+	//don't want to be calling this." );
 	_wide = x;
 	_tall = y;
 }
@@ -137,71 +137,71 @@ const char *Bitmap::GetName()
 //-----------------------------------------------------------------------------
 void Bitmap::Paint()
 {
-	if ( !_valid )
+	if(!_valid)
 		return;
 
 	// if we don't have an _id then lets make one
-	if ( !_id )
+	if(!_id)
 	{
 		_id = g_pSurface->CreateNewTextureID();
 	}
 
 	// if we have not uploaded yet, lets go ahead and do so
-	if ( !_uploaded )
+	if(!_uploaded)
 	{
 		ForceUpload();
 	}
 
 	// set the texture current, set the color, and draw the biatch
-	g_pSurface->DrawSetColor( _color[0], _color[1], _color[2], _color[3] );
-	g_pSurface->DrawSetTexture( _id );
+	g_pSurface->DrawSetColor(_color[0], _color[1], _color[2], _color[3]);
+	g_pSurface->DrawSetTexture(_id);
 
-	if ( _wide == 0 )
+	if(_wide == 0)
 	{
-		GetSize( _wide, _tall);
+		GetSize(_wide, _tall);
 	}
 
-	if ( _rotation == ROTATED_UNROTATED )
+	if(_rotation == ROTATED_UNROTATED)
 	{
 		g_pSurface->DrawTexturedRect(_pos[0], _pos[1], _pos[0] + _wide, _pos[1] + _tall);
 	}
 	else
 	{
 		vgui::Vertex_t verts[4];
-		verts[0].m_Position.Init( 0, 0 );
-		verts[1].m_Position.Init( _wide, 0 );
-		verts[2].m_Position.Init( _wide, _tall );
-		verts[3].m_Position.Init( 0, _tall );
+		verts[0].m_Position.Init(0, 0);
+		verts[1].m_Position.Init(_wide, 0);
+		verts[2].m_Position.Init(_wide, _tall);
+		verts[3].m_Position.Init(0, _tall);
 
-		switch ( _rotation )
+		switch(_rotation)
 		{
-		case ROTATED_CLOCKWISE_90:
-			verts[0].m_TexCoord.Init( 1, 0 );
-			verts[1].m_TexCoord.Init( 1, 1 );
-			verts[2].m_TexCoord.Init( 0, 1 );
-			verts[3].m_TexCoord.Init( 0, 0 );
-			break;
+			case ROTATED_CLOCKWISE_90:
+				verts[0].m_TexCoord.Init(1, 0);
+				verts[1].m_TexCoord.Init(1, 1);
+				verts[2].m_TexCoord.Init(0, 1);
+				verts[3].m_TexCoord.Init(0, 0);
+				break;
 
-		case ROTATED_ANTICLOCKWISE_90:
-			verts[0].m_TexCoord.Init( 0, 1 );
-			verts[1].m_TexCoord.Init( 0, 0 );
-			verts[2].m_TexCoord.Init( 1, 0 );
-			verts[3].m_TexCoord.Init( 1, 1 );
-			break;
+			case ROTATED_ANTICLOCKWISE_90:
+				verts[0].m_TexCoord.Init(0, 1);
+				verts[1].m_TexCoord.Init(0, 0);
+				verts[2].m_TexCoord.Init(1, 0);
+				verts[3].m_TexCoord.Init(1, 1);
+				break;
 
-		case ROTATED_FLIPPED:
-			verts[0].m_TexCoord.Init( 1, 1 );
-			verts[1].m_TexCoord.Init( 0, 1 );
-			verts[2].m_TexCoord.Init( 0, 0 );
-			verts[3].m_TexCoord.Init( 1, 0 );
-			break;
+			case ROTATED_FLIPPED:
+				verts[0].m_TexCoord.Init(1, 1);
+				verts[1].m_TexCoord.Init(0, 1);
+				verts[2].m_TexCoord.Init(0, 0);
+				verts[3].m_TexCoord.Init(1, 0);
+				break;
 
-		default:
-		case ROTATED_UNROTATED:
-			break;
+			default:
+			case ROTATED_UNROTATED:
+				break;
 		}
 
-		g_pSurface->DrawTexturedPolygon( 4, verts );
+		g_pSurface->DrawTexturedPolygon(4, verts);
 	}
 }
 
@@ -210,21 +210,21 @@ void Bitmap::Paint()
 //-----------------------------------------------------------------------------
 void Bitmap::ForceUpload()
 {
-	if ( !_valid || _uploaded )
+	if(!_valid || _uploaded)
 		return;
 
-	if ( !_id )
+	if(!_id)
 	{
-		_id = g_pSurface->CreateNewTextureID( _bProcedural );
+		_id = g_pSurface->CreateNewTextureID(_bProcedural);
 	}
 
-	if ( !_bProcedural )
+	if(!_bProcedural)
 	{
-		g_pSurface->DrawSetTextureFile( _id, _filename, _filtered, false );
+		g_pSurface->DrawSetTextureFile(_id, _filename, _filtered, false);
 	}
 
 	_uploaded = true;
-	_valid = g_pSurface->IsTextureIDValid( _id );
+	_valid = g_pSurface->IsTextureIDValid(_id);
 }
 
 //-----------------------------------------------------------------------------
@@ -237,9 +237,9 @@ HTexture Bitmap::GetID()
 
 bool Bitmap::Evict()
 {
-	if ( _id != 0 )
+	if(_id != 0)
 	{
-		g_pSurface->DestroyTextureID( _id );
+		g_pSurface->DestroyTextureID(_id);
 		// purposely not resetting _valid to match existing silly logic
 		// either a Paint() or ForceUpload() will re-establish
 		_id = 0;
@@ -251,17 +251,17 @@ bool Bitmap::Evict()
 
 int Bitmap::GetNumFrames()
 {
-	if ( !_valid )
+	if(!_valid)
 		return 0;
 
-	return g_pSurface->GetTextureNumFrames( _id );
+	return g_pSurface->GetTextureNumFrames(_id);
 }
 
-void Bitmap::SetFrame( int nFrame )
+void Bitmap::SetFrame(int nFrame)
 {
-	if ( !_valid )
+	if(!_valid)
 		return;
 
 	// the frame cache is critical to cheapen the cost of this call
-	g_pSurface->DrawSetTextureFrame( _id, nFrame, &nFrameCache );
+	g_pSurface->DrawSetTextureFrame(_id, nFrame, &nFrameCache);
 }

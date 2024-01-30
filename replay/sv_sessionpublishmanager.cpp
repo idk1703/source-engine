@@ -14,13 +14,11 @@
 
 //----------------------------------------------------------------------------------------
 
-CSessionPublishManager::CSessionPublishManager( CServerRecordingSession *pSession )
-:	m_pSession( pSession ),
-	m_pBlockPublisher( NULL ),
-	m_pSessionInfoPublisher( NULL )
+CSessionPublishManager::CSessionPublishManager(CServerRecordingSession *pSession)
+	: m_pSession(pSession), m_pBlockPublisher(NULL), m_pSessionInfoPublisher(NULL)
 {
-	m_pSessionInfoPublisher = new CSessionInfoPublisher( pSession );
-	m_pBlockPublisher = new CSessionBlockPublisher( pSession, m_pSessionInfoPublisher );
+	m_pSessionInfoPublisher = new CSessionInfoPublisher(pSession);
+	m_pBlockPublisher = new CSessionBlockPublisher(pSession, m_pSessionInfoPublisher);
 }
 
 CSessionPublishManager::~CSessionPublishManager()
@@ -31,7 +29,7 @@ CSessionPublishManager::~CSessionPublishManager()
 
 void CSessionPublishManager::PublishAllSynchronous()
 {
-	Msg( "Finishing up replay publish...\n" );
+	Msg("Finishing up replay publish...\n");
 
 	m_pBlockPublisher->PublishAllSynchronous();
 	m_pSessionInfoPublisher->PublishAllSynchronous();
@@ -40,18 +38,18 @@ void CSessionPublishManager::PublishAllSynchronous()
 void CSessionPublishManager::OnStartRecording()
 {
 	// Lock the session (which will propagate the lock to all contained blocks)
-	m_pSession->SetLocked( true );
+	m_pSession->SetLocked(true);
 
-	Assert( m_pSession->m_bRecording );
+	Assert(m_pSession->m_bRecording);
 }
 
-void CSessionPublishManager::OnStopRecord( bool bAborting )
+void CSessionPublishManager::OnStopRecord(bool bAborting)
 {
 	// Recording should be turned off on the session by this point
-	Assert( !m_pSession->m_bRecording );
+	Assert(!m_pSession->m_bRecording);
 
-	m_pBlockPublisher->OnStopRecord( bAborting );
-	m_pSessionInfoPublisher->OnStopRecord( bAborting );
+	m_pBlockPublisher->OnStopRecord(bAborting);
+	m_pSessionInfoPublisher->OnStopRecord(bAborting);
 }
 
 ReplayHandle_t CSessionPublishManager::GetSessionHandle() const
@@ -61,15 +59,13 @@ ReplayHandle_t CSessionPublishManager::GetSessionHandle() const
 
 bool CSessionPublishManager::IsDone() const
 {
-	return !m_pSession->m_bRecording &&
-		m_pBlockPublisher->IsDone() &&
-		m_pSessionInfoPublisher->IsDone();
+	return !m_pSession->m_bRecording && m_pBlockPublisher->IsDone() && m_pSessionInfoPublisher->IsDone();
 }
 
 void CSessionPublishManager::Think()
 {
 	// NOTE: This gets called even if replay is disabled.  This is intentional.
-	VPROF_BUDGET( "CSessionPublishManager::Think", VPROF_BUDGETGROUP_REPLAY );
+	VPROF_BUDGET("CSessionPublishManager::Think", VPROF_BUDGETGROUP_REPLAY);
 
 	// Call publishers
 	m_pBlockPublisher->Think();
@@ -82,13 +78,13 @@ void CSessionPublishManager::Think()
 
 void CSessionPublishManager::UnlockSession()
 {
-	Assert( !m_pSession->m_bRecording );
-	Assert( m_pBlockPublisher->IsDone() );
-	Assert( m_pSessionInfoPublisher->IsDone() );
+	Assert(!m_pSession->m_bRecording);
+	Assert(m_pBlockPublisher->IsDone());
+	Assert(m_pSessionInfoPublisher->IsDone());
 
-	IF_REPLAY_DBG( Warning( "Unlocking session %s\n", m_pSession->GetDebugName() ) );
+	IF_REPLAY_DBG(Warning("Unlocking session %s\n", m_pSession->GetDebugName()));
 
-	m_pSession->SetLocked( false );
+	m_pSession->SetLocked(false);
 }
 
 void CSessionPublishManager::AbortPublish()

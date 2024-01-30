@@ -16,14 +16,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 BEGIN_MESSAGE_MAP(CTextureBox, CComboBox)
 	//{{AFX_MSG_MAP(CTextureBox)
 	ON_WM_ERASEBKGND()
 	ON_MESSAGE(CB_SELECTSTRING, OnSelectString)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -33,14 +31,10 @@ CTextureBox::CTextureBox(void)
 	bFirstMeasure = TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTextureBox::~CTextureBox(void)
-{
-}
-
+CTextureBox::~CTextureBox(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -52,7 +46,6 @@ int CTextureBox::CompareItem(LPCOMPAREITEMSTRUCT lpCompareItemStruct)
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : lpDeleteItemStruct -
@@ -62,31 +55,30 @@ void CTextureBox::DeleteItem(LPDELETEITEMSTRUCT lpDeleteItemStruct)
 	CComboBox::DeleteItem(lpDeleteItemStruct);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : lpDrawItemStruct -
 //-----------------------------------------------------------------------------
 void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
-//	if(!pGD)
-//		return;
+	//	if(!pGD)
+	//		return;
 
 	CDC dc;
 	dc.Attach(lpDrawItemStruct->hDC);
 	dc.SaveDC();
 
-	RECT& r = lpDrawItemStruct->rcItem;
+	RECT &r = lpDrawItemStruct->rcItem;
 
 	int iFontHeight = dc.GetTextExtent("J", 1).cy;
 
-	if (lpDrawItemStruct->itemID != -1)
+	if(lpDrawItemStruct->itemID != -1)
 	{
 		IEditorTexture *pTex = (IEditorTexture *)GetItemDataPtr(lpDrawItemStruct->itemID);
 		dc.SetROP2(R2_COPYPEN);
 		CPalette *pOldPalette = NULL;
 
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			pTex->Load();
 
@@ -94,10 +86,10 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			dc.RealizePalette();
 		}
 
-		COLORREF dwBackColor = RGB(255,255,255);
-		COLORREF dwForeColor = RGB(0,0,0);
+		COLORREF dwBackColor = RGB(255, 255, 255);
+		COLORREF dwForeColor = RGB(0, 0, 0);
 
-		if (lpDrawItemStruct->itemState & ODS_SELECTED)
+		if(lpDrawItemStruct->itemState & ODS_SELECTED)
 		{
 			dwBackColor = GetSysColor(COLOR_HIGHLIGHT);
 			dwForeColor = GetSysColor(COLOR_HIGHLIGHTTEXT);
@@ -108,12 +100,12 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		brush.CreateSolidBrush(dwBackColor);
 		dc.FillRect(&r, &brush);
 
-		if (pTex == NULL)
+		if(pTex == NULL)
 		{
 			// separator
 			dc.SelectStockObject(BLACK_PEN);
-			dc.MoveTo(r.left, r.top+5);
-			dc.LineTo(r.right, r.top+5);
+			dc.MoveTo(r.left, r.top + 5);
+			dc.LineTo(r.right, r.top + 5);
 		}
 		else
 		{
@@ -123,7 +115,7 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			// when we get here, we are drawing a regular graphic. we
 			//  check the size of the rectangle - if it's > 32 (just
 			//	a nice number), we're drawing an item in the drop list.
-			if ((r.bottom - r.top) > 32)
+			if((r.bottom - r.top) > 32)
 			{
 				DrawTexData_t DrawTexData;
 				DrawTexData.nFlags = 0;
@@ -154,12 +146,12 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			}
 		}
 
-		if (pOldPalette)
+		if(pOldPalette)
 		{
 			dc.SelectPalette(pOldPalette, FALSE);
 		}
 	}
-	else if (lpDrawItemStruct->itemState & ODS_FOCUS)
+	else if(lpDrawItemStruct->itemState & ODS_FOCUS)
 	{
 		dc.DrawFocusRect(&r);
 	}
@@ -168,14 +160,13 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	dc.Detach();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Adds the given texture to the MRU for this texture list.
 // Input  : pTex - Texture to add. If NULL, MRU is rebuilt from scratch.
 //-----------------------------------------------------------------------------
 void CTextureBox::AddMRU(IEditorTexture *pTex)
 {
-	if (pTex != NULL)
+	if(pTex != NULL)
 	{
 		//
 		// Add the texture to the MRU set.
@@ -196,7 +187,6 @@ void CTextureBox::AddMRU(IEditorTexture *pTex)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Rebuilds the MRU for this texture combo box.
 //-----------------------------------------------------------------------------
@@ -211,12 +201,12 @@ void CTextureBox::RebuildMRU(void)
 	//
 	int nItems = GetCount();
 	int nDelimiterIndex = 0;
-	while (nDelimiterIndex < nItems)
+	while(nDelimiterIndex < nItems)
 	{
 		//
 		// The first item with a NULL item data pointer is the MRU delimiter.
 		//
-		if (GetItemDataPtr(nDelimiterIndex) == NULL)
+		if(GetItemDataPtr(nDelimiterIndex) == NULL)
 		{
 			break;
 		}
@@ -227,7 +217,7 @@ void CTextureBox::RebuildMRU(void)
 	//
 	// If the MRU delimiter was found, delete everything before it.
 	//
-	if (nDelimiterIndex != nItems)
+	if(nDelimiterIndex != nItems)
 	{
 		do
 		{
@@ -240,10 +230,10 @@ void CTextureBox::RebuildMRU(void)
 	//
 	int nStrCount = 0;
 	int nMRUCount = g_Textures.MRUGetCount();
-	for (int nMRU = 0; nMRU < nMRUCount; nMRU++)
+	for(int nMRU = 0; nMRU < nMRUCount; nMRU++)
 	{
 		IEditorTexture *pTex = g_Textures.MRUGet(nMRU);
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			char szBuf[MAX_PATH];
 			pTex->GetShortName(szBuf);
@@ -257,7 +247,7 @@ void CTextureBox::RebuildMRU(void)
 	//
 	// Add the MRU seperator to the list, unless the MRU was empty.
 	//
-	if (nStrCount > 0)
+	if(nStrCount > 0)
 	{
 		int nIndex = InsertString(nStrCount, "");
 		SetItemDataPtr(nIndex, NULL);
@@ -271,18 +261,16 @@ void CTextureBox::RebuildMRU(void)
 	Invalidate();
 }
 
-
-void CTextureBox::NotifyNewMaterial( IEditorTexture *pTex )
+void CTextureBox::NotifyNewMaterial(IEditorTexture *pTex)
 {
 	char szStr[MAX_PATH];
-	pTex->GetShortName( szStr );
-	int iItem = AddString( szStr );
-	if ( iItem != CB_ERR )
+	pTex->GetShortName(szStr);
+	int iItem = AddString(szStr);
+	if(iItem != CB_ERR)
 	{
-		SetItemDataPtr( iItem, (void *)pTex );
+		SetItemDataPtr(iItem, (void *)pTex);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -297,7 +285,7 @@ void CTextureBox::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 	//
 	char *pszText = (char *)lpMeasureItemStruct->itemData;
 
-	if ((pszText == NULL) || (*pszText == '\0'))
+	if((pszText == NULL) || (*pszText == '\0'))
 	{
 		lpMeasureItemStruct->itemHeight = 9;
 	}
@@ -307,13 +295,12 @@ void CTextureBox::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBox::LoadGraphicList(void)
 {
-	if (g_pGameConfig->GetTextureFormat() == tfNone)
+	if(g_pGameConfig->GetTextureFormat() == tfNone)
 	{
 		return;
 	}
@@ -327,10 +314,10 @@ void CTextureBox::LoadGraphicList(void)
 	//
 	int nStrCount = 0;
 	int nMRUCount = g_Textures.MRUGetCount();
-	for (int nMRU = 0; nMRU < nMRUCount; nMRU++)
+	for(int nMRU = 0; nMRU < nMRUCount; nMRU++)
 	{
 		IEditorTexture *pTex = g_Textures.MRUGet(nMRU);
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			char szStr[MAX_PATH];
 			pTex->GetShortName(szStr);
@@ -343,7 +330,7 @@ void CTextureBox::LoadGraphicList(void)
 	//
 	// Add the MRU seperator to the list, unless the MRU was empty.
 	//
-	if (nStrCount > 0)
+	if(nStrCount > 0)
 	{
 		AddString("");
 		SetItemDataPtr(nStrCount, NULL);
@@ -355,12 +342,12 @@ void CTextureBox::LoadGraphicList(void)
 	//
 	int nIndex = 0;
 	IEditorTexture *pTex = g_Textures.EnumActiveTextures(&nIndex, g_pGameConfig->GetTextureFormat());
-	while (pTex != NULL)
+	while(pTex != NULL)
 	{
 		char szStr[MAX_PATH];
 		pTex->GetShortName(szStr);
 		int err = AddString(szStr);
-		Assert( (err != CB_ERR) && (err != CB_ERRSPACE) );
+		Assert((err != CB_ERR) && (err != CB_ERRSPACE));
 		SetItemDataPtr(nStrCount, (void *)pTex);
 		nStrCount++;
 
@@ -373,15 +360,16 @@ void CTextureBox::LoadGraphicList(void)
 	SetCurSel(0);
 
 	int nSel = GetCount();
-	for (int i = 0; i < nSel; i++)
+	for(int i = 0; i < nSel; i++)
 	{
 		IEditorTexture *pTexSearch = (IEditorTexture *)GetItemDataPtr(i);
-		if (pTexSearch != NULL)
+		if(pTexSearch != NULL)
 		{
 			char szName[MAX_PATH];
 			pTexSearch->GetShortName(szName);
 
-			if ((szName[0] != 0) && (szName[0] != '*') && (szName[0] != '+') && (szName[0] != '!') && (strstr(szName, "door") == NULL))
+			if((szName[0] != 0) && (szName[0] != '*') && (szName[0] != '+') && (szName[0] != '!') &&
+			   (strstr(szName, "door") == NULL))
 			{
 				// this one is ok
 				SetCurSel(i);
@@ -393,7 +381,6 @@ void CTextureBox::LoadGraphicList(void)
 	SetRedraw(TRUE);
 	Invalidate();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -424,7 +411,6 @@ BOOL CTextureBox::Create(DWORD dwStyle, const RECT &rect, CWnd *pParentWnd, UINT
 	return CWnd::Create(pszTextureBoxClass, NULL, dwStyle, rect, pParentWnd, nID);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : wParam -
@@ -440,11 +426,11 @@ LRESULT CTextureBox::OnSelectString(WPARAM wParam, LPARAM lParam)
 	for(int i = wParam + 1; i < nCount; i++)
 	{
 		pTex = (IEditorTexture *)GetItemDataPtr(i);
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			char szName[MAX_PATH];
 			pTex->GetShortName(szName);
-			if (!stricmp(szName, pszSelect))
+			if(!stricmp(szName, pszSelect))
 			{
 				SetCurSel(i);
 				return i;
@@ -454,7 +440,6 @@ LRESULT CTextureBox::OnSelectString(WPARAM wParam, LPARAM lParam)
 
 	return LB_ERR;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:

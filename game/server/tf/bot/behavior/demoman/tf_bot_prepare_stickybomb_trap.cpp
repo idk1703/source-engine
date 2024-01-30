@@ -11,38 +11,38 @@
 
 #define MAX_STICKYBOMB_COUNT 8
 
-ConVar tf_bot_stickybomb_density( "tf_bot_stickybomb_density", "0.0001", FCVAR_CHEAT, "Number of stickies to place per square inch" );
-
+ConVar tf_bot_stickybomb_density("tf_bot_stickybomb_density", "0.0001", FCVAR_CHEAT,
+								 "Number of stickies to place per square inch");
 
 //---------------------------------------------------------------------------------------------
 class PlaceStickyBombReply : public INextBotReply
 {
 public:
-	virtual void OnSuccess( INextBot *bot )		// invoked when process completed successfully
+	virtual void OnSuccess(INextBot *bot) // invoked when process completed successfully
 	{
-		CTFBot *me = ToTFBot( bot->GetEntity() );
+		CTFBot *me = ToTFBot(bot->GetEntity());
 
 		CTFWeaponBase *myCurrentWeapon = me->m_Shared.GetActiveTFWeapon();
-		if ( myCurrentWeapon && myCurrentWeapon->GetWeaponID() == TF_WEAPON_PIPEBOMBLAUNCHER )
+		if(myCurrentWeapon && myCurrentWeapon->GetWeaponID() == TF_WEAPON_PIPEBOMBLAUNCHER)
 		{
 			// launch the sticky
-			me->PressFireButton( 0.1f );
+			me->PressFireButton(0.1f);
 
 			// increase the bomb count for this target area
-			if ( m_bombTargetArea )
+			if(m_bombTargetArea)
 			{
 				m_bombTargetArea->m_count++;
 			}
 
-			if( m_pLaunchWaitTimer )
+			if(m_pLaunchWaitTimer)
 			{
 				// release the latch
-				m_pLaunchWaitTimer->Start( 0.15f );
+				m_pLaunchWaitTimer->Start(0.15f);
 			}
 		}
 	}
 
-	virtual void OnFail( INextBot *bot, FailureReason reason )// invoked when process failed
+	virtual void OnFail(INextBot *bot, FailureReason reason) // invoked when process failed
 	{
 		// retry aim immediately
 		m_pLaunchWaitTimer->Invalidate();
@@ -60,43 +60,40 @@ public:
 	CountdownTimer *m_pLaunchWaitTimer;
 };
 
-
 static PlaceStickyBombReply bombReply;
 
-
 //---------------------------------------------------------------------------------------------
-CTFBotPrepareStickybombTrap::CTFBotPrepareStickybombTrap( void )
+CTFBotPrepareStickybombTrap::CTFBotPrepareStickybombTrap(void)
 {
 	m_myArea = NULL;
 }
 
-
 //---------------------------------------------------------------------------------------------
-CTFBotPrepareStickybombTrap::~CTFBotPrepareStickybombTrap( )
+CTFBotPrepareStickybombTrap::~CTFBotPrepareStickybombTrap()
 {
 	bombReply.ClearData();
 }
 
-
 //---------------------------------------------------------------------------------------------
 // Return true if this Action has what it needs to perform right now
-bool CTFBotPrepareStickybombTrap::IsPossible( CTFBot *me )
+bool CTFBotPrepareStickybombTrap::IsPossible(CTFBot *me)
 {
 	// don't lay a trap if we're in the midst of fighting
-	if ( /*me->IsInCombat() || */ me->GetTimeSinceLastInjury() < 1.0f )
+	if(/*me->IsInCombat() || */ me->GetTimeSinceLastInjury() < 1.0f)
 	{
 		return false;
 	}
 
-	if ( !me->IsPlayerClass( TF_CLASS_DEMOMAN ) )
+	if(!me->IsPlayerClass(TF_CLASS_DEMOMAN))
 	{
 		return false;
 	}
 
-	CTFPipebombLauncher *stickyLauncher = dynamic_cast< CTFPipebombLauncher * >( me->Weapon_GetSlot( TF_WPN_TYPE_SECONDARY ) );
-	if ( stickyLauncher && !me->IsWeaponRestricted( stickyLauncher ) )
+	CTFPipebombLauncher *stickyLauncher =
+		dynamic_cast<CTFPipebombLauncher *>(me->Weapon_GetSlot(TF_WPN_TYPE_SECONDARY));
+	if(stickyLauncher && !me->IsWeaponRestricted(stickyLauncher))
 	{
-		if ( stickyLauncher->GetPipeBombCount() >= MAX_STICKYBOMB_COUNT || me->GetAmmoCount( TF_AMMO_SECONDARY ) <= 0 )
+		if(stickyLauncher->GetPipeBombCount() >= MAX_STICKYBOMB_COUNT || me->GetAmmoCount(TF_AMMO_SECONDARY) <= 0)
 		{
 			return false;
 		}
@@ -105,19 +102,18 @@ bool CTFBotPrepareStickybombTrap::IsPossible( CTFBot *me )
 	return true;
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CTFBotPrepareStickybombTrap::InitBombTargetAreas( CTFBot *me )
+void CTFBotPrepareStickybombTrap::InitBombTargetAreas(CTFBot *me)
 {
-	const CUtlVector< CTFNavArea * > &invasionAreaVector = m_myArea->GetEnemyInvasionAreaVector( me->GetTeamNumber() );
+	const CUtlVector<CTFNavArea *> &invasionAreaVector = m_myArea->GetEnemyInvasionAreaVector(me->GetTeamNumber());
 
 	// randomly shuffle the target areas
-	CUtlVector< CTFNavArea * > shuffleVector;
+	CUtlVector<CTFNavArea *> shuffleVector;
 	shuffleVector = invasionAreaVector;
 	int n = shuffleVector.Count();
-	while( n > 1 )
+	while(n > 1)
 	{
-		int k = RandomInt( 0, n-1 );
+		int k = RandomInt(0, n - 1);
 		n--;
 
 		CTFNavArea *tmp = shuffleVector[n];
@@ -128,13 +124,13 @@ void CTFBotPrepareStickybombTrap::InitBombTargetAreas( CTFBot *me )
 	// initialize each target area to zero sticky bombs
 	m_bombTargetAreaVector.RemoveAll();
 
-	for( int i=0; i<shuffleVector.Count(); ++i )
+	for(int i = 0; i < shuffleVector.Count(); ++i)
 	{
 		BombTargetArea target;
 		target.m_area = shuffleVector[i];
 		target.m_count = 0;
 
-		m_bombTargetAreaVector.AddToTail( target );
+		m_bombTargetAreaVector.AddToTail(target);
 	}
 
 	m_launchWaitTimer.Invalidate();
@@ -144,18 +140,19 @@ void CTFBotPrepareStickybombTrap::InitBombTargetAreas( CTFBot *me )
 	me->GetBodyInterface()->ClearPendingAimReply();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotPrepareStickybombTrap::OnStart( CTFBot *me, Action< CTFBot > *priorAction )
+ActionResult<CTFBot> CTFBotPrepareStickybombTrap::OnStart(CTFBot *me, Action<CTFBot> *priorAction)
 {
 	// detonate old set of stickies
 	// me->PressAltFireButton();
 
 	// reload entire clip before laying sticky trap
-	CTFPipebombLauncher *stickyLauncher = dynamic_cast< CTFPipebombLauncher * >( me->Weapon_GetSlot( TF_WPN_TYPE_SECONDARY ) );
-	if ( stickyLauncher )
+	CTFPipebombLauncher *stickyLauncher =
+		dynamic_cast<CTFPipebombLauncher *>(me->Weapon_GetSlot(TF_WPN_TYPE_SECONDARY));
+	if(stickyLauncher)
 	{
-		m_isFullReloadNeeded = ( me->GetAmmoCount( TF_AMMO_SECONDARY ) >= stickyLauncher->GetMaxClip1() && stickyLauncher->Clip1() < stickyLauncher->GetMaxClip1() );
+		m_isFullReloadNeeded = (me->GetAmmoCount(TF_AMMO_SECONDARY) >= stickyLauncher->GetMaxClip1() &&
+								stickyLauncher->Clip1() < stickyLauncher->GetMaxClip1());
 	}
 	else
 	{
@@ -163,12 +160,12 @@ ActionResult< CTFBot >	CTFBotPrepareStickybombTrap::OnStart( CTFBot *me, Action<
 	}
 
 	m_myArea = me->GetLastKnownArea();
-	if ( !m_myArea )
+	if(!m_myArea)
 	{
-		return Done( "No nav mesh" );
+		return Done("No nav mesh");
 	}
 
-	InitBombTargetAreas( me );
+	InitBombTargetAreas(me);
 
 	// own our view updating so we can aim
 	me->StopLookingAroundForEnemies();
@@ -176,49 +173,49 @@ ActionResult< CTFBot >	CTFBotPrepareStickybombTrap::OnStart( CTFBot *me, Action<
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot >	CTFBotPrepareStickybombTrap::Update( CTFBot *me, float interval )
+ActionResult<CTFBot> CTFBotPrepareStickybombTrap::Update(CTFBot *me, float interval)
 {
-	if ( !TFGameRules()->InSetup() )
+	if(!TFGameRules()->InSetup())
 	{
 		const CKnownEntity *threat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-		if ( threat )
+		if(threat)
 		{
 			const float giveUpRange = 500.0f;
-			if ( me->IsDistanceBetweenLessThan( threat->GetLastKnownPosition(), giveUpRange ) )
+			if(me->IsDistanceBetweenLessThan(threat->GetLastKnownPosition(), giveUpRange))
 			{
-				return Done( "Enemy nearby - giving up" );
+				return Done("Enemy nearby - giving up");
 			}
 		}
 	}
 
-	if ( me->GetLastKnownArea() && me->GetLastKnownArea() != m_myArea )
+	if(me->GetLastKnownArea() && me->GetLastKnownArea() != m_myArea)
 	{
 		// we've moved
 		m_myArea = me->GetLastKnownArea();
-		InitBombTargetAreas( me );
+		InitBombTargetAreas(me);
 	}
 
 	CTFWeaponBase *myCurrentWeapon = me->m_Shared.GetActiveTFWeapon();
-	CTFPipebombLauncher *stickyLauncher = dynamic_cast< CTFPipebombLauncher * >( me->Weapon_GetSlot( TF_WPN_TYPE_SECONDARY ) );
+	CTFPipebombLauncher *stickyLauncher =
+		dynamic_cast<CTFPipebombLauncher *>(me->Weapon_GetSlot(TF_WPN_TYPE_SECONDARY));
 
-	if ( !myCurrentWeapon || !stickyLauncher )
+	if(!myCurrentWeapon || !stickyLauncher)
 	{
-		return Done( "Missing weapon" );
+		return Done("Missing weapon");
 	}
 
-	if ( myCurrentWeapon->GetWeaponID() != TF_WEAPON_PIPEBOMBLAUNCHER )
+	if(myCurrentWeapon->GetWeaponID() != TF_WEAPON_PIPEBOMBLAUNCHER)
 	{
-		me->Weapon_Switch( stickyLauncher );
+		me->Weapon_Switch(stickyLauncher);
 	}
 
 	// reload fully
-	if ( m_isFullReloadNeeded )
+	if(m_isFullReloadNeeded)
 	{
-		int maxClip = MIN( stickyLauncher->GetMaxClip1(), me->GetAmmoCount( TF_AMMO_SECONDARY ) );
+		int maxClip = MIN(stickyLauncher->GetMaxClip1(), me->GetAmmoCount(TF_AMMO_SECONDARY));
 
-		if ( stickyLauncher->Clip1() >= maxClip )
+		if(stickyLauncher->Clip1() >= maxClip)
 		{
 			// fully reloaded
 			m_isFullReloadNeeded = false;
@@ -229,57 +226,55 @@ ActionResult< CTFBot >	CTFBotPrepareStickybombTrap::Update( CTFBot *me, float in
 		return Continue();
 	}
 
-
-	if ( stickyLauncher->GetPipeBombCount() >= MAX_STICKYBOMB_COUNT || me->GetAmmoCount( TF_AMMO_SECONDARY ) <= 0 )
+	if(stickyLauncher->GetPipeBombCount() >= MAX_STICKYBOMB_COUNT || me->GetAmmoCount(TF_AMMO_SECONDARY) <= 0)
 	{
-		return Done( "Max sticky bombs reached" );
+		return Done("Max sticky bombs reached");
 	}
 
-
 	// aim towards areas where enemy will come from
-	if ( m_launchWaitTimer.IsElapsed() )
+	if(m_launchWaitTimer.IsElapsed())
 	{
 		// find next target that needs bombs
 		int i;
-		for( i=0; i<m_bombTargetAreaVector.Count(); ++i )
+		for(i = 0; i < m_bombTargetAreaVector.Count(); ++i)
 		{
 			CTFNavArea *targetArea = m_bombTargetAreaVector[i].m_area;
 
 			int desiredCount = tf_bot_stickybomb_density.GetFloat() * targetArea->GetSizeX() * targetArea->GetSizeY();
-			if ( desiredCount < 1 )
+			if(desiredCount < 1)
 			{
 				desiredCount = 1;
 			}
 
-			if ( m_bombTargetAreaVector[i].m_count < desiredCount )
+			if(m_bombTargetAreaVector[i].m_count < desiredCount)
 			{
 				// place a sticky on this area
 				bombReply.m_bombTargetArea = &m_bombTargetAreaVector[i];
 
 				// this timer causes us to wait until the aim finishes and launched before we start another aim
-				m_launchWaitTimer.Start( 2.0f );
+				m_launchWaitTimer.Start(2.0f);
 				bombReply.m_pLaunchWaitTimer = &m_launchWaitTimer;
 
 				Vector bombSpot = targetArea->GetRandomPoint();
 
-				me->GetBodyInterface()->AimHeadTowards( bombSpot, IBody::IMPORTANT, 5.0f, &bombReply, "Aiming a sticky bomb" );
+				me->GetBodyInterface()->AimHeadTowards(bombSpot, IBody::IMPORTANT, 5.0f, &bombReply,
+													   "Aiming a sticky bomb");
 
 				break;
 			}
 		}
 
-		if ( i == m_bombTargetAreaVector.Count() )
+		if(i == m_bombTargetAreaVector.Count())
 		{
-			return Done( "Exhausted bomb target areas" );
+			return Done("Exhausted bomb target areas");
 		}
 	}
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CTFBotPrepareStickybombTrap::OnEnd( CTFBot *me, Action< CTFBot > *nextAction )
+void CTFBotPrepareStickybombTrap::OnEnd(CTFBot *me, Action<CTFBot> *nextAction)
 {
 	// clean up any in-flight AimHeadTowards() replies
 	me->GetBodyInterface()->ClearPendingAimReply();
@@ -287,24 +282,21 @@ void CTFBotPrepareStickybombTrap::OnEnd( CTFBot *me, Action< CTFBot > *nextActio
 	me->StartLookingAroundForEnemies();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CTFBot > CTFBotPrepareStickybombTrap::OnSuspend( CTFBot *me, Action< CTFBot > *interruptingAction )
+ActionResult<CTFBot> CTFBotPrepareStickybombTrap::OnSuspend(CTFBot *me, Action<CTFBot> *interruptingAction)
 {
 	// this behavior is transitory - if we need to do something else, just give up
 	return Done();
 }
 
-
 //---------------------------------------------------------------------------------------------
-EventDesiredResult< CTFBot > CTFBotPrepareStickybombTrap::OnInjured( CTFBot *me, const CTakeDamageInfo &info )
+EventDesiredResult<CTFBot> CTFBotPrepareStickybombTrap::OnInjured(CTFBot *me, const CTakeDamageInfo &info)
 {
-	return TryDone( RESULT_IMPORTANT, "Ouch!" );
+	return TryDone(RESULT_IMPORTANT, "Ouch!");
 }
 
-
 //---------------------------------------------------------------------------------------------
-QueryResultType CTFBotPrepareStickybombTrap::ShouldAttack( const INextBot *me, const CKnownEntity *them ) const
+QueryResultType CTFBotPrepareStickybombTrap::ShouldAttack(const INextBot *me, const CKnownEntity *them) const
 {
 	return ANSWER_NO;
 }

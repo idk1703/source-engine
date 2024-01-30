@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "base_loadout_panel.h"
 #include "item_confirm_delete_dialog.h"
@@ -24,30 +23,31 @@
 #include <tier0/memdbgon.h>
 
 #ifdef STAGING_ONLY
-ConVar tf_use_card_tooltips( "tf_use_card_tooltips", "0", FCVAR_ARCHIVE );
+ConVar tf_use_card_tooltips("tf_use_card_tooltips", "0", FCVAR_ARCHIVE);
 #endif
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseLoadoutPanel::CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName ) : EditablePanel(parent, panelName )
+CBaseLoadoutPanel::CBaseLoadoutPanel(vgui::Panel *parent, const char *panelName) : EditablePanel(parent, panelName)
 {
-	SetParent( parent );
+	SetParent(parent);
 
 	// Use the client scheme
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	SetProportional( true );
+	SetProportional(true);
 
 	m_pItemModelPanelKVs = NULL;
-	m_pMouseOverItemPanel = vgui::SETUP_PANEL( new CItemModelPanel( this, "mouseoveritempanel" ) );
-	m_pMouseOverTooltip = new CItemModelPanelToolTip( this );
-	m_pMouseOverTooltip->SetupPanels( this, m_pMouseOverItemPanel );
+	m_pMouseOverItemPanel = vgui::SETUP_PANEL(new CItemModelPanel(this, "mouseoveritempanel"));
+	m_pMouseOverTooltip = new CItemModelPanelToolTip(this);
+	m_pMouseOverTooltip->SetupPanels(this, m_pMouseOverItemPanel);
 
 #ifdef STAGING_ONLY
-	m_pMouseOverCardPanel = vgui::SETUP_PANEL( new CTFItemCardPanel( this, "mouseovercardpanel" ) );
-	m_pMouseOverCardTooltip = new CItemCardPanelToolTip( this );
-	m_pMouseOverCardTooltip->SetupPanels( this, m_pMouseOverCardPanel );
+	m_pMouseOverCardPanel = vgui::SETUP_PANEL(new CTFItemCardPanel(this, "mouseovercardpanel"));
+	m_pMouseOverCardTooltip = new CItemCardPanelToolTip(this);
+	m_pMouseOverCardTooltip->SetupPanels(this, m_pMouseOverCardPanel);
 #endif
 
 	m_pItemPanelBeingMousedOver = NULL;
@@ -56,10 +56,10 @@ CBaseLoadoutPanel::CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName
 	m_nCurrentPage = 0;
 	m_bTooltipKeyPressed = false;
 
-	SetMouseInputEnabled( true );
-	SetKeyBoardInputEnabled( true );
+	SetMouseInputEnabled(true);
+	SetKeyBoardInputEnabled(true);
 
-	ListenForGameEvent( "inventory_updated" );
+	ListenForGameEvent("inventory_updated");
 }
 
 //-----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ CBaseLoadoutPanel::CBaseLoadoutPanel( vgui::Panel *parent, const char *panelName
 //-----------------------------------------------------------------------------
 CBaseLoadoutPanel::~CBaseLoadoutPanel()
 {
-	if ( m_pItemModelPanelKVs )
+	if(m_pItemModelPanelKVs)
 	{
 		m_pItemModelPanelKVs->deleteThis();
 		m_pItemModelPanelKVs = NULL;
@@ -77,20 +77,20 @@ CBaseLoadoutPanel::~CBaseLoadoutPanel()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CBaseLoadoutPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_pCaratLabel = dynamic_cast<vgui::Label*>( FindChildByName("CaratLabel") );
-	m_pClassLabel = dynamic_cast<vgui::Label*>( FindChildByName("ClassLabel") );
+	m_pCaratLabel = dynamic_cast<vgui::Label *>(FindChildByName("CaratLabel"));
+	m_pClassLabel = dynamic_cast<vgui::Label *>(FindChildByName("ClassLabel"));
 
 	m_bReapplyItemKVs = true;
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
-		SetBorderForItem( m_pItemModelPanels[i], false );
+		SetBorderForItem(m_pItemModelPanels[i], false);
 	}
 
-	m_pMouseOverItemPanel->SetBorder( pScheme->GetBorder("LoadoutItemPopupBorder") );
+	m_pMouseOverItemPanel->SetBorder(pScheme->GetBorder("LoadoutItemPopupBorder"));
 
 	CreateItemPanels();
 }
@@ -98,19 +98,19 @@ void CBaseLoadoutPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::ApplySettings( KeyValues *inResourceData )
+void CBaseLoadoutPanel::ApplySettings(KeyValues *inResourceData)
 {
-	BaseClass::ApplySettings( inResourceData );
+	BaseClass::ApplySettings(inResourceData);
 
-	KeyValues *pItemKV = inResourceData->FindKey( "modelpanels_kv" );
-	if ( pItemKV )
+	KeyValues *pItemKV = inResourceData->FindKey("modelpanels_kv");
+	if(pItemKV)
 	{
-		if ( m_pItemModelPanelKVs )
+		if(m_pItemModelPanelKVs)
 		{
 			m_pItemModelPanelKVs->deleteThis();
 		}
 		m_pItemModelPanelKVs = new KeyValues("modelpanels_kv");
-		pItemKV->CopySubkeys( m_pItemModelPanelKVs );
+		pItemKV->CopySubkeys(m_pItemModelPanelKVs);
 	}
 }
 
@@ -120,16 +120,16 @@ extern ConVar cl_showbackpackrarities;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver )
+void CBaseLoadoutPanel::SetBorderForItem(CItemModelPanel *pItemPanel, bool bMouseOver)
 {
-	if ( !pItemPanel )
+	if(!pItemPanel)
 		return;
 
 	const char *pszBorder = NULL;
 
-	if ( pItemPanel->IsGreyedOut() )
+	if(pItemPanel->IsGreyedOut())
 	{
-		if( pItemPanel->IsSelected() )
+		if(pItemPanel->IsSelected())
 		{
 			pszBorder = "BackpackItemGrayedOut_Selected";
 		}
@@ -141,23 +141,23 @@ void CBaseLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMou
 	else
 	{
 		int iRarity = 0;
-		if ( pItemPanel->HasItem() && cl_showbackpackrarities.GetBool() )
+		if(pItemPanel->HasItem() && cl_showbackpackrarities.GetBool())
 		{
-			iRarity = pItemPanel->GetItem()->GetItemQuality() ;
+			iRarity = pItemPanel->GetItem()->GetItemQuality();
 
 			uint8 nRarity = pItemPanel->GetItem()->GetItemDefinition()->GetRarity();
-			if ( ( nRarity != k_unItemRarity_Any ) && ( iRarity != AE_SELFMADE ) )
+			if((nRarity != k_unItemRarity_Any) && (iRarity != AE_SELFMADE))
 			{
 				// translate this quality to rarity
 				iRarity = nRarity + AE_RARITY_DEFAULT;
 			}
 		}
 
-		if ( pItemPanel->IsSelected() )
+		if(pItemPanel->IsSelected())
 		{
 			pszBorder = g_szItemBorders[iRarity][2];
 		}
-		if ( bMouseOver )
+		if(bMouseOver)
 		{
 			pszBorder = g_szItemBorders[iRarity][1];
 		}
@@ -167,21 +167,21 @@ void CBaseLoadoutPanel::SetBorderForItem( CItemModelPanel *pItemPanel, bool bMou
 		}
 	}
 
-	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
-	pItemPanel->SetBorder( pScheme->GetBorder( pszBorder ) );
+	vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(GetScheme());
+	pItemPanel->SetBorder(pScheme->GetBorder(pszBorder));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::ApplyKVsToItemPanels( void )
+void CBaseLoadoutPanel::ApplyKVsToItemPanels(void)
 {
-	if ( m_pItemModelPanelKVs )
+	if(m_pItemModelPanelKVs)
 	{
-		for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+		for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 		{
-			m_pItemModelPanels[i]->ApplySettings( m_pItemModelPanelKVs );
-			SetBorderForItem( m_pItemModelPanels[i], false );
+			m_pItemModelPanels[i]->ApplySettings(m_pItemModelPanelKVs);
+			SetBorderForItem(m_pItemModelPanels[i], false);
 			m_pItemModelPanels[i]->InvalidateLayout();
 		}
 	}
@@ -190,9 +190,9 @@ void CBaseLoadoutPanel::ApplyKVsToItemPanels( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::PerformLayout( void )
+void CBaseLoadoutPanel::PerformLayout(void)
 {
-	if ( m_bReapplyItemKVs )
+	if(m_bReapplyItemKVs)
 	{
 		m_bReapplyItemKVs = false;
 		ApplyKVsToItemPanels();
@@ -201,22 +201,23 @@ void CBaseLoadoutPanel::PerformLayout( void )
 	BaseClass::PerformLayout();
 
 	// If we're items only, we hide various elements
-	if ( m_pCaratLabel )
+	if(m_pCaratLabel)
 	{
-		m_pCaratLabel->SetVisible( !m_bItemsOnly );
+		m_pCaratLabel->SetVisible(!m_bItemsOnly);
 	}
 
-	if ( m_pClassLabel )
+	if(m_pClassLabel)
 	{
-		m_pClassLabel->SetVisible( !m_bItemsOnly );
+		m_pClassLabel->SetVisible(!m_bItemsOnly);
 	}
 
-	if ( m_pMouseOverItemPanel->IsVisible() )
+	if(m_pMouseOverItemPanel->IsVisible())
 	{
-		// The mouseover panel was visible. Fake a panel entry into the original panel to get it to show up again properly.
-		if ( m_pItemPanelBeingMousedOver )
+		// The mouseover panel was visible. Fake a panel entry into the original panel to get it to show up again
+		// properly.
+		if(m_pItemPanelBeingMousedOver)
 		{
-			OnItemPanelEntered( m_pItemPanelBeingMousedOver );
+			OnItemPanelEntered(m_pItemPanelBeingMousedOver);
 		}
 		else
 		{
@@ -228,33 +229,33 @@ void CBaseLoadoutPanel::PerformLayout( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::AddNewItemPanel( int iPanelIndex )
+void CBaseLoadoutPanel::AddNewItemPanel(int iPanelIndex)
 {
-	CItemModelPanel *pPanel = vgui::SETUP_PANEL( new CItemModelPanel( this, VarArgs("modelpanel%d", iPanelIndex) ) );
-	pPanel->SetActAsButton( true, true );
-	m_pItemModelPanels.AddToTail( pPanel );
+	CItemModelPanel *pPanel = vgui::SETUP_PANEL(new CItemModelPanel(this, VarArgs("modelpanel%d", iPanelIndex)));
+	pPanel->SetActAsButton(true, true);
+	m_pItemModelPanels.AddToTail(pPanel);
 
 #ifdef STAGING_ONLY
-	if ( tf_use_card_tooltips.GetBool() )
+	if(tf_use_card_tooltips.GetBool())
 	{
-		pPanel->SetTooltip( m_pMouseOverCardTooltip, "" );
+		pPanel->SetTooltip(m_pMouseOverCardTooltip, "");
 	}
 	else
 #endif
-		pPanel->SetTooltip( m_pMouseOverTooltip, "" );
+		pPanel->SetTooltip(m_pMouseOverTooltip, "");
 
-	Assert( iPanelIndex == (m_pItemModelPanels.Count()-1) );
+	Assert(iPanelIndex == (m_pItemModelPanels.Count() - 1));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::CreateItemPanels( void )
+void CBaseLoadoutPanel::CreateItemPanels(void)
 {
 	int iNumPanels = GetNumItemPanels();
-	if ( m_pItemModelPanels.Count() < iNumPanels )
+	if(m_pItemModelPanels.Count() < iNumPanels)
 	{
-		for ( int i = m_pItemModelPanels.Count(); i < iNumPanels; i++ )
+		for(int i = m_pItemModelPanels.Count(); i < iNumPanels; i++)
 		{
 			AddNewItemPanel(i);
 		}
@@ -264,14 +265,14 @@ void CBaseLoadoutPanel::CreateItemPanels( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::ShowPanel( int iClass, bool bBackpack, bool bReturningFromArmory )
+void CBaseLoadoutPanel::ShowPanel(int iClass, bool bBackpack, bool bReturningFromArmory)
 {
 	bool bShow = (iClass != 0 || bBackpack);
-	OnShowPanel( bShow, bReturningFromArmory );
+	OnShowPanel(bShow, bReturningFromArmory);
 
-	SetVisible( bShow );
+	SetVisible(bShow);
 
-	if ( bShow )
+	if(bShow)
 	{
 		HideMouseOverPanel();
 
@@ -280,89 +281,91 @@ void CBaseLoadoutPanel::ShowPanel( int iClass, bool bBackpack, bool bReturningFr
 		UpdateModelPanels();
 
 		// make the first slot be selected so controller input will work
-		static ConVarRef joystick( "joystick" );
-		if( joystick.IsValid() && joystick.GetBool() && m_pItemModelPanels.Count() && m_pItemModelPanels[0] )
+		static ConVarRef joystick("joystick");
+		if(joystick.IsValid() && joystick.GetBool() && m_pItemModelPanels.Count() && m_pItemModelPanels[0])
 		{
-			m_pItemModelPanels[0]->SetSelected( true );
+			m_pItemModelPanels[0]->SetSelected(true);
 			m_pItemModelPanels[0]->RequestFocus();
 		}
 	}
 	else
 	{
 		// clear items from panels to make sure that items get invalidate on show panel
-		FOR_EACH_VEC( m_pItemModelPanels, i )
+		FOR_EACH_VEC(m_pItemModelPanels, i)
 		{
-			m_pItemModelPanels[i]->SetItem( NULL );
+			m_pItemModelPanels[i]->SetItem(NULL);
 		}
 	}
 
-	if ( !bReturningFromArmory )
+	if(!bReturningFromArmory)
 	{
-		PostShowPanel( bShow );
+		PostShowPanel(bShow);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::OnCommand( const char *command )
+void CBaseLoadoutPanel::OnCommand(const char *command)
 {
-	engine->ClientCmd( const_cast<char *>( command ) );
+	engine->ClientCmd(const_cast<char *>(command));
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::FireGameEvent( IGameEvent *event )
+void CBaseLoadoutPanel::FireGameEvent(IGameEvent *event)
 {
 	// If we're not visible, ignore all events
-	if ( !IsVisible() )
+	if(!IsVisible())
 		return;
 
 	const char *type = event->GetName();
-	if ( Q_strcmp( "inventory_updated", type ) == 0 )
+	if(Q_strcmp("inventory_updated", type) == 0)
 	{
 		// We need to refresh our model panels, because the items may have changed.
 		UpdateModelPanels();
 	}
 }
 
-CItemModelPanel *CBaseLoadoutPanel::FindBestPanelNavigationForDirection( const CItemModelPanel *pCurrentPanel, const Vector2D &vPos, const Vector2D &vDirection )
+CItemModelPanel *CBaseLoadoutPanel::FindBestPanelNavigationForDirection(const CItemModelPanel *pCurrentPanel,
+																		const Vector2D &vPos,
+																		const Vector2D &vDirection)
 {
 	CItemModelPanel *pBestPanel = NULL;
 
 	// Start with the worst allowable score
 	float flDistance = GetWide() + GetTall();
 	float flDot = -1.0f;
-	float flClosenessScore = flDistance * ( 1.5f - flDot );
+	float flClosenessScore = flDistance * (1.5f - flDot);
 
-	for ( int j = 0; j < m_pItemModelPanels.Count(); j++ )
+	for(int j = 0; j < m_pItemModelPanels.Count(); j++)
 	{
-		CItemModelPanel *pTempPanel = m_pItemModelPanels[ j ];
-		if ( !pTempPanel || pTempPanel == pCurrentPanel )
+		CItemModelPanel *pTempPanel = m_pItemModelPanels[j];
+		if(!pTempPanel || pTempPanel == pCurrentPanel)
 			continue;
 
 		// Get temp center position
 		int nX, nY;
-		pTempPanel->GetPos( nX, nY );
+		pTempPanel->GetPos(nX, nY);
 		nX += pTempPanel->GetWide() / 2;
 		nY += pTempPanel->GetTall() / 2;
-		Vector2D vTempPos( nX, nY );
+		Vector2D vTempPos(nX, nY);
 
 		// Get distance and dot
 		Vector2D vDiff = vTempPos - vPos;
-		float flTempDistance = Vector2DNormalize( vDiff );
-		float flTempDot = vDiff.Dot( vDirection );
+		float flTempDistance = Vector2DNormalize(vDiff);
+		float flTempDot = vDiff.Dot(vDirection);
 
 		// Must be somewhat in the correct direction
-		if ( flTempDot <= 0.0f )
+		if(flTempDot <= 0.0f)
 			continue;
 
-		float flTempScore = flTempDistance * ( 1.5f - flTempDot );
+		float flTempScore = flTempDistance * (1.5f - flTempDot);
 
-		if ( flClosenessScore > flTempScore )
+		if(flClosenessScore > flTempScore)
 		{
 			flClosenessScore = flTempScore;
 			flDistance = flTempDistance;
@@ -374,77 +377,77 @@ CItemModelPanel *CBaseLoadoutPanel::FindBestPanelNavigationForDirection( const C
 	return pBestPanel;
 }
 
-void CBaseLoadoutPanel::LinkModelPanelControllerNavigation( bool bForceRelink )
+void CBaseLoadoutPanel::LinkModelPanelControllerNavigation(bool bForceRelink)
 {
-	if ( m_pItemModelPanels.Count() < 2 )
+	if(m_pItemModelPanels.Count() < 2)
 		return;
 
 	// first unlink everything
-	if( bForceRelink )
+	if(bForceRelink)
 	{
-		for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+		for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 		{
-			CItemModelPanel *pCurrentPanel = m_pItemModelPanels[ i ];
-			if ( !pCurrentPanel )
+			CItemModelPanel *pCurrentPanel = m_pItemModelPanels[i];
+			if(!pCurrentPanel)
 				continue;
 
-			pCurrentPanel->SetNavUp( (vgui::Panel*)NULL );
-			pCurrentPanel->SetNavDown( (vgui::Panel*)NULL );
-			pCurrentPanel->SetNavLeft( (vgui::Panel*)NULL );
-			pCurrentPanel->SetNavRight( (vgui::Panel*)NULL );
+			pCurrentPanel->SetNavUp((vgui::Panel *)NULL);
+			pCurrentPanel->SetNavDown((vgui::Panel *)NULL);
+			pCurrentPanel->SetNavLeft((vgui::Panel *)NULL);
+			pCurrentPanel->SetNavRight((vgui::Panel *)NULL);
 		}
 	}
 
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
-		CItemModelPanel *pCurrentPanel = m_pItemModelPanels[ i ];
-		if ( !pCurrentPanel )
+		CItemModelPanel *pCurrentPanel = m_pItemModelPanels[i];
+		if(!pCurrentPanel)
 			continue;
 
 		// Get center position
 		int nX, nY;
-		pCurrentPanel->GetPos( nX, nY );
+		pCurrentPanel->GetPos(nX, nY);
 		nX += pCurrentPanel->GetWide() / 2;
 		nY += pCurrentPanel->GetTall() / 2;
-		Vector2D vPos( nX, nY );
+		Vector2D vPos(nX, nY);
 
-		if ( !pCurrentPanel->GetNavUpName() || pCurrentPanel->GetNavUpName()[ 0 ] == '\0' )
+		if(!pCurrentPanel->GetNavUpName() || pCurrentPanel->GetNavUpName()[0] == '\0')
 		{
-			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection( pCurrentPanel, vPos, Vector2D( 0, -1 ) );
-			if ( pBestPanel )
+			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection(pCurrentPanel, vPos, Vector2D(0, -1));
+			if(pBestPanel)
 			{
-				pCurrentPanel->SetNavUp( pBestPanel->GetName() );
-				pBestPanel->SetNavDown( pCurrentPanel->GetName() );
+				pCurrentPanel->SetNavUp(pBestPanel->GetName());
+				pBestPanel->SetNavDown(pCurrentPanel->GetName());
 			}
 		}
 
-		if ( !pCurrentPanel->GetNavDownName() || pCurrentPanel->GetNavDownName()[ 0 ] == '\0' )
+		if(!pCurrentPanel->GetNavDownName() || pCurrentPanel->GetNavDownName()[0] == '\0')
 		{
-			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection( pCurrentPanel, vPos, Vector2D( 0, 1 ) );
-			if ( pBestPanel )
+			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection(pCurrentPanel, vPos, Vector2D(0, 1));
+			if(pBestPanel)
 			{
-				pCurrentPanel->SetNavDown( pBestPanel->GetName() );
-				pBestPanel->SetNavUp( pCurrentPanel->GetName() );
+				pCurrentPanel->SetNavDown(pBestPanel->GetName());
+				pBestPanel->SetNavUp(pCurrentPanel->GetName());
 			}
 		}
 
-		if ( !pCurrentPanel->GetNavLeftName() || pCurrentPanel->GetNavLeftName()[ 0 ] == '\0' )
+		if(!pCurrentPanel->GetNavLeftName() || pCurrentPanel->GetNavLeftName()[0] == '\0')
 		{
-			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection( pCurrentPanel, vPos, Vector2D( -1, 0 ) );
-			if ( pBestPanel )
+			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection(pCurrentPanel, vPos, Vector2D(-1, 0));
+			if(pBestPanel)
 			{
-				pCurrentPanel->SetNavLeft( pBestPanel->GetName() );
-				pBestPanel->SetNavRight( pCurrentPanel->GetName() );
+				pCurrentPanel->SetNavLeft(pBestPanel->GetName());
+				pBestPanel->SetNavRight(pCurrentPanel->GetName());
 			}
 		}
 
-		if ( !pCurrentPanel->GetNavRightName() || pCurrentPanel->GetNavRightName()[ 0 ] == '\0' )
+		if(!pCurrentPanel->GetNavRightName() || pCurrentPanel->GetNavRightName()[0] == '\0')
 		{
-			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection( pCurrentPanel, vPos, Vector2D( 1, 0 ) );
-			if ( pBestPanel )
+			CItemModelPanel *pBestPanel = FindBestPanelNavigationForDirection(pCurrentPanel, vPos, Vector2D(1, 0));
+			if(pBestPanel)
 			{
-				pCurrentPanel->SetNavRight( pBestPanel->GetName() );
-				pBestPanel->SetNavLeft( pCurrentPanel->GetName() );
+				pCurrentPanel->SetNavRight(pBestPanel->GetName());
+				pBestPanel->SetNavLeft(pCurrentPanel->GetName());
 			}
 		}
 	}
@@ -453,21 +456,21 @@ void CBaseLoadoutPanel::LinkModelPanelControllerNavigation( bool bForceRelink )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::OnItemPanelEntered( vgui::Panel *panel )
+void CBaseLoadoutPanel::OnItemPanelEntered(vgui::Panel *panel)
 {
-	CItemModelPanel *pItemPanel = dynamic_cast < CItemModelPanel * > ( panel );
+	CItemModelPanel *pItemPanel = dynamic_cast<CItemModelPanel *>(panel);
 
-	if ( pItemPanel && IsVisible() )
+	if(pItemPanel && IsVisible())
 	{
 		CEconItemView *pItem = pItemPanel->GetItem();
-		if ( pItem && !IsIgnoringItemPanelEnters() && !pItemPanel->IsGreyedOut() )
+		if(pItem && !IsIgnoringItemPanelEnters() && !pItemPanel->IsGreyedOut())
 		{
 			m_pItemPanelBeingMousedOver = pItemPanel;
 		}
 
-		if ( !pItemPanel->IsSelected() )
+		if(!pItemPanel->IsSelected())
 		{
-			SetBorderForItem( pItemPanel, true );
+			SetBorderForItem(pItemPanel, true);
 		}
 	}
 }
@@ -475,15 +478,15 @@ void CBaseLoadoutPanel::OnItemPanelEntered( vgui::Panel *panel )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::OnItemPanelExited( vgui::Panel *panel )
+void CBaseLoadoutPanel::OnItemPanelExited(vgui::Panel *panel)
 {
-	CItemModelPanel *pItemPanel = dynamic_cast < CItemModelPanel * > ( panel );
+	CItemModelPanel *pItemPanel = dynamic_cast<CItemModelPanel *>(panel);
 
-	if ( pItemPanel && IsVisible() )
+	if(pItemPanel && IsVisible())
 	{
-		if ( !pItemPanel->IsSelected() )
+		if(!pItemPanel->IsSelected())
 		{
-			SetBorderForItem( pItemPanel, false );
+			SetBorderForItem(pItemPanel, false);
 		}
 	}
 }
@@ -491,32 +494,31 @@ void CBaseLoadoutPanel::OnItemPanelExited( vgui::Panel *panel )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::HideMouseOverPanel( void )
+void CBaseLoadoutPanel::HideMouseOverPanel(void)
 {
-	if ( m_pMouseOverItemPanel->IsVisible() )
+	if(m_pMouseOverItemPanel->IsVisible())
 	{
-		m_pMouseOverItemPanel->SetVisible( false );
+		m_pMouseOverItemPanel->SetVisible(false);
 		m_pItemPanelBeingMousedOver = NULL;
 	}
 
 #ifdef STAGING_ONLY
-	if ( m_pMouseOverCardPanel->IsVisible() )
+	if(m_pMouseOverCardPanel->IsVisible())
 	{
-		m_pMouseOverCardPanel->SetVisible( false );
+		m_pMouseOverCardPanel->SetVisible(false);
 		m_pItemPanelBeingMousedOver = NULL;
 	}
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the index of the first selected item.
 //-----------------------------------------------------------------------------
-int CBaseLoadoutPanel::GetFirstSelectedItemIndex( bool bIncludeEmptySlots )
+int CBaseLoadoutPanel::GetFirstSelectedItemIndex(bool bIncludeEmptySlots)
 {
-	for ( int i = 0; i < m_pItemModelPanels.Count(); i++ )
+	for(int i = 0; i < m_pItemModelPanels.Count(); i++)
 	{
-		if ( m_pItemModelPanels[i]->IsSelected() && ( bIncludeEmptySlots || m_pItemModelPanels[i]->HasItem() ) )
+		if(m_pItemModelPanels[i]->IsSelected() && (bIncludeEmptySlots || m_pItemModelPanels[i]->HasItem()))
 		{
 			return i;
 		}
@@ -524,20 +526,18 @@ int CBaseLoadoutPanel::GetFirstSelectedItemIndex( bool bIncludeEmptySlots )
 	return -1;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the first selected item model panel or NULL if there is no
 //			such panel.
 //-----------------------------------------------------------------------------
-CItemModelPanel *CBaseLoadoutPanel::GetFirstSelectedItemModelPanel (bool bIncludeEmptySlots )
+CItemModelPanel *CBaseLoadoutPanel::GetFirstSelectedItemModelPanel(bool bIncludeEmptySlots)
 {
-	int i = GetFirstSelectedItemIndex( bIncludeEmptySlots );
-	if( i == -1 )
+	int i = GetFirstSelectedItemIndex(bIncludeEmptySlots);
+	if(i == -1)
 		return NULL;
 	else
-		return m_pItemModelPanels[ i ];
+		return m_pItemModelPanels[i];
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the first selected econ item view or NULL if there is no
@@ -545,22 +545,21 @@ CItemModelPanel *CBaseLoadoutPanel::GetFirstSelectedItemModelPanel (bool bInclud
 //-----------------------------------------------------------------------------
 CEconItemView *CBaseLoadoutPanel::GetFirstSelectedItem()
 {
-	CItemModelPanel *pItemModelPanel = GetFirstSelectedItemModelPanel( false );
-	if( pItemModelPanel )
+	CItemModelPanel *pItemModelPanel = GetFirstSelectedItemModelPanel(false);
+	if(pItemModelPanel)
 		return pItemModelPanel->GetItem();
 	else
 		return NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the next item in the specified direction, possibly switching
 //			pages to get there
 //-----------------------------------------------------------------------------
-bool CBaseLoadoutPanel::GetAdjacentItemIndex( int nIndex, int nPage, int *pnNewIndex, int *pnNewPage, int dx, int dy )
+bool CBaseLoadoutPanel::GetAdjacentItemIndex(int nIndex, int nPage, int *pnNewIndex, int *pnNewPage, int dx, int dy)
 {
 	// if we don't have a valid index the right answer is always the first item on the first page
-	if( nIndex == -1 )
+	if(nIndex == -1)
 	{
 		*pnNewIndex = 0;
 		*pnNewPage = nPage;
@@ -571,32 +570,32 @@ bool CBaseLoadoutPanel::GetAdjacentItemIndex( int nIndex, int nPage, int *pnNewI
 	int nColumn = nIndex % GetNumColumns() + dx;
 
 	// just limit us to the top and bottom edges
-	if( nRow < 0 || nRow >= GetNumRows() )
+	if(nRow < 0 || nRow >= GetNumRows())
 		return false;
 
 	// for columns, try to switch pages
 	int nNewPage = nPage;
-	while( nColumn < 0 )
+	while(nColumn < 0)
 	{
-		if( nNewPage == 0 )
+		if(nNewPage == 0)
 			break;
 
 		nNewPage--;
 		nColumn += GetNumColumns();
 	}
 
-	while( nColumn >= GetNumColumns() )
+	while(nColumn >= GetNumColumns())
 	{
-		if( nNewPage == GetNumPages() - 1 )
+		if(nNewPage == GetNumPages() - 1)
 			break;
 
 		nNewPage++;
 		nColumn -= GetNumColumns();
 	}
 
-	if( nColumn < 0 )
+	if(nColumn < 0)
 	{
-		if( nNewPage != nPage )
+		if(nNewPage != nPage)
 		{
 			nColumn = 0;
 		}
@@ -605,9 +604,9 @@ bool CBaseLoadoutPanel::GetAdjacentItemIndex( int nIndex, int nPage, int *pnNewI
 			return false;
 		}
 	}
-	else if( nColumn >= GetNumColumns() )
+	else if(nColumn >= GetNumColumns())
 	{
-		if( nNewPage != nPage )
+		if(nNewPage != nPage)
 		{
 			nColumn = GetNumColumns() - 1;
 		}
@@ -619,13 +618,13 @@ bool CBaseLoadoutPanel::GetAdjacentItemIndex( int nIndex, int nPage, int *pnNewI
 
 	// never change to an invisible panel
 	int nNewIndex = nRow * GetNumColumns() + nColumn;
-	if( nNewIndex >= m_pItemModelPanels.Count() || !m_pItemModelPanels[ nNewIndex ]->IsVisible() )
+	if(nNewIndex >= m_pItemModelPanels.Count() || !m_pItemModelPanels[nNewIndex]->IsVisible())
 	{
 		// try to find a model panel that's still valid so we find the last one on the last valid row
-		while( nNewIndex >= 0 && !m_pItemModelPanels[ nNewIndex ]->IsVisible() )
+		while(nNewIndex >= 0 && !m_pItemModelPanels[nNewIndex]->IsVisible())
 			nNewIndex--;
 
-		if( nNewIndex < 0 || nNewIndex == nIndex )
+		if(nNewIndex < 0 || nNewIndex == nIndex)
 			return false;
 	}
 
@@ -634,132 +633,116 @@ bool CBaseLoadoutPanel::GetAdjacentItemIndex( int nIndex, int nPage, int *pnNewI
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: selects the next item in the specified direction, possibly switching
 //			pages to get there
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::SelectAdjacentItem( int dx, int dy )
+void CBaseLoadoutPanel::SelectAdjacentItem(int dx, int dy)
 {
-	int nSelected = GetFirstSelectedItemIndex( true );
+	int nSelected = GetFirstSelectedItemIndex(true);
 	int nNewPage, nNewSelected;
-	bool bFoundNext = GetAdjacentItemIndex( nSelected, m_nCurrentPage, &nNewSelected, &nNewPage, dx, dy );
-	if( !bFoundNext )
+	bool bFoundNext = GetAdjacentItemIndex(nSelected, m_nCurrentPage, &nNewSelected, &nNewPage, dx, dy);
+	if(!bFoundNext)
 	{
-		vgui::surface()->PlaySound( "player/suit_denydevice.wav" );
+		vgui::surface()->PlaySound("player/suit_denydevice.wav");
 		return;
 	}
 
 	// change pages
-	if( nNewPage != m_nCurrentPage )
+	if(nNewPage != m_nCurrentPage)
 	{
-		Assert( nNewPage >= 0 && nNewPage < GetNumPages() );
-		SetCurrentPage( nNewPage );
+		Assert(nNewPage >= 0 && nNewPage < GetNumPages());
+		SetCurrentPage(nNewPage);
 		UpdateModelPanels();
 	}
 
 	// select the new model
-	if( nSelected != nNewSelected )
+	if(nSelected != nNewSelected)
 	{
-		if( nSelected != -1 && m_pItemModelPanels[ nSelected ]->IsSelected() )
+		if(nSelected != -1 && m_pItemModelPanels[nSelected]->IsSelected())
 		{
-			m_pItemModelPanels[ nSelected ]->SetSelected( false );
-			SetBorderForItem( m_pItemModelPanels[ nSelected ], false );
+			m_pItemModelPanels[nSelected]->SetSelected(false);
+			SetBorderForItem(m_pItemModelPanels[nSelected], false);
 		}
-		if( nNewSelected != -1 && !m_pItemModelPanels[ nNewSelected ]->IsSelected() )
+		if(nNewSelected != -1 && !m_pItemModelPanels[nNewSelected]->IsSelected())
 		{
-			m_pItemModelPanels[ nNewSelected ]->SetSelected( true );
-			SetBorderForItem( m_pItemModelPanels[ nNewSelected ], false );
+			m_pItemModelPanels[nNewSelected]->SetSelected(true);
+			SetBorderForItem(m_pItemModelPanels[nNewSelected], false);
 
-			if( m_bTooltipKeyPressed )
+			if(m_bTooltipKeyPressed)
 			{
-				if( m_pItemModelPanels[ nNewSelected ]->HasItem() )
+				if(m_pItemModelPanels[nNewSelected]->HasItem())
 				{
-					m_pMouseOverTooltip->ShowTooltip( m_pItemModelPanels[ nNewSelected ] );
+					m_pMouseOverTooltip->ShowTooltip(m_pItemModelPanels[nNewSelected]);
 				}
 				else
 				{
 					m_pMouseOverTooltip->HideTooltip();
 				}
 			}
-
 		}
 	}
 
 	OnItemSelectionChanged();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Processes up/down/left/right keys for selecting items in the panel
 //-----------------------------------------------------------------------------
-bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
+bool CBaseLoadoutPanel::HandleItemSelectionKeyPressed(vgui::KeyCode code)
 {
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
 
-	if ( nButtonCode == KEY_XBUTTON_UP ||
-			  nButtonCode == KEY_XSTICK1_UP ||
-			  nButtonCode == KEY_XSTICK2_UP ||
-			  nButtonCode == KEY_UP )
+	if(nButtonCode == KEY_XBUTTON_UP || nButtonCode == KEY_XSTICK1_UP || nButtonCode == KEY_XSTICK2_UP ||
+	   nButtonCode == KEY_UP)
 	{
-		SelectAdjacentItem( 0, -1 );
+		SelectAdjacentItem(0, -1);
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_DOWN ||
-			  nButtonCode == KEY_XSTICK1_DOWN ||
-			  nButtonCode == KEY_XSTICK2_DOWN ||
-			  nButtonCode == STEAMCONTROLLER_DPAD_DOWN ||
-			  nButtonCode == KEY_DOWN )
+	else if(nButtonCode == KEY_XBUTTON_DOWN || nButtonCode == KEY_XSTICK1_DOWN || nButtonCode == KEY_XSTICK2_DOWN ||
+			nButtonCode == STEAMCONTROLLER_DPAD_DOWN || nButtonCode == KEY_DOWN)
 	{
-		SelectAdjacentItem( 0, 1 );
+		SelectAdjacentItem(0, 1);
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
-			  nButtonCode == KEY_XSTICK1_RIGHT ||
-			  nButtonCode == KEY_XSTICK2_RIGHT ||
-			  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
-			  nButtonCode == KEY_RIGHT )
+	else if(nButtonCode == KEY_XBUTTON_RIGHT || nButtonCode == KEY_XSTICK1_RIGHT || nButtonCode == KEY_XSTICK2_RIGHT ||
+			nButtonCode == STEAMCONTROLLER_DPAD_RIGHT || nButtonCode == KEY_RIGHT)
 	{
-		SelectAdjacentItem( 1, 0 );
+		SelectAdjacentItem(1, 0);
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_LEFT ||
-			  nButtonCode == KEY_XSTICK1_LEFT ||
-			  nButtonCode == KEY_XSTICK2_LEFT ||
-			  nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
-			  nButtonCode == KEY_LEFT )
+	else if(nButtonCode == KEY_XBUTTON_LEFT || nButtonCode == KEY_XSTICK1_LEFT || nButtonCode == KEY_XSTICK2_LEFT ||
+			nButtonCode == STEAMCONTROLLER_DPAD_LEFT || nButtonCode == KEY_LEFT)
 	{
-		SelectAdjacentItem( -1, 0 );
+		SelectAdjacentItem(-1, 0);
 		return true;
 	}
-	else if ( code == KEY_PAGEDOWN ||
-			nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER )
+	else if(code == KEY_PAGEDOWN || nButtonCode == KEY_XBUTTON_RIGHT_SHOULDER)
 	{
-		if( m_nCurrentPage < GetNumPages() - 1 )
+		if(m_nCurrentPage < GetNumPages() - 1)
 		{
-			SetCurrentPage( m_nCurrentPage + 1 );
+			SetCurrentPage(m_nCurrentPage + 1);
 			UpdateModelPanels();
 		}
 		return true;
 	}
-	else if ( code == KEY_PAGEUP ||
-			nButtonCode == KEY_XBUTTON_LEFT_SHOULDER )
+	else if(code == KEY_PAGEUP || nButtonCode == KEY_XBUTTON_LEFT_SHOULDER)
 	{
-		if( m_nCurrentPage > 0 )
+		if(m_nCurrentPage > 0)
 		{
-			SetCurrentPage( m_nCurrentPage - 1 );
+			SetCurrentPage(m_nCurrentPage - 1);
 			UpdateModelPanels();
 		}
 		return true;
 	}
-	else if ( nButtonCode == KEY_XBUTTON_Y )
+	else if(nButtonCode == KEY_XBUTTON_Y)
 	{
 		m_bTooltipKeyPressed = true;
-		CItemModelPanel *pSelection = GetFirstSelectedItemModelPanel( false );
-		if( pSelection )
+		CItemModelPanel *pSelection = GetFirstSelectedItemModelPanel(false);
+		if(pSelection)
 		{
 			m_pMouseOverTooltip->ResetDelay();
-			m_pMouseOverTooltip->ShowTooltip( pSelection );
+			m_pMouseOverTooltip->ShowTooltip(pSelection);
 		}
 		return true;
 	}
@@ -769,14 +752,13 @@ bool	CBaseLoadoutPanel::HandleItemSelectionKeyPressed( vgui::KeyCode code )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Processes up/down/left/right keys for selecting items in the panel
 //-----------------------------------------------------------------------------
-bool	CBaseLoadoutPanel::HandleItemSelectionKeyReleased( vgui::KeyCode code )
+bool CBaseLoadoutPanel::HandleItemSelectionKeyReleased(vgui::KeyCode code)
 {
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
-	if( nButtonCode == KEY_XBUTTON_Y )
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
+	if(nButtonCode == KEY_XBUTTON_Y)
 	{
 		m_bTooltipKeyPressed = false;
 		m_pMouseOverTooltip->HideTooltip();
@@ -788,13 +770,12 @@ bool	CBaseLoadoutPanel::HandleItemSelectionKeyReleased( vgui::KeyCode code )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseLoadoutPanel::SetCurrentPage( int nNewPage )
+void CBaseLoadoutPanel::SetCurrentPage(int nNewPage)
 {
-	if( nNewPage < 0 || nNewPage >= GetNumPages() )
+	if(nNewPage < 0 || nNewPage >= GetNumPages())
 		return;
 
 	m_nCurrentPage = nNewPage;

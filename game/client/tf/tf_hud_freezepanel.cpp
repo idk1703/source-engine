@@ -29,7 +29,7 @@
 #include "halloween/c_merasmus.h"
 #include "tf_wardata.h"
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 #include "replay/ireplaysystem.h"
 #include "replay/ireplaymanager.h"
 #include "replay/replay.h"
@@ -41,10 +41,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-DECLARE_HUDELEMENT_DEPTH( CTFFreezePanel, 1 );
+DECLARE_HUDELEMENT_DEPTH(CTFFreezePanel, 1);
 
-#define CALLOUT_WIDE		(XRES(100))
-#define CALLOUT_TALL		(XRES(50))
+#define CALLOUT_WIDE (XRES(100))
+#define CALLOUT_TALL (XRES(50))
 
 extern float g_flFreezeFlash;
 
@@ -52,26 +52,26 @@ extern float g_flFreezeFlash;
 
 extern ConVar hud_freezecamhide;
 
-bool IsTakingAFreezecamScreenshot( void )
+bool IsTakingAFreezecamScreenshot(void)
 {
 	// Don't draw in freezecam, or when the game's not running
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-	bool bInFreezeCam = ( pPlayer && pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM );
+	bool bInFreezeCam = (pPlayer && pPlayer->GetObserverMode() == OBS_MODE_FREEZECAM);
 
-	if ( bInFreezeCam == true && engine->IsTakingScreenshot() )
+	if(bInFreezeCam == true && engine->IsTakingScreenshot())
 		return true;
 
 	CTFFreezePanel *pFreezePanel = CTFFreezePanel::Instance();
-	if ( pFreezePanel )
+	if(pFreezePanel)
 	{
-		if ( pFreezePanel->IsHoldingAfterScreenShot() )
+		if(pFreezePanel->IsHoldingAfterScreenShot())
 			return true;
 	}
 
 	return false;
 }
 
-DECLARE_BUILD_FACTORY( CTFFreezePanelHealth );
+DECLARE_BUILD_FACTORY(CTFFreezePanelHealth);
 
 //-----------------------------------------------------------------------------
 
@@ -87,16 +87,15 @@ CTFFreezePanel *CTFFreezePanel::Instance()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CTFFreezePanel::CTFFreezePanel( const char *pElementName )
-	: EditablePanel( NULL, "FreezePanel" ), CHudElement( pElementName )
+CTFFreezePanel::CTFFreezePanel(const char *pElementName) : EditablePanel(NULL, "FreezePanel"), CHudElement(pElementName)
 {
-	AssertMsg( !s_pFreezePanel, "There can be only one." );
+	AssertMsg(!s_pFreezePanel, "There can be only one.");
 	s_pFreezePanel = this;
 
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetVisible( false );
-	SetScheme( "ClientScheme" );
+	SetParent(pParent);
+	SetVisible(false);
+	SetScheme("ClientScheme");
 
 	m_iKillerIndex = 0;
 	m_iShowNemesisPanel = SHOW_NO_NEMESIS;
@@ -106,12 +105,12 @@ CTFFreezePanel::CTFFreezePanel( const char *pElementName )
 	m_iBasePanelOriginalX = -1;
 	m_iBasePanelOriginalY = -1;
 
-	m_pItemPanel = new CItemModelPanel( this, "itempanel" ) ;
+	m_pItemPanel = new CItemModelPanel(this, "itempanel");
 	m_iItemPanelOriginalX = -1;
 	m_iItemPanelOriginalY = -1;
 
-#if defined( REPLAY_ENABLED )
-	m_pSaveReplayPanel = GET_HUDELEMENT( CReplayReminderPanel );	// Use the HUD's instance
+#if defined(REPLAY_ENABLED)
+	m_pSaveReplayPanel = GET_HUDELEMENT(CReplayReminderPanel); // Use the HUD's instance
 #endif
 
 	m_strCurrentFreezeCamResFile = GetResFilename();
@@ -124,7 +123,7 @@ void CTFFreezePanel::Reset()
 {
 	Hide();
 
-	if ( m_pKillerHealth )
+	if(m_pKillerHealth)
 	{
 		m_pKillerHealth->Reset();
 	}
@@ -136,12 +135,12 @@ void CTFFreezePanel::Reset()
 void CTFFreezePanel::Init()
 {
 	// listen for events
-	ListenForGameEvent( "show_freezepanel" );
-	ListenForGameEvent( "hide_freezepanel" );
-	ListenForGameEvent( "freezecam_started" );
-	ListenForGameEvent( "player_death" );
-	ListenForGameEvent( "teamplay_win_panel" );
-	ListenForGameEvent( "training_complete" );
+	ListenForGameEvent("show_freezepanel");
+	ListenForGameEvent("hide_freezepanel");
+	ListenForGameEvent("freezecam_started");
+	ListenForGameEvent("player_death");
+	ListenForGameEvent("teamplay_win_panel");
+	ListenForGameEvent("training_complete");
 
 	Hide();
 
@@ -151,19 +150,19 @@ void CTFFreezePanel::Init()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::SendTauntAcknowledgement( const char *pszCommand, int iGibs )
+void CTFFreezePanel::SendTauntAcknowledgement(const char *pszCommand, int iGibs)
 {
-	C_TFPlayer *pKiller = ToTFPlayer( UTIL_PlayerByIndex( GetSpectatorTarget() ) );
-	if ( pKiller && pKiller->m_Shared.InCond( TF_COND_TAUNTING ) )
+	C_TFPlayer *pKiller = ToTFPlayer(UTIL_PlayerByIndex(GetSpectatorTarget()));
+	if(pKiller && pKiller->m_Shared.InCond(TF_COND_TAUNTING))
 	{
 		CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pPlayer )
+		if(pPlayer)
 		{
-			KeyValues *kv = new KeyValues( "FreezeCamTaunt" );
-			kv->SetInt( "achiever", pKiller->GetUserID() );
-			kv->SetString( "command", pszCommand );
-			kv->SetInt( "gibs", iGibs );
-			engine->ServerCmdKeyValues( kv );
+			KeyValues *kv = new KeyValues("FreezeCamTaunt");
+			kv->SetInt("achiever", pKiller->GetUserID());
+			kv->SetString("command", pszCommand);
+			kv->SetInt("gibs", iGibs);
+			engine->ServerCmdKeyValues(kv);
 		}
 	}
 }
@@ -171,72 +170,72 @@ void CTFFreezePanel::SendTauntAcknowledgement( const char *pszCommand, int iGibs
 //-----------------------------------------------------------------------------
 // Purpose: Applies scheme settings
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CTFFreezePanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	Assert( !m_strCurrentFreezeCamResFile.IsEmpty() );
-	LoadControlSettings( m_strCurrentFreezeCamResFile.String() );
+	Assert(!m_strCurrentFreezeCamResFile.IsEmpty());
+	LoadControlSettings(m_strCurrentFreezeCamResFile.String());
 
-	m_pBasePanel = dynamic_cast<EditablePanel *>( FindChildByName("FreezePanelBase") );
+	m_pBasePanel = dynamic_cast<EditablePanel *>(FindChildByName("FreezePanelBase"));
 
-	Assert( m_pBasePanel );
+	Assert(m_pBasePanel);
 
-	if ( m_pBasePanel )
+	if(m_pBasePanel)
 	{
-		m_pFreezeLabel = dynamic_cast<Label *>( m_pBasePanel->FindChildByName("FreezeLabel") );
-		m_pKillerLabel = dynamic_cast<Label *>( m_pBasePanel->FindChildByName("FreezeLabelKiller") );
-		m_pFreezePanelBG = dynamic_cast<CTFImagePanel *>( m_pBasePanel->FindChildByName( "FreezePanelBG" ) );
-		m_pNemesisSubPanel = dynamic_cast<EditablePanel *>( m_pBasePanel->FindChildByName( "NemesisSubPanel" ) );
-		m_pKillerHealth	= dynamic_cast<CTFFreezePanelHealth *>( m_pBasePanel->FindChildByName( "FreezePanelHealth" ) );
-		m_pAvatar = dynamic_cast<CAvatarImagePanel *>( m_pBasePanel->FindChildByName("AvatarImage") );
-		m_pFreezeTeamIcon = dynamic_cast<CTFImagePanel *>( m_pBasePanel->FindChildByName( "FreezeTeamIcon" ) );
+		m_pFreezeLabel = dynamic_cast<Label *>(m_pBasePanel->FindChildByName("FreezeLabel"));
+		m_pKillerLabel = dynamic_cast<Label *>(m_pBasePanel->FindChildByName("FreezeLabelKiller"));
+		m_pFreezePanelBG = dynamic_cast<CTFImagePanel *>(m_pBasePanel->FindChildByName("FreezePanelBG"));
+		m_pNemesisSubPanel = dynamic_cast<EditablePanel *>(m_pBasePanel->FindChildByName("NemesisSubPanel"));
+		m_pKillerHealth = dynamic_cast<CTFFreezePanelHealth *>(m_pBasePanel->FindChildByName("FreezePanelHealth"));
+		m_pAvatar = dynamic_cast<CAvatarImagePanel *>(m_pBasePanel->FindChildByName("AvatarImage"));
+		m_pFreezeTeamIcon = dynamic_cast<CTFImagePanel *>(m_pBasePanel->FindChildByName("FreezeTeamIcon"));
 
-		if ( m_pAvatar )
+		if(m_pAvatar)
 		{
-			m_pAvatar->SetShouldScaleImage( true );
-			m_pAvatar->SetShouldDrawFriendIcon( false );
+			m_pAvatar->SetShouldScaleImage(true);
+			m_pAvatar->SetShouldDrawFriendIcon(false);
 		}
 	}
 
-	m_pScreenshotPanel = dynamic_cast<EditablePanel *>( FindChildByName( "ScreenshotPanel" ) );
-	Assert( m_pScreenshotPanel );
+	m_pScreenshotPanel = dynamic_cast<EditablePanel *>(FindChildByName("ScreenshotPanel"));
+	Assert(m_pScreenshotPanel);
 
 	// Move killer panels when the win panel is up
-	int xp,yp;
-	GetPos( xp, yp );
+	int xp, yp;
+	GetPos(xp, yp);
 	m_iYBase = yp;
 
-	int w = 0 , h = 0;
-	if ( m_pBasePanel )
-		m_pBasePanel->GetBounds( m_iBasePanelOriginalX, m_iBasePanelOriginalY, w, h );
-	m_pItemPanel->GetBounds( m_iItemPanelOriginalX, m_iItemPanelOriginalY, w, h );
-	if ( m_pKillerLabel )
+	int w = 0, h = 0;
+	if(m_pBasePanel)
+		m_pBasePanel->GetBounds(m_iBasePanelOriginalX, m_iBasePanelOriginalY, w, h);
+	m_pItemPanel->GetBounds(m_iItemPanelOriginalX, m_iItemPanelOriginalY, w, h);
+	if(m_pKillerLabel)
 	{
-		m_pKillerLabel->GetPos( m_iKillerOriginalX, m_iKillerOriginalY );
+		m_pKillerLabel->GetPos(m_iKillerOriginalX, m_iKillerOriginalY);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::FireGameEvent( IGameEvent * event )
+void CTFFreezePanel::FireGameEvent(IGameEvent *event)
 {
 	const char *pEventName = event->GetName();
 
-	if ( Q_strcmp( "player_death", pEventName ) == 0 )
+	if(Q_strcmp("player_death", pEventName) == 0)
 	{
 		// see if the local player died
-		int iPlayerIndexVictim = engine->GetPlayerForUserID( event->GetInt( "userid" ) );
+		int iPlayerIndexVictim = engine->GetPlayerForUserID(event->GetInt("userid"));
 		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalPlayer && iPlayerIndexVictim == pLocalPlayer->entindex() )
+		if(pLocalPlayer && iPlayerIndexVictim == pLocalPlayer->entindex())
 		{
 			// the local player is dead, see if this is a new nemesis or a revenge
-			if (event->GetInt( "death_flags" ) & TF_DEATH_DOMINATION )
+			if(event->GetInt("death_flags") & TF_DEATH_DOMINATION)
 			{
 				m_iShowNemesisPanel = SHOW_NEW_NEMESIS;
 			}
-			else if ( event->GetInt( "death_flags" ) & TF_DEATH_REVENGE )
+			else if(event->GetInt("death_flags") & TF_DEATH_REVENGE)
 			{
 				m_iShowNemesisPanel = SHOW_REVENGE;
 			}
@@ -246,213 +245,210 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 			}
 		}
 	}
-	else if ( Q_strcmp( "hide_freezepanel", pEventName ) == 0 )
+	else if(Q_strcmp("hide_freezepanel", pEventName) == 0)
 	{
 		Hide();
 	}
-	else if ( Q_strcmp( "freezecam_started", pEventName ) == 0 )
+	else if(Q_strcmp("freezecam_started", pEventName) == 0)
 	{
-		ShowCalloutsIn( 1.0 );
-		ShowSnapshotPanelIn( 1.25 );
+		ShowCalloutsIn(1.0);
+		ShowSnapshotPanelIn(1.25);
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 		// If Replay is enabled on the server, show the replay download reminder.  If GetPendingReplay()
 		// returns NULL, we know we've already saved the replay.
-		CReplay *pCurLifeReplay = ( g_pReplayManager ) ? g_pReplayManager->GetReplayForCurrentLife() : NULL;
-		if ( g_pReplay->IsRecording() && ( pCurLifeReplay && !pCurLifeReplay->m_bRequestedByUser && !pCurLifeReplay->m_bSaved ) )
+		CReplay *pCurLifeReplay = (g_pReplayManager) ? g_pReplayManager->GetReplayForCurrentLife() : NULL;
+		if(g_pReplay->IsRecording() &&
+		   (pCurLifeReplay && !pCurLifeReplay->m_bRequestedByUser && !pCurLifeReplay->m_bSaved))
 		{
-			ShowSaveReplayPanelIn( 1.25 );
+			ShowSaveReplayPanelIn(1.25);
 		}
 
 		// Save the freezeframe for the replay browser
-		if ( g_pReplay->IsRecording() )
+		if(g_pReplay->IsRecording())
 		{
 			// Capture the freezecam in half a second
 			CaptureScreenshotParams_t params;
-			V_memset( &params, 0, sizeof( params ) );
+			V_memset(&params, 0, sizeof(params));
 			params.m_flDelay = 0.0f;
 			params.m_bIgnoreMinTimeBetweenScreenshots = true;
-			g_pReplayScreenshotManager->CaptureScreenshot( params );
+			g_pReplayScreenshotManager->CaptureScreenshot(params);
 		}
 #endif
 
 		CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pPlayer )
+		if(pPlayer)
 		{
-			SendTauntAcknowledgement( "freezecam_taunt" );
+			SendTauntAcknowledgement("freezecam_taunt");
 		}
 	}
-	else if ( Q_strcmp( "teamplay_win_panel", pEventName ) == 0 )
+	else if(Q_strcmp("teamplay_win_panel", pEventName) == 0)
 	{
 		Hide();
 	}
-	else if ( Q_strcmp( "training_complete", pEventName ) == 0 )
+	else if(Q_strcmp("training_complete", pEventName) == 0)
 	{
 		Hide();
 	}
-	else if ( Q_strcmp( "show_freezepanel", pEventName ) == 0 )
+	else if(Q_strcmp("show_freezepanel", pEventName) == 0)
 	{
 		// Get the entity who killed us
-		m_iKillerIndex = event->GetInt( "killer" );
-		C_BaseEntity *pKiller =  ClientEntityList().GetBaseEntity( m_iKillerIndex );
+		m_iKillerIndex = event->GetInt("killer");
+		C_BaseEntity *pKiller = ClientEntityList().GetBaseEntity(m_iKillerIndex);
 		CTFPlayer *pTFPlayerKiller = NULL;
-		if ( pKiller )
+		if(pKiller)
 		{
-			if ( pKiller->IsPlayer() )
+			if(pKiller->IsPlayer())
 			{
-				pTFPlayerKiller = ToTFPlayer( pKiller );
+				pTFPlayerKiller = ToTFPlayer(pKiller);
 			}
-			else if ( pKiller->IsBaseObject() )
+			else if(pKiller->IsBaseObject())
 			{
-				C_BaseObject *pObj = assert_cast<C_BaseObject *>( pKiller );
+				C_BaseObject *pObj = assert_cast<C_BaseObject *>(pKiller);
 				pTFPlayerKiller = pObj->GetOwner();
 			}
 		}
 
 		// Do we need to invalidate a new res file?
-		const char *pszNewResFile = GetResFilename( pTFPlayerKiller );
-		if ( V_stricmp( m_strCurrentFreezeCamResFile.String(), pszNewResFile ) != 0 )
+		const char *pszNewResFile = GetResFilename(pTFPlayerKiller);
+		if(V_stricmp(m_strCurrentFreezeCamResFile.String(), pszNewResFile) != 0)
 		{
 			m_strCurrentFreezeCamResFile = pszNewResFile;
-			InvalidateLayout( true, true );
+			InvalidateLayout(true, true);
 		}
 
-		if ( !g_TF_PR )
+		if(!g_TF_PR)
 		{
-			if ( m_pNemesisSubPanel )
-				m_pNemesisSubPanel->SetDialogVariable( "nemesisname", NULL );
+			if(m_pNemesisSubPanel)
+				m_pNemesisSubPanel->SetDialogVariable("nemesisname", NULL);
 			return;
 		}
 
 		Show();
 
-		ShowSnapshotPanel( false );
-		ShowSaveReplayPanel( false );
+		ShowSnapshotPanel(false);
+		ShowSaveReplayPanel(false);
 		m_bHoldingAfterScreenshot = false;
 
-		if ( m_iBasePanelOriginalX > -1 && m_iBasePanelOriginalY > -1 )
+		if(m_iBasePanelOriginalX > -1 && m_iBasePanelOriginalY > -1)
 		{
-			m_pBasePanel->SetPos( m_iBasePanelOriginalX, m_iBasePanelOriginalY );
+			m_pBasePanel->SetPos(m_iBasePanelOriginalX, m_iBasePanelOriginalY);
 		}
-		if ( m_iItemPanelOriginalX > -1 && m_iItemPanelOriginalY > -1 )
+		if(m_iItemPanelOriginalX > -1 && m_iItemPanelOriginalY > -1)
 		{
-			m_pItemPanel->SetPos( m_iItemPanelOriginalX, m_iItemPanelOriginalY );
+			m_pItemPanel->SetPos(m_iItemPanelOriginalX, m_iItemPanelOriginalY);
 		}
 
-		int xp,yp;
-		GetPos( xp, yp );
-		if ( TFGameRules()->RoundHasBeenWon() )
+		int xp, yp;
+		GetPos(xp, yp);
+		if(TFGameRules()->RoundHasBeenWon())
 		{
-			SetPos( xp, m_iYBase - YRES(50) );
+			SetPos(xp, m_iYBase - YRES(50));
 		}
 		else
 		{
-			SetPos( xp, m_iYBase );
+			SetPos(xp, m_iYBase);
 		}
 
-		if ( pKiller )
+		if(pKiller)
 		{
 			int iMaxBuffedHealth = 0;
 
-			if ( pTFPlayerKiller )
+			if(pTFPlayerKiller)
 			{
 				iMaxBuffedHealth = pTFPlayerKiller->m_Shared.GetMaxBuffedHealth();
 			}
 
 			int iKillerHealth = pKiller->GetHealth();
-			if ( !pKiller->IsAlive() )
+			if(!pKiller->IsAlive())
 			{
 				iKillerHealth = 0;
 			}
 
-			m_pKillerHealth->SetBuilding( pKiller->IsBaseObject() );
-			m_pKillerHealth->SetHealth( iKillerHealth, pKiller->GetMaxHealth(), iMaxBuffedHealth );
+			m_pKillerHealth->SetBuilding(pKiller->IsBaseObject());
+			m_pKillerHealth->SetHealth(iKillerHealth, pKiller->GetMaxHealth(), iMaxBuffedHealth);
 
-			if ( m_pItemPanel )
+			if(m_pItemPanel)
 			{
-				m_pItemPanel->SetVisible( false );
+				m_pItemPanel->SetVisible(false);
 			}
 
-			if ( pKiller->IsPlayer() )
+			if(pKiller->IsPlayer())
 			{
 				C_TFPlayer *pVictim = C_TFPlayer::GetLocalTFPlayer();
 
-				//If this was just a regular kill but this guy is our nemesis then just show it.
-				if ( pVictim && pTFPlayerKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
+				// If this was just a regular kill but this guy is our nemesis then just show it.
+				if(pVictim && pTFPlayerKiller->m_Shared.IsPlayerDominated(pVictim->entindex()))
 				{
-					if ( !pKiller->IsAlive() )
+					if(!pKiller->IsAlive())
 					{
-						m_pFreezeLabel->SetText( "#FreezePanel_Nemesis_Dead" );
+						m_pFreezeLabel->SetText("#FreezePanel_Nemesis_Dead");
 					}
 					else
 					{
-						m_pFreezeLabel->SetText( "#FreezePanel_Nemesis" );
+						m_pFreezeLabel->SetText("#FreezePanel_Nemesis");
 					}
 				}
 				else
 				{
-					if ( !pKiller->IsAlive() )
+					if(!pKiller->IsAlive())
 					{
-						m_pFreezeLabel->SetText( "#FreezePanel_Killer_Dead" );
+						m_pFreezeLabel->SetText("#FreezePanel_Killer_Dead");
 					}
 					else
 					{
-						m_pFreezeLabel->SetText( "#FreezePanel_Killer" );
+						m_pFreezeLabel->SetText("#FreezePanel_Killer");
 					}
 				}
 
-				m_pBasePanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_iKillerIndex ) );
+				m_pBasePanel->SetDialogVariable("killername", g_PR->GetPlayerName(m_iKillerIndex));
 
-				if ( m_pAvatar )
+				if(m_pAvatar)
 				{
-					m_pAvatar->SetPlayer( (C_BasePlayer*)pKiller );
+					m_pAvatar->SetPlayer((C_BasePlayer *)pKiller);
 				}
 
 				// If our killer is using a powerup, show the details of that powerup
-				if ( pTFPlayerKiller && pTFPlayerKiller->m_Shared.IsCarryingRune() )
+				if(pTFPlayerKiller && pTFPlayerKiller->m_Shared.IsCarryingRune())
 				{
-					static CSchemaItemDefHandle rgPowerupItems [] =  { CSchemaItemDefHandle( "Powerup Strength" )
-																	 , CSchemaItemDefHandle( "Powerup Haste" )
-																	 , CSchemaItemDefHandle( "Powerup Regen" )
-																	 , CSchemaItemDefHandle( "Powerup Resist" )
-																	 , CSchemaItemDefHandle( "Powerup Vampire" )
-																	 , CSchemaItemDefHandle( "Powerup Reflect" )
-																	 , CSchemaItemDefHandle( "Powerup Precision" )
-																	 , CSchemaItemDefHandle( "Powerup Agility" )
-																	 , CSchemaItemDefHandle( "Powerup Knockout" )
-																	 , CSchemaItemDefHandle( "Powerup King" )
-																	 , CSchemaItemDefHandle( "Powerup Plague" )
-																	 , CSchemaItemDefHandle( "Powerup Supernova" ) };
+					static CSchemaItemDefHandle rgPowerupItems[] = {
+						CSchemaItemDefHandle("Powerup Strength"),  CSchemaItemDefHandle("Powerup Haste"),
+						CSchemaItemDefHandle("Powerup Regen"),	   CSchemaItemDefHandle("Powerup Resist"),
+						CSchemaItemDefHandle("Powerup Vampire"),   CSchemaItemDefHandle("Powerup Reflect"),
+						CSchemaItemDefHandle("Powerup Precision"), CSchemaItemDefHandle("Powerup Agility"),
+						CSchemaItemDefHandle("Powerup Knockout"),  CSchemaItemDefHandle("Powerup King"),
+						CSchemaItemDefHandle("Powerup Plague"),	   CSchemaItemDefHandle("Powerup Supernova")};
 
-					COMPILE_TIME_ASSERT( ARRAYSIZE( rgPowerupItems ) == RUNE_TYPES_MAX );
+					COMPILE_TIME_ASSERT(ARRAYSIZE(rgPowerupItems) == RUNE_TYPES_MAX);
 
 					// Get the item
-					const CSchemaItemDefHandle& itemDef = rgPowerupItems[pTFPlayerKiller->m_Shared.GetCarryingRuneType()];
+					const CSchemaItemDefHandle &itemDef =
+						rgPowerupItems[pTFPlayerKiller->m_Shared.GetCarryingRuneType()];
 
 					// Create a fake, temp item to show the powerup
 					CEconItemView item;
-					item.SetItemDefIndex( itemDef->GetDefinitionIndex() );
-					item.SetItemQuality( AE_UNIQUE );	// Unique by default
-					item.SetItemLevel( 0 ); // Hide this?
-					item.SetInitialized( true );
-					item.SetItemOriginOverride( kEconItemOrigin_Invalid );
+					item.SetItemDefIndex(itemDef->GetDefinitionIndex());
+					item.SetItemQuality(AE_UNIQUE); // Unique by default
+					item.SetItemLevel(0);			// Hide this?
+					item.SetInitialized(true);
+					item.SetItemOriginOverride(kEconItemOrigin_Invalid);
 
-					m_pItemPanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_iKillerIndex ) );
-					m_pItemPanel->SetItem( &item );
-					m_pItemPanel->SetVisible( true );
+					m_pItemPanel->SetDialogVariable("killername", g_PR->GetPlayerName(m_iKillerIndex));
+					m_pItemPanel->SetItem(&item);
+					m_pItemPanel->SetVisible(true);
 				}
 				else
 				{
 					// If our killer is using an item, display its stats.
 					CTFWeaponBase *pWeapon = pTFPlayerKiller ? pTFPlayerKiller->GetActiveTFWeapon() : NULL;
 					bool bShowItem = false;
-					if ( pWeapon )
+					if(pWeapon)
 					{
 						bShowItem = pWeapon->GetAttributeContainer()->GetItem()->GetItemQuality() != AE_NORMAL;
-						if ( bShowItem )
+						if(bShowItem)
 						{
-							CTFStatPanel *pStatPanel = GET_HUDELEMENT( CTFStatPanel );
-							if ( pStatPanel && pStatPanel->IsVisible() )
+							CTFStatPanel *pStatPanel = GET_HUDELEMENT(CTFStatPanel);
+							if(pStatPanel && pStatPanel->IsVisible())
 							{
 								// Stat panel overrides.
 								bShowItem = false;
@@ -460,136 +456,142 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 						}
 					}
 
-					if ( bShowItem )
+					if(bShowItem)
 					{
-						Label* pItemLabel = m_pItemPanel->FindControl<Label>( "ItemLabel" );
+						Label *pItemLabel = m_pItemPanel->FindControl<Label>("ItemLabel");
 
-						if ( pItemLabel )
+						if(pItemLabel)
 						{
 							// Change the label text depending on if they're holding someone else's item
-							CBasePlayer *pOriginalOwner = GetPlayerByAccountID( pWeapon->GetAttributeContainer()->GetItem()->GetAccountID() );
+							CBasePlayer *pOriginalOwner =
+								GetPlayerByAccountID(pWeapon->GetAttributeContainer()->GetItem()->GetAccountID());
 							bool bOriginalOwner = pOriginalOwner == pKiller;
-							pItemLabel->SetText( bOriginalOwner ? "#FreezePanel_Item" : "#FreezePanel_ItemOtherOwner" );
-							m_pItemPanel->SetDialogVariable( "ownername", bOriginalOwner ? g_PR->GetPlayerName( pOriginalOwner->entindex() ) : "" );
+							pItemLabel->SetText(bOriginalOwner ? "#FreezePanel_Item" : "#FreezePanel_ItemOtherOwner");
+							m_pItemPanel->SetDialogVariable(
+								"ownername", bOriginalOwner ? g_PR->GetPlayerName(pOriginalOwner->entindex()) : "");
 						}
 
-						m_pItemPanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_iKillerIndex ) );
-						m_pItemPanel->SetItem( pWeapon->GetAttributeContainer()->GetItem() );
-						m_pItemPanel->SetVisible( true );
+						m_pItemPanel->SetDialogVariable("killername", g_PR->GetPlayerName(m_iKillerIndex));
+						m_pItemPanel->SetItem(pWeapon->GetAttributeContainer()->GetItem());
+						m_pItemPanel->SetVisible(true);
 					}
 				}
-				if ( m_pItemPanel && m_pItemPanel->IsVisible() )
+				if(m_pItemPanel && m_pItemPanel->IsVisible())
 				{
 					int x, y;
-					m_pItemPanel->GetPos( x, y );
-					m_pItemPanel->SetPos( x, ScreenHeight() - YRES( 12 ) - m_pItemPanel->GetTall() );
+					m_pItemPanel->GetPos(x, y);
+					m_pItemPanel->SetPos(x, ScreenHeight() - YRES(12) - m_pItemPanel->GetTall());
 				}
 			}
-			else if ( pKiller->IsBaseObject() )
+			else if(pKiller->IsBaseObject())
 			{
-				C_BaseObject *pObj = assert_cast<C_BaseObject *>( pKiller );
-				//Assert( pTFPlayerKiller && "Why does this object not have an owner?" );
-				if ( pTFPlayerKiller )
+				C_BaseObject *pObj = assert_cast<C_BaseObject *>(pKiller);
+				// Assert( pTFPlayerKiller && "Why does this object not have an owner?" );
+				if(pTFPlayerKiller)
 				{
 					m_iKillerIndex = pTFPlayerKiller->entindex();
 
-					m_pBasePanel->SetDialogVariable( "killername", g_PR->GetPlayerName( m_iKillerIndex ) );
+					m_pBasePanel->SetDialogVariable("killername", g_PR->GetPlayerName(m_iKillerIndex));
 
-					if ( m_pAvatar )
+					if(m_pAvatar)
 					{
-						m_pAvatar->SetPlayer( pTFPlayerKiller );
-						m_pAvatar->SetVisible( true );
+						m_pAvatar->SetPlayer(pTFPlayerKiller);
+						m_pAvatar->SetVisible(true);
 					}
 
 					pKiller = pTFPlayerKiller;
 				}
 				else
 				{
-					if ( m_pAvatar )
+					if(m_pAvatar)
 					{
-						m_pAvatar->SetVisible( false );
+						m_pAvatar->SetVisible(false);
 					}
 				}
 
-				if ( m_pFreezeLabel )
+				if(m_pFreezeLabel)
 				{
-					if ( pKiller && !pKiller->IsAlive() )
+					if(pKiller && !pKiller->IsAlive())
 					{
-						m_pFreezeLabel->SetText( "#FreezePanel_KillerObject_Dead" );
+						m_pFreezeLabel->SetText("#FreezePanel_KillerObject_Dead");
 					}
 					else
 					{
-						m_pFreezeLabel->SetText( "#FreezePanel_KillerObject" );
+						m_pFreezeLabel->SetText("#FreezePanel_KillerObject");
 					}
 				}
 				const char *pszStatusName = pObj->GetStatusName();
-				wchar_t *wszLocalized = g_pVGuiLocalize->Find( pszStatusName );
+				wchar_t *wszLocalized = g_pVGuiLocalize->Find(pszStatusName);
 
-				if ( !wszLocalized )
+				if(!wszLocalized)
 				{
-					m_pBasePanel->SetDialogVariable( "objectkiller", pszStatusName );
+					m_pBasePanel->SetDialogVariable("objectkiller", pszStatusName);
 				}
 				else
 				{
-					m_pBasePanel->SetDialogVariable( "objectkiller", wszLocalized );
+					m_pBasePanel->SetDialogVariable("objectkiller", wszLocalized);
 				}
 			}
-			else if ( dynamic_cast< C_HeadlessHatman * >( pKiller ) != NULL )
+			else if(dynamic_cast<C_HeadlessHatman *>(pKiller) != NULL)
 			{
-				m_pBasePanel->SetDialogVariable( "killername", g_pVGuiLocalize->Find( "#TF_HALLOWEEN_BOSS_DEATHCAM_NAME" ) );
+				m_pBasePanel->SetDialogVariable("killername",
+												g_pVGuiLocalize->Find("#TF_HALLOWEEN_BOSS_DEATHCAM_NAME"));
 
-				if ( m_pAvatar )
+				if(m_pAvatar)
 				{
-					m_pAvatar->SetVisible( false );
+					m_pAvatar->SetVisible(false);
 				}
 			}
-			else if ( dynamic_cast< C_EyeballBoss * >( pKiller ) != NULL )
+			else if(dynamic_cast<C_EyeballBoss *>(pKiller) != NULL)
 			{
-				m_pBasePanel->SetDialogVariable( "killername", g_pVGuiLocalize->Find( "#TF_HALLOWEEN_EYEBALL_BOSS_DEATHCAM_NAME" ) );
+				m_pBasePanel->SetDialogVariable("killername",
+												g_pVGuiLocalize->Find("#TF_HALLOWEEN_EYEBALL_BOSS_DEATHCAM_NAME"));
 
-				if ( m_pAvatar )
+				if(m_pAvatar)
 				{
-					m_pAvatar->SetVisible( false );
+					m_pAvatar->SetVisible(false);
 				}
 			}
-			else if ( dynamic_cast< C_Merasmus * >( pKiller ) != NULL )
+			else if(dynamic_cast<C_Merasmus *>(pKiller) != NULL)
 			{
-				m_pBasePanel->SetDialogVariable( "killername", g_pVGuiLocalize->Find( "#TF_HALLOWEEN_MERASMUS_DEATHCAM_NAME" ) );
+				m_pBasePanel->SetDialogVariable("killername",
+												g_pVGuiLocalize->Find("#TF_HALLOWEEN_MERASMUS_DEATHCAM_NAME"));
 
-				if ( m_pAvatar )
+				if(m_pAvatar)
 				{
-					m_pAvatar->SetVisible( false );
+					m_pAvatar->SetVisible(false);
 				}
 			}
-			else if ( m_pFreezeLabel )
+			else if(m_pFreezeLabel)
 			{
-				if ( !pKiller->IsAlive() )
+				if(!pKiller->IsAlive())
 				{
-					m_pFreezeLabel->SetText( "#FreezePanel_Killer_Dead" );
+					m_pFreezeLabel->SetText("#FreezePanel_Killer_Dead");
 				}
 				else
 				{
-					m_pFreezeLabel->SetText( "#FreezePanel_Killer" );
+					m_pFreezeLabel->SetText("#FreezePanel_Killer");
 				}
 			}
 
-			if ( m_pFreezePanelBG )
+			if(m_pFreezePanelBG)
 			{
 				// use the killer's team for the background color
-				m_pFreezePanelBG->SetImage( pKiller->GetTeamNumber() == TF_TEAM_BLUE ? "../hud/color_panel_blu" : "../hud/color_panel_red" );
+				m_pFreezePanelBG->SetImage(pKiller->GetTeamNumber() == TF_TEAM_BLUE ? "../hud/color_panel_blu"
+																					: "../hud/color_panel_red");
 			}
 
-			if ( m_pAvatar )
+			if(m_pAvatar)
 			{
 				int iAvX, iAvY;
-				m_pAvatar->GetPos( iAvX, iAvY );
-				if ( m_pAvatar->IsVisible() && m_pAvatar->IsValid() )
+				m_pAvatar->GetPos(iAvX, iAvY);
+				if(m_pAvatar->IsVisible() && m_pAvatar->IsValid())
 				{
-					m_pKillerLabel->SetPos( iAvX + m_pAvatar->GetWide() + XRES(2), m_iKillerOriginalY );
+					m_pKillerLabel->SetPos(iAvX + m_pAvatar->GetWide() + XRES(2), m_iKillerOriginalY);
 				}
 				else
 				{
-					m_pKillerLabel->SetPos( iAvX, m_iKillerOriginalY );
+					m_pKillerLabel->SetPos(iAvX, m_iKillerOriginalY);
 				}
 			}
 		}
@@ -597,23 +599,24 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 		// see if we should show nemesis panel
 		bool bAdvice = false;
 		const wchar_t *pchNemesisText = NULL;
-		switch ( m_iShowNemesisPanel )
+		switch(m_iShowNemesisPanel)
 		{
-		case SHOW_NO_NEMESIS:
+			case SHOW_NO_NEMESIS:
 			{
 				C_TFPlayer *pVictim = C_TFPlayer::GetLocalTFPlayer();
-				CTFPlayer *pTFKiller = ToTFPlayer( pKiller );
+				CTFPlayer *pTFKiller = ToTFPlayer(pKiller);
 
-				//If this was just a regular kill but this guy is our nemesis then just show it.
-				if ( pTFKiller && pTFKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
+				// If this was just a regular kill but this guy is our nemesis then just show it.
+				if(pTFKiller && pTFKiller->m_Shared.IsPlayerDominated(pVictim->entindex()))
 				{
-					pchNemesisText = g_pVGuiLocalize->Find( "#TF_FreezeNemesis" );
+					pchNemesisText = g_pVGuiLocalize->Find("#TF_FreezeNemesis");
 				}
 				// UNDONE: We're not shipping this for now
-				/*else if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && pTFKiller && pTFKiller->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+				/*else if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && pTFKiller &&
+				pTFKiller->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
 				{
-					const wchar_t *pwchHint = g_pVGuiLocalize->Find( VarArgs( "#TF_PVE_FreezePanelHint_%s", pTFKiller->GetPlayerClass()->GetClassIconName() ) );
-					if ( pwchHint && pwchHint[ 0 ] != L'\0' )
+					const wchar_t *pwchHint = g_pVGuiLocalize->Find( VarArgs( "#TF_PVE_FreezePanelHint_%s",
+				pTFKiller->GetPlayerClass()->GetClassIconName() ) ); if ( pwchHint && pwchHint[ 0 ] != L'\0' )
 					{
 						pchNemesisText = pwchHint;
 						bAdvice = true;
@@ -621,42 +624,42 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 				}*/
 			}
 			break;
-		case SHOW_NEW_NEMESIS:
+			case SHOW_NEW_NEMESIS:
 			{
 				C_TFPlayer *pVictim = C_TFPlayer::GetLocalTFPlayer();
-				CTFPlayer *pTFKiller = ToTFPlayer( pKiller );
-				// check to see if killer is still the nemesis of victim; victim may have managed to kill him after victim's
-				// death by grenade or some such, extracting revenge and clearing nemesis condition
-				if ( pTFKiller && pTFKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
+				CTFPlayer *pTFKiller = ToTFPlayer(pKiller);
+				// check to see if killer is still the nemesis of victim; victim may have managed to kill him after
+				// victim's death by grenade or some such, extracting revenge and clearing nemesis condition
+				if(pTFKiller && pTFKiller->m_Shared.IsPlayerDominated(pVictim->entindex()))
 				{
-					pchNemesisText = g_pVGuiLocalize->Find( "#TF_NewNemesis" );
+					pchNemesisText = g_pVGuiLocalize->Find("#TF_NewNemesis");
 				}
 			}
 			break;
-		case SHOW_REVENGE:
-			pchNemesisText = g_pVGuiLocalize->Find( "#TF_GotRevenge" );
-			break;
-		default:
-			Assert( false );	// invalid value
-			break;
+			case SHOW_REVENGE:
+				pchNemesisText = g_pVGuiLocalize->Find("#TF_GotRevenge");
+				break;
+			default:
+				Assert(false); // invalid value
+				break;
 		}
 
-		if ( m_pNemesisSubPanel )
+		if(m_pNemesisSubPanel)
 		{
-			if ( !bAdvice )
+			if(!bAdvice)
 			{
-				m_pNemesisSubPanel->SetDialogVariable( "nemesisname", pchNemesisText );
-				m_pNemesisSubPanel->SetControlVisible( "NemesisLabel2", false );
+				m_pNemesisSubPanel->SetDialogVariable("nemesisname", pchNemesisText);
+				m_pNemesisSubPanel->SetControlVisible("NemesisLabel2", false);
 			}
 			else
 			{
-				m_pNemesisSubPanel->SetDialogVariable( "nemesisname", "" );
-				m_pNemesisSubPanel->SetControlVisible( "NemesisLabel2", true );
-				m_pNemesisSubPanel->SetDialogVariable( "nemesisadvice", pchNemesisText );
+				m_pNemesisSubPanel->SetDialogVariable("nemesisname", "");
+				m_pNemesisSubPanel->SetControlVisible("NemesisLabel2", true);
+				m_pNemesisSubPanel->SetDialogVariable("nemesisadvice", pchNemesisText);
 			}
 		}
 
-		ShowNemesisPanel( pchNemesisText != NULL );
+		ShowNemesisPanel(pchNemesisText != NULL);
 		m_iShowNemesisPanel = SHOW_NO_NEMESIS;
 	}
 }
@@ -664,7 +667,7 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFFreezePanel::GetResFilename( C_TFPlayer *pTFPlayer /*= NULL*/ ) const
+const char *CTFFreezePanel::GetResFilename(C_TFPlayer *pTFPlayer /*= NULL*/) const
 {
 	return "resource/UI/FreezePanel_Basic.res";
 }
@@ -672,7 +675,7 @@ const char *CTFFreezePanel::GetResFilename( C_TFPlayer *pTFPlayer /*= NULL*/ ) c
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ShowCalloutsIn( float flTime )
+void CTFFreezePanel::ShowCalloutsIn(float flTime)
 {
 	m_flShowCalloutsAt = gpGlobals->curtime + flTime;
 }
@@ -680,56 +683,62 @@ void CTFFreezePanel::ShowCalloutsIn( float flTime )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL,
-			CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY )
+CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout(Vector &origin, Vector &vMins, Vector &vMaxs,
+														 CUtlVector<Vector> *vecCalloutsTL,
+														 CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL,
+														 Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR,
+														 int *iX, int *iY)
 {
 	// This is the offset from the topleft of the callout to the arrow tip
 	const int iXOffset = XRES(25);
 	const int iYOffset = YRES(50);
 
-	//if ( engine->IsBoxInViewCluster( vMins + origin, vMaxs + origin) && !engine->CullBox( vMins + origin, vMaxs + origin ) )
+	// if ( engine->IsBoxInViewCluster( vMins + origin, vMaxs + origin) && !engine->CullBox( vMins + origin, vMaxs +
+	// origin ) )
 	{
-		if ( GetVectorInHudSpace( origin, *iX, *iY ) )				// TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
+		if(GetVectorInHudSpace(origin, *iX, *iY)) // TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
 		{
 			*iX -= iXOffset;
 			*iY -= iYOffset;
 			int iRight = *iX + CALLOUT_WIDE;
 			int iBottom = *iY + CALLOUT_TALL;
-			if ( *iX > 0 && *iY > 0 && (iRight < ScreenWidth()) && (iBottom < (ScreenHeight()-YRES(40))) )
+			if(*iX > 0 && *iY > 0 && (iRight < ScreenWidth()) && (iBottom < (ScreenHeight() - YRES(40))))
 			{
 				// Make sure it wouldn't be over the top of the freezepanel or statpanel
-				Vector vecCalloutTL( *iX, *iY, 0 );
-				Vector vecCalloutBR( iRight, iBottom, 1 );
-				if ( !QuickBoxIntersectTest( vecCalloutTL, vecCalloutBR, vecFreezeTL, vecFreezeBR ) &&
-					 !QuickBoxIntersectTest( vecCalloutTL, vecCalloutBR, vecStatTL, vecStatBR ) )
+				Vector vecCalloutTL(*iX, *iY, 0);
+				Vector vecCalloutBR(iRight, iBottom, 1);
+				if(!QuickBoxIntersectTest(vecCalloutTL, vecCalloutBR, vecFreezeTL, vecFreezeBR) &&
+				   !QuickBoxIntersectTest(vecCalloutTL, vecCalloutBR, vecStatTL, vecStatBR))
 				{
 					// Make sure it doesn't intersect any other callouts
 					bool bClear = true;
-					for ( int iCall = 0; iCall < vecCalloutsTL->Count(); iCall++ )
+					for(int iCall = 0; iCall < vecCalloutsTL->Count(); iCall++)
 					{
-						if ( QuickBoxIntersectTest( vecCalloutTL, vecCalloutBR, vecCalloutsTL->Element(iCall), vecCalloutsBR->Element(iCall) ) )
+						if(QuickBoxIntersectTest(vecCalloutTL, vecCalloutBR, vecCalloutsTL->Element(iCall),
+												 vecCalloutsBR->Element(iCall)))
 						{
 							bClear = false;
 							break;
 						}
 					}
 
-					if ( bClear )
+					if(bClear)
 					{
 						// Verify that we have LOS to the gib
-						trace_t	tr;
-						UTIL_TraceLine( origin, MainViewOrigin(), MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr );
-						bClear = ( tr.fraction >= 1.0f );
+						trace_t tr;
+						UTIL_TraceLine(origin, MainViewOrigin(), MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr);
+						bClear = (tr.fraction >= 1.0f);
 					}
 
-					if ( bClear )
+					if(bClear)
 					{
-						CTFFreezePanelCallout *pCallout = new CTFFreezePanelCallout( g_pClientMode->GetViewport(), "FreezePanelCallout" );
-						m_pCalloutPanels.AddToTail( vgui::SETUP_PANEL(pCallout) );
-						vecCalloutsTL->AddToTail( vecCalloutTL );
-						vecCalloutsBR->AddToTail( vecCalloutBR );
-						pCallout->SetVisible( true );
-						pCallout->SetBounds( *iX, *iY, CALLOUT_WIDE, CALLOUT_TALL );
+						CTFFreezePanelCallout *pCallout =
+							new CTFFreezePanelCallout(g_pClientMode->GetViewport(), "FreezePanelCallout");
+						m_pCalloutPanels.AddToTail(vgui::SETUP_PANEL(pCallout));
+						vecCalloutsTL->AddToTail(vecCalloutTL);
+						vecCalloutsBR->AddToTail(vecCalloutBR);
+						pCallout->SetVisible(true);
+						pCallout->SetBounds(*iX, *iY, CALLOUT_WIDE, CALLOUT_TALL);
 						return pCallout;
 					}
 				}
@@ -743,36 +752,36 @@ CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::UpdateCallout( void )
+void CTFFreezePanel::UpdateCallout(void)
 {
 	CTFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	// Abort early if we have no gibs or ragdoll
-	CUtlVector<EHANDLE>	*pGibList = pPlayer->GetSpawnedGibs();
+	CUtlVector<EHANDLE> *pGibList = pPlayer->GetSpawnedGibs();
 	IRagdoll *pRagdoll = pPlayer->GetRepresentativeRagdoll();
-	if ( (!pGibList || pGibList->Count() == 0) && !pRagdoll )
+	if((!pGibList || pGibList->Count() == 0) && !pRagdoll)
 		return;
 
-	if ( m_pFreezePanelBG == NULL )
+	if(m_pFreezePanelBG == NULL)
 		return;
 
 	// Precalc the vectors of the freezepanel & statpanel
 	int iX, iY;
-	m_pFreezePanelBG->GetPos( iX, iY );
-	Vector vecFreezeTL( iX, iY, 0 );
-	Vector vecFreezeBR( iX + m_pFreezePanelBG->GetWide(), iY + m_pFreezePanelBG->GetTall(), 1 );
+	m_pFreezePanelBG->GetPos(iX, iY);
+	Vector vecFreezeTL(iX, iY, 0);
+	Vector vecFreezeBR(iX + m_pFreezePanelBG->GetWide(), iY + m_pFreezePanelBG->GetTall(), 1);
 
 	CUtlVector<Vector> vecCalloutsTL;
 	CUtlVector<Vector> vecCalloutsBR;
 
-	Vector vecStatTL(0,0,0);
-	Vector vecStatBR(0,0,1);
-	CTFStatPanel *pStatPanel = GET_HUDELEMENT( CTFStatPanel );
-	if ( pStatPanel && pStatPanel->IsVisible() )
+	Vector vecStatTL(0, 0, 0);
+	Vector vecStatBR(0, 0, 1);
+	CTFStatPanel *pStatPanel = GET_HUDELEMENT(CTFStatPanel);
+	if(pStatPanel && pStatPanel->IsVisible())
 	{
-		pStatPanel->GetPos( iX, iY );
+		pStatPanel->GetPos(iX, iY);
 		vecStatTL.x = iX;
 		vecStatTL.y = iY;
 		vecStatBR.x = vecStatTL.x + pStatPanel->GetWide();
@@ -782,73 +791,76 @@ void CTFFreezePanel::UpdateCallout( void )
 	Vector vMins, vMaxs;
 
 	// Check gibs
-	if ( pGibList && pGibList->Count() )
+	if(pGibList && pGibList->Count())
 	{
 		int iCount = 0;
-		for ( int i = 0; i < pGibList->Count(); i++ )
+		for(int i = 0; i < pGibList->Count(); i++)
 		{
 			CBaseEntity *pGib = pGibList->Element(i);
-			if ( pGib )
+			if(pGib)
 			{
 				Vector origin = pGib->GetRenderOrigin();
 				IPhysicsObject *pPhysicsObject = pGib->VPhysicsGetObject();
-				if( pPhysicsObject )
+				if(pPhysicsObject)
 				{
 					Vector vecMassCenter = pPhysicsObject->GetMassCenterLocalSpace();
-					pGib->CollisionProp()->CollisionToWorldSpace( vecMassCenter, &origin );
+					pGib->CollisionProp()->CollisionToWorldSpace(vecMassCenter, &origin);
 				}
-				pGib->GetRenderBounds( vMins, vMaxs );
+				pGib->GetRenderBounds(vMins, vMaxs);
 
 				// Try and add the callout
-				CTFFreezePanelCallout *pCallout = TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR,
-					vecFreezeTL, vecFreezeBR, vecStatTL, vecStatBR, &iX, &iY );
-				if ( pCallout )
+				CTFFreezePanelCallout *pCallout =
+					TestAndAddCallout(origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR, vecFreezeTL, vecFreezeBR,
+									  vecStatTL, vecStatBR, &iX, &iY);
+				if(pCallout)
 				{
-					pCallout->UpdateForGib( i, iCount );
+					pCallout->UpdateForGib(i, iCount);
 					iCount++;
 				}
 			}
 		}
 
-		C_ObjectSentrygun *pSentry = dynamic_cast<C_ObjectSentrygun*>( ClientEntityList().GetEnt( GetSpectatorTarget() ) );
-		if ( pSentry )
+		C_ObjectSentrygun *pSentry = dynamic_cast<C_ObjectSentrygun *>(ClientEntityList().GetEnt(GetSpectatorTarget()));
+		if(pSentry)
 		{
 			// A sentry was the killer...check and see if the builder is on screen.
 			CTFPlayer *pBuilder = pSentry->GetBuilder();
-			if ( pBuilder && GetVectorInHudSpace( pBuilder->GetRenderOrigin(), iX, iY ) )				// TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
+			if(pBuilder && GetVectorInHudSpace(pBuilder->GetRenderOrigin(), iX,
+											   iY)) // TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
 			{
-				KeyValues *kv = new KeyValues( "FreezeCamTaunt" );
-				kv->SetInt( "achiever", pBuilder->GetUserID() );
-				kv->SetString( "command", "freezecam_tauntsentry" );
-				engine->ServerCmdKeyValues( kv );
+				KeyValues *kv = new KeyValues("FreezeCamTaunt");
+				kv->SetInt("achiever", pBuilder->GetUserID());
+				kv->SetString("command", "freezecam_tauntsentry");
+				engine->ServerCmdKeyValues(kv);
 			}
 		}
 
 		// Tell the server that we saw some gibs onscreen
-		if ( iCount > 0 )
+		if(iCount > 0)
 		{
-			SendTauntAcknowledgement( "freezecam_tauntgibs", iCount );
+			SendTauntAcknowledgement("freezecam_tauntgibs", iCount);
 		}
 	}
 
 	// Check for a ragdoll as well. Dying characters that ragdoll can also drop wearable items as gibs
-	if ( pRagdoll )
+	if(pRagdoll)
 	{
 		Vector origin = pRagdoll->GetRagdollOrigin();
-		pRagdoll->GetRagdollBounds( vMins, vMaxs );
+		pRagdoll->GetRagdollBounds(vMins, vMaxs);
 
 		// Try and add the callout
-		CTFFreezePanelCallout *pCallout = TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR,
-															 vecFreezeTL, vecFreezeBR, vecStatTL, vecStatBR, &iX, &iY );
-		if ( pCallout )
+		CTFFreezePanelCallout *pCallout = TestAndAddCallout(origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR,
+															vecFreezeTL, vecFreezeBR, vecStatTL, vecStatBR, &iX, &iY);
+		if(pCallout)
 		{
 			pCallout->UpdateForRagdoll();
 		}
 
-		// even if the callout failed, check that our ragdoll is onscreen and our killer is taunting us (for an achievement)
-		if ( GetVectorInHudSpace( origin, iX, iY ) )				// TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
+		// even if the callout failed, check that our ragdoll is onscreen and our killer is taunting us (for an
+		// achievement)
+		if(GetVectorInHudSpace(origin, iX, iY)) // TODO: GetVectorInHudSpace or GetVectorInScreenSpace?
 		{
-			SendTauntAcknowledgement( "freezecam_tauntrag" );
+			SendTauntAcknowledgement("freezecam_tauntrag");
 		}
 	}
 }
@@ -859,12 +871,12 @@ void CTFFreezePanel::UpdateCallout( void )
 void CTFFreezePanel::Show()
 {
 	m_flShowCalloutsAt = 0;
-	SetVisible( true );
+	SetVisible(true);
 }
 
 void CTFFreezePanel::DeleteCalloutPanels()
 {
-	for ( int i = m_pCalloutPanels.Count()-1; i >= 0; i-- )
+	for(int i = m_pCalloutPanels.Count() - 1; i >= 0; i--)
 	{
 		m_pCalloutPanels[i]->MarkForDeletion();
 	}
@@ -876,18 +888,18 @@ void CTFFreezePanel::DeleteCalloutPanels()
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::Hide()
 {
-	SetVisible( false );
+	SetVisible(false);
 	m_bHoldingAfterScreenshot = false;
 
 	// Delete all our callout panels
 	DeleteCalloutPanels();
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 	// Explicitly set the replay reminder's visibility, which is not parented
 	// to the freeze panel.
-	if ( m_pSaveReplayPanel )
+	if(m_pSaveReplayPanel)
 	{
-		m_pSaveReplayPanel->SetVisible( false );
+		m_pSaveReplayPanel->SetVisible(false);
 	}
 #endif
 }
@@ -895,70 +907,71 @@ void CTFFreezePanel::Hide()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFFreezePanel::ShouldDraw( void )
+bool CTFFreezePanel::ShouldDraw(void)
 {
-	return ( IsVisible() );
+	return (IsVisible());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::OnThink( void )
+void CTFFreezePanel::OnThink(void)
 {
 	BaseClass::OnThink();
 
-	if ( m_pItemPanel && m_pItemPanel->IsVisible() )
+	if(m_pItemPanel && m_pItemPanel->IsVisible())
 	{
-		CTFStatPanel *pStatPanel = GET_HUDELEMENT( CTFStatPanel );
-		if ( pStatPanel && pStatPanel->IsVisible() )
+		CTFStatPanel *pStatPanel = GET_HUDELEMENT(CTFStatPanel);
+		if(pStatPanel && pStatPanel->IsVisible())
 		{
-			m_pItemPanel->SetVisible( false );
+			m_pItemPanel->SetVisible(false);
 		}
 	}
 
-	if ( m_flShowCalloutsAt && m_flShowCalloutsAt < gpGlobals->curtime )
+	if(m_flShowCalloutsAt && m_flShowCalloutsAt < gpGlobals->curtime)
 	{
-		if ( ShouldDraw() )
+		if(ShouldDraw())
 		{
 			UpdateCallout();
 		}
 		m_flShowCalloutsAt = 0;
 	}
 
-	if ( m_flShowSnapshotReminderAt && m_flShowSnapshotReminderAt < gpGlobals->curtime )
+	if(m_flShowSnapshotReminderAt && m_flShowSnapshotReminderAt < gpGlobals->curtime)
 	{
-		if ( ShouldDraw() )
+		if(ShouldDraw())
 		{
-			// For now don't do this in Steam Controller mode, because there's no easy way for a SC user to deal with this
-			if ( !::input->IsSteamControllerActive() )
+			// For now don't do this in Steam Controller mode, because there's no easy way for a SC user to deal with
+			// this
+			if(!::input->IsSteamControllerActive())
 			{
-				ShowSnapshotPanel( true );
+				ShowSnapshotPanel(true);
 			}
 		}
 		m_flShowSnapshotReminderAt = 0;
 	}
 
-	if ( m_flShowReplayReminderAt && m_flShowReplayReminderAt < gpGlobals->curtime )
+	if(m_flShowReplayReminderAt && m_flShowReplayReminderAt < gpGlobals->curtime)
 	{
-		if ( ShouldDraw() )
+		if(ShouldDraw())
 		{
-			// For now don't do this in Steam Controller mode, because there's no easy way for a SC user to deal with this
-			if ( !::input->IsSteamControllerActive() )
+			// For now don't do this in Steam Controller mode, because there's no easy way for a SC user to deal with
+			// this
+			if(!::input->IsSteamControllerActive())
 			{
-				ShowSaveReplayPanel( true );
+				ShowSaveReplayPanel(true);
 			}
 		}
 		m_flShowReplayReminderAt = 0;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ShowSnapshotPanelIn( float flTime )
+void CTFFreezePanel::ShowSnapshotPanelIn(float flTime)
 {
-#if defined (_X360 )
+#if defined(_X360)
 	return;
 #endif
 
@@ -968,9 +981,9 @@ void CTFFreezePanel::ShowSnapshotPanelIn( float flTime )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ShowSaveReplayPanelIn( float flTime )
+void CTFFreezePanel::ShowSaveReplayPanelIn(float flTime)
 {
-#if defined (_X360 )
+#if defined(_X360)
 	return;
 #endif
 	m_flShowReplayReminderAt = gpGlobals->curtime + flTime;
@@ -979,200 +992,202 @@ void CTFFreezePanel::ShowSaveReplayPanelIn( float flTime )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ShowSnapshotPanel( bool bShow )
+void CTFFreezePanel::ShowSnapshotPanel(bool bShow)
 {
-	if ( !m_pScreenshotPanel )
+	if(!m_pScreenshotPanel)
 		return;
 
-	const char *key = engine->Key_LookupBinding( "screenshot" );
+	const char *key = engine->Key_LookupBinding("screenshot");
 
-	if ( key == NULL || FStrEq( key, "(null)" ) )
+	if(key == NULL || FStrEq(key, "(null)"))
 	{
 		bShow = false;
 		key = " ";
 	}
 
-	if ( bShow )
+	if(bShow)
 	{
 		char szKey[16];
-		Q_snprintf( szKey, sizeof(szKey), "%s", key );
+		Q_snprintf(szKey, sizeof(szKey), "%s", key);
 		wchar_t wKey[16];
 		wchar_t wLabel[256];
 
 		g_pVGuiLocalize->ConvertANSIToUnicode(szKey, wKey, sizeof(wKey));
-		g_pVGuiLocalize->ConstructString_safe( wLabel, g_pVGuiLocalize->Find("#TF_freezecam_snapshot" ), 1, wKey );
+		g_pVGuiLocalize->ConstructString_safe(wLabel, g_pVGuiLocalize->Find("#TF_freezecam_snapshot"), 1, wKey);
 
-		m_pScreenshotPanel->SetDialogVariable( "text", wLabel );
+		m_pScreenshotPanel->SetDialogVariable("text", wLabel);
 
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( this, "HudSnapShotReminderIn" );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(this, "HudSnapShotReminderIn");
 	}
 
-	m_pScreenshotPanel->SetVisible( bShow );
+	m_pScreenshotPanel->SetVisible(bShow);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ShowSaveReplayPanel( bool bShow )
+void CTFFreezePanel::ShowSaveReplayPanel(bool bShow)
 {
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 	// Make sure ptr's ok
-	if ( !m_pSaveReplayPanel )
+	if(!m_pSaveReplayPanel)
 		return;
 
 	// Don't do this for Steam Controller users
-	if ( ::input->IsSteamControllerActive() )
+	if(::input->IsSteamControllerActive())
 		return;
 
 	// Make sure we're recording
-	if ( !g_pReplay->IsRecording() )
+	if(!g_pReplay->IsRecording())
 		return;
 
 	// Start animation if necessary
-	if ( bShow )
+	if(bShow)
 	{
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( m_pSaveReplayPanel->GetParent(), "HudReplayReminderIn2" );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(m_pSaveReplayPanel->GetParent(),
+																				"HudReplayReminderIn2");
 	}
 
 	// Setup visibility
-	m_pSaveReplayPanel->SetVisible( bShow );
+	m_pSaveReplayPanel->SetVisible(bShow);
 #endif
 }
 
-const char *CTFFreezePanel::GetFilesafePlayerName( const char *pszOldName )
+const char *CTFFreezePanel::GetFilesafePlayerName(const char *pszOldName)
 {
-	if ( !pszOldName )
+	if(!pszOldName)
 		return "";
 
-	static char szSafeName[ MAX_PLAYER_NAME_LENGTH ];
-	int nSafeNameBufSize = sizeof( szSafeName );
+	static char szSafeName[MAX_PLAYER_NAME_LENGTH];
+	int nSafeNameBufSize = sizeof(szSafeName);
 	int nNewPos = 0;
 
-	for( const char *p = pszOldName; *p != 0 && nNewPos < nSafeNameBufSize-1; p++ )
+	for(const char *p = pszOldName; *p != 0 && nNewPos < nSafeNameBufSize - 1; p++)
 	{
-		if( *p == '.' )
+		if(*p == '.')
 		{
-			szSafeName[ nNewPos ] = '-';
+			szSafeName[nNewPos] = '-';
 		}
-		else if( *p == '/' )
+		else if(*p == '/')
 		{
-			szSafeName[ nNewPos ] = '-';
+			szSafeName[nNewPos] = '-';
 		}
-		else if( *p == '\\' )
+		else if(*p == '\\')
 		{
-			szSafeName[ nNewPos ] = '-';
+			szSafeName[nNewPos] = '-';
 		}
-		else if( *p == ':' )
+		else if(*p == ':')
 		{
-			szSafeName[ nNewPos ] = '-';
+			szSafeName[nNewPos] = '-';
 		}
 		else
 		{
-			szSafeName[ nNewPos ] = *p;
+			szSafeName[nNewPos] = *p;
 		}
 
 		nNewPos++;
 	}
 
-	szSafeName[ nNewPos ] = 0;
+	szSafeName[nNewPos] = 0;
 
 	return szSafeName;
 }
 
-int	CTFFreezePanel::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+int CTFFreezePanel::HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	if ( ShouldDraw() && pszCurrentBinding )
+	if(ShouldDraw() && pszCurrentBinding)
 	{
-		if ( FStrEq( pszCurrentBinding, "screenshot" ) || FStrEq( pszCurrentBinding, "jpeg" ) )
+		if(FStrEq(pszCurrentBinding, "screenshot") || FStrEq(pszCurrentBinding, "jpeg"))
 		{
 			// move the target id to the corner
-			if ( m_pBasePanel && m_bShouldScreenshotMovePanelToCorner )
+			if(m_pBasePanel && m_bShouldScreenshotMovePanelToCorner)
 			{
 				int w, h;
-				m_pBasePanel->GetSize( w, h );
+				m_pBasePanel->GetSize(w, h);
 
-				if ( m_pItemPanel && m_pItemPanel->IsVisible() )
+				if(m_pItemPanel && m_pItemPanel->IsVisible())
 				{
-					int iw,ih;
-					m_pItemPanel->GetSize( iw, ih );
-					m_pItemPanel->SetPos( ScreenWidth() - iw, ScreenHeight() - ih );
-					m_pBasePanel->SetPos( ScreenWidth() - w, ScreenHeight() - ih - h );
+					int iw, ih;
+					m_pItemPanel->GetSize(iw, ih);
+					m_pItemPanel->SetPos(ScreenWidth() - iw, ScreenHeight() - ih);
+					m_pBasePanel->SetPos(ScreenWidth() - w, ScreenHeight() - ih - h);
 				}
 				else
 				{
-					m_pBasePanel->SetPos( ScreenWidth() - w, ScreenHeight() - h );
+					m_pBasePanel->SetPos(ScreenWidth() - w, ScreenHeight() - h);
 				}
 			}
 
 			// Get the local player.
 			C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-			if ( pPlayer )
+			if(pPlayer)
 			{
-				//Do effects
+				// Do effects
 				g_flFreezeFlash = gpGlobals->curtime + 0.75f;
-				pPlayer->EmitSound( "Camera.SnapShot" );
+				pPlayer->EmitSound("Camera.SnapShot");
 
-				//Extend Freezecam by a couple more seconds.
-				engine->ClientCmd( "extendfreeze" );
-				view->FreezeFrame( 3.0f );
+				// Extend Freezecam by a couple more seconds.
+				engine->ClientCmd("extendfreeze");
+				view->FreezeFrame(3.0f);
 
-				//Hide the reminder panel
+				// Hide the reminder panel
 				m_flShowSnapshotReminderAt = 0;
-				ShowSnapshotPanel( false );
+				ShowSnapshotPanel(false);
 
 				// Hide replay reminder panel
 				m_flShowReplayReminderAt = 0;
-				ShowSaveReplayPanel( false );
+				ShowSaveReplayPanel(false);
 
 				m_bHoldingAfterScreenshot = true;
 
 				// Hide everything?
-				if ( hud_freezecamhide.GetBool() )
+				if(hud_freezecamhide.GetBool())
 				{
-					SetVisible( false );
+					SetVisible(false);
 					DeleteCalloutPanels();
 				}
 
-				//Set the screenshot name
-				if ( m_iKillerIndex <= MAX_PLAYERS )
+				// Set the screenshot name
+				if(m_iKillerIndex <= MAX_PLAYERS)
 				{
-					const char *pszKillerName = g_PR->GetPlayerName( m_iKillerIndex );
+					const char *pszKillerName = g_PR->GetPlayerName(m_iKillerIndex);
 
-					if ( pszKillerName )
+					if(pszKillerName)
 					{
-						ConVarRef cl_screenshotname( "cl_screenshotname" );
+						ConVarRef cl_screenshotname("cl_screenshotname");
 
-						if ( cl_screenshotname.IsValid() )
+						if(cl_screenshotname.IsValid())
 						{
 							char szScreenShotName[512];
 
-							Q_snprintf( szScreenShotName, sizeof( szScreenShotName ), "%s %s", GetFilesafePlayerName( pszKillerName ), FREEZECAM_SCREENSHOT_STRING );
+							Q_snprintf(szScreenShotName, sizeof(szScreenShotName), "%s %s",
+									   GetFilesafePlayerName(pszKillerName), FREEZECAM_SCREENSHOT_STRING);
 
-							cl_screenshotname.SetValue( szScreenShotName );
+							cl_screenshotname.SetValue(szScreenShotName);
 						}
 					}
 
-					C_TFPlayer *pKiller = ToTFPlayer( UTIL_PlayerByIndex( m_iKillerIndex ) );
-					if ( pKiller )
+					C_TFPlayer *pKiller = ToTFPlayer(UTIL_PlayerByIndex(m_iKillerIndex));
+					if(pKiller)
 					{
 						CSteamID steamID;
-						if ( pKiller->GetSteamID( &steamID ) )
+						if(pKiller->GetSteamID(&steamID))
 						{
-							ConVarRef cl_screenshotusertag( "cl_screenshotusertag" );
-							if ( cl_screenshotusertag.IsValid() )
+							ConVarRef cl_screenshotusertag("cl_screenshotusertag");
+							if(cl_screenshotusertag.IsValid())
 							{
-								cl_screenshotusertag.SetValue( (int)steamID.GetAccountID() );
+								cl_screenshotusertag.SetValue((int)steamID.GetAccountID());
 							}
 						}
 					}
 				}
 			}
 		}
-#if defined( REPLAY_ENABLED )
-		else if ( FStrEq (pszCurrentBinding, "save_replay" ) )
+#if defined(REPLAY_ENABLED)
+		else if(FStrEq(pszCurrentBinding, "save_replay"))
 		{
 			m_flShowReplayReminderAt = 0;
-			ShowSaveReplayPanel( false );
+			ShowSaveReplayPanel(false);
 		}
 #endif
 	}
@@ -1183,59 +1198,60 @@ int	CTFFreezePanel::HudElementKeyInput( int down, ButtonCode_t keynum, const cha
 //-----------------------------------------------------------------------------
 // Purpose: Shows or hides the nemesis part of the panel
 //-----------------------------------------------------------------------------
-void CTFFreezePanel::ShowNemesisPanel( bool bShow )
+void CTFFreezePanel::ShowNemesisPanel(bool bShow)
 {
-	if ( !m_pNemesisSubPanel )
+	if(!m_pNemesisSubPanel)
 		return;
 
-	m_pNemesisSubPanel->SetVisible( bShow );
+	m_pNemesisSubPanel->SetVisible(bShow);
 
-	if ( bShow )
+	if(bShow)
 	{
-		vgui::Label *pLabel = dynamic_cast< vgui::Label *>( m_pNemesisSubPanel->FindChildByName( "NemesisLabel" ) );
-		vgui::Label *pLabel2 = dynamic_cast< vgui::Label *>( m_pNemesisSubPanel->FindChildByName( "NemesisLabel2" ) );
-		vgui::Panel *pBG = m_pNemesisSubPanel->FindChildByName( "NemesisPanelBG" );
-		vgui::ImagePanel *pIcon = dynamic_cast< vgui::ImagePanel *>( m_pNemesisSubPanel->FindChildByName( "NemesisIcon" ) );
+		vgui::Label *pLabel = dynamic_cast<vgui::Label *>(m_pNemesisSubPanel->FindChildByName("NemesisLabel"));
+		vgui::Label *pLabel2 = dynamic_cast<vgui::Label *>(m_pNemesisSubPanel->FindChildByName("NemesisLabel2"));
+		vgui::Panel *pBG = m_pNemesisSubPanel->FindChildByName("NemesisPanelBG");
+		vgui::ImagePanel *pIcon = dynamic_cast<vgui::ImagePanel *>(m_pNemesisSubPanel->FindChildByName("NemesisIcon"));
 
-		// check that our Nemesis panel and resize it to the length of the string (the right side is pinned and doesn't move)
-		if ( pLabel && pLabel2 && pBG && pIcon )
+		// check that our Nemesis panel and resize it to the length of the string (the right side is pinned and doesn't
+		// move)
+		if(pLabel && pLabel2 && pBG && pIcon)
 		{
 			int nDiffX, nDiffY;
 			int wide, tall;
 
-			if ( !pLabel2->IsVisible() )
+			if(!pLabel2->IsVisible())
 			{
-				pLabel->GetContentSize( wide, tall );
+				pLabel->GetContentSize(wide, tall);
 				nDiffX = wide - pLabel->GetWide();
 				nDiffY = tall - pLabel->GetTall();
 			}
 			else
 			{
-				pLabel2->GetContentSize( wide, tall );
+				pLabel2->GetContentSize(wide, tall);
 				nDiffX = wide - pLabel2->GetWide();
 				nDiffY = tall - pLabel2->GetTall();
 			}
 
-			if ( nDiffX != 0 || nDiffY != 0 )
+			if(nDiffX != 0 || nDiffY != 0)
 			{
 				int x, y, w, t;
 
 				// move the icon
-				pIcon->GetBounds( x, y, w, t );
-				pIcon->SetBounds( x - nDiffX, y - nDiffY, w, t );
+				pIcon->GetBounds(x, y, w, t);
+				pIcon->SetBounds(x - nDiffX, y - nDiffY, w, t);
 
-				pLabel->GetBounds( x, y, w, t );
-				pLabel->SetBounds( x - nDiffX, y - nDiffY, w + nDiffX, t + nDiffY );
+				pLabel->GetBounds(x, y, w, t);
+				pLabel->SetBounds(x - nDiffX, y - nDiffY, w + nDiffX, t + nDiffY);
 
-				pLabel2->GetBounds( x, y, w, t );
-				pLabel2->SetBounds( x - nDiffX, y - nDiffY, w + nDiffX, t + nDiffY );
+				pLabel2->GetBounds(x, y, w, t);
+				pLabel2->SetBounds(x - nDiffX, y - nDiffY, w + nDiffX, t + nDiffY);
 
 				// move/resize the background
-				pBG->GetBounds( x, y, w, t );
-				pBG->SetBounds( x - nDiffX, y - nDiffY, w + nDiffX, t + nDiffY );
+				pBG->GetBounds(x, y, w, t);
+				pBG->SetBounds(x - nDiffX, y - nDiffY, w + nDiffX, t + nDiffY);
 
-				m_pNemesisSubPanel->GetBounds( x, y, w, t );
-				m_pNemesisSubPanel->SetBounds( x, y - nDiffY, w, t + nDiffY );
+				m_pNemesisSubPanel->GetBounds(x, y, w, t);
+				m_pNemesisSubPanel->SetBounds(x, y - nDiffY, w, t + nDiffY);
 			}
 		}
 	}
@@ -1244,7 +1260,7 @@ void CTFFreezePanel::ShowNemesisPanel( bool bShow )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFFreezePanelCallout::CTFFreezePanelCallout( Panel *parent, const char *name ) : EditablePanel(parent,name)
+CTFFreezePanelCallout::CTFFreezePanelCallout(Panel *parent, const char *name) : EditablePanel(parent, name)
 {
 	m_pGibLabel = NULL;
 }
@@ -1252,106 +1268,100 @@ CTFFreezePanelCallout::CTFFreezePanelCallout( Panel *parent, const char *name ) 
 //-----------------------------------------------------------------------------
 // Purpose: Applies scheme settings
 //-----------------------------------------------------------------------------
-void CTFFreezePanelCallout::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CTFFreezePanelCallout::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings( "resource/UI/FreezePanelCallout.res" );
+	LoadControlSettings("resource/UI/FreezePanelCallout.res");
 
-	m_pGibLabel = dynamic_cast<Label *>( FindChildByName("CalloutLabel") );
+	m_pGibLabel = dynamic_cast<Label *>(FindChildByName("CalloutLabel"));
 }
 
-const char *pszCalloutGibNames[] =
-{
+const char *pszCalloutGibNames[] = {
 	"#Callout_Head",
 	"#Callout_Foot",
 	"#Callout_Hand",
 	"#Callout_Torso",
-	NULL,	// Random
+	NULL, // Random
 };
-const char *pszCalloutRandomGibNames[] =
-{
-	"#Callout_Organ2",
-	"#Callout_Organ3",
-	"#Callout_Organ4",
-	"#Callout_Organ5",
-	"#Callout_Organ6",
+const char *pszCalloutRandomGibNames[] = {
+	"#Callout_Organ2", "#Callout_Organ3", "#Callout_Organ4", "#Callout_Organ5", "#Callout_Organ6",
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanelCallout::UpdateForGib( int iGib, int iCount )
+void CTFFreezePanelCallout::UpdateForGib(int iGib, int iCount)
 {
-	if ( !m_pGibLabel )
+	if(!m_pGibLabel)
 		return;
 
-	if ( iGib < ARRAYSIZE(pszCalloutGibNames) )
+	if(iGib < ARRAYSIZE(pszCalloutGibNames))
 	{
-		if ( pszCalloutGibNames[iGib] )
+		if(pszCalloutGibNames[iGib])
 		{
-			m_pGibLabel->SetText( pszCalloutGibNames[iGib] );
+			m_pGibLabel->SetText(pszCalloutGibNames[iGib]);
 		}
 		else
 		{
-			m_pGibLabel->SetText( pszCalloutRandomGibNames[ RandomInt(0,ARRAYSIZE(pszCalloutRandomGibNames)-1) ] );
+			m_pGibLabel->SetText(pszCalloutRandomGibNames[RandomInt(0, ARRAYSIZE(pszCalloutRandomGibNames) - 1)]);
 		}
 	}
 	else
 	{
-		if ( iCount > 1 )
+		if(iCount > 1)
 		{
-			m_pGibLabel->SetText( "#FreezePanel_Callout3" );
+			m_pGibLabel->SetText("#FreezePanel_Callout3");
 		}
-		else if ( iCount == 1 )
+		else if(iCount == 1)
 		{
-			m_pGibLabel->SetText( "#FreezePanel_Callout2" );
+			m_pGibLabel->SetText("#FreezePanel_Callout2");
 		}
 		else
 		{
-			m_pGibLabel->SetText( "#FreezePanel_Callout" );
+			m_pGibLabel->SetText("#FreezePanel_Callout");
 		}
 	}
 
 #ifndef _X360
 	int wide, tall;
-	m_pGibLabel->GetContentSize( wide, tall );
+	m_pGibLabel->GetContentSize(wide, tall);
 
 	// is the text wider than the label?
-	if ( wide > m_pGibLabel->GetWide() )
+	if(wide > m_pGibLabel->GetWide())
 	{
 		int nDiff = wide - m_pGibLabel->GetWide();
 		int x, y, w, t;
 
 		// make the label wider
-		m_pGibLabel->GetBounds( x, y, w, t );
-		m_pGibLabel->SetBounds( x, y, w + nDiff, t );
+		m_pGibLabel->GetBounds(x, y, w, t);
+		m_pGibLabel->SetBounds(x, y, w + nDiff, t);
 
-		vgui::Panel *pBackground = FindChildByName( "CalloutBG" );
-		if ( pBackground )
+		vgui::Panel *pBackground = FindChildByName("CalloutBG");
+		if(pBackground)
 		{
 			// also adjust the background image
-			pBackground->GetBounds( x, y, w, t );
-			pBackground->SetBounds( x, y, w + nDiff, t );
+			pBackground->GetBounds(x, y, w, t);
+			pBackground->SetBounds(x, y, w + nDiff, t);
 		}
 
 		// make ourselves bigger to accommodate the wider children
-		GetBounds( x, y, w, t );
-		SetBounds( x, y, w + nDiff, t );
+		GetBounds(x, y, w, t);
+		SetBounds(x, y, w + nDiff, t);
 
 		// check that we haven't run off the right side of the screen
-		if ( x + GetWide() > ScreenWidth() )
+		if(x + GetWide() > ScreenWidth())
 		{
 			// push ourselves to the left to fit on the screen
-			nDiff = ( x + GetWide() ) - ScreenWidth();
-			SetPos( x - nDiff, y );
+			nDiff = (x + GetWide()) - ScreenWidth();
+			SetPos(x - nDiff, y);
 
 			// push the arrow to the right to offset moving ourselves to the left
-			vgui::ImagePanel *pArrow = dynamic_cast<ImagePanel *>( FindChildByName( "ArrowIcon" ) );
-			if ( pArrow )
+			vgui::ImagePanel *pArrow = dynamic_cast<ImagePanel *>(FindChildByName("ArrowIcon"));
+			if(pArrow)
 			{
-				pArrow->GetBounds( x, y, w, t );
-				pArrow->SetBounds( x + nDiff, y, w, t );
+				pArrow->GetBounds(x, y, w, t);
+				pArrow->SetBounds(x + nDiff, y, w, t);
 			}
 		}
 	}
@@ -1361,10 +1371,10 @@ void CTFFreezePanelCallout::UpdateForGib( int iGib, int iCount )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFFreezePanelCallout::UpdateForRagdoll( void )
+void CTFFreezePanelCallout::UpdateForRagdoll(void)
 {
-	if ( !m_pGibLabel )
+	if(!m_pGibLabel)
 		return;
 
-	m_pGibLabel->SetText( "#Callout_Ragdoll" );
+	m_pGibLabel->SetText("#Callout_Ragdoll");
 }

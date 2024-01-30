@@ -11,29 +11,25 @@
 //
 // Recon Data Table
 //
-BEGIN_RECV_TABLE_NOBASE( C_PlayerClassRecon, DT_PlayerClassReconData )
-	RecvPropInt		( RECVINFO( m_ClassData.m_nJumpCount ) ),
-	RecvPropFloat	( RECVINFO( m_ClassData.m_flSuppressionJumpTime ) ),
-	RecvPropFloat	( RECVINFO( m_ClassData.m_flSuppressionImpactTime ) ),
-	RecvPropFloat	( RECVINFO( m_ClassData.m_flStickTime ) ),
-	RecvPropFloat	( RECVINFO( m_ClassData.m_flActiveJumpTime ) ),
-	RecvPropFloat	( RECVINFO( m_ClassData.m_flImpactDist ) ),
-	RecvPropVector	( RECVINFO( m_ClassData.m_vecImpactNormal ) ),
-	RecvPropVector	( RECVINFO( m_ClassData.m_vecUnstickVelocity ) ),
-	RecvPropInt		( RECVINFO( m_ClassData.m_bTrailParticles ) ),
+BEGIN_RECV_TABLE_NOBASE(C_PlayerClassRecon, DT_PlayerClassReconData)
+	RecvPropInt(RECVINFO(m_ClassData.m_nJumpCount)), RecvPropFloat(RECVINFO(m_ClassData.m_flSuppressionJumpTime)),
+		RecvPropFloat(RECVINFO(m_ClassData.m_flSuppressionImpactTime)),
+		RecvPropFloat(RECVINFO(m_ClassData.m_flStickTime)), RecvPropFloat(RECVINFO(m_ClassData.m_flActiveJumpTime)),
+		RecvPropFloat(RECVINFO(m_ClassData.m_flImpactDist)), RecvPropVector(RECVINFO(m_ClassData.m_vecImpactNormal)),
+		RecvPropVector(RECVINFO(m_ClassData.m_vecUnstickVelocity)),
+		RecvPropInt(RECVINFO(m_ClassData.m_bTrailParticles)),
 END_RECV_TABLE()
 
-BEGIN_PREDICTION_DATA_NO_BASE( C_PlayerClassRecon )
+BEGIN_PREDICTION_DATA_NO_BASE(C_PlayerClassRecon)
 
-	DEFINE_PRED_TYPEDESCRIPTION( m_ClassData, PlayerClassReconData_t ),
+	DEFINE_PRED_TYPEDESCRIPTION(m_ClassData, PlayerClassReconData_t),
 
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PlayerClassRecon::C_PlayerClassRecon( C_BaseTFPlayer *pPlayer ) :
-	C_PlayerClass( pPlayer )
+C_PlayerClassRecon::C_PlayerClassRecon(C_BaseTFPlayer *pPlayer) : C_PlayerClass(pPlayer)
 {
 	m_ClassData.m_nJumpCount = 0;
 	m_ClassData.m_flSuppressionJumpTime = -99999;
@@ -49,6 +45,4 @@ C_PlayerClassRecon::C_PlayerClassRecon( C_BaseTFPlayer *pPlayer ) :
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PlayerClassRecon::~C_PlayerClassRecon()
-{
-}
+C_PlayerClassRecon::~C_PlayerClassRecon() {}

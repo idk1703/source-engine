@@ -18,41 +18,37 @@ namespace
 {
 	//-----------------------------------------------------------------------------
 	template<class T>
-	IGameEvent* CreateEvent()
+	IGameEvent *CreateEvent()
 	{
-		IGameEvent *pEvent = gameeventmanager->CreateEvent( T::s_eventName );
-		Assert( pEvent );
+		IGameEvent *pEvent = gameeventmanager->CreateEvent(T::s_eventName);
+		Assert(pEvent);
 		return pEvent;
 	}
 
 	//-----------------------------------------------------------------------------
 	template<class T>
-	bool IsType( IGameEvent *pEvent )
+	bool IsType(IGameEvent *pEvent)
 	{
-		return FStrEq( pEvent->GetName(), T::s_eventName );
+		return FStrEq(pEvent->GetName(), T::s_eventName);
 	}
-}
+} // namespace
 
 //-----------------------------------------------------------------------------
 const char *const BallGet::s_eventName = "pass_get";
 const char *const BallGet::s_keyOwnerIndex = "owner";
 
-BallGet::BallGet( IGameEvent *pEvent )
-	: ownerIndex( pEvent->GetInt( s_keyOwnerIndex ) )
+BallGet::BallGet(IGameEvent *pEvent) : ownerIndex(pEvent->GetInt(s_keyOwnerIndex))
 {
-	Assert( IsType<BallGet>( pEvent ) );
+	Assert(IsType<BallGet>(pEvent));
 }
 
-BallGet::BallGet( int ownerIndex_ )
-	: ownerIndex( ownerIndex_ )
-{
-}
+BallGet::BallGet(int ownerIndex_) : ownerIndex(ownerIndex_) {}
 
 void BallGet::Fire()
 {
-	if ( IGameEvent *pEvent = CreateEvent<BallGet>() )
+	if(IGameEvent *pEvent = CreateEvent<BallGet>())
 	{
-		pEvent->SetInt( s_keyOwnerIndex, ownerIndex );
+		pEvent->SetInt(s_keyOwnerIndex, ownerIndex);
 		gameeventmanager->FireEvent(pEvent);
 	}
 }
@@ -63,36 +59,29 @@ const char *const Score::s_keyScorerIndex = "scorer";
 const char *const Score::s_keyAssisterIndex = "assister";
 const char *const Score::s_keyNumPoints = "points";
 
-Score::Score( IGameEvent *pEvent )
-	: scorerIndex( pEvent->GetInt( s_keyScorerIndex ) )
-	, assisterIndex( pEvent->GetInt( s_keyAssisterIndex ) )
-	, numPoints( pEvent->GetInt( s_keyNumPoints ) )
+Score::Score(IGameEvent *pEvent)
+	: scorerIndex(pEvent->GetInt(s_keyScorerIndex)),
+	  assisterIndex(pEvent->GetInt(s_keyAssisterIndex)),
+	  numPoints(pEvent->GetInt(s_keyNumPoints))
 {
-	Assert( IsType<Score>( pEvent ) );
+	Assert(IsType<Score>(pEvent));
 }
 
-Score::Score( int scorerIndex_, int assisterIndex_, int numPoints_ )
-	: scorerIndex( scorerIndex_ )
-	, assisterIndex( assisterIndex_ )
-	, numPoints( numPoints_ )
+Score::Score(int scorerIndex_, int assisterIndex_, int numPoints_)
+	: scorerIndex(scorerIndex_), assisterIndex(assisterIndex_), numPoints(numPoints_)
 {
 }
 
-Score::Score( int scorerIndex_, int numPoints_ )
-	: scorerIndex( scorerIndex_ )
-	, assisterIndex( -1 )
-	, numPoints( numPoints_ )
-{
-}
+Score::Score(int scorerIndex_, int numPoints_) : scorerIndex(scorerIndex_), assisterIndex(-1), numPoints(numPoints_) {}
 
 void Score::Fire()
 {
-	if ( IGameEvent *pEvent = CreateEvent<Score>() )
+	if(IGameEvent *pEvent = CreateEvent<Score>())
 	{
-		pEvent->SetInt( s_keyScorerIndex, scorerIndex );
-		pEvent->SetInt( s_keyAssisterIndex, assisterIndex );
-		pEvent->SetInt( s_keyNumPoints, numPoints );
-		gameeventmanager->FireEvent( pEvent );
+		pEvent->SetInt(s_keyScorerIndex, scorerIndex);
+		pEvent->SetInt(s_keyAssisterIndex, assisterIndex);
+		pEvent->SetInt(s_keyNumPoints, numPoints);
+		gameeventmanager->FireEvent(pEvent);
 	}
 }
 
@@ -101,38 +90,25 @@ const char *const BallFree::s_eventName = "pass_free";
 const char *const BallFree::s_keyOwnerIndex = "owner";
 const char *const BallFree::s_keyAttackerIndex = "attacker";
 
-BallFree::BallFree( IGameEvent *pEvent )
-	: ownerIndex( pEvent->GetInt( s_keyOwnerIndex ) )
-	, attackerIndex( pEvent->GetInt( s_keyAttackerIndex ) )
+BallFree::BallFree(IGameEvent *pEvent)
+	: ownerIndex(pEvent->GetInt(s_keyOwnerIndex)), attackerIndex(pEvent->GetInt(s_keyAttackerIndex))
 {
-	Assert( IsType<BallFree>( pEvent ) );
+	Assert(IsType<BallFree>(pEvent));
 }
 
-BallFree::BallFree()
-	: ownerIndex( -1 )
-	, attackerIndex( -1 )
-{
-}
+BallFree::BallFree() : ownerIndex(-1), attackerIndex(-1) {}
 
-BallFree::BallFree( int ownerIndex_ )
-	: ownerIndex( ownerIndex_ )
-	, attackerIndex( -1 )
-{
-}
+BallFree::BallFree(int ownerIndex_) : ownerIndex(ownerIndex_), attackerIndex(-1) {}
 
-BallFree::BallFree( int ownerIndex_, int attackerIndex_ )
-	: ownerIndex( ownerIndex_ )
-	, attackerIndex( attackerIndex_ )
-{
-}
+BallFree::BallFree(int ownerIndex_, int attackerIndex_) : ownerIndex(ownerIndex_), attackerIndex(attackerIndex_) {}
 
 void BallFree::Fire()
 {
-	if ( IGameEvent *pEvent = CreateEvent<BallFree>() )
+	if(IGameEvent *pEvent = CreateEvent<BallFree>())
 	{
-		pEvent->SetInt( s_keyOwnerIndex, ownerIndex );
-		pEvent->SetInt( s_keyAttackerIndex, attackerIndex );
-		gameeventmanager->FireEvent( pEvent );
+		pEvent->SetInt(s_keyOwnerIndex, ownerIndex);
+		pEvent->SetInt(s_keyAttackerIndex, attackerIndex);
+		gameeventmanager->FireEvent(pEvent);
 	}
 }
 
@@ -143,40 +119,31 @@ const char *const PassCaught::s_keyCatcherIndex = "catcher";
 const char *const PassCaught::s_keyDist = "dist";
 const char *const PassCaught::s_keyDuration = "duration";
 
-PassCaught::PassCaught( IGameEvent *pEvent )
-	: passerIndex( pEvent->GetInt( s_keyPasserIndex ) )
-	, catcherIndex( pEvent->GetInt( s_keyCatcherIndex ) )
-	, dist( pEvent->GetFloat( s_keyDist ) )
-	, duration( pEvent->GetFloat( s_keyDuration ) )
+PassCaught::PassCaught(IGameEvent *pEvent)
+	: passerIndex(pEvent->GetInt(s_keyPasserIndex)),
+	  catcherIndex(pEvent->GetInt(s_keyCatcherIndex)),
+	  dist(pEvent->GetFloat(s_keyDist)),
+	  duration(pEvent->GetFloat(s_keyDuration))
 {
-	Assert( IsType<PassCaught>( pEvent ) );
+	Assert(IsType<PassCaught>(pEvent));
 }
 
-PassCaught::PassCaught()
-	: passerIndex( -1 )
-	, catcherIndex( -1 )
-	, dist( 0 )
-	, duration( 0 )
-{
-}
+PassCaught::PassCaught() : passerIndex(-1), catcherIndex(-1), dist(0), duration(0) {}
 
-PassCaught::PassCaught( int passerIndex_, int catcherIndex_, float dist_, float duration_ )
-	: passerIndex( passerIndex_ )
-	, catcherIndex( catcherIndex_ )
-	, dist( dist_ )
-	, duration( duration_ )
+PassCaught::PassCaught(int passerIndex_, int catcherIndex_, float dist_, float duration_)
+	: passerIndex(passerIndex_), catcherIndex(catcherIndex_), dist(dist_), duration(duration_)
 {
 }
 
 void PassCaught::Fire()
 {
-	if ( IGameEvent *pEvent = CreateEvent<PassCaught>() )
+	if(IGameEvent *pEvent = CreateEvent<PassCaught>())
 	{
-		pEvent->SetInt( s_keyPasserIndex, passerIndex );
-		pEvent->SetInt( s_keyCatcherIndex, catcherIndex );
-		pEvent->SetFloat( s_keyDist, dist );
-		pEvent->SetFloat( s_keyDuration, duration );
-		gameeventmanager->FireEvent( pEvent );
+		pEvent->SetInt(s_keyPasserIndex, passerIndex);
+		pEvent->SetInt(s_keyCatcherIndex, catcherIndex);
+		pEvent->SetFloat(s_keyDist, dist);
+		pEvent->SetFloat(s_keyDuration, duration);
+		gameeventmanager->FireEvent(pEvent);
 	}
 }
 
@@ -185,32 +152,25 @@ const char *const BallStolen::s_eventName = "pass_ball_stolen";
 const char *const BallStolen::s_keyVictimIndex = "victim";
 const char *const BallStolen::s_keyAttackerIndex = "attacker";
 
-BallStolen::BallStolen( IGameEvent *pEvent )
-	: victimIndex( pEvent->GetInt( s_keyVictimIndex ) )
-	, attackerIndex( pEvent->GetInt( s_keyAttackerIndex ) )
+BallStolen::BallStolen(IGameEvent *pEvent)
+	: victimIndex(pEvent->GetInt(s_keyVictimIndex)), attackerIndex(pEvent->GetInt(s_keyAttackerIndex))
 {
-	Assert( IsType<BallStolen>( pEvent ) );
+	Assert(IsType<BallStolen>(pEvent));
 }
 
-BallStolen::BallStolen()
-	: victimIndex( -1 )
-	, attackerIndex( -1 )
-{
-}
+BallStolen::BallStolen() : victimIndex(-1), attackerIndex(-1) {}
 
-BallStolen::BallStolen( int victimIndex_, int attackerIndex_ )
-	: victimIndex( victimIndex_ )
-	, attackerIndex( attackerIndex_ )
+BallStolen::BallStolen(int victimIndex_, int attackerIndex_) : victimIndex(victimIndex_), attackerIndex(attackerIndex_)
 {
 }
 
 void BallStolen::Fire()
 {
-	if ( IGameEvent *pEvent = CreateEvent<BallStolen>() )
+	if(IGameEvent *pEvent = CreateEvent<BallStolen>())
 	{
-		pEvent->SetInt( s_keyVictimIndex, victimIndex );
-		pEvent->SetInt( s_keyAttackerIndex, attackerIndex );
-		gameeventmanager->FireEvent( pEvent );
+		pEvent->SetInt(s_keyVictimIndex, victimIndex);
+		pEvent->SetInt(s_keyAttackerIndex, attackerIndex);
+		gameeventmanager->FireEvent(pEvent);
 	}
 }
 
@@ -219,31 +179,22 @@ const char *const BallBlocked::s_eventName = "pass_ball_blocked";
 const char *const BallBlocked::s_keyOwnerIndex = "owner";
 const char *const BallBlocked::s_keyBlockerIndex = "blocker";
 
-BallBlocked::BallBlocked( IGameEvent *pEvent )
-	: ownerIndex( pEvent->GetInt( s_keyOwnerIndex ) )
-	, blockerIndex( pEvent->GetInt( s_keyBlockerIndex ) )
+BallBlocked::BallBlocked(IGameEvent *pEvent)
+	: ownerIndex(pEvent->GetInt(s_keyOwnerIndex)), blockerIndex(pEvent->GetInt(s_keyBlockerIndex))
 {
-	Assert( IsType<BallBlocked>( pEvent ) );
+	Assert(IsType<BallBlocked>(pEvent));
 }
 
-BallBlocked::BallBlocked()
-	: ownerIndex( -1 )
-	, blockerIndex( -1 )
-{
-}
+BallBlocked::BallBlocked() : ownerIndex(-1), blockerIndex(-1) {}
 
-BallBlocked::BallBlocked( int ownerIndex_, int blockerIndex_ )
-	: ownerIndex( ownerIndex_ )
-	, blockerIndex( blockerIndex_ )
-{
-}
+BallBlocked::BallBlocked(int ownerIndex_, int blockerIndex_) : ownerIndex(ownerIndex_), blockerIndex(blockerIndex_) {}
 
 void BallBlocked::Fire()
 {
-	if ( IGameEvent *pEvent = CreateEvent<BallBlocked>() )
+	if(IGameEvent *pEvent = CreateEvent<BallBlocked>())
 	{
-		pEvent->SetInt( s_keyOwnerIndex, ownerIndex );
-		pEvent->SetInt( s_keyBlockerIndex, blockerIndex );
-		gameeventmanager->FireEvent( pEvent );
+		pEvent->SetInt(s_keyOwnerIndex, ownerIndex);
+		pEvent->SetInt(s_keyBlockerIndex, blockerIndex);
+		gameeventmanager->FireEvent(pEvent);
 	}
 }

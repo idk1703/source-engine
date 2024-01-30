@@ -11,33 +11,30 @@
 #include "iclientmode.h"
 #include "hl1_hud_numbers.h"
 
-
 // This is a bad way to implement HL1 style sprite fonts, but it will work for now
 
-CHL1HudNumbers::CHL1HudNumbers( vgui::Panel *parent, const char *name ) : BaseClass( parent, name )
+CHL1HudNumbers::CHL1HudNumbers(vgui::Panel *parent, const char *name) : BaseClass(parent, name)
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 }
 
-
-void CHL1HudNumbers::VidInit( void )
+void CHL1HudNumbers::VidInit(void)
 {
-	for ( int i = 0; i < 10; i++ )
+	for(int i = 0; i < 10; i++)
 	{
-		char szNumString[ 10 ];
+		char szNumString[10];
 
-		sprintf( szNumString, "number_%d", i );
-		icon_digits[ i ] = gHUD.GetIcon( szNumString );
+		sprintf(szNumString, "number_%d", i);
+		icon_digits[i] = gHUD.GetIcon(szNumString);
 	}
 }
 
-
-int CHL1HudNumbers::GetNumberFontHeight( void )
+int CHL1HudNumbers::GetNumberFontHeight(void)
 {
-	if ( icon_digits[ 0 ] )
+	if(icon_digits[0])
 	{
-		return icon_digits[ 0 ]->Height();
+		return icon_digits[0]->Height();
 	}
 	else
 	{
@@ -45,12 +42,11 @@ int CHL1HudNumbers::GetNumberFontHeight( void )
 	}
 }
 
-
-int CHL1HudNumbers::GetNumberFontWidth( void )
+int CHL1HudNumbers::GetNumberFontWidth(void)
 {
-	if ( icon_digits[ 0 ] )
+	if(icon_digits[0])
 	{
-		return icon_digits[ 0 ]->Width();
+		return icon_digits[0]->Width();
 	}
 	else
 	{
@@ -58,19 +54,18 @@ int CHL1HudNumbers::GetNumberFontWidth( void )
 	}
 }
 
-
-int CHL1HudNumbers::DrawHudNumber( int x, int y, int iNumber, Color &clrDraw )
+int CHL1HudNumbers::DrawHudNumber(int x, int y, int iNumber, Color &clrDraw)
 {
 	int iWidth = GetNumberFontWidth();
 	int k;
 
-	if ( iNumber > 0 )
+	if(iNumber > 0)
 	{
 		// SPR_Draw 100's
-		if ( iNumber >= 100 )
+		if(iNumber >= 100)
 		{
 			k = iNumber / 100;
-			icon_digits[ k ]->DrawSelf( x, y, clrDraw );
+			icon_digits[k]->DrawSelf(x, y, clrDraw);
 			x += iWidth;
 		}
 		else
@@ -79,10 +74,10 @@ int CHL1HudNumbers::DrawHudNumber( int x, int y, int iNumber, Color &clrDraw )
 		}
 
 		// SPR_Draw 10's
-		if ( iNumber >= 10 )
+		if(iNumber >= 10)
 		{
-			k = ( iNumber % 100 ) / 10;
-			icon_digits[ k ]->DrawSelf( x, y, clrDraw );
+			k = (iNumber % 100) / 10;
+			icon_digits[k]->DrawSelf(x, y, clrDraw);
 			x += iWidth;
 		}
 		else
@@ -92,7 +87,7 @@ int CHL1HudNumbers::DrawHudNumber( int x, int y, int iNumber, Color &clrDraw )
 
 		// SPR_Draw ones
 		k = iNumber % 10;
-		icon_digits[ k ]->DrawSelf( x, y, clrDraw );
+		icon_digits[k]->DrawSelf(x, y, clrDraw);
 		x += iWidth;
 	}
 	else
@@ -105,7 +100,7 @@ int CHL1HudNumbers::DrawHudNumber( int x, int y, int iNumber, Color &clrDraw )
 
 		// SPR_Draw ones
 		k = 0;
-		icon_digits[ k ]->DrawSelf( x, y, clrDraw );
+		icon_digits[k]->DrawSelf(x, y, clrDraw);
 		x += iWidth;
 	}
 

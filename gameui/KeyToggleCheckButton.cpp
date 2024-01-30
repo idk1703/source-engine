@@ -15,24 +15,24 @@
 
 using namespace vgui;
 
-CKeyToggleCheckButton::CKeyToggleCheckButton( Panel *parent, const char *panelName, const char *text,
-	char const *key, char const *cmdname )
- : CheckButton( parent, panelName, text )
+CKeyToggleCheckButton::CKeyToggleCheckButton(Panel *parent, const char *panelName, const char *text, char const *key,
+											 char const *cmdname)
+	: CheckButton(parent, panelName, text)
 {
-	m_pszKeyName = key ? strdup( key ) : NULL;
-	m_pszCmdName = cmdname ? strdup( cmdname ) : NULL;
+	m_pszKeyName = key ? strdup(key) : NULL;
+	m_pszCmdName = cmdname ? strdup(cmdname) : NULL;
 
-	if (m_pszKeyName)
+	if(m_pszKeyName)
 	{
 		Reset();
 	}
-	//m_bNoCommand = false;
+	// m_bNoCommand = false;
 }
 
 CKeyToggleCheckButton::~CKeyToggleCheckButton()
 {
-	free( m_pszKeyName );
-	free( m_pszCmdName );
+	free(m_pszKeyName);
+	free(m_pszCmdName);
 }
 
 //-----------------------------------------------------------------------------
@@ -42,17 +42,17 @@ void CKeyToggleCheckButton::Paint()
 {
 	BaseClass::Paint();
 
-	if ( !m_pszKeyName )
+	if(!m_pszKeyName)
 		return;
 
 	// Fixme, look up key state
 	bool isdown;
-	if ( gameuifuncs->IsKeyDown( m_pszKeyName, isdown ) )
+	if(gameuifuncs->IsKeyDown(m_pszKeyName, isdown))
 	{
 		// if someone changed the value using the consoel
-		if ( m_bStartValue != isdown )
+		if(m_bStartValue != isdown)
 		{
-			SetSelected( isdown );
+			SetSelected(isdown);
 			m_bStartValue = isdown;
 		}
 	}
@@ -86,10 +86,10 @@ void CKeyToggleCheckButton::SetSelected( bool state )
 //-----------------------------------------------------------------------------
 void CKeyToggleCheckButton::Reset()
 {
-	gameuifuncs->IsKeyDown( m_pszKeyName, m_bStartValue );
-	if ( IsSelected() != m_bStartValue)
+	gameuifuncs->IsKeyDown(m_pszKeyName, m_bStartValue);
+	if(IsSelected() != m_bStartValue)
 	{
-		SetSelected( m_bStartValue );
+		SetSelected(m_bStartValue);
 	}
 }
 
@@ -98,15 +98,14 @@ void CKeyToggleCheckButton::Reset()
 //-----------------------------------------------------------------------------
 void CKeyToggleCheckButton::ApplyChanges()
 {
-	if ( !m_pszCmdName || !m_pszCmdName[ 0 ] )
+	if(!m_pszCmdName || !m_pszCmdName[0])
 		return;
 
-	char szCommand[ 256 ];
+	char szCommand[256];
 
-	Q_snprintf( szCommand, sizeof( szCommand ), "%c%s\n", IsSelected() ? '+' : '-',
-		m_pszCmdName );
+	Q_snprintf(szCommand, sizeof(szCommand), "%c%s\n", IsSelected() ? '+' : '-', m_pszCmdName);
 
-	engine->ClientCmd_Unrestricted( szCommand );
+	engine->ClientCmd_Unrestricted(szCommand);
 }
 
 //-----------------------------------------------------------------------------

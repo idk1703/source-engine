@@ -10,21 +10,19 @@
 
 #include <vgui_controls/HTML.h>
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
 // HTML controls display HTML content.
 //-----------------------------------------------------------------------------
-class HTMLDemo: public DemoPage
+class HTMLDemo : public DemoPage
 {
-	public:
-		HTMLDemo(Panel *parent, const char *name);
-		~HTMLDemo();
+public:
+	HTMLDemo(Panel *parent, const char *name);
+	~HTMLDemo();
 
-	private:
-
-		HTML *m_pHTML;
+private:
+	HTML *m_pHTML;
 };
 
 //-----------------------------------------------------------------------------
@@ -40,25 +38,20 @@ HTMLDemo::HTMLDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 
 	// now open a URL
 	m_pHTML->OpenURL("http://www.valvesoftware.com", NULL);
-//	m_pHTML->OpenURL("file:///c:/temp/WebCap.plg");
+	//	m_pHTML->OpenURL("file:///c:/temp/WebCap.plg");
 	// the URL can be any valid URL accepted by Internet Explorer, use file:///c:/... for local filesystem files :)
 
 	// this call causes the control to repaint itself every 1000msec or so, to allow animated gifs to work
 	// bdawson:TODO
-	//m_pHTML->StartAnimate(1000);
+	// m_pHTML->StartAnimate(1000);
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-HTMLDemo::~HTMLDemo()
-{
-}
+HTMLDemo::~HTMLDemo() {}
 
-
-Panel* HTMLDemo_Create(Panel *parent)
+Panel *HTMLDemo_Create(Panel *parent)
 {
 	return new HTMLDemo(parent, "HTMLDemo");
 }

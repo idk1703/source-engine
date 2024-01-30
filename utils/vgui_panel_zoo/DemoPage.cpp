@@ -14,10 +14,10 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 DemoPage::DemoPage(Panel *parent, const char *name) : PropertyPage(parent, name)
 {
-	SetPos(1,80);
+	SetPos(1, 80);
 	int wide, tall;
 	GetParent()->GetSize(wide, tall);
-	SetSize (wide-2, tall - 81);
+	SetSize(wide - 2, tall - 81);
 
 	SetPaintBorderEnabled(false);
 	SetVisible(false);
@@ -26,6 +26,4 @@ DemoPage::DemoPage(Panel *parent, const char *name) : PropertyPage(parent, name)
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-DemoPage::~DemoPage()
-{
-}
+DemoPage::~DemoPage() {}

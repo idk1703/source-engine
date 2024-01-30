@@ -16,14 +16,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Loads the cursor (only once).
 //-----------------------------------------------------------------------------
-CToolMagnify::CToolMagnify(void)
-{
-}
-
+CToolMagnify::CToolMagnify(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -37,7 +33,6 @@ bool CToolMagnify::OnContextMenu2D(CMapView2D *pView, UINT nFlags, const Vector2
 	// Return true to suppress the default view context menu behavior.
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -53,7 +48,6 @@ bool CToolMagnify::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pView -
@@ -64,10 +58,9 @@ bool CToolMagnify::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D
 bool CToolMagnify::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	// cursors are cached by surface
-	pView->SetCursor( "Resource/magnify.cur" );
+	pView->SetCursor("Resource/magnify.cur");
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:

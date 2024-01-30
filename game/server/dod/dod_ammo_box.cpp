@@ -9,131 +9,130 @@
 #include "dod_player.h"
 #include "dod_gamerules.h"
 
-BEGIN_DATADESC( CAmmoBox )
-	DEFINE_THINKFUNC( FlyThink ),
-	DEFINE_ENTITYFUNC( BoxTouch ),
+BEGIN_DATADESC(CAmmoBox)
+	DEFINE_THINKFUNC(FlyThink), DEFINE_ENTITYFUNC(BoxTouch),
 END_DATADESC();
 
-LINK_ENTITY_TO_CLASS( dod_ammo_box, CAmmoBox );
+LINK_ENTITY_TO_CLASS(dod_ammo_box, CAmmoBox);
 
-void CAmmoBox::Spawn( void )
+void CAmmoBox::Spawn(void)
 {
-	Precache( );
-	SetModel( "models/ammo/ammo_us.mdl" );
+	Precache();
+	SetModel("models/ammo/ammo_us.mdl");
 	BaseClass::Spawn();
 
-	SetNextThink( gpGlobals->curtime + 0.75f );
-	SetThink( &CAmmoBox::FlyThink );
+	SetNextThink(gpGlobals->curtime + 0.75f);
+	SetThink(&CAmmoBox::FlyThink);
 
-	SetTouch( &CAmmoBox::BoxTouch );
+	SetTouch(&CAmmoBox::BoxTouch);
 
 	m_hOldOwner = GetOwnerEntity();
 }
 
-void CAmmoBox::Precache( void )
+void CAmmoBox::Precache(void)
 {
-	PrecacheModel( "models/ammo/ammo_axis.mdl" );
-	PrecacheModel( "models/ammo/ammo_us.mdl" );
+	PrecacheModel("models/ammo/ammo_axis.mdl");
+	PrecacheModel("models/ammo/ammo_us.mdl");
 }
 
-CAmmoBox *CAmmoBox::Create( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, int team )
+CAmmoBox *CAmmoBox::Create(const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, int team)
 {
-	CAmmoBox *p = static_cast<CAmmoBox *> ( CBaseAnimating::Create( "dod_ammo_box", vecOrigin, vecAngles, pOwner ) );
+	CAmmoBox *p = static_cast<CAmmoBox *>(CBaseAnimating::Create("dod_ammo_box", vecOrigin, vecAngles, pOwner));
 
-	p->SetAmmoTeam( team );
+	p->SetAmmoTeam(team);
 
 	return p;
 }
 
-void CAmmoBox::SetAmmoTeam( int team )
+void CAmmoBox::SetAmmoTeam(int team)
 {
-	switch( team )
+	switch(team)
 	{
-	case TEAM_ALLIES:
+		case TEAM_ALLIES:
 		{
-			SetModel( "models/ammo/ammo_us.mdl" );
+			SetModel("models/ammo/ammo_us.mdl");
 		}
 		break;
-	case TEAM_AXIS:
+		case TEAM_AXIS:
 		{
-			SetModel( "models/ammo/ammo_axis.mdl" );
+			SetModel("models/ammo/ammo_axis.mdl");
 		}
 		break;
-	default:
-		Assert(0);
-		break;
+		default:
+			Assert(0);
+			break;
 	}
 
 	m_iAmmoTeam = team;
 }
 
-void CAmmoBox::FlyThink( void )
+void CAmmoBox::FlyThink(void)
 {
-	SetOwnerEntity( NULL );	//so our owner can pick it back up
+	SetOwnerEntity(NULL); // so our owner can pick it back up
 }
 
-void CAmmoBox::BoxTouch( CBaseEntity *pOther )
+void CAmmoBox::BoxTouch(CBaseEntity *pOther)
 {
-	Assert( pOther );
+	Assert(pOther);
 
-	if( !pOther->IsPlayer() )
+	if(!pOther->IsPlayer())
 		return;
 
-	if( !pOther->IsAlive() )
+	if(!pOther->IsAlive())
 		return;
 
-	//Don't let the person who threw this ammo pick it up until it hits the ground.
-	//This way we can throw ammo to people, but not touch it as soon as we throw it ourselves
-	if( GetOwnerEntity() == pOther )
+	// Don't let the person who threw this ammo pick it up until it hits the ground.
+	// This way we can throw ammo to people, but not touch it as soon as we throw it ourselves
+	if(GetOwnerEntity() == pOther)
 		return;
 
-	CDODPlayer *pPlayer = ToDODPlayer( pOther );
+	CDODPlayer *pPlayer = ToDODPlayer(pOther);
 
-	Assert( pPlayer );
+	Assert(pPlayer);
 
-	if( pPlayer->GetTeamNumber() != m_iAmmoTeam )
+	if(pPlayer->GetTeamNumber() != m_iAmmoTeam)
 		return;
 
-	if( pPlayer == m_hOldOwner )
+	if(pPlayer == m_hOldOwner)
 	{
-		//don't give ammo, just give him his drop again
+		// don't give ammo, just give him his drop again
 		pPlayer->ReturnGenericAmmo();
 		UTIL_Remove(this);
 	}
 	else
 	{
-		//See if they can use some ammo, if so, remove the box
-		if( pPlayer->GiveGenericAmmo() )
+		// See if they can use some ammo, if so, remove the box
+		if(pPlayer->GiveGenericAmmo())
 			UTIL_Remove(this);
 	}
 }
 
-bool CAmmoBox::MyTouch( CBasePlayer *pBasePlayer )
+bool CAmmoBox::MyTouch(CBasePlayer *pBasePlayer)
 {
-	if ( !pBasePlayer )
+	if(!pBasePlayer)
 	{
-		Assert( false );
+		Assert(false);
 		return false;
 	}
 
-	if( !pBasePlayer->IsAlive() )
+	if(!pBasePlayer->IsAlive())
 		return false;
 
-	if( pBasePlayer->GetTeamNumber() != m_iAmmoTeam )
+	if(pBasePlayer->GetTeamNumber() != m_iAmmoTeam)
 		return false;
 
-	CDODPlayer *pPlayer = ToDODPlayer( pBasePlayer );
+	CDODPlayer *pPlayer = ToDODPlayer(pBasePlayer);
 
-	if( pPlayer == m_hOldOwner )
+	if(pPlayer == m_hOldOwner)
 	{
-		//don't give ammo, just give him his drop again
+		// don't give ammo, just give him his drop again
 		pPlayer->ReturnGenericAmmo();
 		UTIL_Remove(this);
 	}
 	else
 	{
-		//See if they can use some ammo, if so, remove the box
-		if( pPlayer->GiveGenericAmmo() )
+		// See if they can use some ammo, if so, remove the box
+		if(pPlayer->GiveGenericAmmo())
 			UTIL_Remove(this);
 	}
 

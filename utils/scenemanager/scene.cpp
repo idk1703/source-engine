@@ -11,18 +11,18 @@
 #include "workspacemanager.h"
 #include "workspacebrowser.h"
 
-CScene::CScene( CProject *proj, char const *name ) : m_pOwner( proj )
+CScene::CScene(CProject *proj, char const *name) : m_pOwner(proj)
 {
-	Q_strncpy( m_szName, name, sizeof( m_szName ) );
+	Q_strncpy(m_szName, name, sizeof(m_szName));
 	m_pszComments = NULL;
 }
 
 CScene::~CScene()
 {
-	while ( m_Files.Count() > 0 )
+	while(m_Files.Count() > 0)
 	{
-		CVCDFile *f = m_Files[ 0 ];
-		m_Files.Remove( 0 );
+		CVCDFile *f = m_Files[0];
+		m_Files.Remove(0);
 		delete f;
 	}
 	delete[] m_pszComments;
@@ -33,15 +33,15 @@ CProject *CScene::GetOwnerProject()
 	return m_pOwner;
 }
 
-void CScene::SetComments( char const *comments )
+void CScene::SetComments(char const *comments)
 {
 	delete[] m_pszComments;
-	m_pszComments = V_strdup( comments );
+	m_pszComments = V_strdup(comments);
 
-	GetOwnerProject()->SetDirty( true );
+	GetOwnerProject()->SetDirty(true);
 }
 
-char const *CScene::GetComments( void ) const
+char const *CScene::GetComments(void) const
 {
 	return m_pszComments ? m_pszComments : "";
 }
@@ -56,103 +56,103 @@ int CScene::GetVCDCount() const
 	return m_Files.Count();
 }
 
-CVCDFile *CScene::GetVCD( int index )
+CVCDFile *CScene::GetVCD(int index)
 {
-	if ( index < 0 || index >= m_Files.Count() )
+	if(index < 0 || index >= m_Files.Count())
 		return NULL;
-	return m_Files[ index ];
+	return m_Files[index];
 }
 
-void CScene::AddVCD( CVCDFile *vcd )
+void CScene::AddVCD(CVCDFile *vcd)
 {
-	Assert( m_Files.Find( vcd ) == m_Files.InvalidIndex() );
+	Assert(m_Files.Find(vcd) == m_Files.InvalidIndex());
 
-	m_Files.AddToTail( vcd );
+	m_Files.AddToTail(vcd);
 
-	GetOwnerProject()->SetDirty( true );
+	GetOwnerProject()->SetDirty(true);
 }
 
-void CScene::RemoveVCD( CVCDFile *vcd )
+void CScene::RemoveVCD(CVCDFile *vcd)
 {
-	if ( m_Files.Find( vcd ) == m_Files.InvalidIndex() )
+	if(m_Files.Find(vcd) == m_Files.InvalidIndex())
 		return;
 
-	m_Files.FindAndRemove( vcd );
+	m_Files.FindAndRemove(vcd);
 
-	GetOwnerProject()->SetDirty( true );
+	GetOwnerProject()->SetDirty(true);
 }
 
-CVCDFile *CScene::FindVCD( char const *filename )
+CVCDFile *CScene::FindVCD(char const *filename)
 {
 	int c = GetVCDCount();
 	CVCDFile *vcd;
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		vcd = GetVCD( i );
-		if ( !vcd )
+		vcd = GetVCD(i);
+		if(!vcd)
 			continue;
 
-		if ( !Q_stricmp( filename, vcd->GetName() ) )
+		if(!Q_stricmp(filename, vcd->GetName()))
 			return vcd;
 	}
 	return NULL;
 }
 
-void CScene::ValidateTree( mxTreeView *tree, mxTreeViewItem* parent )
+void CScene::ValidateTree(mxTreeView *tree, mxTreeViewItem *parent)
 {
-	CUtlVector< mxTreeViewItem * >	m_KnownItems;
+	CUtlVector<mxTreeViewItem *> m_KnownItems;
 
 	int c = GetVCDCount();
 	CVCDFile *vcd;
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		vcd = GetVCD( i );
-		if ( !vcd )
+		vcd = GetVCD(i);
+		if(!vcd)
 			continue;
 
-		char sz[ 256 ];
-		if ( vcd->GetComments() && vcd->GetComments()[0] )
+		char sz[256];
+		if(vcd->GetComments() && vcd->GetComments()[0])
 		{
-			Q_snprintf( sz, sizeof( sz ), "%s : %s", vcd->GetName(), vcd->GetComments() );
+			Q_snprintf(sz, sizeof(sz), "%s : %s", vcd->GetName(), vcd->GetComments());
 		}
 		else
 		{
-			Q_snprintf( sz, sizeof( sz ), "%s", vcd->GetName() );
+			Q_snprintf(sz, sizeof(sz), "%s", vcd->GetName());
 		}
 
-		mxTreeViewItem *spot = vcd->FindItem( tree, parent );
-		if ( !spot )
+		mxTreeViewItem *spot = vcd->FindItem(tree, parent);
+		if(!spot)
 		{
-			spot = tree->add( parent, sz );
+			spot = tree->add(parent, sz);
 		}
 
-		m_KnownItems.AddToTail( spot );
+		m_KnownItems.AddToTail(spot);
 
-		vcd->SetOrdinal( i );
+		vcd->SetOrdinal(i);
 
-		tree->setLabel( spot, sz );
+		tree->setLabel(spot, sz);
 
-		tree->setImages( spot, vcd->GetIconIndex(), vcd->GetIconIndex() );
-		tree->setUserData( spot, vcd );
-		//tree->setOpen( spot, vcd->IsExpanded() );
+		tree->setImages(spot, vcd->GetIconIndex(), vcd->GetIconIndex());
+		tree->setUserData(spot, vcd);
+		// tree->setOpen( spot, vcd->IsExpanded() );
 
-		vcd->ValidateTree( tree, spot );
+		vcd->ValidateTree(tree, spot);
 	}
 
-	mxTreeViewItem *start = tree->getFirstChild( parent );
-	while ( start )
+	mxTreeViewItem *start = tree->getFirstChild(parent);
+	while(start)
 	{
-		mxTreeViewItem *next = tree->getNextChild( start );
+		mxTreeViewItem *next = tree->getNextChild(start);
 
-		if ( m_KnownItems.Find( start ) == m_KnownItems.InvalidIndex() )
+		if(m_KnownItems.Find(start) == m_KnownItems.InvalidIndex())
 		{
-			tree->remove( start );
+			tree->remove(start);
 		}
 
 		start = next;
 	}
 
-	tree->sortTree( parent, true, CWorkspaceBrowser::CompareFunc, 0 );
+	tree->sortTree(parent, true, CWorkspaceBrowser::CompareFunc, 0);
 }
 
 bool CScene::IsCheckedOut() const
@@ -184,59 +184,59 @@ void CScene::Checkin(bool updatestateicons /*= true*/)
 	// Scenes aren't made for checkin / checkout
 }
 
-void CScene::MoveChildUp( ITreeItem *child )
+void CScene::MoveChildUp(ITreeItem *child)
 {
 	int c = GetVCDCount();
-	for ( int i = 1; i < c; i++ )
+	for(int i = 1; i < c; i++)
 	{
-		CVCDFile *p = GetVCD( i );
-		if ( p != child )
+		CVCDFile *p = GetVCD(i);
+		if(p != child)
 			continue;
 
-		CVCDFile *prev = GetVCD( i - 1 );
+		CVCDFile *prev = GetVCD(i - 1);
 		// Swap
-		m_Files[ i - 1 ] = p;
-		m_Files[ i ] = prev;
+		m_Files[i - 1] = p;
+		m_Files[i] = prev;
 		return;
 	}
 }
 
-void CScene::MoveChildDown( ITreeItem *child )
+void CScene::MoveChildDown(ITreeItem *child)
 {
 	int c = GetVCDCount();
-	for ( int i = 0; i < c - 1; i++ )
+	for(int i = 0; i < c - 1; i++)
 	{
-		CVCDFile *p = GetVCD( i );
-		if ( p != child )
+		CVCDFile *p = GetVCD(i);
+		if(p != child)
 			continue;
 
-		CVCDFile *next = GetVCD( i + 1 );
+		CVCDFile *next = GetVCD(i + 1);
 		// Swap
-		m_Files[ i ]     = next;
-		m_Files[ i + 1 ] = p;
+		m_Files[i] = next;
+		m_Files[i + 1] = p;
 		return;
 	}
 }
 
-bool CScene::IsChildFirst( ITreeItem *child )
+bool CScene::IsChildFirst(ITreeItem *child)
 {
-	int idx = m_Files.Find( (CVCDFile *)child );
-	if ( idx == m_Files.InvalidIndex() )
+	int idx = m_Files.Find((CVCDFile *)child);
+	if(idx == m_Files.InvalidIndex())
 		return false;
 
-	if ( idx != 0 )
+	if(idx != 0)
 		return false;
 
 	return true;
 }
 
-bool CScene::IsChildLast( ITreeItem *child )
+bool CScene::IsChildLast(ITreeItem *child)
 {
-	int idx = m_Files.Find( (CVCDFile *)child );
-	if ( idx == m_Files.InvalidIndex() )
+	int idx = m_Files.Find((CVCDFile *)child);
+	if(idx == m_Files.InvalidIndex())
 		return false;
 
-	if ( idx != m_Files.Count() - 1 )
+	if(idx != m_Files.Count() - 1)
 		return false;
 
 	return true;

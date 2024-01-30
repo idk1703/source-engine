@@ -12,20 +12,19 @@
 // FIXME Hook up a real player standin
 static char *sRagdollShadowModel = "models/player/human_commando.mdl";
 
+IMPLEMENT_SERVERCLASS_ST(CRagdollShadow, DT_RagdollShadow)
+SendPropInt(SENDINFO(m_nPlayer), 10, SPROP_UNSIGNED),
 
-IMPLEMENT_SERVERCLASS_ST( CRagdollShadow, DT_RagdollShadow )
-	SendPropInt( SENDINFO( m_nPlayer ), 10, SPROP_UNSIGNED ),
+	SendPropExclude("DT_BaseEntity", "m_angAbsRotation[0]"), SendPropExclude("DT_BaseEntity", "m_angAbsRotation[1]"),
+	SendPropExclude("DT_BaseEntity", "m_angAbsRotation[2]"),
 
-	SendPropExclude( "DT_BaseEntity", "m_angAbsRotation[0]" ),
-	SendPropExclude( "DT_BaseEntity", "m_angAbsRotation[1]" ),
-	SendPropExclude( "DT_BaseEntity", "m_angAbsRotation[2]" ),
+END_SEND_TABLE
+()
 
-END_SEND_TABLE()
+	LINK_ENTITY_TO_CLASS(ragdoll_shadow, CRagdollShadow);
+PRECACHE_REGISTER(ragdoll_shadow);
 
-LINK_ENTITY_TO_CLASS( ragdoll_shadow, CRagdollShadow );
-PRECACHE_REGISTER( ragdoll_shadow );
-
-CRagdollShadow::CRagdollShadow( void )
+CRagdollShadow::CRagdollShadow(void)
 {
 	m_pPlayer = NULL;
 	m_nPlayer = 0;
@@ -34,28 +33,28 @@ CRagdollShadow::CRagdollShadow( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CRagdollShadow::Spawn( )
+void CRagdollShadow::Spawn()
 {
 	// Init value & model
-	if ( m_pPlayer )
+	if(m_pPlayer)
 	{
-		SetModelName( m_pPlayer->GetModelName() );
+		SetModelName(m_pPlayer->GetModelName());
 	}
 	else
 	{
-		SetModelName( AllocPooledString( sRagdollShadowModel ) );
+		SetModelName(AllocPooledString(sRagdollShadowModel));
 	}
 
 	BaseClass::Spawn();
 
 	// Create the object in the physics system
-	IPhysicsObject *pPhysics = VPhysicsInitNormal( SOLID_VPHYSICS, FSOLID_NOT_SOLID, false );
-//	IPhysicsObject *pPhysics = VPhysicsInitNormal( SOLID_VPHYSICS, 0, false );
+	IPhysicsObject *pPhysics = VPhysicsInitNormal(SOLID_VPHYSICS, FSOLID_NOT_SOLID, false);
+	//	IPhysicsObject *pPhysics = VPhysicsInitNormal( SOLID_VPHYSICS, 0, false );
 
 	// disable physics sounds on this object
-	pPhysics->SetMaterialIndex( physprops->GetSurfaceIndex("default_silent") );
+	pPhysics->SetMaterialIndex(physprops->GetSurfaceIndex("default_silent"));
 
-	UTIL_SetSize( this, Vector(-36,-36, 0), Vector(36,36,72) );
+	UTIL_SetSize(this, Vector(-36, -36, 0), Vector(36, 36, 72));
 }
 
 //-----------------------------------------------------------------------------
@@ -66,51 +65,51 @@ void CRagdollShadow::Spawn( )
 //			clientArea -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-int CRagdollShadow::ShouldTransmit( const CCheckTransmitInfo *pInfo )
+int CRagdollShadow::ShouldTransmit(const CCheckTransmitInfo *pInfo)
 {
 	// Always send to local player
-	if ( Instance( pInfo->m_pClientEnt ) == GetOwnerEntity() )
+	if(Instance(pInfo->m_pClientEnt) == GetOwnerEntity())
 		return FL_EDICT_ALWAYS;
 
-	return BaseClass::ShouldTransmit( pInfo );
+	return BaseClass::ShouldTransmit(pInfo);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CRagdollShadow::Precache( void )
+void CRagdollShadow::Precache(void)
 {
-	PrecacheModel( sRagdollShadowModel );
+	PrecacheModel(sRagdollShadowModel);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Create a resource chunk
 //-----------------------------------------------------------------------------
-CRagdollShadow *CRagdollShadow::Create( CBaseTFPlayer *player, const Vector& force )
+CRagdollShadow *CRagdollShadow::Create(CBaseTFPlayer *player, const Vector &force)
 {
-	CRagdollShadow *pRagdollShadow = (CRagdollShadow*)CreateEntityByName("ragdoll_shadow");
+	CRagdollShadow *pRagdollShadow = (CRagdollShadow *)CreateEntityByName("ragdoll_shadow");
 
-	UTIL_SetOrigin( pRagdollShadow, player->GetAbsOrigin() );
+	UTIL_SetOrigin(pRagdollShadow, player->GetAbsOrigin());
 
 	pRagdollShadow->m_pPlayer = player;
 	pRagdollShadow->m_nPlayer = player->entindex();
 
 	pRagdollShadow->Spawn();
-	pRagdollShadow->SetAbsVelocity( force );
-	pRagdollShadow->SetLocalAngles( vec3_angle );
-	pRagdollShadow->SetLocalAngularVelocity( RandomAngle( -100, 100 ) );
+	pRagdollShadow->SetAbsVelocity(force);
+	pRagdollShadow->SetLocalAngles(vec3_angle);
+	pRagdollShadow->SetLocalAngularVelocity(RandomAngle(-100, 100));
 
-	//pRagdollShadow->AddEffects( EF_NODRAW );
-	pRagdollShadow->AddEffects( EF_NOSHADOW );
+	// pRagdollShadow->AddEffects( EF_NODRAW );
+	pRagdollShadow->AddEffects(EF_NOSHADOW);
 
 	pRagdollShadow->m_lifeState = LIFE_DYING;
 
 	IPhysicsObject *pPhysicsObject = pRagdollShadow->VPhysicsGetObject();
-	if ( pPhysicsObject )
+	if(pPhysicsObject)
 	{
 		AngularImpulse tmp;
-		QAngleToAngularImpulse( pRagdollShadow->GetLocalAngularVelocity(), tmp );
-		pPhysicsObject->AddVelocity( &pRagdollShadow->GetAbsVelocity(), &tmp );
+		QAngleToAngularImpulse(pRagdollShadow->GetLocalAngularVelocity(), tmp);
+		pPhysicsObject->AddVelocity(&pRagdollShadow->GetAbsVelocity(), &tmp);
 	}
 
 	return pRagdollShadow;

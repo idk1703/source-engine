@@ -7,7 +7,6 @@
 //
 //=============================================================================
 
-
 //-----------------------------------------------------------------------------
 // Generic NPC - purely for scripted sequence work.
 //-----------------------------------------------------------------------------
@@ -30,49 +29,47 @@
 class CNPC_Magnusson : public CAI_BaseActor
 {
 public:
-	DECLARE_CLASS( CNPC_Magnusson, CAI_BaseActor );
+	DECLARE_CLASS(CNPC_Magnusson, CAI_BaseActor);
 
-	void	Spawn( void );
-	void	Precache( void );
-	Class_T Classify ( void );
-	void	HandleAnimEvent( animevent_t *pEvent );
-	int		GetSoundInterests ( void );
+	void Spawn(void);
+	void Precache(void);
+	Class_T Classify(void);
+	void HandleAnimEvent(animevent_t *pEvent);
+	int GetSoundInterests(void);
 };
 
-LINK_ENTITY_TO_CLASS( npc_magnusson, CNPC_Magnusson );
-
+LINK_ENTITY_TO_CLASS(npc_magnusson, CNPC_Magnusson);
 
 //-----------------------------------------------------------------------------
 // Classify - indicates this NPC's place in the
 // relationship table.
 //-----------------------------------------------------------------------------
-Class_T	CNPC_Magnusson::Classify ( void )
+Class_T CNPC_Magnusson::Classify(void)
 {
-	return	CLASS_PLAYER_ALLY_VITAL;
+	return CLASS_PLAYER_ALLY_VITAL;
 }
-
 
 //-----------------------------------------------------------------------------
 // HandleAnimEvent - catches the NPC-specific messages
 // that occur when tagged animation frames are played.
 //-----------------------------------------------------------------------------
-void CNPC_Magnusson::HandleAnimEvent( animevent_t *pEvent )
+void CNPC_Magnusson::HandleAnimEvent(animevent_t *pEvent)
 {
-	switch( pEvent->event )
+	switch(pEvent->event)
 	{
-	case 1:
-	default:
-		BaseClass::HandleAnimEvent( pEvent );
-		break;
+		case 1:
+		default:
+			BaseClass::HandleAnimEvent(pEvent);
+			break;
 	}
 }
 
 //-----------------------------------------------------------------------------
 // GetSoundInterests - generic NPC can't hear.
 //-----------------------------------------------------------------------------
-int CNPC_Magnusson::GetSoundInterests ( void )
+int CNPC_Magnusson::GetSoundInterests(void)
 {
-	return	NULL;
+	return NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -81,33 +78,33 @@ int CNPC_Magnusson::GetSoundInterests ( void )
 void CNPC_Magnusson::Spawn()
 {
 	// Allow custom model usage (mostly for monitors)
-	char *szModel = (char *)STRING( GetModelName() );
-	if (!szModel || !*szModel)
+	char *szModel = (char *)STRING(GetModelName());
+	if(!szModel || !*szModel)
 	{
 		szModel = "models/magnusson.mdl";
-		SetModelName( AllocPooledString(szModel) );
+		SetModelName(AllocPooledString(szModel));
 	}
 
 	Precache();
-	SetModel( szModel );
+	SetModel(szModel);
 
 	BaseClass::Spawn();
 
 	SetHullType(HULL_HUMAN);
 	SetHullSizeNormal();
 
-	SetSolid( SOLID_BBOX );
-	AddSolidFlags( FSOLID_NOT_STANDABLE );
-	SetMoveType( MOVETYPE_STEP );
-	SetBloodColor( BLOOD_COLOR_RED );
-	m_iHealth			= 8;
-	m_flFieldOfView		= 0.5;// indicates the width of this NPC's forward view cone ( as a dotproduct result )
-	m_NPCState			= NPC_STATE_NONE;
+	SetSolid(SOLID_BBOX);
+	AddSolidFlags(FSOLID_NOT_STANDABLE);
+	SetMoveType(MOVETYPE_STEP);
+	SetBloodColor(BLOOD_COLOR_RED);
+	m_iHealth = 8;
+	m_flFieldOfView = 0.5; // indicates the width of this NPC's forward view cone ( as a dotproduct result )
+	m_NPCState = NPC_STATE_NONE;
 
-	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD );
-	CapabilitiesAdd( bits_CAP_FRIENDLY_DMG_IMMUNE );
+	CapabilitiesAdd(bits_CAP_MOVE_GROUND | bits_CAP_OPEN_DOORS | bits_CAP_ANIMATEDFACE | bits_CAP_TURN_HEAD);
+	CapabilitiesAdd(bits_CAP_FRIENDLY_DMG_IMMUNE);
 
-	AddEFlags( EFL_NO_DISSOLVE | EFL_NO_MEGAPHYSCANNON_RAGDOLL | EFL_NO_PHYSCANNON_INTERACTION );
+	AddEFlags(EFL_NO_DISSOLVE | EFL_NO_MEGAPHYSCANNON_RAGDOLL | EFL_NO_PHYSCANNON_INTERACTION);
 
 	NPCInit();
 }
@@ -117,7 +114,7 @@ void CNPC_Magnusson::Spawn()
 //-----------------------------------------------------------------------------
 void CNPC_Magnusson::Precache()
 {
-	PrecacheModel( STRING( GetModelName() ) );
+	PrecacheModel(STRING(GetModelName()));
 
 	BaseClass::Precache();
 }

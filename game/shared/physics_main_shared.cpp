@@ -20,40 +20,42 @@
 #include "tier1/callqueue.h"
 
 #ifdef PORTAL
-	#include "portal_util_shared.h"
+#include "portal_util_shared.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 // memory pool for storing links between entities
-static CUtlMemoryPool g_EdictTouchLinks( sizeof(touchlink_t), MAX_EDICTS, CUtlMemoryPool::GROW_NONE, "g_EdictTouchLinks");
-static CUtlMemoryPool g_EntityGroundLinks( sizeof( groundlink_t ), MAX_EDICTS, CUtlMemoryPool::GROW_NONE, "g_EntityGroundLinks");
+static CUtlMemoryPool g_EdictTouchLinks(sizeof(touchlink_t), MAX_EDICTS, CUtlMemoryPool::GROW_NONE,
+										"g_EdictTouchLinks");
+static CUtlMemoryPool g_EntityGroundLinks(sizeof(groundlink_t), MAX_EDICTS, CUtlMemoryPool::GROW_NONE,
+										  "g_EntityGroundLinks");
 
 struct watcher_t
 {
-	EHANDLE				hWatcher;
-	IWatcherCallback	*pWatcherCallback;
+	EHANDLE hWatcher;
+	IWatcherCallback *pWatcherCallback;
 };
 
-static CUtlMultiList<watcher_t, unsigned short>	g_WatcherList;
+static CUtlMultiList<watcher_t, unsigned short> g_WatcherList;
 class CWatcherList
 {
 public:
-	//CWatcherList(); NOTE: Dataobj doesn't support constructors - it zeros the memory
-	~CWatcherList();	// frees the positionwatcher_t's to the pool
+	// CWatcherList(); NOTE: Dataobj doesn't support constructors - it zeros the memory
+	~CWatcherList(); // frees the positionwatcher_t's to the pool
 	void Init();
 
-	void NotifyPositionChanged( CBaseEntity *pEntity );
-	void NotifyVPhysicsStateChanged( IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake );
+	void NotifyPositionChanged(CBaseEntity *pEntity);
+	void NotifyVPhysicsStateChanged(IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake);
 
-	void AddToList( CBaseEntity *pWatcher );
-	void RemoveWatcher( CBaseEntity *pWatcher );
+	void AddToList(CBaseEntity *pWatcher);
+	void RemoveWatcher(CBaseEntity *pWatcher);
 
 private:
-	int GetCallbackObjects( IWatcherCallback **pList, int listMax );
+	int GetCallbackObjects(IWatcherCallback **pList, int listMax);
 
-	unsigned short Find( CBaseEntity *pEntity );
+	unsigned short Find(CBaseEntity *pEntity);
 	unsigned short m_list;
 };
 
@@ -67,15 +69,14 @@ int groundlinksallocated = 0;
 #define DEF_THINK_LIMIT "10"
 #endif
 
-ConVar think_limit( "think_limit", DEF_THINK_LIMIT, FCVAR_REPLICATED, "Maximum think time in milliseconds, warning is printed if this is exceeded." );
+ConVar think_limit("think_limit", DEF_THINK_LIMIT, FCVAR_REPLICATED,
+				   "Maximum think time in milliseconds, warning is printed if this is exceeded.");
 #ifndef CLIENT_DLL
-ConVar debug_touchlinks( "debug_touchlinks", "0", 0, "Spew touch link activity" );
+ConVar debug_touchlinks("debug_touchlinks", "0", 0, "Spew touch link activity");
 #define DebugTouchlinks() debug_touchlinks.GetBool()
 #else
 #define DebugTouchlinks() false
 #endif
-
-
 
 //-----------------------------------------------------------------------------
 // Portal-specific hack designed to eliminate re-entrancy in touch functions
@@ -96,7 +97,7 @@ CCallQueue CPortalTouchScope::m_CallQueue;
 
 CCallQueue *GetPortalCallQueue()
 {
-	return ( CPortalTouchScope::m_nDepth > 0 ) ? &CPortalTouchScope::m_CallQueue : NULL;
+	return (CPortalTouchScope::m_nDepth > 0) ? &CPortalTouchScope::m_CallQueue : NULL;
 }
 
 CPortalTouchScope::CPortalTouchScope()
@@ -106,13 +107,12 @@ CPortalTouchScope::CPortalTouchScope()
 
 CPortalTouchScope::~CPortalTouchScope()
 {
-	Assert( m_nDepth >= 1 );
-	if ( --m_nDepth == 0 )
+	Assert(m_nDepth >= 1);
+	if(--m_nDepth == 0)
 	{
 		m_CallQueue.CallQueued();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: System for hanging objects off of CBaseEntity, etc.
@@ -121,7 +121,6 @@ CPortalTouchScope::~CPortalTouchScope()
 class CDataObjectAccessSystem : public CAutoGameSystem
 {
 public:
-
 	enum
 	{
 		MAX_ACCESSORS = 32,
@@ -130,142 +129,141 @@ public:
 	CDataObjectAccessSystem()
 	{
 		// Cast to int to make it clear that we know we are comparing different enum types.
-		COMPILE_TIME_ASSERT( (int)NUM_DATAOBJECT_TYPES <= (int)MAX_ACCESSORS );
+		COMPILE_TIME_ASSERT((int)NUM_DATAOBJECT_TYPES <= (int)MAX_ACCESSORS);
 
-		Q_memset( m_Accessors, 0, sizeof( m_Accessors ) );
+		Q_memset(m_Accessors, 0, sizeof(m_Accessors));
 	}
 
 	virtual bool Init()
 	{
-		AddDataAccessor( TOUCHLINK, new CEntityDataInstantiator< touchlink_t > );
-		AddDataAccessor( GROUNDLINK, new CEntityDataInstantiator< groundlink_t > );
-		AddDataAccessor( STEPSIMULATION, new CEntityDataInstantiator< StepSimulationData > );
-		AddDataAccessor( MODELSCALE, new CEntityDataInstantiator< ModelScale > );
-		AddDataAccessor( POSITIONWATCHER, new CEntityDataInstantiator< CWatcherList > );
-		AddDataAccessor( PHYSICSPUSHLIST, new CEntityDataInstantiator< physicspushlist_t > );
-		AddDataAccessor( VPHYSICSUPDATEAI, new CEntityDataInstantiator< vphysicsupdateai_t > );
-		AddDataAccessor( VPHYSICSWATCHER, new CEntityDataInstantiator< CWatcherList > );
+		AddDataAccessor(TOUCHLINK, new CEntityDataInstantiator<touchlink_t>);
+		AddDataAccessor(GROUNDLINK, new CEntityDataInstantiator<groundlink_t>);
+		AddDataAccessor(STEPSIMULATION, new CEntityDataInstantiator<StepSimulationData>);
+		AddDataAccessor(MODELSCALE, new CEntityDataInstantiator<ModelScale>);
+		AddDataAccessor(POSITIONWATCHER, new CEntityDataInstantiator<CWatcherList>);
+		AddDataAccessor(PHYSICSPUSHLIST, new CEntityDataInstantiator<physicspushlist_t>);
+		AddDataAccessor(VPHYSICSUPDATEAI, new CEntityDataInstantiator<vphysicsupdateai_t>);
+		AddDataAccessor(VPHYSICSWATCHER, new CEntityDataInstantiator<CWatcherList>);
 
 		return true;
 	}
 
 	virtual void Shutdown()
 	{
-		for ( int i = 0; i < MAX_ACCESSORS; i++ )
+		for(int i = 0; i < MAX_ACCESSORS; i++)
 		{
-			delete m_Accessors[ i ];
-			m_Accessors[ i ]  = 0;
+			delete m_Accessors[i];
+			m_Accessors[i] = 0;
 		}
 	}
 
-	void *GetDataObject( int type, const CBaseEntity *instance )
+	void *GetDataObject(int type, const CBaseEntity *instance)
 	{
-		if ( !IsValidType( type ) )
+		if(!IsValidType(type))
 		{
-			Assert( !"Bogus type" );
+			Assert(!"Bogus type");
 			return NULL;
 		}
-		return m_Accessors[ type ]->GetDataObject( instance );
+		return m_Accessors[type]->GetDataObject(instance);
 	}
 
-	void *CreateDataObject( int type, CBaseEntity *instance )
+	void *CreateDataObject(int type, CBaseEntity *instance)
 	{
-		if ( !IsValidType( type ) )
+		if(!IsValidType(type))
 		{
-			Assert( !"Bogus type" );
+			Assert(!"Bogus type");
 			return NULL;
 		}
 
-		return m_Accessors[ type ]->CreateDataObject( instance );
+		return m_Accessors[type]->CreateDataObject(instance);
 	}
 
-	void DestroyDataObject( int type, CBaseEntity *instance )
+	void DestroyDataObject(int type, CBaseEntity *instance)
 	{
-		if ( !IsValidType( type ) )
+		if(!IsValidType(type))
 		{
-			Assert( !"Bogus type" );
+			Assert(!"Bogus type");
 			return;
 		}
 
-		m_Accessors[ type ]->DestroyDataObject( instance );
+		m_Accessors[type]->DestroyDataObject(instance);
 	}
 
 private:
-
-	bool IsValidType( int type ) const
+	bool IsValidType(int type) const
 	{
-		if ( type < 0 || type >= MAX_ACCESSORS )
+		if(type < 0 || type >= MAX_ACCESSORS)
 			return false;
 
-		if ( m_Accessors[ type ] == NULL )
+		if(m_Accessors[type] == NULL)
 			return false;
 		return true;
 	}
 
-	void AddDataAccessor( int type, IEntityDataInstantiator *instantiator )
+	void AddDataAccessor(int type, IEntityDataInstantiator *instantiator)
 	{
-		if ( type < 0 || type >= MAX_ACCESSORS )
+		if(type < 0 || type >= MAX_ACCESSORS)
 		{
-			Assert( !"AddDataAccessor with out of range type!!!\n" );
+			Assert(!"AddDataAccessor with out of range type!!!\n");
 			return;
 		}
 
-		Assert( instantiator );
+		Assert(instantiator);
 
-		if ( m_Accessors[ type ] != NULL )
+		if(m_Accessors[type] != NULL)
 		{
-			Assert( !"AddDataAccessor, duplicate adds!!!\n" );
+			Assert(!"AddDataAccessor, duplicate adds!!!\n");
 			return;
 		}
 
-		m_Accessors[ type ] = instantiator;
+		m_Accessors[type] = instantiator;
 	}
 
-	IEntityDataInstantiator *m_Accessors[ MAX_ACCESSORS ];
+	IEntityDataInstantiator *m_Accessors[MAX_ACCESSORS];
 };
 
 static CDataObjectAccessSystem g_DataObjectAccessSystem;
 
-bool CBaseEntity::HasDataObjectType( int type ) const
+bool CBaseEntity::HasDataObjectType(int type) const
 {
-	Assert( type >= 0 && type < NUM_DATAOBJECT_TYPES );
-	return ( m_fDataObjectTypes	& (1<<type) ) ? true : false;
+	Assert(type >= 0 && type < NUM_DATAOBJECT_TYPES);
+	return (m_fDataObjectTypes & (1 << type)) ? true : false;
 }
 
-void CBaseEntity::AddDataObjectType( int type )
+void CBaseEntity::AddDataObjectType(int type)
 {
-	Assert( type >= 0 && type < NUM_DATAOBJECT_TYPES );
-	m_fDataObjectTypes |= (1<<type);
+	Assert(type >= 0 && type < NUM_DATAOBJECT_TYPES);
+	m_fDataObjectTypes |= (1 << type);
 }
 
-void CBaseEntity::RemoveDataObjectType( int type )
+void CBaseEntity::RemoveDataObjectType(int type)
 {
-	Assert( type >= 0 && type < NUM_DATAOBJECT_TYPES );
-	m_fDataObjectTypes &= ~(1<<type);
+	Assert(type >= 0 && type < NUM_DATAOBJECT_TYPES);
+	m_fDataObjectTypes &= ~(1 << type);
 }
 
-void *CBaseEntity::GetDataObject( int type )
+void *CBaseEntity::GetDataObject(int type)
 {
-	Assert( type >= 0 && type < NUM_DATAOBJECT_TYPES );
-	if ( !HasDataObjectType( type ) )
+	Assert(type >= 0 && type < NUM_DATAOBJECT_TYPES);
+	if(!HasDataObjectType(type))
 		return NULL;
-	return g_DataObjectAccessSystem.GetDataObject( type, this );
+	return g_DataObjectAccessSystem.GetDataObject(type, this);
 }
 
-void *CBaseEntity::CreateDataObject( int type )
+void *CBaseEntity::CreateDataObject(int type)
 {
-	Assert( type >= 0 && type < NUM_DATAOBJECT_TYPES );
-	AddDataObjectType( type );
-	return g_DataObjectAccessSystem.CreateDataObject( type, this );
+	Assert(type >= 0 && type < NUM_DATAOBJECT_TYPES);
+	AddDataObjectType(type);
+	return g_DataObjectAccessSystem.CreateDataObject(type, this);
 }
 
-void CBaseEntity::DestroyDataObject( int type )
+void CBaseEntity::DestroyDataObject(int type)
 {
-	Assert( type >= 0 && type < NUM_DATAOBJECT_TYPES );
-	if ( !HasDataObjectType( type ) )
+	Assert(type >= 0 && type < NUM_DATAOBJECT_TYPES);
+	if(!HasDataObjectType(type))
 		return;
-	g_DataObjectAccessSystem.DestroyDataObject( type, this );
-	RemoveDataObjectType( type );
+	g_DataObjectAccessSystem.DestroyDataObject(type, this);
+	RemoveDataObjectType(type);
 }
 
 void CWatcherList::Init()
@@ -275,22 +273,22 @@ void CWatcherList::Init()
 
 CWatcherList::~CWatcherList()
 {
-	g_WatcherList.DestroyList( m_list );
+	g_WatcherList.DestroyList(m_list);
 }
 
-int CWatcherList::GetCallbackObjects( IWatcherCallback **pList, int listMax )
+int CWatcherList::GetCallbackObjects(IWatcherCallback **pList, int listMax)
 {
 	int index = 0;
 	unsigned short next = g_WatcherList.InvalidIndex();
-	for ( unsigned short node = g_WatcherList.Head( m_list ); node != g_WatcherList.InvalidIndex(); node = next )
+	for(unsigned short node = g_WatcherList.Head(m_list); node != g_WatcherList.InvalidIndex(); node = next)
 	{
-		next = g_WatcherList.Next( node );
+		next = g_WatcherList.Next(node);
 		watcher_t *pNode = &g_WatcherList.Element(node);
-		if ( pNode->hWatcher.Get() )
+		if(pNode->hWatcher.Get())
 		{
 			pList[index] = pNode->pWatcherCallback;
 			index++;
-			if ( index >= listMax )
+			if(index >= listMax)
 			{
 				Assert(0);
 				return index;
@@ -298,48 +296,48 @@ int CWatcherList::GetCallbackObjects( IWatcherCallback **pList, int listMax )
 		}
 		else
 		{
-			g_WatcherList.Remove( m_list, node );
+			g_WatcherList.Remove(m_list, node);
 		}
 	}
 	return index;
 }
 
-void CWatcherList::NotifyPositionChanged( CBaseEntity *pEntity )
+void CWatcherList::NotifyPositionChanged(CBaseEntity *pEntity)
 {
 	IWatcherCallback *pCallbacks[1024]; // HACKHACK: Assumes this list is big enough
-	int count = GetCallbackObjects( pCallbacks, ARRAYSIZE(pCallbacks) );
-	for ( int i = 0; i < count; i++ )
+	int count = GetCallbackObjects(pCallbacks, ARRAYSIZE(pCallbacks));
+	for(int i = 0; i < count; i++)
 	{
 		IPositionWatcher *pWatcher = assert_cast<IPositionWatcher *>(pCallbacks[i]);
-		if ( pWatcher )
+		if(pWatcher)
 		{
 			pWatcher->NotifyPositionChanged(pEntity);
 		}
 	}
 }
 
-void CWatcherList::NotifyVPhysicsStateChanged( IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake )
+void CWatcherList::NotifyVPhysicsStateChanged(IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake)
 {
-	IWatcherCallback *pCallbacks[1024];	// HACKHACK: Assumes this list is big enough!
-	int count = GetCallbackObjects( pCallbacks, ARRAYSIZE(pCallbacks) );
-	for ( int i = 0; i < count; i++ )
+	IWatcherCallback *pCallbacks[1024]; // HACKHACK: Assumes this list is big enough!
+	int count = GetCallbackObjects(pCallbacks, ARRAYSIZE(pCallbacks));
+	for(int i = 0; i < count; i++)
 	{
 		IVPhysicsWatcher *pWatcher = assert_cast<IVPhysicsWatcher *>(pCallbacks[i]);
-		if ( pWatcher )
+		if(pWatcher)
 		{
 			pWatcher->NotifyVPhysicsStateChanged(pPhysics, pEntity, bAwake);
 		}
 	}
 }
 
-unsigned short CWatcherList::Find( CBaseEntity *pEntity )
+unsigned short CWatcherList::Find(CBaseEntity *pEntity)
 {
 	unsigned short next = g_WatcherList.InvalidIndex();
-	for ( unsigned short node = g_WatcherList.Head( m_list ); node != g_WatcherList.InvalidIndex(); node = next )
+	for(unsigned short node = g_WatcherList.Head(m_list); node != g_WatcherList.InvalidIndex(); node = next)
 	{
-		next = g_WatcherList.Next( node );
+		next = g_WatcherList.Next(node);
 		watcher_t *pNode = &g_WatcherList.Element(node);
-		if ( pNode->hWatcher.Get() == pEntity )
+		if(pNode->hWatcher.Get() == pEntity)
 		{
 			return node;
 		}
@@ -347,103 +345,102 @@ unsigned short CWatcherList::Find( CBaseEntity *pEntity )
 	return g_WatcherList.InvalidIndex();
 }
 
-void CWatcherList::RemoveWatcher( CBaseEntity *pEntity )
+void CWatcherList::RemoveWatcher(CBaseEntity *pEntity)
 {
-	unsigned short node = Find( pEntity );
-	if ( node != g_WatcherList.InvalidIndex() )
+	unsigned short node = Find(pEntity);
+	if(node != g_WatcherList.InvalidIndex())
 	{
-		g_WatcherList.Remove( m_list, node );
+		g_WatcherList.Remove(m_list, node);
 	}
 }
 
-
-void CWatcherList::AddToList( CBaseEntity *pWatcher )
+void CWatcherList::AddToList(CBaseEntity *pWatcher)
 {
-	unsigned short node = Find( pWatcher );
-	if ( node == g_WatcherList.InvalidIndex() )
+	unsigned short node = Find(pWatcher);
+	if(node == g_WatcherList.InvalidIndex())
 	{
 		watcher_t watcher;
 		watcher.hWatcher = pWatcher;
-			// save this separately so we can use the EHANDLE to test for deletion
-		watcher.pWatcherCallback = dynamic_cast<IWatcherCallback *> (pWatcher);
+		// save this separately so we can use the EHANDLE to test for deletion
+		watcher.pWatcherCallback = dynamic_cast<IWatcherCallback *>(pWatcher);
 
-		if ( watcher.pWatcherCallback )
+		if(watcher.pWatcherCallback)
 		{
-			g_WatcherList.AddToTail( m_list, watcher );
+			g_WatcherList.AddToTail(m_list, watcher);
 		}
 	}
 }
 
-static void AddWatcherToEntity( CBaseEntity *pWatcher, CBaseEntity *pEntity, int watcherType )
+static void AddWatcherToEntity(CBaseEntity *pWatcher, CBaseEntity *pEntity, int watcherType)
 {
 	CWatcherList *pList = (CWatcherList *)pEntity->GetDataObject(watcherType);
-	if ( !pList )
+	if(!pList)
 	{
-		pList = ( CWatcherList * )pEntity->CreateDataObject( watcherType );
+		pList = (CWatcherList *)pEntity->CreateDataObject(watcherType);
 		pList->Init();
 	}
 
-	pList->AddToList( pWatcher );
+	pList->AddToList(pWatcher);
 }
 
-static void RemoveWatcherFromEntity( CBaseEntity *pWatcher, CBaseEntity *pEntity, int watcherType )
+static void RemoveWatcherFromEntity(CBaseEntity *pWatcher, CBaseEntity *pEntity, int watcherType)
 {
 	CWatcherList *pList = (CWatcherList *)pEntity->GetDataObject(watcherType);
-	if ( pList )
+	if(pList)
 	{
-		pList->RemoveWatcher( pWatcher );
+		pList->RemoveWatcher(pWatcher);
 	}
 }
 
-void WatchPositionChanges( CBaseEntity *pWatcher, CBaseEntity *pMovingEntity )
+void WatchPositionChanges(CBaseEntity *pWatcher, CBaseEntity *pMovingEntity)
 {
-	AddWatcherToEntity( pWatcher, pMovingEntity, POSITIONWATCHER );
+	AddWatcherToEntity(pWatcher, pMovingEntity, POSITIONWATCHER);
 }
 
-void RemovePositionWatcher( CBaseEntity *pWatcher, CBaseEntity *pMovingEntity )
+void RemovePositionWatcher(CBaseEntity *pWatcher, CBaseEntity *pMovingEntity)
 {
-	RemoveWatcherFromEntity( pWatcher, pMovingEntity, POSITIONWATCHER );
+	RemoveWatcherFromEntity(pWatcher, pMovingEntity, POSITIONWATCHER);
 }
 
-void ReportPositionChanged( CBaseEntity *pMovedEntity )
+void ReportPositionChanged(CBaseEntity *pMovedEntity)
 {
 	CWatcherList *pList = (CWatcherList *)pMovedEntity->GetDataObject(POSITIONWATCHER);
-	if ( pList )
+	if(pList)
 	{
-		pList->NotifyPositionChanged( pMovedEntity );
+		pList->NotifyPositionChanged(pMovedEntity);
 	}
 }
 
-void WatchVPhysicsStateChanges( CBaseEntity *pWatcher, CBaseEntity *pPhysicsEntity )
+void WatchVPhysicsStateChanges(CBaseEntity *pWatcher, CBaseEntity *pPhysicsEntity)
 {
-	AddWatcherToEntity( pWatcher, pPhysicsEntity, VPHYSICSWATCHER );
+	AddWatcherToEntity(pWatcher, pPhysicsEntity, VPHYSICSWATCHER);
 }
 
-void RemoveVPhysicsStateWatcher( CBaseEntity *pWatcher, CBaseEntity *pPhysicsEntity )
+void RemoveVPhysicsStateWatcher(CBaseEntity *pWatcher, CBaseEntity *pPhysicsEntity)
 {
-	AddWatcherToEntity( pWatcher, pPhysicsEntity, VPHYSICSWATCHER );
+	AddWatcherToEntity(pWatcher, pPhysicsEntity, VPHYSICSWATCHER);
 }
 
-void ReportVPhysicsStateChanged( IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake )
+void ReportVPhysicsStateChanged(IPhysicsObject *pPhysics, CBaseEntity *pEntity, bool bAwake)
 {
 	CWatcherList *pList = (CWatcherList *)pEntity->GetDataObject(VPHYSICSWATCHER);
-	if ( pList )
+	if(pList)
 	{
-		pList->NotifyVPhysicsStateChanged( pPhysics, pEntity, bAwake );
+		pList->NotifyVPhysicsStateChanged(pPhysics, pEntity, bAwake);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseEntity::DestroyAllDataObjects( void )
+void CBaseEntity::DestroyAllDataObjects(void)
 {
 	int i;
-	for ( i = 0; i < NUM_DATAOBJECT_TYPES; i++ )
+	for(i = 0; i < NUM_DATAOBJECT_TYPES; i++)
 	{
-		if ( HasDataObjectType( i ) )
+		if(HasDataObjectType(i))
 		{
-			DestroyDataObject( i );
+			DestroyDataObject(i);
 		}
 	}
 }
@@ -457,21 +454,20 @@ void CBaseEntity::DestroyAllDataObjects( void )
 void SpewLinks()
 {
 	int nCount = 0;
-	for ( CBaseEntity *pClass = gEntList.FirstEnt(); pClass != NULL; pClass = gEntList.NextEnt(pClass) )
+	for(CBaseEntity *pClass = gEntList.FirstEnt(); pClass != NULL; pClass = gEntList.NextEnt(pClass))
 	{
-		if ( pClass /*&& !pClass->IsDormant()*/ )
+		if(pClass /*&& !pClass->IsDormant()*/)
 		{
-			touchlink_t *root = ( touchlink_t * )pClass->GetDataObject( TOUCHLINK );
-			if ( root )
+			touchlink_t *root = (touchlink_t *)pClass->GetDataObject(TOUCHLINK);
+			if(root)
 			{
 
 				// check if the edict is already in the list
-				for ( touchlink_t *link = root->nextLink; link != root; link = link->nextLink )
+				for(touchlink_t *link = root->nextLink; link != root; link = link->nextLink)
 				{
 					++nCount;
-					Msg("[%d] (%d) Link %d (%s) -> %d (%s)\n", nCount, pClass->IsDormant(),
-						pClass->entindex(), pClass->GetClassname(),
-						link->entityTouched->entindex(), link->entityTouched->GetClassname() );
+					Msg("[%d] (%d) Link %d (%s) -> %d (%s)\n", nCount, pClass->IsDormant(), pClass->entindex(),
+						pClass->GetClassname(), link->entityTouched->entindex(), link->entityTouched->GetClassname());
 				}
 			}
 		}
@@ -483,10 +479,10 @@ void SpewLinks()
 //-----------------------------------------------------------------------------
 // Returns the actual gravity
 //-----------------------------------------------------------------------------
-static inline float GetActualGravity( CBaseEntity *pEnt )
+static inline float GetActualGravity(CBaseEntity *pEnt)
 {
 	float ent_gravity = pEnt->GetGravity();
-	if ( ent_gravity == 0.0f )
+	if(ent_gravity == 0.0f)
 	{
 		ent_gravity = 1.0f;
 	}
@@ -494,21 +490,20 @@ static inline float GetActualGravity( CBaseEntity *pEnt )
 	return ent_gravity * GetCurrentGravity();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : inline touchlink_t
 //-----------------------------------------------------------------------------
-inline touchlink_t *AllocTouchLink( void )
+inline touchlink_t *AllocTouchLink(void)
 {
-	touchlink_t *link = (touchlink_t*)g_EdictTouchLinks.Alloc( sizeof(touchlink_t) );
-	if ( link )
+	touchlink_t *link = (touchlink_t *)g_EdictTouchLinks.Alloc(sizeof(touchlink_t));
+	if(link)
 	{
 		++linksallocated;
 	}
 	else
 	{
-		DevWarning( "AllocTouchLink: failed to allocate touchlink_t.\n" );
+		DevWarning("AllocTouchLink: failed to allocate touchlink_t.\n");
 	}
 
 	return link;
@@ -521,11 +516,11 @@ static touchlink_t *g_pNextLink = NULL;
 // Input  : *link -
 // Output : inline void
 //-----------------------------------------------------------------------------
-inline void FreeTouchLink( touchlink_t *link )
+inline void FreeTouchLink(touchlink_t *link)
 {
-	if ( link )
+	if(link)
 	{
-		if ( link == g_pNextLink )
+		if(link == g_pNextLink)
 		{
 			g_pNextLink = link->nextLink;
 		}
@@ -534,12 +529,13 @@ inline void FreeTouchLink( touchlink_t *link )
 	}
 
 	// Necessary to catch crashes
-	g_EdictTouchLinks.Free( link );
+	g_EdictTouchLinks.Free(link);
 }
 
 #ifdef STAGING_ONLY
 #ifndef CLIENT_DLL
-ConVar sv_groundlink_debug( "sv_groundlink_debug", "0", FCVAR_NONE, "Enable logging of alloc/free operations for debugging." );
+ConVar sv_groundlink_debug("sv_groundlink_debug", "0", FCVAR_NONE,
+						   "Enable logging of alloc/free operations for debugging.");
 #endif
 #endif // STAGING_ONLY
 
@@ -547,23 +543,25 @@ ConVar sv_groundlink_debug( "sv_groundlink_debug", "0", FCVAR_NONE, "Enable logg
 // Purpose:
 // Output : inline groundlink_t
 //-----------------------------------------------------------------------------
-inline groundlink_t *AllocGroundLink( void )
+inline groundlink_t *AllocGroundLink(void)
 {
-	groundlink_t *link = (groundlink_t*)g_EntityGroundLinks.Alloc( sizeof(groundlink_t) );
-	if ( link )
+	groundlink_t *link = (groundlink_t *)g_EntityGroundLinks.Alloc(sizeof(groundlink_t));
+	if(link)
 	{
 		++groundlinksallocated;
 	}
 	else
 	{
-		DevMsg( "AllocGroundLink: failed to allocate groundlink_t.!!!  groundlinksallocated=%d g_EntityGroundLinks.Count()=%d\n", groundlinksallocated, g_EntityGroundLinks.Count() );
+		DevMsg("AllocGroundLink: failed to allocate groundlink_t.!!!  groundlinksallocated=%d "
+			   "g_EntityGroundLinks.Count()=%d\n",
+			   groundlinksallocated, g_EntityGroundLinks.Count());
 	}
 
 #ifdef STAGING_ONLY
 #ifndef CLIENT_DLL
-	if ( sv_groundlink_debug.GetBool() )
+	if(sv_groundlink_debug.GetBool())
 	{
-		UTIL_LogPrintf( "Groundlink Alloc: %p at %d\n", link, groundlinksallocated );
+		UTIL_LogPrintf("Groundlink Alloc: %p at %d\n", link, groundlinksallocated);
 	}
 #endif
 #endif // STAGING_ONLY
@@ -576,32 +574,32 @@ inline groundlink_t *AllocGroundLink( void )
 // Input  : *link -
 // Output : inline void
 //-----------------------------------------------------------------------------
-inline void FreeGroundLink( groundlink_t *link )
+inline void FreeGroundLink(groundlink_t *link)
 {
 #ifdef STAGING_ONLY
 #ifndef CLIENT_DLL
-	if ( sv_groundlink_debug.GetBool() )
+	if(sv_groundlink_debug.GetBool())
 	{
-		UTIL_LogPrintf( "Groundlink Free: %p at %d\n", link, groundlinksallocated );
+		UTIL_LogPrintf("Groundlink Free: %p at %d\n", link, groundlinksallocated);
 	}
 #endif
 #endif // STAGING_ONLY
 
-	if ( link )
+	if(link)
 	{
 		--groundlinksallocated;
 	}
 
-	g_EntityGroundLinks.Free( link );
+	g_EntityGroundLinks.Free(link);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseEntity::IsCurrentlyTouching( void ) const
+bool CBaseEntity::IsCurrentlyTouching(void) const
 {
-	if ( HasDataObjectType( TOUCHLINK ) )
+	if(HasDataObjectType(TOUCHLINK))
 	{
 		return true;
 	}
@@ -616,14 +614,14 @@ static bool g_bCleanupDatObject = true;
 //			have stopped touching it, and notify the entity if so.
 //			Called at the end of a frame, after all the entities have run
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsCheckForEntityUntouch( void )
+void CBaseEntity::PhysicsCheckForEntityUntouch(void)
 {
-	Assert( g_pNextLink == NULL );
+	Assert(g_pNextLink == NULL);
 
 	touchlink_t *link;
 
-	touchlink_t *root = ( touchlink_t * )GetDataObject( TOUCHLINK );
-	if ( root )
+	touchlink_t *root = (touchlink_t *)GetDataObject(TOUCHLINK);
+	if(root)
 	{
 #ifdef PORTAL
 		CPortalTouchScope scope;
@@ -632,28 +630,28 @@ void CBaseEntity::PhysicsCheckForEntityUntouch( void )
 		g_bCleanupDatObject = false;
 
 		link = root->nextLink;
-		while ( link != root )
+		while(link != root)
 		{
 			g_pNextLink = link->nextLink;
 
 			// these touchlinks are not polled.  The ents are touching due to an outside
 			// system that will add/delete them as necessary (vphysics in this case)
-			if ( link->touchStamp == TOUCHSTAMP_EVENT_DRIVEN )
+			if(link->touchStamp == TOUCHSTAMP_EVENT_DRIVEN)
 			{
 				// refresh the touch call
-				PhysicsTouch( link->entityTouched );
+				PhysicsTouch(link->entityTouched);
 			}
 			else
 			{
 				// check to see if the touch stamp is up to date
-				if ( link->touchStamp != touchStamp )
+				if(link->touchStamp != touchStamp)
 				{
 					// stamp is out of data, so entities are no longer touching
 					// remove self from other entities touch list
-					PhysicsNotifyOtherOfUntouch( this, link->entityTouched );
+					PhysicsNotifyOtherOfUntouch(this, link->entityTouched);
 
 					// remove other entity from this list
-					PhysicsRemoveToucher( this, link );
+					PhysicsRemoveToucher(this, link);
 				}
 			}
 
@@ -663,45 +661,42 @@ void CBaseEntity::PhysicsCheckForEntityUntouch( void )
 		g_bCleanupDatObject = saveCleanup;
 
 		// Nothing left in list, destroy root
-		if ( root->nextLink == root &&
-			 root->prevLink == root )
+		if(root->nextLink == root && root->prevLink == root)
 		{
-			DestroyDataObject( TOUCHLINK );
+			DestroyDataObject(TOUCHLINK);
 		}
 	}
 
 	g_pNextLink = NULL;
 
-	SetCheckUntouch( false );
+	SetCheckUntouch(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: notifies an entity than another touching entity has moved out of contact.
 // Input  : *other - the entity to be acted upon
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsNotifyOtherOfUntouch( CBaseEntity *ent, CBaseEntity *other )
+void CBaseEntity::PhysicsNotifyOtherOfUntouch(CBaseEntity *ent, CBaseEntity *other)
 {
-	if ( !other )
+	if(!other)
 		return;
 
 	// loop through ed's touch list, looking for the notifier
 	// remove and call untouch if found
-	touchlink_t *root = ( touchlink_t * )other->GetDataObject( TOUCHLINK );
-	if ( root )
+	touchlink_t *root = (touchlink_t *)other->GetDataObject(TOUCHLINK);
+	if(root)
 	{
 		touchlink_t *link = root->nextLink;
-		while ( link != root )
+		while(link != root)
 		{
-			if ( link->entityTouched == ent )
+			if(link->entityTouched == ent)
 			{
-				PhysicsRemoveToucher( other, link );
+				PhysicsRemoveToucher(other, link);
 
 				// Check for complete removal
-				if ( g_bCleanupDatObject &&
-					 root->nextLink == root &&
-					 root->prevLink == root )
+				if(g_bCleanupDatObject && root->nextLink == root && root->prevLink == root)
 				{
-					other->DestroyDataObject( TOUCHLINK );
+					other->DestroyDataObject(TOUCHLINK);
 				}
 				return;
 			}
@@ -715,28 +710,28 @@ void CBaseEntity::PhysicsNotifyOtherOfUntouch( CBaseEntity *ent, CBaseEntity *ot
 // Purpose: removes a toucher from the list
 // Input  : *link - the link to remove
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsRemoveToucher( CBaseEntity *otherEntity, touchlink_t *link )
+void CBaseEntity::PhysicsRemoveToucher(CBaseEntity *otherEntity, touchlink_t *link)
 {
 	// Every start Touch gets a corresponding end touch
-	if ( (link->flags & FTOUCHLINK_START_TOUCH) &&
-		link->entityTouched != NULL &&
-		otherEntity != NULL )
+	if((link->flags & FTOUCHLINK_START_TOUCH) && link->entityTouched != NULL && otherEntity != NULL)
 	{
-		otherEntity->EndTouch( link->entityTouched );
+		otherEntity->EndTouch(link->entityTouched);
 	}
 
 	link->nextLink->prevLink = link->prevLink;
 	link->prevLink->nextLink = link->nextLink;
 
-	if ( DebugTouchlinks() )
-		Msg( "remove 0x%p: %s-%s (%d-%d) [%d in play, %d max]\n", link, link->entityTouched->GetDebugName(), otherEntity->GetDebugName(), link->entityTouched->entindex(), otherEntity->entindex(), linksallocated, g_EdictTouchLinks.PeakCount() );
-	FreeTouchLink( link );
+	if(DebugTouchlinks())
+		Msg("remove 0x%p: %s-%s (%d-%d) [%d in play, %d max]\n", link, link->entityTouched->GetDebugName(),
+			otherEntity->GetDebugName(), link->entityTouched->entindex(), otherEntity->entindex(), linksallocated,
+			g_EdictTouchLinks.PeakCount());
+	FreeTouchLink(link);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Clears all touches from the list
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsRemoveTouchedList( CBaseEntity *ent )
+void CBaseEntity::PhysicsRemoveTouchedList(CBaseEntity *ent)
 {
 #ifdef PORTAL
 	CPortalTouchScope scope;
@@ -744,28 +739,30 @@ void CBaseEntity::PhysicsRemoveTouchedList( CBaseEntity *ent )
 
 	touchlink_t *link, *nextLink;
 
-	touchlink_t *root = ( touchlink_t * )ent->GetDataObject( TOUCHLINK );
-	if ( root )
+	touchlink_t *root = (touchlink_t *)ent->GetDataObject(TOUCHLINK);
+	if(root)
 	{
 		link = root->nextLink;
 		bool saveCleanup = g_bCleanupDatObject;
 		g_bCleanupDatObject = false;
-		while ( link && link != root )
+		while(link && link != root)
 		{
 			nextLink = link->nextLink;
 
 			// notify the other entity that this ent has gone away
-			PhysicsNotifyOtherOfUntouch( ent, link->entityTouched );
+			PhysicsNotifyOtherOfUntouch(ent, link->entityTouched);
 
 			// kill it
-			if ( DebugTouchlinks() )
-				Msg( "remove 0x%p: %s-%s (%d-%d) [%d in play, %d max]\n", link, ent->GetDebugName(), link->entityTouched->GetDebugName(), ent->entindex(), link->entityTouched->entindex(), linksallocated, g_EdictTouchLinks.PeakCount() );
-			FreeTouchLink( link );
+			if(DebugTouchlinks())
+				Msg("remove 0x%p: %s-%s (%d-%d) [%d in play, %d max]\n", link, ent->GetDebugName(),
+					link->entityTouched->GetDebugName(), ent->entindex(), link->entityTouched->entindex(),
+					linksallocated, g_EdictTouchLinks.PeakCount());
+			FreeTouchLink(link);
 			link = nextLink;
 		}
 
 		g_bCleanupDatObject = saveCleanup;
-		ent->DestroyDataObject( TOUCHLINK );
+		ent->DestroyDataObject(TOUCHLINK);
 	}
 
 	ent->touchStamp = 0;
@@ -776,20 +773,20 @@ void CBaseEntity::PhysicsRemoveTouchedList( CBaseEntity *ent )
 // Input  : *other -
 // Output : groundlink_t
 //-----------------------------------------------------------------------------
-groundlink_t *CBaseEntity::AddEntityToGroundList( CBaseEntity *other )
+groundlink_t *CBaseEntity::AddEntityToGroundList(CBaseEntity *other)
 {
 	groundlink_t *link;
 
-	if ( this == other )
+	if(this == other)
 		return NULL;
 
 	// check if the edict is already in the list
-	groundlink_t *root = ( groundlink_t * )GetDataObject( GROUNDLINK );
-	if ( root )
+	groundlink_t *root = (groundlink_t *)GetDataObject(GROUNDLINK);
+	if(root)
 	{
-		for ( link = root->nextLink; link != root; link = link->nextLink )
+		for(link = root->nextLink; link != root; link = link->nextLink)
 		{
-			if ( link->entity == other )
+			if(link->entity == other)
 			{
 				// no more to do
 				return link;
@@ -798,7 +795,7 @@ groundlink_t *CBaseEntity::AddEntityToGroundList( CBaseEntity *other )
 	}
 	else
 	{
-		root = ( groundlink_t * )CreateDataObject( GROUNDLINK );
+		root = (groundlink_t *)CreateDataObject(GROUNDLINK);
 		root->prevLink = root->nextLink = root;
 	}
 
@@ -807,7 +804,7 @@ groundlink_t *CBaseEntity::AddEntityToGroundList( CBaseEntity *other )
 
 	// build new link
 	link = AllocGroundLink();
-	if ( !link )
+	if(!link)
 		return NULL;
 
 	link->entity = other;
@@ -817,7 +814,7 @@ groundlink_t *CBaseEntity::AddEntityToGroundList( CBaseEntity *other )
 	link->prevLink->nextLink = link;
 	link->nextLink->prevLink = link;
 
-	PhysicsStartGroundContact( other );
+	PhysicsStartGroundContact(other);
 
 	return link;
 }
@@ -826,14 +823,14 @@ groundlink_t *CBaseEntity::AddEntityToGroundList( CBaseEntity *other )
 // Purpose: Called whenever two entities come in contact
 // Input  : *pentOther - the entity who it has touched
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsStartGroundContact( CBaseEntity *pentOther )
+void CBaseEntity::PhysicsStartGroundContact(CBaseEntity *pentOther)
 {
-	if ( !pentOther )
+	if(!pentOther)
 		return;
 
-	if ( !(IsMarkedForDeletion() || pentOther->IsMarkedForDeletion()) )
+	if(!(IsMarkedForDeletion() || pentOther->IsMarkedForDeletion()))
 	{
-		pentOther->StartGroundContact( this );
+		pentOther->StartGroundContact(this);
 	}
 }
 
@@ -841,27 +838,26 @@ void CBaseEntity::PhysicsStartGroundContact( CBaseEntity *pentOther )
 // Purpose: notifies an entity than another touching entity has moved out of contact.
 // Input  : *other - the entity to be acted upon
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsNotifyOtherOfGroundRemoval( CBaseEntity *ent, CBaseEntity *other )
+void CBaseEntity::PhysicsNotifyOtherOfGroundRemoval(CBaseEntity *ent, CBaseEntity *other)
 {
-	if ( !other )
+	if(!other)
 		return;
 
 	// loop through ed's touch list, looking for the notifier
 	// remove and call untouch if found
-	groundlink_t *root = ( groundlink_t * )other->GetDataObject( GROUNDLINK );
-	if ( root )
+	groundlink_t *root = (groundlink_t *)other->GetDataObject(GROUNDLINK);
+	if(root)
 	{
 		groundlink_t *link = root->nextLink;
-		while ( link != root )
+		while(link != root)
 		{
-			if ( link->entity == ent )
+			if(link->entity == ent)
 			{
-				PhysicsRemoveGround( other, link );
+				PhysicsRemoveGround(other, link);
 
-				if ( root->nextLink == root &&
-					 root->prevLink == root )
+				if(root->nextLink == root && root->prevLink == root)
 				{
-					other->DestroyDataObject( GROUNDLINK );
+					other->DestroyDataObject(GROUNDLINK);
 				}
 				return;
 			}
@@ -875,50 +871,50 @@ void CBaseEntity::PhysicsNotifyOtherOfGroundRemoval( CBaseEntity *ent, CBaseEnti
 // Purpose: removes a toucher from the list
 // Input  : *link - the link to remove
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsRemoveGround( CBaseEntity *other, groundlink_t *link )
+void CBaseEntity::PhysicsRemoveGround(CBaseEntity *other, groundlink_t *link)
 {
 	// Every start Touch gets a corresponding end touch
-	if ( link->entity != NULL )
+	if(link->entity != NULL)
 	{
 		CBaseEntity *linkEntity = link->entity;
 		CBaseEntity *otherEntity = other;
-		if ( linkEntity && otherEntity )
+		if(linkEntity && otherEntity)
 		{
-			linkEntity->EndGroundContact( otherEntity );
+			linkEntity->EndGroundContact(otherEntity);
 		}
 	}
 
 	link->nextLink->prevLink = link->prevLink;
 	link->prevLink->nextLink = link->nextLink;
-	FreeGroundLink( link );
+	FreeGroundLink(link);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: static method to remove ground list for an entity
 // Input  : *ent -
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsRemoveGroundList( CBaseEntity *ent )
+void CBaseEntity::PhysicsRemoveGroundList(CBaseEntity *ent)
 {
 	groundlink_t *link, *nextLink;
 
-	groundlink_t *root = ( groundlink_t * )ent->GetDataObject( GROUNDLINK );
-	if ( root )
+	groundlink_t *root = (groundlink_t *)ent->GetDataObject(GROUNDLINK);
+	if(root)
 	{
 		link = root->nextLink;
-		while ( link && link != root )
+		while(link && link != root)
 		{
 			nextLink = link->nextLink;
 
 			// notify the other entity that this ent has gone away
-			PhysicsNotifyOtherOfGroundRemoval( ent, link->entity );
+			PhysicsNotifyOtherOfGroundRemoval(ent, link->entity);
 
 			// kill it
-			FreeGroundLink( link );
+			FreeGroundLink(link);
 
 			link = nextLink;
 		}
 
-		ent->DestroyDataObject( GROUNDLINK );
+		ent->DestroyDataObject(GROUNDLINK);
 	}
 }
 
@@ -926,13 +922,13 @@ void CBaseEntity::PhysicsRemoveGroundList( CBaseEntity *ent )
 // Purpose: Called every frame that two entities are touching
 // Input  : *pentOther - the entity who it has touched
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsTouch( CBaseEntity *pentOther )
+void CBaseEntity::PhysicsTouch(CBaseEntity *pentOther)
 {
-	if ( pentOther )
+	if(pentOther)
 	{
-		if ( !(IsMarkedForDeletion() || pentOther->IsMarkedForDeletion()) )
+		if(!(IsMarkedForDeletion() || pentOther->IsMarkedForDeletion()))
 		{
-			Touch( pentOther );
+			Touch(pentOther);
 		}
 	}
 }
@@ -941,19 +937,17 @@ void CBaseEntity::PhysicsTouch( CBaseEntity *pentOther )
 // Purpose: Called whenever two entities come in contact
 // Input  : *pentOther - the entity who it has touched
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsStartTouch( CBaseEntity *pentOther )
+void CBaseEntity::PhysicsStartTouch(CBaseEntity *pentOther)
 {
-	if ( pentOther )
+	if(pentOther)
 	{
-		if ( !(IsMarkedForDeletion() || pentOther->IsMarkedForDeletion()) )
+		if(!(IsMarkedForDeletion() || pentOther->IsMarkedForDeletion()))
 		{
-			StartTouch( pentOther );
-			Touch( pentOther );
+			StartTouch(pentOther);
+			Touch(pentOther);
 		}
 	}
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Marks in an entity that it is touching another entity, and calls
@@ -962,35 +956,35 @@ void CBaseEntity::PhysicsStartTouch( CBaseEntity *pentOther )
 //			untouch we know things haven't changed.
 // Input  : *other - entity that it is in contact with
 //-----------------------------------------------------------------------------
-touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
+touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched(CBaseEntity *other)
 {
 	touchlink_t *link;
 
-	if ( this == other )
+	if(this == other)
 		return NULL;
 
 	// Entities in hierarchy should not interact
-	if ( (this->GetMoveParent() == other) || (this == other->GetMoveParent()) )
+	if((this->GetMoveParent() == other) || (this == other->GetMoveParent()))
 		return NULL;
 
 	// check if either entity doesn't generate touch functions
-	if ( (GetFlags() | other->GetFlags()) & FL_DONTTOUCH )
+	if((GetFlags() | other->GetFlags()) & FL_DONTTOUCH)
 		return NULL;
 
 	// Pure triggers should not touch each other
-	if ( IsSolidFlagSet( FSOLID_TRIGGER ) && other->IsSolidFlagSet( FSOLID_TRIGGER ) )
+	if(IsSolidFlagSet(FSOLID_TRIGGER) && other->IsSolidFlagSet(FSOLID_TRIGGER))
 	{
-		if (!IsSolid() && !other->IsSolid())
+		if(!IsSolid() && !other->IsSolid())
 			return NULL;
 	}
 
 	// Don't do touching if marked for deletion
-	if ( other->IsMarkedForDeletion() )
+	if(other->IsMarkedForDeletion())
 	{
 		return NULL;
 	}
 
-	if ( IsMarkedForDeletion() )
+	if(IsMarkedForDeletion())
 	{
 		return NULL;
 	}
@@ -1000,19 +994,19 @@ touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
 #endif
 
 	// check if the edict is already in the list
-	touchlink_t *root = ( touchlink_t * )GetDataObject( TOUCHLINK );
-	if ( root )
+	touchlink_t *root = (touchlink_t *)GetDataObject(TOUCHLINK);
+	if(root)
 	{
-		for ( link = root->nextLink; link != root; link = link->nextLink )
+		for(link = root->nextLink; link != root; link = link->nextLink)
 		{
-			if ( link->entityTouched == other )
+			if(link->entityTouched == other)
 			{
 				// update stamp
 				link->touchStamp = touchStamp;
 
-				if ( !CBaseEntity::sm_bDisableTouchFuncs )
+				if(!CBaseEntity::sm_bDisableTouchFuncs)
 				{
-					PhysicsTouch( other );
+					PhysicsTouch(other);
 				}
 
 				// no more to do
@@ -1023,7 +1017,7 @@ touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
 	else
 	{
 		// Allocate the root object
-		root = ( touchlink_t * )CreateDataObject( TOUCHLINK );
+		root = (touchlink_t *)CreateDataObject(TOUCHLINK);
 		root->nextLink = root->prevLink = root;
 	}
 
@@ -1032,9 +1026,10 @@ touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
 
 	// build new link
 	link = AllocTouchLink();
-	if ( DebugTouchlinks() )
-		Msg( "add 0x%p: %s-%s (%d-%d) [%d in play, %d max]\n", link, GetDebugName(), other->GetDebugName(), entindex(), other->entindex(), linksallocated, g_EdictTouchLinks.PeakCount() );
-	if ( !link )
+	if(DebugTouchlinks())
+		Msg("add 0x%p: %s-%s (%d-%d) [%d in play, %d max]\n", link, GetDebugName(), other->GetDebugName(), entindex(),
+			other->entindex(), linksallocated, g_EdictTouchLinks.PeakCount());
+	if(!link)
 		return NULL;
 
 	link->touchStamp = touchStamp;
@@ -1048,12 +1043,12 @@ touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
 
 	// non-solid entities don't get touched
 	bool bShouldTouch = (IsSolid() && !IsSolidFlagSet(FSOLID_VOLUME_CONTENTS)) || IsSolidFlagSet(FSOLID_TRIGGER);
-	if ( bShouldTouch && !other->IsSolidFlagSet(FSOLID_TRIGGER) )
+	if(bShouldTouch && !other->IsSolidFlagSet(FSOLID_TRIGGER))
 	{
 		link->flags |= FTOUCHLINK_START_TOUCH;
-		if ( !CBaseEntity::sm_bDisableTouchFuncs )
+		if(!CBaseEntity::sm_bDisableTouchFuncs)
 		{
-			PhysicsStartTouch( other );
+			PhysicsStartTouch(other);
 		}
 	}
 
@@ -1061,39 +1056,38 @@ touchlink_t *CBaseEntity::PhysicsMarkEntityAsTouched( CBaseEntity *other )
 }
 
 static trace_t g_TouchTrace;
-const trace_t &CBaseEntity::GetTouchTrace( void )
+const trace_t &CBaseEntity::GetTouchTrace(void)
 {
 	return g_TouchTrace;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Marks the fact that two edicts are in contact
 // Input  : *other - other entity
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsMarkEntitiesAsTouching( CBaseEntity *other, trace_t &trace )
+void CBaseEntity::PhysicsMarkEntitiesAsTouching(CBaseEntity *other, trace_t &trace)
 {
 	g_TouchTrace = trace;
-	PhysicsMarkEntityAsTouched( other );
-	other->PhysicsMarkEntityAsTouched( this );
+	PhysicsMarkEntityAsTouched(other);
+	other->PhysicsMarkEntityAsTouched(this);
 }
 
-void CBaseEntity::PhysicsMarkEntitiesAsTouchingEventDriven( CBaseEntity *other, trace_t &trace )
+void CBaseEntity::PhysicsMarkEntitiesAsTouchingEventDriven(CBaseEntity *other, trace_t &trace)
 {
 	g_TouchTrace = trace;
 	g_TouchTrace.m_pEnt = other;
 
 	touchlink_t *link;
-	link = this->PhysicsMarkEntityAsTouched( other );
-	if ( link )
+	link = this->PhysicsMarkEntityAsTouched(other);
+	if(link)
 	{
 		// mark these links as event driven so they aren't untouched the next frame
 		// when the physics doesn't refresh them
 		link->touchStamp = TOUCHSTAMP_EVENT_DRIVEN;
 	}
 	g_TouchTrace.m_pEnt = this;
-	link = other->PhysicsMarkEntityAsTouched( this );
-	if ( link )
+	link = other->PhysicsMarkEntityAsTouched(this);
+	if(link)
 	{
 		link->touchStamp = TOUCHSTAMP_EVENT_DRIVEN;
 	}
@@ -1104,32 +1098,31 @@ void CBaseEntity::PhysicsMarkEntitiesAsTouchingEventDriven( CBaseEntity *other, 
 // Input  : *other -
 //			*ptrace -
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsImpact( CBaseEntity *other, trace_t &trace )
+void CBaseEntity::PhysicsImpact(CBaseEntity *other, trace_t &trace)
 {
-	if ( !other )
+	if(!other)
 	{
 		return;
 	}
 
 	// If either of the entities is flagged to be deleted,
 	//  don't call the touch functions
-	if ( ( GetFlags() | other->GetFlags() ) & FL_KILLME )
+	if((GetFlags() | other->GetFlags()) & FL_KILLME)
 	{
 		return;
 	}
 
-	PhysicsMarkEntitiesAsTouching( other, trace );
+	PhysicsMarkEntitiesAsTouching(other, trace);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the mask of what is solid for the given entity
 // Output : unsigned int
 //-----------------------------------------------------------------------------
-unsigned int CBaseEntity::PhysicsSolidMaskForEntity( void ) const
+unsigned int CBaseEntity::PhysicsSolidMaskForEntity(void) const
 {
 	return MASK_SOLID;
 }
-
 
 //-----------------------------------------------------------------------------
 // Computes the water level + type
@@ -1141,182 +1134,178 @@ void CBaseEntity::UpdateWaterState()
 	// Probably for rigid children anyways...
 
 	// Compute the point to check for water state
-	Vector	point;
-	CollisionProp()->NormalizedToWorldSpace( Vector( 0.5f, 0.5f, 0.0f ), &point );
+	Vector point;
+	CollisionProp()->NormalizedToWorldSpace(Vector(0.5f, 0.5f, 0.0f), &point);
 
-	SetWaterLevel( 0 );
-	SetWaterType( CONTENTS_EMPTY );
-	int cont = UTIL_PointContents (point);
+	SetWaterLevel(0);
+	SetWaterType(CONTENTS_EMPTY);
+	int cont = UTIL_PointContents(point);
 
-	if (( cont & MASK_WATER ) == 0)
+	if((cont & MASK_WATER) == 0)
 		return;
 
-	SetWaterType( cont );
-	SetWaterLevel( 1 );
+	SetWaterType(cont);
+	SetWaterLevel(1);
 
 	// point sized entities are always fully submerged
-	if ( IsPointSized() )
+	if(IsPointSized())
 	{
-		SetWaterLevel( 3 );
+		SetWaterLevel(3);
 	}
 	else
 	{
 		// Check the exact center of the box
 		point[2] = WorldSpaceCenter().z;
 
-		int midcont = UTIL_PointContents (point);
-		if ( midcont & MASK_WATER )
+		int midcont = UTIL_PointContents(point);
+		if(midcont & MASK_WATER)
 		{
 			// Now check where the eyes are...
-			SetWaterLevel( 2 );
+			SetWaterLevel(2);
 			point[2] = EyePosition().z;
 
-			int eyecont = UTIL_PointContents (point);
-			if ( eyecont & MASK_WATER )
+			int eyecont = UTIL_PointContents(point);
+			if(eyecont & MASK_WATER)
 			{
-				SetWaterLevel( 3 );
+				SetWaterLevel(3);
 			}
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Check if entity is in the water and applies any current to velocity
 // and sets appropriate water flags
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseEntity::PhysicsCheckWater( void )
+bool CBaseEntity::PhysicsCheckWater(void)
 {
-	if (GetMoveParent())
+	if(GetMoveParent())
 		return GetWaterLevel() > 1;
 
 	int cont = GetWaterType();
 
 	// If we're not in water + don't have a current, we're done
-	if ( ( cont & (MASK_WATER | MASK_CURRENT) ) != (MASK_WATER | MASK_CURRENT) )
+	if((cont & (MASK_WATER | MASK_CURRENT)) != (MASK_WATER | MASK_CURRENT))
 		return GetWaterLevel() > 1;
 
 	// Compute current direction
-	Vector v( 0, 0, 0 );
-	if ( cont & CONTENTS_CURRENT_0 )
+	Vector v(0, 0, 0);
+	if(cont & CONTENTS_CURRENT_0)
 	{
 		v[0] += 1;
 	}
-	if ( cont & CONTENTS_CURRENT_90 )
+	if(cont & CONTENTS_CURRENT_90)
 	{
 		v[1] += 1;
 	}
-	if ( cont & CONTENTS_CURRENT_180 )
+	if(cont & CONTENTS_CURRENT_180)
 	{
 		v[0] -= 1;
 	}
-	if ( cont & CONTENTS_CURRENT_270 )
+	if(cont & CONTENTS_CURRENT_270)
 	{
 		v[1] -= 1;
 	}
-	if ( cont & CONTENTS_CURRENT_UP )
+	if(cont & CONTENTS_CURRENT_UP)
 	{
 		v[2] += 1;
 	}
-	if ( cont & CONTENTS_CURRENT_DOWN )
+	if(cont & CONTENTS_CURRENT_DOWN)
 	{
 		v[2] -= 1;
 	}
 
 	// The deeper we are, the stronger the current.
 	Vector newBaseVelocity;
-	VectorMA (GetBaseVelocity(), 50.0*GetWaterLevel(), v, newBaseVelocity);
-	SetBaseVelocity( newBaseVelocity );
+	VectorMA(GetBaseVelocity(), 50.0 * GetWaterLevel(), v, newBaseVelocity);
+	SetBaseVelocity(newBaseVelocity);
 
 	return GetWaterLevel() > 1;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Bounds velocity
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsCheckVelocity( void )
+void CBaseEntity::PhysicsCheckVelocity(void)
 {
 	Vector origin = GetAbsOrigin();
 	Vector vecAbsVelocity = GetAbsVelocity();
 
 	bool bReset = false;
-	for ( int i=0 ; i<3 ; i++ )
+	for(int i = 0; i < 3; i++)
 	{
-		if ( IS_NAN(vecAbsVelocity[i]) )
+		if(IS_NAN(vecAbsVelocity[i]))
 		{
-			Msg( "Got a NaN velocity on %s\n", GetClassname() );
+			Msg("Got a NaN velocity on %s\n", GetClassname());
 			vecAbsVelocity[i] = 0;
 			bReset = true;
 		}
-		if ( IS_NAN(origin[i]) )
+		if(IS_NAN(origin[i]))
 		{
-			Msg( "Got a NaN origin on %s\n", GetClassname() );
+			Msg("Got a NaN origin on %s\n", GetClassname());
 			origin[i] = 0;
 			bReset = true;
 		}
 
-		if ( vecAbsVelocity[i] > sv_maxvelocity.GetFloat() )
+		if(vecAbsVelocity[i] > sv_maxvelocity.GetFloat())
 		{
 #ifdef _DEBUG
-			DevWarning( 2, "Got a velocity too high on %s\n", GetClassname() );
+			DevWarning(2, "Got a velocity too high on %s\n", GetClassname());
 #endif
 			vecAbsVelocity[i] = sv_maxvelocity.GetFloat();
 			bReset = true;
 		}
-		else if ( vecAbsVelocity[i] < -sv_maxvelocity.GetFloat() )
+		else if(vecAbsVelocity[i] < -sv_maxvelocity.GetFloat())
 		{
 #ifdef _DEBUG
-			DevWarning( 2, "Got a velocity too low on %s\n", GetClassname() );
+			DevWarning(2, "Got a velocity too low on %s\n", GetClassname());
 #endif
 			vecAbsVelocity[i] = -sv_maxvelocity.GetFloat();
 			bReset = true;
 		}
 	}
 
-	if (bReset)
+	if(bReset)
 	{
-		SetAbsOrigin( origin );
-		SetAbsVelocity( vecAbsVelocity );
+		SetAbsOrigin(origin);
+		SetAbsVelocity(vecAbsVelocity);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Applies gravity to falling objects
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsAddGravityMove( Vector &move )
+void CBaseEntity::PhysicsAddGravityMove(Vector &move)
 {
 	Vector vecAbsVelocity = GetAbsVelocity();
 
-	move.x = (vecAbsVelocity.x + GetBaseVelocity().x ) * gpGlobals->frametime;
-	move.y = (vecAbsVelocity.y + GetBaseVelocity().y ) * gpGlobals->frametime;
+	move.x = (vecAbsVelocity.x + GetBaseVelocity().x) * gpGlobals->frametime;
+	move.y = (vecAbsVelocity.y + GetBaseVelocity().y) * gpGlobals->frametime;
 
-	if ( GetFlags() & FL_ONGROUND )
+	if(GetFlags() & FL_ONGROUND)
 	{
 		move.z = GetBaseVelocity().z * gpGlobals->frametime;
 		return;
 	}
 
 	// linear acceleration due to gravity
-	float newZVelocity = vecAbsVelocity.z - GetActualGravity( this ) * gpGlobals->frametime;
+	float newZVelocity = vecAbsVelocity.z - GetActualGravity(this) * gpGlobals->frametime;
 
-	move.z = ((vecAbsVelocity.z + newZVelocity) / 2.0 + GetBaseVelocity().z ) * gpGlobals->frametime;
+	move.z = ((vecAbsVelocity.z + newZVelocity) / 2.0 + GetBaseVelocity().z) * gpGlobals->frametime;
 
 	Vector vecBaseVelocity = GetBaseVelocity();
 	vecBaseVelocity.z = 0.0f;
-	SetBaseVelocity( vecBaseVelocity );
+	SetBaseVelocity(vecBaseVelocity);
 
 	vecAbsVelocity.z = newZVelocity;
-	SetAbsVelocity( vecAbsVelocity );
+	SetAbsVelocity(vecAbsVelocity);
 
 	// Bound velocity
 	PhysicsCheckVelocity();
 }
 
-
-#define	STOP_EPSILON	0.1
+#define STOP_EPSILON 0.1
 //-----------------------------------------------------------------------------
 // Purpose: Slide off of the impacting object.  Returns the blocked flags (1 = floor, 2 = step / wall)
 // Input  : in -
@@ -1325,33 +1314,33 @@ void CBaseEntity::PhysicsAddGravityMove( Vector &move )
 //			overbounce -
 // Output : int
 //-----------------------------------------------------------------------------
-int CBaseEntity::PhysicsClipVelocity( const Vector& in, const Vector& normal, Vector& out, float overbounce )
+int CBaseEntity::PhysicsClipVelocity(const Vector &in, const Vector &normal, Vector &out, float overbounce)
 {
-	float	backoff;
-	float	change;
+	float backoff;
+	float change;
 	float angle;
-	int		i, blocked;
+	int i, blocked;
 
 	blocked = 0;
 
-	angle = normal[ 2 ];
+	angle = normal[2];
 
-	if ( angle > 0 )
+	if(angle > 0)
 	{
-		blocked |= 1;		// floor
+		blocked |= 1; // floor
 	}
-	if ( !angle )
+	if(!angle)
 	{
-		blocked |= 2;		// step
+		blocked |= 2; // step
 	}
 
-	backoff = DotProduct (in, normal) * overbounce;
+	backoff = DotProduct(in, normal) * overbounce;
 
-	for ( i=0 ; i<3 ; i++ )
+	for(i = 0; i < 3; i++)
 	{
-		change = normal[i]*backoff;
+		change = normal[i] * backoff;
 		out[i] = in[i] - change;
-		if (out[i] > -STOP_EPSILON && out[i] < STOP_EPSILON)
+		if(out[i] > -STOP_EPSILON && out[i] < STOP_EPSILON)
 		{
 			out[i] = 0;
 		}
@@ -1363,87 +1352,88 @@ int CBaseEntity::PhysicsClipVelocity( const Vector& in, const Vector& normal, Ve
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseEntity::ResolveFlyCollisionBounce( trace_t &trace, Vector &vecVelocity, float flMinTotalElasticity )
+void CBaseEntity::ResolveFlyCollisionBounce(trace_t &trace, Vector &vecVelocity, float flMinTotalElasticity)
 {
 #ifdef HL1_DLL
 	flMinTotalElasticity = 0.3f;
-#endif//HL1_DLL
+#endif // HL1_DLL
 
 	// Get the impact surface's elasticity.
 	float flSurfaceElasticity;
-	physprops->GetPhysicsProperties( trace.surface.surfaceProps, NULL, NULL, NULL, &flSurfaceElasticity );
+	physprops->GetPhysicsProperties(trace.surface.surfaceProps, NULL, NULL, NULL, &flSurfaceElasticity);
 
 	float flTotalElasticity = GetElasticity() * flSurfaceElasticity;
-	if ( flMinTotalElasticity > 0.9f )
+	if(flMinTotalElasticity > 0.9f)
 	{
 		flMinTotalElasticity = 0.9f;
 	}
-	flTotalElasticity = clamp( flTotalElasticity, flMinTotalElasticity, 0.9f );
+	flTotalElasticity = clamp(flTotalElasticity, flMinTotalElasticity, 0.9f);
 
 	// NOTE: A backoff of 2.0f is a reflection
 	Vector vecAbsVelocity;
-	PhysicsClipVelocity( GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, 2.0f );
+	PhysicsClipVelocity(GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, 2.0f);
 	vecAbsVelocity *= flTotalElasticity;
 
 	// Get the total velocity (player + conveyors, etc.)
-	VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecVelocity );
-	float flSpeedSqr = DotProduct( vecVelocity, vecVelocity );
+	VectorAdd(vecAbsVelocity, GetBaseVelocity(), vecVelocity);
+	float flSpeedSqr = DotProduct(vecVelocity, vecVelocity);
 
 	// Stop if on ground.
-	if ( trace.plane.normal.z > 0.7f )			// Floor
+	if(trace.plane.normal.z > 0.7f) // Floor
 	{
 		// Verify that we have an entity.
 		CBaseEntity *pEntity = trace.m_pEnt;
-		Assert( pEntity );
+		Assert(pEntity);
 
 		// Are we on the ground?
-		if ( vecVelocity.z < ( GetActualGravity( this ) * gpGlobals->frametime ) )
+		if(vecVelocity.z < (GetActualGravity(this) * gpGlobals->frametime))
 		{
 			vecAbsVelocity.z = 0.0f;
 
 			// Recompute speedsqr based on the new absvel
-			VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecVelocity );
-			flSpeedSqr = DotProduct( vecVelocity, vecVelocity );
+			VectorAdd(vecAbsVelocity, GetBaseVelocity(), vecVelocity);
+			flSpeedSqr = DotProduct(vecVelocity, vecVelocity);
 		}
 
-		SetAbsVelocity( vecAbsVelocity );
+		SetAbsVelocity(vecAbsVelocity);
 
-		if ( flSpeedSqr < ( 30 * 30 ) )
+		if(flSpeedSqr < (30 * 30))
 		{
-			if ( pEntity->IsStandable() )
+			if(pEntity->IsStandable())
 			{
-				SetGroundEntity( pEntity );
+				SetGroundEntity(pEntity);
 			}
 
 			// Reset velocities.
-			SetAbsVelocity( vec3_origin );
-			SetLocalAngularVelocity( vec3_angle );
+			SetAbsVelocity(vec3_origin);
+			SetLocalAngularVelocity(vec3_angle);
 		}
 		else
 		{
 			Vector vecDelta = GetBaseVelocity() - vecAbsVelocity;
 			Vector vecBaseDir = GetBaseVelocity();
-			VectorNormalize( vecBaseDir );
-			float flScale = vecDelta.Dot( vecBaseDir );
+			VectorNormalize(vecBaseDir);
+			float flScale = vecDelta.Dot(vecBaseDir);
 
-			VectorScale( vecAbsVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, vecVelocity );
-			VectorMA( vecVelocity, ( 1.0f - trace.fraction ) * gpGlobals->frametime, GetBaseVelocity() * flScale, vecVelocity );
-			PhysicsPushEntity( vecVelocity, &trace );
+			VectorScale(vecAbsVelocity, (1.0f - trace.fraction) * gpGlobals->frametime, vecVelocity);
+			VectorMA(vecVelocity, (1.0f - trace.fraction) * gpGlobals->frametime, GetBaseVelocity() * flScale,
+					 vecVelocity);
+			PhysicsPushEntity(vecVelocity, &trace);
 		}
 	}
 	else
 	{
 		// If we get *too* slow, we'll stick without ever coming to rest because
 		// we'll get pushed down by gravity faster than we can escape from the wall.
-		if ( flSpeedSqr < ( 30 * 30 ) )
+		if(flSpeedSqr < (30 * 30))
 		{
 			// Reset velocities.
-			SetAbsVelocity( vec3_origin );
-			SetLocalAngularVelocity( vec3_angle );
+			SetAbsVelocity(vec3_origin);
+			SetLocalAngularVelocity(vec3_angle);
 		}
 		else
 		{
-			SetAbsVelocity( vecAbsVelocity );
+			SetAbsVelocity(vecAbsVelocity);
 		}
 	}
 }
@@ -1451,89 +1441,88 @@ void CBaseEntity::ResolveFlyCollisionBounce( trace_t &trace, Vector &vecVelocity
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseEntity::ResolveFlyCollisionSlide( trace_t &trace, Vector &vecVelocity )
+void CBaseEntity::ResolveFlyCollisionSlide(trace_t &trace, Vector &vecVelocity)
 {
 	// Get the impact surface's friction.
 	float flSurfaceFriction;
-	physprops->GetPhysicsProperties( trace.surface.surfaceProps, NULL, NULL, &flSurfaceFriction, NULL );
+	physprops->GetPhysicsProperties(trace.surface.surfaceProps, NULL, NULL, &flSurfaceFriction, NULL);
 
 	// A backoff of 1.0 is a slide.
 	float flBackOff = 1.0f;
 	Vector vecAbsVelocity;
-	PhysicsClipVelocity( GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, flBackOff );
+	PhysicsClipVelocity(GetAbsVelocity(), trace.plane.normal, vecAbsVelocity, flBackOff);
 
-	if ( trace.plane.normal.z <= 0.7 )			// Floor
+	if(trace.plane.normal.z <= 0.7) // Floor
 	{
-		SetAbsVelocity( vecAbsVelocity );
+		SetAbsVelocity(vecAbsVelocity);
 		return;
 	}
 
 	// Stop if on ground.
 	// Get the total velocity (player + conveyors, etc.)
-	VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecVelocity );
-	float flSpeedSqr = DotProduct( vecVelocity, vecVelocity );
+	VectorAdd(vecAbsVelocity, GetBaseVelocity(), vecVelocity);
+	float flSpeedSqr = DotProduct(vecVelocity, vecVelocity);
 
 	// Verify that we have an entity.
 	CBaseEntity *pEntity = trace.m_pEnt;
-	Assert( pEntity );
+	Assert(pEntity);
 
 	// Are we on the ground?
-	if ( vecVelocity.z < ( GetActualGravity( this ) * gpGlobals->frametime ) )
+	if(vecVelocity.z < (GetActualGravity(this) * gpGlobals->frametime))
 	{
 		vecAbsVelocity.z = 0.0f;
 
 		// Recompute speedsqr based on the new absvel
-		VectorAdd( vecAbsVelocity, GetBaseVelocity(), vecVelocity );
-		flSpeedSqr = DotProduct( vecVelocity, vecVelocity );
+		VectorAdd(vecAbsVelocity, GetBaseVelocity(), vecVelocity);
+		flSpeedSqr = DotProduct(vecVelocity, vecVelocity);
 	}
-	SetAbsVelocity( vecAbsVelocity );
+	SetAbsVelocity(vecAbsVelocity);
 
-	if ( flSpeedSqr < ( 30 * 30 ) )
+	if(flSpeedSqr < (30 * 30))
 	{
-		if ( pEntity->IsStandable() )
+		if(pEntity->IsStandable())
 		{
-			SetGroundEntity( pEntity );
+			SetGroundEntity(pEntity);
 		}
 
 		// Reset velocities.
-		SetAbsVelocity( vec3_origin );
-		SetLocalAngularVelocity( vec3_angle );
+		SetAbsVelocity(vec3_origin);
+		SetLocalAngularVelocity(vec3_angle);
 	}
 	else
 	{
 		vecAbsVelocity += GetBaseVelocity();
-		vecAbsVelocity *= ( 1.0f - trace.fraction ) * gpGlobals->frametime * flSurfaceFriction;
-		PhysicsPushEntity( vecAbsVelocity, &trace );
+		vecAbsVelocity *= (1.0f - trace.fraction) * gpGlobals->frametime * flSurfaceFriction;
+		PhysicsPushEntity(vecAbsVelocity, &trace);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseEntity::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity )
+void CBaseEntity::ResolveFlyCollisionCustom(trace_t &trace, Vector &vecVelocity)
 {
 	// Stop if on ground.
-	if ( trace.plane.normal.z > 0.7 )			// Floor
+	if(trace.plane.normal.z > 0.7) // Floor
 	{
 		// Get the total velocity (player + conveyors, etc.)
-		VectorAdd( GetAbsVelocity(), GetBaseVelocity(), vecVelocity );
+		VectorAdd(GetAbsVelocity(), GetBaseVelocity(), vecVelocity);
 
 		// Verify that we have an entity.
 		CBaseEntity *pEntity = trace.m_pEnt;
-		Assert( pEntity );
+		Assert(pEntity);
 
 		// Are we on the ground?
-		if ( vecVelocity.z < ( GetActualGravity( this ) * gpGlobals->frametime ) )
+		if(vecVelocity.z < (GetActualGravity(this) * gpGlobals->frametime))
 		{
 			Vector vecAbsVelocity = GetAbsVelocity();
 			vecAbsVelocity.z = 0.0f;
-			SetAbsVelocity( vecAbsVelocity );
+			SetAbsVelocity(vecAbsVelocity);
 		}
 
-		if ( pEntity->IsStandable() )
+		if(pEntity->IsStandable())
 		{
-			SetGroundEntity( pEntity );
+			SetGroundEntity(pEntity);
 		}
 	}
 }
@@ -1541,77 +1530,78 @@ void CBaseEntity::ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity
 //-----------------------------------------------------------------------------
 // Performs the collision resolution for fliers.
 //-----------------------------------------------------------------------------
-void CBaseEntity::PerformFlyCollisionResolution( trace_t &trace, Vector &move )
+void CBaseEntity::PerformFlyCollisionResolution(trace_t &trace, Vector &move)
 {
-	switch( GetMoveCollide() )
+	switch(GetMoveCollide())
 	{
-	case MOVECOLLIDE_FLY_CUSTOM:
+		case MOVECOLLIDE_FLY_CUSTOM:
 		{
-			ResolveFlyCollisionCustom( trace, move );
+			ResolveFlyCollisionCustom(trace, move);
 			break;
 		}
 
-	case MOVECOLLIDE_FLY_BOUNCE:
+		case MOVECOLLIDE_FLY_BOUNCE:
 		{
-			ResolveFlyCollisionBounce( trace, move );
+			ResolveFlyCollisionBounce(trace, move);
 			break;
 		}
 
-	case MOVECOLLIDE_FLY_SLIDE:
-	case MOVECOLLIDE_DEFAULT:
-	// NOTE: The default fly collision state is the same as a slide (for backward capatability).
-		{
-			ResolveFlyCollisionSlide( trace, move );
-			break;
-		}
+		case MOVECOLLIDE_FLY_SLIDE:
+		case MOVECOLLIDE_DEFAULT:
+			// NOTE: The default fly collision state is the same as a slide (for backward capatability).
+			{
+				ResolveFlyCollisionSlide(trace, move);
+				break;
+			}
 
-	default:
+		default:
 		{
 			// Invalid MOVECOLLIDE_<type>
-			Assert( 0 );
+			Assert(0);
 			break;
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Checks if an object has passed into or out of water and sets water info, alters velocity, plays splash sounds, etc.
+// Purpose: Checks if an object has passed into or out of water and sets water info, alters velocity, plays splash
+// sounds, etc.
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsCheckWaterTransition( void )
+void CBaseEntity::PhysicsCheckWaterTransition(void)
 {
 	int oldcont = GetWaterType();
 	UpdateWaterState();
 	int cont = GetWaterType();
 
 	// We can exit right out if we're a child... don't bother with this...
-	if (GetMoveParent())
+	if(GetMoveParent())
 		return;
 
-	if ( cont & MASK_WATER )
+	if(cont & MASK_WATER)
 	{
-		if (oldcont == CONTENTS_EMPTY)
+		if(oldcont == CONTENTS_EMPTY)
 		{
 #ifndef CLIENT_DLL
 			Splash();
 #endif // !CLIENT_DLL
 
 			// just crossed into water
-			EmitSound( "BaseEntity.EnterWater" );
+			EmitSound("BaseEntity.EnterWater");
 
-			if ( !IsEFlagSet( EFL_NO_WATER_VELOCITY_CHANGE ) )
+			if(!IsEFlagSet(EFL_NO_WATER_VELOCITY_CHANGE))
 			{
 				Vector vecAbsVelocity = GetAbsVelocity();
 				vecAbsVelocity[2] *= 0.5;
-				SetAbsVelocity( vecAbsVelocity );
+				SetAbsVelocity(vecAbsVelocity);
 			}
 		}
 	}
 	else
 	{
-		if ( oldcont != CONTENTS_EMPTY )
+		if(oldcont != CONTENTS_EMPTY)
 		{
 			// just crossed out of water
-			EmitSound( "BaseEntity.ExitWater" );
+			EmitSound("BaseEntity.ExitWater");
 		}
 	}
 }
@@ -1619,43 +1609,42 @@ void CBaseEntity::PhysicsCheckWaterTransition( void )
 //-----------------------------------------------------------------------------
 // Computes new angles based on the angular velocity
 //-----------------------------------------------------------------------------
-void CBaseEntity::SimulateAngles( float flFrameTime )
+void CBaseEntity::SimulateAngles(float flFrameTime)
 {
 	// move angles
 	QAngle angles;
-	VectorMA ( GetLocalAngles(), flFrameTime, GetLocalAngularVelocity(), angles );
-	SetLocalAngles( angles );
+	VectorMA(GetLocalAngles(), flFrameTime, GetLocalAngularVelocity(), angles);
+	SetLocalAngles(angles);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Toss, bounce, and fly movement.  When onground, do nothing.
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsToss( void )
+void CBaseEntity::PhysicsToss(void)
 {
-	trace_t	trace;
-	Vector	move;
+	trace_t trace;
+	Vector move;
 
 	PhysicsCheckWater();
 
 	// regular thinking
-	if ( !PhysicsRunThink() )
+	if(!PhysicsRunThink())
 		return;
 
 	// Moving upward, off the ground, or  resting on a client/monster, remove FL_ONGROUND
-	if ( GetAbsVelocity()[2] > 0 || !GetGroundEntity() || !GetGroundEntity()->IsStandable() )
+	if(GetAbsVelocity()[2] > 0 || !GetGroundEntity() || !GetGroundEntity()->IsStandable())
 	{
-		SetGroundEntity( NULL );
+		SetGroundEntity(NULL);
 	}
 
 	// Check to see if entity is on the ground at rest
-	if ( GetFlags() & FL_ONGROUND )
+	if(GetFlags() & FL_ONGROUND)
 	{
-		if ( VectorCompare( GetAbsVelocity(), vec3_origin ) )
+		if(VectorCompare(GetAbsVelocity(), vec3_origin))
 		{
 			// Clear rotation if not moving (even if on a conveyor)
-			SetLocalAngularVelocity( vec3_angle );
-			if ( VectorCompare( GetBaseVelocity(), vec3_origin ) )
+			SetLocalAngularVelocity(vec3_angle);
+			if(VectorCompare(GetBaseVelocity(), vec3_origin))
 				return;
 		}
 	}
@@ -1663,9 +1652,9 @@ void CBaseEntity::PhysicsToss( void )
 	PhysicsCheckVelocity();
 
 	// add gravity
-	if ( GetMoveType() == MOVETYPE_FLYGRAVITY && !(GetFlags() & FL_FLY) )
+	if(GetMoveType() == MOVETYPE_FLYGRAVITY && !(GetFlags() & FL_FLY))
 	{
-		PhysicsAddGravityMove( move );
+		PhysicsAddGravityMove(move);
 	}
 	else
 	{
@@ -1674,25 +1663,25 @@ void CBaseEntity::PhysicsToss( void )
 		Vector vecAbsVelocity = GetAbsVelocity();
 		vecAbsVelocity += GetBaseVelocity();
 		VectorScale(vecAbsVelocity, gpGlobals->frametime, move);
-		PhysicsCheckVelocity( );
+		PhysicsCheckVelocity();
 	}
 
 	// move angles
-	SimulateAngles( gpGlobals->frametime );
+	SimulateAngles(gpGlobals->frametime);
 
 	// move origin
-	PhysicsPushEntity( move, &trace );
+	PhysicsPushEntity(move, &trace);
 
-#if !defined( CLIENT_DLL )
-	if ( VPhysicsGetObject() )
+#if !defined(CLIENT_DLL)
+	if(VPhysicsGetObject())
 	{
-		VPhysicsGetObject()->UpdateShadow( GetAbsOrigin(), vec3_angle, true, gpGlobals->frametime );
+		VPhysicsGetObject()->UpdateShadow(GetAbsOrigin(), vec3_angle, true, gpGlobals->frametime);
 	}
 #endif
 
 	PhysicsCheckVelocity();
 
-	if (trace.allsolid )
+	if(trace.allsolid)
 	{
 		// entity is trapped in another solid
 		// UNDONE: does this entity needs to be removed?
@@ -1701,25 +1690,24 @@ void CBaseEntity::PhysicsToss( void )
 		return;
 	}
 
-#if !defined( CLIENT_DLL )
-	if (IsEdictFree())
+#if !defined(CLIENT_DLL)
+	if(IsEdictFree())
 		return;
 #endif
 
-	if (trace.fraction != 1.0f)
+	if(trace.fraction != 1.0f)
 	{
-		PerformFlyCollisionResolution( trace, move );
+		PerformFlyCollisionResolution(trace, move);
 	}
 
 	// check for in water
 	PhysicsCheckWaterTransition();
 }
 
-
 //-----------------------------------------------------------------------------
 // Simulation in local space of rigid children
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsRigidChild( void )
+void CBaseEntity::PhysicsRigidChild(void)
 {
 	VPROF("CBaseEntity::PhysicsRigidChild");
 	// NOTE: rigidly attached children do simulation in local space
@@ -1729,168 +1717,166 @@ void CBaseEntity::PhysicsRigidChild( void )
 	Vector vecPrevOrigin = GetAbsOrigin();
 
 	// regular thinking
-	if ( !PhysicsRunThink() )
+	if(!PhysicsRunThink())
 		return;
 
 	VPROF_SCOPE_BEGIN("CBaseEntity::PhysicsRigidChild-2");
 
-#if !defined( CLIENT_DLL )
+#if !defined(CLIENT_DLL)
 	// Cause touch functions to be called
-	PhysicsTouchTriggers( &vecPrevOrigin );
+	PhysicsTouchTriggers(&vecPrevOrigin);
 
 	// We have to do this regardless owing to hierarchy
-	if ( VPhysicsGetObject() )
+	if(VPhysicsGetObject())
 	{
 		int solidType = GetSolid();
-		bool bAxisAligned = ( solidType == SOLID_BBOX || solidType == SOLID_NONE ) ? true : false;
-		VPhysicsGetObject()->UpdateShadow( GetAbsOrigin(), bAxisAligned ? vec3_angle : GetAbsAngles(), true, gpGlobals->frametime );
+		bool bAxisAligned = (solidType == SOLID_BBOX || solidType == SOLID_NONE) ? true : false;
+		VPhysicsGetObject()->UpdateShadow(GetAbsOrigin(), bAxisAligned ? vec3_angle : GetAbsAngles(), true,
+										  gpGlobals->frametime);
 	}
 #endif
 
 	VPROF_SCOPE_END();
 }
 
-
 //-----------------------------------------------------------------------------
 // Computes the base velocity
 //-----------------------------------------------------------------------------
-void CBaseEntity::UpdateBaseVelocity( void )
+void CBaseEntity::UpdateBaseVelocity(void)
 {
-#if !defined( CLIENT_DLL )
-	if ( GetFlags() & FL_ONGROUND )
+#if !defined(CLIENT_DLL)
+	if(GetFlags() & FL_ONGROUND)
 	{
-		CBaseEntity	*groundentity = GetGroundEntity();
-		if ( groundentity )
+		CBaseEntity *groundentity = GetGroundEntity();
+		if(groundentity)
 		{
 			// On conveyor belt that's moving?
-			if ( groundentity->GetFlags() & FL_CONVEYOR )
+			if(groundentity->GetFlags() & FL_CONVEYOR)
 			{
 				Vector vecNewBaseVelocity;
-				groundentity->GetGroundVelocityToApply( vecNewBaseVelocity );
-				if ( GetFlags() & FL_BASEVELOCITY )
+				groundentity->GetGroundVelocityToApply(vecNewBaseVelocity);
+				if(GetFlags() & FL_BASEVELOCITY)
 				{
 					vecNewBaseVelocity += GetBaseVelocity();
 				}
-				AddFlag( FL_BASEVELOCITY );
-				SetBaseVelocity( vecNewBaseVelocity );
+				AddFlag(FL_BASEVELOCITY);
+				SetBaseVelocity(vecNewBaseVelocity);
 			}
 		}
 	}
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Runs a frame of physics for a specific edict (and all it's children)
 // Input  : *ent - the thinking edict
 //-----------------------------------------------------------------------------
-void CBaseEntity::PhysicsSimulate( void )
+void CBaseEntity::PhysicsSimulate(void)
 {
-	VPROF( "CBaseEntity::PhysicsSimulate" );
+	VPROF("CBaseEntity::PhysicsSimulate");
 	// NOTE:  Players override PhysicsSimulate and drive through their CUserCmds at that point instead of
 	//  processng through this function call!!!  They shouldn't chain to here ever.
 	// Make sure not to simulate this guy twice per frame
-	if (m_nSimulationTick == gpGlobals->tickcount)
+	if(m_nSimulationTick == gpGlobals->tickcount)
 		return;
 
 	m_nSimulationTick = gpGlobals->tickcount;
 
-	Assert( !IsPlayer() );
+	Assert(!IsPlayer());
 
 	// If we've got a moveparent, we must simulate that first.
 	CBaseEntity *pMoveParent = GetMoveParent();
 
-	if ( (GetMoveType() == MOVETYPE_NONE && !pMoveParent) || (GetMoveType() == MOVETYPE_VPHYSICS ) )
+	if((GetMoveType() == MOVETYPE_NONE && !pMoveParent) || (GetMoveType() == MOVETYPE_VPHYSICS))
 	{
 		PhysicsNone();
 		return;
 	}
 
 	// If ground entity goes away, make sure FL_ONGROUND is valid
-	if ( !GetGroundEntity() )
+	if(!GetGroundEntity())
 	{
-		RemoveFlag( FL_ONGROUND );
+		RemoveFlag(FL_ONGROUND);
 	}
 
-	if (pMoveParent)
+	if(pMoveParent)
 	{
-		VPROF( "CBaseEntity::PhysicsSimulate-MoveParent" );
+		VPROF("CBaseEntity::PhysicsSimulate-MoveParent");
 		pMoveParent->PhysicsSimulate();
 	}
 	else
 	{
-		VPROF( "CBaseEntity::PhysicsSimulate-BaseVelocity" );
+		VPROF("CBaseEntity::PhysicsSimulate-BaseVelocity");
 
 		UpdateBaseVelocity();
 
-		if ( ((GetFlags() & FL_BASEVELOCITY) == 0) && (GetBaseVelocity() != vec3_origin) )
+		if(((GetFlags() & FL_BASEVELOCITY) == 0) && (GetBaseVelocity() != vec3_origin))
 		{
 			// Apply momentum (add in half of the previous frame of velocity first)
 			// BUGBUG: This will break with PhysicsStep() because of the timestep difference
 			Vector vecAbsVelocity;
-			VectorMA( GetAbsVelocity(), 1.0 + (gpGlobals->frametime*0.5), GetBaseVelocity(), vecAbsVelocity );
-			SetAbsVelocity( vecAbsVelocity );
-			SetBaseVelocity( vec3_origin );
+			VectorMA(GetAbsVelocity(), 1.0 + (gpGlobals->frametime * 0.5), GetBaseVelocity(), vecAbsVelocity);
+			SetAbsVelocity(vecAbsVelocity);
+			SetBaseVelocity(vec3_origin);
 		}
-		RemoveFlag( FL_BASEVELOCITY );
+		RemoveFlag(FL_BASEVELOCITY);
 	}
 
-	switch( GetMoveType() )
+	switch(GetMoveType())
 	{
-	case MOVETYPE_PUSH:
+		case MOVETYPE_PUSH:
 		{
-			VPROF( "CBaseEntity::PhysicsSimulate-MOVETYPE_PUSH" );
+			VPROF("CBaseEntity::PhysicsSimulate-MOVETYPE_PUSH");
 			PhysicsPusher();
 		}
 		break;
 
-
-	case MOVETYPE_VPHYSICS:
+		case MOVETYPE_VPHYSICS:
 		{
 		}
 		break;
 
-	case MOVETYPE_NONE:
+		case MOVETYPE_NONE:
 		{
-			VPROF( "CBaseEntity::PhysicsSimulate-MOVETYPE_NONE" );
+			VPROF("CBaseEntity::PhysicsSimulate-MOVETYPE_NONE");
 			Assert(pMoveParent);
 			PhysicsRigidChild();
 		}
 		break;
 
-	case MOVETYPE_NOCLIP:
+		case MOVETYPE_NOCLIP:
 		{
-			VPROF( "CBaseEntity::PhysicsSimulate-MOVETYPE_NOCLIP" );
+			VPROF("CBaseEntity::PhysicsSimulate-MOVETYPE_NOCLIP");
 			PhysicsNoclip();
 		}
 		break;
 
-	case MOVETYPE_STEP:
+		case MOVETYPE_STEP:
 		{
-			VPROF( "CBaseEntity::PhysicsSimulate-MOVETYPE_STEP" );
+			VPROF("CBaseEntity::PhysicsSimulate-MOVETYPE_STEP");
 			PhysicsStep();
 		}
 		break;
 
-	case MOVETYPE_FLY:
-	case MOVETYPE_FLYGRAVITY:
+		case MOVETYPE_FLY:
+		case MOVETYPE_FLYGRAVITY:
 		{
-			VPROF( "CBaseEntity::PhysicsSimulate-MOVETYPE_FLY" );
+			VPROF("CBaseEntity::PhysicsSimulate-MOVETYPE_FLY");
 			PhysicsToss();
 		}
 		break;
 
-	case MOVETYPE_CUSTOM:
+		case MOVETYPE_CUSTOM:
 		{
-			VPROF( "CBaseEntity::PhysicsSimulate-MOVETYPE_CUSTOM" );
+			VPROF("CBaseEntity::PhysicsSimulate-MOVETYPE_CUSTOM");
 			PhysicsCustom();
 		}
 		break;
 
-	default:
-		Warning( "PhysicsSimulate: %s bad movetype %d", GetClassname(), GetMoveType() );
-		Assert(0);
-		break;
+		default:
+			Warning("PhysicsSimulate: %s bad movetype %d", GetClassname(), GetMoveType());
+			Assert(0);
+			break;
 	}
 }
 
@@ -1901,41 +1887,41 @@ void CBaseEntity::PhysicsSimulate( void )
 //  Returns false if the entity removed itself.
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBaseEntity::PhysicsRunThink( thinkmethods_t thinkMethod )
+bool CBaseEntity::PhysicsRunThink(thinkmethods_t thinkMethod)
 {
-	if ( IsEFlagSet( EFL_NO_THINK_FUNCTION ) )
+	if(IsEFlagSet(EFL_NO_THINK_FUNCTION))
 		return true;
 
 	bool bAlive = true;
 
 	// Don't fire the base if we're avoiding it
-	if ( thinkMethod != THINK_FIRE_ALL_BUT_BASE )
+	if(thinkMethod != THINK_FIRE_ALL_BUT_BASE)
 	{
-		bAlive = PhysicsRunSpecificThink( -1, &CBaseEntity::Think );
-		if ( !bAlive )
+		bAlive = PhysicsRunSpecificThink(-1, &CBaseEntity::Think);
+		if(!bAlive)
 			return false;
 	}
 
 	// Are we just firing the base think?
-	if ( thinkMethod == THINK_FIRE_BASE_ONLY )
+	if(thinkMethod == THINK_FIRE_BASE_ONLY)
 		return bAlive;
 
 	// Fire the rest of 'em
-	for ( int i = 0; i < m_aThinkFunctions.Count(); i++ )
+	for(int i = 0; i < m_aThinkFunctions.Count(); i++)
 	{
 #ifdef _DEBUG
 		// Set the context
 		m_iCurrentThinkContext = i;
 #endif
 
-		bAlive = PhysicsRunSpecificThink( i, m_aThinkFunctions[i].m_pfnThink );
+		bAlive = PhysicsRunSpecificThink(i, m_aThinkFunctions[i].m_pfnThink);
 
 #ifdef _DEBUG
 		// Clear our context
 		m_iCurrentThinkContext = NO_THINK_CONTEXT;
 #endif
 
-		if ( !bAlive )
+		if(!bAlive)
 			return false;
 	}
 
@@ -1947,29 +1933,29 @@ bool CBaseEntity::PhysicsRunThink( thinkmethods_t thinkMethod )
 //-----------------------------------------------------------------------------
 struct ThinkSync
 {
-	float					thinktime;
-	int						thinktick;
-	CUtlVector< EHANDLE >	entities;
+	float thinktime;
+	int thinktick;
+	CUtlVector<EHANDLE> entities;
 
 	ThinkSync()
 	{
 		thinktime = 0;
 	}
 
-	ThinkSync( const ThinkSync& src )
+	ThinkSync(const ThinkSync &src)
 	{
 		thinktime = src.thinktime;
 		thinktick = src.thinktick;
 		int c = src.entities.Count();
-		for ( int i = 0; i < c; i++ )
+		for(int i = 0; i < c; i++)
 		{
-			entities.AddToTail( src.entities[ i ] );
+			entities.AddToTail(src.entities[i]);
 		}
 	}
 };
 
-#if !defined( CLIENT_DLL )
-static ConVar sv_thinktimecheck( "sv_thinktimecheck", "0", 0, "Check for thinktimes all on same timestamp." );
+#if !defined(CLIENT_DLL)
+static ConVar sv_thinktimecheck("sv_thinktimecheck", "0", 0, "Check for thinktimes all on same timestamp.");
 #endif
 
 //-----------------------------------------------------------------------------
@@ -1978,19 +1964,18 @@ static ConVar sv_thinktimecheck( "sv_thinktimecheck", "0", 0, "Check for thinkti
 class CThinkSyncTester
 {
 public:
-	CThinkSyncTester() :
-	  m_Thinkers( 0, 0, ThinkLessFunc )
+	CThinkSyncTester() : m_Thinkers(0, 0, ThinkLessFunc)
 	{
-		  m_nLastFrameCount = -1;
-		  m_bShouldCheck = false;
+		m_nLastFrameCount = -1;
+		m_bShouldCheck = false;
 	}
 
-	void EntityThinking( int framecount, CBaseEntity *ent, float thinktime, int thinktick )
+	void EntityThinking(int framecount, CBaseEntity *ent, float thinktime, int thinktick)
 	{
-#if !defined( CLIENT_DLL )
-		if ( m_nLastFrameCount != framecount )
+#if !defined(CLIENT_DLL)
+		if(m_nLastFrameCount != framecount)
 		{
-			if ( m_bShouldCheck )
+			if(m_bShouldCheck)
 			{
 				// Report
 				Report();
@@ -2001,88 +1986,85 @@ public:
 			m_bShouldCheck = sv_thinktimecheck.GetBool();
 		}
 
-		if ( !m_bShouldCheck )
+		if(!m_bShouldCheck)
 			return;
 
-		ThinkSync *p = FindOrAddItem( ent, thinktime );
-		if ( !p )
+		ThinkSync *p = FindOrAddItem(ent, thinktime);
+		if(!p)
 		{
-			Assert( 0 );
+			Assert(0);
 		}
 
 		p->thinktime = thinktime;
 		p->thinktick = thinktick;
 		EHANDLE h;
 		h = ent;
-		p->entities.AddToTail( h );
+		p->entities.AddToTail(h);
 #endif
 	}
 
 private:
-
-	static bool ThinkLessFunc( const ThinkSync& item1, const ThinkSync& item2 )
+	static bool ThinkLessFunc(const ThinkSync &item1, const ThinkSync &item2)
 	{
 		return item1.thinktime < item2.thinktime;
 	}
 
-	ThinkSync	*FindOrAddItem( CBaseEntity *ent, float thinktime )
+	ThinkSync *FindOrAddItem(CBaseEntity *ent, float thinktime)
 	{
 		ThinkSync item;
 		item.thinktime = thinktime;
 
-		int idx = m_Thinkers.Find( item );
-		if ( idx == m_Thinkers.InvalidIndex() )
+		int idx = m_Thinkers.Find(item);
+		if(idx == m_Thinkers.InvalidIndex())
 		{
-			idx = m_Thinkers.Insert( item );
+			idx = m_Thinkers.Insert(item);
 		}
 
-		return &m_Thinkers[ idx ];
+		return &m_Thinkers[idx];
 	}
 
 	void Report()
 	{
-		if ( m_Thinkers.Count() == 0 )
+		if(m_Thinkers.Count() == 0)
 			return;
 
-		Msg( "-----------------\nThink report frame %i\n", gpGlobals->tickcount );
+		Msg("-----------------\nThink report frame %i\n", gpGlobals->tickcount);
 
-		for ( int i = m_Thinkers.FirstInorder();
-			i != m_Thinkers.InvalidIndex();
-			i = m_Thinkers.NextInorder( i ) )
+		for(int i = m_Thinkers.FirstInorder(); i != m_Thinkers.InvalidIndex(); i = m_Thinkers.NextInorder(i))
 		{
-			ThinkSync *p = &m_Thinkers[ i ];
-			Assert( p );
-			if ( !p )
+			ThinkSync *p = &m_Thinkers[i];
+			Assert(p);
+			if(!p)
 				continue;
 
 			int ecount = p->entities.Count();
-			if ( !ecount )
+			if(!ecount)
 			{
 				continue;
 			}
 
-			Msg( "thinktime %f, %i entities\n", p->thinktime, ecount );
-			for ( int j =0; j < ecount; j++ )
+			Msg("thinktime %f, %i entities\n", p->thinktime, ecount);
+			for(int j = 0; j < ecount; j++)
 			{
-				EHANDLE h = p->entities[ j ];
+				EHANDLE h = p->entities[j];
 				int lastthinktick = 0;
 				int nextthinktick = 0;
 				CBaseEntity *e = h.Get();
-				if ( e )
+				if(e)
 				{
 					lastthinktick = e->m_nLastThinkTick;
 					nextthinktick = e->m_nNextThinkTick;
 				}
 
-				Msg( "  %p : %30s (last %5i/next %5i)\n", h.Get(), h.Get() ? h->GetClassname() : "NULL",
-					lastthinktick, nextthinktick );
+				Msg("  %p : %30s (last %5i/next %5i)\n", h.Get(), h.Get() ? h->GetClassname() : "NULL", lastthinktick,
+					nextthinktick);
 			}
 		}
 	}
 
-	CUtlRBTree< ThinkSync >	m_Thinkers;
-	int			m_nLastFrameCount;
-	bool		m_bShouldCheck;
+	CUtlRBTree<ThinkSync> m_Thinkers;
+	int m_nLastFrameCount;
+	bool m_bShouldCheck;
 };
 
 static CThinkSyncTester g_ThinkChecker;
@@ -2090,11 +2072,11 @@ static CThinkSyncTester g_ThinkChecker;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseEntity::PhysicsRunSpecificThink( int nContextIndex, BASEPTR thinkFunc )
+bool CBaseEntity::PhysicsRunSpecificThink(int nContextIndex, BASEPTR thinkFunc)
 {
-	int thinktick = GetNextThinkTick( nContextIndex );
+	int thinktick = GetNextThinkTick(nContextIndex);
 
-	if ( thinktick <= 0 || thinktick > gpGlobals->tickcount )
+	if(thinktick <= 0 || thinktick > gpGlobals->tickcount)
 		return true;
 
 	float thinktime = thinktick * TICK_INTERVAL;
@@ -2102,43 +2084,43 @@ bool CBaseEntity::PhysicsRunSpecificThink( int nContextIndex, BASEPTR thinkFunc 
 	// Don't let things stay in the past.
 	//  it is possible to start that way
 	//  by a trigger with a local time.
-	if ( thinktime < gpGlobals->curtime )
+	if(thinktime < gpGlobals->curtime)
 	{
 		thinktime = gpGlobals->curtime;
 	}
 
 	// Only do this on the game server
-#if !defined( CLIENT_DLL )
-	g_ThinkChecker.EntityThinking( gpGlobals->tickcount, this, thinktime, m_nNextThinkTick );
+#if !defined(CLIENT_DLL)
+	g_ThinkChecker.EntityThinking(gpGlobals->tickcount, this, thinktime, m_nNextThinkTick);
 #endif
 
-	SetNextThink( nContextIndex, TICK_NEVER_THINK );
+	SetNextThink(nContextIndex, TICK_NEVER_THINK);
 
-	PhysicsDispatchThink( thinkFunc );
+	PhysicsDispatchThink(thinkFunc);
 
-	SetLastThink( nContextIndex, gpGlobals->curtime );
+	SetLastThink(nContextIndex, gpGlobals->curtime);
 
 	// Return whether entity is still valid
-	return ( !IsMarkedForDeletion() );
+	return (!IsMarkedForDeletion());
 }
 
-void CBaseEntity::SetGroundEntity( CBaseEntity *ground )
+void CBaseEntity::SetGroundEntity(CBaseEntity *ground)
 {
-	if ( m_hGroundEntity.Get() == ground )
+	if(m_hGroundEntity.Get() == ground)
 		return;
 
 #ifdef GAME_DLL
 	// this can happen in-between updates to the held object controller (physcannon, +USE)
 	// so trap it here and release held objects when they become player ground
-	if ( ground && IsPlayer() && ground->GetMoveType()== MOVETYPE_VPHYSICS )
+	if(ground && IsPlayer() && ground->GetMoveType() == MOVETYPE_VPHYSICS)
 	{
 		CBasePlayer *pPlayer = ToBasePlayer(this);
 		IPhysicsObject *pPhysGround = ground->VPhysicsGetObject();
-		if ( pPhysGround && pPlayer )
+		if(pPhysGround && pPlayer)
 		{
-			if ( pPhysGround->GetGameFlags() & FVPHYSICS_PLAYER_HELD )
+			if(pPhysGround->GetGameFlags() & FVPHYSICS_PLAYER_HELD)
 			{
-				pPlayer->ForceDropOfCarriedPhysObjects( ground );
+				pPlayer->ForceDropOfCarriedPhysObjects(ground);
 			}
 		}
 	}
@@ -2148,63 +2130,60 @@ void CBaseEntity::SetGroundEntity( CBaseEntity *ground )
 	m_hGroundEntity = ground;
 
 	// Just starting to touch
-	if ( !oldGround && ground )
+	if(!oldGround && ground)
 	{
-		ground->AddEntityToGroundList( this );
+		ground->AddEntityToGroundList(this);
 	}
 	// Just stopping touching
-	else if ( oldGround && !ground )
+	else if(oldGround && !ground)
 	{
-		PhysicsNotifyOtherOfGroundRemoval( this, oldGround );
+		PhysicsNotifyOtherOfGroundRemoval(this, oldGround);
 	}
 	// Changing out to new ground entity
 	else
 	{
-		PhysicsNotifyOtherOfGroundRemoval( this, oldGround );
-		ground->AddEntityToGroundList( this );
+		PhysicsNotifyOtherOfGroundRemoval(this, oldGround);
+		ground->AddEntityToGroundList(this);
 	}
 
 	// HACK/PARANOID:  This is redundant with the code above, but in case we get out of sync groundlist entries ever,
 	//  this will force the appropriate flags
-	if ( ground )
+	if(ground)
 	{
-		AddFlag( FL_ONGROUND );
+		AddFlag(FL_ONGROUND);
 	}
 	else
 	{
-		RemoveFlag( FL_ONGROUND );
+		RemoveFlag(FL_ONGROUND);
 	}
 }
 
-CBaseEntity *CBaseEntity::GetGroundEntity( void )
+CBaseEntity *CBaseEntity::GetGroundEntity(void)
 {
 	return m_hGroundEntity;
 }
 
-void CBaseEntity::StartGroundContact( CBaseEntity *ground )
+void CBaseEntity::StartGroundContact(CBaseEntity *ground)
 {
-	AddFlag( FL_ONGROUND );
-//	Msg( "+++ %s starting contact with ground %s\n", GetClassname(), ground->GetClassname() );
+	AddFlag(FL_ONGROUND);
+	//	Msg( "+++ %s starting contact with ground %s\n", GetClassname(), ground->GetClassname() );
 }
 
-void CBaseEntity::EndGroundContact( CBaseEntity *ground )
+void CBaseEntity::EndGroundContact(CBaseEntity *ground)
 {
-	RemoveFlag( FL_ONGROUND );
-//	Msg( "--- %s ending contact with ground %s\n", GetClassname(), ground->GetClassname() );
+	RemoveFlag(FL_ONGROUND);
+	//	Msg( "--- %s ending contact with ground %s\n", GetClassname(), ground->GetClassname() );
 }
 
-
-void CBaseEntity::SetGroundChangeTime( float flTime )
+void CBaseEntity::SetGroundChangeTime(float flTime)
 {
 	m_flGroundChangeTime = flTime;
 }
 
-float CBaseEntity::GetGroundChangeTime( void )
+float CBaseEntity::GetGroundChangeTime(void)
 {
 	return m_flGroundChangeTime;
 }
-
-
 
 // Remove this as ground entity for all object resting on this object
 //-----------------------------------------------------------------------------
@@ -2214,22 +2193,22 @@ void CBaseEntity::WakeRestingObjects()
 {
 	// Unset this as ground entity for everything resting on this object
 	//  This calls endgroundcontact for everything on the list
-	PhysicsRemoveGroundList( this );
+	PhysicsRemoveGroundList(this);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *ent -
 //-----------------------------------------------------------------------------
-bool CBaseEntity::HasNPCsOnIt( void )
+bool CBaseEntity::HasNPCsOnIt(void)
 {
 	groundlink_t *link;
-	groundlink_t *root = ( groundlink_t * )GetDataObject( GROUNDLINK );
-	if ( root )
+	groundlink_t *root = (groundlink_t *)GetDataObject(GROUNDLINK);
+	if(root)
 	{
-		for ( link = root->nextLink; link != root; link = link->nextLink )
+		for(link = root->nextLink; link != root; link = link->nextLink)
 		{
-			if ( link->entity && link->entity->MyNPCPointer() )
+			if(link->entity && link->entity->MyNPCPointer())
 				return true;
 		}
 	}

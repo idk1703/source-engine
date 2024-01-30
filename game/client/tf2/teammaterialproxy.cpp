@@ -19,13 +19,12 @@ class CTeamMaterialProxy : public CEntityMaterialProxy
 public:
 	CTeamMaterialProxy();
 	virtual ~CTeamMaterialProxy();
-	virtual bool Init( IMaterial *pMaterial, KeyValues* pKeyValues );
-	virtual void OnBind( C_BaseEntity *pEnt );
+	virtual bool Init(IMaterial *pMaterial, KeyValues *pKeyValues);
+	virtual void OnBind(C_BaseEntity *pEnt);
 
 private:
-	IMaterialVar* m_FrameVar;
+	IMaterialVar *m_FrameVar;
 };
-
 
 //-----------------------------------------------------------------------------
 // Constructor, destructor
@@ -36,19 +35,16 @@ CTeamMaterialProxy::CTeamMaterialProxy()
 	m_FrameVar = 0;
 }
 
-CTeamMaterialProxy::~CTeamMaterialProxy()
-{
-}
-
+CTeamMaterialProxy::~CTeamMaterialProxy() {}
 
 //-----------------------------------------------------------------------------
 // Init baby...
 //-----------------------------------------------------------------------------
-bool CTeamMaterialProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
+bool CTeamMaterialProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
 	bool foundVar;
-	m_FrameVar = pMaterial->FindVar( "$frame", &foundVar, false );
-	if( !foundVar )
+	m_FrameVar = pMaterial->FindVar("$frame", &foundVar, false);
+	if(!foundVar)
 		m_FrameVar = 0;
 	return true;
 }
@@ -56,16 +52,16 @@ bool CTeamMaterialProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
 //-----------------------------------------------------------------------------
 // Set the appropriate texture...
 //-----------------------------------------------------------------------------
-void CTeamMaterialProxy::OnBind( C_BaseEntity *pEnt )
+void CTeamMaterialProxy::OnBind(C_BaseEntity *pEnt)
 {
-	if( !m_FrameVar )
+	if(!m_FrameVar)
 		return;
 
 	int team = pEnt->GetRenderTeamNumber();
 	team--;
 
 	// Use that as an animated frame number
-	m_FrameVar->SetIntValue( team );
+	m_FrameVar->SetIntValue(team);
 }
 
-EXPOSE_INTERFACE( CTeamMaterialProxy, IMaterialProxy, "TeamTexture" IMATERIAL_PROXY_INTERFACE_VERSION );
+EXPOSE_INTERFACE(CTeamMaterialProxy, IMaterialProxy, "TeamTexture" IMATERIAL_PROXY_INTERFACE_VERSION);

@@ -14,34 +14,31 @@
 class CHudAreaCapIcon : public CHudElement, public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudAreaCapIcon, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudAreaCapIcon, vgui::Panel);
 
-	CHudAreaCapIcon( const char *name );
+	CHudAreaCapIcon(const char *name);
 
 	virtual void Paint();
 	virtual void Init();
 	virtual bool ShouldDraw();
 
 private:
-	int	m_iAreaTexture;
+	int m_iAreaTexture;
 	int m_iPrevMaterialIndex;
 	Color m_clrIcon;
 };
 
-
 // DECLARE_HUDELEMENT( CHudAreaCapIcon );
 
-
-CHudAreaCapIcon::CHudAreaCapIcon( const char *pName ) :
-	vgui::Panel( NULL, "HudAreaCapIcon" ), CHudElement( pName )
+CHudAreaCapIcon::CHudAreaCapIcon(const char *pName) : vgui::Panel(NULL, "HudAreaCapIcon"), CHudElement(pName)
 {
-	SetParent( g_pClientMode->GetViewport() );
+	SetParent(g_pClientMode->GetViewport());
 
-	m_clrIcon = Color(255,255,255,255);
+	m_clrIcon = Color(255, 255, 255, 255);
 
 	m_iPrevMaterialIndex = 0;
 
-	SetHiddenBits( HIDEHUD_PLAYERDEAD );
+	SetHiddenBits(HIDEHUD_PLAYERDEAD);
 }
 
 void CHudAreaCapIcon::Init()
@@ -84,5 +81,4 @@ void CHudAreaCapIcon::Paint()
 
 		// store the previous material index to compare next frame
 		m_iPrevMaterialIndex = iMaterialIndex;*/
-
 }

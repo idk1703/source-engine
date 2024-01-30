@@ -12,13 +12,12 @@
 #include "tier1/KeyValues.h"
 #include <vgui_controls/ComboBox.h>
 
-
 using namespace vgui;
 
 // Combo boxes are boxes that display text and have a menu attached.
 // Selecting an item from the menu changes the displayed text in the box.
 
-class ComboBoxDemo: public DemoPage
+class ComboBoxDemo : public DemoPage
 {
 public:
 	ComboBoxDemo(Panel *parent, const char *name);
@@ -26,8 +25,6 @@ public:
 
 private:
 	ComboBox *m_pComboBox;
-
-
 };
 
 //-----------------------------------------------------------------------------
@@ -48,30 +45,24 @@ ComboBoxDemo::ComboBoxDemo(Panel *parent, const char *name) : DemoPage(parent, n
 	m_pComboBox->SetWide(80);
 
 	// Add text selections to the menu list
-	m_pComboBox->AddItem("Right", NULL );
-	m_pComboBox->AddItem("Left", NULL );
-	m_pComboBox->AddItem("Up", NULL );
-	m_pComboBox->AddItem("Down", NULL );
-	m_pComboBox->AddItem("Forward", NULL );
-	m_pComboBox->AddItem("Backward", NULL );
+	m_pComboBox->AddItem("Right", NULL);
+	m_pComboBox->AddItem("Left", NULL);
+	m_pComboBox->AddItem("Up", NULL);
+	m_pComboBox->AddItem("Down", NULL);
+	m_pComboBox->AddItem("Forward", NULL);
+	m_pComboBox->AddItem("Backward", NULL);
 
 	// Activate the first item in the list, so our box will start out
 	// with a default selection. ("Right")
 	m_pComboBox->ActivateItem(0);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-ComboBoxDemo::~ComboBoxDemo()
-{
-}
+ComboBoxDemo::~ComboBoxDemo() {}
 
-
-
-
-Panel* ComboBoxDemo_Create(Panel *parent)
+Panel *ComboBoxDemo_Create(Panel *parent)
 {
 	return new ComboBoxDemo(parent, "ComboBoxDemo");
 }

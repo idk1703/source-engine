@@ -12,33 +12,29 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define GRENADETRAIL_ENTITYNAME		"env_grenadetrail"
+#define GRENADETRAIL_ENTITYNAME "env_grenadetrail"
 
 //-----------------------------------------------------------------------------
-//Data table
+// Data table
 //-----------------------------------------------------------------------------
 IMPLEMENT_SERVERCLASS_ST(CGrenadeTrail, DT_GrenadeTrail)
-	SendPropFloat(SENDINFO(m_SpawnRate), 8, 0, 1, 1024),
+SendPropFloat(SENDINFO(m_SpawnRate), 8, 0, 1, 1024),
 	SendPropFloat(SENDINFO(m_ParticleLifetime), 16, SPROP_ROUNDUP, 0.1, 100),
-	SendPropFloat(SENDINFO(m_StopEmitTime), 0, SPROP_NOSCALE),
-	SendPropBool(SENDINFO(m_bEmit) ),
-	SendPropInt(SENDINFO(m_nAttachment), 32 ),
-END_SEND_TABLE()
+	SendPropFloat(SENDINFO(m_StopEmitTime), 0, SPROP_NOSCALE), SendPropBool(SENDINFO(m_bEmit)),
+	SendPropInt(SENDINFO(m_nAttachment), 32),
+END_SEND_TABLE
+()
 
+	BEGIN_DATADESC(CGrenadeTrail)
 
-BEGIN_DATADESC( CGrenadeTrail )
+		DEFINE_KEYFIELD(m_SpawnRate, FIELD_FLOAT, "spawnrate"),
+	DEFINE_KEYFIELD(m_ParticleLifetime, FIELD_FLOAT, "lifetime"), DEFINE_FIELD(m_StopEmitTime, FIELD_TIME),
+	DEFINE_FIELD(m_bEmit, FIELD_BOOLEAN), DEFINE_FIELD(m_nAttachment, FIELD_INTEGER),
 
-	DEFINE_KEYFIELD( m_SpawnRate, FIELD_FLOAT, "spawnrate" ),
-	DEFINE_KEYFIELD( m_ParticleLifetime, FIELD_FLOAT, "lifetime" ),
-	DEFINE_FIELD( m_StopEmitTime, FIELD_TIME ),
-	DEFINE_FIELD( m_bEmit, FIELD_BOOLEAN ),
-	DEFINE_FIELD( m_nAttachment, FIELD_INTEGER ),
+END_DATADESC
+()
 
-END_DATADESC()
-
-
-LINK_ENTITY_TO_CLASS(env_grenadetrail, CGrenadeTrail);
-
+	LINK_ENTITY_TO_CLASS(env_grenadetrail, CGrenadeTrail);
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -50,7 +46,7 @@ CGrenadeTrail::CGrenadeTrail()
 	m_ParticleLifetime = 5;
 	m_StopEmitTime = 0; // Don't stop emitting particles
 	m_bEmit = true;
-	m_nAttachment	= 0;
+	m_nAttachment = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -63,17 +59,16 @@ void CGrenadeTrail::SetEmit(bool bVal)
 	m_bEmit = bVal;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : CGrenadeTrail*
 //-----------------------------------------------------------------------------
-CGrenadeTrail* CGrenadeTrail::CreateGrenadeTrail()
+CGrenadeTrail *CGrenadeTrail::CreateGrenadeTrail()
 {
 	CBaseEntity *pEnt = CreateEntityByName(GRENADETRAIL_ENTITYNAME);
 	if(pEnt)
 	{
-		CGrenadeTrail *pTrail = dynamic_cast<CGrenadeTrail*>(pEnt);
+		CGrenadeTrail *pTrail = dynamic_cast<CGrenadeTrail *>(pEnt);
 		if(pTrail)
 		{
 			pTrail->Activate();
@@ -93,17 +88,17 @@ CGrenadeTrail* CGrenadeTrail::CreateGrenadeTrail()
 // Input  : index - entity that has the attachment
 //			attachment - point to attach to
 //-----------------------------------------------------------------------------
-void CGrenadeTrail::FollowEntity( CBaseEntity *pEntity, const char *pAttachmentName )
+void CGrenadeTrail::FollowEntity(CBaseEntity *pEntity, const char *pAttachmentName)
 {
 	// For attachments
-	if ( pAttachmentName && pEntity && pEntity->GetBaseAnimating() )
+	if(pAttachmentName && pEntity && pEntity->GetBaseAnimating())
 	{
-		m_nAttachment = pEntity->GetBaseAnimating()->LookupAttachment( pAttachmentName );
+		m_nAttachment = pEntity->GetBaseAnimating()->LookupAttachment(pAttachmentName);
 	}
 	else
 	{
 		m_nAttachment = 0;
 	}
 
-	BaseClass::FollowEntity( pEntity );
+	BaseClass::FollowEntity(pEntity);
 }

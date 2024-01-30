@@ -11,7 +11,7 @@
 #include "fgdlib/HelperInfo.h"
 #include "materialsystem/imaterialsystem.h"
 #include "materialsystem/imesh.h"
-#include "MainFrm.h"			// For refreshing the object properties dialog
+#include "MainFrm.h" // For refreshing the object properties dialog
 #include "MapDoc.h"
 #include "MapSweptPlayerHull.h"
 #include "MapPlayerHullHandle.h"
@@ -19,7 +19,7 @@
 #include "MapView2D.h"
 #include "Material.h"
 #include "Options.h"
-#include "ObjectProperties.h"	// For refreshing the object properties dialog
+#include "ObjectProperties.h" // For refreshing the object properties dialog
 #include "Render2D.h"
 #include "Render3D.h"
 #include "ToolManager.h"
@@ -28,9 +28,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 IMPLEMENT_MAPCLASS(CMapSweptPlayerHull);
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Used for creating a CMapSweptPlayerHull from a set
@@ -42,10 +40,9 @@ IMPLEMENT_MAPCLASS(CMapSweptPlayerHull);
 CMapClass *CMapSweptPlayerHull::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 {
 	CMapSweptPlayerHull *pBox = new CMapSweptPlayerHull;
-	pBox->SetRenderColor(255,255,255);
-	return(pBox);
+	pBox->SetRenderColor(255, 255, 255);
+	return (pBox);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -54,7 +51,6 @@ CMapSweptPlayerHull::CMapSweptPlayerHull(void)
 {
 	Initialize();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -72,14 +68,10 @@ void CMapSweptPlayerHull::Initialize(void)
 	m_Point[1]->Attach(this);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CMapSweptPlayerHull::~CMapSweptPlayerHull(void)
-{
-}
-
+CMapSweptPlayerHull::~CMapSweptPlayerHull(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -94,7 +86,7 @@ void CMapSweptPlayerHull::CalcBounds(BOOL bFullUpdate)
 
 	m_Render2DBox.ResetBounds();
 	m_CullBox.ResetBounds();
-	for (int i = 0; i < 2; i++)
+	for(int i = 0; i < 2; i++)
 	{
 		m_Point[i]->CalcBounds(bFullUpdate);
 		m_Point[i]->GetCullBox(vecMins, vecMaxs);
@@ -106,7 +98,6 @@ void CMapSweptPlayerHull::CalcBounds(BOOL bFullUpdate)
 	m_Render2DBox = m_CullBox;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : CMapClass
@@ -115,14 +106,13 @@ CMapClass *CMapSweptPlayerHull::Copy(bool bUpdateDependencies)
 {
 	CMapSweptPlayerHull *pCopy = new CMapSweptPlayerHull;
 
-	if (pCopy != NULL)
+	if(pCopy != NULL)
 	{
 		pCopy->CopyFrom(this, bUpdateDependencies);
 	}
 
-	return(pCopy);
+	return (pCopy);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -139,9 +129,8 @@ CMapClass *CMapSweptPlayerHull::CopyFrom(CMapClass *pObject, bool bUpdateDepende
 	m_Point[0]->CopyFrom(pFrom->m_Point[0], bUpdateDependencies);
 	m_Point[1]->CopyFrom(pFrom->m_Point[1], bUpdateDependencies);
 
-	return(this);
+	return (this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Gets the tool object for a given context data from HitTest2D.
@@ -159,12 +148,11 @@ CBaseTool *CMapSweptPlayerHull::GetToolObject(int nHitData, bool bAttachObject)
 	// to be displayed as they are dragged around.
 	CToolSweptPlayerHull *pTool = (CToolSweptPlayerHull *)ToolManager()->GetToolForID(TOOL_SWEPT_HULL);
 
-	if ( bAttachObject )
+	if(bAttachObject)
 		pTool->Attach(this, nHitData);
 
 	return pTool;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -175,11 +163,11 @@ CBaseTool *CMapSweptPlayerHull::GetToolObject(int nHitData, bool bAttachObject)
 //-----------------------------------------------------------------------------
 bool CMapSweptPlayerHull::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData)
 {
-	if (IsVisible())
+	if(IsVisible())
 	{
-		for (unsigned int i = 0; i < 2; i++)
+		for(unsigned int i = 0; i < 2; i++)
 		{
-			if ( m_Point[i]->HitTest2D(pView, point, HitData) )
+			if(m_Point[i]->HitTest2D(pView, point, HitData))
 			{
 				HitData.pObject = this;
 				HitData.uData = i;
@@ -192,7 +180,6 @@ bool CMapSweptPlayerHull::HitTest2D(CMapView2D *pView, const Vector2D &point, Hi
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pRender -
@@ -201,7 +188,7 @@ void CMapSweptPlayerHull::Render2D(CRender2D *pRender)
 {
 	SelectionState_t eState = GetSelectionState();
 
-	CMapView2D *pView = (CMapView2D*)pRender->GetView();
+	CMapView2D *pView = (CMapView2D *)pRender->GetView();
 
 	m_Point[0]->Render2D(pRender);
 	m_Point[1]->Render2D(pRender);
@@ -213,8 +200,8 @@ void CMapSweptPlayerHull::Render2D(CRender2D *pRender)
 
 	Vector mins1, maxs1;
 	Vector mins2, maxs2;
-	m_Point[0]->m_CullBox.GetBounds( mins1, maxs1 );
-	m_Point[1]->m_CullBox.GetBounds( mins2, maxs2 );
+	m_Point[0]->m_CullBox.GetBounds(mins1, maxs1);
+	m_Point[1]->m_CullBox.GetBounds(mins2, maxs2);
 
 	// Draw swept volume
 	Vector dir = vecOrigin2 - vecOrigin1;
@@ -223,26 +210,27 @@ void CMapSweptPlayerHull::Render2D(CRender2D *pRender)
 	int nVert = pView->axVert;
 	int nThird = pView->axThird;
 
-	dir[ nThird ] = 0;
+	dir[nThird] = 0;
 
-	VectorNormalize( dir );
+	VectorNormalize(dir);
 
-	float dx = dir[ nHorz ];
-	float dy = dir[ nVert ];
+	float dx = dir[nHorz];
+	float dy = dir[nVert];
 
-	if ( dx == 0 && dy == 0 )
+	if(dx == 0 && dy == 0)
 		return;
 
-	if (eState == SELECT_MODIFY)
+	if(eState == SELECT_MODIFY)
 	{
-		pRender->PushRenderMode( RENDER_MODE_DOTTED );
-		pRender->SetDrawColor( GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection), GetBValue(Options.colors.clrSelection) );
-
+		pRender->PushRenderMode(RENDER_MODE_DOTTED);
+		pRender->SetDrawColor(GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection),
+							  GetBValue(Options.colors.clrSelection));
 	}
 	else
 	{
-		pRender->PushRenderMode( RENDER_MODE_FLAT );
-		pRender->SetDrawColor( GetRValue(Options.colors.clrToolHandle), GetGValue(Options.colors.clrToolHandle), GetBValue(Options.colors.clrToolHandle) );
+		pRender->PushRenderMode(RENDER_MODE_FLAT);
+		pRender->SetDrawColor(GetRValue(Options.colors.clrToolHandle), GetGValue(Options.colors.clrToolHandle),
+							  GetBValue(Options.colors.clrToolHandle));
 	}
 
 	Vector line1[2];
@@ -253,67 +241,66 @@ void CMapSweptPlayerHull::Render2D(CRender2D *pRender)
 	line2[0].Init();
 	line2[1].Init();
 
-	if ( dx > 0 )
+	if(dx > 0)
 	{
-		if ( dy > 0 )
+		if(dy > 0)
 		{
-			line1[0][nHorz] = mins1[ nHorz ];
-			line1[0][nVert] = maxs1[ nVert ];
-			line1[1][nHorz] = mins2[ nHorz ];
-			line1[1][nVert] = maxs2[ nVert ];
+			line1[0][nHorz] = mins1[nHorz];
+			line1[0][nVert] = maxs1[nVert];
+			line1[1][nHorz] = mins2[nHorz];
+			line1[1][nVert] = maxs2[nVert];
 
-			line2[0][nHorz] = maxs1[ nHorz ];
-			line2[0][nVert] = mins1[ nVert ];
-			line2[1][nHorz] = maxs2[ nHorz ];
-			line2[1][nVert] = mins2[ nVert ];
+			line2[0][nHorz] = maxs1[nHorz];
+			line2[0][nVert] = mins1[nVert];
+			line2[1][nHorz] = maxs2[nHorz];
+			line2[1][nVert] = mins2[nVert];
 		}
 		else
 		{
-			line1[0][nHorz] = maxs1[ nHorz ];
-			line1[0][nVert] = maxs1[ nVert ];
-			line1[1][nHorz] = maxs2[ nHorz ];
-			line1[1][nVert] = maxs2[ nVert ];
+			line1[0][nHorz] = maxs1[nHorz];
+			line1[0][nVert] = maxs1[nVert];
+			line1[1][nHorz] = maxs2[nHorz];
+			line1[1][nVert] = maxs2[nVert];
 
-			line2[0][nHorz] = mins1[ nHorz ];
-			line2[0][nVert] = mins1[ nVert ];
-			line2[1][nHorz] = mins2[ nHorz ];
-			line2[1][nVert] = mins2[ nVert ];
+			line2[0][nHorz] = mins1[nHorz];
+			line2[0][nVert] = mins1[nVert];
+			line2[1][nHorz] = mins2[nHorz];
+			line2[1][nVert] = mins2[nVert];
 		}
 	}
 	else
 	{
-		if ( dy > 0 )
+		if(dy > 0)
 		{
-			line1[0][nHorz] = maxs1[ nHorz ];
-			line1[0][nVert] = maxs1[ nVert ];
-			line1[1][nHorz] = maxs2[ nHorz ];
-			line1[1][nVert] = maxs2[ nVert ];
+			line1[0][nHorz] = maxs1[nHorz];
+			line1[0][nVert] = maxs1[nVert];
+			line1[1][nHorz] = maxs2[nHorz];
+			line1[1][nVert] = maxs2[nVert];
 
-			line2[0][nHorz] = mins1[ nHorz ];
-			line2[0][nVert] = mins1[ nVert ];
-			line2[1][nHorz] = mins2[ nHorz ];
-			line2[1][nVert] = mins2[ nVert ];
+			line2[0][nHorz] = mins1[nHorz];
+			line2[0][nVert] = mins1[nVert];
+			line2[1][nHorz] = mins2[nHorz];
+			line2[1][nVert] = mins2[nVert];
 		}
 		else
 		{
-			line1[0][nHorz] = mins1[ nHorz ];
-			line1[0][nVert] = maxs1[ nVert ];
-			line1[1][nHorz] = mins2[ nHorz ];
-			line1[1][nVert] = maxs2[ nVert ];
+			line1[0][nHorz] = mins1[nHorz];
+			line1[0][nVert] = maxs1[nVert];
+			line1[1][nHorz] = mins2[nHorz];
+			line1[1][nVert] = maxs2[nVert];
 
-			line2[0][nHorz] = maxs1[ nHorz ];
-			line2[0][nVert] = mins1[ nVert ];
-			line2[1][nHorz] = maxs2[ nHorz ];
-			line2[1][nVert] = mins2[ nVert ];
+			line2[0][nHorz] = maxs1[nHorz];
+			line2[0][nVert] = mins1[nVert];
+			line2[1][nHorz] = maxs2[nHorz];
+			line2[1][nVert] = mins2[nVert];
 		}
 	}
 
-	pRender->DrawLine( line1[0], line1[1] );
-	pRender->DrawLine( line2[0], line2[1] );
+	pRender->DrawLine(line1[0], line1[1]);
+	pRender->DrawLine(line2[0], line2[1]);
 
 	pRender->PopRenderMode();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -321,18 +308,18 @@ void CMapSweptPlayerHull::Render2D(CRender2D *pRender)
 //-----------------------------------------------------------------------------
 void CMapSweptPlayerHull::Render3D(CRender3D *pRender)
 {
-	for (int i = 0; i < 2; i++)
+	for(int i = 0; i < 2; i++)
 	{
 		m_Point[i]->Render3D(pRender);
 	}
 
-	if (GetSelectionState() == SELECT_NONE)
+	if(GetSelectionState() == SELECT_NONE)
 	{
-		pRender->SetDrawColor( 200,180,0 );
+		pRender->SetDrawColor(200, 180, 0);
 	}
 	else
 	{
-		pRender->SetDrawColor( 255,0,0 );
+		pRender->SetDrawColor(255, 0, 0);
 	}
 
 	Vector vec1;
@@ -341,27 +328,23 @@ void CMapSweptPlayerHull::Render3D(CRender3D *pRender)
 	m_Point[1]->GetOrigin(vec2);
 
 	pRender->DrawLine(vec1, vec2);
-
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 int CMapSweptPlayerHull::SerializeRMF(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 int CMapSweptPlayerHull::SerializeMAP(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Overridden to chain down to our endpoints, which are not children.
@@ -373,7 +356,6 @@ void CMapSweptPlayerHull::SetOrigin(Vector &vecOrigin)
 	m_Point[0]->SetOrigin(vecOrigin);
 	m_Point[1]->SetOrigin(vecOrigin);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Overridden to chain down to our endpoints, which are not children.
@@ -388,7 +370,6 @@ SelectionState_t CMapSweptPlayerHull::SetSelectionState(SelectionState_t eSelect
 	return eState;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Special version of set SelectionState to set the state in only one
 //			endpoint handle for dragging that handle.
@@ -400,27 +381,21 @@ SelectionState_t CMapSweptPlayerHull::SetSelectionState(SelectionState_t eSelect
 	return eState;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: Overridden because origin helpers don't take the color of their
+//			parent entity.
+// Input  : red, green, blue -
+//-----------------------------------------------------------------------------
+void CMapSweptPlayerHull::SetRenderColor(unsigned char red, unsigned char green, unsigned char blue) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Overridden because origin helpers don't take the color of their
 //			parent entity.
 // Input  : red, green, blue -
 //-----------------------------------------------------------------------------
-void CMapSweptPlayerHull::SetRenderColor(unsigned char red, unsigned char green, unsigned char blue)
-{
-}
+void CMapSweptPlayerHull::SetRenderColor(color32 rgbColor) {}
 
-
-//-----------------------------------------------------------------------------
-// Purpose: Overridden because origin helpers don't take the color of their
-//			parent entity.
-// Input  : red, green, blue -
-//-----------------------------------------------------------------------------
-void CMapSweptPlayerHull::SetRenderColor(color32 rgbColor)
-{
-}
-
-static Vector playerFixup( 0, 0, 36 );
+static Vector playerFixup(0, 0, 36);
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -429,20 +404,20 @@ static Vector playerFixup( 0, 0, 36 );
 //-----------------------------------------------------------------------------
 void CMapSweptPlayerHull::OnParentKeyChanged(const char *szKey, const char *szValue)
 {
-	if (!stricmp(szKey, "point0"))
+	if(!stricmp(szKey, "point0"))
 	{
 		Vector vecOrigin;
-		sscanf(szValue, "%f %f %f", &vecOrigin.x, &vecOrigin.y, &vecOrigin.z );
+		sscanf(szValue, "%f %f %f", &vecOrigin.x, &vecOrigin.y, &vecOrigin.z);
 
 		vecOrigin += playerFixup;
 
 		m_Point[0]->SetOrigin(vecOrigin);
 		PostUpdate(Notify_Changed);
 	}
-	else if (!stricmp(szKey, "point1"))
+	else if(!stricmp(szKey, "point1"))
 	{
 		Vector vecOrigin;
-		sscanf(szValue, "%f %f %f", &vecOrigin.x, &vecOrigin.y, &vecOrigin.z );
+		sscanf(szValue, "%f %f %f", &vecOrigin.x, &vecOrigin.y, &vecOrigin.z);
 
 		vecOrigin += playerFixup;
 
@@ -451,17 +426,15 @@ void CMapSweptPlayerHull::OnParentKeyChanged(const char *szKey, const char *szVa
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called by the axis tool to update the position of the endpoint.
 //-----------------------------------------------------------------------------
 void CMapSweptPlayerHull::UpdateEndPoint(Vector &vecPos, int nPointIndex)
 {
-	m_Point[nPointIndex]->SetOrigin( vecPos );
+	m_Point[nPointIndex]->SetOrigin(vecPos);
 	PostUpdate(Notify_Changed);
 	UpdateParentKey();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Overridden to transform our endpoints.
@@ -481,8 +454,8 @@ void CMapSweptPlayerHull::DoTransform(const VMatrix &matrix)
 //-----------------------------------------------------------------------------
 void CMapSweptPlayerHull::UpdateParentKey(void)
 {
-	CMapEntity *pEntity = dynamic_cast <CMapEntity *> (m_pParent);
-	if (pEntity != NULL)
+	CMapEntity *pEntity = dynamic_cast<CMapEntity *>(m_pParent);
+	if(pEntity != NULL)
 	{
 		Vector vecOrigin1;
 		Vector vecOrigin2;
@@ -495,7 +468,7 @@ void CMapSweptPlayerHull::UpdateParentKey(void)
 		PostUpdate(Notify_Changed);
 
 		char szValue[KEYVALUE_MAX_VALUE_LENGTH];
-		sprintf(szValue, "%g %g %g", (double)vecOrigin1.x, (double)vecOrigin1.y, (double)vecOrigin1.z );
+		sprintf(szValue, "%g %g %g", (double)vecOrigin1.x, (double)vecOrigin1.y, (double)vecOrigin1.z);
 		pEntity->NotifyChildKeyChanged(this, "point0", szValue);
 		pEntity->NotifyChildKeyChanged(this, "origin", szValue);
 
@@ -503,7 +476,6 @@ void CMapSweptPlayerHull::UpdateParentKey(void)
 		pEntity->NotifyChildKeyChanged(this, "point1", szValue);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the keyvalue in our parent when we are	added to the world.
@@ -515,7 +487,6 @@ void CMapSweptPlayerHull::OnAddToWorld(CMapWorld *pWorld)
 	UpdateParentKey();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets the keyvalue in our parent after the map is loaded.
 // Input  : pWorld -
@@ -525,7 +496,6 @@ void CMapSweptPlayerHull::PostloadWorld(CMapWorld *pWorld)
 	BaseClass::PostloadWorld(pWorld);
 	UpdateParentKey();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the position of the given endpoint.

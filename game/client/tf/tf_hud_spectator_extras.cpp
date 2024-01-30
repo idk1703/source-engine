@@ -22,28 +22,30 @@
 
 using namespace vgui;
 
-ConVar tf_spec_xray_disable( "tf_spec_xray_disable", "0", FCVAR_ARCHIVE, "Disable the spectator xray mode." );
-ConVar tf_enable_glows_after_respawn( "tf_enable_glows_after_respawn", "1", FCVAR_ARCHIVE, "Enable teammate glow effects after respawn." );
+ConVar tf_spec_xray_disable("tf_spec_xray_disable", "0", FCVAR_ARCHIVE, "Disable the spectator xray mode.");
+ConVar tf_enable_glows_after_respawn("tf_enable_glows_after_respawn", "1", FCVAR_ARCHIVE,
+									 "Enable teammate glow effects after respawn.");
 
-DECLARE_HUDELEMENT( CTFHudSpectatorExtras );
+DECLARE_HUDELEMENT(CTFHudSpectatorExtras);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFHudSpectatorExtras::CTFHudSpectatorExtras( const char *pszElementName ) : CHudElement( pszElementName ), EditablePanel( NULL, "HudSpectatorExtras" )
+CTFHudSpectatorExtras::CTFHudSpectatorExtras(const char *pszElementName)
+	: CHudElement(pszElementName), EditablePanel(NULL, "HudSpectatorExtras")
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( 0 );
+	SetHiddenBits(0);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 100);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFHudSpectatorExtras::ShouldDraw( void )
+bool CTFHudSpectatorExtras::ShouldDraw(void)
 {
 	return true;
 }
@@ -51,24 +53,24 @@ bool CTFHudSpectatorExtras::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHudSpectatorExtras::Reset( void )
+void CTFHudSpectatorExtras::Reset(void)
 {
-	if ( !g_PR )
+	if(!g_PR)
 		return;
 
-	FOR_EACH_VEC( m_vecEntitiesToDraw, i )
+	FOR_EACH_VEC(m_vecEntitiesToDraw, i)
 	{
 		int nEntIndex = m_vecEntitiesToDraw[i].m_nEntIndex;
-		if ( IsPlayerIndex( nEntIndex ) && !g_PR->IsConnected( nEntIndex ) )
+		if(IsPlayerIndex(nEntIndex) && !g_PR->IsConnected(nEntIndex))
 			continue;
 
-		CBaseCombatCharacter *pEnt = dynamic_cast< CBaseCombatCharacter* >( cl_entitylist->GetEnt( nEntIndex ) );
-		if ( !pEnt )
+		CBaseCombatCharacter *pEnt = dynamic_cast<CBaseCombatCharacter *>(cl_entitylist->GetEnt(nEntIndex));
+		if(!pEnt)
 			continue;
 
-		if ( pEnt->IsClientSideGlowEnabled() )
+		if(pEnt->IsClientSideGlowEnabled())
 		{
-			pEnt->SetClientSideGlowEnabled( false );
+			pEnt->SetClientSideGlowEnabled(false);
 		}
 	}
 
@@ -78,13 +80,13 @@ void CTFHudSpectatorExtras::Reset( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHudSpectatorExtras::RemoveEntity( int nRemove )
+void CTFHudSpectatorExtras::RemoveEntity(int nRemove)
 {
-	FOR_EACH_VEC( m_vecEntitiesToDraw, i )
+	FOR_EACH_VEC(m_vecEntitiesToDraw, i)
 	{
-		if ( m_vecEntitiesToDraw[i].m_nEntIndex == nRemove )
+		if(m_vecEntitiesToDraw[i].m_nEntIndex == nRemove)
 		{
-			m_vecEntitiesToDraw.Remove( i );
+			m_vecEntitiesToDraw.Remove(i);
 			return;
 		}
 	}
@@ -97,33 +99,33 @@ void CTFHudSpectatorExtras::OnTick()
 {
 	BaseClass::OnTick();
 
-	if ( !g_PR )
+	if(!g_PR)
 		return;
 
-	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
+	if(TFGameRules() && TFGameRules()->ShowMatchSummary())
 	{
 		Reset();
 		return;
 	}
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pLocalPlayer )
+	if(!pLocalPlayer)
 		return;
 
 	int nLocalPlayerTeam = pLocalPlayer->GetTeamNumber();
 	bool bIsHLTV = engine->IsHLTV();
 
-	if ( tf_spec_xray_disable.GetBool() || ( !bIsHLTV && ( nLocalPlayerTeam < TEAM_SPECTATOR ) ) )
+	if(tf_spec_xray_disable.GetBool() || (!bIsHLTV && (nLocalPlayerTeam < TEAM_SPECTATOR)))
 	{
 		Reset();
 		return;
 	}
 
-	if ( nLocalPlayerTeam >= FIRST_GAME_TEAM )
+	if(nLocalPlayerTeam >= FIRST_GAME_TEAM)
 	{
-		if ( pLocalPlayer->IsAlive() && !pLocalPlayer->m_Shared.InCond( TF_COND_TEAM_GLOWS ) )
+		if(pLocalPlayer->IsAlive() && !pLocalPlayer->m_Shared.InCond(TF_COND_TEAM_GLOWS))
 		{
-			if ( m_vecEntitiesToDraw.Count() > 0 )
+			if(m_vecEntitiesToDraw.Count() > 0)
 			{
 				Reset();
 			}
@@ -131,59 +133,61 @@ void CTFHudSpectatorExtras::OnTick()
 		}
 	}
 
-	if ( bIsHLTV ||
-		( tf_spec_xray.GetBool() && ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) || ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) || ( pLocalPlayer->m_Shared.InCond( TF_COND_TEAM_GLOWS ) && tf_enable_glows_after_respawn.GetBool() ) ) ) )
+	if(bIsHLTV || (tf_spec_xray.GetBool() &&
+				   ((nLocalPlayerTeam == TEAM_SPECTATOR) || (pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM) ||
+					(pLocalPlayer->m_Shared.InCond(TF_COND_TEAM_GLOWS) && tf_enable_glows_after_respawn.GetBool()))))
 	{
-		bool bShowEveryone = ( bIsHLTV ||
-							   ( ( nLocalPlayerTeam == TEAM_SPECTATOR ) && tf_spec_xray.GetBool() ) ||
-							   ( ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM ) && ( tf_spec_xray.GetInt() > 1 ) ) );
+		bool bShowEveryone = (bIsHLTV || ((nLocalPlayerTeam == TEAM_SPECTATOR) && tf_spec_xray.GetBool()) ||
+							  ((nLocalPlayerTeam >= FIRST_GAME_TEAM) &&
+							   (pLocalPlayer->GetObserverMode() > OBS_MODE_FREEZECAM) && (tf_spec_xray.GetInt() > 1)));
 
 		// loop through the players
-		for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+		for(int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			if ( !g_PR->IsConnected( i ) )
+			if(!g_PR->IsConnected(i))
 			{
-				RemoveEntity( i );
+				RemoveEntity(i);
 				continue;
 			}
 
-			CTFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
-			if ( !pPlayer || ( pPlayer == pLocalPlayer ) )
+			CTFPlayer *pPlayer = ToTFPlayer(UTIL_PlayerByIndex(i));
+			if(!pPlayer || (pPlayer == pLocalPlayer))
 			{
-				RemoveEntity( i );
+				RemoveEntity(i);
 				continue;
 			}
 
 			int nPlayerTeamNumber = pPlayer->GetTeamNumber();
 
 			// remove the entities we don't want to draw anymore
-			if ( pPlayer->IsDormant() ||
-				( nPlayerTeamNumber < FIRST_GAME_TEAM ) ||
-				( !pPlayer->IsAlive() ) ||
-				( pPlayer->m_Shared.IsStealthed() && ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
-				( !bShowEveryone && !pPlayer->IsPlayerClass( TF_CLASS_SPY ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
-				( !bShowEveryone && pPlayer->IsPlayerClass( TF_CLASS_SPY ) && !pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) ) ||
-				( !bShowEveryone && pPlayer->IsPlayerClass( TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) && ( pPlayer->m_Shared.GetDisguiseTeam() != nLocalPlayerTeam ) ) )
+			if(pPlayer->IsDormant() || (nPlayerTeamNumber < FIRST_GAME_TEAM) || (!pPlayer->IsAlive()) ||
+			   (pPlayer->m_Shared.IsStealthed() && (nLocalPlayerTeam >= FIRST_GAME_TEAM) &&
+				(nPlayerTeamNumber != nLocalPlayerTeam)) ||
+			   (!bShowEveryone && !pPlayer->IsPlayerClass(TF_CLASS_SPY) && (nPlayerTeamNumber != nLocalPlayerTeam)) ||
+			   (!bShowEveryone && pPlayer->IsPlayerClass(TF_CLASS_SPY) &&
+				!pPlayer->m_Shared.InCond(TF_COND_DISGUISED) && (nPlayerTeamNumber != nLocalPlayerTeam)) ||
+			   (!bShowEveryone && pPlayer->IsPlayerClass(TF_CLASS_SPY) && pPlayer->m_Shared.InCond(TF_COND_DISGUISED) &&
+				(nPlayerTeamNumber != nLocalPlayerTeam) && (pPlayer->m_Shared.GetDisguiseTeam() != nLocalPlayerTeam)))
 			{
-				if ( pPlayer->IsClientSideGlowEnabled() )
+				if(pPlayer->IsClientSideGlowEnabled())
 				{
-					pPlayer->SetClientSideGlowEnabled( false );
+					pPlayer->SetClientSideGlowEnabled(false);
 				}
-				RemoveEntity( i );
+				RemoveEntity(i);
 				continue;
 			}
 
 			// passed all of the tests, so make sure they're in the list
 			int nVecIndex = -1;
-			FOR_EACH_VEC( m_vecEntitiesToDraw, nTemp )
+			FOR_EACH_VEC(m_vecEntitiesToDraw, nTemp)
 			{
-				if ( m_vecEntitiesToDraw[nTemp].m_nEntIndex == i )
+				if(m_vecEntitiesToDraw[nTemp].m_nEntIndex == i)
 				{
 					nVecIndex = nTemp;
 					break;
 				}
 			}
-			if ( nVecIndex == -1 )
+			if(nVecIndex == -1)
 			{
 				nVecIndex = m_vecEntitiesToDraw.AddToTail();
 			}
@@ -193,21 +197,22 @@ void CTFHudSpectatorExtras::OnTick()
 
 			// don't draw their name if we're currently spectating them, but we still want them to glow
 			m_vecEntitiesToDraw[nVecIndex].m_bDrawName = true;
-			if ( !pLocalPlayer->IsAlive() )
+			if(!pLocalPlayer->IsAlive())
 			{
-				CSpectatorTargetID *pSpecTargetID = (CSpectatorTargetID *)GET_HUDELEMENT( CSpectatorTargetID );
-				if ( ( pLocalPlayer->GetObserverTarget() == pPlayer ) || ( pSpecTargetID && pSpecTargetID->GetTargetIndex() == i ) )
+				CSpectatorTargetID *pSpecTargetID = (CSpectatorTargetID *)GET_HUDELEMENT(CSpectatorTargetID);
+				if((pLocalPlayer->GetObserverTarget() == pPlayer) ||
+				   (pSpecTargetID && pSpecTargetID->GetTargetIndex() == i))
 				{
 					m_vecEntitiesToDraw[nVecIndex].m_bDrawName = false;
 
 					// if we're in chase mode, just remove them entirely
-					if ( pLocalPlayer->GetObserverMode() == OBS_MODE_CHASE )
+					if(pLocalPlayer->GetObserverMode() == OBS_MODE_CHASE)
 					{
-						if ( pPlayer->IsClientSideGlowEnabled() )
+						if(pPlayer->IsClientSideGlowEnabled())
 						{
-							pPlayer->SetClientSideGlowEnabled( false );
+							pPlayer->SetClientSideGlowEnabled(false);
 						}
-						RemoveEntity( i );
+						RemoveEntity(i);
 						continue;
 					}
 				}
@@ -215,75 +220,81 @@ void CTFHudSpectatorExtras::OnTick()
 
 			// disguised Spy?
 			C_TFPlayer *pDisguiseTarget = NULL;
-			if ( !bIsHLTV && ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) )
+			if(!bIsHLTV && (nLocalPlayerTeam >= FIRST_GAME_TEAM))
 			{
-				if ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) && ( nPlayerTeamNumber != nLocalPlayerTeam ) )
+				if(pPlayer->IsPlayerClass(TF_CLASS_SPY) && pPlayer->m_Shared.InCond(TF_COND_DISGUISED) &&
+				   (nPlayerTeamNumber != nLocalPlayerTeam))
 				{
-					pDisguiseTarget = ToTFPlayer( pPlayer->m_Shared.GetDisguiseTarget() );
+					pDisguiseTarget = ToTFPlayer(pPlayer->m_Shared.GetDisguiseTarget());
 				}
 			}
 
 			// use actual name or disguised name?
 			int nNameIndex = pDisguiseTarget ? pDisguiseTarget->entindex() : i;
-			g_pVGuiLocalize->ConvertANSIToUnicode( g_PR->GetPlayerName( nNameIndex ), m_vecEntitiesToDraw[nVecIndex].m_wszName, sizeof( m_vecEntitiesToDraw[nVecIndex].m_wszName ) );
-			m_vecEntitiesToDraw[nVecIndex].m_nNameWidth = UTIL_ComputeStringWidth( m_hNameFont, m_vecEntitiesToDraw[nVecIndex].m_wszName );
+			g_pVGuiLocalize->ConvertANSIToUnicode(g_PR->GetPlayerName(nNameIndex),
+												  m_vecEntitiesToDraw[nVecIndex].m_wszName,
+												  sizeof(m_vecEntitiesToDraw[nVecIndex].m_wszName));
+			m_vecEntitiesToDraw[nVecIndex].m_nNameWidth =
+				UTIL_ComputeStringWidth(m_hNameFont, m_vecEntitiesToDraw[nVecIndex].m_wszName);
 
-			m_vecEntitiesToDraw[nVecIndex].m_nOffset = ( VEC_HULL_MAX_SCALED( pPlayer ).z );
+			m_vecEntitiesToDraw[nVecIndex].m_nOffset = (VEC_HULL_MAX_SCALED(pPlayer).z);
 
 			// use actual health or disguised health?
 			float flHealth = 1.0f;
 
-			if ( pDisguiseTarget )
+			if(pDisguiseTarget)
 			{
-				flHealth = (float)( pPlayer->m_Shared.GetDisguiseHealth() ) / (float)( pPlayer->m_Shared.GetDisguiseMaxHealth() );
+				flHealth =
+					(float)(pPlayer->m_Shared.GetDisguiseHealth()) / (float)(pPlayer->m_Shared.GetDisguiseMaxHealth());
 			}
 			else
 			{
-				flHealth = (float)( pPlayer->GetHealth() ) / (float)( pPlayer->GetMaxHealth() );
+				flHealth = (float)(pPlayer->GetHealth()) / (float)(pPlayer->GetMaxHealth());
 			}
 			// don't show buffed health for this simple bar
-			if ( flHealth > 1.0f )
+			if(flHealth > 1.0f)
 			{
 				flHealth = 1.0f;
 			}
 			m_vecEntitiesToDraw[nVecIndex].m_flHealth = flHealth;
 
- 			// what color should we use?
+			// what color should we use?
 			float r, g, b;
-			pPlayer->GetGlowEffectColor( &r, &g, &b );
-			m_vecEntitiesToDraw[nVecIndex].m_clrGlowColor = Color( r * 255, g * 255, b * 255, 255 );
+			pPlayer->GetGlowEffectColor(&r, &g, &b);
+			m_vecEntitiesToDraw[nVecIndex].m_clrGlowColor = Color(r * 255, g * 255, b * 255, 255);
 
-			if ( !pPlayer->IsClientSideGlowEnabled() )
+			if(!pPlayer->IsClientSideGlowEnabled())
 			{
-				pPlayer->SetClientSideGlowEnabled( true );
+				pPlayer->SetClientSideGlowEnabled(true);
 			}
 		}
 
 		// loop through the buildings
-		for ( int nCount = 0; nCount < IBaseObjectAutoList::AutoList().Count(); nCount++ )
+		for(int nCount = 0; nCount < IBaseObjectAutoList::AutoList().Count(); nCount++)
 		{
 			bool bDraw = false;
-			C_BaseObject *pObject = static_cast<C_BaseObject*>( IBaseObjectAutoList::AutoList()[nCount] );
-			if ( !pObject->IsDormant() && !pObject->IsMapPlaced() && !pObject->IsEffectActive( EF_NODRAW ) )
+			C_BaseObject *pObject = static_cast<C_BaseObject *>(IBaseObjectAutoList::AutoList()[nCount]);
+			if(!pObject->IsDormant() && !pObject->IsMapPlaced() && !pObject->IsEffectActive(EF_NODRAW))
 			{
-				if ( bShowEveryone || ( ( nLocalPlayerTeam >= FIRST_GAME_TEAM ) && ( nLocalPlayerTeam == pObject->GetTeamNumber() ) ) )
+				if(bShowEveryone ||
+				   ((nLocalPlayerTeam >= FIRST_GAME_TEAM) && (nLocalPlayerTeam == pObject->GetTeamNumber())))
 				{
 					bDraw = true;
 				}
 			}
 
-			if ( bDraw )
+			if(bDraw)
 			{
 				int nVecIndex = -1;
-				FOR_EACH_VEC( m_vecEntitiesToDraw, nTemp )
+				FOR_EACH_VEC(m_vecEntitiesToDraw, nTemp)
 				{
-					if ( m_vecEntitiesToDraw[nTemp].m_nEntIndex == pObject->entindex() )
+					if(m_vecEntitiesToDraw[nTemp].m_nEntIndex == pObject->entindex())
 					{
 						nVecIndex = nTemp;
 						break;
 					}
 				}
-				if ( nVecIndex == -1 )
+				if(nVecIndex == -1)
 				{
 					nVecIndex = m_vecEntitiesToDraw.AddToTail();
 				}
@@ -293,42 +304,44 @@ void CTFHudSpectatorExtras::OnTick()
 
 				// don't draw the name if we're currently spectating this building, but we still want it to glow
 				m_vecEntitiesToDraw[nVecIndex].m_bDrawName = true;
-				if ( pLocalPlayer->GetObserverTarget() == pObject )
+				if(pLocalPlayer->GetObserverTarget() == pObject)
 				{
 					m_vecEntitiesToDraw[nVecIndex].m_bDrawName = false;
 				}
 
-				if ( pObject->GetType() == OBJ_TELEPORTER )
+				if(pObject->GetType() == OBJ_TELEPORTER)
 				{
 					m_vecEntitiesToDraw[nVecIndex].m_nOffset = 30;
 				}
-				else if ( pObject->GetType() == OBJ_DISPENSER )
+				else if(pObject->GetType() == OBJ_DISPENSER)
 				{
 					m_vecEntitiesToDraw[nVecIndex].m_nOffset = 70;
 				}
 				else
 				{
-					switch ( pObject->GetUpgradeLevel() )
+					switch(pObject->GetUpgradeLevel())
 					{
-					case 1:
-						m_vecEntitiesToDraw[nVecIndex].m_nOffset = 50;
-						break;
-					case 2:
-						m_vecEntitiesToDraw[nVecIndex].m_nOffset = 65;
-						break;
-					case 3:
-					default:
-						m_vecEntitiesToDraw[nVecIndex].m_nOffset = 80;
-						break;
+						case 1:
+							m_vecEntitiesToDraw[nVecIndex].m_nOffset = 50;
+							break;
+						case 2:
+							m_vecEntitiesToDraw[nVecIndex].m_nOffset = 65;
+							break;
+						case 3:
+						default:
+							m_vecEntitiesToDraw[nVecIndex].m_nOffset = 80;
+							break;
 					}
 				}
 
-				pObject->GetTargetIDString( m_vecEntitiesToDraw[nVecIndex].m_wszName, sizeof( m_vecEntitiesToDraw[nVecIndex].m_wszName ), true );
-				m_vecEntitiesToDraw[nVecIndex].m_nNameWidth = UTIL_ComputeStringWidth( m_hNameFont, m_vecEntitiesToDraw[nVecIndex].m_wszName );
+				pObject->GetTargetIDString(m_vecEntitiesToDraw[nVecIndex].m_wszName,
+										   sizeof(m_vecEntitiesToDraw[nVecIndex].m_wszName), true);
+				m_vecEntitiesToDraw[nVecIndex].m_nNameWidth =
+					UTIL_ComputeStringWidth(m_hNameFont, m_vecEntitiesToDraw[nVecIndex].m_wszName);
 
 				float flHealth = 1.0f;
-				flHealth = (float)( pObject->GetHealth() ) / (float)( pObject->GetMaxHealth() );
-				if ( flHealth > 1.0f )
+				flHealth = (float)(pObject->GetHealth()) / (float)(pObject->GetMaxHealth());
+				if(flHealth > 1.0f)
 				{
 					flHealth = 1.0f;
 				}
@@ -336,21 +349,21 @@ void CTFHudSpectatorExtras::OnTick()
 
 				// what color should we use?
 				float r, g, b;
-				pObject->GetGlowEffectColor( &r, &g, &b );
-				m_vecEntitiesToDraw[nVecIndex].m_clrGlowColor = Color( r * 255, g * 255, b * 255, 255 );
+				pObject->GetGlowEffectColor(&r, &g, &b);
+				m_vecEntitiesToDraw[nVecIndex].m_clrGlowColor = Color(r * 255, g * 255, b * 255, 255);
 
-				if ( !pObject->IsClientSideGlowEnabled() )
+				if(!pObject->IsClientSideGlowEnabled())
 				{
-					pObject->SetClientSideGlowEnabled( true );
+					pObject->SetClientSideGlowEnabled(true);
 				}
 			}
 			else
 			{
-				if ( pObject->IsClientSideGlowEnabled() )
+				if(pObject->IsClientSideGlowEnabled())
 				{
-					pObject->SetClientSideGlowEnabled( false );
+					pObject->SetClientSideGlowEnabled(false);
 				}
-				RemoveEntity( pObject->entindex() );
+				RemoveEntity(pObject->entindex());
 			}
 		}
 	}
@@ -367,52 +380,56 @@ void CTFHudSpectatorExtras::Paint()
 {
 	BaseClass::Paint();
 
-	if ( !g_PR )
+	if(!g_PR)
 		return;
 
-	if ( tf_spec_xray_disable.GetBool() )
+	if(tf_spec_xray_disable.GetBool())
 		return;
 
 	int nNameOffset = 35;
 	int nHealthWidth = 70;
 	int nHealthHeight = 6;
 
-	FOR_EACH_VEC( m_vecEntitiesToDraw, i )
+	FOR_EACH_VEC(m_vecEntitiesToDraw, i)
 	{
-		if ( !m_vecEntitiesToDraw[i].m_bDrawName )
+		if(!m_vecEntitiesToDraw[i].m_bDrawName)
 			continue;
 
 		int nEntIndex = m_vecEntitiesToDraw[i].m_nEntIndex;
-		if ( IsPlayerIndex( nEntIndex ) && !g_PR->IsConnected( nEntIndex ) )
+		if(IsPlayerIndex(nEntIndex) && !g_PR->IsConnected(nEntIndex))
 			continue;
 
-		C_BaseEntity *pEnt = cl_entitylist->GetEnt( nEntIndex );
-		if ( !pEnt )
+		C_BaseEntity *pEnt = cl_entitylist->GetEnt(nEntIndex);
+		if(!pEnt)
 			continue;
 
 		Vector vecPos = pEnt->GetAbsOrigin();
 		vecPos.z += m_vecEntitiesToDraw[i].m_nOffset;
 
 		int iX, iY;
-		Vector vecWorld( vecPos.x, vecPos.y, vecPos.z );
-		if ( GetVectorInHudSpace( vecWorld, iX, iY ) )
+		Vector vecWorld(vecPos.x, vecPos.y, vecPos.z);
+		if(GetVectorInHudSpace(vecWorld, iX, iY))
 		{
- 			// draw the name
- 			vgui::surface()->DrawSetTextFont( m_hNameFont );
-			vgui::surface()->DrawSetTextPos( iX - ( m_vecEntitiesToDraw[i].m_nNameWidth / 2 ), iY - nNameOffset );
-			vgui::surface()->DrawSetTextColor( m_vecEntitiesToDraw[i].m_clrGlowColor );
-			vgui::surface()->DrawPrintText( m_vecEntitiesToDraw[i].m_wszName, wcslen( m_vecEntitiesToDraw[i].m_wszName ), vgui::FONT_DRAW_NONADDITIVE );
+			// draw the name
+			vgui::surface()->DrawSetTextFont(m_hNameFont);
+			vgui::surface()->DrawSetTextPos(iX - (m_vecEntitiesToDraw[i].m_nNameWidth / 2), iY - nNameOffset);
+			vgui::surface()->DrawSetTextColor(m_vecEntitiesToDraw[i].m_clrGlowColor);
+			vgui::surface()->DrawPrintText(m_vecEntitiesToDraw[i].m_wszName, wcslen(m_vecEntitiesToDraw[i].m_wszName),
+										   vgui::FONT_DRAW_NONADDITIVE);
 
 			int xHealthPos = iX - 35;
 			int yHealthPos = iY - 10;
 
 			// draw the health bar background
-			vgui::surface()->DrawSetColor( Color( 127, 127, 127, 255 ) );
-			vgui::surface()->DrawFilledRect( xHealthPos, yHealthPos, xHealthPos + nHealthWidth, yHealthPos + nHealthHeight );
+			vgui::surface()->DrawSetColor(Color(127, 127, 127, 255));
+			vgui::surface()->DrawFilledRect(xHealthPos, yHealthPos, xHealthPos + nHealthWidth,
+											yHealthPos + nHealthHeight);
 
 			// draw the health bar
-			vgui::surface()->DrawSetColor( m_vecEntitiesToDraw[i].m_clrGlowColor );
-			vgui::surface()->DrawFilledRect( xHealthPos, yHealthPos, xHealthPos + ( nHealthWidth * m_vecEntitiesToDraw[i].m_flHealth ), yHealthPos + nHealthHeight );
+			vgui::surface()->DrawSetColor(m_vecEntitiesToDraw[i].m_clrGlowColor);
+			vgui::surface()->DrawFilledRect(xHealthPos, yHealthPos,
+											xHealthPos + (nHealthWidth * m_vecEntitiesToDraw[i].m_flHealth),
+											yHealthPos + nHealthHeight);
 		}
 	}
 }

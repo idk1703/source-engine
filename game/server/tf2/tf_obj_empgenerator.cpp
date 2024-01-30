@@ -12,19 +12,20 @@
 #include "tf_obj_empgenerator.h"
 #include "ndebugoverlay.h"
 
-BEGIN_DATADESC( CObjectEMPGenerator )
+BEGIN_DATADESC(CObjectEMPGenerator)
 
-	DEFINE_THINKFUNC( EMPThink ),
+	DEFINE_THINKFUNC(EMPThink),
 
 END_DATADESC()
 
 IMPLEMENT_SERVERCLASS_ST(CObjectEMPGenerator, DT_ObjectEMPGenerator)
-END_SEND_TABLE();
+END_SEND_TABLE
+();
 
 LINK_ENTITY_TO_CLASS(obj_empgenerator, CObjectEMPGenerator);
 PRECACHE_REGISTER(obj_empgenerator);
 
-ConVar	obj_empgenerator_health( "obj_empgenerator_health","100", FCVAR_NONE, "EMP Generator health" );
+ConVar obj_empgenerator_health("obj_empgenerator_health", "100", FCVAR_NONE, "EMP Generator health");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -42,21 +43,21 @@ void CObjectEMPGenerator::Spawn()
 	BaseClass::Spawn();
 
 	Precache();
-	SetModel( EMPGENERATOR_MODEL );
-	SetSolid( SOLID_BBOX );
-	SetCollisionGroup( TFCOLLISION_GROUP_COMBATOBJECT );
+	SetModel(EMPGENERATOR_MODEL);
+	SetSolid(SOLID_BBOX);
+	SetCollisionGroup(TFCOLLISION_GROUP_COMBATOBJECT);
 
 	UTIL_SetSize(this, EMPGENERATOR_MINS, EMPGENERATOR_MAXS);
 	m_takedamage = DAMAGE_YES;
 	m_iHealth = obj_empgenerator_health.GetInt();
 
-	SetThink( EMPThink );
-	SetNextThink( gpGlobals->curtime + EMPGENERATOR_RATE );
+	SetThink(EMPThink);
+	SetNextThink(gpGlobals->curtime + EMPGENERATOR_RATE);
 	m_flExpiresAt = gpGlobals->curtime + EMPGENERATOR_LIFETIME;
 
-	SetType( OBJ_EMPGENERATOR );
-	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER |
-		OF_DONT_AUTO_REPAIR | OF_DONT_PREVENT_BUILD_NEAR_OBJ | OF_DOESNT_NEED_POWER;
+	SetType(OBJ_EMPGENERATOR);
+	m_fObjectFlags |= OF_SUPPRESS_NOTIFY_UNDER_ATTACK | OF_SUPPRESS_TECH_ANALYZER | OF_DONT_AUTO_REPAIR |
+					  OF_DONT_PREVENT_BUILD_NEAR_OBJ | OF_DOESNT_NEED_POWER;
 }
 
 //-----------------------------------------------------------------------------
@@ -64,33 +65,34 @@ void CObjectEMPGenerator::Spawn()
 //-----------------------------------------------------------------------------
 void CObjectEMPGenerator::Precache()
 {
-	PrecacheModel( EMPGENERATOR_MODEL );
+	PrecacheModel(EMPGENERATOR_MODEL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Look for enemies to EMP
 //-----------------------------------------------------------------------------
-void CObjectEMPGenerator::EMPThink( void )
+void CObjectEMPGenerator::EMPThink(void)
 {
-	if ( !GetTeam() )
+	if(!GetTeam())
 		return;
 
 	// Time to die?
-	if ( gpGlobals->curtime > m_flExpiresAt )
+	if(gpGlobals->curtime > m_flExpiresAt)
 	{
-		UTIL_Remove( this );
+		UTIL_Remove(this);
 		return;
 	}
 
 	// Look for nearby enemies to EMP
 	CBaseEntity *pEntity = NULL;
-	for ( CEntitySphereQuery sphere( GetAbsOrigin(), EMPGENERATOR_RADIUS ); ( pEntity = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
+	for(CEntitySphereQuery sphere(GetAbsOrigin(), EMPGENERATOR_RADIUS); (pEntity = sphere.GetCurrentEntity()) != NULL;
+		sphere.NextEntity())
 	{
-		if ( InSameTeam( pEntity ) )
+		if(InSameTeam(pEntity))
 			continue;
-		if ( !pEntity->CanBePoweredUp() )
+		if(!pEntity->CanBePoweredUp())
 			continue;
 
-		pEntity->AttemptToPowerup( POWERUP_EMP, EMPGENERATOR_EMP_TIME );
+		pEntity->AttemptToPowerup(POWERUP_EMP, EMPGENERATOR_EMP_TIME);
 	}
 }

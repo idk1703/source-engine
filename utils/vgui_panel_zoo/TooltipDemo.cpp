@@ -13,15 +13,13 @@
 
 using namespace vgui;
 
-
-class TooltipsDemo: public DemoPage
+class TooltipsDemo : public DemoPage
 {
-	public:
-		TooltipsDemo(Panel *parent, const char *name);
-		~TooltipsDemo();
+public:
+	TooltipsDemo(Panel *parent, const char *name);
+	~TooltipsDemo();
 
-	private:
-
+private:
 };
 
 //-----------------------------------------------------------------------------
@@ -29,7 +27,7 @@ class TooltipsDemo: public DemoPage
 //-----------------------------------------------------------------------------
 TooltipsDemo::TooltipsDemo(Panel *parent, const char *name) : DemoPage(parent, name)
 {
-	ToggleButton *pButton = new ToggleButton (this, "RadioDesc5", "");
+	ToggleButton *pButton = new ToggleButton(this, "RadioDesc5", "");
 	pButton->GetTooltip()->SetTooltipFormatToSingleLine();
 
 	LoadControlSettings("Demo/SampleToolTips.res");
@@ -38,14 +36,9 @@ TooltipsDemo::TooltipsDemo(Panel *parent, const char *name) : DemoPage(parent, n
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-TooltipsDemo::~TooltipsDemo()
-{
-}
+TooltipsDemo::~TooltipsDemo() {}
 
-
-
-
-Panel* TooltipsDemo_Create(Panel *parent)
+Panel *TooltipsDemo_Create(Panel *parent)
 {
 	return new TooltipsDemo(parent, "TooltipsDemo");
 }

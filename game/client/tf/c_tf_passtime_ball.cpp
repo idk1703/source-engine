@@ -18,19 +18,24 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_CLIENTCLASS_DT( C_PasstimeBall, DT_PasstimeBall, CPasstimeBall )
-	RecvPropInt(RECVINFO(m_iCollisionCount)),
-	RecvPropEHandle(RECVINFO(m_hHomingTarget)),
-	RecvPropEHandle(RECVINFO(m_hCarrier)),
-	RecvPropEHandle(RECVINFO(m_hPrevCarrier)),
-END_RECV_TABLE()
+IMPLEMENT_CLIENTCLASS_DT(C_PasstimeBall, DT_PasstimeBall, CPasstimeBall)
+RecvPropInt(RECVINFO(m_iCollisionCount)), RecvPropEHandle(RECVINFO(m_hHomingTarget)),
+	RecvPropEHandle(RECVINFO(m_hCarrier)), RecvPropEHandle(RECVINFO(m_hPrevCarrier)),
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-LINK_ENTITY_TO_CLASS( passtime_ball, C_PasstimeBall );
-PRECACHE_REGISTER( passtime_ball );
+	//-----------------------------------------------------------------------------
+	LINK_ENTITY_TO_CLASS(passtime_ball, C_PasstimeBall);
+PRECACHE_REGISTER(passtime_ball);
 
-C_TFPlayer *C_PasstimeBall::GetCarrier() { return m_hCarrier.Get(); }
-C_TFPlayer *C_PasstimeBall::GetPrevCarrier() { return m_hPrevCarrier.Get(); }
+C_TFPlayer *C_PasstimeBall::GetCarrier()
+{
+	return m_hCarrier.Get();
+}
+C_TFPlayer *C_PasstimeBall::GetPrevCarrier()
+{
+	return m_hPrevCarrier.Get();
+}
 
 //-----------------------------------------------------------------------------
 C_PasstimeBall::C_PasstimeBall()
@@ -40,9 +45,7 @@ C_PasstimeBall::C_PasstimeBall()
 }
 
 //-----------------------------------------------------------------------------
-C_PasstimeBall::~C_PasstimeBall()
-{
-}
+C_PasstimeBall::~C_PasstimeBall() {}
 
 //-----------------------------------------------------------------------------
 unsigned int C_PasstimeBall::PhysicsSolidMaskForEntity() const
@@ -50,9 +53,8 @@ unsigned int C_PasstimeBall::PhysicsSolidMaskForEntity() const
 	return MASK_PLAYERSOLID; // must match server
 }
 
-
 //-----------------------------------------------------------------------------
-bool C_PasstimeBall::ShouldCollide( int collisionGroup, int contentsMask ) const
+bool C_PasstimeBall::ShouldCollide(int collisionGroup, int contentsMask) const
 {
 	// note: returning false for COLLISION_GROUP_PLAYER_MOVEMENT means the ball won't
 	// stop player movement. the only real visible effect when this function doesn't
@@ -62,23 +64,23 @@ bool C_PasstimeBall::ShouldCollide( int collisionGroup, int contentsMask ) const
 	// ball won't actually prevent the player from moving through it.
 	return (collisionGroup != COLLISION_GROUP_PLAYER_MOVEMENT);
 	//	&& (contentsMask & MASK_SHOT_HULL);
-	//return BaseClass::ShouldCollide( collisionGroup, contentsMask );
+	// return BaseClass::ShouldCollide( collisionGroup, contentsMask );
 }
 
 //-----------------------------------------------------------------------------
-void C_PasstimeBall::OnDataChanged( DataUpdateType_t updateType )
+void C_PasstimeBall::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
-	if ( updateType == DATA_UPDATE_CREATED )
+	if(updateType == DATA_UPDATE_CREATED)
 	{
 		return;
 	}
 
-	if ( TFGameRules()->IsPasstimeMode() )
+	if(TFGameRules()->IsPasstimeMode())
 	{
 		bool bIsVisible = !(GetEffects() & EF_NODRAW);
-		if ( bIsVisible && !m_bWasVisible )
+		if(bIsVisible && !m_bWasVisible)
 		{
 			float nextValidTime = gpGlobals->curtime + 0.1f;
 			m_fDrawTime = nextValidTime;
@@ -88,12 +90,12 @@ void C_PasstimeBall::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-int C_PasstimeBall::DrawModel( int flags )
+int C_PasstimeBall::DrawModel(int flags)
 {
-	if( gpGlobals->curtime < m_fDrawTime )
+	if(gpGlobals->curtime < m_fDrawTime)
 	{
 		return 0;
 	}
 
-	return BaseClass::DrawModel( flags );
+	return BaseClass::DrawModel(flags);
 }

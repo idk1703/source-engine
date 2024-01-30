@@ -18,9 +18,9 @@
 //			*lumpfilename -
 //			iIndex -
 //-----------------------------------------------------------------------------
-void GenerateLumpFileName( const char *bspfilename, char *lumpfilename, int iBufferSize, int iIndex )
+void GenerateLumpFileName(const char *bspfilename, char *lumpfilename, int iBufferSize, int iIndex)
 {
 	char lumppre[MAX_PATH];
-	V_StripExtension( bspfilename, lumppre, MAX_PATH );
-	Q_snprintf( lumpfilename, iBufferSize, "%s_l_%d.lmp", lumppre, iIndex );
+	V_StripExtension(bspfilename, lumppre, MAX_PATH);
+	Q_snprintf(lumpfilename, iBufferSize, "%s_l_%d.lmp", lumppre, iIndex);
 }

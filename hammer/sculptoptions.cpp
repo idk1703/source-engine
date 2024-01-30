@@ -33,13 +33,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
+extern CToolDisplace *GetDisplacementTool();
+extern void FaceListSewEdges(void);
 
-extern CToolDisplace* GetDisplacementTool();
-extern void FaceListSewEdges( void );
-
-
-CUtlMap<EditDispHandle_t, CMapDisp *>		CSculptTool::m_OrigMapDisp( 3, 3, CSculptTool::MapDispLessFunc );
-
+CUtlMap<EditDispHandle_t, CMapDisp *> CSculptTool::m_OrigMapDisp(3, 3, CSculptTool::MapDispLessFunc);
 
 //-----------------------------------------------------------------------------
 // Purpose: constructor
@@ -64,19 +61,17 @@ CSculptTool::CSculptTool()
 	m_OriginalCollisionValid = m_CurrentCollisionValid = false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: destructor
 //-----------------------------------------------------------------------------
 CSculptTool::~CSculptTool()
 {
-	FOR_EACH_MAP( m_OrigMapDisp, pos )
+	FOR_EACH_MAP(m_OrigMapDisp, pos)
 	{
-		delete m_OrigMapDisp.Element( pos );
+		delete m_OrigMapDisp.Element(pos);
 	}
 	m_OrigMapDisp.Purge();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: setup for starting to paint on the displacement
@@ -84,15 +79,14 @@ CSculptTool::~CSculptTool()
 //			vPoint - the initial click point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptTool::BeginPaint(CMapView3D *pView, const Vector2D &vPoint)
 {
 	DuplicateSelectedDisp();
 
-	GetStartingSpot( pView, vPoint );
+	GetStartingSpot(pView, vPoint);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: main routine called when mouse move has happened to start painting
@@ -101,7 +95,7 @@ bool CSculptTool::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
 //			SpatialData - the spatial data ( mostly ignored )
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &SpatialData )
+bool CSculptTool::Paint(CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &SpatialData)
 {
 	m_SpatialData = SpatialData;
 
@@ -109,17 +103,15 @@ bool CSculptTool::Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaint
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: determines if any of the special keys ( control, shift, alt ) are pressed
 //-----------------------------------------------------------------------------
 void CSculptTool::DetermineKeysDown()
 {
-	m_bCtrlDown = ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) != 0 );
-	m_bShiftDown = ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0 );
-	m_bAltDown = ( ( GetAsyncKeyState( VK_MENU ) & 0x8000 ) != 0 );
+	m_bCtrlDown = ((GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0);
+	m_bShiftDown = ((GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0);
+	m_bAltDown = ((GetAsyncKeyState(VK_MENU) & 0x8000) != 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the left mouse button up in the 3d view
@@ -128,7 +120,7 @@ void CSculptTool::DetermineKeysDown()
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptTool::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	DetermineKeysDown();
 
@@ -139,7 +131,6 @@ bool CSculptTool::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the left mouse button down in the 3d view
 // Input  : pView - the 3d view
@@ -147,7 +138,7 @@ bool CSculptTool::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptTool::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	DetermineKeysDown();
 
@@ -158,7 +149,6 @@ bool CSculptTool::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the right mouse button up in the 3d view
 // Input  : pView - the 3d view
@@ -166,7 +156,7 @@ bool CSculptTool::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptTool::OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	DetermineKeysDown();
 
@@ -177,7 +167,6 @@ bool CSculptTool::OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the right mouse button down in the 3d view
 // Input  : pView - the 3d view
@@ -185,7 +174,7 @@ bool CSculptTool::OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptTool::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	DetermineKeysDown();
 
@@ -196,7 +185,6 @@ bool CSculptTool::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the mouse move in the 3d view
 // Input  : pView - the 3d view
@@ -204,7 +192,7 @@ bool CSculptTool::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptTool::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	DetermineKeysDown();
 
@@ -213,66 +201,66 @@ bool CSculptTool::OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: called just before painting begins to gather reference information
 // Input  : pView - the 3d view
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::PrePaint( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptTool::PrePaint(CMapView3D *pView, const Vector2D &vPoint)
 {
-	Vector2D	RadiusPoint = vPoint;
-	Vector		vecStart, vecEnd;
+	Vector2D RadiusPoint = vPoint;
+	Vector vecStart, vecEnd;
 
 	RadiusPoint.x += m_BrushSize;
-	pView->GetCamera()->BuildRay( RadiusPoint, vecStart, vecEnd );
+	pView->GetCamera()->BuildRay(RadiusPoint, vecStart, vecEnd);
 
-	m_OriginalCollisionValid = FindCollisionIntercept( pView->GetCamera(), vPoint, true, m_OriginalCollisionPoint, m_OriginalCollisionNormal, m_OriginalCollisionIntercept );
-	if ( m_OriginalCollisionValid )
+	m_OriginalCollisionValid = FindCollisionIntercept(pView->GetCamera(), vPoint, true, m_OriginalCollisionPoint,
+													  m_OriginalCollisionNormal, m_OriginalCollisionIntercept);
+	if(m_OriginalCollisionValid)
 	{
-		m_OriginalProjectedRadius = CalcDistanceToLine( m_OriginalCollisionPoint, vecStart, vecEnd );
+		m_OriginalProjectedRadius = CalcDistanceToLine(m_OriginalCollisionPoint, vecStart, vecEnd);
 	}
 
-	m_CurrentCollisionValid = FindCollisionIntercept( pView->GetCamera(), vPoint, false, m_CurrentCollisionPoint, m_CurrentCollisionNormal, m_CurrentCollisionIntercept );
-	if ( m_CurrentCollisionValid )
+	m_CurrentCollisionValid = FindCollisionIntercept(pView->GetCamera(), vPoint, false, m_CurrentCollisionPoint,
+													 m_CurrentCollisionNormal, m_CurrentCollisionIntercept);
+	if(m_CurrentCollisionValid)
 	{
-		m_CurrentProjectedRadius = CalcDistanceToLine( m_CurrentCollisionPoint, vecStart, vecEnd );
+		m_CurrentProjectedRadius = CalcDistanceToLine(m_CurrentCollisionPoint, vecStart, vecEnd);
 	}
 
 	m_SpatialData.m_flRadius = 128.0f;
-	m_SpatialData.m_flRadius2 = ( m_SpatialData.m_flRadius * m_SpatialData.m_flRadius );
+	m_SpatialData.m_flRadius2 = (m_SpatialData.m_flRadius * m_SpatialData.m_flRadius);
 	m_SpatialData.m_flOORadius2 = 1.0f / m_SpatialData.m_flRadius2;
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: called after painting finishes to finalize things
 // Input  : bAutoSew - should we sew the edges
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::PostPaint( bool bAutoSew )
+bool CSculptTool::PostPaint(bool bAutoSew)
 {
 	// Get the displacement manager from the active map document.
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 		return false;
 
 	// Update the modified displacements.
 	int nDispCount = pDispMgr->SelectCount();
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
-			pDisp->Paint_Update( false );
+			pDisp->Paint_Update(false);
 		}
 	}
 
 	// Auto "sew" if necessary.
-	if ( bAutoSew )
+	if(bAutoSew)
 	{
 		FaceListSewEdges();
 	}
@@ -280,42 +268,40 @@ bool CSculptTool::PostPaint( bool bAutoSew )
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: called to dispatch the painting routine across all selected displacements
 // Input  : pView - the 3d view
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptTool::DoPaint( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptTool::DoPaint(CMapView3D *pView, const Vector2D &vPoint)
 {
 	// Get the displacement manager from the active map document.
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 		return false;
 
 	// For each displacement surface is the selection list attempt to paint on it.
 	int nDispCount = pDispMgr->SelectCount();
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
-			CMapDisp	*OrigDisp = NULL;
-			int			index = m_OrigMapDisp.Find( pDisp->GetEditHandle() );
+			CMapDisp *OrigDisp = NULL;
+			int index = m_OrigMapDisp.Find(pDisp->GetEditHandle());
 
-			if ( index != m_OrigMapDisp.InvalidIndex() )
+			if(index != m_OrigMapDisp.InvalidIndex())
 			{
-				OrigDisp = m_OrigMapDisp[ index ];
+				OrigDisp = m_OrigMapDisp[index];
 			}
-			DoPaintOperation( pView, vPoint, pDisp, OrigDisp );
+			DoPaintOperation(pView, vPoint, pDisp, OrigDisp);
 		}
 	}
 
 	// Successful paint.
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: checks to see if a given displacement vert lies within the 2d screenspace of the circle
@@ -327,15 +313,16 @@ bool CSculptTool::DoPaint( CMapView3D *pView, const Vector2D &vPoint )
 //			bUseCurrentPosition - should we use the current collision test point
 // Output : returns true if the point is within the circle
 //-----------------------------------------------------------------------------
-bool CSculptTool::IsPointInScreenCircle( CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int nVertIndex, bool bUseOrigDisplacement, bool bUseCurrentPosition, float *pflLengthPercent )
+bool CSculptTool::IsPointInScreenCircle(CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int nVertIndex,
+										bool bUseOrigDisplacement, bool bUseCurrentPosition, float *pflLengthPercent)
 {
-	Vector	vVert, vTestVert;
+	Vector vVert, vTestVert;
 
-	pDisp->GetVert( nVertIndex, vVert );
+	pDisp->GetVert(nVertIndex, vVert);
 
-	if ( pOrigDisp && bUseOrigDisplacement )
+	if(pOrigDisp && bUseOrigDisplacement)
 	{
-		pOrigDisp->GetVert( nVertIndex, vTestVert );
+		pOrigDisp->GetVert(nVertIndex, vTestVert);
 	}
 	else
 	{
@@ -351,34 +338,34 @@ bool CSculptTool::IsPointInScreenCircle( CMapView3D *pView, CMapDisp *pDisp, CMa
 
 	return ( Length <= m_BrushSize );
 #else
-	if ( bUseCurrentPosition )
+	if(bUseCurrentPosition)
 	{
-		if ( !m_CurrentCollisionValid )
+		if(!m_CurrentCollisionValid)
 		{
 			return false;
 		}
 
-		Vector	Offset = m_CurrentCollisionPoint - vTestVert;
-		float	Length = Offset.Length();
+		Vector Offset = m_CurrentCollisionPoint - vTestVert;
+		float Length = Offset.Length();
 
-		if ( pflLengthPercent )
+		if(pflLengthPercent)
 		{
 			*pflLengthPercent = Length / m_CurrentProjectedRadius;
 		}
 
-		return ( Length <= m_CurrentProjectedRadius );
+		return (Length <= m_CurrentProjectedRadius);
 	}
 	else
 	{
-		if ( !m_OriginalCollisionValid )
+		if(!m_OriginalCollisionValid)
 		{
 			return false;
 		}
 
-		Vector	Offset = m_OriginalCollisionPoint - vTestVert;
-		float	Length = Offset.Length();
+		Vector Offset = m_OriginalCollisionPoint - vTestVert;
+		float Length = Offset.Length();
 
-		if ( pflLengthPercent )
+		if(pflLengthPercent)
 		{
 			*pflLengthPercent = Length / m_OriginalProjectedRadius;
 		}
@@ -389,31 +376,29 @@ bool CSculptTool::IsPointInScreenCircle( CMapView3D *pView, CMapDisp *pDisp, CMa
 			Msg( "%d: ( %g %g %g ) from %g <= %g at ( %g %g %g )\n", vertIndex, vTestVert.x, vTestVert.y, vTestVert.z, Length, m_OriginalProjectedRadius, m_OriginalCollisionPoint.x, m_OriginalCollisionPoint.y, m_OriginalCollisionPoint.z );
 		}
 #endif
-		return ( Length <= m_OriginalProjectedRadius );
+		return (Length <= m_OriginalProjectedRadius);
 	}
 #endif
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds a displacement to the undo manager
 // Input  : pDisp - the displacement
 //-----------------------------------------------------------------------------
-void CSculptTool::AddToUndo( CMapDisp **pDisp )
+void CSculptTool::AddToUndo(CMapDisp **pDisp)
 {
 	CMapDisp *pUndoDisp = *pDisp;
-	if ( pUndoDisp->Paint_IsDirty() )
+	if(pUndoDisp->Paint_IsDirty())
 		return;
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( pDispMgr )
+	if(pDispMgr)
 	{
 		EditDispHandle_t handle = pUndoDisp->GetEditHandle();
-		pDispMgr->Undo( handle, false );
-		*pDisp = EditDispMgr()->GetDisp( handle );
+		pDispMgr->Undo(handle, false);
+		*pDisp = EditDispMgr()->GetDisp(handle);
 	}
 }
-
 
 #if 0
 //-----------------------------------------------------------------------------
@@ -446,7 +431,6 @@ void CSculptTool::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDisp
 }
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: this routine does the smoothing operation
 // Input  : pView - the 3d view
@@ -455,32 +439,32 @@ void CSculptTool::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDisp
 //			pOrigDisp - the displacement prior to the paint operation
 // Output :
 //-----------------------------------------------------------------------------
-void CSculptTool::DoPaintSmooth( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp )
+void CSculptTool::DoPaintSmooth(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp)
 {
-	Vector	vPaintPos, vVert;
+	Vector vPaintPos, vVert;
 
-	pDisp->GetSurfNormal( m_SpatialData.m_vPaintAxis );
+	pDisp->GetSurfNormal(m_SpatialData.m_vPaintAxis);
 
 	int nVertCount = pDisp->GetSize();
-	for ( int iVert = 0; iVert < nVertCount; iVert++ )
+	for(int iVert = 0; iVert < nVertCount; iVert++)
 	{
-		if ( IsPointInScreenCircle( pView, pDisp, pOrigDisp, iVert, false, true ) )
+		if(IsPointInScreenCircle(pView, pDisp, pOrigDisp, iVert, false, true))
 		{
-//			Msg( "Checking Vert %d\n", iVert );
+			//			Msg( "Checking Vert %d\n", iVert );
 			// Get the current vert.
-			pDisp->GetVert( iVert, vVert );
+			pDisp->GetVert(iVert, vVert);
 
 			// Build the new smoothed position and set it.
-			if ( DoPaintSmoothOneOverExp( vVert, vPaintPos ) )
+			if(DoPaintSmoothOneOverExp(vVert, vPaintPos))
 			{
-				AddToUndo( &pDisp );
-				pDisp->Paint_SetValue( iVert, vPaintPos );
-//				Msg( "Vert %d Updated: from %g %g %g to %g %g %g\n", iVert, vVert.x, vVert.y, vVert.z, vPaintPos.x, vPaintPos.y, vPaintPos.z );
+				AddToUndo(&pDisp);
+				pDisp->Paint_SetValue(iVert, vPaintPos);
+				//				Msg( "Vert %d Updated: from %g %g %g to %g %g %g\n", iVert, vVert.x, vVert.y, vVert.z,
+				//vPaintPos.x, vPaintPos.y, vPaintPos.z );
 			}
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: checks to see if the paint sphere is within the bounding box
@@ -490,11 +474,11 @@ void CSculptTool::DoPaintSmooth( CMapView3D *pView, const Vector2D &vPoint, CMap
 //			vBBoxMax - bounding box maxs
 // Output : returns two if the two intersect
 //-----------------------------------------------------------------------------
-bool CSculptTool::PaintSphereDispBBoxOverlap( const Vector &vCenter, float flRadius, const Vector &vBBoxMin, const Vector &vBBoxMax )
+bool CSculptTool::PaintSphereDispBBoxOverlap(const Vector &vCenter, float flRadius, const Vector &vBBoxMin,
+											 const Vector &vBBoxMax)
 {
-	return IsBoxIntersectingSphere( vBBoxMin, vBBoxMax, vCenter, flRadius );
+	return IsBoxIntersectingSphere(vBBoxMin, vBBoxMax, vCenter, flRadius);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: checkes to see if the two spheres intersect
@@ -504,33 +488,31 @@ bool CSculptTool::PaintSphereDispBBoxOverlap( const Vector &vCenter, float flRad
 //			flDistance2 - radius of point
 // Output : returns true if the two spheres intersect
 //-----------------------------------------------------------------------------
-bool CSculptTool::IsInSphereRadius( const Vector &vCenter, float flRadius2, const Vector &vPos, float &flDistance2 )
+bool CSculptTool::IsInSphereRadius(const Vector &vCenter, float flRadius2, const Vector &vPos, float &flDistance2)
 {
 	Vector vTmp;
-	VectorSubtract( vPos, vCenter, vTmp );
-	flDistance2 = ( vTmp.x * vTmp.x ) + ( vTmp.y * vTmp.y ) + ( vTmp.z * vTmp.z );
-	return ( flDistance2 < flRadius2 );
+	VectorSubtract(vPos, vCenter, vTmp);
+	flDistance2 = (vTmp.x * vTmp.x) + (vTmp.y * vTmp.y) + (vTmp.z * vTmp.z);
+	return (flDistance2 < flRadius2);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: calculates the smoothing radius squared
 // Input  : vPoint - the point to be smoothed
 // Output : returns the smoothing radius squared
 //-----------------------------------------------------------------------------
-float CSculptTool::CalcSmoothRadius2( const Vector &vPoint )
+float CSculptTool::CalcSmoothRadius2(const Vector &vPoint)
 {
 	Vector vTmp;
-	VectorSubtract( m_SpatialData.m_vCenter, vPoint, vTmp );
-	float flDistance2 = ( vTmp.x * vTmp.x ) + ( vTmp.y * vTmp.y ) + ( vTmp.z * vTmp.z );
+	VectorSubtract(m_SpatialData.m_vCenter, vPoint, vTmp);
+	float flDistance2 = (vTmp.x * vTmp.x) + (vTmp.y * vTmp.y) + (vTmp.z * vTmp.z);
 
 	float flRatio = flDistance2 / m_SpatialData.m_flRadius2;
 	flRatio = 1.0f - flRatio;
 
 	float flRadius = flRatio * m_SpatialData.m_flRadius;
-	return ( flRadius * flRadius );
+	return (flRadius * flRadius);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: smooths all displacements
@@ -538,77 +520,76 @@ float CSculptTool::CalcSmoothRadius2( const Vector &vPoint )
 // Output : returns true if successful
 //			vPaintPos - the new smoothing position
 //-----------------------------------------------------------------------------
-bool CSculptTool::DoPaintSmoothOneOverExp( const Vector &vNewCenter, Vector &vPaintPos )
+bool CSculptTool::DoPaintSmoothOneOverExp(const Vector &vNewCenter, Vector &vPaintPos)
 {
 	// Get the displacement manager from the active map document.
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 		return false;
 
 	// Calculate the smoothing radius.
-	float flNewRadius2 = CalcSmoothRadius2( vNewCenter );
+	float flNewRadius2 = CalcSmoothRadius2(vNewCenter);
 	flNewRadius2 *= 2.0f;
-	float flNewRadius = ( float )sqrt( flNewRadius2 );
-
+	float flNewRadius = (float)sqrt(flNewRadius2);
 
 	// Test all selected surfaces for smoothing.
 	float flWeight = 0.0f;
 	float flSmoothDist = 0.0f;
 
 	// Calculate the plane dist.
-	float flPaintDist = m_SpatialData.m_vPaintAxis.Dot( vNewCenter );
+	float flPaintDist = m_SpatialData.m_vPaintAxis.Dot(vNewCenter);
 
 	int nDispCount = pDispMgr->SelectCount();
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
 			// Test paint sphere displacement bbox for overlap.
 			Vector vBBoxMin, vBBoxMax;
-			pDisp->GetBoundingBox( vBBoxMin, vBBoxMax );
-			if ( PaintSphereDispBBoxOverlap( vNewCenter, flNewRadius, vBBoxMin, vBBoxMax ) )
+			pDisp->GetBoundingBox(vBBoxMin, vBBoxMax);
+			if(PaintSphereDispBBoxOverlap(vNewCenter, flNewRadius, vBBoxMin, vBBoxMax))
 			{
 				Vector vVert;
 				int nVertCount = pDisp->GetSize();
-				for ( int iVert = 0; iVert < nVertCount; iVert++ )
+				for(int iVert = 0; iVert < nVertCount; iVert++)
 				{
 					// Get the current vert.
-					pDisp->GetVert( iVert, vVert );
+					pDisp->GetVert(iVert, vVert);
 
 					float flDistance2 = 0.0f;
-					if ( IsInSphereRadius( vNewCenter, flNewRadius2, vVert, flDistance2 ) )
+					if(IsInSphereRadius(vNewCenter, flNewRadius2, vVert, flDistance2))
 					{
 						float flRatio = flDistance2 / flNewRadius2;
-						float flFactor = 1.0f / exp( flRatio );
-						if ( flFactor != 1.0f )
+						float flFactor = 1.0f / exp(flRatio);
+						if(flFactor != 1.0f)
 						{
-							flFactor *= 1.0f / ( m_SpatialData.m_flScalar * 2.0f );
+							flFactor *= 1.0f / (m_SpatialData.m_flScalar * 2.0f);
 						}
 
 						Vector vProjectVert;
-						float flProjectDist = DotProduct( vVert, m_SpatialData.m_vPaintAxis ) - flPaintDist;
-						flSmoothDist += ( flProjectDist * flFactor );
+						float flProjectDist = DotProduct(vVert, m_SpatialData.m_vPaintAxis) - flPaintDist;
+						flSmoothDist += (flProjectDist * flFactor);
 						flWeight += flFactor;
-//						Msg( "Factoring %d: %g %g %g at %g\n", iVert, vVert.x, vVert.y, vVert.z, flNewRadius2 );
+						//						Msg( "Factoring %d: %g %g %g at %g\n", iVert, vVert.x, vVert.y, vVert.z,
+						//flNewRadius2 );
 					}
 				}
 			}
 		}
 	}
 
-	if ( flWeight == 0.0f )
+	if(flWeight == 0.0f)
 	{
 		return false;
 	}
 
 	// Re-normalize the smoothing position.
 	flSmoothDist /= flWeight;
-	vPaintPos = vNewCenter + ( m_SpatialData.m_vPaintAxis * flSmoothDist );
+	vPaintPos = vNewCenter + (m_SpatialData.m_vPaintAxis * flSmoothDist);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: gets the starting position when the paint operation begins
@@ -616,24 +597,23 @@ bool CSculptTool::DoPaintSmoothOneOverExp( const Vector &vNewCenter, Vector &vPa
 //			vPoint - the mouse point
 // Output : returns the starting position
 //-----------------------------------------------------------------------------
-bool CSculptTool::GetStartingSpot( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptTool::GetStartingSpot(CMapView3D *pView, const Vector2D &vPoint)
 {
-	m_ValidPaintingSpot = FindCollisionIntercept( pView->GetCamera(), vPoint, false, m_StartingCollisionPoint, m_StartingCollisionNormal, m_StartingCollisionIntercept );
+	m_ValidPaintingSpot = FindCollisionIntercept(pView->GetCamera(), vPoint, false, m_StartingCollisionPoint,
+												 m_StartingCollisionNormal, m_StartingCollisionIntercept);
 
-	if ( m_ValidPaintingSpot )
+	if(m_ValidPaintingSpot)
 	{
-		Vector2D	RadiusPoint = vPoint;
-		Vector		vecStart, vecEnd;
+		Vector2D RadiusPoint = vPoint;
+		Vector vecStart, vecEnd;
 
 		RadiusPoint.x += m_BrushSize;
-		pView->GetCamera()->BuildRay( RadiusPoint, vecStart, vecEnd );
-		m_StartingProjectedRadius = CalcDistanceToLine( m_StartingCollisionPoint, vecStart, vecEnd );
-
+		pView->GetCamera()->BuildRay(RadiusPoint, vecStart, vecEnd);
+		m_StartingProjectedRadius = CalcDistanceToLine(m_StartingCollisionPoint, vecStart, vecEnd);
 	}
 
 	return m_ValidPaintingSpot;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Draws a 2d line to represent the direction
@@ -642,94 +622,90 @@ bool CSculptTool::GetStartingSpot( CMapView3D *pView, const Vector2D &vPoint )
 //			Towards - the color to be used if the direction is towards the viewer
 //			Away - the color to be used if the direction is away from the view
 //-----------------------------------------------------------------------------
-void CSculptTool::DrawDirection( CRender3D *pRender, Vector Direction, Color Towards, Color Away )
+void CSculptTool::DrawDirection(CRender3D *pRender, Vector Direction, Color Towards, Color Away)
 {
-	Vector		ViewPoint, ViewDir;
-	Vector2D	ViewVert;
+	Vector ViewPoint, ViewDir;
+	Vector2D ViewVert;
 
-	VMatrix  Matrix;
-	pRender->GetCamera()->GetViewProjMatrix( Matrix );
-	Matrix.SetTranslation( Vector( 0.0f, 0.0f, 0.0f ) );
-	Vector3DMultiply( Matrix, Direction, ViewDir );
-	VectorNormalize( ViewDir );
+	VMatrix Matrix;
+	pRender->GetCamera()->GetViewProjMatrix(Matrix);
+	Matrix.SetTranslation(Vector(0.0f, 0.0f, 0.0f));
+	Vector3DMultiply(Matrix, Direction, ViewDir);
+	VectorNormalize(ViewDir);
 
-	ViewVert = m_MousePoint + ( Vector2D( ViewDir.x, -ViewDir.y ) * m_BrushSize );
+	ViewVert = m_MousePoint + (Vector2D(ViewDir.x, -ViewDir.y) * m_BrushSize);
 
-	if ( ViewDir.z > 0.0f )
+	if(ViewDir.z > 0.0f)
 	{
-		pRender->SetDrawColor( Away.r(), Away.g(), Away.b() );
+		pRender->SetDrawColor(Away.r(), Away.g(), Away.b());
 	}
 	else
 	{
-		pRender->SetDrawColor( Towards.r(), Towards.g(), Towards.b() );
+		pRender->SetDrawColor(Towards.r(), Towards.g(), Towards.b());
 	}
 
 	bool bPopMode = pRender->BeginClientSpace();
-	pRender->DrawLine( Vector( m_MousePoint.x, m_MousePoint.y, 0.0f ), Vector( ViewVert.x, ViewVert.y, 0.0f ) );
-	if ( bPopMode )
+	pRender->DrawLine(Vector(m_MousePoint.x, m_MousePoint.y, 0.0f), Vector(ViewVert.x, ViewVert.y, 0.0f));
+	if(bPopMode)
 	{
 		pRender->EndClientSpace();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: this function will copy all the selected displacements
 //-----------------------------------------------------------------------------
-void CSculptTool::DuplicateSelectedDisp( )
+void CSculptTool::DuplicateSelectedDisp()
 {
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 	{
 		return;
 	}
 
-	FOR_EACH_MAP( m_OrigMapDisp, pos )
+	FOR_EACH_MAP(m_OrigMapDisp, pos)
 	{
-		delete m_OrigMapDisp.Element( pos );
+		delete m_OrigMapDisp.Element(pos);
 	}
 	m_OrigMapDisp.Purge();
 
 	int nDispCount = pDispMgr->SelectCount();
 
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
 			CMapDisp *pCopy = new CMapDisp();
 
-			pCopy->CopyFrom( pDisp, false );
-			m_OrigMapDisp.Insert( pDisp->GetEditHandle(), pCopy );
+			pCopy->CopyFrom(pDisp, false);
+			m_OrigMapDisp.Insert(pDisp->GetEditHandle(), pCopy);
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: this function will initialize all selected displacements for updating
 //-----------------------------------------------------------------------------
-void CSculptTool::PrepareDispForPainting( )
+void CSculptTool::PrepareDispForPainting()
 {
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 	{
 		return;
 	}
 
 	int nDispCount = pDispMgr->SelectCount();
 
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
-			pDisp->Paint_Init( DISPPAINT_CHANNEL_POSITION );
+			pDisp->Paint_Init(DISPPAINT_CHANNEL_POSITION);
 		}
 	}
-
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: this function will find the collision location within the selected displacements
@@ -741,89 +717,79 @@ void CSculptTool::PrepareDispForPainting( )
 //			vCollisionNormal - the normal of the tri hit
 //			flCollisionIntercept - the intercept
 //-----------------------------------------------------------------------------
-bool CSculptTool::FindCollisionIntercept( CCamera *pCamera, const Vector2D &vPoint, bool bUseOrigPosition, Vector &vCollisionPoint, Vector &vCollisionNormal, float &flCollisionIntercept )
+bool CSculptTool::FindCollisionIntercept(CCamera *pCamera, const Vector2D &vPoint, bool bUseOrigPosition,
+										 Vector &vCollisionPoint, Vector &vCollisionNormal, float &flCollisionIntercept)
 {
-	Vector	vecStart, vecEnd;
-	float	flFraction, flLeastFraction;
+	Vector vecStart, vecEnd;
+	float flFraction, flLeastFraction;
 
 	flLeastFraction = -1.0f;
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( !pDispMgr )
+	if(!pDispMgr)
 	{
 		return false;
 	}
 
 	int nDispCount = pDispMgr->SelectCount();
-	pCamera->BuildRay( vPoint, vecStart, vecEnd );
+	pCamera->BuildRay(vPoint, vecStart, vecEnd);
 
-	for ( int iDisp = 0; iDisp < nDispCount; iDisp++ )
+	for(int iDisp = 0; iDisp < nDispCount; iDisp++)
 	{
-		CMapDisp *pDisp = pDispMgr->GetFromSelect( iDisp );
-		if ( pDisp )
+		CMapDisp *pDisp = pDispMgr->GetFromSelect(iDisp);
+		if(pDisp)
 		{
-			if ( bUseOrigPosition )
+			if(bUseOrigPosition)
 			{
-				CMapDisp	*OrigDisp = NULL;
-				int			index = m_OrigMapDisp.Find( pDisp->GetEditHandle() );
+				CMapDisp *OrigDisp = NULL;
+				int index = m_OrigMapDisp.Find(pDisp->GetEditHandle());
 
-				if ( index != m_OrigMapDisp.InvalidIndex() )
+				if(index != m_OrigMapDisp.InvalidIndex())
 				{
-					OrigDisp = m_OrigMapDisp[ index ];
+					OrigDisp = m_OrigMapDisp[index];
 				}
 
-				if ( OrigDisp )
+				if(OrigDisp)
 				{
 					pDisp = OrigDisp;
 				}
 			}
 
-			int iTri = pDisp->CollideWithDispTri( vecStart, vecEnd, flFraction, false );
-			if ( iTri != -1 && ( flLeastFraction == -1.0f || flFraction < flLeastFraction ) )
+			int iTri = pDisp->CollideWithDispTri(vecStart, vecEnd, flFraction, false);
+			if(iTri != -1 && (flLeastFraction == -1.0f || flFraction < flLeastFraction))
 			{
 				flLeastFraction = flFraction;
-				vCollisionPoint = vecStart + ( ( vecEnd - vecStart ) * flFraction );
+				vCollisionPoint = vecStart + ((vecEnd - vecStart) * flFraction);
 
 				unsigned short v1, v2, v3;
 				Vector vec1, vec2, vec3;
 
-				pDisp->GetTriIndices( iTri, v1, v2, v3 );
-				pDisp->GetVert( v1, vec1 );
-				pDisp->GetVert( v2, vec2 );
-				pDisp->GetVert( v3, vec3 );
+				pDisp->GetTriIndices(iTri, v1, v2, v3);
+				pDisp->GetVert(v1, vec1);
+				pDisp->GetVert(v2, vec2);
+				pDisp->GetVert(v3, vec3);
 
-				ComputeTrianglePlane( vec1, vec2, vec3, vCollisionNormal, flCollisionIntercept );
+				ComputeTrianglePlane(vec1, vec2, vec3, vCollisionNormal, flCollisionIntercept);
 			}
 		}
 	}
 
-	return ( flLeastFraction != -1.0f );
+	return (flLeastFraction != -1.0f);
 }
-
-
-
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CSculptPainter::CSculptPainter() :
-	CSculptTool()
+CSculptPainter::CSculptPainter() : CSculptTool()
 {
 	m_InSizingMode = m_InPaintingMode = false;
 	m_OrigBrushSize = m_BrushSize;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: destructor
 //-----------------------------------------------------------------------------
-CSculptPainter::~CSculptPainter( )
-{
-
-}
-
+CSculptPainter::~CSculptPainter() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: setup for starting to paint on the displacement
@@ -831,15 +797,14 @@ CSculptPainter::~CSculptPainter( )
 //			vPoint - the initial click point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptPainter::BeginPaint(CMapView3D *pView, const Vector2D &vPoint)
 {
-	CSculptTool::BeginPaint( pView, vPoint );
+	CSculptTool::BeginPaint(pView, vPoint);
 
 	PrepareDispForPainting();
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: main routine called when mouse move has happened to start painting
@@ -848,41 +813,41 @@ bool CSculptPainter::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
 //			SpatialData - the spatial data ( mostly ignored )
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &SpatialData )
+bool CSculptPainter::Paint(CMapView3D *pView, const Vector2D &vPoint, SpatialPaintData_t &SpatialData)
 {
-	__super::Paint( pView, vPoint, SpatialData );
+	__super::Paint(pView, vPoint, SpatialData);
 
-	if ( m_bRMBDown )
+	if(m_bRMBDown)
 	{
-		if ( !m_bAltDown )
+		if(!m_bAltDown)
 		{
-			DoSizing( vPoint );
+			DoSizing(vPoint);
 		}
 	}
-	else if ( m_bLMBDown )
+	else if(m_bLMBDown)
 	{
-		if ( !m_ValidPaintingSpot )
+		if(!m_ValidPaintingSpot)
 		{
-			if ( !GetStartingSpot( pView, vPoint ) )
+			if(!GetStartingSpot(pView, vPoint))
 			{
 				return false;
 			}
 		}
 
 		// Setup painting.
-		if ( !PrePaint( pView, vPoint ) )
+		if(!PrePaint(pView, vPoint))
 		{
 			return false;
 		}
 
 		// Handle painting.
-		if ( !DoPaint( pView, vPoint ) )
+		if(!DoPaint(pView, vPoint))
 		{
 			return false;
 		}
 
 		// Finish painting.
-		if ( !PostPaint( m_PaintOwner->GetAutoSew() ) )
+		if(!PostPaint(m_PaintOwner->GetAutoSew()))
 		{
 			return false;
 		}
@@ -892,7 +857,6 @@ bool CSculptPainter::Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPa
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the left mouse button up in the 3d view
 // Input  : pView - the 3d view
@@ -900,21 +864,20 @@ bool CSculptPainter::Paint( CMapView3D *pView, const Vector2D &vPoint, SpatialPa
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptPainter::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	CSculptTool::OnLMouseUp3D( pView, nFlags, vPoint );
+	CSculptTool::OnLMouseUp3D(pView, nFlags, vPoint);
 
 	m_InPaintingMode = false;
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( pDispMgr )
+	if(pDispMgr)
 	{
 		pDispMgr->PostUndo();
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the left mouse button down in the 3d view
@@ -923,21 +886,20 @@ bool CSculptPainter::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptPainter::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	CSculptTool::OnLMouseDown3D( pView, nFlags, vPoint );
+	CSculptTool::OnLMouseDown3D(pView, nFlags, vPoint);
 
 	m_InPaintingMode = true;
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( pDispMgr )
+	if(pDispMgr)
 	{
-		pDispMgr->PreUndo( "Displacement Modifier" );
+		pDispMgr->PreUndo("Displacement Modifier");
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the right mouse button up in the 3d view
@@ -946,21 +908,20 @@ bool CSculptPainter::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vecto
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptPainter::OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	CSculptTool::OnRMouseUp3D( pView, nFlags, vPoint );
+	CSculptTool::OnRMouseUp3D(pView, nFlags, vPoint);
 
 	m_InSizingMode = false;
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( pDispMgr )
+	if(pDispMgr)
 	{
 		pDispMgr->PostUndo();
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the right mouse button down in the 3d view
@@ -969,19 +930,18 @@ bool CSculptPainter::OnRMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptPainter::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	CSculptTool::OnRMouseDown3D( pView, nFlags, vPoint );
+	CSculptTool::OnRMouseDown3D(pView, nFlags, vPoint);
 
 	IWorldEditDispMgr *pDispMgr = GetActiveWorldEditDispManager();
-	if( pDispMgr )
+	if(pDispMgr)
 	{
-		pDispMgr->PreUndo( "Displacement Modifier" );
+		pDispMgr->PreUndo("Displacement Modifier");
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the mouse move in the 3d view
@@ -990,20 +950,19 @@ bool CSculptPainter::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vecto
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptPainter::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	return CSculptTool::OnMouseMove3D( pView, nFlags, vPoint );
+	return CSculptTool::OnMouseMove3D(pView, nFlags, vPoint);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: toggles the sizing mode
 // Input  : vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPainter::DoSizing( const Vector2D &vPoint )
+bool CSculptPainter::DoSizing(const Vector2D &vPoint)
 {
-	if ( !m_InSizingMode )
+	if(!m_InSizingMode)
 	{
 		m_InSizingMode = true;
 		m_StartSizingPoint = vPoint;
@@ -1011,8 +970,8 @@ bool CSculptPainter::DoSizing( const Vector2D &vPoint )
 	}
 	else
 	{
-		m_BrushSize = m_OrigBrushSize + ( vPoint.x - m_StartSizingPoint.x );
-		if ( m_BrushSize < 1.0f )
+		m_BrushSize = m_OrigBrushSize + (vPoint.x - m_StartSizingPoint.x);
+		if(m_BrushSize < 1.0f)
 		{
 			m_BrushSize = 1.0f;
 		}
@@ -1021,24 +980,15 @@ bool CSculptPainter::DoSizing( const Vector2D &vPoint )
 	return true;
 }
 
-
-
-
-
-
-
-
 // CSculptPushOptions dialog
 
 IMPLEMENT_DYNAMIC(CSculptPushOptions, CDialog)
 
-
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CSculptPushOptions::CSculptPushOptions(CWnd* pParent /*=NULL*/) :
-	CDialog(CSculptPushOptions::IDD, pParent),
-	CSculptPainter()
+CSculptPushOptions::CSculptPushOptions(CWnd *pParent /*=NULL*/)
+	: CDialog(CSculptPushOptions::IDD, pParent), CSculptPainter()
 {
 	m_OffsetMode = OFFSET_MODE_ABSOLUTE;
 	m_NormalMode = NORMAL_MODE_Z;
@@ -1047,91 +997,80 @@ CSculptPushOptions::CSculptPushOptions(CWnd* pParent /*=NULL*/) :
 	m_OffsetAmount = 1.0f;
 	m_SmoothAmount = 0.2f;
 	m_Direction = 1.0f;
-	m_SelectedNormal.Init( 0.0f, 0.0f, 0.0f );
+	m_SelectedNormal.Init(0.0f, 0.0f, 0.0f);
 
 	m_flFalloffSpot = 0.5f;
 	m_flFalloffEndingValue = 0.0f;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: destructor
 //-----------------------------------------------------------------------------
-CSculptPushOptions::~CSculptPushOptions()
-{
-}
-
+CSculptPushOptions::~CSculptPushOptions() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: initializes the dialog
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-BOOL CSculptPushOptions::OnInitDialog( void )
+BOOL CSculptPushOptions::OnInitDialog(void)
 {
-	char	temp[ 1024 ];
+	char temp[1024];
 
 	CDialog::OnInitDialog();
 
-	m_OffsetModeControl.InsertString( -1, "Adaptive" );
-	m_OffsetModeControl.InsertString( -1, "Absolute" );
-	m_OffsetModeControl.SetCurSel( m_OffsetMode );
+	m_OffsetModeControl.InsertString(-1, "Adaptive");
+	m_OffsetModeControl.InsertString(-1, "Absolute");
+	m_OffsetModeControl.SetCurSel(m_OffsetMode);
 
-	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
+	m_OffsetDistanceControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ABSOLUTE));
+	m_OffsetAmountControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ADAPTIVE));
 
-	sprintf( temp, "%g", m_OffsetDistance );
-	m_OffsetDistanceControl.SetWindowText( temp );
+	sprintf(temp, "%g", m_OffsetDistance);
+	m_OffsetDistanceControl.SetWindowText(temp);
 
-	sprintf( temp, "%g%%", m_OffsetAmount * 100.0f );
-	m_OffsetAmountControl.SetWindowText( temp );
+	sprintf(temp, "%g%%", m_OffsetAmount * 100.0f);
+	m_OffsetAmountControl.SetWindowText(temp);
 
-	sprintf( temp, "%g%%", m_SmoothAmount * 100.0f );
-	m_SmoothAmountControl.SetWindowText( temp );
+	sprintf(temp, "%g%%", m_SmoothAmount * 100.0f);
+	m_SmoothAmountControl.SetWindowText(temp);
 
-	sprintf( temp, "%g%%", m_flFalloffSpot * 100.0f );
-	m_FalloffPositionControl.SetWindowText( temp );
+	sprintf(temp, "%g%%", m_flFalloffSpot * 100.0f);
+	m_FalloffPositionControl.SetWindowText(temp);
 
-	sprintf( temp, "%g%%", m_flFalloffEndingValue * 100.0f );
-	m_FalloffFinalControl.SetWindowText( temp );
+	sprintf(temp, "%g%%", m_flFalloffEndingValue * 100.0f);
+	m_FalloffFinalControl.SetWindowText(temp);
 
-	m_NormalModeControl.InsertString( -1, "Brush Center" );
-	m_NormalModeControl.InsertString( -1, "Screen" );
-	m_NormalModeControl.InsertString( -1, "Screen XY" );
-	m_NormalModeControl.InsertString( -1, "X" );
-	m_NormalModeControl.InsertString( -1, "Y" );
-	m_NormalModeControl.InsertString( -1, "Z" );
-	m_NormalModeControl.InsertString( -1, "Selected" );
-	m_NormalModeControl.SetCurSel( m_NormalMode );
+	m_NormalModeControl.InsertString(-1, "Brush Center");
+	m_NormalModeControl.InsertString(-1, "Screen");
+	m_NormalModeControl.InsertString(-1, "Screen XY");
+	m_NormalModeControl.InsertString(-1, "X");
+	m_NormalModeControl.InsertString(-1, "Y");
+	m_NormalModeControl.InsertString(-1, "Z");
+	m_NormalModeControl.InsertString(-1, "Selected");
+	m_NormalModeControl.SetCurSel(m_NormalMode);
 
-	m_DensityModeControl.InsertString( -1, "Additive" );
-	m_DensityModeControl.InsertString( -1, "Attenuated" );
-	m_DensityModeControl.SetCurSel( m_DensityMode );
+	m_DensityModeControl.InsertString(-1, "Additive");
+	m_DensityModeControl.InsertString(-1, "Attenuated");
+	m_DensityModeControl.SetCurSel(m_DensityMode);
 
 	return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: prevent the dialog from closing
+//-----------------------------------------------------------------------------
+void CSculptPushOptions::OnOK() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: prevent the dialog from closing
 //-----------------------------------------------------------------------------
-void CSculptPushOptions::OnOK()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: prevent the dialog from closing
-//-----------------------------------------------------------------------------
-void CSculptPushOptions::OnCancel()
-{
-}
-
+void CSculptPushOptions::OnCancel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: set up the data exchange for the variables
 // Input  : pDX - the data exchange object
 //-----------------------------------------------------------------------------
-void CSculptPushOptions::DoDataExchange(CDataExchange* pDX)
+void CSculptPushOptions::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_SCULPT_PUSH_OPTION_OFFSET_MODE, m_OffsetModeControl);
@@ -1144,39 +1083,41 @@ void CSculptPushOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SCULPT_PUSH_OPTION_FALLOFF_FINAL, m_FalloffFinalControl);
 }
 
-
 BEGIN_MESSAGE_MAP(CSculptPushOptions, CDialog)
-	ON_CBN_SELCHANGE(IDC_IDC_SCULPT_PUSH_OPTION_NORMAL_MODE, &CSculptPushOptions::OnCbnSelchangeIdcSculptPushOptionNormalMode)
+	ON_CBN_SELCHANGE(IDC_IDC_SCULPT_PUSH_OPTION_NORMAL_MODE,
+					 &CSculptPushOptions::OnCbnSelchangeIdcSculptPushOptionNormalMode)
 	ON_CBN_SELCHANGE(IDC_SCULPT_PUSH_OPTION_OFFSET_MODE, &CSculptPushOptions::OnCbnSelchangeSculptPushOptionOffsetMode)
 	ON_EN_CHANGE(IDC_SCULPT_PUSH_OPTION_OFFSET_DISTANCE, &CSculptPushOptions::OnEnChangeSculptPushOptionOffsetDistance)
-	ON_CBN_SELCHANGE(IDC_SCULPT_PUSH_OPTION_DENSITY_MODE, &CSculptPushOptions::OnCbnSelchangeSculptPushOptionDensityMode)
-	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_SMOOTH_AMOUNT, &CSculptPushOptions::OnEnKillfocusSculptPushOptionSmoothAmount)
-	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_OFFSET_AMOUNT, &CSculptPushOptions::OnEnKillfocusSculptPushOptionOffsetAmount)
-	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_FALLOFF_POSITION, &CSculptPushOptions::OnEnKillfocusSculptPushOptionFalloffPosition)
-	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_FALLOFF_FINAL, &CSculptPushOptions::OnEnKillfocusSculptPushOptionFalloffFinal)
+	ON_CBN_SELCHANGE(IDC_SCULPT_PUSH_OPTION_DENSITY_MODE,
+					 &CSculptPushOptions::OnCbnSelchangeSculptPushOptionDensityMode)
+	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_SMOOTH_AMOUNT,
+					&CSculptPushOptions::OnEnKillfocusSculptPushOptionSmoothAmount)
+	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_OFFSET_AMOUNT,
+					&CSculptPushOptions::OnEnKillfocusSculptPushOptionOffsetAmount)
+	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_FALLOFF_POSITION,
+					&CSculptPushOptions::OnEnKillfocusSculptPushOptionFalloffPosition)
+	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_FALLOFF_FINAL,
+					&CSculptPushOptions::OnEnKillfocusSculptPushOptionFalloffFinal)
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the normal mode of the sculpt operation
 //-----------------------------------------------------------------------------
 void CSculptPushOptions::OnCbnSelchangeIdcSculptPushOptionNormalMode()
 {
-	m_NormalMode = ( NormalMode )m_NormalModeControl.GetCurSel();
+	m_NormalMode = (NormalMode)m_NormalModeControl.GetCurSel();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the offset mode of the sculpt operation
 //-----------------------------------------------------------------------------
 void CSculptPushOptions::OnCbnSelchangeSculptPushOptionOffsetMode()
 {
-	m_OffsetMode = ( OffsetMode )m_OffsetModeControl.GetCurSel();
+	m_OffsetMode = (OffsetMode)m_OffsetModeControl.GetCurSel();
 
-	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
+	m_OffsetDistanceControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ABSOLUTE));
+	m_OffsetAmountControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ADAPTIVE));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: setup for starting to paint on the displacement
@@ -1184,11 +1125,11 @@ void CSculptPushOptions::OnCbnSelchangeSculptPushOptionOffsetMode()
 //			vPoint - the initial click point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPushOptions::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptPushOptions::BeginPaint(CMapView3D *pView, const Vector2D &vPoint)
 {
-	__super::BeginPaint( pView, vPoint );
+	__super::BeginPaint(pView, vPoint);
 
-	if ( m_bCtrlDown )
+	if(m_bCtrlDown)
 	{
 		m_Direction = -1.0f;
 	}
@@ -1200,68 +1141,71 @@ bool CSculptPushOptions::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: draws the tool in the 3d view
 // Input  : pRender - the 3d renderer
 //-----------------------------------------------------------------------------
-void CSculptPushOptions::RenderTool3D( CRender3D *pRender )
+void CSculptPushOptions::RenderTool3D(CRender3D *pRender)
 {
-//	pRender->DrawText( "mouse", m_MousePoint.x, m_MousePoint.y, 0 );
-//	Msg( "%g %g\n", m_MousePoint.x, m_MousePoint.y );
+	//	pRender->DrawText( "mouse", m_MousePoint.x, m_MousePoint.y, 0 );
+	//	Msg( "%g %g\n", m_MousePoint.x, m_MousePoint.y );
 
-	pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
+	pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
 
-	if ( m_InSizingMode )
-	{	// yellow for sizing mode
+	if(m_InSizingMode)
+	{ // yellow for sizing mode
 		pRender->BeginClientSpace();
-		pRender->SetDrawColor( 255, 255, 0 );
-		pRender->DrawCircle( Vector( m_StartSizingPoint.x, m_StartSizingPoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize, 32 );
-		if ( m_flFalloffSpot > 0.0f )
+		pRender->SetDrawColor(255, 255, 0);
+		pRender->DrawCircle(Vector(m_StartSizingPoint.x, m_StartSizingPoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f),
+							m_BrushSize, 32);
+		if(m_flFalloffSpot > 0.0f)
 		{
-			pRender->SetDrawColor( 192, 192, 0 );
-			pRender->DrawCircle( Vector( m_StartSizingPoint.x, m_StartSizingPoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize * m_flFalloffSpot, 32 );
+			pRender->SetDrawColor(192, 192, 0);
+			pRender->DrawCircle(Vector(m_StartSizingPoint.x, m_StartSizingPoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f),
+								m_BrushSize * m_flFalloffSpot, 32);
 		}
 		pRender->EndClientSpace();
 	}
-	else if ( m_bShiftDown )
-	{	// purple for smoothing
-		pRender->SetDrawColor( 255, 0, 255 );
+	else if(m_bShiftDown)
+	{ // purple for smoothing
+		pRender->SetDrawColor(255, 0, 255);
 		pRender->BeginClientSpace();
-		pRender->DrawCircle( Vector( m_MousePoint.x, m_MousePoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize, 32 );
+		pRender->DrawCircle(Vector(m_MousePoint.x, m_MousePoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f), m_BrushSize, 32);
 		pRender->EndClientSpace();
 	}
-	else if ( m_bCtrlDown )
-	{	// red for negative sculpting
+	else if(m_bCtrlDown)
+	{ // red for negative sculpting
 		pRender->BeginClientSpace();
-		pRender->SetDrawColor( 255, 0, 0 );
-		pRender->DrawCircle( Vector( m_MousePoint.x, m_MousePoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize, 32 );
-		if ( m_flFalloffSpot > 0.0f )
+		pRender->SetDrawColor(255, 0, 0);
+		pRender->DrawCircle(Vector(m_MousePoint.x, m_MousePoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f), m_BrushSize, 32);
+		if(m_flFalloffSpot > 0.0f)
 		{
-			pRender->SetDrawColor( 192, 0, 0 );
-			pRender->DrawCircle( Vector( m_MousePoint.x, m_MousePoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize * m_flFalloffSpot, 32 );
+			pRender->SetDrawColor(192, 0, 0);
+			pRender->DrawCircle(Vector(m_MousePoint.x, m_MousePoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f),
+								m_BrushSize * m_flFalloffSpot, 32);
 		}
 		pRender->EndClientSpace();
 
-		Vector	vPaintAxis;
-		GetPaintAxis( pRender->GetCamera(), m_MousePoint, vPaintAxis );
-		DrawDirection( pRender, -vPaintAxis, Color( 255, 255, 255 ), Color( 255, 128, 128 ) );
+		Vector vPaintAxis;
+		GetPaintAxis(pRender->GetCamera(), m_MousePoint, vPaintAxis);
+		DrawDirection(pRender, -vPaintAxis, Color(255, 255, 255), Color(255, 128, 128));
 	}
 	else
-	{	// green for positive sculpting
+	{ // green for positive sculpting
 		pRender->BeginClientSpace();
-		pRender->SetDrawColor( 0, 255, 0 );
-		pRender->DrawCircle( Vector( m_MousePoint.x, m_MousePoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize, 32 );
-		if ( m_flFalloffSpot > 0.0f )
+		pRender->SetDrawColor(0, 255, 0);
+		pRender->DrawCircle(Vector(m_MousePoint.x, m_MousePoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f), m_BrushSize, 32);
+		if(m_flFalloffSpot > 0.0f)
 		{
-			pRender->SetDrawColor( 0, 192, 0 );
-			pRender->DrawCircle( Vector( m_MousePoint.x, m_MousePoint.y, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), m_BrushSize * m_flFalloffSpot, 32 );
+			pRender->SetDrawColor(0, 192, 0);
+			pRender->DrawCircle(Vector(m_MousePoint.x, m_MousePoint.y, 0.0f), Vector(0.0f, 0.0f, 1.0f),
+								m_BrushSize * m_flFalloffSpot, 32);
 		}
 		pRender->EndClientSpace();
 
-		Vector	vPaintAxis;
-		GetPaintAxis( pRender->GetCamera(), m_MousePoint, vPaintAxis );
-		DrawDirection( pRender, vPaintAxis, Color( 255, 255, 255 ), Color( 255, 128, 128 ) );
+		Vector vPaintAxis;
+		GetPaintAxis(pRender->GetCamera(), m_MousePoint, vPaintAxis);
+		DrawDirection(pRender, vPaintAxis, Color(255, 255, 255), Color(255, 128, 128));
 	}
 
 #if 0
@@ -1312,7 +1256,6 @@ void CSculptPushOptions::RenderTool3D( CRender3D *pRender )
 	}
 #endif
 
-
 	pRender->PopRenderMode();
 
 #if 0
@@ -1332,7 +1275,6 @@ void CSculptPushOptions::RenderTool3D( CRender3D *pRender )
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the right mouse button down in the 3d view
 // Input  : pView - the 3d view
@@ -1340,14 +1282,14 @@ void CSculptPushOptions::RenderTool3D( CRender3D *pRender )
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptPushOptions::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptPushOptions::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	CSculptTool::OnRMouseDown3D( pView, nFlags, vPoint );
+	CSculptTool::OnRMouseDown3D(pView, nFlags, vPoint);
 
-	if ( m_bAltDown )
+	if(m_bAltDown)
 	{
 		m_NormalMode = NORMAL_MODE_Z;
-		m_NormalModeControl.SetCurSel( m_NormalMode );
+		m_NormalModeControl.SetCurSel(m_NormalMode);
 
 #if 0
 
@@ -1391,16 +1333,17 @@ bool CSculptPushOptions::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const V
 			}
 		}
 #else
-		Vector	CollisionPoint, CollisionNormal;
-		float	CollisionIntercept;
+		Vector CollisionPoint, CollisionNormal;
+		float CollisionIntercept;
 
-		if ( FindCollisionIntercept( pView->GetCamera(), vPoint, false, CollisionPoint, CollisionNormal, CollisionIntercept ) )
+		if(FindCollisionIntercept(pView->GetCamera(), vPoint, false, CollisionPoint, CollisionNormal,
+								  CollisionIntercept))
 		{
 			// set the paint direction
 			m_SelectedNormal = -CollisionNormal;
 
 			m_NormalMode = NORMAL_MODE_SELECTED;
-			m_NormalModeControl.SetCurSel( m_NormalMode );
+			m_NormalModeControl.SetCurSel(m_NormalMode);
 		}
 #endif
 	}
@@ -1408,35 +1351,34 @@ bool CSculptPushOptions::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const V
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: returns the painting direction
 // Input  : pCamera - the 3d camera
 //			vPoint - the 2d mouse point
 // Output : vPaintAxis - the direction the painting should go
 //-----------------------------------------------------------------------------
-void CSculptPushOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis )
+void CSculptPushOptions::GetPaintAxis(CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis)
 {
-	switch( m_NormalMode )
+	switch(m_NormalMode)
 	{
 		case NORMAL_MODE_SCREEN:
-			pCamera->GetViewForward( vPaintAxis );
+			pCamera->GetViewForward(vPaintAxis);
 			vPaintAxis = -vPaintAxis;
 			break;
 
 		case NORMAL_MODE_SCREEN_XY:
-			pCamera->GetViewForward( vPaintAxis );
+			pCamera->GetViewForward(vPaintAxis);
 			vPaintAxis = -vPaintAxis;
 			vPaintAxis.z = 0.f;
 			break;
 
 		case NORMAL_MODE_BRUSH_CENTER:
-			if ( !m_InPaintingMode )
+			if(!m_InPaintingMode)
 			{
-				Vector	CollisionPoint, CollisionNormal;
-				float	CollisionIntercept;
+				Vector CollisionPoint, CollisionNormal;
+				float CollisionIntercept;
 
-				FindCollisionIntercept( pCamera, vPoint, false, CollisionPoint, CollisionNormal, CollisionIntercept );
+				FindCollisionIntercept(pCamera, vPoint, false, CollisionPoint, CollisionNormal, CollisionIntercept);
 
 				vPaintAxis = -CollisionNormal;
 			}
@@ -1447,15 +1389,15 @@ void CSculptPushOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint,
 			break;
 
 		case NORMAL_MODE_X:
-			vPaintAxis.Init( 1.0f, 0.0f, 0.0f );
+			vPaintAxis.Init(1.0f, 0.0f, 0.0f);
 			break;
 
 		case NORMAL_MODE_Y:
-			vPaintAxis.Init( 0.0f, 1.0f, 0.0f );
+			vPaintAxis.Init(0.0f, 1.0f, 0.0f);
 			break;
 
 		case NORMAL_MODE_Z:
-			vPaintAxis.Init( 0.0f, 0.0f, 1.0f );
+			vPaintAxis.Init(0.0f, 0.0f, 1.0f);
 			break;
 
 		case NORMAL_MODE_SELECTED:
@@ -1463,10 +1405,9 @@ void CSculptPushOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint,
 			break;
 
 		default:
-			vPaintAxis.Init( 0.0f, 0.0f, 1.0f );
+			vPaintAxis.Init(0.0f, 0.0f, 1.0f);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: applies the specific push operation onto the displacement
@@ -1475,36 +1416,37 @@ void CSculptPushOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint,
 //			pDisp - the displacement to apply the push to
 //			pOrigDisp - the original displacement prior to any adjustments
 //-----------------------------------------------------------------------------
-void CSculptPushOptions::DoPaintOperation( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp )
+void CSculptPushOptions::DoPaintOperation(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp,
+										  CMapDisp *pOrigDisp)
 {
-	Vector	vPaintPos, vVert, vDirection;
-	float	flMaxDistance = 0.0f;
-	float	flDistance;
-	float	flLengthPercent;
-	Vector	vPaintAxis;
+	Vector vPaintPos, vVert, vDirection;
+	float flMaxDistance = 0.0f;
+	float flDistance;
+	float flLengthPercent;
+	Vector vPaintAxis;
 
-	if ( m_bShiftDown )
+	if(m_bShiftDown)
 	{
-//		DoSmoothOperation( pView, vPoint, pDisp, pOrigDisp );
-//		m_SpatialData.m_flRadius = 256.0f;
-//		m_SpatialData.m_flScalar = 5.0f / m_SmoothAmount;
+		//		DoSmoothOperation( pView, vPoint, pDisp, pOrigDisp );
+		//		m_SpatialData.m_flRadius = 256.0f;
+		//		m_SpatialData.m_flScalar = 5.0f / m_SmoothAmount;
 
-//		m_SpatialData.m_flRadius = m_StartingProjectedRadius * 1.5f;
+		//		m_SpatialData.m_flRadius = m_StartingProjectedRadius * 1.5f;
 		m_SpatialData.m_flRadius = m_CurrentProjectedRadius * 2.0f;
-		m_SpatialData.m_flRadius2 = ( m_SpatialData.m_flRadius * m_SpatialData.m_flRadius );
+		m_SpatialData.m_flRadius2 = (m_SpatialData.m_flRadius * m_SpatialData.m_flRadius);
 		m_SpatialData.m_flOORadius2 = 1.0f / m_SpatialData.m_flRadius2;
 		m_SpatialData.m_flScalar = 10.0f / m_SmoothAmount;
 		m_SpatialData.m_vCenter = m_CurrentCollisionPoint;
 
-		DoPaintSmooth( pView, vPoint, pDisp, pOrigDisp );
+		DoPaintSmooth(pView, vPoint, pDisp, pOrigDisp);
 		return;
 	}
 
-	GetPaintAxis( pView->GetCamera(), vPoint, vPaintAxis );
+	GetPaintAxis(pView->GetCamera(), vPoint, vPaintAxis);
 
 	vDirection = vPaintAxis * m_Direction;
 
-	switch( m_OffsetMode )
+	switch(m_OffsetMode)
 	{
 		case OFFSET_MODE_ADAPTIVE:
 			flMaxDistance = m_StartingProjectedRadius * m_OffsetAmount;
@@ -1515,63 +1457,63 @@ void CSculptPushOptions::DoPaintOperation( CMapView3D *pView, const Vector2D &vP
 	}
 
 	int nVertCount = pDisp->GetSize();
-	for ( int iVert = 0; iVert < nVertCount; iVert++ )
+	for(int iVert = 0; iVert < nVertCount; iVert++)
 	{
-		if ( IsPointInScreenCircle( pView, pDisp, pOrigDisp, iVert, true, false, &flLengthPercent ) )
+		if(IsPointInScreenCircle(pView, pDisp, pOrigDisp, iVert, true, false, &flLengthPercent))
 		{
-			pDisp->GetVert( iVert, vVert );
+			pDisp->GetVert(iVert, vVert);
 
-			if ( flLengthPercent > m_flFalloffSpot )
+			if(flLengthPercent > m_flFalloffSpot)
 			{
-				flLengthPercent = ( flLengthPercent - m_flFalloffSpot ) / ( 1.0f - m_flFalloffSpot );
+				flLengthPercent = (flLengthPercent - m_flFalloffSpot) / (1.0f - m_flFalloffSpot);
 				flLengthPercent = 1.0 - flLengthPercent;
-				flDistance = ( ( 1.0f - m_flFalloffEndingValue ) * flLengthPercent * flMaxDistance ) + ( m_flFalloffEndingValue * flMaxDistance );
+				flDistance = ((1.0f - m_flFalloffEndingValue) * flLengthPercent * flMaxDistance) +
+							 (m_flFalloffEndingValue * flMaxDistance);
 			}
 			else
 			{
 				flDistance = flMaxDistance;
 			}
 
-			if ( flDistance == 0.0f )
+			if(flDistance == 0.0f)
 			{
 				continue;
 			}
 
-			switch( m_DensityMode )
+			switch(m_DensityMode)
 			{
 				case DENSITY_MODE_ADDITIVE:
-					VectorScale( vDirection, flDistance, vPaintPos );
-					VectorAdd( vPaintPos, vVert, vPaintPos );
+					VectorScale(vDirection, flDistance, vPaintPos);
+					VectorAdd(vPaintPos, vVert, vPaintPos);
 					break;
 
 				case DENSITY_MODE_ATTENUATED:
-					VectorScale( vDirection, flDistance, vPaintPos );
-					VectorAdd( vPaintPos, vVert, vPaintPos );
+					VectorScale(vDirection, flDistance, vPaintPos);
+					VectorAdd(vPaintPos, vVert, vPaintPos);
 
-					if ( pOrigDisp )
+					if(pOrigDisp)
 					{
-						Vector	vOrigVert, vDiff;
-						float	Length;
+						Vector vOrigVert, vDiff;
+						float Length;
 
-						pOrigDisp->GetVert( iVert, vOrigVert );
-						vDiff = ( vPaintPos - vOrigVert );
+						pOrigDisp->GetVert(iVert, vOrigVert);
+						vDiff = (vPaintPos - vOrigVert);
 						Length = vDiff.Length() / flMaxDistance;
-						if ( Length > 1.0f )
+						if(Length > 1.0f)
 						{
 							Length = 1.0f;
 						}
 
-						vPaintPos = vOrigVert + ( Length * vDirection * flMaxDistance );
+						vPaintPos = vOrigVert + (Length * vDirection * flMaxDistance);
 					}
 					break;
 			}
 
-			AddToUndo( &pDisp );
-			pDisp->Paint_SetValue( iVert, vPaintPos );
+			AddToUndo(&pDisp);
+			pDisp->Paint_SetValue(iVert, vPaintPos);
 		}
 	}
 }
-
 
 #if 0
 
@@ -2127,145 +2069,134 @@ void CSculptPushOptions::DoSmoothOperation( CMapView3D *pView, const Vector2D &v
 }
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: sets the offset distance
 //-----------------------------------------------------------------------------
 void CSculptPushOptions::OnEnChangeSculptPushOptionOffsetDistance()
 {
-	char	temp[ 1024 ];
+	char temp[1024];
 
-	m_OffsetDistanceControl.GetWindowText( temp, sizeof( temp ) );
-	m_OffsetDistance = atof( temp );
+	m_OffsetDistanceControl.GetWindowText(temp, sizeof(temp));
+	m_OffsetDistance = atof(temp);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the density mode
 //-----------------------------------------------------------------------------
 void CSculptPushOptions::OnCbnSelchangeSculptPushOptionDensityMode()
 {
-	m_DensityMode = ( DensityMode )m_DensityModeControl.GetCurSel();
+	m_DensityMode = (DensityMode)m_DensityModeControl.GetCurSel();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the smooth amount
 //-----------------------------------------------------------------------------
 void CSculptPushOptions::OnEnKillfocusSculptPushOptionSmoothAmount()
 {
-	char	temp[ 1024 ], t2[ 1024 ];
+	char temp[1024], t2[1024];
 
-	m_SmoothAmountControl.GetWindowText( temp, sizeof( temp ) );
-	sscanf( temp, "%f%%", &m_SmoothAmount );
+	m_SmoothAmountControl.GetWindowText(temp, sizeof(temp));
+	sscanf(temp, "%f%%", &m_SmoothAmount);
 	m_SmoothAmount /= 100.0f;
 
-	if ( m_SmoothAmount <= 0.0f )
+	if(m_SmoothAmount <= 0.0f)
 	{
 		m_SmoothAmount = 0.2f;
 	}
 
-	sprintf( t2, "%g%%", m_SmoothAmount * 100.0f );
+	sprintf(t2, "%g%%", m_SmoothAmount * 100.0f);
 
-	if ( strcmpi( temp, t2 ) != 0 )
+	if(strcmpi(temp, t2) != 0)
 	{
-		m_SmoothAmountControl.SetWindowText( t2 );
+		m_SmoothAmountControl.SetWindowText(t2);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the offset amount
 //-----------------------------------------------------------------------------
 void CSculptPushOptions::OnEnKillfocusSculptPushOptionOffsetAmount()
 {
-	char	temp[ 1024 ], t2[ 1024 ];
+	char temp[1024], t2[1024];
 
-	m_OffsetAmountControl.GetWindowText( temp, sizeof( temp ) );
-	sscanf( temp, "%f%%", &m_OffsetAmount );
+	m_OffsetAmountControl.GetWindowText(temp, sizeof(temp));
+	sscanf(temp, "%f%%", &m_OffsetAmount);
 	m_OffsetAmount /= 100.0f;
 
-	if ( m_OffsetAmount <= 0.0f )
+	if(m_OffsetAmount <= 0.0f)
 	{
 		m_OffsetAmount = 1.0f;
 	}
 
-	sprintf( t2, "%g%%", m_OffsetAmount * 100.0f );
+	sprintf(t2, "%g%%", m_OffsetAmount * 100.0f);
 
-	if ( strcmpi( temp, t2 ) != 0 )
+	if(strcmpi(temp, t2) != 0)
 	{
-		m_OffsetAmountControl.SetWindowText( t2 );
+		m_OffsetAmountControl.SetWindowText(t2);
 	}
 }
 
 void CSculptPushOptions::OnEnKillfocusSculptPushOptionFalloffPosition()
 {
-	char	temp[ 1024 ], t2[ 1024 ];
+	char temp[1024], t2[1024];
 
-	m_FalloffPositionControl.GetWindowText( temp, sizeof( temp ) );
-	sscanf( temp, "%f%%", &m_flFalloffSpot );
+	m_FalloffPositionControl.GetWindowText(temp, sizeof(temp));
+	sscanf(temp, "%f%%", &m_flFalloffSpot);
 	m_flFalloffSpot /= 100.0f;
 
-	if ( m_flFalloffSpot <= 0.0f )
+	if(m_flFalloffSpot <= 0.0f)
 	{
 		m_flFalloffSpot = 0.0f;
 	}
 
-	if ( m_flFalloffSpot > 1.0f )
+	if(m_flFalloffSpot > 1.0f)
 	{
 		m_flFalloffSpot = 1.0f;
 	}
 
-	sprintf( t2, "%g%%", m_flFalloffSpot * 100.0f );
+	sprintf(t2, "%g%%", m_flFalloffSpot * 100.0f);
 
-	if ( strcmpi( temp, t2 ) != 0 )
+	if(strcmpi(temp, t2) != 0)
 	{
-		m_FalloffPositionControl.SetWindowText( t2 );
+		m_FalloffPositionControl.SetWindowText(t2);
 	}
 }
 
 void CSculptPushOptions::OnEnKillfocusSculptPushOptionFalloffFinal()
 {
-	char	temp[ 1024 ], t2[ 1024 ];
+	char temp[1024], t2[1024];
 
-	m_FalloffFinalControl.GetWindowText( temp, sizeof( temp ) );
-	sscanf( temp, "%f%%", &m_flFalloffEndingValue);
+	m_FalloffFinalControl.GetWindowText(temp, sizeof(temp));
+	sscanf(temp, "%f%%", &m_flFalloffEndingValue);
 	m_flFalloffEndingValue /= 100.0f;
 
-	if ( m_flFalloffEndingValue <= 0.0f )
+	if(m_flFalloffEndingValue <= 0.0f)
 	{
 		m_flFalloffEndingValue = 0.0f;
 	}
 
-	if ( m_flFalloffEndingValue > 1.0f )
+	if(m_flFalloffEndingValue > 1.0f)
 	{
 		m_flFalloffEndingValue = 1.0f;
 	}
 
-	sprintf( t2, "%g%%", m_flFalloffEndingValue * 100.0f );
+	sprintf(t2, "%g%%", m_flFalloffEndingValue * 100.0f);
 
-	if ( strcmpi( temp, t2 ) != 0 )
+	if(strcmpi(temp, t2) != 0)
 	{
-		m_FalloffFinalControl.SetWindowText( t2 );
+		m_FalloffFinalControl.SetWindowText(t2);
 	}
 }
-
-
-
-
-
 
 // CSculptCarveOptions dialog
 
 IMPLEMENT_DYNAMIC(CSculptCarveOptions, CDialog)
 
-
 //-----------------------------------------------------------------------------
 // Purpose: constructor
 //-----------------------------------------------------------------------------
-CSculptCarveOptions::CSculptCarveOptions(CWnd* pParent /*=NULL*/) :
-	CDialog(CSculptCarveOptions::IDD, pParent),
-	CSculptPainter()
+CSculptCarveOptions::CSculptCarveOptions(CWnd *pParent /*=NULL*/)
+	: CDialog(CSculptCarveOptions::IDD, pParent), CSculptPainter()
 {
 	m_OffsetMode = OFFSET_MODE_ABSOLUTE;
 	m_NormalMode = NORMAL_MODE_Z;
@@ -2274,90 +2205,79 @@ CSculptCarveOptions::CSculptCarveOptions(CWnd* pParent /*=NULL*/) :
 	m_OffsetAmount = 1.0f;
 	m_SmoothAmount = 0.2f;
 	m_Direction = 1.0f;
-	m_SelectedNormal.Init( 0.0f, 0.0f, 0.0f );
+	m_SelectedNormal.Init(0.0f, 0.0f, 0.0f);
 	m_BrushLocation = -1;
-	m_StartLine.Init( -1.0f, -1.0f );
-	m_EndLine.Init( -1.0f, -1.0f );
+	m_StartLine.Init(-1.0f, -1.0f);
+	m_EndLine.Init(-1.0f, -1.0f);
 
-	for( int i = 0; i < MAX_SCULPT_SIZE; i++ )
+	for(int i = 0; i < MAX_SCULPT_SIZE; i++)
 	{
-		m_BrushPoints[ i ] = ( i / ( float )MAX_SCULPT_SIZE ); // 0.0f;
+		m_BrushPoints[i] = (i / (float)MAX_SCULPT_SIZE); // 0.0f;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: destructor
 //-----------------------------------------------------------------------------
-CSculptCarveOptions::~CSculptCarveOptions()
-{
-}
-
+CSculptCarveOptions::~CSculptCarveOptions() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: initializes the dialog
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-BOOL CSculptCarveOptions::OnInitDialog( )
+BOOL CSculptCarveOptions::OnInitDialog()
 {
-	char	temp[ 1024 ];
+	char temp[1024];
 
 	CDialog::OnInitDialog();
 
-	m_OffsetModeControl.InsertString( -1, "Adaptive" );
-	m_OffsetModeControl.InsertString( -1, "Absolute" );
-	m_OffsetModeControl.SetCurSel( m_OffsetMode );
+	m_OffsetModeControl.InsertString(-1, "Adaptive");
+	m_OffsetModeControl.InsertString(-1, "Absolute");
+	m_OffsetModeControl.SetCurSel(m_OffsetMode);
 
-	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
+	m_OffsetDistanceControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ABSOLUTE));
+	m_OffsetAmountControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ADAPTIVE));
 
-	sprintf( temp, "%g", m_OffsetDistance );
-	m_OffsetDistanceControl.SetWindowText( temp );
+	sprintf(temp, "%g", m_OffsetDistance);
+	m_OffsetDistanceControl.SetWindowText(temp);
 
-	sprintf( temp, "%g%%", m_OffsetAmount * 100.0f );
-	m_OffsetAmountControl.SetWindowText( temp );
+	sprintf(temp, "%g%%", m_OffsetAmount * 100.0f);
+	m_OffsetAmountControl.SetWindowText(temp);
 
-	sprintf( temp, "%g%%", m_SmoothAmount * 100.0f );
-	m_SmoothAmountControl.SetWindowText( temp );
+	sprintf(temp, "%g%%", m_SmoothAmount * 100.0f);
+	m_SmoothAmountControl.SetWindowText(temp);
 
-	m_NormalModeControl.InsertString( -1, "Brush Center" );
-	m_NormalModeControl.InsertString( -1, "Screen" );
-	m_NormalModeControl.InsertString( -1, "Screen XY" );
-	m_NormalModeControl.InsertString( -1, "X" );
-	m_NormalModeControl.InsertString( -1, "Y" );
-	m_NormalModeControl.InsertString( -1, "Z" );
-	m_NormalModeControl.InsertString( -1, "Selected" );
-	m_NormalModeControl.SetCurSel( m_NormalMode );
+	m_NormalModeControl.InsertString(-1, "Brush Center");
+	m_NormalModeControl.InsertString(-1, "Screen");
+	m_NormalModeControl.InsertString(-1, "Screen XY");
+	m_NormalModeControl.InsertString(-1, "X");
+	m_NormalModeControl.InsertString(-1, "Y");
+	m_NormalModeControl.InsertString(-1, "Z");
+	m_NormalModeControl.InsertString(-1, "Selected");
+	m_NormalModeControl.SetCurSel(m_NormalMode);
 
-	m_DensityModeControl.InsertString( -1, "Additive" );
-	m_DensityModeControl.InsertString( -1, "Attenuated" );
-	m_DensityModeControl.SetCurSel( m_DensityMode );
+	m_DensityModeControl.InsertString(-1, "Additive");
+	m_DensityModeControl.InsertString(-1, "Attenuated");
+	m_DensityModeControl.SetCurSel(m_DensityMode);
 
 	return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: prevent the dialog from closing
+//-----------------------------------------------------------------------------
+void CSculptCarveOptions::OnOK() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: prevent the dialog from closing
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::OnOK( )
-{
-}
-
-
-//-----------------------------------------------------------------------------
-// Purpose: prevent the dialog from closing
-//-----------------------------------------------------------------------------
-void CSculptCarveOptions::OnCancel( )
-{
-}
-
+void CSculptCarveOptions::OnCancel() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: set up the data exchange for the variables
 // Input  : pDX - the data exchange object
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::DoDataExchange(CDataExchange* pDX)
+void CSculptCarveOptions::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_SCULPT_PUSH_OPTION_OFFSET_MODE, m_OffsetModeControl);
@@ -2369,14 +2289,17 @@ void CSculptCarveOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CARVE_BRUSH, m_CarveBrushControl);
 }
 
-
 BEGIN_MESSAGE_MAP(CSculptCarveOptions, CDialog)
-	ON_CBN_SELCHANGE(IDC_IDC_SCULPT_PUSH_OPTION_NORMAL_MODE, &CSculptCarveOptions::OnCbnSelchangeIdcSculptPushOptionNormalMode)
+	ON_CBN_SELCHANGE(IDC_IDC_SCULPT_PUSH_OPTION_NORMAL_MODE,
+					 &CSculptCarveOptions::OnCbnSelchangeIdcSculptPushOptionNormalMode)
 	ON_CBN_SELCHANGE(IDC_SCULPT_PUSH_OPTION_OFFSET_MODE, &CSculptCarveOptions::OnCbnSelchangeSculptPushOptionOffsetMode)
 	ON_EN_CHANGE(IDC_SCULPT_PUSH_OPTION_OFFSET_DISTANCE, &CSculptCarveOptions::OnEnChangeSculptPushOptionOffsetDistance)
-	ON_CBN_SELCHANGE(IDC_SCULPT_PUSH_OPTION_DENSITY_MODE, &CSculptCarveOptions::OnCbnSelchangeSculptPushOptionDensityMode)
-	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_SMOOTH_AMOUNT, &CSculptCarveOptions::OnEnKillfocusSculptPushOptionSmoothAmount)
-	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_OFFSET_AMOUNT, &CSculptCarveOptions::OnEnKillfocusSculptPushOptionOffsetAmount)
+	ON_CBN_SELCHANGE(IDC_SCULPT_PUSH_OPTION_DENSITY_MODE,
+					 &CSculptCarveOptions::OnCbnSelchangeSculptPushOptionDensityMode)
+	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_SMOOTH_AMOUNT,
+					&CSculptCarveOptions::OnEnKillfocusSculptPushOptionSmoothAmount)
+	ON_EN_KILLFOCUS(IDC_SCULPT_PUSH_OPTION_OFFSET_AMOUNT,
+					&CSculptCarveOptions::OnEnKillfocusSculptPushOptionOffsetAmount)
 
 	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
@@ -2384,27 +2307,24 @@ BEGIN_MESSAGE_MAP(CSculptCarveOptions, CDialog)
 	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Purpose: sets the normal mode
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnCbnSelchangeIdcSculptPushOptionNormalMode()
 {
-	m_NormalMode = ( NormalMode )m_NormalModeControl.GetCurSel();
+	m_NormalMode = (NormalMode)m_NormalModeControl.GetCurSel();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the offset mode
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnCbnSelchangeSculptPushOptionOffsetMode()
 {
-	m_OffsetMode = ( OffsetMode )m_OffsetModeControl.GetCurSel();
+	m_OffsetMode = (OffsetMode)m_OffsetModeControl.GetCurSel();
 
-	m_OffsetDistanceControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ABSOLUTE ) );
-	m_OffsetAmountControl.EnableWindow( ( m_OffsetMode == OFFSET_MODE_ADAPTIVE ) );
+	m_OffsetDistanceControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ABSOLUTE));
+	m_OffsetAmountControl.EnableWindow((m_OffsetMode == OFFSET_MODE_ADAPTIVE));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: setup for starting to paint on the displacement
@@ -2412,11 +2332,11 @@ void CSculptCarveOptions::OnCbnSelchangeSculptPushOptionOffsetMode()
 //			vPoint - the initial click point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::BeginPaint( CMapView3D *pView, const Vector2D &vPoint )
+bool CSculptCarveOptions::BeginPaint(CMapView3D *pView, const Vector2D &vPoint)
 {
-	__super::BeginPaint( pView, vPoint );
+	__super::BeginPaint(pView, vPoint);
 
-	if ( m_bCtrlDown )
+	if(m_bCtrlDown)
 	{
 		m_Direction = -1.0f;
 	}
@@ -2427,7 +2347,6 @@ bool CSculptCarveOptions::BeginPaint( CMapView3D *pView, const Vector2D &vPoint 
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: calculates the normal / direction of the drawing line
@@ -2478,51 +2397,50 @@ bool CSculptCarveOptions::CalculatePointNormal( int nPointIndex, Vector2D &vNorm
 }
 #endif
 
-
 //-----------------------------------------------------------------------------
 // Purpose: calculates the normal / direction of the drawing line
 // Input  : nPointIndex - which point to factor from
 // Output : returns true if we found a valid normal
 //			vNormal - the normal we found
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::CalculateQueuePoint( Vector2D &vPoint, Vector2D &vNormal )
+bool CSculptCarveOptions::CalculateQueuePoint(Vector2D &vPoint, Vector2D &vNormal)
 {
-	float		count = 0.0;
-	Vector2D	vAverage( 0.0f, 0.0f );
+	float count = 0.0;
+	Vector2D vAverage(0.0f, 0.0f);
 	const float fMaxLength = 40.0f;
-	float		fTotalLength = 0.0f;
-	Vector2D	vInitialDir;
-	bool		bInitialDirSet = false;
+	float fTotalLength = 0.0f;
+	Vector2D vInitialDir;
+	bool bInitialDirSet = false;
 
 	int PointIndex = m_PointQueue.Count() - 1;
-	if ( PointIndex <= 1 )
+	if(PointIndex <= 1)
 	{
 		return false;
 	}
 
-	vPoint = m_PointQueue[ PointIndex ];
+	vPoint = m_PointQueue[PointIndex];
 
 	// keep going back from the current point until you get a total distance
-	for( int j = PointIndex - 1; j >= 0; j-- )
+	for(int j = PointIndex - 1; j >= 0; j--)
 	{
 		int index = j;
 		int index2 = PointIndex;
 
-		Vector2D	vDiff( m_PointQueue[ index2 ].x - m_PointQueue[ index ].x, m_PointQueue[ index2 ].y - m_PointQueue[ index ].y );
-		float		Length = Vector2DNormalize( vDiff );
+		Vector2D vDiff(m_PointQueue[index2].x - m_PointQueue[index].x, m_PointQueue[index2].y - m_PointQueue[index].y);
+		float Length = Vector2DNormalize(vDiff);
 
-		if ( Length == 0.0f )
+		if(Length == 0.0f)
 		{
 			continue;
 		}
 
-		if ( bInitialDirSet == false )
+		if(bInitialDirSet == false)
 		{
 			vInitialDir = vDiff;
 			bInitialDirSet = true;
 		}
 
-		if ( DotProduct2D( vInitialDir, vDiff ) <= 0.5f )
+		if(DotProduct2D(vInitialDir, vDiff) <= 0.5f)
 		{
 			break;
 		}
@@ -2542,19 +2460,19 @@ bool CSculptCarveOptions::CalculateQueuePoint( Vector2D &vPoint, Vector2D &vNorm
 		factor = Length;
 
 		//= Length; // ( ( j + 1 ) * 100 ); // * Length; //  * 8 * Length;
-		vAverage += ( vDiff * factor );
+		vAverage += (vDiff * factor);
 		count += factor;
 
-		if ( fTotalLength >= fMaxLength )
+		if(fTotalLength >= fMaxLength)
 		{
 			break;
 		}
 	}
 
-	if ( count > 0.0f )
+	if(count > 0.0f)
 	{
 		vAverage /= count;
-		Vector2DNormalize( vAverage );
+		Vector2DNormalize(vAverage);
 
 		vNormal = vAverage;
 		return true;
@@ -2563,52 +2481,53 @@ bool CSculptCarveOptions::CalculateQueuePoint( Vector2D &vPoint, Vector2D &vNorm
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: adds the point and normal to the queue
 // Input  : vPoint - the point to be added
 //			bDrawIt - if we should add this point to the draw / normal lists
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::AddQueuePoint( const Vector2D &vPoint, bool bDrawIt )
+void CSculptCarveOptions::AddQueuePoint(const Vector2D &vPoint, bool bDrawIt)
 {
-	m_PointQueue.AddToTail( vPoint );
-	if ( m_PointQueue.Count() > MAX_QUEUE_SIZE )
+	m_PointQueue.AddToTail(vPoint);
+	if(m_PointQueue.Count() > MAX_QUEUE_SIZE)
 	{
-		m_PointQueue.Remove( 0 );
+		m_PointQueue.Remove(0);
 	}
 
-	Vector2D	vNewPoint, vNewNormal;
+	Vector2D vNewPoint, vNewNormal;
 
-	if ( bDrawIt && CalculateQueuePoint( vNewPoint, vNewNormal ) )
+	if(bDrawIt && CalculateQueuePoint(vNewPoint, vNewNormal))
 	{
-		m_DrawPoints.AddToTail( vNewPoint );
-		m_DrawNormal.AddToTail( vNewNormal );
+		m_DrawPoints.AddToTail(vNewPoint);
+		m_DrawNormal.AddToTail(vNewNormal);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: draws the tool in the 3d view
 // Input  : pRender - the 3d renderer
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::RenderTool3D( CRender3D *pRender )
+void CSculptCarveOptions::RenderTool3D(CRender3D *pRender)
 {
-//	pRender->DrawText( "mouse", m_MousePoint.x, m_MousePoint.y, 0 );
-//	Msg( "%g %g\n", m_MousePoint.x, m_MousePoint.y );
+	//	pRender->DrawText( "mouse", m_MousePoint.x, m_MousePoint.y, 0 );
+	//	Msg( "%g %g\n", m_MousePoint.x, m_MousePoint.y );
 
-	pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
+	pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
 
 	pRender->BeginClientSpace();
 
-	Vector2D	vMousePoint, vMouseNormal;
+	Vector2D vMousePoint, vMouseNormal;
 
-	if ( CalculateQueuePoint( vMousePoint, vMouseNormal ) )
+	if(CalculateQueuePoint(vMousePoint, vMouseNormal))
 	{
-		Vector2D	vRight( -vMouseNormal.y, vMouseNormal.x );
+		Vector2D vRight(-vMouseNormal.y, vMouseNormal.x);
 
-		pRender->SetDrawColor( 255, 255, 0 );
-		pRender->DrawLine( Vector( vMousePoint.x, vMousePoint.y, 0.0f ), Vector( vMousePoint.x + vRight.x * m_BrushSize, vMousePoint.y + vRight.y * m_BrushSize, 0.0f ) );
-		pRender->DrawLine( Vector( vMousePoint.x, vMousePoint.y, 0.0f ), Vector( vMousePoint.x - ( vRight.x * m_BrushSize ), vMousePoint.y - ( vRight.y * m_BrushSize ), 0.0f ) );
+		pRender->SetDrawColor(255, 255, 0);
+		pRender->DrawLine(Vector(vMousePoint.x, vMousePoint.y, 0.0f),
+						  Vector(vMousePoint.x + vRight.x * m_BrushSize, vMousePoint.y + vRight.y * m_BrushSize, 0.0f));
+		pRender->DrawLine(
+			Vector(vMousePoint.x, vMousePoint.y, 0.0f),
+			Vector(vMousePoint.x - (vRight.x * m_BrushSize), vMousePoint.y - (vRight.y * m_BrushSize), 0.0f));
 	}
 
 #if 0
@@ -2790,7 +2709,6 @@ void CSculptCarveOptions::RenderTool3D( CRender3D *pRender )
 	}
 #endif
 
-
 	pRender->PopRenderMode();
 
 #if 0
@@ -2810,7 +2728,6 @@ void CSculptCarveOptions::RenderTool3D( CRender3D *pRender )
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: handles the left mouse button up in the 3d view
 // Input  : pView - the 3d view
@@ -2818,15 +2735,14 @@ void CSculptCarveOptions::RenderTool3D( CRender3D *pRender )
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptCarveOptions::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	__super::OnLMouseUp3D( pView, nFlags, vPoint );
+	__super::OnLMouseUp3D(pView, nFlags, vPoint);
 
-	AddQueuePoint( vPoint, true );
+	AddQueuePoint(vPoint, true);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the left mouse button down in the 3d view
@@ -2835,17 +2751,16 @@ bool CSculptCarveOptions::OnLMouseUp3D( CMapView3D *pView, UINT nFlags, const Ve
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptCarveOptions::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	__super::OnLMouseDown3D( pView, nFlags, vPoint );
+	__super::OnLMouseDown3D(pView, nFlags, vPoint);
 
 	m_DrawPoints.Purge();
 	m_DrawNormal.Purge();
-	AddQueuePoint( vPoint, true );
+	AddQueuePoint(vPoint, true);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the right mouse button down in the 3d view
@@ -2854,14 +2769,14 @@ bool CSculptCarveOptions::OnLMouseDown3D( CMapView3D *pView, UINT nFlags, const 
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptCarveOptions::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	__super::OnRMouseDown3D( pView, nFlags, vPoint );
+	__super::OnRMouseDown3D(pView, nFlags, vPoint);
 
-	if ( m_bAltDown )
+	if(m_bAltDown)
 	{
 		m_NormalMode = NORMAL_MODE_Z;
-		m_NormalModeControl.SetCurSel( m_NormalMode );
+		m_NormalModeControl.SetCurSel(m_NormalMode);
 
 #if 0
 
@@ -2905,23 +2820,23 @@ bool CSculptCarveOptions::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const 
 			}
 		}
 #else
-		Vector	CollisionPoint, CollisionNormal;
-		float	CollisionIntercept;
+		Vector CollisionPoint, CollisionNormal;
+		float CollisionIntercept;
 
-		if ( FindCollisionIntercept( pView->GetCamera(), vPoint, false, CollisionPoint, CollisionNormal, CollisionIntercept ) )
+		if(FindCollisionIntercept(pView->GetCamera(), vPoint, false, CollisionPoint, CollisionNormal,
+								  CollisionIntercept))
 		{
 			// set the paint direction
 			m_SelectedNormal = -CollisionNormal;
 
 			m_NormalMode = NORMAL_MODE_SELECTED;
-			m_NormalModeControl.SetCurSel( m_NormalMode );
+			m_NormalModeControl.SetCurSel(m_NormalMode);
 		}
 #endif
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles the mouse move in the 3d view
@@ -2930,15 +2845,14 @@ bool CSculptCarveOptions::OnRMouseDown3D( CMapView3D *pView, UINT nFlags, const 
 //			vPoint - the mouse point
 // Output : returns true if successful
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::OnMouseMove3D( CMapView3D *pView, UINT nFlags, const Vector2D &vPoint )
+bool CSculptCarveOptions::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoint)
 {
-	__super::OnMouseMove3D( pView, nFlags, vPoint );
+	__super::OnMouseMove3D(pView, nFlags, vPoint);
 
-	AddQueuePoint( vPoint, m_bLMBDown );
+	AddQueuePoint(vPoint, m_bLMBDown);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the painting direction
@@ -2946,28 +2860,28 @@ bool CSculptCarveOptions::OnMouseMove3D( CMapView3D *pView, UINT nFlags, const V
 //			vPoint - the 2d mouse point
 // Output : vPaintAxis - the direction the painting should go
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis )
+void CSculptCarveOptions::GetPaintAxis(CCamera *pCamera, const Vector2D &vPoint, Vector &vPaintAxis)
 {
-	switch( m_NormalMode )
+	switch(m_NormalMode)
 	{
 		case NORMAL_MODE_SCREEN:
-			pCamera->GetViewForward( vPaintAxis );
+			pCamera->GetViewForward(vPaintAxis);
 			vPaintAxis = -vPaintAxis;
 			break;
 
 		case NORMAL_MODE_SCREEN_XY:
-			pCamera->GetViewForward( vPaintAxis );
+			pCamera->GetViewForward(vPaintAxis);
 			vPaintAxis = -vPaintAxis;
 			vPaintAxis.z = 0.f;
 			break;
 
 		case NORMAL_MODE_BRUSH_CENTER:
-			if ( !m_InPaintingMode )
+			if(!m_InPaintingMode)
 			{
-				Vector	CollisionPoint, CollisionNormal;
-				float	CollisionIntercept;
+				Vector CollisionPoint, CollisionNormal;
+				float CollisionIntercept;
 
-				FindCollisionIntercept( pCamera, vPoint, false, CollisionPoint, CollisionNormal, CollisionIntercept );
+				FindCollisionIntercept(pCamera, vPoint, false, CollisionPoint, CollisionNormal, CollisionIntercept);
 
 				vPaintAxis = -CollisionNormal;
 			}
@@ -2978,15 +2892,15 @@ void CSculptCarveOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint
 			break;
 
 		case NORMAL_MODE_X:
-			vPaintAxis.Init( 1.0f, 0.0f, 0.0f );
+			vPaintAxis.Init(1.0f, 0.0f, 0.0f);
 			break;
 
 		case NORMAL_MODE_Y:
-			vPaintAxis.Init( 0.0f, 1.0f, 0.0f );
+			vPaintAxis.Init(0.0f, 1.0f, 0.0f);
 			break;
 
 		case NORMAL_MODE_Z:
-			vPaintAxis.Init( 0.0f, 0.0f, 1.0f );
+			vPaintAxis.Init(0.0f, 0.0f, 1.0f);
 			break;
 
 		case NORMAL_MODE_SELECTED:
@@ -2994,10 +2908,9 @@ void CSculptCarveOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint
 			break;
 
 		default:
-			vPaintAxis.Init( 0.0f, 0.0f, 1.0f );
+			vPaintAxis.Init(0.0f, 0.0f, 1.0f);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: determines if a displacement point is affected by the carve
@@ -3011,55 +2924,57 @@ void CSculptCarveOptions::GetPaintAxis( CCamera *pCamera, const Vector2D &vPoint
 // Output :	returns true if the point is affected
 //			vViewVert - the 2d view vert location
 //-----------------------------------------------------------------------------
-bool CSculptCarveOptions::IsPointAffected( CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int vertIndex, int nBrushPoint, Vector2D &vViewVert, bool bUseOrigDisplacement, bool bUseCurrentPosition )
+bool CSculptCarveOptions::IsPointAffected(CMapView3D *pView, CMapDisp *pDisp, CMapDisp *pOrigDisp, int vertIndex,
+										  int nBrushPoint, Vector2D &vViewVert, bool bUseOrigDisplacement,
+										  bool bUseCurrentPosition)
 {
-	Vector	vVert, vTestVert;
+	Vector vVert, vTestVert;
 
-	pDisp->GetVert( vertIndex, vVert );
+	pDisp->GetVert(vertIndex, vVert);
 
-	if ( pOrigDisp && bUseOrigDisplacement )
+	if(pOrigDisp && bUseOrigDisplacement)
 	{
-		pOrigDisp->GetVert( vertIndex, vTestVert );
+		pOrigDisp->GetVert(vertIndex, vTestVert);
 	}
 	else
 	{
 		vTestVert = vVert;
 	}
 
-	pView->GetCamera()->WorldToView( vTestVert, vViewVert );
+	pView->GetCamera()->WorldToView(vTestVert, vViewVert);
 
 	float distance;
 
-	float tolerance = DotProduct2D( m_DrawNormal[ nBrushPoint ], m_DrawNormal[ nBrushPoint - 1 ] );
-	if ( tolerance <= 0.5f )
+	float tolerance = DotProduct2D(m_DrawNormal[nBrushPoint], m_DrawNormal[nBrushPoint - 1]);
+	if(tolerance <= 0.5f)
 	{
 		return false;
 	}
 
-	distance = DotProduct2D( m_DrawNormal[ nBrushPoint ], m_DrawPoints[ nBrushPoint ] );
-	if ( DotProduct2D( m_DrawNormal[ nBrushPoint ], vViewVert ) > distance )
+	distance = DotProduct2D(m_DrawNormal[nBrushPoint], m_DrawPoints[nBrushPoint]);
+	if(DotProduct2D(m_DrawNormal[nBrushPoint], vViewVert) > distance)
 	{
 		return false;
 	}
-	distance = DotProduct2D( m_DrawNormal[ nBrushPoint - 1 ], m_DrawPoints[ nBrushPoint - 1 ] );
-	if ( DotProduct2D( m_DrawNormal[ nBrushPoint - 1 ], vViewVert ) < distance )
-	{
-		return false;
-	}
-
-	Vector2D	vRight( -m_DrawNormal[ nBrushPoint ].y, m_DrawNormal[ nBrushPoint ].x );
-	Vector2D	vPoint;
-
-	vPoint = m_DrawPoints[ nBrushPoint ] + ( vRight * m_BrushSize );
-	distance = DotProduct2D( vRight, vPoint );
-	if ( DotProduct2D( vRight, vViewVert ) > distance )
+	distance = DotProduct2D(m_DrawNormal[nBrushPoint - 1], m_DrawPoints[nBrushPoint - 1]);
+	if(DotProduct2D(m_DrawNormal[nBrushPoint - 1], vViewVert) < distance)
 	{
 		return false;
 	}
 
-	vPoint = m_DrawPoints[ nBrushPoint ] - ( vRight * m_BrushSize );
-	distance = DotProduct2D( vRight, vPoint );
-	if ( DotProduct2D( vRight, vViewVert ) < distance )
+	Vector2D vRight(-m_DrawNormal[nBrushPoint].y, m_DrawNormal[nBrushPoint].x);
+	Vector2D vPoint;
+
+	vPoint = m_DrawPoints[nBrushPoint] + (vRight * m_BrushSize);
+	distance = DotProduct2D(vRight, vPoint);
+	if(DotProduct2D(vRight, vViewVert) > distance)
+	{
+		return false;
+	}
+
+	vPoint = m_DrawPoints[nBrushPoint] - (vRight * m_BrushSize);
+	distance = DotProduct2D(vRight, vPoint);
+	if(DotProduct2D(vRight, vViewVert) < distance)
 	{
 		return false;
 	}
@@ -3074,41 +2989,42 @@ bool CSculptCarveOptions::IsPointAffected( CMapView3D *pView, CMapDisp *pDisp, C
 //			pDisp - the displacement to apply the push to
 //			pOrigDisp - the original displacement prior to any adjustments
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::DoPaintOperation( CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp, CMapDisp *pOrigDisp )
+void CSculptCarveOptions::DoPaintOperation(CMapView3D *pView, const Vector2D &vPoint, CMapDisp *pDisp,
+										   CMapDisp *pOrigDisp)
 {
-	Vector		vPaintPos, vVert, vDirection;
-	Vector2D	vViewVert;
-	float		flDistance = 0.0f;
-	Vector		vPaintAxis;
+	Vector vPaintPos, vVert, vDirection;
+	Vector2D vViewVert;
+	float flDistance = 0.0f;
+	Vector vPaintAxis;
 
 	int nTestPoint = m_DrawPoints.Count() - 1;
-	if ( nTestPoint < 2 )
+	if(nTestPoint < 2)
 	{
 		return;
 	}
 
-	if ( m_bShiftDown )
+	if(m_bShiftDown)
 	{
-//		DoSmoothOperation( pView, vPoint, pDisp, pOrigDisp );
-//		m_SpatialData.m_flRadius = 256.0f;
-//		m_SpatialData.m_flScalar = 5.0f / m_SmoothAmount;
+		//		DoSmoothOperation( pView, vPoint, pDisp, pOrigDisp );
+		//		m_SpatialData.m_flRadius = 256.0f;
+		//		m_SpatialData.m_flScalar = 5.0f / m_SmoothAmount;
 
-//		m_SpatialData.m_flRadius = m_StartingProjectedRadius * 1.5f;
+		//		m_SpatialData.m_flRadius = m_StartingProjectedRadius * 1.5f;
 		m_SpatialData.m_flRadius = m_CurrentProjectedRadius * 2.0f;
-		m_SpatialData.m_flRadius2 = ( m_SpatialData.m_flRadius * m_SpatialData.m_flRadius );
+		m_SpatialData.m_flRadius2 = (m_SpatialData.m_flRadius * m_SpatialData.m_flRadius);
 		m_SpatialData.m_flOORadius2 = 1.0f / m_SpatialData.m_flRadius2;
 		m_SpatialData.m_flScalar = 10.0f / m_SmoothAmount;
 		m_SpatialData.m_vCenter = m_CurrentCollisionPoint;
 
-		DoPaintSmooth( pView, vPoint, pDisp, pOrigDisp );
+		DoPaintSmooth(pView, vPoint, pDisp, pOrigDisp);
 		return;
 	}
 
-	GetPaintAxis( pView->GetCamera(), vPoint, vPaintAxis );
+	GetPaintAxis(pView->GetCamera(), vPoint, vPaintAxis);
 
 	vDirection = vPaintAxis * m_Direction;
 
-	switch( m_OffsetMode )
+	switch(m_OffsetMode)
 	{
 		case OFFSET_MODE_ADAPTIVE:
 			flDistance = m_StartingProjectedRadius * m_OffsetAmount;
@@ -3119,134 +3035,129 @@ void CSculptCarveOptions::DoPaintOperation( CMapView3D *pView, const Vector2D &v
 	}
 
 	int nVertCount = pDisp->GetSize();
-	for ( int iVert = 0; iVert < nVertCount; iVert++ )
+	for(int iVert = 0; iVert < nVertCount; iVert++)
 	{
-		if ( IsPointAffected( pView, pDisp, pOrigDisp, iVert, nTestPoint, vViewVert ) )
+		if(IsPointAffected(pView, pDisp, pOrigDisp, iVert, nTestPoint, vViewVert))
 		{
-			pDisp->GetVert( iVert, vVert );
+			pDisp->GetVert(iVert, vVert);
 
-			Vector2D	vRight( -m_DrawNormal[ nTestPoint ].y, m_DrawNormal[ nTestPoint ].x );
-			float		fLineDistance = DotProduct2D( vRight, m_DrawPoints[ nTestPoint ] ) - DotProduct2D( vRight, vViewVert );
+			Vector2D vRight(-m_DrawNormal[nTestPoint].y, m_DrawNormal[nTestPoint].x);
+			float fLineDistance = DotProduct2D(vRight, m_DrawPoints[nTestPoint]) - DotProduct2D(vRight, vViewVert);
 
-			fLineDistance = ( fLineDistance + m_BrushSize ) / ( m_BrushSize * 2.0f );
-			int index = ( int )( fLineDistance * MAX_SCULPT_SIZE );
+			fLineDistance = (fLineDistance + m_BrushSize) / (m_BrushSize * 2.0f);
+			int index = (int)(fLineDistance * MAX_SCULPT_SIZE);
 
-			index = clamp( index, 0, MAX_SCULPT_SIZE - 1 );
+			index = clamp(index, 0, MAX_SCULPT_SIZE - 1);
 			index = MAX_SCULPT_SIZE - index - 1;
 
-			float		fScaledDistance = m_BrushPoints[ index ] * flDistance;
+			float fScaledDistance = m_BrushPoints[index] * flDistance;
 
-			if ( fScaledDistance == 0.0f )
+			if(fScaledDistance == 0.0f)
 			{
 				continue;
 			}
 
-			switch( m_DensityMode )
+			switch(m_DensityMode)
 			{
 				case DENSITY_MODE_ADDITIVE:
-					VectorScale( vDirection, fScaledDistance, vPaintPos );
-					VectorAdd( vPaintPos, vVert, vPaintPos );
+					VectorScale(vDirection, fScaledDistance, vPaintPos);
+					VectorAdd(vPaintPos, vVert, vPaintPos);
 					break;
 
 				case DENSITY_MODE_ATTENUATED:
-					VectorScale( vDirection, fScaledDistance, vPaintPos );
-					VectorAdd( vPaintPos, vVert, vPaintPos );
+					VectorScale(vDirection, fScaledDistance, vPaintPos);
+					VectorAdd(vPaintPos, vVert, vPaintPos);
 
-					if ( pOrigDisp )
+					if(pOrigDisp)
 					{
-						Vector	vOrigVert, vDiff;
-						float	Length;
+						Vector vOrigVert, vDiff;
+						float Length;
 
-						pOrigDisp->GetVert( iVert, vOrigVert );
-						vDiff = ( vPaintPos - vOrigVert );
+						pOrigDisp->GetVert(iVert, vOrigVert);
+						vDiff = (vPaintPos - vOrigVert);
 						Length = vDiff.Length() / flDistance;
-						if ( Length > 1.0f )
+						if(Length > 1.0f)
 						{
 							Length = 1.0f;
 						}
 
-						vPaintPos = vOrigVert + ( Length * vDirection * flDistance );
+						vPaintPos = vOrigVert + (Length * vDirection * flDistance);
 					}
 					break;
 			}
 
-			AddToUndo( &pDisp );
-			pDisp->Paint_SetValue( iVert, vPaintPos );
+			AddToUndo(&pDisp);
+			pDisp->Paint_SetValue(iVert, vPaintPos);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the offset distance
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnEnChangeSculptPushOptionOffsetDistance()
 {
-	char	temp[ 1024 ];
+	char temp[1024];
 
-	m_OffsetDistanceControl.GetWindowText( temp, sizeof( temp ) );
-	m_OffsetDistance = atof( temp );
+	m_OffsetDistanceControl.GetWindowText(temp, sizeof(temp));
+	m_OffsetDistance = atof(temp);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the density mode
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnCbnSelchangeSculptPushOptionDensityMode()
 {
-	m_DensityMode = ( DensityMode )m_DensityModeControl.GetCurSel();
+	m_DensityMode = (DensityMode)m_DensityModeControl.GetCurSel();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the smooth amount
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnEnKillfocusSculptPushOptionSmoothAmount()
 {
-	char	temp[ 1024 ], t2[ 1024 ];
+	char temp[1024], t2[1024];
 
-	m_SmoothAmountControl.GetWindowText( temp, sizeof( temp ) );
-	sscanf( temp, "%f%%", &m_SmoothAmount );
+	m_SmoothAmountControl.GetWindowText(temp, sizeof(temp));
+	sscanf(temp, "%f%%", &m_SmoothAmount);
 	m_SmoothAmount /= 100.0f;
 
-	if ( m_SmoothAmount <= 0.0f )
+	if(m_SmoothAmount <= 0.0f)
 	{
 		m_SmoothAmount = 0.2f;
 	}
 
-	sprintf( t2, "%g%%", m_SmoothAmount * 100.0f );
+	sprintf(t2, "%g%%", m_SmoothAmount * 100.0f);
 
-	if ( strcmpi( temp, t2 ) != 0 )
+	if(strcmpi(temp, t2) != 0)
 	{
-		m_SmoothAmountControl.SetWindowText( t2 );
+		m_SmoothAmountControl.SetWindowText(t2);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the offset amount
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnEnKillfocusSculptPushOptionOffsetAmount()
 {
-	char	temp[ 1024 ], t2[ 1024 ];
+	char temp[1024], t2[1024];
 
-	m_OffsetAmountControl.GetWindowText( temp, sizeof( temp ) );
-	sscanf( temp, "%f%%", &m_OffsetAmount );
+	m_OffsetAmountControl.GetWindowText(temp, sizeof(temp));
+	sscanf(temp, "%f%%", &m_OffsetAmount);
 	m_OffsetAmount /= 100.0f;
 
-	if ( m_OffsetAmount <= 0.0f )
+	if(m_OffsetAmount <= 0.0f)
 	{
 		m_OffsetAmount = 1.0f;
 	}
 
-	sprintf( t2, "%g%%", m_OffsetAmount * 100.0f );
+	sprintf(t2, "%g%%", m_OffsetAmount * 100.0f);
 
-	if ( strcmpi( temp, t2 ) != 0 )
+	if(strcmpi(temp, t2) != 0)
 	{
-		m_OffsetAmountControl.SetWindowText( t2 );
+		m_OffsetAmountControl.SetWindowText(t2);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: paints the carve brush
@@ -3255,46 +3166,46 @@ void CSculptCarveOptions::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
-	CBrush black( RGB( 0, 0, 0 ) );
-	CBrush red( RGB( 255, 0, 0 ) );
-	CBrush green( RGB( 0, 255, 0 ) );
-	CBrush blue_red( RGB( 64, 0, 128 ) );
-	CBrush blue_green( RGB( 0, 64, 128 ) );
-	CBrush blue( RGB( 0, 0, 255 ) );
+	CBrush black(RGB(0, 0, 0));
+	CBrush red(RGB(255, 0, 0));
+	CBrush green(RGB(0, 255, 0));
+	CBrush blue_red(RGB(64, 0, 128));
+	CBrush blue_green(RGB(0, 64, 128));
+	CBrush blue(RGB(0, 0, 255));
 
 	CRect WindowRect;
-	m_CarveBrushControl.GetWindowRect( &WindowRect );
-	ScreenToClient( &WindowRect );
-	dc.FillRect( WindowRect, &black );
+	m_CarveBrushControl.GetWindowRect(&WindowRect);
+	ScreenToClient(&WindowRect);
+	dc.FillRect(WindowRect, &black);
 
-	float center = ( WindowRect.bottom + WindowRect.top ) / 2;
-	float height = ( WindowRect.bottom - WindowRect.top ) - 1;
+	float center = (WindowRect.bottom + WindowRect.top) / 2;
+	float height = (WindowRect.bottom - WindowRect.top) - 1;
 
-	if ( m_BrushLocation != -1 )
+	if(m_BrushLocation != -1)
 	{
-		CRect	rect;
+		CRect rect;
 
-		rect.left = ( m_BrushLocation * 2 ) + WindowRect.left;
+		rect.left = (m_BrushLocation * 2) + WindowRect.left;
 		rect.right = rect.left + 2;
 		rect.bottom = WindowRect.bottom;
 		rect.top = WindowRect.top;
-		dc.FillRect( rect, &blue );
+		dc.FillRect(rect, &blue);
 	}
 
-	for( int i = 0; i < MAX_SCULPT_SIZE; i++ )
+	for(int i = 0; i < MAX_SCULPT_SIZE; i++)
 	{
-		float	size = height / 2.0f * m_BrushPoints[ i ];
-		CRect	rect;
-		CBrush	*pBrush;
+		float size = height / 2.0f * m_BrushPoints[i];
+		CRect rect;
+		CBrush *pBrush;
 
-		rect.left = ( i * 2 ) + WindowRect.left;
+		rect.left = (i * 2) + WindowRect.left;
 		rect.right = rect.left + 2;
 		rect.bottom = center - size;
 		rect.top = center;
 
-		if ( m_BrushPoints[ i ] >= 0.0f )
+		if(m_BrushPoints[i] >= 0.0f)
 		{
-			if ( m_BrushLocation == i )
+			if(m_BrushLocation == i)
 			{
 				pBrush = &blue_green;
 			}
@@ -3305,7 +3216,7 @@ void CSculptCarveOptions::OnPaint()
 		}
 		else
 		{
-			if ( m_BrushLocation == i )
+			if(m_BrushLocation == i)
 			{
 				pBrush = &blue_red;
 			}
@@ -3314,71 +3225,68 @@ void CSculptCarveOptions::OnPaint()
 				pBrush = &red;
 			}
 		}
-		dc.FillRect( rect, pBrush );
+		dc.FillRect(rect, pBrush);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: adjusts the carve brush
 // Input  : x - location to set the height to
 //			y - offset into the brush
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::AdjustBrush( int x, int y )
+void CSculptCarveOptions::AdjustBrush(int x, int y)
 {
-	CRect	WindowRect;
-	CPoint	MousePoint( x, y );
+	CRect WindowRect;
+	CPoint MousePoint(x, y);
 
-	m_CarveBrushControl.GetWindowRect( &WindowRect );
-	ClientToScreen( &MousePoint );
+	m_CarveBrushControl.GetWindowRect(&WindowRect);
+	ClientToScreen(&MousePoint);
 
-	if ( MousePoint.x >= WindowRect.left && MousePoint.x < WindowRect.right &&
-		 MousePoint.y >= WindowRect.top && MousePoint.y < WindowRect.bottom )
+	if(MousePoint.x >= WindowRect.left && MousePoint.x < WindowRect.right && MousePoint.y >= WindowRect.top &&
+	   MousePoint.y < WindowRect.bottom)
 	{
-		int		pos = ( MousePoint.x - WindowRect.left ) / 2;
-		float	center = ( WindowRect.bottom + WindowRect.top ) / 2;
-		float	value = ( center - MousePoint.y ) / ( WindowRect.bottom - WindowRect.top ) * 2.0f;
+		int pos = (MousePoint.x - WindowRect.left) / 2;
+		float center = (WindowRect.bottom + WindowRect.top) / 2;
+		float value = (center - MousePoint.y) / (WindowRect.bottom - WindowRect.top) * 2.0f;
 
-		value = clamp( value, -1.0f, 1.0f );
-		if ( pos >= 0 && pos < MAX_SCULPT_SIZE )
+		value = clamp(value, -1.0f, 1.0f);
+		if(pos >= 0 && pos < MAX_SCULPT_SIZE)
 		{
-			m_BrushPoints[ pos ] = value;
+			m_BrushPoints[pos] = value;
 			Invalidate();
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: sets the brush cursor location
 // Input  : x - x location of mouse
 //			y - y location of mouse
 //-----------------------------------------------------------------------------
-void CSculptCarveOptions::AdjustBrushCursor( int x, int y )
+void CSculptCarveOptions::AdjustBrushCursor(int x, int y)
 {
-	CRect	WindowRect;
-	int		OldBrushLocation = m_BrushLocation;
-	CPoint	MousePoint( x, y );
+	CRect WindowRect;
+	int OldBrushLocation = m_BrushLocation;
+	CPoint MousePoint(x, y);
 
-	m_CarveBrushControl.GetWindowRect( &WindowRect );
-	ClientToScreen( &MousePoint );
+	m_CarveBrushControl.GetWindowRect(&WindowRect);
+	ClientToScreen(&MousePoint);
 
-	if ( MousePoint.x >= WindowRect.left && MousePoint.x < WindowRect.right &&
-		 MousePoint.y >= WindowRect.top && MousePoint.y < WindowRect.bottom )
+	if(MousePoint.x >= WindowRect.left && MousePoint.x < WindowRect.right && MousePoint.y >= WindowRect.top &&
+	   MousePoint.y < WindowRect.bottom)
 	{
-		m_BrushLocation = ( MousePoint.x - WindowRect.left ) / 2;
+		m_BrushLocation = (MousePoint.x - WindowRect.left) / 2;
 	}
 	else
 	{
 		m_BrushLocation = -1;
 	}
 
-	if ( OldBrushLocation != m_BrushLocation )
+	if(OldBrushLocation != m_BrushLocation)
 	{
 		Invalidate();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles adjusting the brush
@@ -3387,12 +3295,11 @@ void CSculptCarveOptions::AdjustBrushCursor( int x, int y )
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	AdjustBrush( point.x, point.y );
-	AdjustBrushCursor( point.x, point.y );
+	AdjustBrush(point.x, point.y);
+	AdjustBrushCursor(point.x, point.y);
 
 	__super::OnLButtonDown(nFlags, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles adjusting the brush
@@ -3401,12 +3308,11 @@ void CSculptCarveOptions::OnLButtonDown(UINT nFlags, CPoint point)
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	AdjustBrush( point.x, point.y );
-	AdjustBrushCursor( point.x, point.y );
+	AdjustBrush(point.x, point.y);
+	AdjustBrushCursor(point.x, point.y);
 
 	__super::OnLButtonUp(nFlags, point);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: handles adjusting the brush
@@ -3415,33 +3321,27 @@ void CSculptCarveOptions::OnLButtonUp(UINT nFlags, CPoint point)
 //-----------------------------------------------------------------------------
 void CSculptCarveOptions::OnMouseMove(UINT nFlags, CPoint point)
 {
-	if ( nFlags & MK_LBUTTON )
+	if(nFlags & MK_LBUTTON)
 	{
-		AdjustBrush( point.x, point.y );
+		AdjustBrush(point.x, point.y);
 	}
-	AdjustBrushCursor( point.x, point.y );
+	AdjustBrushCursor(point.x, point.y);
 
 	__super::OnMouseMove(nFlags, point);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: we want to handle the messages for mouse events
 //-----------------------------------------------------------------------------
-BOOL CSculptCarveOptions::PreTranslateMessage( MSG* pMsg )
+BOOL CSculptCarveOptions::PreTranslateMessage(MSG *pMsg)
 {
-	if ( pMsg->message == WM_LBUTTONDOWN || pMsg->message == WM_MOUSEMOVE )
+	if(pMsg->message == WM_LBUTTONDOWN || pMsg->message == WM_MOUSEMOVE)
 	{
 		return FALSE;
 	}
 
-	return __super::PreTranslateMessage( pMsg );
+	return __super::PreTranslateMessage(pMsg);
 }
-
-
-
-
-
 
 #if 0
 
@@ -3928,6 +3828,5 @@ BOOL CSculptProjectOptions::OnInitDialog()
 // current mouse position updates location of rectangle
 // then rmb = size
 // +control = st adjust
-
 
 #include <tier0/memdbgoff.h>

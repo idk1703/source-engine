@@ -9,15 +9,15 @@
 #include "tf_item.h"
 #include "func_achievement.h"
 
-LINK_ENTITY_TO_CLASS( func_achievement, CAchievementZone );
+LINK_ENTITY_TO_CLASS(func_achievement, CAchievementZone);
 
 //=============================================================================
 //
 // CTF Achievement Zone functions.
 //
 
-BEGIN_DATADESC( CAchievementZone )
-	DEFINE_KEYFIELD( m_iZoneID, FIELD_INTEGER, "zone_id" ),
+BEGIN_DATADESC(CAchievementZone)
+	DEFINE_KEYFIELD(m_iZoneID, FIELD_INTEGER, "zone_id"),
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
@@ -32,52 +32,49 @@ CAchievementZone::CAchievementZone()
 //-----------------------------------------------------------------------------
 // Purpose: Spawn function for the entity
 //-----------------------------------------------------------------------------
-void CAchievementZone::Spawn( void )
+void CAchievementZone::Spawn(void)
 {
 	Precache();
 	BaseClass::Spawn();
 	InitTrigger();
 
-	AddSpawnFlags( SF_TRIGGER_ALLOW_ALL ); // so we can keep track of who is touching us
-	AddEffects( EF_NODRAW );
+	AddSpawnFlags(SF_TRIGGER_ALLOW_ALL); // so we can keep track of who is touching us
+	AddEffects(EF_NODRAW);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAchievementZone::Precache( void )
-{
-
-}
+void CAchievementZone::Precache(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified entity is touching this zone
 //-----------------------------------------------------------------------------
-bool CAchievementZone::IsTouching( const CBaseEntity *pEntity ) const
+bool CAchievementZone::IsTouching(const CBaseEntity *pEntity) const
 {
-	return BaseClass::IsTouching( pEntity );
+	return BaseClass::IsTouching(pEntity);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAchievementZone::InputEnable( inputdata_t &inputdata )
+void CAchievementZone::InputEnable(inputdata_t &inputdata)
 {
-	SetDisabled( false );
+	SetDisabled(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAchievementZone::InputDisable( inputdata_t &inputdata )
+void CAchievementZone::InputDisable(inputdata_t &inputdata)
 {
-	SetDisabled( true );
+	SetDisabled(true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CAchievementZone::IsDisabled( void )
+bool CAchievementZone::IsDisabled(void)
 {
 	return m_bDisabled;
 }
@@ -85,22 +82,22 @@ bool CAchievementZone::IsDisabled( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAchievementZone::InputToggle( inputdata_t &inputdata )
+void CAchievementZone::InputToggle(inputdata_t &inputdata)
 {
-	if ( m_bDisabled )
+	if(m_bDisabled)
 	{
-		SetDisabled( false );
+		SetDisabled(false);
 	}
 	else
 	{
-		SetDisabled( true );
+		SetDisabled(true);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CAchievementZone::SetDisabled( bool bDisabled )
+void CAchievementZone::SetDisabled(bool bDisabled)
 {
 	m_bDisabled = bDisabled;
 }
@@ -108,19 +105,19 @@ void CAchievementZone::SetDisabled( bool bDisabled )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified entity is in an Achievement zone
 //-----------------------------------------------------------------------------
-CAchievementZone *InAchievementZone( CBaseEntity *pEntity )
+CAchievementZone *InAchievementZone(CBaseEntity *pEntity)
 {
-	if ( pEntity )
+	if(pEntity)
 	{
 		CBaseEntity *pTempEnt = NULL;
-		while ( ( pTempEnt = gEntList.FindEntityByClassname( pTempEnt, "func_achievement" ) ) != NULL )
+		while((pTempEnt = gEntList.FindEntityByClassname(pTempEnt, "func_achievement")) != NULL)
 		{
-			CAchievementZone *pZone = dynamic_cast<CAchievementZone *>( pTempEnt );
+			CAchievementZone *pZone = dynamic_cast<CAchievementZone *>(pTempEnt);
 
-			if ( !pZone->IsDisabled() && pZone->PointIsWithin( pEntity->GetAbsOrigin() ) )
+			if(!pZone->IsDisabled() && pZone->PointIsWithin(pEntity->GetAbsOrigin()))
 			{
 				int iTeam = pZone->GetTeamNumber();
-				if ( !iTeam || ( iTeam && ( pEntity->GetTeamNumber() == iTeam ) ) )
+				if(!iTeam || (iTeam && (pEntity->GetTeamNumber() == iTeam)))
 				{
 					return pZone;
 				}

@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <iostream.h>
 
-
 #ifdef _DEBUG
 #ifdef _MEMDEBUG
 #define _MDEBUG
@@ -26,60 +25,64 @@
 #endif
 
 #ifdef _MDEBUG
-static int numBytesAllocated=0;
-//these were written by me, wes cumberland, not paul andre leblanc
-void * operator new(size_t size)
+static int numBytesAllocated = 0;
+// these were written by me, wes cumberland, not paul andre leblanc
+void *operator new(size_t size)
 {
 	void *ptr = malloc(size);
-	numBytesAllocated+=size;
+	numBytesAllocated += size;
 	return ptr;
 }
 
-void * operator new[](size_t size)
+void *operator new[](size_t size)
 {
 	void *ptr = malloc(size);
-	numBytesAllocated+=size;
+	numBytesAllocated += size;
 	return ptr;
 }
 
-void operator delete(void* ptr)
+void operator delete(void *ptr)
 {
 	free(ptr);
 }
 
-void operator delete[](void* ptr)
+void operator delete[](void *ptr)
 {
 	free(ptr);
 }
 
-
-//this code will track allocations
-//this code was written by Paul Andre LeBlanc <paul.a.leblanc@sympatico.ca>
-//I got it off of dejanews.com
+// this code will track allocations
+// this code was written by Paul Andre LeBlanc <paul.a.leblanc@sympatico.ca>
+// I got it off of dejanews.com
 void *operator new(size_t size, const char *file, const int line)
 {
 	void *ptr = new char[size];
-	numBytesAllocated+=size;
-	cout << "new: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr << " (" << numBytesAllocated<<" total allocated)"<< endl;
+	numBytesAllocated += size;
+	cout << "new: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr
+		 << " (" << numBytesAllocated << " total allocated)" << endl;
 	return ptr;
 }
 
-void *operator new[](size_t size, const char *file, const int line) {
+void *operator new[](size_t size, const char *file, const int line)
+{
 	void *ptr = new char[size];
-	numBytesAllocated+=size;
-	cout << "new[]: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr << " (" << numBytesAllocated<<" total allocated)" << endl;
+	numBytesAllocated += size;
+	cout << "new[]: Allocating " << size << " bytes in file " << file << ", line " << line << ", address is " << ptr
+		 << " (" << numBytesAllocated << " total allocated)" << endl;
 	return ptr;
 }
 
-void operator delete(void *ptr, const char *file, const int line) {
+void operator delete(void *ptr, const char *file, const int line)
+{
 	cout << "delete: Freeing memory allocated at file " << file << ", line " << line << ", address is " << ptr << endl;
-	delete [] (char *) ptr;
+	delete[](char *) ptr;
 }
 
 void operator delete[](void *ptr, const char *file, const int line)
 {
-	cout << "delete[]: Freeing memory allocated at file " << file << ", line " << line << ", address is " << ptr << endl;
-	delete [] (char *) ptr;
+	cout << "delete[]: Freeing memory allocated at file " << file << ", line " << line << ", address is " << ptr
+		 << endl;
+	delete[](char *) ptr;
 }
 
 #endif
@@ -92,7 +95,7 @@ void operator delete[](void *ptr, const char *file, const int line)
 //------------------------------------------------------------------------------------------------------
 int TFStats_win32_new_handler(size_t sz)
 {
-	printf("TFStats ran out of memory trying to allocate %li bytes\n",sz);
+	printf("TFStats ran out of memory trying to allocate %li bytes\n", sz);
 	return 0;
 }
 //------------------------------------------------------------------------------------------------------
@@ -105,7 +108,6 @@ void TFStats_linux_new_handler(void)
 	printf("TFStats ran out of memory!\n");
 }
 
-
 //------------------------------------------------------------------------------------------------------
 // Function:	TFStats_setNewHandler
 // Purpose:	 sets the new handler to the TFStats new handler
@@ -117,6 +119,6 @@ void TFStats_setNewHandler()
 	_set_new_mode(1);
 #else
 	std::set_new_handler(TFStats_linux_new_handler);
-	//std::set_new_mode(1);
+	// std::set_new_mode(1);
 #endif
 }

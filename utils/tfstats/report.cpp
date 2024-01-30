@@ -19,9 +19,9 @@
 // Input:	pageName - the name of the html file
 //				pageTitle - the title of the document
 //------------------------------------------------------------------------------------------------------
-void CReport::makeHTMLPage(char* pageName,char* pageTitle)
+void CReport::makeHTMLPage(char *pageName, char *pageTitle)
 {
-	CHTMLFile Page(pageName,pageTitle);
+	CHTMLFile Page(pageName, pageTitle);
 	report(Page);
 }
 //------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ void CReport::makeHTMLPage(char* pageName,char* pageTitle)
 // Purpose:	generates the report's output and adds it to anHTML file
 // Input:	html - the HTML file to add this report element to
 //------------------------------------------------------------------------------------------------------
-void CReport::report(CHTMLFile& html)
+void CReport::report(CHTMLFile &html)
 {
 	generate();
 	writeHTML(html);

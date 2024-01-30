@@ -26,56 +26,53 @@
 #include "eyeball_behavior/eyeball_boss_behavior.h"
 #include "halloween/zombie/zombie.h"
 
+ConVar tf_eyeball_boss_debug("tf_eyeball_boss_debug", "0", FCVAR_CHEAT);
+ConVar tf_eyeball_boss_debug_orientation("tf_eyeball_boss_debug_orientation", "0", FCVAR_CHEAT);
 
-ConVar tf_eyeball_boss_debug( "tf_eyeball_boss_debug", "0", FCVAR_CHEAT );
-ConVar tf_eyeball_boss_debug_orientation( "tf_eyeball_boss_debug_orientation", "0", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_lifetime("tf_eyeball_boss_lifetime", "120", FCVAR_CHEAT);
+ConVar tf_eyeball_boss_lifetime_spell("tf_eyeball_boss_lifetime_spell", "8", FCVAR_CHEAT);
 
-ConVar tf_eyeball_boss_lifetime( "tf_eyeball_boss_lifetime", "120", FCVAR_CHEAT );
-ConVar tf_eyeball_boss_lifetime_spell( "tf_eyeball_boss_lifetime_spell", "8", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_speed("tf_eyeball_boss_speed", "250", FCVAR_CHEAT);
 
-ConVar tf_eyeball_boss_speed( "tf_eyeball_boss_speed", "250", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_hover_height("tf_eyeball_boss_hover_height", "200", FCVAR_CHEAT);
 
-ConVar tf_eyeball_boss_hover_height( "tf_eyeball_boss_hover_height", "200", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_acceleration("tf_eyeball_boss_acceleration", "500", FCVAR_CHEAT);
+ConVar tf_eyeball_boss_horiz_damping("tf_eyeball_boss_horiz_damping", "2", FCVAR_CHEAT);
+ConVar tf_eyeball_boss_vert_damping("tf_eyeball_boss_vert_damping", "1", FCVAR_CHEAT);
 
-ConVar tf_eyeball_boss_acceleration( "tf_eyeball_boss_acceleration", "500", FCVAR_CHEAT );
-ConVar tf_eyeball_boss_horiz_damping( "tf_eyeball_boss_horiz_damping", "2", FCVAR_CHEAT );
-ConVar tf_eyeball_boss_vert_damping( "tf_eyeball_boss_vert_damping", "1", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_attack_range("tf_eyeball_boss_attack_range", "750", FCVAR_CHEAT);
 
-ConVar tf_eyeball_boss_attack_range( "tf_eyeball_boss_attack_range", "750", FCVAR_CHEAT );
-
-ConVar tf_eyeball_boss_health_base( "tf_eyeball_boss_health_base", "8000", FCVAR_CHEAT );
-ConVar tf_eyeball_boss_health_per_player( "tf_eyeball_boss_health_per_player", "400", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_health_base("tf_eyeball_boss_health_base", "8000", FCVAR_CHEAT);
+ConVar tf_eyeball_boss_health_per_player("tf_eyeball_boss_health_per_player", "400", FCVAR_CHEAT);
 extern ConVar tf_halloween_bot_min_player_count;
 
-ConVar tf_eyeball_boss_health_at_level_2( "tf_eyeball_boss_health_at_level_2", "17000", FCVAR_CHEAT );
-ConVar tf_eyeball_boss_health_per_level( "tf_eyeball_boss_health_per_level", "3000", FCVAR_CHEAT );
+ConVar tf_eyeball_boss_health_at_level_2("tf_eyeball_boss_health_at_level_2", "17000", FCVAR_CHEAT);
+ConVar tf_eyeball_boss_health_per_level("tf_eyeball_boss_health_per_level", "3000", FCVAR_CHEAT);
 
+LINK_ENTITY_TO_CLASS(eyeball_boss, CEyeballBoss);
 
-LINK_ENTITY_TO_CLASS( eyeball_boss, CEyeballBoss );
+IMPLEMENT_SERVERCLASS_ST(CEyeballBoss, DT_EyeballBoss)
 
-IMPLEMENT_SERVERCLASS_ST( CEyeballBoss, DT_EyeballBoss )
+SendPropExclude("DT_BaseEntity", "m_angRotation"),		  // client has its own orientation logic
+	SendPropExclude("DT_BaseEntity", "m_angAbsRotation"), // client has its own orientation logic
+	SendPropVector(SENDINFO(m_lookAtSpot), 0, SPROP_COORD), SendPropInt(SENDINFO(m_attitude)),
 
-	SendPropExclude( "DT_BaseEntity", "m_angRotation" ),	// client has its own orientation logic
-	SendPropExclude( "DT_BaseEntity", "m_angAbsRotation" ),	// client has its own orientation logic
-	SendPropVector( SENDINFO( m_lookAtSpot ), 0, SPROP_COORD ),
-	SendPropInt( SENDINFO( m_attitude ) ),
+END_SEND_TABLE
+()
 
-END_SEND_TABLE()
+	int CEyeballBoss::m_level = 1;
 
-
-int CEyeballBoss::m_level = 1;
-
-IMPLEMENT_AUTO_LIST( IEyeballBossAutoList );
+IMPLEMENT_AUTO_LIST(IEyeballBossAutoList);
 
 //-----------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
 CEyeballBoss::CEyeballBoss()
 {
-	ALLOCATE_INTENTION_INTERFACE( CEyeballBoss );
+	ALLOCATE_INTENTION_INTERFACE(CEyeballBoss);
 
-	m_locomotor = new CEyeballBossLocomotion( this );
-	m_body = new CEyeballBossBody( this );
-	m_vision = new CDisableVision( this );
+	m_locomotor = new CEyeballBossLocomotion(this);
+	m_body = new CEyeballBossBody(this);
+	m_vision = new CDisableVision(this);
 
 	m_eyeOffset = vec3_origin;
 	m_target = NULL;
@@ -86,65 +83,64 @@ CEyeballBoss::CEyeballBoss()
 	m_damageLimit = -1;
 }
 
-
 //-----------------------------------------------------------------------------------------------------
 CEyeballBoss::~CEyeballBoss()
 {
 	DEALLOCATE_INTENTION_INTERFACE;
 
-	if ( m_vision )
+	if(m_vision)
 		delete m_vision;
 
-	if ( m_body )
+	if(m_body)
 		delete m_body;
 
-	if ( m_locomotor )
+	if(m_locomotor)
 		delete m_locomotor;
 
-	IGameEvent *event = gameeventmanager->CreateEvent( "recalculate_truce" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("recalculate_truce");
+	if(event)
 	{
-		gameeventmanager->FireEvent( event, true );
+		gameeventmanager->FireEvent(event, true);
 	}
 }
 
 void CEyeballBoss::PrecacheEyeballBoss()
 {
-	PrecacheModel( "models/props_halloween/halloween_demoeye.mdl" );
-	PrecacheModel( "models/props_halloween/eyeball_projectile.mdl" );
+	PrecacheModel("models/props_halloween/halloween_demoeye.mdl");
+	PrecacheModel("models/props_halloween/eyeball_projectile.mdl");
 
-	PrecacheScriptSound( "Halloween.EyeballBossIdle" );
-	PrecacheScriptSound( "Halloween.EyeballBossBecomeAlert" );
-	PrecacheScriptSound( "Halloween.EyeballBossAcquiredVictim" );
-	PrecacheScriptSound( "Halloween.EyeballBossStunned" );
-	PrecacheScriptSound( "Halloween.EyeballBossStunRecover" );
-	PrecacheScriptSound( "Halloween.EyeballBossLaugh" );
-	PrecacheScriptSound( "Halloween.EyeballBossBigLaugh" );
-	PrecacheScriptSound( "Halloween.EyeballBossDie" );
-	PrecacheScriptSound( "Halloween.EyeballBossEscapeSoon" );
-	PrecacheScriptSound( "Halloween.EyeballBossEscapeImminent" );
-	PrecacheScriptSound( "Halloween.EyeballBossEscaped" );
-	PrecacheScriptSound( "Halloween.EyeballBossDie" );
-	PrecacheScriptSound( "Halloween.EyeballBossTeleport" );
-	PrecacheScriptSound( "Halloween.HeadlessBossSpawnRumble" );
+	PrecacheScriptSound("Halloween.EyeballBossIdle");
+	PrecacheScriptSound("Halloween.EyeballBossBecomeAlert");
+	PrecacheScriptSound("Halloween.EyeballBossAcquiredVictim");
+	PrecacheScriptSound("Halloween.EyeballBossStunned");
+	PrecacheScriptSound("Halloween.EyeballBossStunRecover");
+	PrecacheScriptSound("Halloween.EyeballBossLaugh");
+	PrecacheScriptSound("Halloween.EyeballBossBigLaugh");
+	PrecacheScriptSound("Halloween.EyeballBossDie");
+	PrecacheScriptSound("Halloween.EyeballBossEscapeSoon");
+	PrecacheScriptSound("Halloween.EyeballBossEscapeImminent");
+	PrecacheScriptSound("Halloween.EyeballBossEscaped");
+	PrecacheScriptSound("Halloween.EyeballBossDie");
+	PrecacheScriptSound("Halloween.EyeballBossTeleport");
+	PrecacheScriptSound("Halloween.HeadlessBossSpawnRumble");
 
-	PrecacheScriptSound( "Halloween.EyeballBossBecomeEnraged" );
-	PrecacheScriptSound( "Halloween.EyeballBossRage" );
-	PrecacheScriptSound( "Halloween.EyeballBossCalmDown" );
-	PrecacheScriptSound( "Halloween.spell_spawn_boss_disappear" );
+	PrecacheScriptSound("Halloween.EyeballBossBecomeEnraged");
+	PrecacheScriptSound("Halloween.EyeballBossRage");
+	PrecacheScriptSound("Halloween.EyeballBossCalmDown");
+	PrecacheScriptSound("Halloween.spell_spawn_boss_disappear");
 
-	PrecacheScriptSound( "Halloween.MonoculusBossSpawn" );
-	PrecacheScriptSound( "Halloween.MonoculusBossDeath" );
+	PrecacheScriptSound("Halloween.MonoculusBossSpawn");
+	PrecacheScriptSound("Halloween.MonoculusBossDeath");
 
-	PrecacheParticleSystem( "eyeboss_death" );
-	PrecacheParticleSystem( "eyeboss_aura_angry" );
-	PrecacheParticleSystem( "eyeboss_aura_grumpy" );
-	PrecacheParticleSystem( "eyeboss_aura_calm" );
-	PrecacheParticleSystem( "eyeboss_aura_stunned" );
-	PrecacheParticleSystem( "eyeboss_tp_normal" );
-	PrecacheParticleSystem( "eyeboss_tp_escape" );
-	PrecacheParticleSystem( "eyeboss_team_red" );
-	PrecacheParticleSystem( "eyeboss_team_blue" );
+	PrecacheParticleSystem("eyeboss_death");
+	PrecacheParticleSystem("eyeboss_aura_angry");
+	PrecacheParticleSystem("eyeboss_aura_grumpy");
+	PrecacheParticleSystem("eyeboss_aura_calm");
+	PrecacheParticleSystem("eyeboss_aura_stunned");
+	PrecacheParticleSystem("eyeboss_tp_normal");
+	PrecacheParticleSystem("eyeboss_tp_escape");
+	PrecacheParticleSystem("eyeboss_team_red");
+	PrecacheParticleSystem("eyeboss_team_blue");
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -156,103 +152,103 @@ void CEyeballBoss::Precache()
 	// Halloween Boss for the entire year
 
 	bool bAllowPrecache = CBaseEntity::IsPrecacheAllowed();
-	CBaseEntity::SetAllowPrecache( true );
+	CBaseEntity::SetAllowPrecache(true);
 
 	PrecacheEyeballBoss();
 
-	CBaseEntity::SetAllowPrecache( bAllowPrecache );
+	CBaseEntity::SetAllowPrecache(bAllowPrecache);
 }
 
-
 //-----------------------------------------------------------------------------------------------------
-void CEyeballBoss::Spawn( void )
+void CEyeballBoss::Spawn(void)
 {
 	Precache();
 
 	BaseClass::Spawn();
 
-	SetModel( "models/props_halloween/halloween_demoeye.mdl" );
+	SetModel("models/props_halloween/halloween_demoeye.mdl");
 
 	int health = tf_eyeball_boss_health_base.GetInt();
 
-	if ( m_level > 1 )
+	if(m_level > 1)
 	{
 		// the Boss was defeated last time - he's tougher this time
 		health = tf_eyeball_boss_health_at_level_2.GetInt();
 
-		health += tf_eyeball_boss_health_per_level.GetInt() * ( m_level - 2 );
+		health += tf_eyeball_boss_health_per_level.GetInt() * (m_level - 2);
 	}
 	else
 	{
 		// scale the boss' health with the player count
-		int totalPlayers = GetGlobalTFTeam( TF_TEAM_BLUE )->GetNumPlayers() + GetGlobalTFTeam( TF_TEAM_RED )->GetNumPlayers();
+		int totalPlayers =
+			GetGlobalTFTeam(TF_TEAM_BLUE)->GetNumPlayers() + GetGlobalTFTeam(TF_TEAM_RED)->GetNumPlayers();
 
-		if ( totalPlayers > tf_halloween_bot_min_player_count.GetInt() )
+		if(totalPlayers > tf_halloween_bot_min_player_count.GetInt())
 		{
-			health += ( totalPlayers - tf_halloween_bot_min_player_count.GetInt() ) * tf_eyeball_boss_health_per_player.GetInt();
+			health += (totalPlayers - tf_halloween_bot_min_player_count.GetInt()) *
+					  tf_eyeball_boss_health_per_player.GetInt();
 		}
 	}
 
-	SetHealth( health );
-	SetMaxHealth( health );
+	SetHealth(health);
+	SetMaxHealth(health);
 
 	m_homePos = GetAbsOrigin();
 
-	Vector mins( -50, -50, -50 );
-	Vector maxs( 50, 50, 50 );
-	CollisionProp()->SetSurroundingBoundsType( USE_SPECIFIED_BOUNDS, &mins, &maxs );
-	CollisionProp()->SetCollisionBounds( mins, maxs );
+	Vector mins(-50, -50, -50);
+	Vector maxs(50, 50, 50);
+	CollisionProp()->SetSurroundingBoundsType(USE_SPECIFIED_BOUNDS, &mins, &maxs);
+	CollisionProp()->SetCollisionBounds(mins, maxs);
 
 	m_lookAtSpot = vec3_origin;
 
 	CBaseEntity *spawnPoint = NULL;
-	while( ( spawnPoint = gEntList.FindEntityByClassname( spawnPoint, "info_target" ) ) != NULL )
+	while((spawnPoint = gEntList.FindEntityByClassname(spawnPoint, "info_target")) != NULL)
 	{
-		if ( FStrEq( STRING( spawnPoint->GetEntityName() ), "spawn_boss_alt" ) )
+		if(FStrEq(STRING(spawnPoint->GetEntityName()), "spawn_boss_alt"))
 		{
-			m_spawnSpotVector.AddToTail( spawnPoint );
+			m_spawnSpotVector.AddToTail(spawnPoint);
 		}
 	}
 
-	if ( m_spawnSpotVector.Count() == 0 )
+	if(m_spawnSpotVector.Count() == 0)
 	{
-		Warning( "No info_target entities named 'spawn_boss_alt' found!\n" );
+		Warning("No info_target entities named 'spawn_boss_alt' found!\n");
 	}
 
 	// show Boss' health meter on HUD
-	if ( IsSpell() )
+	if(IsSpell())
 	{
 		// this will force particle effect on the boss
 		m_attitude = GetTeamNumber() == TF_TEAM_RED ? EYEBALL_ANGRY : EYEBALL_CALM;
 	}
 	else
 	{
-		if ( g_pMonsterResource )
+		if(g_pMonsterResource)
 		{
-			g_pMonsterResource->SetBossHealthPercentage( 1.0f );
+			g_pMonsterResource->SetBossHealthPercentage(1.0f);
 		}
 
 		m_attitude = EYEBALL_CALM;
 	}
 
-	IGameEvent *event = gameeventmanager->CreateEvent( "recalculate_truce" );
-	if ( event )
+	IGameEvent *event = gameeventmanager->CreateEvent("recalculate_truce");
+	if(event)
 	{
-		gameeventmanager->FireEvent( event, true );
+		gameeventmanager->FireEvent(event, true);
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBoss::Update( void )
+void CEyeballBoss::Update(void)
 {
 	BaseClass::Update();
 
 	m_attitude = EYEBALL_CALM;
 
-	if ( IsEnraged() )
+	if(IsEnraged())
 	{
-		if ( IsSpell() )
+		if(IsSpell())
 		{
 			m_attitude = GetTeamNumber() == TF_TEAM_RED ? EYEBALL_ANGRY : EYEBALL_CALM;
 			m_nSkin = GetTeamNumber() == TF_TEAM_RED ? EYEBALL_TEAM_RED : EYEBALL_TEAM_BLUE;
@@ -262,41 +258,41 @@ void CEyeballBoss::Update( void )
 			m_nSkin = EYEBALL_RED_SKIN;
 		}
 
-		int angryPoseParameter = LookupPoseParameter( "anger" );
-		if ( angryPoseParameter >= 0 )
+		int angryPoseParameter = LookupPoseParameter("anger");
+		if(angryPoseParameter >= 0)
 		{
-			SetPoseParameter( angryPoseParameter, 1 );
+			SetPoseParameter(angryPoseParameter, 1);
 		}
 	}
-	else if ( IsGrumpy() )
+	else if(IsGrumpy())
 	{
 		m_nSkin = EYEBALL_NORMAL_SKIN;
 
-		int angryPoseParameter = LookupPoseParameter( "anger" );
-		if ( angryPoseParameter >= 0 )
+		int angryPoseParameter = LookupPoseParameter("anger");
+		if(angryPoseParameter >= 0)
 		{
-			SetPoseParameter( angryPoseParameter, 0.4f );
+			SetPoseParameter(angryPoseParameter, 0.4f);
 		}
 	}
 	else
 	{
 		m_nSkin = EYEBALL_NORMAL_SKIN;
 
-		int angryPoseParameter = LookupPoseParameter( "anger" );
-		if ( angryPoseParameter >= 0 )
+		int angryPoseParameter = LookupPoseParameter("anger");
+		if(angryPoseParameter >= 0)
 		{
-			SetPoseParameter( angryPoseParameter, 0 );
+			SetPoseParameter(angryPoseParameter, 0);
 		}
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBoss::UpdateOnRemove( void )
+void CEyeballBoss::UpdateOnRemove(void)
 {
-	// In regular TF gameplay, g_pMonsterResource should always be non-null. The null check helps some server plugins though.
-	Assert( g_pMonsterResource != NULL );
-	if ( g_pMonsterResource )
+	// In regular TF gameplay, g_pMonsterResource should always be non-null. The null check helps some server plugins
+	// though.
+	Assert(g_pMonsterResource != NULL);
+	if(g_pMonsterResource)
 	{
 		g_pMonsterResource->HideBossHealthMeter();
 	}
@@ -304,45 +300,43 @@ void CEyeballBoss::UpdateOnRemove( void )
 	BaseClass::UpdateOnRemove();
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBoss::JarateNearbyPlayers( float range )
+void CEyeballBoss::JarateNearbyPlayers(float range)
 {
-	CUtlVector< CTFPlayer * > playerVector;
-	CollectPlayers( &playerVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS );
-	CollectPlayers( &playerVector, TF_TEAM_BLUE, COLLECT_ONLY_LIVING_PLAYERS, APPEND_PLAYERS );
+	CUtlVector<CTFPlayer *> playerVector;
+	CollectPlayers(&playerVector, TF_TEAM_RED, COLLECT_ONLY_LIVING_PLAYERS);
+	CollectPlayers(&playerVector, TF_TEAM_BLUE, COLLECT_ONLY_LIVING_PLAYERS, APPEND_PLAYERS);
 
-	for( int i=0; i<playerVector.Count(); ++i )
+	for(int i = 0; i < playerVector.Count(); ++i)
 	{
-		if ( IsRangeLessThan( playerVector[i], range ) &&
-			IsLineOfSightClear( playerVector[i], CBaseCombatCharacter::IGNORE_ACTORS ) )
+		if(IsRangeLessThan(playerVector[i], range) &&
+		   IsLineOfSightClear(playerVector[i], CBaseCombatCharacter::IGNORE_ACTORS))
 		{
-			playerVector[i]->m_Shared.AddCond( TF_COND_URINE, 10.0f );
+			playerVector[i]->m_Shared.AddCond(TF_COND_URINE, 10.0f);
 		}
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-float EyeballBossModifyDamage( const CTakeDamageInfo &info )
+float EyeballBossModifyDamage(const CTakeDamageInfo &info)
 {
-	CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( info.GetWeapon() );
-	CObjectSentrygun *sentry = dynamic_cast< CObjectSentrygun * >( info.GetInflictor() );
-	CTFProjectile_SentryRocket *sentryRocket = dynamic_cast< CTFProjectile_SentryRocket * >( info.GetInflictor() );
+	CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase *>(info.GetWeapon());
+	CObjectSentrygun *sentry = dynamic_cast<CObjectSentrygun *>(info.GetInflictor());
+	CTFProjectile_SentryRocket *sentryRocket = dynamic_cast<CTFProjectile_SentryRocket *>(info.GetInflictor());
 
-	if ( sentry || sentryRocket )
+	if(sentry || sentryRocket)
 	{
 		return info.GetDamage() * 0.25f;
 	}
-	else if ( pWeapon )
+	else if(pWeapon)
 	{
-		switch( pWeapon->GetWeaponID() )
+		switch(pWeapon->GetWeaponID())
 		{
-		case TF_WEAPON_FLAMETHROWER:
-			return info.GetDamage() * 0.5f;
+			case TF_WEAPON_FLAMETHROWER:
+				return info.GetDamage() * 0.5f;
 
-		case TF_WEAPON_MINIGUN:
-			return info.GetDamage() * 0.25f;
+			case TF_WEAPON_MINIGUN:
+				return info.GetDamage() * 0.25f;
 		}
 	}
 
@@ -350,58 +344,57 @@ float EyeballBossModifyDamage( const CTakeDamageInfo &info )
 	return info.GetDamage();
 }
 
-
 //---------------------------------------------------------------------------------------------
-int CEyeballBoss::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
+int CEyeballBoss::OnTakeDamage_Alive(const CTakeDamageInfo &rawInfo)
 {
 	CTakeDamageInfo info = rawInfo;
 
-	if ( IsSelf( info.GetAttacker() ) )
+	if(IsSelf(info.GetAttacker()))
 	{
 		// don't injure myself
 		return 0;
 	}
 
 	// have we reached our damage limit?
-	if ( m_damageLimit == 0 )
+	if(m_damageLimit == 0)
 	{
 		return 0;
 	}
 
-	if ( IsSpell() )
+	if(IsSpell())
 	{
 		return 0;
 	}
 
 	int beforeHealth = GetHealth();
 
-	info.SetDamage( EyeballBossModifyDamage( info ) );
+	info.SetDamage(EyeballBossModifyDamage(info));
 
-	int result = BaseClass::OnTakeDamage_Alive( info );
+	int result = BaseClass::OnTakeDamage_Alive(info);
 
 	// update boss health meter
 	float healthPercentage = (float)GetHealth() / (float)GetMaxHealth();
 
-	if ( g_pMonsterResource )
+	if(g_pMonsterResource)
 	{
-		if ( healthPercentage <= 0.0f )
+		if(healthPercentage <= 0.0f)
 		{
 			g_pMonsterResource->HideBossHealthMeter();
 		}
 		else
 		{
-			g_pMonsterResource->SetBossHealthPercentage( healthPercentage );
+			g_pMonsterResource->SetBossHealthPercentage(healthPercentage);
 		}
 	}
 
 	// do we have a damage limit?
-	if ( m_damageLimit >= 0 )
+	if(m_damageLimit >= 0)
 	{
 		int actualDamage = beforeHealth - GetHealth();
 
 		m_damageLimit -= actualDamage;
 
-		if ( m_damageLimit < 0 )
+		if(m_damageLimit < 0)
 		{
 			m_damageLimit = 0;
 		}
@@ -410,92 +403,87 @@ int CEyeballBoss::OnTakeDamage_Alive( const CTakeDamageInfo &rawInfo )
 	return result;
 }
 
-
 //---------------------------------------------------------------------------------------------
-bool CEyeballBoss::ShouldCollide( int collisionGroup, int contentsMask ) const
+bool CEyeballBoss::ShouldCollide(int collisionGroup, int contentsMask) const
 {
-	return BaseClass::ShouldCollide( collisionGroup, contentsMask );
+	return BaseClass::ShouldCollide(collisionGroup, contentsMask);
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Update our last known nav area directly underneath us (since we fly)
 //-----------------------------------------------------------------------------
-void CEyeballBoss::UpdateLastKnownArea( void )
+void CEyeballBoss::UpdateLastKnownArea(void)
 {
-	if ( TheNavMesh->IsGenerating() )
+	if(TheNavMesh->IsGenerating())
 	{
 		ClearLastKnownArea();
 		return;
 	}
 
 	// find the area we are directly standing in
-	CNavArea *area = TheNavMesh->GetNearestNavArea( this, GETNAVAREA_CHECK_LOS, 500.0f );
-	if ( !area )
+	CNavArea *area = TheNavMesh->GetNearestNavArea(this, GETNAVAREA_CHECK_LOS, 500.0f);
+	if(!area)
 		return;
 
 	// make sure we can actually use this area - if not, consider ourselves off the mesh
-	if ( !IsAreaTraversable( area ) )
+	if(!IsAreaTraversable(area))
 		return;
 
-	if ( area != m_lastNavArea )
+	if(area != m_lastNavArea)
 	{
 		// player entered a new nav area
-		if ( m_lastNavArea )
+		if(m_lastNavArea)
 		{
-			m_lastNavArea->DecrementPlayerCount( m_registeredNavTeam, entindex() );
-			m_lastNavArea->OnExit( this, area );
+			m_lastNavArea->DecrementPlayerCount(m_registeredNavTeam, entindex());
+			m_lastNavArea->OnExit(this, area);
 		}
 
 		m_registeredNavTeam = GetTeamNumber();
-		area->IncrementPlayerCount( m_registeredNavTeam, entindex() );
-		area->OnEnter( this, m_lastNavArea );
+		area->IncrementPlayerCount(m_registeredNavTeam, entindex());
+		area->OnEnter(this, m_lastNavArea);
 
-		OnNavAreaChanged( area, m_lastNavArea );
+		OnNavAreaChanged(area, m_lastNavArea);
 
 		m_lastNavArea = area;
 	}
 }
 
-
 //---------------------------------------------------------------------------------------------
-CBaseCombatCharacter *CEyeballBoss::GetVictim( void ) const
+CBaseCombatCharacter *CEyeballBoss::GetVictim(void) const
 {
-	if ( m_victim == NULL )
+	if(m_victim == NULL)
 		return NULL;
 
-	if ( !m_victim->IsAlive() )
+	if(!m_victim->IsAlive())
 		return NULL;
 
-	if ( IsInPurgatory( m_victim ) )
+	if(IsInPurgatory(m_victim))
 		return NULL;
 
 	return m_victim;
 }
 
-
 //---------------------------------------------------------------------------------------------
-CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
+CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim(void)
 {
 	CBaseCombatCharacter *victim = NULL;
 	float victimRangeSq = FLT_MAX;
 
-	CUtlVector< CTFPlayer * > playerVector;
+	CUtlVector<CTFPlayer *> playerVector;
 	int nTargetTeam = TEAM_ANY;
-	if ( IsSpell() )
+	if(IsSpell())
 	{
 		nTargetTeam = GetTeamNumber() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED;
 
-		for ( int i=0; i<TFGameRules()->GetBossCount(); ++i )
+		for(int i = 0; i < TFGameRules()->GetBossCount(); ++i)
 		{
-			CBaseCombatCharacter *pBoss = TFGameRules()->GetActiveBoss( i );
-			if ( pBoss && !IsSelf( pBoss ) && pBoss->GetTeamNumber() != GetTeamNumber() )
+			CBaseCombatCharacter *pBoss = TFGameRules()->GetActiveBoss(i);
+			if(pBoss && !IsSelf(pBoss) && pBoss->GetTeamNumber() != GetTeamNumber())
 			{
-				float rangeSq = ( pBoss->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr();
-				if ( rangeSq < victimRangeSq )
+				float rangeSq = (pBoss->GetAbsOrigin() - GetAbsOrigin()).LengthSqr();
+				if(rangeSq < victimRangeSq)
 				{
-					if ( IsLineOfSightClear( pBoss ) )
+					if(IsLineOfSightClear(pBoss))
 					{
 						victim = pBoss;
 						victimRangeSq = rangeSq;
@@ -504,21 +492,19 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
 			}
 		}
 	}
-	CollectPlayers( &playerVector, nTargetTeam, COLLECT_ONLY_LIVING_PLAYERS );
+	CollectPlayers(&playerVector, nTargetTeam, COLLECT_ONLY_LIVING_PLAYERS);
 
-	for( int i=0; i<playerVector.Count(); ++i )
+	for(int i = 0; i < playerVector.Count(); ++i)
 	{
 		CTFPlayer *player = playerVector[i];
 
-		if ( IsInPurgatory( player ) )
+		if(IsInPurgatory(player))
 			continue;
 
-		if ( player->m_Shared.IsStealthed() )
+		if(player->m_Shared.IsStealthed())
 		{
-			if ( !player->m_Shared.InCond( TF_COND_BURNING ) &&
-				 !player->m_Shared.InCond( TF_COND_URINE ) &&
-				 !player->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) &&
-				 !player->m_Shared.InCond( TF_COND_BLEEDING ) )
+			if(!player->m_Shared.InCond(TF_COND_BURNING) && !player->m_Shared.InCond(TF_COND_URINE) &&
+			   !player->m_Shared.InCond(TF_COND_STEALTHED_BLINK) && !player->m_Shared.InCond(TF_COND_BLEEDING))
 			{
 				// cloaked spies are invisible to us
 				continue;
@@ -526,21 +512,21 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
 		}
 
 		// ignore player who disguises as my team
-		if ( player->m_Shared.InCond( TF_COND_DISGUISED ) && player->m_Shared.GetDisguiseTeam() == GetTeamNumber() )
+		if(player->m_Shared.InCond(TF_COND_DISGUISED) && player->m_Shared.GetDisguiseTeam() == GetTeamNumber())
 		{
 			continue;
 		}
 
 		// ignore ghost players
-		if ( player->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+		if(player->m_Shared.InCond(TF_COND_HALLOWEEN_GHOST_MODE))
 		{
 			continue;
 		}
 
-		float rangeSq = ( player->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr();
-		if ( rangeSq < victimRangeSq )
+		float rangeSq = (player->GetAbsOrigin() - GetAbsOrigin()).LengthSqr();
+		if(rangeSq < victimRangeSq)
 		{
-			if ( IsLineOfSightClear( player ) )
+			if(IsLineOfSightClear(player))
 			{
 				victim = player;
 				victimRangeSq = rangeSq;
@@ -548,20 +534,20 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
 		}
 	}
 
-	for ( int i=0; i<IBaseObjectAutoList::AutoList().Count(); ++i )
+	for(int i = 0; i < IBaseObjectAutoList::AutoList().Count(); ++i)
 	{
-		CBaseObject* pObj = static_cast< CBaseObject* >( IBaseObjectAutoList::AutoList()[i] );
-		if ( pObj->GetTeamNumber() == GetTeamNumber() )
+		CBaseObject *pObj = static_cast<CBaseObject *>(IBaseObjectAutoList::AutoList()[i]);
+		if(pObj->GetTeamNumber() == GetTeamNumber())
 		{
 			continue;
 		}
 
-		if ( pObj->ObjectType() == OBJ_SENTRYGUN )
+		if(pObj->ObjectType() == OBJ_SENTRYGUN)
 		{
-			float rangeSq = ( pObj->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr();
-			if ( rangeSq < victimRangeSq )
+			float rangeSq = (pObj->GetAbsOrigin() - GetAbsOrigin()).LengthSqr();
+			if(rangeSq < victimRangeSq)
 			{
-				if ( IsLineOfSightClear( pObj ) )
+				if(IsLineOfSightClear(pObj))
 				{
 					victim = pObj;
 					victimRangeSq = rangeSq;
@@ -571,18 +557,18 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
 	}
 
 	// find closest zombie
-	for ( int i=0; i<IZombieAutoList::AutoList().Count(); ++i )
+	for(int i = 0; i < IZombieAutoList::AutoList().Count(); ++i)
 	{
-		CZombie* pZombie = static_cast< CZombie* >( IZombieAutoList::AutoList()[i] );
-		if ( pZombie->GetTeamNumber() == GetTeamNumber() )
+		CZombie *pZombie = static_cast<CZombie *>(IZombieAutoList::AutoList()[i]);
+		if(pZombie->GetTeamNumber() == GetTeamNumber())
 		{
 			continue;
 		}
 
-		float rangeSq = GetRangeSquaredTo( pZombie );
-		if ( rangeSq < victimRangeSq )
+		float rangeSq = GetRangeSquaredTo(pZombie);
+		if(rangeSq < victimRangeSq)
 		{
-			if ( IsLineOfSightClear( pZombie ) )
+			if(IsLineOfSightClear(pZombie))
 			{
 				victim = pZombie;
 				victimRangeSq = rangeSq;
@@ -593,99 +579,84 @@ CBaseCombatCharacter *CEyeballBoss::FindClosestVisibleVictim( void )
 	return victim;
 }
 
-
 //---------------------------------------------------------------------------------------------
-const Vector &CEyeballBoss::PickNewSpawnSpot( void ) const
+const Vector &CEyeballBoss::PickNewSpawnSpot(void) const
 {
 	static Vector spot;
 
-	if ( m_spawnSpotVector.Count() == 0 )
+	if(m_spawnSpotVector.Count() == 0)
 	{
 		spot = GetAbsOrigin();
 	}
 	else
 	{
-		spot = m_spawnSpotVector[ RandomInt( 0, m_spawnSpotVector.Count()-1 ) ]->GetAbsOrigin();
+		spot = m_spawnSpotVector[RandomInt(0, m_spawnSpotVector.Count() - 1)]->GetAbsOrigin();
 	}
 
 	return spot;
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBoss::BecomeEnraged( float duration )
+void CEyeballBoss::BecomeEnraged(float duration)
 {
-	if ( !IsEnraged() )
+	if(!IsEnraged())
 	{
-		EmitSound( "Halloween.EyeballBossBecomeEnraged" );
+		EmitSound("Halloween.EyeballBossBecomeEnraged");
 	}
 
-	m_rageTimer.Start( duration );
+	m_rageTimer.Start(duration);
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBoss::LogPlayerInteraction( const char *verb, CTFPlayer *player )
+void CEyeballBoss::LogPlayerInteraction(const char *verb, CTFPlayer *player)
 {
-	if ( !player || !verb )
+	if(!player || !verb)
 		return;
 
-	if ( !player->GetTeam() )
+	if(!player->GetTeam())
 		return;
 
 	CTFWeaponBase *weapon = player->GetActiveTFWeapon();
 	const char *weaponLogName = NULL;
 
-	if ( weapon )
+	if(weapon)
 	{
-		weaponLogName = WeaponIdToAlias( weapon->GetWeaponID() );
+		weaponLogName = WeaponIdToAlias(weapon->GetWeaponID());
 
 		CEconItemView *pItem = weapon->GetAttributeContainer()->GetItem();
 
-		if ( pItem && pItem->GetStaticData() )
+		if(pItem && pItem->GetStaticData())
 		{
-			if ( pItem->GetStaticData()->GetLogClassname() )
+			if(pItem->GetStaticData()->GetLogClassname())
 			{
 				weaponLogName = pItem->GetStaticData()->GetLogClassname();
 			}
 		}
 	}
 
-	UTIL_LogPrintf( "HALLOWEEN: \"%s<%i><%s><%s>\" %s with \"%s\" (attacker_position \"%d %d %d\")\n",
-					player->GetPlayerName(),
-					player->GetUserID(),
-					player->GetNetworkIDString(),
-					player->GetTeam()->GetName(),
-					verb,
-					weaponLogName ? weaponLogName : "NoWeapon",
-					(int)player->GetAbsOrigin().x,
-					(int)player->GetAbsOrigin().y,
-					(int)player->GetAbsOrigin().z );
+	UTIL_LogPrintf("HALLOWEEN: \"%s<%i><%s><%s>\" %s with \"%s\" (attacker_position \"%d %d %d\")\n",
+				   player->GetPlayerName(), player->GetUserID(), player->GetNetworkIDString(),
+				   player->GetTeam()->GetName(), verb, weaponLogName ? weaponLogName : "NoWeapon",
+				   (int)player->GetAbsOrigin().x, (int)player->GetAbsOrigin().y, (int)player->GetAbsOrigin().z);
 }
 
+//---------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------
+IMPLEMENT_INTENTION_INTERFACE(CEyeballBoss, CEyeballBossBehavior);
 
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-IMPLEMENT_INTENTION_INTERFACE( CEyeballBoss, CEyeballBossBehavior );
-
-
-//---------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------
-CEyeballBossLocomotion::CEyeballBossLocomotion( INextBot *bot ) : ILocomotion( bot )
+CEyeballBossLocomotion::CEyeballBossLocomotion(INextBot *bot) : ILocomotion(bot)
 {
 	Reset();
 }
 
-
 //---------------------------------------------------------------------------------------------
-CEyeballBossLocomotion::~CEyeballBossLocomotion()
-{
-}
-
+CEyeballBossLocomotion::~CEyeballBossLocomotion() {}
 
 //---------------------------------------------------------------------------------------------
 // (EXTEND) reset to initial state
-void CEyeballBossLocomotion::Reset( void )
+void CEyeballBossLocomotion::Reset(void)
 {
 	m_velocity = vec3_origin;
 	m_acceleration = vec3_origin;
@@ -695,18 +666,18 @@ void CEyeballBossLocomotion::Reset( void )
 	m_desiredAltitude = tf_eyeball_boss_hover_height.GetFloat();
 }
 
-
 #ifdef LOW_FLOAT_BUT_HANGS_UP_ON_LEDGES
 //---------------------------------------------------------------------------------------------
-void CEyeballBossLocomotion::MaintainAltitude( void )
+void CEyeballBossLocomotion::MaintainAltitude(void)
 {
 	CBaseCombatCharacter *me = GetBot()->GetEntity();
 
 	trace_t result;
-	CTraceFilterSimpleClassnameList filter( me, COLLISION_GROUP_NONE );
-	filter.AddClassnameToIgnore( "eyeball_boss" );
+	CTraceFilterSimpleClassnameList filter(me, COLLISION_GROUP_NONE);
+	filter.AddClassnameToIgnore("eyeball_boss");
 
-	UTIL_TraceLine( me->GetAbsOrigin(), me->GetAbsOrigin() + Vector( 0, 0, -2000.0f ), MASK_PLAYERSOLID_BRUSHONLY, &filter, &result );
+	UTIL_TraceLine(me->GetAbsOrigin(), me->GetAbsOrigin() + Vector(0, 0, -2000.0f), MASK_PLAYERSOLID_BRUSHONLY, &filter,
+				   &result);
 
 	float groundZ = result.endpos.z;
 
@@ -716,7 +687,7 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 
 	float error = desiredAltitude - currentAltitude;
 
-	float accelZ = clamp( error, -tf_eyeball_boss_acceleration.GetFloat(), tf_eyeball_boss_acceleration.GetFloat() );
+	float accelZ = clamp(error, -tf_eyeball_boss_acceleration.GetFloat(), tf_eyeball_boss_acceleration.GetFloat());
 
 	m_acceleration.z += accelZ;
 }
@@ -725,11 +696,11 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 #define HI_FLOATING
 #ifdef HI_FLOATING
 //---------------------------------------------------------------------------------------------
-void CEyeballBossLocomotion::MaintainAltitude( void )
+void CEyeballBossLocomotion::MaintainAltitude(void)
 {
 	CBaseCombatCharacter *me = GetBot()->GetEntity();
 
-	if ( !me->IsAlive() )
+	if(!me->IsAlive())
 	{
 		m_acceleration.x = 0.0f;
 		m_acceleration.y = 0.0f;
@@ -739,19 +710,18 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 	}
 
 	trace_t result;
-	CTraceFilterSimpleClassnameList filter( me, COLLISION_GROUP_NONE );
-	filter.AddClassnameToIgnore( "eyeball_boss" );
+	CTraceFilterSimpleClassnameList filter(me, COLLISION_GROUP_NONE);
+	filter.AddClassnameToIgnore("eyeball_boss");
 
 	// find ceiling
-	TraceHull( me->GetAbsOrigin(), me->GetAbsOrigin() + Vector( 0, 0, 1000.0f ),
-			   me->WorldAlignMins(), me->WorldAlignMaxs(),
-			   GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
+	TraceHull(me->GetAbsOrigin(), me->GetAbsOrigin() + Vector(0, 0, 1000.0f), me->WorldAlignMins(),
+			  me->WorldAlignMaxs(), GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result);
 
 	float ceiling = result.endpos.z - me->GetAbsOrigin().z;
 
 	Vector aheadXY;
 
-	if ( IsAttemptingToMove() )
+	if(IsAttemptingToMove())
 	{
 		aheadXY.x = m_forward.x;
 		aheadXY.y = m_forward.y;
@@ -763,11 +733,11 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 		aheadXY = vec3_origin;
 	}
 
-	TraceHull( me->GetAbsOrigin() + Vector( 0, 0, ceiling ) + aheadXY * 50.0f,
-			   me->GetAbsOrigin() + Vector( 0, 0, -2000.0f ) + aheadXY * 50.0f,
-			   Vector( 1.25f * me->WorldAlignMins().x, 1.25f * me->WorldAlignMins().y, me->WorldAlignMins().z ),
-			   Vector( 1.25f * me->WorldAlignMaxs().x, 1.25f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z ),
-			   GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
+	TraceHull(me->GetAbsOrigin() + Vector(0, 0, ceiling) + aheadXY * 50.0f,
+			  me->GetAbsOrigin() + Vector(0, 0, -2000.0f) + aheadXY * 50.0f,
+			  Vector(1.25f * me->WorldAlignMins().x, 1.25f * me->WorldAlignMins().y, me->WorldAlignMins().z),
+			  Vector(1.25f * me->WorldAlignMaxs().x, 1.25f * me->WorldAlignMaxs().y, me->WorldAlignMaxs().z),
+			  GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result);
 
 	float groundZ = result.endpos.z;
 
@@ -777,7 +747,7 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 
 	float error = desiredAltitude - currentAltitude;
 
-	float accelZ = clamp( error, -tf_eyeball_boss_acceleration.GetFloat(), tf_eyeball_boss_acceleration.GetFloat() );
+	float accelZ = clamp(error, -tf_eyeball_boss_acceleration.GetFloat(), tf_eyeball_boss_acceleration.GetFloat());
 
 	m_acceleration.z += accelZ;
 }
@@ -785,7 +755,7 @@ void CEyeballBossLocomotion::MaintainAltitude( void )
 
 //---------------------------------------------------------------------------------------------
 // (EXTEND) update internal state
-void CEyeballBossLocomotion::Update( void )
+void CEyeballBossLocomotion::Update(void)
 {
 	CBaseCombatCharacter *me = GetBot()->GetEntity();
 	const float deltaT = GetUpdateInterval();
@@ -798,17 +768,18 @@ void CEyeballBossLocomotion::Update( void )
 	m_forward = m_velocity;
 	m_currentSpeed = m_forward.NormalizeInPlace();
 
-	Vector damping( tf_eyeball_boss_horiz_damping.GetFloat(), tf_eyeball_boss_horiz_damping.GetFloat(), tf_eyeball_boss_vert_damping.GetFloat() );
+	Vector damping(tf_eyeball_boss_horiz_damping.GetFloat(), tf_eyeball_boss_horiz_damping.GetFloat(),
+				   tf_eyeball_boss_vert_damping.GetFloat());
 	Vector totalAccel = m_acceleration - m_velocity * damping;
 
 	m_velocity += totalAccel * deltaT;
-	me->SetAbsVelocity( m_velocity );
+	me->SetAbsVelocity(m_velocity);
 
 	pos += m_velocity * deltaT;
 
 	// check for collisions along move
 	trace_t result;
-	CTraceFilterSkipClassname filter( me, "eyeball_boss", COLLISION_GROUP_NONE );
+	CTraceFilterSkipClassname filter(me, "eyeball_boss", COLLISION_GROUP_NONE);
 	Vector from = me->GetAbsOrigin();
 	Vector to = pos;
 	Vector desiredGoal = to;
@@ -820,17 +791,18 @@ void CEyeballBossLocomotion::Update( void )
 
 	bool didHitWorld = false;
 
-	while( true )
+	while(true)
 	{
-		TraceHull( from, desiredGoal, me->WorldAlignMins(), me->WorldAlignMaxs(), GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result );
+		TraceHull(from, desiredGoal, me->WorldAlignMins(), me->WorldAlignMaxs(),
+				  GetBot()->GetBodyInterface()->GetSolidMask(), &filter, &result);
 
-		if ( !result.DidHit() )
+		if(!result.DidHit())
 		{
 			resolvedGoal = pos;
 			break;
 		}
 
-		if ( result.DidHitWorld() )
+		if(result.DidHitWorld())
 		{
 			didHitWorld = true;
 		}
@@ -839,20 +811,20 @@ void CEyeballBossLocomotion::Update( void )
 		surfaceNormal += result.plane.normal;
 
 		// If we hit really close to our target, then stop
-		if ( !result.startsolid && desiredGoal.DistToSqr( result.endpos ) < 1.0f )
+		if(!result.startsolid && desiredGoal.DistToSqr(result.endpos) < 1.0f)
 		{
 			resolvedGoal = result.endpos;
 			break;
 		}
 
-		if ( result.startsolid )
+		if(result.startsolid)
 		{
 			// stuck inside solid; don't move
 			resolvedGoal = me->GetAbsOrigin();
 			break;
 		}
 
-		if ( --recursionLimit <= 0 )
+		if(--recursionLimit <= 0)
 		{
 			// reached recursion limit, no more adjusting allowed
 			resolvedGoal = result.endpos;
@@ -861,16 +833,16 @@ void CEyeballBossLocomotion::Update( void )
 
 		// slide off of surface we hit
 		Vector fullMove = desiredGoal - from;
-		Vector leftToMove = fullMove * ( 1.0f - result.fraction );
+		Vector leftToMove = fullMove * (1.0f - result.fraction);
 
-		float blocked = DotProduct( result.plane.normal, leftToMove );
+		float blocked = DotProduct(result.plane.normal, leftToMove);
 
 		Vector unconstrained = fullMove - blocked * result.plane.normal;
 
 		// check for collisions along remainder of move
 		// But don't bother if we're not going to deflect much
 		Vector remainingMove = from + unconstrained;
-		if ( remainingMove.DistToSqr( result.endpos ) < 1.0f )
+		if(remainingMove.DistToSqr(result.endpos) < 1.0f)
 		{
 			resolvedGoal = result.endpos;
 			break;
@@ -879,28 +851,27 @@ void CEyeballBossLocomotion::Update( void )
 		desiredGoal = remainingMove;
 	}
 
-	if ( hitCount > 0 )
+	if(hitCount > 0)
 	{
 		surfaceNormal.NormalizeInPlace();
 
 		// bounce
-		m_velocity = m_velocity - 2.0f * DotProduct( m_velocity, surfaceNormal ) * surfaceNormal;
+		m_velocity = m_velocity - 2.0f * DotProduct(m_velocity, surfaceNormal) * surfaceNormal;
 
-		if ( didHitWorld )
+		if(didHitWorld)
 		{
-			//me->EmitSound( "Minion.Bounce" );
+			// me->EmitSound( "Minion.Bounce" );
 		}
 	}
 
-	GetBot()->GetEntity()->SetAbsOrigin( result.endpos );
+	GetBot()->GetEntity()->SetAbsOrigin(result.endpos);
 
 	m_acceleration = vec3_origin;
 }
 
-
 //---------------------------------------------------------------------------------------------
 // (EXTEND) move directly towards the given position
-void CEyeballBossLocomotion::Approach( const Vector &goalPos, float goalWeight )
+void CEyeballBossLocomotion::Approach(const Vector &goalPos, float goalWeight)
 {
 	Vector flyGoal = goalPos;
 	flyGoal.z += m_desiredAltitude;
@@ -913,38 +884,33 @@ void CEyeballBossLocomotion::Approach( const Vector &goalPos, float goalWeight )
 	m_acceleration += tf_eyeball_boss_acceleration.GetFloat() * toGoal;
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBossLocomotion::SetDesiredSpeed( float speed )
+void CEyeballBossLocomotion::SetDesiredSpeed(float speed)
 {
 	m_desiredSpeed = speed;
 }
 
-
 //---------------------------------------------------------------------------------------------
-float CEyeballBossLocomotion::GetDesiredSpeed( void ) const
+float CEyeballBossLocomotion::GetDesiredSpeed(void) const
 {
 	return m_desiredSpeed;
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBossLocomotion::SetDesiredAltitude( float height )
+void CEyeballBossLocomotion::SetDesiredAltitude(float height)
 {
 	m_desiredAltitude = height;
 }
 
-
 //---------------------------------------------------------------------------------------------
-float CEyeballBossLocomotion::GetDesiredAltitude( void ) const
+float CEyeballBossLocomotion::GetDesiredAltitude(void) const
 {
 	return m_desiredAltitude;
 }
 
-
 //---------------------------------------------------------------------------------------------
 // Face along path. Since we float, only face horizontally.
-void CEyeballBossLocomotion::FaceTowards( const Vector &target )
+void CEyeballBossLocomotion::FaceTowards(const Vector &target)
 {
 	CBaseCombatCharacter *me = GetBot()->GetEntity();
 
@@ -952,53 +918,49 @@ void CEyeballBossLocomotion::FaceTowards( const Vector &target )
 	toTarget.z = 0.0f;
 
 	QAngle angles;
-	VectorAngles( toTarget, angles );
+	VectorAngles(toTarget, angles);
 
-	me->SetAbsAngles( angles );
+	me->SetAbsAngles(angles);
 }
-
 
 //---------------------------------------------------------------------------------------------
 // return position of "feet" - the driving point where the bot contacts the ground
 // for this floating boss, "feet" refers to the ground directly underneath him
-const Vector &CEyeballBossLocomotion::GetFeet( void ) const
+const Vector &CEyeballBossLocomotion::GetFeet(void) const
 {
 	static Vector feet;
 	CBaseCombatCharacter *me = GetBot()->GetEntity();
 
 	trace_t result;
-	CTraceFilterSimpleClassnameList filter( me, COLLISION_GROUP_NONE );
-	filter.AddClassnameToIgnore( "eyeball_boss" );
+	CTraceFilterSimpleClassnameList filter(me, COLLISION_GROUP_NONE);
+	filter.AddClassnameToIgnore("eyeball_boss");
 
 	feet = me->GetAbsOrigin();
 
-	UTIL_TraceLine( feet, feet + Vector( 0, 0, -2000.0f ), MASK_PLAYERSOLID_BRUSHONLY, &filter, &result );
+	UTIL_TraceLine(feet, feet + Vector(0, 0, -2000.0f), MASK_PLAYERSOLID_BRUSHONLY, &filter, &result);
 
 	feet.z = result.endpos.z;
 
 	return feet;
 }
 
-
-
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
-CEyeballBossBody::CEyeballBossBody( INextBot *bot ) : CBotNPCBody( bot )
+CEyeballBossBody::CEyeballBossBody(INextBot *bot) : CBotNPCBody(bot)
 {
 	m_leftRightPoseParameter = -1;
 	m_upDownPoseParameter = -1;
 	m_lookAtSpot = vec3_origin;
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBossBody::Update( void )
+void CEyeballBossBody::Update(void)
 {
 	CBaseCombatCharacter *me = GetBot()->GetEntity();
 
 	// track client-side rotation
 	Vector myForward;
-	me->GetVectors( &myForward, NULL, NULL );
+	me->GetVectors(&myForward, NULL, NULL);
 
 	const float myApproachRate = 3.0f; // 1.0f;
 
@@ -1009,41 +971,42 @@ void CEyeballBossBody::Update( void )
 	myForward.NormalizeInPlace();
 
 	QAngle myNewAngles;
-	VectorAngles( myForward, myNewAngles );
+	VectorAngles(myForward, myNewAngles);
 
-	me->SetAbsAngles( myNewAngles );
+	me->SetAbsAngles(myNewAngles);
 
-	if ( tf_eyeball_boss_debug.GetBool() )
+	if(tf_eyeball_boss_debug.GetBool())
 	{
-		NDebugOverlay::Line( me->WorldSpaceCenter(), me->WorldSpaceCenter() + 150.0f * myForward, 255, 255, 0, true, 0.1f );
+		NDebugOverlay::Line(me->WorldSpaceCenter(), me->WorldSpaceCenter() + 150.0f * myForward, 255, 255, 0, true,
+							0.1f);
 	}
 
 	// move the animation ahead in time
 	me->StudioFrameAdvance();
-	me->DispatchAnimEvents( me );
+	me->DispatchAnimEvents(me);
 }
-
 
 //---------------------------------------------------------------------------------------------
 // Aim the bot's head towards the given goal
-void CEyeballBossBody::AimHeadTowards( const Vector &lookAtPos, LookAtPriorityType priority, float duration, INextBotReply *replyWhenAimed, const char *reason )
+void CEyeballBossBody::AimHeadTowards(const Vector &lookAtPos, LookAtPriorityType priority, float duration,
+									  INextBotReply *replyWhenAimed, const char *reason)
 {
 	CEyeballBoss *me = (CEyeballBoss *)GetBot()->GetEntity();
 
 	m_lookAtSpot = lookAtPos;
-	me->SetLookAtTarget( lookAtPos );
+	me->SetLookAtTarget(lookAtPos);
 }
-
 
 //---------------------------------------------------------------------------------------------
 // Continually aim the bot's head towards the given subject
-void CEyeballBossBody::AimHeadTowards( CBaseEntity *subject, LookAtPriorityType priority, float duration, INextBotReply *replyWhenAimed, const char *reason )
+void CEyeballBossBody::AimHeadTowards(CBaseEntity *subject, LookAtPriorityType priority, float duration,
+									  INextBotReply *replyWhenAimed, const char *reason)
 {
 	CEyeballBoss *me = (CEyeballBoss *)GetBot()->GetEntity();
 
-	me->SetLookAtTarget( subject->EyePosition() );
+	me->SetLookAtTarget(subject->EyePosition());
 
-	if ( !subject )
+	if(!subject)
 		return;
 
 	m_lookAtSpot = subject->EyePosition();

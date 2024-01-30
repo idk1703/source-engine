@@ -13,9 +13,8 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 // Global off switch for hint system
-static ConVar tf2_hintsystem( "tf2_hintsystem", "0", 0, "Enable interface hints in TF2." );
+static ConVar tf2_hintsystem("tf2_hintsystem", "0", 0, "Enable interface hints in TF2.");
 static C_TFHintManager *g_pHintManager = NULL;
 
 #define HINT_DISPLAY_STATS_FILE "scripts/hintdisplaystats.txt"
@@ -26,44 +25,45 @@ static float g_flLastEscapeKeyTime = -1.0f;
 // Input  : *panel -
 // Output : static void
 //-----------------------------------------------------------------------------
-static void PositionPanel( C_TFBaseHint *panel )
+static void PositionPanel(C_TFBaseHint *panel)
 {
 	int w, h;
-	panel->GetSize( w, h );
+	panel->GetSize(w, h);
 
-	int x = ( ScreenWidth() - w ) / 2;
-	int y = ( ScreenHeight() - h ) / 2;
+	int x = (ScreenWidth() - w) / 2;
+	int y = (ScreenHeight() - h) / 2;
 
-	panel->SetPos( x, y );
+	panel->SetPos(x, y);
 
-	panel->SetDesiredPosition( ScreenWidth() - w - 10, y - 75 );
+	panel->SetDesiredPosition(ScreenWidth() - w - 10, y - 75);
 }
 
 IMPLEMENT_CLIENTCLASS_DT_NOBASE(C_TFHintManager, DT_TFHintManager, CTFHintManager)
-END_RECV_TABLE()
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-C_TFHintManager::C_TFHintManager( void )
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_TFHintManager::C_TFHintManager(void)
 {
 	g_pHintManager = this;
 
-	m_pkvHintSystem = new KeyValues( "HintSystem" );
-	if ( m_pkvHintSystem )
+	m_pkvHintSystem = new KeyValues("HintSystem");
+	if(m_pkvHintSystem)
 	{
-		bool valid = m_pkvHintSystem->LoadFromFile( filesystem, "scripts//hintsystem.txt" );
-		if ( !valid )
+		bool valid = m_pkvHintSystem->LoadFromFile(filesystem, "scripts//hintsystem.txt");
+		if(!valid)
 		{
 			m_pkvHintSystem->deleteThis();
 			m_pkvHintSystem = NULL;
 		}
 	}
 
-	m_pkvHintDisplayStats = new KeyValues( "HintDisplayStats" );
-	if ( m_pkvHintDisplayStats )
+	m_pkvHintDisplayStats = new KeyValues("HintDisplayStats");
+	if(m_pkvHintDisplayStats)
 	{
-		m_pkvHintDisplayStats->LoadFromFile( filesystem, HINT_DISPLAY_STATS_FILE );
+		m_pkvHintDisplayStats->LoadFromFile(filesystem, HINT_DISPLAY_STATS_FILE);
 	}
 }
 
@@ -71,31 +71,31 @@ C_TFHintManager::C_TFHintManager( void )
 // Purpose:
 // Output : KeyValues
 //-----------------------------------------------------------------------------
-KeyValues *C_TFHintManager::GetHintKeyValues( void )
+KeyValues *C_TFHintManager::GetHintKeyValues(void)
 {
 	return m_pkvHintSystem;
 }
 
-KeyValues *C_TFHintManager::GetHintDisplayStats( void )
+KeyValues *C_TFHintManager::GetHintDisplayStats(void)
 {
 	return m_pkvHintDisplayStats;
 }
 
-void C_TFHintManager::OnDataChanged( DataUpdateType_t updateType )
+void C_TFHintManager::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
 	// Think right away
-	if ( updateType ==  DATA_UPDATE_CREATED )
-		SetNextClientThink( 0.0f );
+	if(updateType == DATA_UPDATE_CREATED)
+		SetNextClientThink(0.0f);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Remove complete hints, and activate next highest priority hint
 //-----------------------------------------------------------------------------
-void C_TFHintManager::ClientThink( void )
+void C_TFHintManager::ClientThink(void)
 {
-	SetNextClientThink( gpGlobals->curtime + 1.0 );
+	SetNextClientThink(gpGlobals->curtime + 1.0);
 
 	int i;
 	int highestPriority = -1;
@@ -103,24 +103,24 @@ void C_TFHintManager::ClientThink( void )
 	bool anyVisible = false;
 
 	// See if any of the hints are completed, otherwise, store off the highest priority one
-	for ( i = m_aHints.Size() - 1; i >= 0; i-- )
+	for(i = m_aHints.Size() - 1; i >= 0; i--)
 	{
-		C_TFBaseHint *hint = m_aHints[ i ];
+		C_TFBaseHint *hint = m_aHints[i];
 
 		// See if it should just be deleted
-		if ( hint && hint->GetCompleted() )
+		if(hint && hint->GetCompleted())
 		{
-			m_aHints.Remove( i );
+			m_aHints.Remove(i);
 			delete hint;
 			continue;
 		}
 
-		if ( hint->IsVisible() )
+		if(hint->IsVisible())
 		{
 			anyVisible = true;
 		}
 
-		if ( !best || ( hint->GetPriority() > highestPriority ) )
+		if(!best || (hint->GetPriority() > highestPriority))
 		{
 			highestPriority = hint->GetPriority();
 			best = hint;
@@ -128,13 +128,13 @@ void C_TFHintManager::ClientThink( void )
 	}
 
 	// Last hint finished, show next best one
-	if ( !anyVisible )
+	if(!anyVisible)
 	{
 		// Now hide all but best one
-		for ( i = 0; i < m_aHints.Size(); i++ )
+		for(i = 0; i < m_aHints.Size(); i++)
 		{
-			C_TFBaseHint *hint = m_aHints[ i ];
-			hint->SetVisible( hint == best );
+			C_TFBaseHint *hint = m_aHints[i];
+			hint->SetVisible(hint == best);
 		}
 	}
 }
@@ -146,27 +146,27 @@ void C_TFHintManager::ClientThink( void )
 //			priority -
 //			entityIndex -
 //-----------------------------------------------------------------------------
-C_TFBaseHint *C_TFHintManager::AddHint( int hintID, const char *subsection, int entityIndex, int maxduplicates )
+C_TFBaseHint *C_TFHintManager::AddHint(int hintID, const char *subsection, int entityIndex, int maxduplicates)
 {
-	if ( !tf2_hintsystem.GetBool() )
+	if(!tf2_hintsystem.GetBool())
 		return NULL;
 
 	// Don't add the same hint more than once unless maxduplicates >= 1 has been specifically requested
-	int count = CountInstancesOfHintID( hintID );
-	if ( count > maxduplicates )
+	int count = CountInstancesOfHintID(hintID);
+	if(count > maxduplicates)
 	{
 		return NULL;
 	}
 
-	C_TFBaseHint *hint = C_TFBaseHint::CreateHint( hintID, subsection, entityIndex );
-	if ( hint )
+	C_TFBaseHint *hint = C_TFBaseHint::CreateHint(hintID, subsection, entityIndex);
+	if(hint)
 	{
 		// Force it to compute it's exact size
 		hint->PerformLayout();
 
-		PositionPanel( hint );
+		PositionPanel(hint);
 
-		m_aHints.AddToTail( hint );
+		m_aHints.AddToTail(hint);
 	}
 
 	return hint;
@@ -175,11 +175,11 @@ C_TFBaseHint *C_TFHintManager::AddHint( int hintID, const char *subsection, int 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_TFHintManager::ClearHints( void )
+void C_TFHintManager::ClearHints(void)
 {
-	for ( int i = 0; i < m_aHints.Size(); i++ )
+	for(int i = 0; i < m_aHints.Size(); i++)
 	{
-		C_TFBaseHint *hint = m_aHints[ i ];
+		C_TFBaseHint *hint = m_aHints[i];
 		delete hint;
 	}
 
@@ -191,22 +191,22 @@ void C_TFHintManager::ClearHints( void )
 // Input  : playerIndex -
 //			hintID -
 //-----------------------------------------------------------------------------
-void C_TFHintManager::CompleteHint( int hintID, bool visibleOnly )
+void C_TFHintManager::CompleteHint(int hintID, bool visibleOnly)
 {
-	for ( int i = m_aHints.Size() - 1; i >= 0; i-- )
+	for(int i = m_aHints.Size() - 1; i >= 0; i--)
 	{
-		C_TFBaseHint *hint = m_aHints[ i ];
-		if ( !hint )
+		C_TFBaseHint *hint = m_aHints[i];
+		if(!hint)
 			continue;
 
-		if ( hint->GetID() != hintID )
+		if(hint->GetID() != hintID)
 			continue;
 
-		if ( visibleOnly && !hint->IsVisible() )
+		if(visibleOnly && !hint->IsVisible())
 			continue;
 
 		delete hint;
-		m_aHints.Remove( i );
+		m_aHints.Remove(i);
 		return;
 	}
 }
@@ -217,13 +217,13 @@ void C_TFHintManager::CompleteHint( int hintID, bool visibleOnly )
 //			hintID -
 // Output :	Number of instances in list
 //-----------------------------------------------------------------------------
-int C_TFHintManager::CountInstancesOfHintID( int hintID )
+int C_TFHintManager::CountInstancesOfHintID(int hintID)
 {
 	int c = 0;
-	for ( int i = m_aHints.Size() - 1; i >= 0; i-- )
+	for(int i = m_aHints.Size() - 1; i >= 0; i--)
 	{
-		C_TFBaseHint *hint = m_aHints[ i ];
-		if ( hint && hint->GetID() == hintID )
+		C_TFBaseHint *hint = m_aHints[i];
+		if(hint && hint->GetID() == hintID)
 		{
 			c++;
 		}
@@ -237,12 +237,12 @@ int C_TFHintManager::CountInstancesOfHintID( int hintID )
 // Input  : playerIndex -
 // Output : int
 //-----------------------------------------------------------------------------
-int C_TFHintManager::GetCurrentHintID( void )
+int C_TFHintManager::GetCurrentHintID(void)
 {
-	for ( int i = m_aHints.Size() - 1; i >= 0; i-- )
+	for(int i = m_aHints.Size() - 1; i >= 0; i--)
 	{
-		C_TFBaseHint *hint = m_aHints[ i ];
-		if ( hint && hint->IsVisible() )
+		C_TFBaseHint *hint = m_aHints[i];
+		if(hint && hint->IsVisible())
 		{
 			return hint->GetID();
 		}
@@ -254,29 +254,29 @@ int C_TFHintManager::GetCurrentHintID( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_TFHintManager::ResetDisplayStats( void )
+void C_TFHintManager::ResetDisplayStats(void)
 {
-	if ( !m_pkvHintDisplayStats )
+	if(!m_pkvHintDisplayStats)
 	{
-		Assert( 0 );
+		Assert(0);
 		return;
 	}
 
 	KeyValues *kv = m_pkvHintDisplayStats->GetFirstSubKey();
-	while ( kv )
+	while(kv)
 	{
 		KeyValues *subKey = kv->GetFirstSubKey();
-		if ( subKey && stricmp( subKey->GetName(), "times_shown") )
+		if(subKey && stricmp(subKey->GetName(), "times_shown"))
 		{
-			while ( subKey )
+			while(subKey)
 			{
-				subKey->SetString( "times_shown", "0" );
+				subKey->SetString("times_shown", "0");
 				subKey = subKey->GetNextKey();
 			}
 		}
 		else
 		{
-			kv->SetString( "times_shown", "0" );
+			kv->SetString("times_shown", "0");
 		}
 
 		kv = kv->GetNextKey();
@@ -290,14 +290,15 @@ void C_TFHintManager::ResetDisplayStats( void )
 //			1 -
 //			-1 -
 //-----------------------------------------------------------------------------
-C_TFBaseHint *CreateGlobalHint( int hintid, const char *subsection /*=NULL*/, int entity /*= -1*/, int maxduplicates /*=0*/ )
+C_TFBaseHint *CreateGlobalHint(int hintid, const char *subsection /*=NULL*/, int entity /*= -1*/,
+							   int maxduplicates /*=0*/)
 {
-	if ( !g_pHintManager )
+	if(!g_pHintManager)
 	{
 		return NULL;
 	}
 
-	return g_pHintManager->AddHint( hintid, subsection, entity, maxduplicates );
+	return g_pHintManager->AddHint(hintid, subsection, entity, maxduplicates);
 }
 
 //-----------------------------------------------------------------------------
@@ -307,17 +308,17 @@ C_TFBaseHint *CreateGlobalHint( int hintid, const char *subsection /*=NULL*/, in
 //			1 -
 //			-1 -
 //-----------------------------------------------------------------------------
-C_TFBaseHint *CreateGlobalHint_Panel( vgui::Panel *targetPanel, int hintid, const char *subsection /*=NULL*/, int entity /*= -1*/, int maxduplicates /*=0*/ )
+C_TFBaseHint *CreateGlobalHint_Panel(vgui::Panel *targetPanel, int hintid, const char *subsection /*=NULL*/,
+									 int entity /*= -1*/, int maxduplicates /*=0*/)
 {
-	C_TFBaseHint *hint = CreateGlobalHint( hintid, subsection, entity, maxduplicates );
-	if ( hint )
+	C_TFBaseHint *hint = CreateGlobalHint(hintid, subsection, entity, maxduplicates);
+	if(hint)
 	{
 		// Find an appropriate position near the panel
-		hint->SetHintTarget( targetPanel );
+		hint->SetHintTarget(targetPanel);
 	}
 	return hint;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Trap the escape key when a hint is showing
@@ -327,33 +328,33 @@ C_TFBaseHint *CreateGlobalHint_Panel( vgui::Panel *targetPanel, int hintid, cons
 // Hitting escape twice withing this amount of seconds will clear all hints pending
 #define ENTER_DOUBLETAP_TIME 1.0f
 
-bool HintSystemEscapeKey( void )
+bool HintSystemEscapeKey(void)
 {
-	if ( !g_pHintManager )
+	if(!g_pHintManager)
 		return false;
 
 	int hintID = g_pHintManager->GetCurrentHintID();
-	if ( hintID != TF_HINT_UNDEFINED )
+	if(hintID != TF_HINT_UNDEFINED)
 	{
 		bool killall = false;
 
 		float curtime = gpGlobals->curtime;
 		float dt = curtime - g_flLastEscapeKeyTime;
 
-		if ( dt < ENTER_DOUBLETAP_TIME )
+		if(dt < ENTER_DOUBLETAP_TIME)
 		{
 			killall = true;
 		}
 
 		g_flLastEscapeKeyTime = curtime;
 
-		if ( killall )
+		if(killall)
 		{
 			g_pHintManager->ClearHints();
 		}
 		else
 		{
-			g_pHintManager->CompleteHint( hintID, true );
+			g_pHintManager->CompleteHint(hintID, true);
 		}
 		// Swallow the escape key
 		return true;
@@ -366,21 +367,21 @@ bool HintSystemEscapeKey( void )
 // Purpose:
 // Input  : hindid -
 //-----------------------------------------------------------------------------
-void DestroyGlobalHint( int hintid )
+void DestroyGlobalHint(int hintid)
 {
-	if ( !g_pHintManager )
+	if(!g_pHintManager)
 		return;
 
-	g_pHintManager->CompleteHint( hintid, false );
+	g_pHintManager->CompleteHint(hintid, false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : KeyValues
 //-----------------------------------------------------------------------------
-KeyValues *GetHintKeyValues( void )
+KeyValues *GetHintKeyValues(void)
 {
-	if ( !g_pHintManager )
+	if(!g_pHintManager)
 		return NULL;
 
 	return g_pHintManager->GetHintKeyValues();
@@ -390,9 +391,9 @@ KeyValues *GetHintKeyValues( void )
 // Purpose:
 // Output : KeyValues
 //-----------------------------------------------------------------------------
-KeyValues *GetHintDisplayStats( void )
+KeyValues *GetHintDisplayStats(void)
 {
-	if ( !g_pHintManager )
+	if(!g_pHintManager)
 		return NULL;
 
 	return g_pHintManager->GetHintDisplayStats();
@@ -401,27 +402,27 @@ KeyValues *GetHintDisplayStats( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void ResetDisplayStats( void )
+void ResetDisplayStats(void)
 {
-	if ( g_pHintManager )
+	if(g_pHintManager)
 	{
 		g_pHintManager->ResetDisplayStats();
 	}
 }
 
-static ConCommand tf2_hintreset( "tf2_hintreset", ResetDisplayStats, 0, FCVAR_CHEAT );
+static ConCommand tf2_hintreset("tf2_hintreset", ResetDisplayStats, 0, FCVAR_CHEAT);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_TFHintManager::~C_TFHintManager( void )
+C_TFHintManager::~C_TFHintManager(void)
 {
 	ClearHints();
 	g_pHintManager = NULL;
 	m_pkvHintSystem->deleteThis();
-	if ( m_pkvHintDisplayStats )
+	if(m_pkvHintDisplayStats)
 	{
-		m_pkvHintDisplayStats->SaveToFile( filesystem, HINT_DISPLAY_STATS_FILE );
+		m_pkvHintDisplayStats->SaveToFile(filesystem, HINT_DISPLAY_STATS_FILE);
 	}
 	m_pkvHintDisplayStats->deleteThis();
 }

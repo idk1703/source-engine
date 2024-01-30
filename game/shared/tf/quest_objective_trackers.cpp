@@ -14,19 +14,18 @@
 #include "schemainitutils.h"
 #include "econ_item_system.h"
 #ifdef CLIENT_DLL
-	#include "quest_log_panel.h"
+#include "quest_log_panel.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#if defined( DEBUG ) || defined( STAGING_ONLY )
-ConVar tf_quests_commit_every_point( "tf_quests_commit_every_point", "0", FCVAR_REPLICATED );
-ConVar tf_quests_progress_enabled( "tf_quests_progress_enabled", "1", FCVAR_REPLICATED );
+#if defined(DEBUG) || defined(STAGING_ONLY)
+ConVar tf_quests_commit_every_point("tf_quests_commit_every_point", "0", FCVAR_REPLICATED);
+ConVar tf_quests_progress_enabled("tf_quests_progress_enabled", "1", FCVAR_REPLICATED);
 #endif
 
-
-CQuestObjectiveManager *QuestObjectiveManager( void )
+CQuestObjectiveManager *QuestObjectiveManager(void)
 {
 	static CQuestObjectiveManager g_QuestObjectiveManager;
 	return &g_QuestObjectiveManager;
@@ -35,29 +34,28 @@ CQuestObjectiveManager *QuestObjectiveManager( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker( const CTFQuestObjectiveDefinition* pObjective, CQuestItemTracker* pParent )
-	: m_nObjectiveDefIndex( pObjective->GetDefinitionIndex() )
-	, m_pParent( pParent )
-	, m_pEvaluator( NULL )
+CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker(const CTFQuestObjectiveDefinition *pObjective,
+													   CQuestItemTracker *pParent)
+	: m_nObjectiveDefIndex(pObjective->GetDefinitionIndex()), m_pParent(pParent), m_pEvaluator(NULL)
 {
 	KeyValues *pKVConditions = pObjective->GetConditionsKeyValues();
 
-	AssertMsg( !m_pEvaluator, "%s", CFmtStr( "Too many input for operator '%s'.", GetConditionName() ).Get() );
+	AssertMsg(!m_pEvaluator, "%s", CFmtStr("Too many input for operator '%s'.", GetConditionName()).Get());
 
-	const char *pszType = pKVConditions->GetString( "type" );
-	m_pEvaluator = CreateEvaluatorByName( pszType, this );
-	AssertMsg( m_pEvaluator != NULL, "%s", CFmtStr( "Failed to create quest condition name '%s' for '%s'", pszType, GetConditionName() ).Get() );
+	const char *pszType = pKVConditions->GetString("type");
+	m_pEvaluator = CreateEvaluatorByName(pszType, this);
+	AssertMsg(m_pEvaluator != NULL, "%s",
+			  CFmtStr("Failed to create quest condition name '%s' for '%s'", pszType, GetConditionName()).Get());
 
-	SO_TRACKER_SPEW( CFmtStr( "Creating objective tracker def %d for quest def %d on item %llu for user %s\n",
-							  pObjective->GetDefinitionIndex(),
-							  pParent->GetItem()->GetItemDefinition()->GetDefinitionIndex(),
-							  pParent->GetItem()->GetID(),
-							  pParent->GetOwnerSteamID().Render() ),
-					 SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT );
+	SO_TRACKER_SPEW(CFmtStr("Creating objective tracker def %d for quest def %d on item %llu for user %s\n",
+							pObjective->GetDefinitionIndex(),
+							pParent->GetItem()->GetItemDefinition()->GetDefinitionIndex(), pParent->GetItem()->GetID(),
+							pParent->GetOwnerSteamID().Render()),
+					SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT);
 
-	if ( !m_pEvaluator->BInitFromKV( pKVConditions, NULL ) )
+	if(!m_pEvaluator->BInitFromKV(pKVConditions, NULL))
 	{
-		AssertMsg( false, "Failed to init from KeyValues" );
+		AssertMsg(false, "Failed to init from KeyValues");
 	}
 }
 
@@ -66,7 +64,7 @@ CBaseQuestObjectiveTracker::CBaseQuestObjectiveTracker( const CTFQuestObjectiveD
 //-----------------------------------------------------------------------------
 CBaseQuestObjectiveTracker::~CBaseQuestObjectiveTracker()
 {
-	if ( m_pEvaluator )
+	if(m_pEvaluator)
 	{
 		delete m_pEvaluator;
 	}
@@ -75,9 +73,10 @@ CBaseQuestObjectiveTracker::~CBaseQuestObjectiveTracker()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CBaseQuestObjectiveTracker::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReasonsContainer_t& invalidReasons ) const
+bool CBaseQuestObjectiveTracker::IsValidForPlayer(const CTFPlayer *pOwner,
+												  InvalidReasonsContainer_t &invalidReasons) const
 {
-	return m_pEvaluator->IsValidForPlayer( pOwner, invalidReasons );
+	return m_pEvaluator->IsValidForPlayer(pOwner, invalidReasons);
 }
 
 //-----------------------------------------------------------------------------
@@ -91,12 +90,12 @@ const CTFPlayer *CBaseQuestObjectiveTracker::GetQuestOwner() const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseQuestObjectiveTracker::EvaluateCondition( CTFQuestEvaluator *pSender, int nScore )
+void CBaseQuestObjectiveTracker::EvaluateCondition(CTFQuestEvaluator *pSender, int nScore)
 {
 #ifdef GAME_DLL
 	// tracker should be the root
-	Assert( !GetParent() );
-	IncrementCount( nScore );
+	Assert(!GetParent());
+	IncrementCount(nScore);
 	ResetCondition();
 #endif
 }
@@ -114,94 +113,91 @@ void CBaseQuestObjectiveTracker::ResetCondition()
 //-----------------------------------------------------------------------------
 bool CBaseQuestObjectiveTracker::UpdateConditions()
 {
-	const CTFQuestObjectiveDefinition *pObjective = (CTFQuestObjectiveDefinition*)ItemSystem()->GetItemSchema()->GetQuestObjectiveByDefIndex( m_nObjectiveDefIndex );
-	if ( !pObjective )
+	const CTFQuestObjectiveDefinition *pObjective =
+		(CTFQuestObjectiveDefinition *)ItemSystem()->GetItemSchema()->GetQuestObjectiveByDefIndex(m_nObjectiveDefIndex);
+	if(!pObjective)
 		return false;
 
 	// clean up previous evaluator
-	if ( m_pEvaluator )
+	if(m_pEvaluator)
 	{
 		delete m_pEvaluator;
 		m_pEvaluator = NULL;
 	}
 
-	CUtlVector< CUtlString > vecErrors;
-	return BInitFromKV( pObjective->GetConditionsKeyValues(), &vecErrors );
+	CUtlVector<CUtlString> vecErrors;
+	return BInitFromKV(pObjective->GetConditionsKeyValues(), &vecErrors);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const CTFPlayer* CBaseQuestObjectiveTracker::GetTrackedPlayer() const
+const CTFPlayer *CBaseQuestObjectiveTracker::GetTrackedPlayer() const
 {
 #ifdef CLIENT_DLL
-	return ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
+	return ToTFPlayer(C_BasePlayer::GetLocalPlayer());
 #else
 	return m_pParent->GetTrackedPlayer();
 #endif
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBaseQuestObjectiveTracker::IncrementCount( int nIncrementValue )
+void CBaseQuestObjectiveTracker::IncrementCount(int nIncrementValue)
 {
-	const CTFQuestObjectiveDefinition *pObjective = (CTFQuestObjectiveDefinition*)ItemSystem()->GetItemSchema()->GetQuestObjectiveByDefIndex( m_nObjectiveDefIndex );
-	Assert( pObjective );
-	if ( !pObjective )
+	const CTFQuestObjectiveDefinition *pObjective =
+		(CTFQuestObjectiveDefinition *)ItemSystem()->GetItemSchema()->GetQuestObjectiveByDefIndex(m_nObjectiveDefIndex);
+	Assert(pObjective);
+	if(!pObjective)
 		return;
 
 	uint32 nPointsToAdd = nIncrementValue * pObjective->GetPoints();
-	m_pParent->IncrementCount( nPointsToAdd, pObjective );
+	m_pParent->IncrementCount(nPointsToAdd, pObjective);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID SteamIDOwner, CSOTrackerManager* pManager )
-	: CBaseSOTracker( pItem, SteamIDOwner, pManager )
-	, m_pItem( NULL )
-	, m_nStandardPoints( 0 )
-	, m_nBonusPoints( 0 )
+CQuestItemTracker::CQuestItemTracker(const CSharedObject *pItem, CSteamID SteamIDOwner, CSOTrackerManager *pManager)
+	: CBaseSOTracker(pItem, SteamIDOwner, pManager),
+	  m_pItem(NULL),
+	  m_nStandardPoints(0),
+	  m_nBonusPoints(0)
 #ifdef GAME_DLL
-	, m_nStartingStandardPoints( 0 )
-	, m_nStartingBonusPoints( 0 )
+	  ,
+	  m_nStartingStandardPoints(0),
+	  m_nStartingBonusPoints(0)
 #endif
 {
-	m_pItem = assert_cast< const CEconItem* >( pItem );
+	m_pItem = assert_cast<const CEconItem *>(pItem);
 	// Retrieve starting numbers
 	UpdatePointsFromSOItem();
 
-	SO_TRACKER_SPEW( CFmtStr( "Creating tracker for quest %d on item %llu for user %s with %dsp and %dbp\n",
-							  GetItem()->GetItemDefinition()->GetDefinitionIndex(),
-							  GetItem()->GetID(),
-							  GetOwnerSteamID().Render(),
-							  GetEarnedStandardPoints(),
-							  GetEarnedBonusPoints() ),
-					 SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
+	SO_TRACKER_SPEW(CFmtStr("Creating tracker for quest %d on item %llu for user %s with %dsp and %dbp\n",
+							GetItem()->GetItemDefinition()->GetDefinitionIndex(), GetItem()->GetID(),
+							GetOwnerSteamID().Render(), GetEarnedStandardPoints(), GetEarnedBonusPoints()),
+					SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT);
 
 	// Create trackers for each objective
 	QuestObjectiveDefVec_t vecChosenObjectives;
-	m_pItem->GetItemDefinition()->GetQuestDef()->GetRolledObjectivesForItem( vecChosenObjectives, m_pItem );
-	FOR_EACH_VEC( vecChosenObjectives, i )
+	m_pItem->GetItemDefinition()->GetQuestDef()->GetRolledObjectivesForItem(vecChosenObjectives, m_pItem);
+	FOR_EACH_VEC(vecChosenObjectives, i)
 	{
-		if ( !DoesObjectiveNeedToBeTracked( vecChosenObjectives[i] ) )
+		if(!DoesObjectiveNeedToBeTracked(vecChosenObjectives[i]))
 			continue;
 
-		CBaseQuestObjectiveTracker* pNewTracker = new CBaseQuestObjectiveTracker( vecChosenObjectives[i], this );
-		m_vecObjectiveTrackers.AddToTail( pNewTracker );
+		CBaseQuestObjectiveTracker *pNewTracker = new CBaseQuestObjectiveTracker(vecChosenObjectives[i], this);
+		m_vecObjectiveTrackers.AddToTail(pNewTracker);
 	}
 
-	if ( m_vecObjectiveTrackers.IsEmpty() )
+	if(m_vecObjectiveTrackers.IsEmpty())
 	{
-		SO_TRACKER_SPEW( CFmtStr( "Did not create any objective trackers for quest %d on item %llu for user %s with %dsp and %dbp\n",
-								  GetItem()->GetItemDefinition()->GetDefinitionIndex(),
-								  GetItem()->GetID(),
-								  GetOwnerSteamID().Render(),
-								  GetEarnedStandardPoints(),
-								  GetEarnedBonusPoints() ),
-						 SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT );
+		SO_TRACKER_SPEW(
+			CFmtStr("Did not create any objective trackers for quest %d on item %llu for user %s with %dsp and %dbp\n",
+					GetItem()->GetItemDefinition()->GetDefinitionIndex(), GetItem()->GetID(),
+					GetOwnerSteamID().Render(), GetEarnedStandardPoints(), GetEarnedBonusPoints()),
+			SO_TRACKER_SPEW_OBJECTIVE_TRACKER_MANAGEMENT);
 	}
 }
 
@@ -211,21 +207,15 @@ CQuestItemTracker::CQuestItemTracker( const CSharedObject* pItem, CSteamID Steam
 CQuestItemTracker::~CQuestItemTracker()
 {
 #ifdef CLIENT_DLL
-	SO_TRACKER_SPEW( CFmtStr( "Deleting tracker for quest %u on item %llu with %usp and %ubp\n",
-							   m_pItem->GetItemDefinition()->GetDefinitionIndex(),
-							   m_pItem->GetItemID(),
-							   m_nStandardPoints,
-							   m_nBonusPoints ),
-					 SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
+	SO_TRACKER_SPEW(CFmtStr("Deleting tracker for quest %u on item %llu with %usp and %ubp\n",
+							m_pItem->GetItemDefinition()->GetDefinitionIndex(), m_pItem->GetItemID(), m_nStandardPoints,
+							m_nBonusPoints),
+					SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT);
 #else
-	SO_TRACKER_SPEW( CFmtStr( "Deleting tracker for quest %u on item %llu with %usp %ussp %ubp %usbp\n",
-							   m_pItem->GetItemDefinition()->GetDefinitionIndex(),
-							   m_pItem->GetItemID(),
-							   m_nStandardPoints,
-							   m_nStartingStandardPoints,
-							   m_nBonusPoints,
-							   m_nStartingBonusPoints ),
-					 SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT );
+	SO_TRACKER_SPEW(CFmtStr("Deleting tracker for quest %u on item %llu with %usp %ussp %ubp %usbp\n",
+							m_pItem->GetItemDefinition()->GetDefinitionIndex(), m_pItem->GetItemID(), m_nStandardPoints,
+							m_nStartingStandardPoints, m_nBonusPoints, m_nStartingBonusPoints),
+					SO_TRACKER_SPEW_ITEM_TRACKER_MANAGEMENT);
 #endif
 	m_vecObjectiveTrackers.PurgeAndDeleteElements();
 }
@@ -238,42 +228,45 @@ CQuestItemTracker::~CQuestItemTracker()
 void CQuestItemTracker::UpdatePointsFromSOItem()
 {
 	uint32 nNewPoints = 0;
-	static CSchemaAttributeDefHandle pAttribDef_EarnedStandardPoints( "quest earned standard points" );
-	m_pItem->FindAttribute( pAttribDef_EarnedStandardPoints, &nNewPoints );
+	static CSchemaAttributeDefHandle pAttribDef_EarnedStandardPoints("quest earned standard points");
+	m_pItem->FindAttribute(pAttribDef_EarnedStandardPoints, &nNewPoints);
 #ifdef GAME_DLL
-	m_nStartingStandardPoints = Max( nNewPoints, m_nStartingStandardPoints );
+	m_nStartingStandardPoints = Max(nNewPoints, m_nStartingStandardPoints);
 #else
-	m_nStandardPoints = Max( nNewPoints, m_nStandardPoints );
+	m_nStandardPoints = Max(nNewPoints, m_nStandardPoints);
 #endif
 
 	nNewPoints = 0;
-	static CSchemaAttributeDefHandle pAttribDef_EarnedBonusPoints( "quest earned bonus points" );
-	m_pItem->FindAttribute( pAttribDef_EarnedBonusPoints, &nNewPoints );
+	static CSchemaAttributeDefHandle pAttribDef_EarnedBonusPoints("quest earned bonus points");
+	m_pItem->FindAttribute(pAttribDef_EarnedBonusPoints, &nNewPoints);
 #ifdef GAME_DLL
-	m_nStartingBonusPoints = Max( nNewPoints, m_nStartingBonusPoints );
+	m_nStartingBonusPoints = Max(nNewPoints, m_nStartingBonusPoints);
 #else
-	m_nBonusPoints = Max( nNewPoints, m_nBonusPoints );
+	m_nBonusPoints = Max(nNewPoints, m_nBonusPoints);
 #endif
 
 #ifdef GAME_DLL
-	SendUpdateToClient( NULL );
+	SendUpdateToClient(NULL);
 
-	SO_TRACKER_SPEW( CFmtStr( "Updated points from item.  CS:%d S:%d  CB:%d B:%d\n", m_nStandardPoints, m_nStartingStandardPoints, m_nBonusPoints, m_nStartingBonusPoints ), SO_TRACKER_SPEW_OBJECTIVES );
+	SO_TRACKER_SPEW(CFmtStr("Updated points from item.  CS:%d S:%d  CB:%d B:%d\n", m_nStandardPoints,
+							m_nStartingStandardPoints, m_nBonusPoints, m_nStartingBonusPoints),
+					SO_TRACKER_SPEW_OBJECTIVES);
 #else
-	SO_TRACKER_SPEW( CFmtStr( "Updated points from item.  S:%d B:%d\n", m_nStandardPoints, m_nBonusPoints ), SO_TRACKER_SPEW_OBJECTIVES );
+	SO_TRACKER_SPEW(CFmtStr("Updated points from item.  S:%d B:%d\n", m_nStandardPoints, m_nBonusPoints),
+					SO_TRACKER_SPEW_OBJECTIVES);
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const CBaseQuestObjectiveTracker* CQuestItemTracker::FindTrackerForDefIndex( uint32 nDefIndex ) const
+const CBaseQuestObjectiveTracker *CQuestItemTracker::FindTrackerForDefIndex(uint32 nDefIndex) const
 {
-	FOR_EACH_VEC( m_vecObjectiveTrackers, i )
+	FOR_EACH_VEC(m_vecObjectiveTrackers, i)
 	{
-		if ( m_vecObjectiveTrackers[ i ]->GetObjectiveDefIndex() == nDefIndex )
+		if(m_vecObjectiveTrackers[i]->GetObjectiveDefIndex() == nDefIndex)
 		{
-			return m_vecObjectiveTrackers[ i ];
+			return m_vecObjectiveTrackers[i];
 		}
 	}
 
@@ -300,66 +293,66 @@ uint32 CQuestItemTracker::GetEarnedBonusPoints() const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CQuestItemTracker::IncrementCount( uint32 nIncrementValue, const CQuestObjectiveDefinition* pObjective )
+void CQuestItemTracker::IncrementCount(uint32 nIncrementValue, const CQuestObjectiveDefinition *pObjective)
 {
-#if defined( DEBUG ) || defined( STAGING_ONLY )
-	if ( !tf_quests_progress_enabled.GetBool() )
+#if defined(DEBUG) || defined(STAGING_ONLY)
+	if(!tf_quests_progress_enabled.GetBool())
 		return;
 #endif
 
 #ifdef GAME_DLL
-	Assert( pObjective );
-	Assert( m_pItem );
-	if ( !pObjective || !m_pItem )
+	Assert(pObjective);
+	Assert(m_pItem);
+	if(!pObjective || !m_pItem)
 		return;
 
 	auto pQuestDef = m_pItem->GetItemDefinition()->GetQuestDef();
-	Assert( pQuestDef );
-	if ( !pQuestDef )
+	Assert(pQuestDef);
+	if(!pQuestDef)
 		return;
 
-	if ( g_pVGuiLocalize && ( g_nQuestSpewFlags & SO_TRACKER_SPEW_OBJECTIVES ) )
+	if(g_pVGuiLocalize && (g_nQuestSpewFlags & SO_TRACKER_SPEW_OBJECTIVES))
 	{
-		locchar_t loc_IntermediateName[ MAX_ITEM_NAME_LENGTH ];
-		locchar_t locValue[ MAX_ITEM_NAME_LENGTH ];
-		loc_sprintf_safe( locValue, LOCCHAR( "%d" ), pObjective->GetPoints() );
-		loc_scpy_safe( loc_IntermediateName, CConstructLocalizedString( g_pVGuiLocalize->Find( pObjective->GetDescriptionToken() ), locValue ) );
+		locchar_t loc_IntermediateName[MAX_ITEM_NAME_LENGTH];
+		locchar_t locValue[MAX_ITEM_NAME_LENGTH];
+		loc_sprintf_safe(locValue, LOCCHAR("%d"), pObjective->GetPoints());
+		loc_scpy_safe(loc_IntermediateName,
+					  CConstructLocalizedString(g_pVGuiLocalize->Find(pObjective->GetDescriptionToken()), locValue));
 		char szTempObjectiveName[256];
-		::ILocalize::ConvertUnicodeToANSI( loc_IntermediateName, szTempObjectiveName, sizeof( szTempObjectiveName ));
+		::ILocalize::ConvertUnicodeToANSI(loc_IntermediateName, szTempObjectiveName, sizeof(szTempObjectiveName));
 
-		SO_TRACKER_SPEW( CFmtStr( "Increment for quest: %llu Objective: \"%s\" %d->%d (+%d)\n"
-			, m_pItem->GetItemID()
-			, szTempObjectiveName
-			, m_nStandardPoints + m_nBonusPoints
-			, m_nStandardPoints + m_nBonusPoints + nIncrementValue
-			, nIncrementValue ), SO_TRACKER_SPEW_OBJECTIVES );
+		SO_TRACKER_SPEW(CFmtStr("Increment for quest: %llu Objective: \"%s\" %d->%d (+%d)\n", m_pItem->GetItemID(),
+								szTempObjectiveName, m_nStandardPoints + m_nBonusPoints,
+								m_nStandardPoints + m_nBonusPoints + nIncrementValue, nIncrementValue),
+						SO_TRACKER_SPEW_OBJECTIVES);
 	}
 
 	// Regardless of standard or bonus, we fill the standard gauge first
 	uint32 nMaxStandardPoints = pQuestDef->GetMaxStandardPoints() - GetEarnedStandardPoints();
-	int nAmountToAdd = Min( nMaxStandardPoints, nIncrementValue );
+	int nAmountToAdd = Min(nMaxStandardPoints, nIncrementValue);
 	m_nStandardPoints += nAmountToAdd;
 	nIncrementValue -= nAmountToAdd;
 
 	// If any bonus points left, fill in bonus points
-	if ( pObjective->IsAdvanced() && nIncrementValue > 0 )
+	if(pObjective->IsAdvanced() && nIncrementValue > 0)
 	{
-		uint32 nMaxBonusPoints = pQuestDef->GetMaxBonusPoints() + pQuestDef->GetMaxStandardPoints() - GetEarnedStandardPoints() - GetEarnedBonusPoints();
-		m_nBonusPoints += Min( nMaxBonusPoints, nIncrementValue );
+		uint32 nMaxBonusPoints = pQuestDef->GetMaxBonusPoints() + pQuestDef->GetMaxStandardPoints() -
+								 GetEarnedStandardPoints() - GetEarnedBonusPoints();
+		m_nBonusPoints += Min(nMaxBonusPoints, nIncrementValue);
 	}
 
-	bool bShouldCommit = IsQuestItemReadyToTurnIn( m_pItem );
-#if defined( DEBUG ) || defined( STAGING_ONLY )
+	bool bShouldCommit = IsQuestItemReadyToTurnIn(m_pItem);
+#if defined(DEBUG) || defined(STAGING_ONLY)
 	bShouldCommit |= tf_quests_commit_every_point.GetBool();
 #endif
 
 	// Once we're over the turn-in threshhold, we need to record every point made.
-	if ( bShouldCommit )
+	if(bShouldCommit)
 	{
 		CommitChangesToDB();
 	}
 
-	SendUpdateToClient( pObjective );
+	SendUpdateToClient(pObjective);
 #endif
 }
 
@@ -371,14 +364,15 @@ void CQuestItemTracker::IncrementCount( uint32 nIncrementValue, const CQuestObje
 //-----------------------------------------------------------------------------
 void CQuestItemTracker::OnUpdate()
 {
-	FOR_EACH_VEC_BACK( m_vecObjectiveTrackers, i )
+	FOR_EACH_VEC_BACK(m_vecObjectiveTrackers, i)
 	{
-		const CQuestObjectiveDefinition *pObjective = GEconItemSchema().GetQuestObjectiveByDefIndex( m_vecObjectiveTrackers[ i ]->GetObjectiveDefIndex() );
-		Assert( pObjective );
-		if ( !pObjective || !DoesObjectiveNeedToBeTracked( pObjective ) )
+		const CQuestObjectiveDefinition *pObjective =
+			GEconItemSchema().GetQuestObjectiveByDefIndex(m_vecObjectiveTrackers[i]->GetObjectiveDefIndex());
+		Assert(pObjective);
+		if(!pObjective || !DoesObjectiveNeedToBeTracked(pObjective))
 		{
-			delete m_vecObjectiveTrackers[ i ];
-			m_vecObjectiveTrackers.Remove( i );
+			delete m_vecObjectiveTrackers[i];
+			m_vecObjectiveTrackers.Remove(i);
 		}
 	}
 }
@@ -389,11 +383,12 @@ void CQuestItemTracker::OnUpdate()
 void CQuestItemTracker::OnRemove()
 {
 #ifdef GAME_DLL
-	CommitRecord_t* pRecord = m_pManager->GetCommitRecord( m_pItem->GetItemID() );
-	if ( pRecord )
+	CommitRecord_t *pRecord = m_pManager->GetCommitRecord(m_pItem->GetItemID());
+	if(pRecord)
 	{
-		CMsgGCQuestObjective_PointsChange* pProto = assert_cast< CMsgGCQuestObjective_PointsChange* >( pRecord->m_pProtoMsg );
-		pProto->set_update_base_points( true );
+		CMsgGCQuestObjective_PointsChange *pProto =
+			assert_cast<CMsgGCQuestObjective_PointsChange *>(pRecord->m_pProtoMsg);
+		pProto->set_update_base_points(true);
 	}
 #endif
 }
@@ -402,30 +397,30 @@ void CQuestItemTracker::Spew() const
 {
 	CBaseSOTracker::Spew();
 
-	FOR_EACH_VEC( m_vecObjectiveTrackers, i )
+	FOR_EACH_VEC(m_vecObjectiveTrackers, i)
 	{
-		DevMsg( "Tracking objective: %d\n", m_vecObjectiveTrackers[ i ]->GetObjectiveDefIndex() );
+		DevMsg("Tracking objective: %d\n", m_vecObjectiveTrackers[i]->GetObjectiveDefIndex());
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CQuestItemTracker::DoesObjectiveNeedToBeTracked( const CQuestObjectiveDefinition* pObjective ) const
+bool CQuestItemTracker::DoesObjectiveNeedToBeTracked(const CQuestObjectiveDefinition *pObjective) const
 {
 	auto pQuestDef = m_pItem->GetItemDefinition()->GetQuestDef();
 
-	Assert( pObjective );
-	if ( pObjective && pQuestDef )
+	Assert(pObjective);
+	if(pObjective && pQuestDef)
 	{
 		// If there's standard points to be earned, all objectives need to be tracked
-		if ( pQuestDef->GetMaxStandardPoints() > 0 && GetEarnedStandardPoints() < pQuestDef->GetMaxStandardPoints() )
+		if(pQuestDef->GetMaxStandardPoints() > 0 && GetEarnedStandardPoints() < pQuestDef->GetMaxStandardPoints())
 		{
 			return true;
 		}
 
 		// If this objective is advanced, only track it if there's bonus points to be earned
-		if ( pObjective->IsAdvanced() )
+		if(pObjective->IsAdvanced())
 		{
 			return pQuestDef->GetMaxBonusPoints() > 0 && GetEarnedBonusPoints() < pQuestDef->GetMaxBonusPoints();
 		}
@@ -440,46 +435,45 @@ bool CQuestItemTracker::DoesObjectiveNeedToBeTracked( const CQuestObjectiveDefin
 void CQuestItemTracker::CommitChangesToDB()
 {
 #ifdef CLIENT_DLL
-	if ( GetQuestLog() && GetTrackedPlayer() == C_TFPlayer::GetLocalTFPlayer() )
+	if(GetQuestLog() && GetTrackedPlayer() == C_TFPlayer::GetLocalTFPlayer())
 	{
 		GetQuestLog()->MarkQuestsDirty();
 	}
 #else // GAME_DLL
 
 	// Nothing to commit?  Bail
-	if ( m_nStandardPoints == 0 && m_nBonusPoints == 0 )
+	if(m_nStandardPoints == 0 && m_nBonusPoints == 0)
 		return;
 
-	SO_TRACKER_SPEW( CFmtStr( "CommitChangesToDB: %llu S:%d B:%d\n"
-			, m_pItem->GetItemID()
-			, GetEarnedStandardPoints()
-			, GetEarnedBonusPoints() ), 0 );
+	SO_TRACKER_SPEW(CFmtStr("CommitChangesToDB: %llu S:%d B:%d\n", m_pItem->GetItemID(), GetEarnedStandardPoints(),
+							GetEarnedBonusPoints()),
+					0);
 
-	CSteamID ownerSteamID( m_pItem->GetAccountID(), GetUniverse(), k_EAccountTypeIndividual );
+	CSteamID ownerSteamID(m_pItem->GetAccountID(), GetUniverse(), k_EAccountTypeIndividual);
 
 	CMsgGCQuestObjective_PointsChange record;
 
 	// Cook up our message
-	record.set_owner_steamid( ownerSteamID.ConvertToUint64() );
-	record.set_quest_item_id( m_pItem->GetItemID() );
-	record.set_standard_points( GetEarnedStandardPoints() );
-	record.set_bonus_points( GetEarnedBonusPoints() ); // Here's the meat
+	record.set_owner_steamid(ownerSteamID.ConvertToUint64());
+	record.set_quest_item_id(m_pItem->GetItemID());
+	record.set_standard_points(GetEarnedStandardPoints());
+	record.set_bonus_points(GetEarnedBonusPoints()); // Here's the meat
 
-	m_pManager->AddCommitRecord( &record, record.quest_item_id(), true );
+	m_pManager->AddCommitRecord(&record, record.quest_item_id(), true);
 #endif
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CQuestItemTracker::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReasonsContainer_t& invalidReasons ) const
+int CQuestItemTracker::IsValidForPlayer(const CTFPlayer *pOwner, InvalidReasonsContainer_t &invalidReasons) const
 {
 	int nNumInvalid = 0;
-	FOR_EACH_VEC( m_vecObjectiveTrackers, i )
+	FOR_EACH_VEC(m_vecObjectiveTrackers, i)
 	{
-		m_vecObjectiveTrackers[ i ]->IsValidForPlayer( pOwner, invalidReasons );
+		m_vecObjectiveTrackers[i]->IsValidForPlayer(pOwner, invalidReasons);
 
-		if ( !invalidReasons.IsValid() )
+		if(!invalidReasons.IsValid())
 		{
 			++nNumInvalid;
 		}
@@ -492,42 +486,39 @@ int CQuestItemTracker::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReasons
 //-----------------------------------------------------------------------------
 // Purpose: The server has changed scores.  Apply those changes here
 //-----------------------------------------------------------------------------
-void CQuestItemTracker::UpdateFromServer( uint32 nStandardPoints, uint32 nBonusPoints )
+void CQuestItemTracker::UpdateFromServer(uint32 nStandardPoints, uint32 nBonusPoints)
 {
-	SO_TRACKER_SPEW( CFmtStr( "Updating \"%s's\" standard points: %d->%d bonus points: %d->%d\n"
-					  , m_pItem->GetItemDefinition()->GetQuestDef()->GetRolledNameForItem( m_pItem )
-					  , m_nStandardPoints
-					  , nStandardPoints
-					  , m_nBonusPoints
-					  , nBonusPoints )
-					  , SO_TRACKER_SPEW_OBJECTIVES );
+	SO_TRACKER_SPEW(CFmtStr("Updating \"%s's\" standard points: %d->%d bonus points: %d->%d\n",
+							m_pItem->GetItemDefinition()->GetQuestDef()->GetRolledNameForItem(m_pItem),
+							m_nStandardPoints, nStandardPoints, m_nBonusPoints, nBonusPoints),
+					SO_TRACKER_SPEW_OBJECTIVES);
 
 	m_nStandardPoints = nStandardPoints;
 	m_nBonusPoints = nBonusPoints;
 }
 #else
-void CQuestItemTracker::SendUpdateToClient( const CQuestObjectiveDefinition* pObjective )
+void CQuestItemTracker::SendUpdateToClient(const CQuestObjectiveDefinition *pObjective)
 {
-	const CTFPlayer* pPlayer = GetTrackedPlayer();
+	const CTFPlayer *pPlayer = GetTrackedPlayer();
 
 	// They might've disconnected, so let's check if they're still around
-	if ( pPlayer )
+	if(pPlayer)
 	{
 		// Update the user on their progress
-		CSingleUserRecipientFilter filter( GetTrackedPlayer() );
+		CSingleUserRecipientFilter filter(GetTrackedPlayer());
 		filter.MakeReliable();
-		UserMessageBegin( filter, "QuestObjectiveCompleted" );
+		UserMessageBegin(filter, "QuestObjectiveCompleted");
 		itemid_t nID = m_pItem->GetItemID();
-		WRITE_BITS( &nID, 64 );
-		WRITE_WORD( GetEarnedStandardPoints() );
-		WRITE_WORD( GetEarnedBonusPoints() );
-		WRITE_WORD( pObjective ? pObjective->GetDefinitionIndex() : (uint32)-1 );
+		WRITE_BITS(&nID, 64);
+		WRITE_WORD(GetEarnedStandardPoints());
+		WRITE_WORD(GetEarnedBonusPoints());
+		WRITE_WORD(pObjective ? pObjective->GetDefinitionIndex() : (uint32)-1);
 		MessageEnd();
 	}
 }
 #endif
 
-#if defined( DEBUG ) || defined( STAGING_ONLY )
+#if defined(DEBUG) || defined(STAGING_ONLY)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -539,9 +530,10 @@ void CQuestItemTracker::DBG_CompleteQuest()
 	uint32 nStandardPointsDelta = pQuestDef->GetMaxStandardPoints() - GetEarnedStandardPoints();
 
 	// Cheat!
-	if ( m_vecObjectiveTrackers.Count() )
+	if(m_vecObjectiveTrackers.Count())
 	{
-		const_cast< CBaseQuestObjectiveTracker* >( m_vecObjectiveTrackers[0] )->EvaluateCondition( NULL, nStandardPointsDelta );
+		const_cast<CBaseQuestObjectiveTracker *>(m_vecObjectiveTrackers[0])
+			->EvaluateCondition(NULL, nStandardPointsDelta);
 	}
 
 	CommitChangesToDB();

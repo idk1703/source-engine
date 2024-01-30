@@ -11,13 +11,12 @@
 #include "c_tf_player.h"
 #include "clientmode_tf.h"
 
-
 class CHudSmokeBomb : public CHudElement, public vgui::Panel
 {
 public:
-	DECLARE_CLASS_SIMPLE( CHudSmokeBomb, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudSmokeBomb, vgui::Panel);
 
-	CHudSmokeBomb( const char *name );
+	CHudSmokeBomb(const char *name);
 
 	virtual bool ShouldDraw();
 	virtual void Paint();
@@ -27,50 +26,46 @@ private:
 	CHudTexture *m_pIcon;
 };
 
-DECLARE_HUDELEMENT( CHudSmokeBomb );
+DECLARE_HUDELEMENT(CHudSmokeBomb);
 
-CHudSmokeBomb::CHudSmokeBomb( const char *pName ) :
-	vgui::Panel( NULL, "HudSmokeBomb" ), CHudElement( pName )
+CHudSmokeBomb::CHudSmokeBomb(const char *pName) : vgui::Panel(NULL, "HudSmokeBomb"), CHudElement(pName)
 {
-	SetParent( g_pClientMode->GetViewport() );
+	SetParent(g_pClientMode->GetViewport());
 	m_pIcon = NULL;
 
-	SetHiddenBits( HIDEHUD_PLAYERDEAD );
+	SetHiddenBits(HIDEHUD_PLAYERDEAD);
 }
 
-
-void CHudSmokeBomb::Init()
-{
-}
+void CHudSmokeBomb::Init() {}
 
 bool CHudSmokeBomb::ShouldDraw()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
 	// if we are spectating another player first person, check this player
-	if ( pPlayer && ( pPlayer->GetObserverMode() == OBS_MODE_IN_EYE ) )
+	if(pPlayer && (pPlayer->GetObserverMode() == OBS_MODE_IN_EYE))
 	{
-		pPlayer = ToTFPlayer( pPlayer->GetObserverTarget() );
+		pPlayer = ToTFPlayer(pPlayer->GetObserverTarget());
 	}
 
-	return ( pPlayer && pPlayer->IsAlive() && pPlayer->m_Shared.InCond( TF_COND_SMOKE_BOMB ) );
+	return (pPlayer && pPlayer->IsAlive() && pPlayer->m_Shared.InCond(TF_COND_SMOKE_BOMB));
 }
 
 extern ConVar tf_smoke_bomb_time;
 
 void CHudSmokeBomb::Paint()
 {
-	if ( !m_pIcon )
+	if(!m_pIcon)
 	{
-		m_pIcon = gHUD.GetIcon( "cond_smoke_bomb" );
+		m_pIcon = gHUD.GetIcon("cond_smoke_bomb");
 	}
 
 	int x, y, w, h;
-	GetBounds( x, y, w, h );
+	GetBounds(x, y, w, h);
 
-	if ( m_pIcon )
+	if(m_pIcon)
 	{
-		m_pIcon->DrawSelf( 0, 0, w, w, Color(255,255,255,255) );
+		m_pIcon->DrawSelf(0, 0, w, w, Color(255, 255, 255, 255));
 	}
 
 	// Draw a progress bar for time remaining
@@ -81,16 +76,16 @@ void CHudSmokeBomb::Paint()
 
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	float flExpireTime = pPlayer->m_Shared.GetSmokeBombExpireTime();
 
-	float flPercent = ( flExpireTime - gpGlobals->curtime ) / tf_smoke_bomb_time.GetFloat();
+	float flPercent = (flExpireTime - gpGlobals->curtime) / tf_smoke_bomb_time.GetFloat();
 
-	surface()->DrawSetColor( Color(0,0,0,255) );
-	surface()->DrawFilledRect( barX - 1, barY - 1, barX + barW + 1, barY + barH + 1 );
+	surface()->DrawSetColor(Color(0, 0, 0, 255));
+	surface()->DrawFilledRect(barX - 1, barY - 1, barX + barW + 1, barY + barH + 1);
 
-	surface()->DrawSetColor( Color(200,200,200,255) );
-	surface()->DrawFilledRect( barX, barY, barX + (int)( (float)barW * flPercent ), barY + barH );
+	surface()->DrawSetColor(Color(200, 200, 200, 255));
+	surface()->DrawFilledRect(barX, barY, barX + (int)((float)barW * flPercent), barY + barH);
 }

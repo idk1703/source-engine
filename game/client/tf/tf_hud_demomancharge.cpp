@@ -30,78 +30,79 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CHudDemomanChargeMeter : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudDemomanChargeMeter, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudDemomanChargeMeter, EditablePanel);
 
 public:
-	CHudDemomanChargeMeter( const char *pElementName );
+	CHudDemomanChargeMeter(const char *pElementName);
 
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
-	virtual void	OnTick( void );
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
+	virtual void OnTick(void);
 
 private:
 	vgui::ContinuousProgressBar *m_pChargeMeter;
 };
 
-DECLARE_HUDELEMENT( CHudDemomanChargeMeter );
+DECLARE_HUDELEMENT(CHudDemomanChargeMeter);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CHudDemomanChargeMeter::CHudDemomanChargeMeter( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudDemomanCharge" )
+CHudDemomanChargeMeter::CHudDemomanChargeMeter(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudDemomanCharge")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	m_pChargeMeter = new ContinuousProgressBar( this, "ChargeMeter" );
+	m_pChargeMeter = new ContinuousProgressBar(this, "ChargeMeter");
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 
-	RegisterForRenderGroup( "inspect_panel" );
+	RegisterForRenderGroup("inspect_panel");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudDemomanChargeMeter::ApplySchemeSettings( IScheme *pScheme )
+void CHudDemomanChargeMeter::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudDemomanCharge.res" );
+	LoadControlSettings("resource/UI/HudDemomanCharge.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CHudDemomanChargeMeter::ShouldDraw( void )
+bool CHudDemomanChargeMeter::ShouldDraw(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer || !pPlayer->IsAlive() )
+	if(!pPlayer || !pPlayer->IsAlive())
 		return false;
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
-	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast< ITFChargeUpWeapon *>( pWpn );
-	if ( !pWpn || !pChargeupWeapon || !pChargeupWeapon->CanCharge() )
+	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast<ITFChargeUpWeapon *>(pWpn);
+	if(!pWpn || !pChargeupWeapon || !pChargeupWeapon->CanCharge())
 		return false;
 
 #ifdef STAGING_ONLY
 	int iCustomHUD = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( pWpn, iCustomHUD, custom_charge_meter );
-	if ( iCustomHUD )
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pWpn, iCustomHUD, custom_charge_meter);
+	if(iCustomHUD)
 		return false;
 #endif // STAGING_ONLY
 
-	if ( pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_GHOST_MODE ) )
+	if(pPlayer->m_Shared.InCond(TF_COND_HALLOWEEN_GHOST_MODE))
 		return false;
 
-	if ( CTFMinigameLogic::GetMinigameLogic() && CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame() )
+	if(CTFMinigameLogic::GetMinigameLogic() && CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame())
 		return false;
 
-	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
+	if(TFGameRules() && TFGameRules()->ShowMatchSummary())
 		return false;
 
 	return CHudElement::ShouldDraw();
@@ -110,44 +111,44 @@ bool CHudDemomanChargeMeter::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudDemomanChargeMeter::OnTick( void )
+void CHudDemomanChargeMeter::OnTick(void)
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	CTFWeaponBase *pWpn = pPlayer->GetActiveTFWeapon();
 
 #ifdef STAGING_ONLY
 	int iCustomHUD = 0;
-	CALL_ATTRIB_HOOK_INT_ON_OTHER( pWpn, iCustomHUD, custom_charge_meter );
-	if ( iCustomHUD )
+	CALL_ATTRIB_HOOK_INT_ON_OTHER(pWpn, iCustomHUD, custom_charge_meter);
+	if(iCustomHUD)
 		return;
 #endif // STAGING_ONLY
 
-	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast< ITFChargeUpWeapon *>( pWpn );
-	if ( !pWpn || !pChargeupWeapon || !pChargeupWeapon->CanCharge() )
+	ITFChargeUpWeapon *pChargeupWeapon = dynamic_cast<ITFChargeUpWeapon *>(pWpn);
+	if(!pWpn || !pChargeupWeapon || !pChargeupWeapon->CanCharge())
 		return;
 
-	if ( m_pChargeMeter )
+	if(m_pChargeMeter)
 	{
 		float flChargeMaxTime = pChargeupWeapon->GetChargeMaxTime();
 
-		if ( flChargeMaxTime != 0 )
+		if(flChargeMaxTime != 0)
 		{
 			float flChargeBeginTime = pChargeupWeapon->GetChargeBeginTime();
 
-			if ( flChargeBeginTime > 0 )
+			if(flChargeBeginTime > 0)
 			{
-				float flTimeCharged = MAX( 0, gpGlobals->curtime - flChargeBeginTime );
-				float flPercentCharged = MIN( 1.0, flTimeCharged / flChargeMaxTime );
+				float flTimeCharged = MAX(0, gpGlobals->curtime - flChargeBeginTime);
+				float flPercentCharged = MIN(1.0, flTimeCharged / flChargeMaxTime);
 
-				m_pChargeMeter->SetProgress( flPercentCharged );
+				m_pChargeMeter->SetProgress(flPercentCharged);
 			}
 			else
 			{
-				m_pChargeMeter->SetProgress( 0.0f );
+				m_pChargeMeter->SetProgress(0.0f);
 			}
 		}
 	}

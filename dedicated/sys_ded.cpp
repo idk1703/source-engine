@@ -35,17 +35,17 @@
 #include <unistd.h>
 #endif
 
-void* FileSystemFactory( const char *pName, int *pReturnCode );
-bool InitInstance( );
-int ProcessConsoleInput( void );
-bool NET_Init( void );
-void NET_Shutdown( void );
-const char *UTIL_GetBaseDir( void );
+void *FileSystemFactory(const char *pName, int *pReturnCode);
+bool InitInstance();
+int ProcessConsoleInput(void);
+bool NET_Init(void);
+void NET_Shutdown(void);
+const char *UTIL_GetBaseDir(void);
 #ifdef _WIN32
 bool g_bVGui = false;
 #endif
 
-#if defined ( _WIN32 )
+#if defined(_WIN32)
 #include "console/TextConsoleWin32.h"
 CTextConsoleWin32 console;
 #else
@@ -65,29 +65,29 @@ IDedicatedServerAPI *engine = NULL;
 class CVCRHelpers : public IVCRHelpers
 {
 public:
-	virtual void	ErrorMessage( const char *pMsg )
+	virtual void ErrorMessage(const char *pMsg)
 	{
-		printf( "ERROR: %s\n", pMsg );
+		printf("ERROR: %s\n", pMsg);
 	}
 
-	virtual void*	GetMainWindow()
+	virtual void *GetMainWindow()
 	{
 		return 0;
 	}
 };
 CVCRHelpers g_VCRHelpers;
 
-SpewRetval_t DedicatedSpewOutputFunc( SpewType_t spewType, char const *pMsg ); // in sys_common.cpp
+SpewRetval_t DedicatedSpewOutputFunc(SpewType_t spewType, char const *pMsg); // in sys_common.cpp
 
 //-----------------------------------------------------------------------------
 // Run a single VGUI frame. if bFinished is true, run VGUIFinishedConfig() first.
 //-----------------------------------------------------------------------------
-static bool DoRunVGUIFrame( bool bFinished = false )
+static bool DoRunVGUIFrame(bool bFinished = false)
 {
 #ifdef _WIN32
-	if ( g_bVGui )
+	if(g_bVGui)
 	{
-		if ( bFinished )
+		if(bFinished)
 			VGUIFinishedConfig();
 		RunVGUIFrame();
 		return true;
@@ -103,31 +103,31 @@ static bool DoRunVGUIFrame( bool bFinished = false )
 //-----------------------------------------------------------------------------
 static bool HandleVCRHook()
 {
-#if defined ( _WIN32 )
+#if defined(_WIN32)
 	MSG msg;
 
 	bool bDone = false;
-	while( VCRHook_PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+	while(VCRHook_PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
-		//if (!GetMessage( &msg, NULL, 0, 0))
-		if ( msg.message == WM_QUIT )
+		// if (!GetMessage( &msg, NULL, 0, 0))
+		if(msg.message == WM_QUIT)
 		{
 			bDone = true;
 			break;
 		}
 
-		TranslateMessage( &msg );
-		DispatchMessage( &msg );
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 
-	if ( IsPC() )
+	if(IsPC())
 	{
 		// NOTE: Under some implementations of Win9x,
 		// dispatching messages can cause the FPU control word to change
 		SetupFPUControlWord();
 	}
 
-	if ( bDone /*|| gbAppHasBeenTerminated*/ )
+	if(bDone /*|| gbAppHasBeenTerminated*/)
 		return true;
 #endif // _WIN32
 
@@ -139,7 +139,7 @@ static bool HandleVCRHook()
 //  Server loop
 //
 //-----------------------------------------------------------------------------
-void RunServer( void )
+void RunServer(void)
 {
 #ifdef _WIN32
 	if(gpszCvars)
@@ -149,30 +149,30 @@ void RunServer( void )
 #endif
 
 	// Run 2 engine frames first to get the engine to load its resources.
-	for ( int i = 0; i < 2; i++ )
+	for(int i = 0; i < 2; i++)
 	{
 		DoRunVGUIFrame();
-		if ( !engine->RunFrame() )
+		if(!engine->RunFrame())
 			return;
 	}
 
 	// Run final VGUI frame.
-	DoRunVGUIFrame( true );
+	DoRunVGUIFrame(true);
 
 	int bDone = false;
-	while ( !bDone )
+	while(!bDone)
 	{
 		// Check on VCRHook_PeekMessage...
-		if ( HandleVCRHook() )
+		if(HandleVCRHook())
 			break;
 
-		if ( !DoRunVGUIFrame() )
+		if(!DoRunVGUIFrame())
 			ProcessConsoleInput();
 
-		if ( !engine->RunFrame() )
+		if(!engine->RunFrame())
 			bDone = true;
 
-		sys->UpdateStatus( 0 /* don't force */ );
+		sys->UpdateStatus(0 /* don't force */);
 	}
 }
 
@@ -181,25 +181,25 @@ void RunServer( void )
 // initialize the console or wait for vgui to start the server
 //
 //-----------------------------------------------------------------------------
-static bool ConsoleStartup( )
+static bool ConsoleStartup()
 {
 #ifdef _WIN32
-	if ( g_bVGui )
+	if(g_bVGui)
 	{
 		RunVGUIFrame();
 
 		// Run the config screen
-		while (VGUIIsInConfig()	&& VGUIIsRunning())
+		while(VGUIIsInConfig() && VGUIIsRunning())
 			RunVGUIFrame();
 
-		if ( VGUIIsStopping() )
+		if(VGUIIsStopping())
 			return false;
 
 		return true;
 	}
 	else
 	{
-		if ( !console.Init() )
+		if(!console.Init())
 		{
 			return false;
 		}
@@ -209,35 +209,34 @@ static bool ConsoleStartup( )
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Instantiate all main libraries
 //-----------------------------------------------------------------------------
-bool CDedicatedAppSystemGroup::Create( )
+bool CDedicatedAppSystemGroup::Create()
 {
 #ifndef _WIN32
-	if ( !console.Init() )
+	if(!console.Init())
 		return false;
 #endif
 
 	// Hook the debug output stuff (override the spew func in the appframework)
-	SpewOutputFunc( DedicatedSpewOutputFunc );
+	SpewOutputFunc(DedicatedSpewOutputFunc);
 
 	// Added the dedicated exports module for the engine to grab
-	AppModule_t dedicatedModule = LoadModule( Sys_GetFactoryThis() );
-	IAppSystem *pSystem = AddSystem( dedicatedModule, VENGINE_DEDICATEDEXPORTS_API_VERSION );
-	if ( !pSystem )
+	AppModule_t dedicatedModule = LoadModule(Sys_GetFactoryThis());
+	IAppSystem *pSystem = AddSystem(dedicatedModule, VENGINE_DEDICATEDEXPORTS_API_VERSION);
+	if(!pSystem)
 		return false;
 
-	if ( sys->LoadModules( this ) )
+	if(sys->LoadModules(this))
 	{
-		// Find the input system and tell it to skip Steam Controller initialization (we have to set this flag before Init gets called on the
-		// input system). Dedicated server should skip controller initialization to avoid initializing Steam, because we don't want the user to be
-		// flagged as "playing" the game.
-		auto inputsystem = ( IInputSystem* )FindSystem( INPUTSYSTEM_INTERFACE_VERSION );
-		if ( inputsystem )
+		// Find the input system and tell it to skip Steam Controller initialization (we have to set this flag before
+		// Init gets called on the input system). Dedicated server should skip controller initialization to avoid
+		// initializing Steam, because we don't want the user to be flagged as "playing" the game.
+		auto inputsystem = (IInputSystem *)FindSystem(INPUTSYSTEM_INTERFACE_VERSION);
+		if(inputsystem)
 		{
-			inputsystem->SetSkipControllerInitialization( true );
+			inputsystem->SetSkipControllerInitialization(true);
 		}
 
 		return true;
@@ -248,12 +247,12 @@ bool CDedicatedAppSystemGroup::Create( )
 	}
 }
 
-bool CDedicatedAppSystemGroup::PreInit( )
+bool CDedicatedAppSystemGroup::PreInit()
 {
 	// A little hack needed because dedicated links directly to filesystem .cpp files
 	g_pFullFileSystem = NULL;
 
-	if ( !BaseClass::PreInit() )
+	if(!BaseClass::PreInit())
 		return false;
 
 	CFSSteamSetupInfo steamInfo;
@@ -263,7 +262,7 @@ bool CDedicatedAppSystemGroup::PreInit( )
 	steamInfo.m_bSetSteamDLLPath = false;
 	steamInfo.m_bSteam = g_pFullFileSystem->IsSteam();
 	steamInfo.m_bNoGameInfo = steamInfo.m_bSteam;
-	if ( FileSystem_SetupSteamEnvironment( steamInfo ) != FS_OK )
+	if(FileSystem_SetupSteamEnvironment(steamInfo) != FS_OK)
 		return false;
 
 	CFSMountContentInfo fsInfo;
@@ -271,45 +270,45 @@ bool CDedicatedAppSystemGroup::PreInit( )
 	fsInfo.m_bToolsMode = false;
 	fsInfo.m_pDirectoryName = steamInfo.m_GameInfoPath;
 
-	if ( FileSystem_MountContent( fsInfo ) != FS_OK )
+	if(FileSystem_MountContent(fsInfo) != FS_OK)
 		return false;
 
-	if ( !NET_Init() )
+	if(!NET_Init())
 		return false;
 
 #ifdef _WIN32
-	g_bVGui = !CommandLine()->CheckParm( "-console" );
+	g_bVGui = !CommandLine()->CheckParm("-console");
 #endif
 
 	CreateInterfaceFn factory = GetFactory();
-	IInputSystem *inputsystem = (IInputSystem *)factory( INPUTSYSTEM_INTERFACE_VERSION, NULL );
-	if ( inputsystem )
+	IInputSystem *inputsystem = (IInputSystem *)factory(INPUTSYSTEM_INTERFACE_VERSION, NULL);
+	if(inputsystem)
 	{
-		inputsystem->SetConsoleTextMode( true );
+		inputsystem->SetConsoleTextMode(true);
 	}
 
 #ifdef _WIN32
-	if ( g_bVGui )
+	if(g_bVGui)
 	{
-		StartVGUI( GetFactory() );
+		StartVGUI(GetFactory());
 	}
 	else
 #endif
 	{
-		if ( !sys->CreateConsoleWindow() )
+		if(!sys->CreateConsoleWindow())
 			return false;
 	}
 
 	return true;
 }
 
-int CDedicatedAppSystemGroup::Main( )
+int CDedicatedAppSystemGroup::Main()
 {
-	if ( !ConsoleStartup() )
+	if(!ConsoleStartup())
 		return -1;
 
 #ifdef _WIN32
-	if ( g_bVGui )
+	if(g_bVGui)
 		RunVGUIFrame();
 #endif
 
@@ -317,12 +316,12 @@ int CDedicatedAppSystemGroup::Main( )
 	ModInfo_t info;
 	info.m_pInstance = GetAppInstance();
 	info.m_pBaseDirectory = UTIL_GetBaseDir();
-	info.m_pInitialMod = CommandLine()->ParmValue( "-game", "hl2" );
-	info.m_pInitialGame = CommandLine()->ParmValue( "-defaultgamedir", "hl2" );
+	info.m_pInitialMod = CommandLine()->ParmValue("-game", "hl2");
+	info.m_pInitialGame = CommandLine()->ParmValue("-defaultgamedir", "hl2");
 	info.m_pParentAppSystemGroup = this;
-	info.m_bTextMode = CommandLine()->CheckParm( "-textmode" );
+	info.m_bTextMode = CommandLine()->CheckParm("-textmode");
 
-	if ( engine->ModInit( info ) )
+	if(engine->ModInit(info))
 	{
 		engine->ModShutdown();
 	} // if engine->ModInit
@@ -336,7 +335,7 @@ int CDedicatedAppSystemGroup::Main( )
 void CDedicatedAppSystemGroup::PostShutdown()
 {
 #ifdef _WIN32
-	if ( g_bVGui )
+	if(g_bVGui)
 		StopVGUI();
 #endif
 
@@ -349,67 +348,61 @@ void CDedicatedAppSystemGroup::PostShutdown()
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void CDedicatedAppSystemGroup::Destroy()
-{
-}
-
+void CDedicatedAppSystemGroup::Destroy() {}
 
 //-----------------------------------------------------------------------------
 // Gets the executable name
 //-----------------------------------------------------------------------------
-bool GetExecutableName( char *out, int nMaxLen )
+bool GetExecutableName(char *out, int nMaxLen)
 {
 #ifdef _WIN32
-	if ( !::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), out, nMaxLen ) )
+	if(!::GetModuleFileName((HINSTANCE)GetModuleHandle(NULL), out, nMaxLen))
 		return false;
 	return true;
 #elif POSIX
-	Q_strncpy( out, g_szEXEName, nMaxLen );
+	Q_strncpy(out, g_szEXEName, nMaxLen);
 	return true;
 #endif
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the directory where this .exe is running from
 // Output : char
 //-----------------------------------------------------------------------------
-void UTIL_ComputeBaseDir( char *pBaseDir, int nMaxLen )
+void UTIL_ComputeBaseDir(char *pBaseDir, int nMaxLen)
 {
 	int j;
 	char *pBuffer = NULL;
 
-	pBaseDir[ 0 ] = 0;
+	pBaseDir[0] = 0;
 
-	if ( GetExecutableName( pBaseDir, nMaxLen ) )
+	if(GetExecutableName(pBaseDir, nMaxLen))
 	{
-		pBuffer = strrchr( pBaseDir, CORRECT_PATH_SEPARATOR );
-		if ( pBuffer && *pBuffer )
+		pBuffer = strrchr(pBaseDir, CORRECT_PATH_SEPARATOR);
+		if(pBuffer && *pBuffer)
 		{
-			*(pBuffer+1) = '\0';
+			*(pBuffer + 1) = '\0';
 		}
 
-		j = strlen( pBaseDir );
-		if (j > 0)
+		j = strlen(pBaseDir);
+		if(j > 0)
 		{
-			if ( ( pBaseDir[ j-1 ] == '\\' ) ||
-				 ( pBaseDir[ j-1 ] == '/' ) )
+			if((pBaseDir[j - 1] == '\\') || (pBaseDir[j - 1] == '/'))
 			{
-				pBaseDir[ j-1 ] = 0;
+				pBaseDir[j - 1] = 0;
 			}
 		}
 	}
 
-	char const *pOverrideDir = CommandLine()->CheckParm( "-basedir" );
-	if ( pOverrideDir )
+	char const *pOverrideDir = CommandLine()->CheckParm("-basedir");
+	if(pOverrideDir)
 	{
-		strcpy( pBaseDir, pOverrideDir );
+		strcpy(pBaseDir, pOverrideDir);
 	}
 
-	Q_strlower( pBaseDir );
-	Q_FixSlashes( pBaseDir );
+	Q_strlower(pBaseDir);
+	Q_FixSlashes(pBaseDir);
 }
-
 
 //-----------------------------------------------------------------------------
 // This class is a helper class used for steam-based applications.
@@ -422,10 +415,9 @@ void UTIL_ComputeBaseDir( char *pBaseDir, int nMaxLen )
 class CDedicatedSteamApplication : public CSteamApplication
 {
 public:
-	CDedicatedSteamApplication( CSteamAppSystemGroup *pAppSystemGroup );
-	virtual bool Create( );
+	CDedicatedSteamApplication(CSteamAppSystemGroup *pAppSystemGroup);
+	virtual bool Create();
 };
-
 
 //-----------------------------------------------------------------------------
 // This class is a helper class used for steam-based applications.
@@ -435,33 +427,31 @@ public:
 // I couldn't use the one in appframework because the dedicated server
 // inlines all the filesystem code.
 //-----------------------------------------------------------------------------
-CDedicatedSteamApplication::CDedicatedSteamApplication( CSteamAppSystemGroup *pAppSystemGroup ) : CSteamApplication( pAppSystemGroup )
+CDedicatedSteamApplication::CDedicatedSteamApplication(CSteamAppSystemGroup *pAppSystemGroup)
+	: CSteamApplication(pAppSystemGroup)
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Implementation of IAppSystemGroup
 //-----------------------------------------------------------------------------
-bool CDedicatedSteamApplication::Create( )
+bool CDedicatedSteamApplication::Create()
 {
 	// Add in the cvar factory
-	AppModule_t cvarModule = LoadModule( VStdLib_GetICVarFactory() );
-	AddSystem( cvarModule, CVAR_INTERFACE_VERSION );
+	AppModule_t cvarModule = LoadModule(VStdLib_GetICVarFactory());
+	AddSystem(cvarModule, CVAR_INTERFACE_VERSION);
 
-	AppModule_t fileSystemModule = LoadModule( FileSystemFactory );
-	m_pFileSystem = (IFileSystem*)AddSystem( fileSystemModule, FILESYSTEM_INTERFACE_VERSION );
+	AppModule_t fileSystemModule = LoadModule(FileSystemFactory);
+	m_pFileSystem = (IFileSystem *)AddSystem(fileSystemModule, FILESYSTEM_INTERFACE_VERSION);
 
-	if ( !m_pFileSystem )
+	if(!m_pFileSystem)
 	{
-		Warning( "Unable to load the file system!\n" );
+		Warning("Unable to load the file system!\n");
 		return false;
 	}
 
 	return true;
 }
-
-
 
 //-----------------------------------------------------------------------------
 //
@@ -472,59 +462,59 @@ int main(int argc, char **argv)
 {
 #ifndef POSIX
 	_asm
-	{
+		{
 		fninit
-	}
+		}
 #endif
 
 	SetupFPUControlWord();
 
 #ifdef POSIX
-	Q_strncpy( g_szEXEName, *argv, ARRAYSIZE( g_szEXEName ) );
+	Q_strncpy(g_szEXEName, *argv, ARRAYSIZE(g_szEXEName));
 	// Store off command line for argument searching
-	BuildCmdLine( argc, argv );
+	BuildCmdLine(argc, argv);
 #endif
 
-	MathLib_Init( 2.2f, 2.2f, 0.0f, 1.0f );
+	MathLib_Init(2.2f, 2.2f, 0.0f, 1.0f);
 
 	// Store off command line for argument searching
-	CommandLine()->CreateCmdLine( VCRHook_GetCommandLine() );
+	CommandLine()->CreateCmdLine(VCRHook_GetCommandLine());
 #ifndef _WIN32
-	Plat_SetCommandLine( CommandLine()->GetCmdLine() );
+	Plat_SetCommandLine(CommandLine()->GetCmdLine());
 #endif
 
 	// Start VCR mode?
 	const char *filename;
-	if( CommandLine()->CheckParm( "-vcrrecord", &filename ) )
+	if(CommandLine()->CheckParm("-vcrrecord", &filename))
 	{
-		if ( !VCRStart( filename, true, &g_VCRHelpers ) )
+		if(!VCRStart(filename, true, &g_VCRHelpers))
 		{
-			Error( "-vcrrecord: can't open '%s' for writing.\n", filename );
+			Error("-vcrrecord: can't open '%s' for writing.\n", filename);
 			return -1;
 		}
 	}
-	else if( CommandLine()->CheckParm( "-vcrplayback", &filename ) )
+	else if(CommandLine()->CheckParm("-vcrplayback", &filename))
 	{
-		if ( !VCRStart( filename, false, &g_VCRHelpers ) )
+		if(!VCRStart(filename, false, &g_VCRHelpers))
 		{
-			Error( "-vcrplayback: can't open '%s' for reading.\n", filename );
+			Error("-vcrplayback: can't open '%s' for reading.\n", filename);
 			return -1;
 		}
 	}
 
 	// Figure out the directory the executable is running from
 	// and make that be the current working directory
-	char pBasedir[ MAX_PATH ];
-	UTIL_ComputeBaseDir( pBasedir, MAX_PATH );
-	_chdir( pBasedir );
+	char pBasedir[MAX_PATH];
+	UTIL_ComputeBaseDir(pBasedir, MAX_PATH);
+	_chdir(pBasedir);
 
 	// Rehook the command line through VCR mode.
-	CommandLine()->CreateCmdLine( VCRHook_GetCommandLine() );
+	CommandLine()->CreateCmdLine(VCRHook_GetCommandLine());
 
-	if ( !InitInstance() )
+	if(!InitInstance())
 		return -1;
 
 	CDedicatedAppSystemGroup dedicatedSystems;
-	CDedicatedSteamApplication steamApplication( &dedicatedSystems );
-	return steamApplication.Run( );
+	CDedicatedSteamApplication steamApplication(&dedicatedSystems);
+	return steamApplication.Run();
 }

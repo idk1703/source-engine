@@ -11,16 +11,13 @@
 // NOTE: This has to be the last file included!
 #include "tier0/memdbgon.h"
 
-
-
-
 //-----------------------------------------------------------------------------
 // Call this to connect to all tier 1 libraries.
 // It's up to the caller to check the globals it cares about to see if ones are missing
 //-----------------------------------------------------------------------------
-void ConnectTier1Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount )
+void ConnectTier1Libraries(CreateInterfaceFn *pFactoryList, int nFactoryCount)
 {
-	ConnectInterfaces( pFactoryList, nFactoryCount );
+	ConnectInterfaces(pFactoryList, nFactoryCount);
 }
 
 void DisconnectTier1Libraries()

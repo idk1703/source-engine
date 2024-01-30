@@ -10,60 +10,59 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // CEntitySpawnManager
 //-----------------------------------------------------------------------------
-BEGIN_DATADESC( CEntitySpawnManager )
+BEGIN_DATADESC(CEntitySpawnManager)
 
 	// Fields
-	DEFINE_KEYFIELD( m_iszEntityName, FIELD_STRING, "entity_name" ),
-	DEFINE_KEYFIELD( m_iEntityCount, FIELD_INTEGER, "entity_count" ),
-	DEFINE_KEYFIELD( m_iRespawnTime, FIELD_INTEGER, "respawn_time" ),
-	DEFINE_KEYFIELD( m_bDropToGround, FIELD_BOOLEAN, "drop_to_ground" ),
-	DEFINE_KEYFIELD( m_bRandomRotation, FIELD_BOOLEAN, "random_rotation" ),
+	DEFINE_KEYFIELD(m_iszEntityName, FIELD_STRING, "entity_name"),
+		DEFINE_KEYFIELD(m_iEntityCount, FIELD_INTEGER, "entity_count"),
+		DEFINE_KEYFIELD(m_iRespawnTime, FIELD_INTEGER, "respawn_time"),
+		DEFINE_KEYFIELD(m_bDropToGround, FIELD_BOOLEAN, "drop_to_ground"),
+		DEFINE_KEYFIELD(m_bRandomRotation, FIELD_BOOLEAN, "random_rotation"),
 
 	// Outputs
 	// ON RESPAWN ?
 
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( entity_spawn_manager, CEntitySpawnManager );
+LINK_ENTITY_TO_CLASS(entity_spawn_manager, CEntitySpawnManager);
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void CEntitySpawnManager::Spawn( void )
+void CEntitySpawnManager::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	SetNextThink( TICK_NEVER_THINK );
-	SetThink( NULL );
+	SetNextThink(TICK_NEVER_THINK);
+	SetThink(NULL);
 }
 
 //-----------------------------------------------------------------------------
 // Stores related spawn points.
 //-----------------------------------------------------------------------------
-void CEntitySpawnManager::RegisterSpawnPoint( CEntitySpawnPoint* pNewPoint )
+void CEntitySpawnManager::RegisterSpawnPoint(CEntitySpawnPoint *pNewPoint)
 {
-	m_SpawnPoints.AddToHead( pNewPoint );
+	m_SpawnPoints.AddToHead(pNewPoint);
 }
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void CEntitySpawnManager::Activate( void )
+void CEntitySpawnManager::Activate(void)
 {
 	BaseClass::Activate();
 
-//	AssertMsg1( 0, ("entity_spawn_manager active with %i points!"), m_SpawnPoints.Count() );
+	//	AssertMsg1( 0, ("entity_spawn_manager active with %i points!"), m_SpawnPoints.Count() );
 
 	// Don't spawn more objects than we have points.
-	m_iMaxSpawnedEntities = MIN( m_SpawnPoints.Count(), m_iEntityCount );
+	m_iMaxSpawnedEntities = MIN(m_SpawnPoints.Count(), m_iEntityCount);
 
-	if ( !m_iszEntityName || (m_iMaxSpawnedEntities == 0) )
+	if(!m_iszEntityName || (m_iMaxSpawnedEntities == 0))
 	{
-		AssertMsg1( 0, ("entity_spawn_manager %s active with nothing to spawn!"), GetEntityName().ToCStr() );
+		AssertMsg1(0, ("entity_spawn_manager %s active with nothing to spawn!"), GetEntityName().ToCStr());
 		return;
 	}
 
@@ -77,19 +76,19 @@ void CEntitySpawnManager::Activate( void )
 void CEntitySpawnManager::SpawnAllEntities()
 {
 	int iNumUsed = 0;
-	for ( int i=0; i<m_SpawnPoints.Count(); ++i )
+	for(int i = 0; i < m_SpawnPoints.Count(); ++i)
 	{
-		if ( m_SpawnPoints[i]->IsUsed() )
+		if(m_SpawnPoints[i]->IsUsed())
 		{
 			iNumUsed++;
 		}
 	}
 
 	int iNumToSpawn = m_iMaxSpawnedEntities - iNumUsed;
-	if ( iNumToSpawn <= 0 )
+	if(iNumToSpawn <= 0)
 		return;
 
-	while ( iNumToSpawn )
+	while(iNumToSpawn)
 	{
 		SpawnEntity();
 		iNumToSpawn--;
@@ -101,7 +100,7 @@ void CEntitySpawnManager::SpawnAllEntities()
 //-----------------------------------------------------------------------------
 bool CEntitySpawnManager::SpawnEntity()
 {
-	return SpawnEntityAt( GetRandomUnusedIndex() );
+	return SpawnEntityAt(GetRandomUnusedIndex());
 }
 
 //-----------------------------------------------------------------------------
@@ -111,13 +110,13 @@ int CEntitySpawnManager::GetRandomUnusedIndex()
 {
 	int iStartIndex = rand() % m_SpawnPoints.Count();
 
-	for ( int i=0; i<m_SpawnPoints.Count(); ++i )
+	for(int i = 0; i < m_SpawnPoints.Count(); ++i)
 	{
-		int index = i+iStartIndex;
-		if ( index >= m_SpawnPoints.Count() )
+		int index = i + iStartIndex;
+		if(index >= m_SpawnPoints.Count())
 			index -= m_SpawnPoints.Count();
 		CEntitySpawnPoint *pPoint = m_SpawnPoints[index];
-		if ( !pPoint || pPoint->IsUsed() )
+		if(!pPoint || pPoint->IsUsed())
 			continue;
 		else
 			return index;
@@ -129,93 +128,93 @@ int CEntitySpawnManager::GetRandomUnusedIndex()
 //-----------------------------------------------------------------------------
 // Creates the entity.
 //-----------------------------------------------------------------------------
-bool CEntitySpawnManager::SpawnEntityAt( int iIndex )
+bool CEntitySpawnManager::SpawnEntityAt(int iIndex)
 {
-	if ( iIndex == -1 )
+	if(iIndex == -1)
 		return false;
 
 	CEntitySpawnPoint *pPoint = m_SpawnPoints[iIndex];
-	if ( !pPoint )
+	if(!pPoint)
 		return false;
 
-	CBaseEntity *pEnt = CreateEntityByName( m_iszEntityName.ToCStr() );
-	if ( !pEnt )
+	CBaseEntity *pEnt = CreateEntityByName(m_iszEntityName.ToCStr());
+	if(!pEnt)
 		return false;
 
 	Vector origin = pPoint->GetAbsOrigin();
 	Vector mins, maxs, mins_o, maxs_o;
-	pEnt->CollisionProp()->WorldSpaceAABB( &mins, &maxs );
+	pEnt->CollisionProp()->WorldSpaceAABB(&mins, &maxs);
 	mins_o = origin + mins;
 	maxs_o = origin + mins;
-	if ( !UTIL_IsSpaceEmpty( pEnt, mins_o, maxs_o ) )
+	if(!UTIL_IsSpaceEmpty(pEnt, mins_o, maxs_o))
 	{
-		UTIL_Remove( pEnt );
+		UTIL_Remove(pEnt);
 		return false;
 	}
 
-	if ( m_bDropToGround )
+	if(m_bDropToGround)
 	{
 		trace_t trace;
-		UTIL_TraceHull( origin, origin + Vector( 0, 0, -500 ), mins, maxs, MASK_SOLID, pEnt, COLLISION_GROUP_NONE, &trace );
+		UTIL_TraceHull(origin, origin + Vector(0, 0, -500), mins, maxs, MASK_SOLID, pEnt, COLLISION_GROUP_NONE, &trace);
 		origin = trace.endpos;
 	}
 
-	pEnt->SetAbsOrigin( origin );
-	DispatchSpawn( pEnt );
+	pEnt->SetAbsOrigin(origin);
+	DispatchSpawn(pEnt);
 
-	if ( m_bRandomRotation )
+	if(m_bRandomRotation)
 	{
-		pEnt->SetAbsAngles( QAngle( 0, random->RandomFloat( 0, 360 ), 0 ) );
+		pEnt->SetAbsAngles(QAngle(0, random->RandomFloat(0, 360), 0));
 	}
 	else
 	{
-		pEnt->SetAbsAngles( pPoint->GetAbsAngles() );
+		pEnt->SetAbsAngles(pPoint->GetAbsAngles());
 	}
 
-	pPoint->SetEntity( pEnt );
+	pPoint->SetEntity(pEnt);
 
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // CEntitySpawnPoint
 //-----------------------------------------------------------------------------
-BEGIN_DATADESC( CEntitySpawnPoint )
+BEGIN_DATADESC(CEntitySpawnPoint)
 
 	// Fields
-	DEFINE_KEYFIELD( m_iszSpawnManagerName, FIELD_STRING, "spawn_manager_name" ),
+	DEFINE_KEYFIELD(m_iszSpawnManagerName, FIELD_STRING, "spawn_manager_name"),
 
 END_DATADESC()
 
-LINK_ENTITY_TO_CLASS( entity_spawn_point, CEntitySpawnPoint );
+LINK_ENTITY_TO_CLASS(entity_spawn_point, CEntitySpawnPoint);
 
 //-----------------------------------------------------------------------------
 // Initializes the spawn point and registers it with its manager.
 //-----------------------------------------------------------------------------
-void CEntitySpawnPoint::Spawn( void )
+void CEntitySpawnPoint::Spawn(void)
 {
 	BaseClass::Spawn();
 
-	SetNextThink( TICK_NEVER_THINK );
-	SetThink( NULL );
+	SetNextThink(TICK_NEVER_THINK);
+	SetThink(NULL);
 
-	if ( !m_iszSpawnManagerName )
+	if(!m_iszSpawnManagerName)
 	{
-		AssertMsg( 0, ("entity_spawn_point with no spawn_manager_name!") );
+		AssertMsg(0, ("entity_spawn_point with no spawn_manager_name!"));
 		return;
 	}
 
-	m_hSpawnManager = dynamic_cast<CEntitySpawnManager*>( gEntList.FindEntityByName( NULL, m_iszSpawnManagerName ) );
-	if ( !m_hSpawnManager )
+	m_hSpawnManager = dynamic_cast<CEntitySpawnManager *>(gEntList.FindEntityByName(NULL, m_iszSpawnManagerName));
+	if(!m_hSpawnManager)
 	{
-		AssertMsg2( 0, ("entity_spawn_point %s unable to find spawn_manager_name %s!"), GetEntityName().ToCStr(), m_iszSpawnManagerName.ToCStr() );
+		AssertMsg2(0, ("entity_spawn_point %s unable to find spawn_manager_name %s!"), GetEntityName().ToCStr(),
+				   m_iszSpawnManagerName.ToCStr());
 		return;
 	}
 
-	m_hSpawnManager->RegisterSpawnPoint( this );
+	m_hSpawnManager->RegisterSpawnPoint(this);
 
-	gEntList.AddListenerEntity( this );
+	gEntList.AddListenerEntity(this);
 }
 
 //-----------------------------------------------------------------------------
@@ -223,7 +222,7 @@ void CEntitySpawnPoint::Spawn( void )
 //-----------------------------------------------------------------------------
 void CEntitySpawnPoint::UpdateOnRemove(void)
 {
-	gEntList.RemoveListenerEntity( this );
+	gEntList.RemoveListenerEntity(this);
 
 	BaseClass::UpdateOnRemove();
 }
@@ -232,30 +231,30 @@ void CEntitySpawnPoint::UpdateOnRemove(void)
 // When our entity is deleted, we become responsible for indicating when a new one should spawn.
 //-----------------------------------------------------------------------------
 
-void CEntitySpawnPoint::OnEntityDeleted( CBaseEntity *pEntity )
+void CEntitySpawnPoint::OnEntityDeleted(CBaseEntity *pEntity)
 {
-	if ( !m_hSpawnManager )
+	if(!m_hSpawnManager)
 		return;
 
-	if ( pEntity == m_hMyEntity )
+	if(pEntity == m_hMyEntity)
 	{
 		m_flNodeFree = gpGlobals->curtime + 10.f;
 		m_hMyEntity = NULL;
-		SetNextThink( gpGlobals->curtime + m_hSpawnManager->GetRespawnTime() );
-		SetThink( &CEntitySpawnPoint::RespawnNotifyThink );
+		SetNextThink(gpGlobals->curtime + m_hSpawnManager->GetRespawnTime());
+		SetThink(&CEntitySpawnPoint::RespawnNotifyThink);
 	}
 }
 
-void CEntitySpawnPoint::RespawnNotifyThink( void )
+void CEntitySpawnPoint::RespawnNotifyThink(void)
 {
-	if ( (gpGlobals->curtime > m_flNodeFree) && m_hSpawnManager->SpawnEntity() )
+	if((gpGlobals->curtime > m_flNodeFree) && m_hSpawnManager->SpawnEntity())
 	{
-		SetThink( NULL );
-		SetNextThink( TICK_NEVER_THINK );
+		SetThink(NULL);
+		SetNextThink(TICK_NEVER_THINK);
 	}
 	else
 	{
-		SetNextThink( gpGlobals->curtime + 5.f );
-		SetThink( &CEntitySpawnPoint::RespawnNotifyThink );
+		SetNextThink(gpGlobals->curtime + 5.f);
+		SetThink(&CEntitySpawnPoint::RespawnNotifyThink);
 	}
 }

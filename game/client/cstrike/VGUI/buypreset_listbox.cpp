@@ -25,40 +25,42 @@
 using namespace vgui;
 
 #ifndef max
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#define max(a, b) (((a) > (b)) ? (a) : (b))
 #endif
 
-
 //--------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------
-BuyPresetListBox::BuyPresetListBox( vgui::Panel *parent, char const *panelName ) : Panel( parent, panelName )
+BuyPresetListBox::BuyPresetListBox(vgui::Panel *parent, char const *panelName) : Panel(parent, panelName)
 {
 	m_visibleIndex = 0;
 	m_lastSize = 0;
 
-	SetBounds( 0, 0, 100, 100 );
+	SetBounds(0, 0, 100, 100);
 
 	m_vbar = new ScrollBar(this, "PanelListPanelVScroll", true);
-	m_vbar->SetBounds( 0, 0, 20, 20 );
+	m_vbar->SetBounds(0, 0, 20, 20);
 	m_vbar->SetVisible(true);
-	m_vbar->AddActionSignalTarget( this );
+	m_vbar->AddActionSignalTarget(this);
 
 	m_pPanelEmbedded = new EditablePanel(this, "PanelListEmbedded");
 	m_pPanelEmbedded->SetBounds(0, 0, 20, 20);
-	m_pPanelEmbedded->SetPaintBackgroundEnabled( false );
+	m_pPanelEmbedded->SetPaintBackgroundEnabled(false);
 	m_pPanelEmbedded->SetPaintBorderEnabled(false);
 
-	if( IsProportional() )
+	if(IsProportional())
 	{
 		int width, height;
-		int sw,sh;
-		surface()->GetProportionalBase( width, height );
+		int sw, sh;
+		surface()->GetProportionalBase(width, height);
 		GetHudSize(sw, sh);
 
 		// resize scrollbar, etc
-		m_iScrollbarSize = static_cast<int>( static_cast<float>( SCROLLBAR_SIZE )*( static_cast<float>( sw )/ static_cast<float>( width )));
-		m_iDefaultHeight = static_cast<int>( static_cast<float>( DEFAULT_HEIGHT )*( static_cast<float>( sw )/ static_cast<float>( width )));
-		m_iPanelBuffer = static_cast<int>( static_cast<float>( PANELBUFFER )*( static_cast<float>( sw )/ static_cast<float>( width )));
+		m_iScrollbarSize =
+			static_cast<int>(static_cast<float>(SCROLLBAR_SIZE) * (static_cast<float>(sw) / static_cast<float>(width)));
+		m_iDefaultHeight =
+			static_cast<int>(static_cast<float>(DEFAULT_HEIGHT) * (static_cast<float>(sw) / static_cast<float>(width)));
+		m_iPanelBuffer =
+			static_cast<int>(static_cast<float>(PANELBUFFER) * (static_cast<float>(sw) / static_cast<float>(width)));
 	}
 	else
 	{
@@ -79,9 +81,9 @@ BuyPresetListBox::~BuyPresetListBox()
 /**
  *  Passes commands up to the parent
  */
-void BuyPresetListBox::OnCommand( const char *command )
+void BuyPresetListBox::OnCommand(const char *command)
 {
-	GetParent()->OnCommand( command );
+	GetParent()->OnCommand(command);
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -91,10 +93,10 @@ void BuyPresetListBox::OnCommand( const char *command )
 void BuyPresetListBox::OnMouseWheeled(int delta)
 {
 	int scale = 3;
-	if ( m_items.Count() )
+	if(m_items.Count())
 	{
 		Panel *panel = m_items[0].panel;
-		if ( panel )
+		if(panel)
 		{
 			scale = panel->GetTall() + m_iPanelBuffer;
 		}
@@ -108,19 +110,19 @@ void BuyPresetListBox::OnMouseWheeled(int delta)
 /**
  *  Computes vertical pixels needed by listbox contents
  */
-int	BuyPresetListBox::computeVPixelsNeeded( void )
+int BuyPresetListBox::computeVPixelsNeeded(void)
 {
 	int pixels = 0;
 
 	int i;
-	for ( i = 0; i < m_items.Count(); i++ )
+	for(i = 0; i < m_items.Count(); i++)
 	{
 		Panel *panel = m_items[i].panel;
-		if ( !panel )
+		if(!panel)
 			continue;
 
 		int w, h;
-		panel->GetSize( w, h );
+		panel->GetSize(w, h);
 
 		pixels += m_iPanelBuffer; // add in buffer. between items.
 		pixels += h;
@@ -133,17 +135,18 @@ int	BuyPresetListBox::computeVPixelsNeeded( void )
 
 //--------------------------------------------------------------------------------------------------------------
 /**
- *  Adds an item to the end of the listbox.  UserData is assumed to be a pointer that can be freed by the listbox if non-NULL.
+ *  Adds an item to the end of the listbox.  UserData is assumed to be a pointer that can be freed by the listbox if
+ * non-NULL.
  */
-int BuyPresetListBox::AddItem( vgui::Panel *panel, void * userData )
+int BuyPresetListBox::AddItem(vgui::Panel *panel, void *userData)
 {
 	assert(panel);
 
-	DataItem item = { panel, userData };
+	DataItem item = {panel, userData};
 
-	panel->SetParent( m_pPanelEmbedded );
+	panel->SetParent(m_pPanelEmbedded);
 
-	m_items.AddToTail( item );
+	m_items.AddToTail(item);
 
 	InvalidateLayout();
 	return m_items.Count();
@@ -153,9 +156,9 @@ int BuyPresetListBox::AddItem( vgui::Panel *panel, void * userData )
 /**
  *  Exchanges two items in the listbox
  */
-void BuyPresetListBox::SwapItems( int index1, int index2 )
+void BuyPresetListBox::SwapItems(int index1, int index2)
 {
-	if ( index1 < 0 || index2 < 0 || index1 >= m_items.Count() || index2 >= m_items.Count() )
+	if(index1 < 0 || index2 < 0 || index1 >= m_items.Count() || index2 >= m_items.Count())
 	{
 		return;
 	}
@@ -171,7 +174,7 @@ void BuyPresetListBox::SwapItems( int index1, int index2 )
 /**
  *  Returns the number of items in the listbox
  */
-int	BuyPresetListBox::GetItemCount( void ) const
+int BuyPresetListBox::GetItemCount(void) const
 {
 	return m_items.Count();
 }
@@ -180,9 +183,9 @@ int	BuyPresetListBox::GetItemCount( void ) const
 /**
  *  Returns the panel in the given index, or NULL
  */
-Panel * BuyPresetListBox::GetItemPanel(int index) const
+Panel *BuyPresetListBox::GetItemPanel(int index) const
 {
-	if ( index < 0 || index >= m_items.Count() )
+	if(index < 0 || index >= m_items.Count())
 		return NULL;
 
 	return m_items[index].panel;
@@ -192,9 +195,9 @@ Panel * BuyPresetListBox::GetItemPanel(int index) const
 /**
  *  Returns the userData in the given index, or NULL
  */
-void * BuyPresetListBox::GetItemUserData(int index)
+void *BuyPresetListBox::GetItemUserData(int index)
 {
-	if ( index < 0 || index >= m_items.Count() )
+	if(index < 0 || index >= m_items.Count())
 	{
 		return NULL;
 	}
@@ -206,9 +209,9 @@ void * BuyPresetListBox::GetItemUserData(int index)
 /**
  *  Sets the userData in the given index
  */
-void BuyPresetListBox::SetItemUserData( int index, void * userData )
+void BuyPresetListBox::SetItemUserData(int index, void *userData)
 {
-	if ( index < 0 || index >= m_items.Count() )
+	if(index < 0 || index >= m_items.Count())
 		return;
 
 	m_items[index].userData = userData;
@@ -220,20 +223,20 @@ void BuyPresetListBox::SetItemUserData( int index, void * userData )
  */
 void BuyPresetListBox::RemoveItem(int index)
 {
-	if ( index < 0 || index >= m_items.Count() )
+	if(index < 0 || index >= m_items.Count())
 		return;
 
 	DataItem item = m_items[index];
-	if ( item.panel )
+	if(item.panel)
 	{
 		item.panel->MarkForDeletion();
 	}
-	if ( item.userData )
+	if(item.userData)
 	{
 		delete item.userData;
 	}
 
-	m_items.Remove( index );
+	m_items.Remove(index);
 
 	InvalidateLayout();
 }
@@ -244,9 +247,9 @@ void BuyPresetListBox::RemoveItem(int index)
  */
 void BuyPresetListBox::DeleteAllItems()
 {
-	while ( m_items.Count() )
+	while(m_items.Count())
 	{
-		RemoveItem( 0 );
+		RemoveItem(0);
 	}
 
 	// move the scrollbar to the top of the list
@@ -271,7 +274,7 @@ void BuyPresetListBox::OnSizeChanged(int wide, int tall)
 void BuyPresetListBox::PerformLayout()
 {
 	int wide, tall;
-	GetSize( wide, tall );
+	GetSize(wide, tall);
 
 	int vpixels = computeVPixelsNeeded();
 
@@ -280,18 +283,18 @@ void BuyPresetListBox::PerformLayout()
 	//!! need to make it recalculate scroll positions
 	m_vbar->SetVisible(true);
 	m_vbar->SetEnabled(false);
-	m_vbar->SetRange( 0, (MAX( 0, vpixels - tall + m_iDefaultHeight ))  );
-	m_vbar->SetRangeWindow( m_iDefaultHeight );
-	m_vbar->SetButtonPressedScrollValue( m_iDefaultHeight ); // standard height of labels/buttons etc.
+	m_vbar->SetRange(0, (MAX(0, vpixels - tall + m_iDefaultHeight)));
+	m_vbar->SetRangeWindow(m_iDefaultHeight);
+	m_vbar->SetButtonPressedScrollValue(m_iDefaultHeight); // standard height of labels/buttons etc.
 	m_vbar->SetPos(wide - m_iScrollbarSize, 1);
 	m_vbar->SetSize(m_iScrollbarSize, tall - 2);
 
 	m_visibleIndex = visibleIndex;
 
-	int top = MAX( 0, m_vbar->GetValue() );
+	int top = MAX(0, m_vbar->GetValue());
 
-	m_pPanelEmbedded->SetPos( 1, -top );
-	m_pPanelEmbedded->SetSize( wide-m_iScrollbarSize -2, vpixels );
+	m_pPanelEmbedded->SetPos(1, -top);
+	m_pPanelEmbedded->SetSize(wide - m_iScrollbarSize - 2, vpixels);
 
 	// Now lay out the controls on the embedded panel
 	int y = 0;
@@ -299,7 +302,7 @@ void BuyPresetListBox::PerformLayout()
 	int totalh = 0;
 
 	int i;
-	for ( i = 0; i < m_items.Count(); i++, y += h )
+	for(i = 0; i < m_items.Count(); i++, y += h)
 	{
 		// add in a little buffer between panels
 		y += m_iPanelBuffer;
@@ -308,48 +311,48 @@ void BuyPresetListBox::PerformLayout()
 		h = item.panel->GetTall();
 
 		totalh += h;
-		item.panel->SetBounds( 8, y, wide - m_iScrollbarSize - 8 - 8, h );
+		item.panel->SetBounds(8, y, wide - m_iScrollbarSize - 8 - 8, h);
 		item.panel->InvalidateLayout();
 	}
 
-	if ( m_visibleIndex >= 0 && m_visibleIndex < m_items.Count() )
+	if(m_visibleIndex >= 0 && m_visibleIndex < m_items.Count())
 	{
 
 		int vpos = 0;
 
 		int tempWide, tempTall;
-		GetSize( tempWide, tempTall );
+		GetSize(tempWide, tempTall);
 
 		int vtop, vbottom;
-		m_vbar->GetRange( vtop, vbottom );
+		m_vbar->GetRange(vtop, vbottom);
 
-		int tempTop = MAX( 0, m_vbar->GetValue() ); // top pixel in the embedded panel
+		int tempTop = MAX(0, m_vbar->GetValue()); // top pixel in the embedded panel
 		int bottom = tempTop + tempTall - 2;
 
 		int itemTop, itemLeft, itemBottom, itemRight;
-		m_items[m_visibleIndex].panel->GetBounds( itemLeft, itemTop, itemRight, itemBottom );
+		m_items[m_visibleIndex].panel->GetBounds(itemLeft, itemTop, itemRight, itemBottom);
 		itemBottom += itemTop;
 		itemRight += itemLeft;
 
-		if ( itemTop < tempTop )
+		if(itemTop < tempTop)
 		{
 			// item's top is too high
-			vpos -= ( tempTop - itemTop );
+			vpos -= (tempTop - itemTop);
 
 			m_vbar->SetValue(vpos);
 			OnSliderMoved(vpos);
 		}
-		else if ( itemBottom > bottom )
+		else if(itemBottom > bottom)
 		{
 			// item's bottom is too low
-			vpos += ( itemBottom - bottom );
+			vpos += (itemBottom - bottom);
 
 			m_vbar->SetValue(vpos);
 			OnSliderMoved(vpos);
 		}
 	}
 
-	if ( m_lastSize == vpixels )
+	if(m_lastSize == vpixels)
 	{
 		m_visibleIndex = -1;
 	}
@@ -360,7 +363,7 @@ void BuyPresetListBox::PerformLayout()
 /**
  *  Try to ensure that the given index is visible
  */
-void BuyPresetListBox::MakeItemVisible( int index )
+void BuyPresetListBox::MakeItemVisible(int index)
 {
 	m_visibleIndex = index;
 	m_lastSize = 0;
@@ -382,17 +385,15 @@ void BuyPresetListBox::ApplySchemeSettings(IScheme *pScheme)
 	PerformLayout();
 }
 
-
 //--------------------------------------------------------------------------------------------------------------
 /**
  *  Handles slider being dragged
  */
-void BuyPresetListBox::OnSliderMoved( int position )
+void BuyPresetListBox::OnSliderMoved(int position)
 {
 	InvalidateLayout();
 	Repaint();
 }
-
 
 //--------------------------------------------------------------------------------------------------------------
 /**

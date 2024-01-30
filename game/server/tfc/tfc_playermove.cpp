@@ -12,24 +12,22 @@
 #include "ipredictionsystem.h"
 #include "tfc_player.h"
 
-
 static CMoveData g_MoveData;
 CMoveData *g_pMoveData = &g_MoveData;
 
 IPredictionSystem *IPredictionSystem::g_pPredictionSystems = NULL;
-
 
 //-----------------------------------------------------------------------------
 // Sets up the move data for TF2
 //-----------------------------------------------------------------------------
 class CTFCPlayerMove : public CPlayerMove
 {
-DECLARE_CLASS( CTFCPlayerMove, CPlayerMove );
+	DECLARE_CLASS(CTFCPlayerMove, CPlayerMove);
 
 public:
-	virtual void	StartCommand( CBasePlayer *player, CUserCmd *cmd );
-	virtual void	SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
-	virtual void	FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move );
+	virtual void StartCommand(CBasePlayer *player, CUserCmd *cmd);
+	virtual void SetupMove(CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move);
+	virtual void FinishMove(CBasePlayer *player, CUserCmd *ucmd, CMoveData *move);
 };
 
 // PlayerMove Interface
@@ -47,9 +45,9 @@ CPlayerMove *PlayerMove()
 // Main setup, finish
 //-----------------------------------------------------------------------------
 
-void CTFCPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
+void CTFCPlayerMove::StartCommand(CBasePlayer *player, CUserCmd *cmd)
 {
-	BaseClass::StartCommand( player, cmd );
+	BaseClass::StartCommand(player, cmd);
 }
 
 //-----------------------------------------------------------------------------
@@ -57,11 +55,10 @@ void CTFCPlayerMove::StartCommand( CBasePlayer *player, CUserCmd *cmd )
 //          from the player for movement. (Server-side, the client-side version
 //          of this code can be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
-void CTFCPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move )
+void CTFCPlayerMove::SetupMove(CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move)
 {
-	BaseClass::SetupMove( player, ucmd, pHelper, move );
+	BaseClass::SetupMove(player, ucmd, pHelper, move);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: This is called post player movement to copy back all data that
@@ -69,8 +66,8 @@ void CTFCPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper
 //          movement. (Server-side, the client-side version of this code can
 //          be found in prediction.cpp.)
 //-----------------------------------------------------------------------------
-void CTFCPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
+void CTFCPlayerMove::FinishMove(CBasePlayer *player, CUserCmd *ucmd, CMoveData *move)
 {
 	// Call the default FinishMove code.
-	BaseClass::FinishMove( player, ucmd, move );
+	BaseClass::FinishMove(player, ucmd, move);
 }

@@ -23,29 +23,22 @@
 
 using namespace vgui;
 
-
 enum
 {
 	MENUBARINDENT = 4, // indent from top and bottom of panel.
 };
 
-DECLARE_BUILD_FACTORY( MenuBar );
+DECLARE_BUILD_FACTORY(MenuBar);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-MenuBar::MenuBar(Panel *parent, const char *panelName) :
-	Panel(parent, panelName),
-	m_nRightEdge( 0 )
-{
-}
+MenuBar::MenuBar(Panel *parent, const char *panelName) : Panel(parent, panelName), m_nRightEdge(0) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-MenuBar::~MenuBar()
-{
-}
+MenuBar::~MenuBar() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -60,13 +53,12 @@ void MenuBar::AddButton(MenuButton *button)
 //-----------------------------------------------------------------------------
 // This will add the menu to the menu bar
 //-----------------------------------------------------------------------------
-void MenuBar::AddMenu( const char *pButtonName, Menu *pMenu )
+void MenuBar::AddMenu(const char *pButtonName, Menu *pMenu)
 {
 	MenuButton *pMenuButton = new MenuButton(this, pButtonName, pButtonName);
 	pMenuButton->SetMenu(pMenu);
 	AddButton(pMenuButton);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle key presses, Activate shortcuts
@@ -75,39 +67,39 @@ void MenuBar::OnKeyCodeTyped(KeyCode code)
 {
 	switch(code)
 	{
-	case KEY_RIGHT:
+		case KEY_RIGHT:
 		{
 			// iterate the menu items looking for one that is open
 			// if we find one open, open the one to the right
-			for (int i = 0; i < m_pMenuButtons.Count() - 1; i++)
+			for(int i = 0; i < m_pMenuButtons.Count() - 1; i++)
 			{
 				MenuButton *panel = m_pMenuButtons[i];
-				if (panel->IsDepressed())
+				if(panel->IsDepressed())
 				{
 					m_pMenuButtons[i]->DoClick();
-					m_pMenuButtons[i+1]->DoClick();
+					m_pMenuButtons[i + 1]->DoClick();
 					break;
 				}
 			}
 			break;
 		}
-	case KEY_LEFT:
+		case KEY_LEFT:
 		{
 			// iterate the menu items looking for one that is open
 			// if we find one open, open the one to the left
-			for (int i = 1; i < m_pMenuButtons.Count(); i++)
+			for(int i = 1; i < m_pMenuButtons.Count(); i++)
 			{
 				MenuButton *panel = m_pMenuButtons[i];
-				if (panel->IsDepressed())
+				if(panel->IsDepressed())
 				{
 					m_pMenuButtons[i]->DoClick();
-					m_pMenuButtons[i-1]->DoClick();
+					m_pMenuButtons[i - 1]->DoClick();
 					break;
 				}
 			}
 			break;
 		}
-	default:
+		default:
 		{
 			break;
 		}
@@ -122,16 +114,16 @@ void MenuBar::OnKeyCodeTyped(KeyCode code)
 //-----------------------------------------------------------------------------
 void MenuBar::OnKeyTyped(wchar_t unichar)
 {
-	if (unichar)
+	if(unichar)
 	{
 		// iterate the menu items looking for one with the matching hotkey
-		for (int i = 0; i < m_pMenuButtons.Count(); i++)
+		for(int i = 0; i < m_pMenuButtons.Count(); i++)
 		{
 			MenuButton *panel = m_pMenuButtons[i];
-			if (panel->IsVisible())
+			if(panel->IsVisible())
 			{
 				Panel *hot = panel->HasHotkey(unichar);
-				if (hot)
+				if(hot)
 				{
 					// post a message to the menuitem telling it it's hotkey was pressed
 					PostMessage(hot, new KeyValues("Hotkey"));
@@ -146,14 +138,14 @@ void MenuBar::OnKeyTyped(wchar_t unichar)
 
 void MenuBar::Paint()
 {
-	IScheme *pScheme = scheme()->GetIScheme( GetScheme() );
-	for ( int i = 0; i < m_pMenuButtons.Count(); i++)
+	IScheme *pScheme = scheme()->GetIScheme(GetScheme());
+	for(int i = 0; i < m_pMenuButtons.Count(); i++)
 	{
-		if (!m_pMenuButtons[i]->IsArmed())
+		if(!m_pMenuButtons[i]->IsArmed())
 			m_pMenuButtons[i]->SetDefaultBorder(NULL);
 		else
 		{
-			m_pMenuButtons[i]->SetDefaultBorder(pScheme->GetBorder( "ButtonBorder"));
+			m_pMenuButtons[i]->SetDefaultBorder(pScheme->GetBorder("ButtonBorder"));
 		}
 	}
 }
@@ -169,11 +161,8 @@ void MenuBar::ApplySchemeSettings(IScheme *pScheme)
 	SetBorder(pScheme->GetBorder("ButtonBorder"));
 
 	// get the background color
-	SetBgColor(pScheme->GetColor( "MenuBar.BgColor", GetBgColor() ));
-
+	SetBgColor(pScheme->GetColor("MenuBar.BgColor", GetBgColor()));
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Reformat according to the new layout
@@ -181,17 +170,17 @@ void MenuBar::ApplySchemeSettings(IScheme *pScheme)
 void MenuBar::PerformLayout()
 {
 	int nBarWidth, nBarHeight;
-	GetSize( nBarWidth, nBarHeight );
+	GetSize(nBarWidth, nBarHeight);
 
 	// Now position + resize all buttons
 	int x = MENUBARINDENT;
-	for ( int i = 0; i < m_pMenuButtons.Count(); ++i )
+	for(int i = 0; i < m_pMenuButtons.Count(); ++i)
 	{
 		int nWide, nTall;
 
 		m_pMenuButtons[i]->GetContentSize(nWide, nTall);
-		m_pMenuButtons[i]->SetPos( x, MENUBARINDENT );
-		m_pMenuButtons[i]->SetSize( nWide + Label::Content, nBarHeight - 2 * MENUBARINDENT );
+		m_pMenuButtons[i]->SetPos(x, MENUBARINDENT);
+		m_pMenuButtons[i]->SetSize(nWide + Label::Content, nBarHeight - 2 * MENUBARINDENT);
 
 		x += nWide + MENUBARINDENT;
 	}
@@ -204,7 +193,7 @@ void MenuBar::PerformLayout()
 // Input  : w -
 //			int&h -
 //-----------------------------------------------------------------------------
-void MenuBar::GetContentSize( int& w, int&h )
+void MenuBar::GetContentSize(int &w, int &h)
 {
 	w = m_nRightEdge + 2;
 	h = GetTall();
@@ -225,21 +214,21 @@ void MenuBar::OnCursorEnteredMenuButton(int VPanel)
 {
 	VPANEL menuButton = (VPANEL)VPanel;
 	// see if we had a menu open
-	for ( int i = 0; i < m_pMenuButtons.Count(); i++)
+	for(int i = 0; i < m_pMenuButtons.Count(); i++)
 	{
 		// one of our buttons was pressed.
-		if (m_pMenuButtons[i]->IsDepressed())
+		if(m_pMenuButtons[i]->IsDepressed())
 		{
 			int oldbutton = i;
 			// now see if menuButton is one of ours.
-			for ( int j = 0; j < m_pMenuButtons.Count(); j++)
+			for(int j = 0; j < m_pMenuButtons.Count(); j++)
 			{
 				MenuButton *button = static_cast<MenuButton *>(ipanel()->GetPanel(menuButton, GetModuleName()));
 				// it is one of ours.
-				if ( button == m_pMenuButtons[j])
+				if(button == m_pMenuButtons[j])
 				{
 					// if its a different button than the one we already had open,
-					if (j != oldbutton)
+					if(j != oldbutton)
 					{
 						// close this menu and open the one we just entered
 						m_pMenuButtons[oldbutton]->DoClick();

@@ -22,25 +22,24 @@
 class CTEKillPlayerAttachments : public CBaseTempEntity
 {
 public:
-	DECLARE_CLASS( CTEKillPlayerAttachments, CBaseTempEntity );
+	DECLARE_CLASS(CTEKillPlayerAttachments, CBaseTempEntity);
 
-					CTEKillPlayerAttachments( const char *name );
-	virtual			~CTEKillPlayerAttachments( void );
+	CTEKillPlayerAttachments(const char *name);
+	virtual ~CTEKillPlayerAttachments(void);
 
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
+	virtual void Test(const Vector &current_origin, const QAngle &current_angles);
 
 	DECLARE_SERVERCLASS();
 
 public:
-	CNetworkVar( int, m_nPlayer );
+	CNetworkVar(int, m_nPlayer);
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-CTEKillPlayerAttachments::CTEKillPlayerAttachments( const char *name ) :
-	CBaseTempEntity( name )
+CTEKillPlayerAttachments::CTEKillPlayerAttachments(const char *name) : CBaseTempEntity(name)
 {
 	m_nPlayer = 0;
 }
@@ -48,31 +47,28 @@ CTEKillPlayerAttachments::CTEKillPlayerAttachments( const char *name ) :
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTEKillPlayerAttachments::~CTEKillPlayerAttachments( void )
-{
-}
+CTEKillPlayerAttachments::~CTEKillPlayerAttachments(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *current_origin -
 //			*current_angles -
 //-----------------------------------------------------------------------------
-void CTEKillPlayerAttachments::Test( const Vector& current_origin, const QAngle& current_angles )
+void CTEKillPlayerAttachments::Test(const Vector &current_origin, const QAngle &current_angles)
 {
 	m_nPlayer = 1;
 
 	CBroadcastRecipientFilter filter;
-	Create( filter, 0.0 );
+	Create(filter, 0.0);
 }
 
-
 IMPLEMENT_SERVERCLASS_ST(CTEKillPlayerAttachments, DT_TEKillPlayerAttachments)
-	SendPropInt( SENDINFO(m_nPlayer), 5, SPROP_UNSIGNED ),
-END_SEND_TABLE()
+SendPropInt(SENDINFO(m_nPlayer), 5, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
-
-// Singleton to fire TEKillPlayerAttachments objects
-static CTEKillPlayerAttachments g_TEKillPlayerAttachments( "KillPlayerAttachments" );
+	// Singleton to fire TEKillPlayerAttachments objects
+	static CTEKillPlayerAttachments g_TEKillPlayerAttachments("KillPlayerAttachments");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -82,11 +78,10 @@ static CTEKillPlayerAttachments g_TEKillPlayerAttachments( "KillPlayerAttachment
 //			*recipient -
 //			player -
 //-----------------------------------------------------------------------------
-void TE_KillPlayerAttachments( IRecipientFilter& filter, float delay,
-	int player )
+void TE_KillPlayerAttachments(IRecipientFilter &filter, float delay, int player)
 {
 	g_TEKillPlayerAttachments.m_nPlayer = player;
 
 	// Send it over the wire
-	g_TEKillPlayerAttachments.Create( filter, delay );
+	g_TEKillPlayerAttachments.Create(filter, delay);
 }

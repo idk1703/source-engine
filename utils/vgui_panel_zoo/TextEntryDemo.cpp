@@ -10,7 +10,6 @@
 
 #include <vgui_controls/TextEntry.h>
 
-
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
@@ -28,16 +27,16 @@ using namespace vgui;
 // When URL's are displayed in TextEntry windows they become clickable, and
 // will open a browser when clicked.
 //-----------------------------------------------------------------------------
-class TextEntryDemo: public DemoPage
+class TextEntryDemo : public DemoPage
 {
-	public:
-		TextEntryDemo(Panel *parent, const char *name);
-		~TextEntryDemo();
+public:
+	TextEntryDemo(Panel *parent, const char *name);
+	~TextEntryDemo();
 
-	private:
-		void SetVisible(bool status);
+private:
+	void SetVisible(bool status);
 
-		TextEntry *m_pTextEntry;
+	TextEntry *m_pTextEntry;
 };
 
 //-----------------------------------------------------------------------------
@@ -66,7 +65,6 @@ TextEntryDemo::TextEntryDemo(Panel *parent, const char *name) : DemoPage(parent,
 	// Note window has horizontal scrolling of text on by default.
 	// You can enforce a char limit by using setMaximumCharCount()
 
-
 	// A non editable textentry filled with text to test elipses:
 	TextEntry *m_pTextEntry2 = new TextEntry(this, "ATextEntry");
 	m_pTextEntry2->SetBounds(100, 130, 200, tall);
@@ -78,22 +76,19 @@ void TextEntryDemo::SetVisible(bool status)
 {
 	// We want all the text in the window selected the
 	// first time the user clicks in the window.
-	if (status)
-		m_pTextEntry->SelectAllOnFirstFocus(true);;
+	if(status)
+		m_pTextEntry->SelectAllOnFirstFocus(true);
+	;
 
 	DemoPage::SetVisible(status);
-
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-TextEntryDemo::~TextEntryDemo()
-{
-}
+TextEntryDemo::~TextEntryDemo() {}
 
-
-Panel* TextEntryDemo_Create(Panel *parent)
+Panel *TextEntryDemo_Create(Panel *parent)
 {
 	return new TextEntryDemo(parent, "TextEntryDemo");
 }

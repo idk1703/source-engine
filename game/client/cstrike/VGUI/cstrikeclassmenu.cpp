@@ -18,44 +18,39 @@
 
 using namespace vgui;
 
-
 // ----------------------------------------------------------------------------- //
 // Class image panels. These maintain a list of the class image panels so
 // it can render 3D images into them.
 // ----------------------------------------------------------------------------- //
 
-CUtlVector<CCSClassImagePanel*> g_ClassImagePanels;
+CUtlVector<CCSClassImagePanel *> g_ClassImagePanels;
 
-
-CCSClassImagePanel::CCSClassImagePanel( vgui::Panel *pParent, const char *pName )
-	: vgui::ImagePanel( pParent, pName )
+CCSClassImagePanel::CCSClassImagePanel(vgui::Panel *pParent, const char *pName) : vgui::ImagePanel(pParent, pName)
 {
-	g_ClassImagePanels.AddToTail( this );
+	g_ClassImagePanels.AddToTail(this);
 	m_ModelName[0] = 0;
 }
 
 CCSClassImagePanel::~CCSClassImagePanel()
 {
-	g_ClassImagePanels.FindAndRemove( this );
+	g_ClassImagePanels.FindAndRemove(this);
 }
 
-void CCSClassImagePanel::ApplySettings( KeyValues *inResourceData )
+void CCSClassImagePanel::ApplySettings(KeyValues *inResourceData)
 {
-	const char *pName = inResourceData->GetString( "3DModel" );
-	if ( pName )
+	const char *pName = inResourceData->GetString("3DModel");
+	if(pName)
 	{
-		Q_strncpy( m_ModelName, pName, sizeof( m_ModelName ) );
+		Q_strncpy(m_ModelName, pName, sizeof(m_ModelName));
 	}
 
-	BaseClass::ApplySettings( inResourceData );
+	BaseClass::ApplySettings(inResourceData);
 }
-
 
 void CCSClassImagePanel::Paint()
 {
 	BaseClass::Paint();
 }
-
 
 // ----------------------------------------------------------------------------- //
 // CClassMenu_TER
@@ -63,46 +58,45 @@ void CCSClassImagePanel::Paint()
 
 CClassMenu_TER::CClassMenu_TER(IViewPort *pViewPort) : CClassMenu(pViewPort, PANEL_CLASS_TER)
 {
-	LoadControlSettings( "Resource/UI/ClassMenu_TER.res" );
-	CreateBackground( this );
+	LoadControlSettings("Resource/UI/ClassMenu_TER.res");
+	CreateBackground(this);
 	m_backgroundLayoutFinished = false;
 }
 
-const char *CClassMenu_TER::GetName( void )
+const char *CClassMenu_TER::GetName(void)
 {
 	return PANEL_CLASS_TER;
 }
 
 void CClassMenu_TER::ShowPanel(bool bShow)
 {
-	if ( bShow)
+	if(bShow)
 	{
-		engine->CheckPoint( "ClassMenu" );
+		engine->CheckPoint("ClassMenu");
 	}
 
-	BaseClass::ShowPanel( bShow );
-
+	BaseClass::ShowPanel(bShow);
 }
 
 void CClassMenu_TER::SetVisible(bool state)
 {
 	BaseClass::SetVisible(state);
 
-	if ( state )
+	if(state)
 	{
-		Panel *pAutoButton = FindChildByName( "autoselect_t" );
-		if ( pAutoButton )
+		Panel *pAutoButton = FindChildByName("autoselect_t");
+		if(pAutoButton)
 		{
 			pAutoButton->RequestFocus();
 		}
 	}
 }
 
-bool modelExists( const char *search, const CUtlVector< const char * > &names )
+bool modelExists(const char *search, const CUtlVector<const char *> &names)
 {
-	for ( int i=0; i<names.Count(); ++i )
+	for(int i = 0; i < names.Count(); ++i)
 	{
-		if ( Q_stristr( names[i], search ) != NULL )
+		if(Q_stristr(names[i], search) != NULL)
 		{
 			return true;
 		}
@@ -115,32 +109,29 @@ void CClassMenu_TER::Update()
 {
 	C_CSPlayer *pLocalPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if ( pLocalPlayer && pLocalPlayer->PlayerClass() >= FIRST_T_CLASS && pLocalPlayer->PlayerClass() <= LAST_T_CLASS )
+	if(pLocalPlayer && pLocalPlayer->PlayerClass() >= FIRST_T_CLASS && pLocalPlayer->PlayerClass() <= LAST_T_CLASS)
 	{
-		SetVisibleButton( "CancelButton", true );
+		SetVisibleButton("CancelButton", true);
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", false );
+		SetVisibleButton("CancelButton", false);
 	}
 
 	// if we don't have the new models installed,
 	// turn off the militia and spetsnaz buttons
-	SetVisibleButton( "militia", false );
+	SetVisibleButton("militia", false);
 }
-
 
 Panel *CClassMenu_TER::CreateControlByName(const char *controlName)
 {
-	if ( Q_stricmp( controlName, "CSClassImagePanel" ) == 0 )
+	if(Q_stricmp(controlName, "CSClassImagePanel") == 0)
 	{
-		return new CCSClassImagePanel( NULL, controlName );
+		return new CCSClassImagePanel(NULL, controlName);
 	}
 
-	return BaseClass::CreateControlByName( controlName );
+	return BaseClass::CreateControlByName(controlName);
 }
-
-
 
 // ----------------------------------------------------------------------------- //
 // CClassMenu_CT
@@ -148,45 +139,44 @@ Panel *CClassMenu_TER::CreateControlByName(const char *controlName)
 
 CClassMenu_CT::CClassMenu_CT(IViewPort *pViewPort) : CClassMenu(pViewPort, PANEL_CLASS_CT)
 {
-	LoadControlSettings( "Resource/UI/ClassMenu_CT.res" );
-	CreateBackground( this );
+	LoadControlSettings("Resource/UI/ClassMenu_CT.res");
+	CreateBackground(this);
 	m_backgroundLayoutFinished = false;
 }
 
 Panel *CClassMenu_CT::CreateControlByName(const char *controlName)
 {
-	if ( Q_stricmp( controlName, "CSClassImagePanel" ) == 0 )
+	if(Q_stricmp(controlName, "CSClassImagePanel") == 0)
 	{
-		return new CCSClassImagePanel( NULL, controlName );
+		return new CCSClassImagePanel(NULL, controlName);
 	}
 
-	return BaseClass::CreateControlByName( controlName );
+	return BaseClass::CreateControlByName(controlName);
 }
 
-const char *CClassMenu_CT::GetName( void )
+const char *CClassMenu_CT::GetName(void)
 {
 	return PANEL_CLASS_CT;
 }
 
 void CClassMenu_CT::ShowPanel(bool bShow)
 {
-	if ( bShow)
+	if(bShow)
 	{
-		engine->CheckPoint( "ClassMenu" );
+		engine->CheckPoint("ClassMenu");
 	}
 
-	BaseClass::ShowPanel( bShow );
-
+	BaseClass::ShowPanel(bShow);
 }
 
 void CClassMenu_CT::SetVisible(bool state)
 {
 	BaseClass::SetVisible(state);
 
-	if ( state )
+	if(state)
 	{
-		Panel *pAutoButton = FindChildByName( "autoselect_ct" );
-		if ( pAutoButton )
+		Panel *pAutoButton = FindChildByName("autoselect_ct");
+		if(pAutoButton)
 		{
 			pAutoButton->RequestFocus();
 		}
@@ -197,27 +187,24 @@ void CClassMenu_CT::Update()
 {
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if ( pPlayer && pPlayer->PlayerClass() >= FIRST_CT_CLASS && pPlayer->PlayerClass() <= LAST_CT_CLASS )
+	if(pPlayer && pPlayer->PlayerClass() >= FIRST_CT_CLASS && pPlayer->PlayerClass() <= LAST_CT_CLASS)
 	{
-		SetVisibleButton( "CancelButton", true );
+		SetVisibleButton("CancelButton", true);
 	}
 	else
 	{
-		SetVisibleButton( "CancelButton", false );
+		SetVisibleButton("CancelButton", false);
 	}
 
 	// if we don't have the new models installed,
 	// turn off the militia and spetsnaz buttons
-	SetVisibleButton( "spetsnaz", false );
+	SetVisibleButton("spetsnaz", false);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: The CS background is painted by image panels, so we should do nothing
 //-----------------------------------------------------------------------------
-void CClassMenu_TER::PaintBackground()
-{
-}
+void CClassMenu_TER::PaintBackground() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale / center the window
@@ -227,26 +214,24 @@ void CClassMenu_TER::PerformLayout()
 	BaseClass::PerformLayout();
 
 	// stretch the window to fullscreen
-	if ( !m_backgroundLayoutFinished )
-		LayoutBackgroundPanel( this );
+	if(!m_backgroundLayoutFinished)
+		LayoutBackgroundPanel(this);
 	m_backgroundLayoutFinished = true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CClassMenu_TER::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CClassMenu_TER::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	ApplyBackgroundSchemeSettings( this, pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
+	ApplyBackgroundSchemeSettings(this, pScheme);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: The CS background is painted by image panels, so we should do nothing
 //-----------------------------------------------------------------------------
-void CClassMenu_CT::PaintBackground()
-{
-}
+void CClassMenu_CT::PaintBackground() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale / center the window
@@ -256,16 +241,16 @@ void CClassMenu_CT::PerformLayout()
 	BaseClass::PerformLayout();
 
 	// stretch the window to fullscreen
-	if ( !m_backgroundLayoutFinished )
-		LayoutBackgroundPanel( this );
+	if(!m_backgroundLayoutFinished)
+		LayoutBackgroundPanel(this);
 	m_backgroundLayoutFinished = true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CClassMenu_CT::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CClassMenu_CT::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	ApplyBackgroundSchemeSettings( this, pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
+	ApplyBackgroundSchemeSettings(this, pScheme);
 }

@@ -11,32 +11,35 @@
 #include "ammodef.h"
 #include "in_buttons.h"
 
-#define SIEGE_TOWER_MINS			Vector(-30, -50, -10)
-#define SIEGE_TOWER_MAXS			Vector( 30,  50, 55)
-#define SIEGE_TOWER_MODEL			"models/objects/vehicle_siege_tower.mdl"
-#define SIEGE_TOWER_LADDER_MODEL	"models/objects/vehicle_siege_ladder.mdl"
-#define SIEGE_TOWER_PLATFORM_MODEL	"models/objects/vehicle_siege_plat.mdl"
+#define SIEGE_TOWER_MINS		   Vector(-30, -50, -10)
+#define SIEGE_TOWER_MAXS		   Vector(30, 50, 55)
+#define SIEGE_TOWER_MODEL		   "models/objects/vehicle_siege_tower.mdl"
+#define SIEGE_TOWER_LADDER_MODEL   "models/objects/vehicle_siege_ladder.mdl"
+#define SIEGE_TOWER_PLATFORM_MODEL "models/objects/vehicle_siege_plat.mdl"
 
-IMPLEMENT_SERVERCLASS_ST( CVehicleSiegeTower, DT_VehicleSiegeTower )
-END_SEND_TABLE();
+IMPLEMENT_SERVERCLASS_ST(CVehicleSiegeTower, DT_VehicleSiegeTower)
+END_SEND_TABLE
+();
 
-LINK_ENTITY_TO_CLASS( vehicle_siege_tower, CVehicleSiegeTower );
-PRECACHE_REGISTER( vehicle_siege_tower );
+LINK_ENTITY_TO_CLASS(vehicle_siege_tower, CVehicleSiegeTower);
+PRECACHE_REGISTER(vehicle_siege_tower);
 
-IMPLEMENT_SERVERCLASS_ST( CObjectSiegeLadder, DT_ObjectSiegeLadder )
-END_SEND_TABLE();
+IMPLEMENT_SERVERCLASS_ST(CObjectSiegeLadder, DT_ObjectSiegeLadder)
+END_SEND_TABLE
+();
 
-LINK_ENTITY_TO_CLASS( obj_siege_ladder, CObjectSiegeLadder );
-PRECACHE_REGISTER( obj_siege_ladder );
+LINK_ENTITY_TO_CLASS(obj_siege_ladder, CObjectSiegeLadder);
+PRECACHE_REGISTER(obj_siege_ladder);
 
-IMPLEMENT_SERVERCLASS_ST( CObjectSiegePlatform, DT_ObjectSiegePlatform )
-END_SEND_TABLE();
+IMPLEMENT_SERVERCLASS_ST(CObjectSiegePlatform, DT_ObjectSiegePlatform)
+END_SEND_TABLE
+();
 
-LINK_ENTITY_TO_CLASS( obj_siege_platform, CObjectSiegePlatform );
-PRECACHE_REGISTER( obj_siege_platform );
+LINK_ENTITY_TO_CLASS(obj_siege_platform, CObjectSiegePlatform);
+PRECACHE_REGISTER(obj_siege_platform);
 
 // CVars
-ConVar	vehicle_siege_tower_health( "vehicle_siege_tower_health","600", FCVAR_NONE, "Siege tower health" );
+ConVar vehicle_siege_tower_health("vehicle_siege_tower_health", "600", FCVAR_NONE, "Siege tower health");
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -52,10 +55,10 @@ CVehicleSiegeTower::CVehicleSiegeTower()
 //-----------------------------------------------------------------------------
 void CVehicleSiegeTower::Precache()
 {
-	PrecacheModel( SIEGE_TOWER_MODEL );
+	PrecacheModel(SIEGE_TOWER_MODEL);
 
-	PrecacheVGuiScreen( "screen_vehicle_siege_tower" );
-	PrecacheVGuiScreen( "screen_vulnerable_point" );
+	PrecacheVGuiScreen("screen_vehicle_siege_tower");
+	PrecacheVGuiScreen("screen_vulnerable_point");
 
 	BaseClass::Precache();
 }
@@ -65,15 +68,15 @@ void CVehicleSiegeTower::Precache()
 //-----------------------------------------------------------------------------
 void CVehicleSiegeTower::Spawn()
 {
-	SetModel( SIEGE_TOWER_MODEL );
+	SetModel(SIEGE_TOWER_MODEL);
 
 	// This size is used for placement only...
-	UTIL_SetSize( this, SIEGE_TOWER_MINS, SIEGE_TOWER_MAXS );
+	UTIL_SetSize(this, SIEGE_TOWER_MINS, SIEGE_TOWER_MAXS);
 	m_takedamage = DAMAGE_YES;
 	m_iHealth = vehicle_siege_tower_health.GetInt();
 
-	SetType( OBJ_SIEGE_TOWER );
-	SetMaxPassengerCount( 4 );
+	SetType(OBJ_SIEGE_TOWER);
+	SetMaxPassengerCount(4);
 
 	BaseClass::Spawn();
 }
@@ -81,29 +84,29 @@ void CVehicleSiegeTower::Spawn()
 //-----------------------------------------------------------------------------
 // Purpose: Gets info about the control panels
 //-----------------------------------------------------------------------------
-void CVehicleSiegeTower::GetControlPanelInfo( int nPanelIndex, const char *&pPanelName )
+void CVehicleSiegeTower::GetControlPanelInfo(int nPanelIndex, const char *&pPanelName)
 {
-	//pPanelName = "screen_vehicle_siege_tower";
+	// pPanelName = "screen_vehicle_siege_tower";
 	pPanelName = "screen_vulnerable_point";
 }
 
 //-----------------------------------------------------------------------------
 // Here's where we deal with weapons, ladders, etc.
 //-----------------------------------------------------------------------------
-void CVehicleSiegeTower::OnItemPostFrame( CBaseTFPlayer *pDriver )
+void CVehicleSiegeTower::OnItemPostFrame(CBaseTFPlayer *pDriver)
 {
 	// I can't do anything if I'm not active
-	if ( !ShouldBeActive() )
+	if(!ShouldBeActive())
 		return;
 
-	if ( GetPassengerRole( pDriver ) != VEHICLE_ROLE_DRIVER )
+	if(GetPassengerRole(pDriver) != VEHICLE_ROLE_DRIVER)
 		return;
 
-	if ( !IsDeployed() && ( pDriver->m_afButtonPressed & IN_ATTACK ) )
+	if(!IsDeployed() && (pDriver->m_afButtonPressed & IN_ATTACK))
 	{
 		InternalDeploy();
 	}
-	else if ( IsDeployed() && ( pDriver->m_afButtonPressed & IN_ATTACK ) )
+	else if(IsDeployed() && (pDriver->m_afButtonPressed & IN_ATTACK))
 	{
 		InternalUnDeploy();
 	}
@@ -112,29 +115,29 @@ void CVehicleSiegeTower::OnItemPostFrame( CBaseTFPlayer *pDriver )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CVehicleSiegeTower::InternalDeploy( void )
+void CVehicleSiegeTower::InternalDeploy(void)
 {
 	// Deploy
-	if ( !Deploy() )
+	if(!Deploy())
 		return;
 
-	InputTurnOff( inputdata_t() );
+	InputTurnOff(inputdata_t());
 
 	// Create the ladder.
 	Vector vecOrigin;
 	QAngle vecAngle;
-	GetAttachment( "ladder", vecOrigin, vecAngle );
-	CreateLadder( vecOrigin, vecAngle );
+	GetAttachment("ladder", vecOrigin, vecAngle);
+	CreateLadder(vecOrigin, vecAngle);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CVehicleSiegeTower::InternalUnDeploy( void )
+void CVehicleSiegeTower::InternalUnDeploy(void)
 {
 	// Undeploy
 	UnDeploy();
-	InputTurnOn( inputdata_t() );
+	InputTurnOn(inputdata_t());
 
 	// Destory the ladder.
 	DestroyLadder();
@@ -143,28 +146,28 @@ void CVehicleSiegeTower::InternalUnDeploy( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CVehicleSiegeTower::CreateLadder( const Vector &vecOrigin, const QAngle &vecAngles )
+void CVehicleSiegeTower::CreateLadder(const Vector &vecOrigin, const QAngle &vecAngles)
 {
 	// NOTE: This ladder and platform code is a total hack to test vehicles with.  This
 	//       is not the correct way to handle this problem at all.
-	m_hLadder = CObjectSiegeLadder::Create( vecOrigin, vecAngles, this );
-	m_hPlatform = CObjectSiegePlatform::Create( vecOrigin, vecAngles, this );
+	m_hLadder = CObjectSiegeLadder::Create(vecOrigin, vecAngles, this);
+	m_hPlatform = CObjectSiegePlatform::Create(vecOrigin, vecAngles, this);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CVehicleSiegeTower::DestroyLadder( void )
+void CVehicleSiegeTower::DestroyLadder(void)
 {
-	if ( m_hLadder.Get() )
+	if(m_hLadder.Get())
 	{
-		UTIL_Remove( m_hLadder );
+		UTIL_Remove(m_hLadder);
 		m_hLadder = NULL;
 	}
 
-	if ( m_hPlatform.Get() )
+	if(m_hPlatform.Get())
 	{
-		UTIL_Remove( m_hPlatform );
+		UTIL_Remove(m_hPlatform);
 		m_hPlatform = NULL;
 	}
 }
@@ -172,7 +175,7 @@ void CVehicleSiegeTower::DestroyLadder( void )
 //------------------------------------------------------------------------------
 // Purpose:
 //------------------------------------------------------------------------------
-void CVehicleSiegeTower::Killed( void )
+void CVehicleSiegeTower::Killed(void)
 {
 	DestroyLadder();
 	BaseClass::Killed();
@@ -186,17 +189,16 @@ void CVehicleSiegeTower::Killed( void )
 //------------------------------------------------------------------------------
 // Purpose:
 //------------------------------------------------------------------------------
-CObjectSiegeLadder::CObjectSiegeLadder()
-{
-}
+CObjectSiegeLadder::CObjectSiegeLadder() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CObjectSiegeLadder *CObjectSiegeLadder::Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent )
+CObjectSiegeLadder *CObjectSiegeLadder::Create(const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent)
 {
-	CObjectSiegeLadder *pLadder = static_cast<CObjectSiegeLadder*>( CBaseObject::Create( "obj_siege_ladder", vOrigin, vAngles ) );
-	if ( pLadder )
+	CObjectSiegeLadder *pLadder =
+		static_cast<CObjectSiegeLadder *>(CBaseObject::Create("obj_siege_ladder", vOrigin, vAngles));
+	if(pLadder)
 	{
 		pLadder->m_hTower = pParent;
 	}
@@ -210,19 +212,19 @@ CObjectSiegeLadder *CObjectSiegeLadder::Create( const Vector &vOrigin, const QAn
 void CObjectSiegeLadder::Spawn()
 {
 	Precache();
-	SetModel( SIEGE_TOWER_LADDER_MODEL );
-	SetSolid( SOLID_VPHYSICS );
+	SetModel(SIEGE_TOWER_LADDER_MODEL);
+	SetSolid(SOLID_VPHYSICS);
 	m_takedamage = DAMAGE_NO;
 
 	BaseClass::Spawn();
 
-	CollisionProp()->SetSurroundingBoundsType( USE_BEST_COLLISION_BOUNDS );
+	CollisionProp()->SetSurroundingBoundsType(USE_BEST_COLLISION_BOUNDS);
 	IPhysicsObject *pPhysics = VPhysicsInitStatic();
-	if ( pPhysics )
+	if(pPhysics)
 	{
-		pPhysics->EnableMotion( false );
+		pPhysics->EnableMotion(false);
 	}
-	SetCollisionGroup( TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT );
+	SetCollisionGroup(TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT);
 }
 
 //-----------------------------------------------------------------------------
@@ -230,15 +232,15 @@ void CObjectSiegeLadder::Spawn()
 //-----------------------------------------------------------------------------
 void CObjectSiegeLadder::Precache()
 {
-	PrecacheModel( SIEGE_TOWER_LADDER_MODEL );
+	PrecacheModel(SIEGE_TOWER_LADDER_MODEL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Pass all damage back to the siege tower
 //-----------------------------------------------------------------------------
-int	CObjectSiegeLadder::OnTakeDamage( const CTakeDamageInfo &info )
+int CObjectSiegeLadder::OnTakeDamage(const CTakeDamageInfo &info)
 {
-	return m_hTower->OnTakeDamage( info );
+	return m_hTower->OnTakeDamage(info);
 }
 
 //==============================================================================
@@ -249,17 +251,16 @@ int	CObjectSiegeLadder::OnTakeDamage( const CTakeDamageInfo &info )
 //------------------------------------------------------------------------------
 // Purpose:
 //------------------------------------------------------------------------------
-CObjectSiegePlatform::CObjectSiegePlatform()
-{
-}
+CObjectSiegePlatform::CObjectSiegePlatform() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CObjectSiegePlatform *CObjectSiegePlatform::Create( const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent )
+CObjectSiegePlatform *CObjectSiegePlatform::Create(const Vector &vOrigin, const QAngle &vAngles, CBaseEntity *pParent)
 {
-	CObjectSiegePlatform *pPlatform = static_cast<CObjectSiegePlatform*>( CBaseObject::Create( "obj_siege_platform", vOrigin, vAngles ) );
-	if ( pPlatform )
+	CObjectSiegePlatform *pPlatform =
+		static_cast<CObjectSiegePlatform *>(CBaseObject::Create("obj_siege_platform", vOrigin, vAngles));
+	if(pPlatform)
 	{
 		pPlatform->m_hTower = pParent;
 	}
@@ -273,18 +274,18 @@ CObjectSiegePlatform *CObjectSiegePlatform::Create( const Vector &vOrigin, const
 void CObjectSiegePlatform::Spawn()
 {
 	Precache();
-	SetModel( SIEGE_TOWER_PLATFORM_MODEL );
-	SetSolid( SOLID_VPHYSICS );
+	SetModel(SIEGE_TOWER_PLATFORM_MODEL);
+	SetSolid(SOLID_VPHYSICS);
 	m_takedamage = DAMAGE_NO;
 
 	BaseClass::Spawn();
-	CollisionProp()->SetSurroundingBoundsType( USE_BEST_COLLISION_BOUNDS );
+	CollisionProp()->SetSurroundingBoundsType(USE_BEST_COLLISION_BOUNDS);
 	IPhysicsObject *pPhysics = VPhysicsInitStatic();
-	if ( pPhysics )
+	if(pPhysics)
 	{
-		pPhysics->EnableMotion( false );
+		pPhysics->EnableMotion(false);
 	}
-	SetCollisionGroup( TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT );
+	SetCollisionGroup(TFCOLLISION_GROUP_OBJECT_SOLIDTOPLAYERMOVEMENT);
 }
 
 //-----------------------------------------------------------------------------
@@ -292,13 +293,13 @@ void CObjectSiegePlatform::Spawn()
 //-----------------------------------------------------------------------------
 void CObjectSiegePlatform::Precache()
 {
-	PrecacheModel( SIEGE_TOWER_PLATFORM_MODEL );
+	PrecacheModel(SIEGE_TOWER_PLATFORM_MODEL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Pass all damage back to the siege tower
 //-----------------------------------------------------------------------------
-int	CObjectSiegePlatform::OnTakeDamage( const CTakeDamageInfo &info )
+int CObjectSiegePlatform::OnTakeDamage(const CTakeDamageInfo &info)
 {
-	return m_hTower->OnTakeDamage( info );
+	return m_hTower->OnTakeDamage(info);
 }

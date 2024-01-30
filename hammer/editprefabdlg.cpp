@@ -19,9 +19,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditPrefabDlg dialog
 
-
-CEditPrefabDlg::CEditPrefabDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditPrefabDlg::IDD, pParent)
+CEditPrefabDlg::CEditPrefabDlg(CWnd *pParent /*=NULL*/) : CDialog(CEditPrefabDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditPrefabDlg)
 	m_strDescript = _T("");
@@ -33,8 +31,7 @@ CEditPrefabDlg::CEditPrefabDlg(CWnd* pParent /*=NULL*/)
 	m_bEnableLibrary = FALSE;
 }
 
-
-void CEditPrefabDlg::DoDataExchange(CDataExchange* pDX)
+void CEditPrefabDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditPrefabDlg)
@@ -47,7 +44,6 @@ void CEditPrefabDlg::DoDataExchange(CDataExchange* pDX)
 	DDV_MaxChars(pDX, m_strDescript, iMaxDescriptChars);
 	DDV_MaxChars(pDX, m_strName, iMaxNameChars);
 }
-
 
 BEGIN_MESSAGE_MAP(CEditPrefabDlg, CDialog)
 	//{{AFX_MSG_MAP(CEditPrefabDlg)

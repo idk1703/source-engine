@@ -91,37 +91,39 @@
 // Auto generated inc files
 #include "emissive_scroll_blended_pass_dx8_vs11.inc"
 
-void InitParamsEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, const char *pMaterialName, EmissiveScrollBlendedPassVars_t &info )
+void InitParamsEmissiveScrollBlendedPass(CBaseVSShader *pShader, IMaterialVar **params, const char *pMaterialName,
+										 EmissiveScrollBlendedPassVars_t &info)
 {
-	SET_FLAGS2( MATERIAL_VAR2_SUPPORTS_HW_SKINNING );
+	SET_FLAGS2(MATERIAL_VAR2_SUPPORTS_HW_SKINNING);
 
-	if ( ( info.m_nEmissiveScrollVector >= 0 ) && ( !params[info.m_nEmissiveScrollVector]->IsDefined() ) )
+	if((info.m_nEmissiveScrollVector >= 0) && (!params[info.m_nEmissiveScrollVector]->IsDefined()))
 	{
-		params[info.m_nEmissiveScrollVector]->SetVecValue( kDefaultEmissiveScrollVector, 4 );
+		params[info.m_nEmissiveScrollVector]->SetVecValue(kDefaultEmissiveScrollVector, 4);
 	}
 
-	if ( ( info.m_nBlendStrength >= 0 ) && ( !params[info.m_nBlendStrength]->IsDefined() ) )
+	if((info.m_nBlendStrength >= 0) && (!params[info.m_nBlendStrength]->IsDefined()))
 	{
-		params[info.m_nBlendStrength]->SetFloatValue( kDefaultEmissiveBlendStrength );
+		params[info.m_nBlendStrength]->SetFloatValue(kDefaultEmissiveBlendStrength);
 	}
 
-	if ( ( info.m_nEmissiveTint >= 0 ) && ( !params[info.m_nEmissiveTint]->IsDefined() ) )
+	if((info.m_nEmissiveTint >= 0) && (!params[info.m_nEmissiveTint]->IsDefined()))
 	{
-		params[info.m_nEmissiveTint]->SetVecValue( kDefaultEmissiveTint, 4 );
+		params[info.m_nEmissiveTint]->SetVecValue(kDefaultEmissiveTint, 4);
 	}
 
-	SET_PARAM_FLOAT_IF_NOT_DEFINED( info.m_nTime, 0.0f );
+	SET_PARAM_FLOAT_IF_NOT_DEFINED(info.m_nTime, 0.0f);
 }
 
-void InitEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, EmissiveScrollBlendedPassVars_t &info )
+void InitEmissiveScrollBlendedPass(CBaseVSShader *pShader, IMaterialVar **params, EmissiveScrollBlendedPassVars_t &info)
 {
 	// Load textures
-	pShader->LoadTexture( info.m_nBaseTexture );
-	pShader->LoadTexture( info.m_nEmissiveTexture );
+	pShader->LoadTexture(info.m_nBaseTexture);
+	pShader->LoadTexture(info.m_nEmissiveTexture);
 }
 
-void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynamicAPI *pShaderAPI,
-								   IShaderShadow* pShaderShadow, EmissiveScrollBlendedPassVars_t &info, VertexCompressionType_t vertexCompression )
+void DrawEmissiveScrollBlendedPass(CBaseVSShader *pShader, IMaterialVar **params, IShaderDynamicAPI *pShaderAPI,
+								   IShaderShadow *pShaderShadow, EmissiveScrollBlendedPassVars_t &info,
+								   VertexCompressionType_t vertexCompression)
 {
 	SHADOW_STATE
 	{
@@ -129,23 +131,23 @@ void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** param
 		pShader->SetInitialShadowState();
 
 		// Set stream format
-		pShaderShadow->VertexShaderVertexFormat( VERTEX_POSITION | VERTEX_NORMAL, 1, 0, 0 );
+		pShaderShadow->VertexShaderVertexFormat(VERTEX_POSITION | VERTEX_NORMAL, 1, 0, 0);
 
 		// Vertex Shader
 		emissive_scroll_blended_pass_dx8_vs11_Static_Index vshIndex;
-		pShaderShadow->SetVertexShader( "emissive_scroll_blended_pass_dx8_vs11", vshIndex.GetIndex() );
+		pShaderShadow->SetVertexShader("emissive_scroll_blended_pass_dx8_vs11", vshIndex.GetIndex());
 
 		// Pixel Shader
-		pShaderShadow->SetPixelShader( "emissive_scroll_blended_pass_dx8_ps11", 0 );
+		pShaderShadow->SetPixelShader("emissive_scroll_blended_pass_dx8_ps11", 0);
 
 		// Textures
-		pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
-		pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
-		pShaderShadow->EnableTexture( SHADER_SAMPLER2, true );
+		pShaderShadow->EnableTexture(SHADER_SAMPLER0, true);
+		pShaderShadow->EnableTexture(SHADER_SAMPLER1, true);
+		pShaderShadow->EnableTexture(SHADER_SAMPLER2, true);
 
 		// Blending
-		pShader->EnableAlphaBlending( SHADER_BLEND_ONE, SHADER_BLEND_ONE );
-		pShaderShadow->EnableAlphaWrites( false );
+		pShader->EnableAlphaBlending(SHADER_BLEND_ONE, SHADER_BLEND_ONE);
+		pShaderShadow->EnableAlphaWrites(false);
 	}
 	DYNAMIC_STATE
 	{
@@ -154,48 +156,54 @@ void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** param
 
 		// Set Vertex Shader Combos
 		emissive_scroll_blended_pass_dx8_vs11_Dynamic_Index vshIndex;
-		vshIndex.SetSKINNING( pShaderAPI->GetCurrentNumBones() > 0 );
-		pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
+		vshIndex.SetSKINNING(pShaderAPI->GetCurrentNumBones() > 0);
+		pShaderAPI->SetVertexShaderIndex(vshIndex.GetIndex());
 
 		// Set Vertex Shader Constants
-		pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BASETEXTURETRANSFORM );
+		pShader->SetVertexShaderTextureTransform(VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BASETEXTURETRANSFORM);
 
-		float vEmissiveScrollVector[4] = { kDefaultEmissiveScrollVector[0], kDefaultEmissiveScrollVector[1], 0.0f, 0.0f };
-		if ( IS_PARAM_DEFINED( info.m_nEmissiveScrollVector ) )
+		float vEmissiveScrollVector[4] = {kDefaultEmissiveScrollVector[0], kDefaultEmissiveScrollVector[1], 0.0f, 0.0f};
+		if(IS_PARAM_DEFINED(info.m_nEmissiveScrollVector))
 		{
 			const float *flPtr = params[info.m_nEmissiveScrollVector]->GetVecValue();
-			if ( flPtr != NULL )
+			if(flPtr != NULL)
 			{
 				vEmissiveScrollVector[0] = flPtr[0];
 				vEmissiveScrollVector[1] = flPtr[1];
 			}
 		}
 
-		float curTime = IS_PARAM_DEFINED( info.m_nTime ) && params[info.m_nTime]->GetFloatValue() > 0.0f ? params[info.m_nTime]->GetFloatValue() : pShaderAPI->CurrentTime();
-		float selfIllumScroll[4] = { vEmissiveScrollVector[0] * curTime, vEmissiveScrollVector[1] * curTime, 0.0f, 0.0f };
-		pShaderAPI->SetVertexShaderConstant( VERTEX_SHADER_SHADER_SPECIFIC_CONST_4, selfIllumScroll, 1 );
+		float curTime = IS_PARAM_DEFINED(info.m_nTime) && params[info.m_nTime]->GetFloatValue() > 0.0f
+							? params[info.m_nTime]->GetFloatValue()
+							: pShaderAPI->CurrentTime();
+		float selfIllumScroll[4] = {vEmissiveScrollVector[0] * curTime, vEmissiveScrollVector[1] * curTime, 0.0f, 0.0f};
+		pShaderAPI->SetVertexShaderConstant(VERTEX_SHADER_SHADER_SPECIFIC_CONST_4, selfIllumScroll, 1);
 
 		// Set Pixel Shader Combos
 		/* None */
 
 		// Bind textures
-		pShader->BindTexture( SHADER_SAMPLER0, info.m_nBaseTexture );
-		pShader->BindTexture( SHADER_SAMPLER1, info.m_nEmissiveTexture );
+		pShader->BindTexture(SHADER_SAMPLER0, info.m_nBaseTexture);
+		pShader->BindTexture(SHADER_SAMPLER1, info.m_nEmissiveTexture);
 
 		// Set Pixel Shader Constants (Copied from vortwarp code)
-		pShader->SetModulationPixelShaderDynamicState( 3 );
-		pShader->EnablePixelShaderOverbright( 0, true, true );
+		pShader->SetModulationPixelShaderDynamicState(3);
+		pShader->EnablePixelShaderOverbright(0, true, true);
 
-		pShaderAPI->SetPixelShaderConstant( 1, IS_PARAM_DEFINED( info.m_nEmissiveTint ) ? params[info.m_nEmissiveTint]->GetVecValue() : kDefaultEmissiveTint, 1 );
+		pShaderAPI->SetPixelShaderConstant(
+			1,
+			IS_PARAM_DEFINED(info.m_nEmissiveTint) ? params[info.m_nEmissiveTint]->GetVecValue() : kDefaultEmissiveTint,
+			1);
 
-		float c4[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // NOTE: w is written to dest alpha
-		c4[0] = IS_PARAM_DEFINED( info.m_nBlendStrength ) ? params[info.m_nBlendStrength]->GetFloatValue() : kDefaultEmissiveBlendStrength;
+		float c4[4] = {0.0f, 0.0f, 0.0f, 0.0f}; // NOTE: w is written to dest alpha
+		c4[0] = IS_PARAM_DEFINED(info.m_nBlendStrength) ? params[info.m_nBlendStrength]->GetFloatValue()
+														: kDefaultEmissiveBlendStrength;
 		c4[1] = c4[0];
 		c4[2] = c4[0];
-		pShaderAPI->SetPixelShaderConstant( 4, c4, 1 );
+		pShaderAPI->SetPixelShaderConstant(4, c4, 1);
 
-		float c5[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		pShaderAPI->SetPixelShaderConstant( 5, c5, 1 );
+		float c5[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+		pShaderAPI->SetPixelShaderConstant(5, c5, 1);
 	}
 	pShader->Draw();
 }

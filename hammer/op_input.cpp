@@ -32,10 +32,9 @@ const int ONLY_ONCE_COLUMN = 6;
 #define ICON_CONN_BAD		0
 #define ICON_CONN_GOOD		1
 #define ICON_CONN_BAD_GREY	2
-#define ICON_CONN_GOOD_GREY	3
+#define ICON_CONN_GOOD_GREY 3
 
 IMPLEMENT_DYNCREATE(COP_Input, CObjectPage)
-
 
 BEGIN_MESSAGE_MAP(COP_Input, CObjectPage)
 	//{{AFX_MSG_MAP(COP_Input)
@@ -48,13 +47,12 @@ END_MESSAGE_MAP()
 //-----------------------------------------------------------------------------
 // Static vars
 //-----------------------------------------------------------------------------
-CImageList*			   COP_Input::m_pImageList = NULL;
+CImageList *COP_Input::m_pImageList = NULL;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
-COP_Input::COP_Input(void)
-	: CObjectPage(COP_Input::IDD)
+COP_Input::COP_Input(void) : CObjectPage(COP_Input::IDD)
 {
 	m_pObjectList = NULL;
 	m_pEntityList = new CMapEntityList;
@@ -64,12 +62,11 @@ COP_Input::COP_Input(void)
 	//
 	// All columns initially sort in ascending order.
 	//
-	for (int i = 0; i < OUTPUT_LIST_NUM_COLUMNS; i++)
+	for(int i = 0; i < OUTPUT_LIST_NUM_COLUMNS; i++)
 	{
 		m_eSortDirection[i] = Sort_Ascending;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
@@ -83,63 +80,67 @@ COP_Input::~COP_Input(void)
 //-----------------------------------------------------------------------------
 // Purpose: Compares by delays. Used as a secondary sort by all other columns.
 //-----------------------------------------------------------------------------
-static int CALLBACK InputCompareDelaysSecondary(CInputConnection *pInputConn1, CInputConnection *pInputConn2, SortDirection_t eDirection)
+static int CALLBACK InputCompareDelaysSecondary(CInputConnection *pInputConn1, CInputConnection *pInputConn2,
+												SortDirection_t eDirection)
 {
 	CEntityConnection *pConn1 = pInputConn1->m_pConnection;
 	CEntityConnection *pConn2 = pInputConn2->m_pConnection;
-	return(CEntityConnection::CompareDelaysSecondary(pConn1,pConn2,eDirection));
+	return (CEntityConnection::CompareDelaysSecondary(pConn1, pConn2, eDirection));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by delays, does a secondary compare by output name.
 //-----------------------------------------------------------------------------
-static int CALLBACK InputCompareDelays(CInputConnection *pInputConn1, CInputConnection *pInputConn2, SortDirection_t eDirection)
+static int CALLBACK InputCompareDelays(CInputConnection *pInputConn1, CInputConnection *pInputConn2,
+									   SortDirection_t eDirection)
 {
 	CEntityConnection *pConn1 = pInputConn1->m_pConnection;
 	CEntityConnection *pConn2 = pInputConn2->m_pConnection;
-	return(CEntityConnection::CompareDelays(pConn1, pConn2,eDirection));
+	return (CEntityConnection::CompareDelays(pConn1, pConn2, eDirection));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by output name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-static int CALLBACK InputCompareOutputNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2, SortDirection_t eDirection)
+static int CALLBACK InputCompareOutputNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2,
+											SortDirection_t eDirection)
 {
 	CEntityConnection *pConn1 = pInputConn1->m_pConnection;
 	CEntityConnection *pConn2 = pInputConn2->m_pConnection;
-	return(CEntityConnection::CompareOutputNames(pConn1,pConn2,eDirection));
+	return (CEntityConnection::CompareOutputNames(pConn1, pConn2, eDirection));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by input name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-static int CALLBACK InputCompareInputNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2, SortDirection_t eDirection)
+static int CALLBACK InputCompareInputNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2,
+										   SortDirection_t eDirection)
 {
 	CEntityConnection *pConn1 = pInputConn1->m_pConnection;
 	CEntityConnection *pConn2 = pInputConn2->m_pConnection;
-	return(CEntityConnection::CompareInputNames(pConn1,pConn2,eDirection));
+	return (CEntityConnection::CompareInputNames(pConn1, pConn2, eDirection));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by source name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-static int CALLBACK InputCompareSourceNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2, SortDirection_t eDirection)
+static int CALLBACK InputCompareSourceNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2,
+											SortDirection_t eDirection)
 {
 	CEntityConnection *pConn1 = pInputConn1->m_pConnection;
 	CEntityConnection *pConn2 = pInputConn2->m_pConnection;
-	return(CEntityConnection::CompareSourceNames(pConn1,pConn2,eDirection));
+	return (CEntityConnection::CompareSourceNames(pConn1, pConn2, eDirection));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Compares by target name, does a secondary compare by delay.
 //-----------------------------------------------------------------------------
-static int CALLBACK InputCompareTargetNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2, SortDirection_t eDirection)
+static int CALLBACK InputCompareTargetNames(CInputConnection *pInputConn1, CInputConnection *pInputConn2,
+											SortDirection_t eDirection)
 {
 	CEntityConnection *pConn1 = pInputConn1->m_pConnection;
 	CEntityConnection *pConn2 = pInputConn2->m_pConnection;
-	return(CEntityConnection::CompareTargetNames(pConn1,pConn2,eDirection));
+	return (CEntityConnection::CompareTargetNames(pConn1, pConn2, eDirection));
 }
 
 //------------------------------------------------------------------------------
@@ -153,23 +154,23 @@ bool COP_Input::ValidateConnections(int nItem)
 	CInputConnection *pInputConn = (CInputConnection *)m_ListCtrl.GetItemData(nItem);
 
 	// Early out
-	if (!pInputConn)
+	if(!pInputConn)
 	{
 		return false;
 	}
 
 	CEntityConnection *pConnection = pInputConn->m_pConnection;
-	if (pConnection != NULL)
+	if(pConnection != NULL)
 	{
 		// Validate input
-		if (!MapEntityList_HasInput(m_pEntityList, pConnection->GetInputName()))
+		if(!MapEntityList_HasInput(m_pEntityList, pConnection->GetInputName()))
 		{
 			return false;
 		}
 
 		// Validate output
 		CMapEntity *pEntity = pInputConn->m_pEntity;
-		if (!CEntityConnection::ValidateOutput(pEntity,pConnection->GetOutputName()))
+		if(!CEntityConnection::ValidateOutput(pEntity, pConnection->GetOutputName()))
 		{
 			return false;
 		}
@@ -185,7 +186,7 @@ bool COP_Input::ValidateConnections(int nItem)
 void COP_Input::UpdateItemValidity(int nItem)
 {
 	int nIcon;
-	if (ValidateConnections(nItem))
+	if(ValidateConnections(nItem))
 	{
 		nIcon = (m_bMultipleTargetNames ? ICON_CONN_GOOD_GREY : ICON_CONN_GOOD);
 	}
@@ -193,9 +194,8 @@ void COP_Input::UpdateItemValidity(int nItem)
 	{
 		nIcon = (m_bMultipleTargetNames ? ICON_CONN_BAD_GREY : ICON_CONN_BAD);
 	}
-	m_ListCtrl.SetItem(nItem,0,LVIF_IMAGE, 0, nIcon, 0, 0, 0 );
+	m_ListCtrl.SetItem(nItem, 0, LVIF_IMAGE, 0, nIcon, 0, 0, 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -206,19 +206,19 @@ void COP_Input::AddEntityConnections(const char *pTargetName, CMapEntity *pTestE
 {
 	int nConnCount = pTestEntity->Connections_GetCount();
 
-	if (nConnCount != 0)
+	if(nConnCount != 0)
 	{
 		int nItemCount = m_ListCtrl.GetItemCount();
 		m_ListCtrl.SetItemCount(nItemCount + nConnCount);
 
-		for (int i = 0; i < nConnCount; i++)
+		for(int i = 0; i < nConnCount; i++)
 		{
 			CEntityConnection *pConnection = pTestEntity->Connections_Get(i);
-			if (pConnection != NULL && !CompareEntityNames(pConnection->GetTargetName(), pTargetName))
+			if(pConnection != NULL && !CompareEntityNames(pConnection->GetTargetName(), pTargetName))
 			{
 				// Update source name for correct sorting
 				const char *pszTestName = pTestEntity->GetKeyValue("targetname");
-				if (pszTestName == NULL)
+				if(pszTestName == NULL)
 				{
 					pszTestName = pTestEntity->GetClassName();
 				}
@@ -235,13 +235,14 @@ void COP_Input::AddEntityConnections(const char *pTargetName, CMapEntity *pTestE
 				char szTemp[MAX_PATH];
 				sprintf(szTemp, "%.2f", fDelay);
 				m_ListCtrl.SetItemText(nItemCount, DELAY_COLUMN, szTemp);
-				m_ListCtrl.SetItemText(nItemCount, ONLY_ONCE_COLUMN, (pConnection->GetTimesToFire() == EVENT_FIRE_ALWAYS) ? "No" : "Yes");
+				m_ListCtrl.SetItemText(nItemCount, ONLY_ONCE_COLUMN,
+									   (pConnection->GetTimesToFire() == EVENT_FIRE_ALWAYS) ? "No" : "Yes");
 				m_ListCtrl.SetItemText(nItemCount, PARAMETER_COLUMN, pConnection->GetParam());
 
 				// Set list ctrl data
-				CInputConnection *pInputConn	= new CInputConnection;
-				pInputConn->m_pConnection		= pConnection;
-				pInputConn->m_pEntity			= pTestEntity;
+				CInputConnection *pInputConn = new CInputConnection;
+				pInputConn->m_pConnection = pConnection;
+				pInputConn->m_pEntity = pTestEntity;
 				m_ListCtrl.SetItemData(nItemCount, (DWORD)pInputConn);
 
 				nItemCount++;
@@ -249,7 +250,6 @@ void COP_Input::AddEntityConnections(const char *pTargetName, CMapEntity *pTestE
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -273,22 +273,22 @@ void COP_Input::DoDataExchange(CDataExchange *pDX)
 void COP_Input::OnMark(void)
 {
 	// This should always be 1 as dialog is set up to be single select
-	if (m_ListCtrl.GetSelectedCount() == 1)
+	if(m_ListCtrl.GetSelectedCount() == 1)
 	{
 		int nCount = m_ListCtrl.GetItemCount();
 		CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-		if (nCount > 0 && pDoc)
+		if(nCount > 0 && pDoc)
 		{
-			for (int nItem = nCount - 1; nItem >= 0; nItem--)
+			for(int nItem = nCount - 1; nItem >= 0; nItem--)
 			{
-				if (m_ListCtrl.GetItemState(nItem, LVIS_SELECTED) & LVIS_SELECTED)
+				if(m_ListCtrl.GetItemState(nItem, LVIS_SELECTED) & LVIS_SELECTED)
 				{
 					CInputConnection *pInputConn = (CInputConnection *)m_ListCtrl.GetItemData(nItem);
 					CMapEntity *pEntity = pInputConn->m_pEntity;
 					CEntityConnection *pConnection = pInputConn->m_pConnection;
 
 					// Shouldn't happen but just in case
-					if (!pEntity || !pConnection)
+					if(!pEntity || !pConnection)
 					{
 						return;
 					}
@@ -310,7 +310,6 @@ void COP_Input::OnMark(void)
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets up the list view columns, initial sort column.
@@ -336,7 +335,7 @@ BOOL COP_Input::OnInitDialog(void)
 	// Force an update of the column header text so that the sort indicator is shown.
 	UpdateColumnHeaderText(m_nSortColumn, true, m_eSortDirection[m_nSortColumn]);
 
-	if (m_ListCtrl.GetItemCount() > 0)
+	if(m_ListCtrl.GetItemCount() > 0)
 	{
 		m_ListCtrl.SetColumnWidth(OUTPUT_NAME_COLUMN, LVSCW_AUTOSIZE);
 		m_ListCtrl.SetColumnWidth(SOURCE_NAME_COLUMN, LVSCW_AUTOSIZE);
@@ -347,30 +346,26 @@ BOOL COP_Input::OnInitDialog(void)
 	}
 
 	// Create image list.  Is deleted automatically when listctrl is deleted
-	if (!m_pImageList)
+	if(!m_pImageList)
 	{
 		CWinApp *pApp = AfxGetApp();
 		m_pImageList = new CImageList();
-		Assert(m_pImageList != NULL);    // serious allocation failure checking
-		m_pImageList->Create(16, 16, TRUE,   1, 0);
-		m_pImageList->Add(pApp->LoadIcon( IDI_INPUTBAD ));
-		m_pImageList->Add(pApp->LoadIcon( IDI_INPUT ));
-		m_pImageList->Add(pApp->LoadIcon( IDI_INPUTBAD_GREY ));
-		m_pImageList->Add(pApp->LoadIcon( IDI_INPUT_GREY ));
+		Assert(m_pImageList != NULL); // serious allocation failure checking
+		m_pImageList->Create(16, 16, TRUE, 1, 0);
+		m_pImageList->Add(pApp->LoadIcon(IDI_INPUTBAD));
+		m_pImageList->Add(pApp->LoadIcon(IDI_INPUT));
+		m_pImageList->Add(pApp->LoadIcon(IDI_INPUTBAD_GREY));
+		m_pImageList->Add(pApp->LoadIcon(IDI_INPUT_GREY));
 	}
-	m_ListCtrl.SetImageList(m_pImageList, LVSIL_SMALL );
+	m_ListCtrl.SetImageList(m_pImageList, LVSIL_SMALL);
 
-	CAnchorDef anchorDefs[] =
-	{
-		CAnchorDef( IDC_LIST, k_eSimpleAnchorAllSides ),
-		CAnchorDef( IDC_MARK, k_eSimpleAnchorBottomSide ),
-		CAnchorDef( IDC_INFO_TEXT, k_eSimpleAnchorBottomSide )
-	};
-	m_AnchorMgr.Init( GetSafeHwnd(), anchorDefs, ARRAYSIZE( anchorDefs ) );
+	CAnchorDef anchorDefs[] = {CAnchorDef(IDC_LIST, k_eSimpleAnchorAllSides),
+							   CAnchorDef(IDC_MARK, k_eSimpleAnchorBottomSide),
+							   CAnchorDef(IDC_INFO_TEXT, k_eSimpleAnchorBottomSide)};
+	m_AnchorMgr.Init(GetSafeHwnd(), anchorDefs, ARRAYSIZE(anchorDefs));
 
-	return(TRUE);
+	return (TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -383,23 +378,23 @@ BOOL COP_Input::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 {
 	NMHDR *pnmh = (NMHDR *)lParam;
 
-	if (pnmh->idFrom == IDC_LIST)
+	if(pnmh->idFrom == IDC_LIST)
 	{
-		switch (pnmh->code)
+		switch(pnmh->code)
 		{
 			case LVN_COLUMNCLICK:
 			{
 				NMLISTVIEW *pnmv = (NMLISTVIEW *)lParam;
-				if (pnmv->iSubItem < OUTPUT_LIST_NUM_COLUMNS)
+				if(pnmv->iSubItem < OUTPUT_LIST_NUM_COLUMNS)
 				{
 					SortDirection_t eSortDirection = m_eSortDirection[pnmv->iSubItem];
 
 					//
 					// If they clicked on the current sort column, reverse the sort direction.
 					//
-					if (pnmv->iSubItem == m_nSortColumn)
+					if(pnmv->iSubItem == m_nSortColumn)
 					{
-						if (m_eSortDirection[m_nSortColumn] == Sort_Ascending)
+						if(m_eSortDirection[m_nSortColumn] == Sort_Ascending)
 						{
 							eSortDirection = Sort_Descending;
 						}
@@ -414,17 +409,17 @@ BOOL COP_Input::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 					//
 					SetSortColumn(pnmv->iSubItem, eSortDirection);
 				}
-				return(TRUE);
+				return (TRUE);
 			}
 			case NM_DBLCLK:
 			{
 				OnMark();
-				return(TRUE);
+				return (TRUE);
 			}
 		}
 	}
 
-	return(CObjectPage::OnNotify(wParam, lParam, pResult));
+	return (CObjectPage::OnNotify(wParam, lParam, pResult));
 }
 
 //-----------------------------------------------------------------------------
@@ -434,11 +429,11 @@ BOOL COP_Input::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 void COP_Input::RemoveAllEntityConnections(void)
 {
 	int nCount = m_ListCtrl.GetItemCount();
-	if (nCount > 0)
+	if(nCount > 0)
 	{
-		for (int nItem = nCount - 1; nItem >= 0; nItem--)
+		for(int nItem = nCount - 1; nItem >= 0; nItem--)
 		{
-			CInputConnection *pInputConnection		= (CInputConnection *)m_ListCtrl.GetItemData(nItem);
+			CInputConnection *pInputConnection = (CInputConnection *)m_ListCtrl.GetItemData(nItem);
 			m_ListCtrl.DeleteItem(nItem);
 			delete pInputConnection;
 		}
@@ -450,28 +445,28 @@ void COP_Input::RemoveAllEntityConnections(void)
 // Input  : Mode -
 //			pData -
 //-----------------------------------------------------------------------------
-void COP_Input::UpdateData( int Mode, PVOID pData, bool bCanEdit )
+void COP_Input::UpdateData(int Mode, PVOID pData, bool bCanEdit)
 {
-	__super::UpdateData( Mode, pData, bCanEdit );
+	__super::UpdateData(Mode, pData, bCanEdit);
 
-	if (!IsWindow(m_hWnd))
+	if(!IsWindow(m_hWnd))
 	{
 		return;
 	}
 
-	switch (Mode)
+	switch(Mode)
 	{
 		case LoadFirstData:
 		{
-//			m_ListCtrl.DeleteAllItems();
-//			UpdateConnectionList();
+			//			m_ListCtrl.DeleteAllItems();
+			//			UpdateConnectionList();
 			break;
 		}
 
 		case LoadData:
 		{
-//			m_ListCtrl.DeleteAllItems();
-//			UpdateConnectionList();
+			//			m_ListCtrl.DeleteAllItems();
+			//			UpdateConnectionList();
 
 			break;
 		}
@@ -485,7 +480,6 @@ void COP_Input::UpdateData( int Mode, PVOID pData, bool bCanEdit )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : nColumn -
@@ -498,7 +492,7 @@ void COP_Input::SetSortColumn(int nColumn, SortDirection_t eDirection)
 	//
 	// If the sort column changed, update the old sort column header text.
 	//
-	if (m_nSortColumn != nColumn)
+	if(m_nSortColumn != nColumn)
 	{
 		UpdateColumnHeaderText(m_nSortColumn, false, eDirection);
 	}
@@ -506,7 +500,7 @@ void COP_Input::SetSortColumn(int nColumn, SortDirection_t eDirection)
 	//
 	// If the sort column or direction changed, update the new sort column header text.
 	//
-	if ((m_nSortColumn != nColumn) || (m_eSortDirection[m_nSortColumn] != eDirection))
+	if((m_nSortColumn != nColumn) || (m_eSortDirection[m_nSortColumn] != eDirection))
 	{
 		UpdateColumnHeaderText(nColumn, true, eDirection);
 	}
@@ -517,7 +511,6 @@ void COP_Input::SetSortColumn(int nColumn, SortDirection_t eDirection)
 	SortListByColumn(m_nSortColumn, m_eSortDirection[m_nSortColumn]);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sorts the outputs list by column.
 // Input  : nColumn - Index of column by which to sort.
@@ -526,7 +519,7 @@ void COP_Input::SortListByColumn(int nColumn, SortDirection_t eDirection)
 {
 	PFNLVCOMPARE pfnSort = NULL;
 
-	switch (nColumn)
+	switch(nColumn)
 	{
 		case ONLY_ONCE_COLUMN:
 		{
@@ -570,7 +563,7 @@ void COP_Input::SortListByColumn(int nColumn, SortDirection_t eDirection)
 		}
 	}
 
-	if (pfnSort != NULL)
+	if(pfnSort != NULL)
 	{
 		m_ListCtrl.SortItems(pfnSort, (DWORD)eDirection);
 	}
@@ -587,13 +580,13 @@ void COP_Input::UpdateEntityList()
 	// Clear old entity list
 	m_pEntityList->RemoveAll();
 
-	if (m_pObjectList != NULL)
+	if(m_pObjectList != NULL)
 	{
-		FOR_EACH_OBJ( *m_pObjectList, pos )
+		FOR_EACH_OBJ(*m_pObjectList, pos)
 		{
 			CMapClass *pObject = m_pObjectList->Element(pos);
 
-			if ((pObject != NULL) && (pObject->IsMapClass(MAPCLASS_TYPE(CMapEntity))))
+			if((pObject != NULL) && (pObject->IsMapClass(MAPCLASS_TYPE(CMapEntity))))
 			{
 				CMapEntity *pEntity = (CMapEntity *)pObject;
 				m_pEntityList->AddToTail(pEntity);
@@ -613,30 +606,30 @@ void COP_Input::UpdateConnectionList(void)
 
 	const char *pszTargetName = NULL;
 
-	FOR_EACH_OBJ( *m_pEntityList, pos )
+	FOR_EACH_OBJ(*m_pEntityList, pos)
 	{
 		CMapEntity *pInEntity = m_pEntityList->Element(pos);
 
-		if (!pszTargetName)
+		if(!pszTargetName)
 		{
 			pszTargetName = pInEntity->GetKeyValue("targetname");
 		}
-		else if (pszTargetName != pInEntity->GetKeyValue("targetname"))
+		else if(pszTargetName != pInEntity->GetKeyValue("targetname"))
 		{
 			pszTargetName = pInEntity->GetKeyValue("targetname");
 			m_bMultipleTargetNames = true;
 		}
 
-		if (pszTargetName)
+		if(pszTargetName)
 		{
 			CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 			CMapWorld *pWorld = pDoc->GetMapWorld();
 			const CMapEntityList *pEntityList = pWorld->EntityList_GetList();
 
-			FOR_EACH_OBJ( *pEntityList, pos2 )
+			FOR_EACH_OBJ(*pEntityList, pos2)
 			{
 				CMapEntity *pTestEntity = pEntityList->Element(pos2);
-				if (pTestEntity != NULL)
+				if(pTestEntity != NULL)
 				{
 					AddEntityConnections(pszTargetName, pTestEntity);
 				}
@@ -645,7 +638,7 @@ void COP_Input::UpdateConnectionList(void)
 	}
 
 	// Update validity flag on all items
-	for (int nItem = 0; nItem < m_ListCtrl.GetItemCount(); nItem++)
+	for(int nItem = 0; nItem < m_ListCtrl.GetItemCount(); nItem++)
 	{
 		UpdateItemValidity(nItem);
 	}
@@ -672,12 +665,12 @@ void COP_Input::UpdateColumnHeaderText(int nColumn, bool bIsSortColumn, SortDire
 
 	int nMarker = 0;
 
-	if (szHeaderText[0] != '\0')
+	if(szHeaderText[0] != '\0')
 	{
 		nMarker = strlen(szHeaderText) - 1;
 		char chMarker = szHeaderText[nMarker];
 
-		if ((chMarker == '>') || (chMarker == '<'))
+		if((chMarker == '>') || (chMarker == '<'))
 		{
 			nMarker -= 2;
 		}
@@ -687,9 +680,9 @@ void COP_Input::UpdateColumnHeaderText(int nColumn, bool bIsSortColumn, SortDire
 		}
 	}
 
-	if (bIsSortColumn)
+	if(bIsSortColumn)
 	{
-		if (nMarker != 0)
+		if(nMarker != 0)
 		{
 			szHeaderText[nMarker++] = ' ';
 			szHeaderText[nMarker++] = ' ';
@@ -702,7 +695,6 @@ void COP_Input::UpdateColumnHeaderText(int nColumn, bool bIsSortColumn, SortDire
 
 	m_ListCtrl.SetColumn(nColumn, &Column);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when our window is being destroyed.
@@ -722,13 +714,13 @@ void COP_Input::SetSelectedConnection(CEntityConnection *pConnection)
 
 	// Set selected item to be active and all others to false
 	int nItemCount = m_ListCtrl.GetItemCount();
-	for (int nItem = 0; nItem < nItemCount; nItem++)
+	for(int nItem = 0; nItem < nItemCount; nItem++)
 	{
 		CInputConnection *pOutputConn = (CInputConnection *)m_ListCtrl.GetItemData(nItem);
 
-		if ( pOutputConn->m_pConnection == pConnection)
+		if(pOutputConn->m_pConnection == pConnection)
 		{
-			m_ListCtrl.SetItemState(nItem,LVIS_SELECTED,LVIS_SELECTED);
+			m_ListCtrl.SetItemState(nItem, LVIS_SELECTED, LVIS_SELECTED);
 		}
 		else
 		{
@@ -739,7 +731,7 @@ void COP_Input::SetSelectedConnection(CEntityConnection *pConnection)
 	m_ListCtrl.SetRedraw(TRUE);
 }
 
-void COP_Input::OnSize( UINT nType, int cx, int cy )
+void COP_Input::OnSize(UINT nType, int cx, int cy)
 {
 	m_AnchorMgr.OnSize();
 }

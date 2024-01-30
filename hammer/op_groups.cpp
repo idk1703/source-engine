@@ -22,9 +22,7 @@ const char *NO_GROUP_STRING = "(no group)";
 const DWORD NO_GROUP_ID = 0xffff;
 const DWORD VALUE_DIFFERENT_ID = 0xfffe;
 
-
 static const unsigned int g_uToggleStateMsg = ::RegisterWindowMessage(GROUPLIST_MSG_TOGGLE_STATE);
-
 
 BEGIN_MESSAGE_MAP(COP_Groups, CObjectPage)
 	//{{AFX_MSG_MAP(COP_Groups)
@@ -37,39 +35,32 @@ END_MESSAGE_MAP()
 
 IMPLEMENT_DYNCREATE(COP_Groups, CObjectPage)
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-COP_Groups::COP_Groups()
-	: CObjectPage(COP_Groups::IDD)
+COP_Groups::COP_Groups() : CObjectPage(COP_Groups::IDD)
 {
 	//{{AFX_DATA_INIT(COP_Groups)
 	//}}AFX_DATA_INIT
 	m_pEditObjectRuntimeClass = RUNTIME_CLASS(editCMapClass);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-COP_Groups::~COP_Groups()
-{
-}
-
+COP_Groups::~COP_Groups() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pDX -
 //-----------------------------------------------------------------------------
-void COP_Groups::DoDataExchange(CDataExchange* pDX)
+void COP_Groups::DoDataExchange(CDataExchange *pDX)
 {
 	CObjectPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(COP_Model)
 	DDX_Control(pDX, IDC_EDITGROUPS, m_EditGroupsControl);
 	//}}AFX_DATA_MAP
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -80,35 +71,34 @@ void COP_Groups::SetMultiEdit(bool b)
 	CObjectPage::SetMultiEdit(b);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool COP_Groups::SaveData(void)
 {
-	if (!IsWindow(m_hWnd))
+	if(!IsWindow(m_hWnd))
 	{
 		return false;
 	}
 
 	int nCount = m_cGroups.GetVisGroupCount();
-	for (int i = 0; i < nCount; i++)
+	for(int i = 0; i < nCount; i++)
 	{
 		CVisGroup *pVisGroup = m_cGroups.GetVisGroup(i);
 
 		// Don't let users edit Auto VisGroup membership!
-		if ( pVisGroup->IsAutoVisGroup() )
+		if(pVisGroup->IsAutoVisGroup())
 			continue;
 
 		int nCheck = m_cGroups.GetCheck(pVisGroup);
 
-		if (nCheck != -1)
+		if(nCheck != -1)
 		{
-			FOR_EACH_OBJ( *m_pObjectList, pos )
+			FOR_EACH_OBJ(*m_pObjectList, pos)
 			{
 				CMapClass *pObject = m_pObjectList->Element(pos);
-				if (nCheck)
+				if(nCheck)
 				{
 					pObject->AddVisGroup(pVisGroup);
 				}
@@ -123,28 +113,27 @@ bool COP_Groups::SaveData(void)
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : Mode -
 //			pData -
 //-----------------------------------------------------------------------------
-void COP_Groups::UpdateData( int Mode, void *pData, bool bCanEdit )
+void COP_Groups::UpdateData(int Mode, void *pData, bool bCanEdit)
 {
-	__super::UpdateData( Mode, pData, bCanEdit );
+	__super::UpdateData(Mode, pData, bCanEdit);
 
-	if ( !IsWindow(m_hWnd) )
+	if(!IsWindow(m_hWnd))
 	{
 		return;
 	}
 
 	static int s_checkState[128];
 
-	if (Mode == LoadData || Mode == LoadFirstData)
+	if(Mode == LoadData || Mode == LoadFirstData)
 	{
 		CMapClass *pObject = (CMapClass *)pData;
 
-		if (Mode == LoadFirstData)
+		if(Mode == LoadFirstData)
 		{
 			UpdateGroupList();
 
@@ -152,7 +141,7 @@ void COP_Groups::UpdateData( int Mode, void *pData, bool bCanEdit )
 			// Loading the first object. check each group this object is in.
 			//
 			int nCount = m_cGroups.GetVisGroupCount();
-			for (int i = 0; i < nCount; i++)
+			for(int i = 0; i < nCount; i++)
 			{
 				CVisGroup *pVisGroup = m_cGroups.GetVisGroup(i);
 				s_checkState[i] = pObject->IsInVisGroup(pVisGroup);
@@ -164,13 +153,13 @@ void COP_Groups::UpdateData( int Mode, void *pData, bool bCanEdit )
 			// Loading subsequent objects.
 			//
 			int nCount = m_cGroups.GetVisGroupCount();
-			for (int i = 0; i < nCount; i++)
+			for(int i = 0; i < nCount; i++)
 			{
-				if ( s_checkState[i] != -1)
+				if(s_checkState[i] != -1)
 				{
 					CVisGroup *pVisGroup = m_cGroups.GetVisGroup(i);
 
-					if ( pObject->IsInVisGroup(pVisGroup) != s_checkState[i] )
+					if(pObject->IsInVisGroup(pVisGroup) != s_checkState[i])
 					{
 						s_checkState[i] = -1;
 					}
@@ -178,27 +167,26 @@ void COP_Groups::UpdateData( int Mode, void *pData, bool bCanEdit )
 			}
 		}
 	}
-	else if ( Mode == LoadFinished )
+	else if(Mode == LoadFinished)
 	{
 		int nCount = m_cGroups.GetVisGroupCount();
-		for (int i = 0; i < nCount; i++)
+		for(int i = 0; i < nCount; i++)
 		{
 			CVisGroup *pVisGroup = m_cGroups.GetVisGroup(i);
 			m_cGroups.SetCheck(pVisGroup, s_checkState[i]);
 		}
 	}
 
-	m_cGroups.EnableWindow( ( m_bCanEdit ? TRUE : FALSE ) );
-	m_EditGroupsControl.EnableWindow( ( m_bCanEdit ? TRUE : FALSE ) );
+	m_cGroups.EnableWindow((m_bCanEdit ? TRUE : FALSE));
+	m_EditGroupsControl.EnableWindow((m_bCanEdit ? TRUE : FALSE));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void COP_Groups::UpdateGroupList(void)
 {
-	if (!IsWindow(m_hWnd))
+	if(!IsWindow(m_hWnd))
 	{
 		return;
 	}
@@ -207,13 +195,13 @@ void COP_Groups::UpdateGroupList(void)
 	m_cGroups.DeleteAllItems();
 
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (pDoc != NULL)
+	if(pDoc != NULL)
 	{
 		int nCount = pDoc->VisGroups_GetCount();
-		for (int i = 0; i < nCount; i++)
+		for(int i = 0; i < nCount; i++)
 		{
 			CVisGroup *pGroup = pDoc->VisGroups_GetVisGroup(i);
-			if (!pGroup->GetParent())
+			if(!pGroup->GetParent())
 			{
 				m_cGroups.AddVisGroup(pGroup);
 			}
@@ -224,7 +212,6 @@ void COP_Groups::UpdateGroupList(void)
 	m_cGroups.SetRedraw(true);
 	m_cGroups.Invalidate();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -238,7 +225,6 @@ void COP_Groups::OnEditgroups()
 	// dvs: TODO: update the check state for all groups
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -249,16 +235,12 @@ BOOL COP_Groups::OnInitDialog()
 	m_cGroups.SubclassDlgItem(IDC_GROUPS, this);
 	m_cGroups.EnableChecks();
 
-	CAnchorDef anchorDefs[] =
-	{
-		CAnchorDef( IDC_GROUPS, k_eSimpleAnchorAllSides ),
-		CAnchorDef( IDC_EDITGROUPS, k_eSimpleAnchorBottomRight )
-	};
-	m_AnchorMgr.Init( GetSafeHwnd(), anchorDefs, ARRAYSIZE( anchorDefs ) );
+	CAnchorDef anchorDefs[] = {CAnchorDef(IDC_GROUPS, k_eSimpleAnchorAllSides),
+							   CAnchorDef(IDC_EDITGROUPS, k_eSimpleAnchorBottomRight)};
+	m_AnchorMgr.Init(GetSafeHwnd(), anchorDefs, ARRAYSIZE(anchorDefs));
 
 	return TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the check state of a group is toggled in the groups list.
@@ -271,14 +253,13 @@ LRESULT COP_Groups::OnListToggleState(WPARAM wParam, LPARAM lParam)
 	CVisGroup *pVisGroup = (CVisGroup *)wParam;
 
 	// Don't let users edit Auto VisGroup membership!
-	if ( pVisGroup->IsAutoVisGroup() )
+	if(pVisGroup->IsAutoVisGroup())
 		return 0;
 
 	m_cGroups.SetCheck(pVisGroup, (int)lParam);
 
 	return 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -287,11 +268,11 @@ LRESULT COP_Groups::OnListToggleState(WPARAM wParam, LPARAM lParam)
 void COP_Groups::OnSetFocus(CWnd *pOld)
 {
 	// fixme:
-	//UpdateGrouplist();
+	// UpdateGrouplist();
 	CPropertyPage::OnSetFocus(pOld);
 }
 
-void COP_Groups::OnSize( UINT nType, int cx, int cy )
+void COP_Groups::OnSize(UINT nType, int cx, int cy)
 {
 	m_AnchorMgr.OnSize();
 }

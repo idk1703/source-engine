@@ -14,38 +14,28 @@
 #include "mxtk/mxLabel.h"
 #include <windows.h>
 
-
-
 class mxLabel_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxLabel::mxLabel (mxWindow *parent, int x, int y, int w, int h, const char *label)
-: mxWidget (parent, x, y, w, h, label)
+mxLabel::mxLabel(mxWindow *parent, int x, int y, int w, int h, const char *label) : mxWidget(parent, x, y, w, h, label)
 {
 
-	if (!parent)
+	if(!parent)
 		return;
 
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	void *handle = (void *) CreateWindowEx (0, "STATIC", label, WS_VISIBLE | WS_CHILD,
-				x, y, w, h, hwndParent,
-				(HMENU) NULL, (HINSTANCE) GetModuleHandle (NULL), NULL);
+	void *handle = (void *)CreateWindowEx(0, "STATIC", label, WS_VISIBLE | WS_CHILD, x, y, w, h, hwndParent,
+										  (HMENU)NULL, (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
 
-	setHandle (handle);
-	setType (MX_LABEL);
-	setParent (parent);
+	setHandle(handle);
+	setType(MX_LABEL);
+	setParent(parent);
 }
 
-
-
-mxLabel::~mxLabel ()
-{
-}
+mxLabel::~mxLabel() {}

@@ -16,100 +16,70 @@
 #include <string.h>
 //#include <ostream.h"
 
-
-
 class mxMenu_i
 {
 public:
 	int dummy;
 };
 
-
-
-mxMenu::mxMenu ()
-: mxWidget (0, 0, 0, 0, 0)
+mxMenu::mxMenu() : mxWidget(0, 0, 0, 0, 0)
 {
-	void *handle = (void *) CreateMenu ();
+	void *handle = (void *)CreateMenu();
 
-	setHandle (handle);
-	setType (MX_MENU);
+	setHandle(handle);
+	setType(MX_MENU);
 }
 
+mxMenu::~mxMenu() {}
 
-
-mxMenu::~mxMenu ()
+void mxMenu::add(const char *item, int id)
 {
+	AppendMenu((HMENU)getHandle(), MF_STRING, (UINT)id, item);
 }
 
-
-
-void
-mxMenu::add (const char *item, int id)
+void mxMenu::addMenu(const char *item, mxMenu *menu)
 {
-	AppendMenu ((HMENU) getHandle (), MF_STRING, (UINT) id, item);
+	AppendMenu((HMENU)getHandle(), MF_POPUP, (UINT)menu->getHandle(), item);
 }
 
-
-
-void
-mxMenu::addMenu (const char *item, mxMenu *menu)
+void mxMenu::addSeparator()
 {
-	AppendMenu ((HMENU) getHandle (), MF_POPUP, (UINT) menu->getHandle (), item);
+	AppendMenu((HMENU)getHandle(), MF_SEPARATOR, 0, 0);
 }
 
-
-
-void
-mxMenu::addSeparator ()
+void mxMenu::setEnabled(int id, bool b)
 {
-	AppendMenu ((HMENU) getHandle (), MF_SEPARATOR, 0, 0);
+	EnableMenuItem((HMENU)getHandle(), (UINT)id, MF_BYCOMMAND | (b ? MF_ENABLED : MF_GRAYED));
 }
 
-
-
-void
-mxMenu::setEnabled (int id, bool b)
+void mxMenu::setChecked(int id, bool b)
 {
-	EnableMenuItem ((HMENU) getHandle (), (UINT) id, MF_BYCOMMAND | (b ? MF_ENABLED:MF_GRAYED));
+	CheckMenuItem((HMENU)getHandle(), (UINT)id, MF_BYCOMMAND | (b ? MF_CHECKED : MF_UNCHECKED));
 }
 
-
-
-void
-mxMenu::setChecked (int id, bool b)
-{
-	CheckMenuItem ((HMENU) getHandle (), (UINT) id, MF_BYCOMMAND | (b ? MF_CHECKED:MF_UNCHECKED));
-}
-
-
-
-bool
-mxMenu::isEnabled (int id) const
+bool mxMenu::isEnabled(int id) const
 {
 	MENUITEMINFO mii;
 
-	memset (&mii, 0, sizeof (mii));
-	mii.cbSize = sizeof (mii);
+	memset(&mii, 0, sizeof(mii));
+	mii.cbSize = sizeof(mii);
 	mii.fMask = MIIM_STATE;
-	GetMenuItemInfo ((HMENU) getHandle (), (UINT) id, false, &mii);
-	if (mii.fState & MFS_GRAYED)
+	GetMenuItemInfo((HMENU)getHandle(), (UINT)id, false, &mii);
+	if(mii.fState & MFS_GRAYED)
 		return true;
 
 	return false;
 }
 
-
-
-bool
-mxMenu::isChecked (int id) const
+bool mxMenu::isChecked(int id) const
 {
 	MENUITEMINFO mii;
 
-	memset (&mii, 0, sizeof (mii));
-	mii.cbSize = sizeof (mii);
+	memset(&mii, 0, sizeof(mii));
+	mii.cbSize = sizeof(mii);
 	mii.fMask = MIIM_STATE;
-	GetMenuItemInfo ((HMENU) getHandle (), (UINT) id, false, &mii);
-	if (mii.fState & MFS_CHECKED)
+	GetMenuItemInfo((HMENU)getHandle(), (UINT)id, false, &mii);
+	if(mii.fState & MFS_CHECKED)
 		return true;
 
 	return false;

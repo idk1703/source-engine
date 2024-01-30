@@ -9,6 +9,6 @@
 
 //----------------------------------------------------------------------------------------
 
-ConVar replay_debug( "replay_debug", "0", FCVAR_DONTRECORD, "Show Replay debug info." );
+ConVar replay_debug("replay_debug", "0", FCVAR_DONTRECORD, "Show Replay debug info.");
 
 //----------------------------------------------------------------------------------------

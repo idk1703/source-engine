@@ -10,22 +10,22 @@
 #include "filesystem_tools.h"
 
 static CSysModule *pPhysicsModule = NULL;
-CreateInterfaceFn GetPhysicsFactory( void )
+CreateInterfaceFn GetPhysicsFactory(void)
 {
-	if ( !pPhysicsModule )
+	if(!pPhysicsModule)
 	{
-		pPhysicsModule = g_pFullFileSystem->LoadModule( "VPHYSICS.DLL" );
-		if ( !pPhysicsModule )
+		pPhysicsModule = g_pFullFileSystem->LoadModule("VPHYSICS.DLL");
+		if(!pPhysicsModule)
 			return NULL;
 	}
 
-	return Sys_GetFactory( pPhysicsModule );
+	return Sys_GetFactory(pPhysicsModule);
 }
 
-void PhysicsDLLPath( const char *pPathname )
+void PhysicsDLLPath(const char *pPathname)
 {
-	if ( !pPhysicsModule )
+	if(!pPhysicsModule)
 	{
-		pPhysicsModule = g_pFullFileSystem->LoadModule( pPathname );
+		pPhysicsModule = g_pFullFileSystem->LoadModule(pPathname);
 	}
 }

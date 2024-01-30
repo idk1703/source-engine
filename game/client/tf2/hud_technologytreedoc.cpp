@@ -22,19 +22,18 @@
 static CTechnologyTreeDoc s_TechnologyTreeDoc;
 
 // Hook network messages
-DECLARE_MESSAGE( s_TechnologyTreeDoc, Technology )
+DECLARE_MESSAGE(s_TechnologyTreeDoc, Technology)
 
 // Create object singleton on stack
-CTechnologyTreeDoc& GetTechnologyTreeDoc()
+CTechnologyTreeDoc &GetTechnologyTreeDoc()
 {
 	return s_TechnologyTreeDoc;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Construction
 //-----------------------------------------------------------------------------
-CTechnologyTreeDoc::CTechnologyTreeDoc( void )
+CTechnologyTreeDoc::CTechnologyTreeDoc(void)
 {
 	m_pTree = NULL;
 }
@@ -42,7 +41,7 @@ CTechnologyTreeDoc::CTechnologyTreeDoc( void )
 //-----------------------------------------------------------------------------
 // Purpose: Destruction
 //-----------------------------------------------------------------------------
-CTechnologyTreeDoc::~CTechnologyTreeDoc( void )
+CTechnologyTreeDoc::~CTechnologyTreeDoc(void)
 {
 	delete m_pTree;
 }
@@ -50,7 +49,7 @@ CTechnologyTreeDoc::~CTechnologyTreeDoc( void )
 //-----------------------------------------------------------------------------
 // Purpose: Initialize the panel
 //-----------------------------------------------------------------------------
-void CTechnologyTreeDoc::Init( void )
+void CTechnologyTreeDoc::Init(void)
 {
 	ReloadTechTree();
 }
@@ -58,44 +57,42 @@ void CTechnologyTreeDoc::Init( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTechnologyTreeDoc::LevelInit( void )
+void CTechnologyTreeDoc::LevelInit(void)
 {
-	if ( m_pTree )
+	if(m_pTree)
 	{
-		m_pTree->SetPreferredTechnology( NULL );
+		m_pTree->SetPreferredTechnology(NULL);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTechnologyTreeDoc::LevelShutdown( void )
+void CTechnologyTreeDoc::LevelShutdown(void)
 {
-	if ( m_pTree )
+	if(m_pTree)
 	{
-		m_pTree->SetPreferredTechnology( NULL );
+		m_pTree->SetPreferredTechnology(NULL);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTechnologyTreeDoc::ReloadTechTree( void )
+void CTechnologyTreeDoc::ReloadTechTree(void)
 {
 	// FIXME, CTechnologyTreeDoc should be an entity /MO
-	HOOK_HUD_MESSAGE( s_TechnologyTreeDoc, Technology );
+	HOOK_HUD_MESSAGE(s_TechnologyTreeDoc, Technology);
 
 	// Reconstruct the tech tree
 	delete m_pTree;
 
 	// FIXME: If we reactivate this, we'll need to revisit team number here...
-	m_pTree = new CTechnologyTree( ::filesystem, 0);
-	Assert( m_pTree );
+	m_pTree = new CTechnologyTree(::filesystem, 0);
+	Assert(m_pTree);
 
-	m_pTree->SetPreferredTechnology( NULL );
+	m_pTree->SetPreferredTechnology(NULL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Receive hud update message from server
@@ -113,48 +110,48 @@ int CTechnologyTreeDoc::MsgFunc_Technology(bf_read &msg)
 	bool preferred;
 
 	// Which tech
-	index		= msg.ReadByte();
+	index = msg.ReadByte();
 	// Available to this team?
-	available	= msg.ReadByte();
+	available = msg.ReadByte();
 	// # of players indicating this as their preferred tech for new spending
-	voters		= msg.ReadByte();
+	voters = msg.ReadByte();
 
-	preferred = ( voters & 0x80 ) ? true : false;
+	preferred = (voters & 0x80) ? true : false;
 	voters &= 0x7f;
 
 	resourcelevel = (float)msg.ReadShort();
 
 	// Look it up by index
-	CBaseTechnology *item = m_pTree->GetTechnology( index );
-	if ( item )
+	CBaseTechnology *item = m_pTree->GetTechnology(index);
+	if(item)
 	{
 		bool wasactive = item->GetActive();
 
 		bool justactivated = !wasactive && available;
 
 		// Set data elements
-		item->SetActive( available ? true : false );
-		item->SetVoters( voters );
-		item->SetResourceLevel( resourcelevel );
+		item->SetActive(available ? true : false);
+		item->SetVoters(voters);
+		item->SetResourceLevel(resourcelevel);
 
 		// If this is the tech I am voting for, clear my vote
-		if ( preferred )
+		if(preferred)
 		{
 			// Sets the flag on the item, too
-			m_pTree->SetPreferredTechnology( item );
+			m_pTree->SetPreferredTechnology(item);
 		}
 		else
 		{
 			// Force deselection in case there is no active preference on the server any more
-			item->SetPreferred( false );
+			item->SetPreferred(false);
 		}
 
-		if ( justactivated && item->GetLevel() > 0 && !item->GetHintsGiven( TF_HINT_NEWTECHNOLOGY ) )
+		if(justactivated && item->GetLevel() > 0 && !item->GetHintsGiven(TF_HINT_NEWTECHNOLOGY))
 		{
 			// So we only give this hint once this game, even if we respawn, etc.
-			item->SetHintsGiven( TF_HINT_NEWTECHNOLOGY, true );
+			item->SetHintsGiven(TF_HINT_NEWTECHNOLOGY, true);
 			// Note, only show a max of three or 4 newtechnology hints at a time
-			CreateGlobalHint( TF_HINT_NEWTECHNOLOGY, item->GetPrintName(), index, 3 );
+			CreateGlobalHint(TF_HINT_NEWTECHNOLOGY, item->GetPrintName(), index, 3);
 		}
 	}
 
@@ -164,12 +161,12 @@ int CTechnologyTreeDoc::MsgFunc_Technology(bf_read &msg)
 //-----------------------------------------------------------------------------
 // Purpose: Add a file of technologies to the technology tree
 //-----------------------------------------------------------------------------
-void CTechnologyTreeDoc::AddTechnologyFile( char *sFilename )
+void CTechnologyTreeDoc::AddTechnologyFile(char *sFilename)
 {
 	// Add the technologies to the tech list
-	if ( m_pTree )
+	if(m_pTree)
 	{
 		// FIXME: If we reactivate this, we'll need to revisit team number here...
-		m_pTree->AddTechnologyFile( ::filesystem, 0, sFilename );
+		m_pTree->AddTechnologyFile(::filesystem, 0, sFilename);
 	}
 }

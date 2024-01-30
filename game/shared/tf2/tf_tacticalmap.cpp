@@ -16,28 +16,28 @@
 #include "c_basetfplayer.h"
 #include "C_BaseObject.h"
 
-static inline bool IsPlayerCamoed( int iEntIndex )
+static inline bool IsPlayerCamoed(int iEntIndex)
 {
-	C_BaseTFPlayer* pPlayer = (C_BaseTFPlayer*)ClientEntityList().GetClientEntity(iEntIndex);
-	if (!pPlayer)
+	C_BaseTFPlayer *pPlayer = (C_BaseTFPlayer *)ClientEntityList().GetClientEntity(iEntIndex);
+	if(!pPlayer)
 		return false;
 
 	return pPlayer->IsCamouflaged();
 }
 
-static inline bool IsPlayerVisible( int iEntIndex )
+static inline bool IsPlayerVisible(int iEntIndex)
 {
-	C_BaseTFPlayer* pPlayer = (C_BaseTFPlayer*)ClientEntityList().GetClientEntity(iEntIndex);
-	if (!pPlayer)
+	C_BaseTFPlayer *pPlayer = (C_BaseTFPlayer *)ClientEntityList().GetClientEntity(iEntIndex);
+	if(!pPlayer)
 		return false;
 
 	return pPlayer->GetClass() != TFCLASS_UNDECIDED;
 }
 
-static inline bool IsEntityAnObject( int iEntIndex )
+static inline bool IsEntityAnObject(int iEntIndex)
 {
 	IClientNetworkable *pEnt = ClientEntityList().GetClientEntity(iEntIndex);
-	return dynamic_cast<C_BaseObject*>(pEnt) != 0;
+	return dynamic_cast<C_BaseObject *>(pEnt) != 0;
 }
 
 #else
@@ -47,71 +47,70 @@ static inline bool IsEntityAnObject( int iEntIndex )
 #include "tf_team.h"
 #include "tf_player.h"
 
-static inline bool IsPlayerCamoed( int iEntIndex )
+static inline bool IsPlayerCamoed(int iEntIndex)
 {
-	CBaseTFPlayer* pPlayer = (CBaseTFPlayer *)CBaseEntity::Instance( engine->PEntityOfEntIndex( iEntIndex ) );
-	if (!pPlayer)
+	CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)CBaseEntity::Instance(engine->PEntityOfEntIndex(iEntIndex));
+	if(!pPlayer)
 		return false;
 	return pPlayer->IsCamouflaged();
 }
 
-static inline bool IsPlayerVisible( int iEntIndex )
+static inline bool IsPlayerVisible(int iEntIndex)
 {
-	CBaseTFPlayer* pPlayer = (CBaseTFPlayer *)CBaseEntity::Instance( engine->PEntityOfEntIndex( iEntIndex ) );
-	if (!pPlayer)
+	CBaseTFPlayer *pPlayer = (CBaseTFPlayer *)CBaseEntity::Instance(engine->PEntityOfEntIndex(iEntIndex));
+	if(!pPlayer)
 		return false;
 	return pPlayer->PlayerClass() != TFCLASS_UNDECIDED;
 }
 
-static inline bool IsEntityAnObject( int iEntIndex )
+static inline bool IsEntityAnObject(int iEntIndex)
 {
-	CBaseEntity* pEnt = CBaseEntity::Instance( engine->PEntityOfEntIndex( iEntIndex ) );
-	CBaseObject *pObject = dynamic_cast<CBaseObject*>(pEnt);
-	if (!pObject)
+	CBaseEntity *pEnt = CBaseEntity::Instance(engine->PEntityOfEntIndex(iEntIndex));
+	CBaseObject *pObject = dynamic_cast<CBaseObject *>(pEnt);
+	if(!pObject)
 		return false;
 
 	// Don't bother with boring ones... they're boring!
-	return ((pObject->GetObjectFlags( ) & OF_SUPPRESS_VISIBLE_TO_TACTICAL) == 0);
+	return ((pObject->GetObjectFlags() & OF_SUPPRESS_VISIBLE_TO_TACTICAL) == 0);
 }
 
 #endif
 
 // Visibility defines
-#define PLAYER_VISIBILITY_DISTANCE			2000		// Distance around a player that's exposed on the tactical map
-
+#define PLAYER_VISIBILITY_DISTANCE 2000 // Distance around a player that's exposed on the tactical map
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the entity is visible on this player's tactical map
 //-----------------------------------------------------------------------------
-bool IsEntityVisibleToTactical( int iLocalTeamNumber, int iLocalTeamPlayers,
-	int iLocalTeamObjects, int entIndex, const char *pEntName, int iEntTeamNumber, const Vector &entOrigin )
+bool IsEntityVisibleToTactical(int iLocalTeamNumber, int iLocalTeamPlayers, int iLocalTeamObjects, int entIndex,
+							   const char *pEntName, int iEntTeamNumber, const Vector &entOrigin)
 {
 	// Resource zones are always visible
-	if ( !strcmp( pEntName, "trigger_resourcezone") )
+	if(!strcmp(pEntName, "trigger_resourcezone"))
 		return true;
 
 	// Tunnels are always visible
-	if ( !strcmp( pEntName, "obj_tunnel") || !strcmp( pEntName, "obj_tunnel_prop") )
+	if(!strcmp(pEntName, "obj_tunnel") || !strcmp(pEntName, "obj_tunnel_prop"))
 		return true;
 
 	// Fixed shields are never visible
-	if ( !strcmp( pEntName, "shield") )
+	if(!strcmp(pEntName, "shield"))
 		return false;
 
 	// NOTE: If you're looking for various object types, fix the ugly hack
 	// in mapdata.cpp!!
-	if ( iLocalTeamNumber == iEntTeamNumber )
+	if(iLocalTeamNumber == iEntTeamNumber)
 	{
 		// Objects are always visible to their team
-		if (IsEntityAnObject( entIndex ))
+		if(IsEntityAnObject(entIndex))
 			return true;
 
 		// Players are always visible to their team
-		if (!Q_strncmp( pEntName, "player", 7) )
+		if(!Q_strncmp(pEntName, "player", 7))
 			return true;
 
 		// Resource collectors are always visible to their team
-		if ( !strcmp( pEntName, "npc_rescollector_aerial") )
+		if(!strcmp(pEntName, "npc_rescollector_aerial"))
 			return true;
 	}
 

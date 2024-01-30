@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 
 #include "confirm_dialog.h"
@@ -24,55 +23,52 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-static const wchar_t* GetSCGlyph( const char* action )
+static const wchar_t *GetSCGlyph(const char *action)
 {
-	auto origin = g_pInputSystem->GetSteamControllerActionOrigin( action, GAME_ACTION_SET_FPSCONTROLS );
-	return g_pInputSystem->GetSteamControllerFontCharacterForActionOrigin( origin );
+	auto origin = g_pInputSystem->GetSteamControllerActionOrigin(action, GAME_ACTION_SET_FPSCONTROLS);
+	return g_pInputSystem->GetSteamControllerFontCharacterForActionOrigin(origin);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CConfirmDialog::CConfirmDialog( vgui::Panel *parent )
-:	BaseClass( parent, "ConfirmDialog" ),
-	m_pCancelButton( NULL ),
-	m_pConfirmButton( NULL ),
-	m_pIcon( NULL )
+CConfirmDialog::CConfirmDialog(vgui::Panel *parent)
+	: BaseClass(parent, "ConfirmDialog"), m_pCancelButton(NULL), m_pConfirmButton(NULL), m_pIcon(NULL)
 {
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CConfirmDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings( GetResFile(), "GAME" );
+	LoadControlSettings(GetResFile(), "GAME");
 
-	SetBorder( pScheme->GetBorder("EconItemBorder") );
+	SetBorder(pScheme->GetBorder("EconItemBorder"));
 
 	// Cache off button ptrs
-	m_pConfirmButton = dynamic_cast< CExButton* >( FindChildByName( "ConfirmButton" ) );
-	m_pCancelButton = dynamic_cast< CExButton* >( FindChildByName( "CancelButton" ) );
-	m_pIcon = dynamic_cast< vgui::ImagePanel* >( FindChildByName( "Icon" ) );
+	m_pConfirmButton = dynamic_cast<CExButton *>(FindChildByName("ConfirmButton"));
+	m_pCancelButton = dynamic_cast<CExButton *>(FindChildByName("CancelButton"));
+	m_pIcon = dynamic_cast<vgui::ImagePanel *>(FindChildByName("Icon"));
 
-	SetDialogVariable( "text", GetText() );
+	SetDialogVariable("text", GetText());
 
-	if ( ::input->IsSteamControllerActive() )
+	if(::input->IsSteamControllerActive())
 	{
-		auto iconConfirm = GetSCGlyph( "cl_trigger_first_notification" );
-		auto iconCancel = GetSCGlyph( "cl_decline_first_notification" );
-		auto confirmHint = dynamic_cast< CExLabel* >( FindChildByName( "ConfirmButtonHintIcon" ) );
-		auto cancelHint = dynamic_cast< CExLabel* >( FindChildByName( "CancelButtonHintIcon" ) );
-		if ( confirmHint )
+		auto iconConfirm = GetSCGlyph("cl_trigger_first_notification");
+		auto iconCancel = GetSCGlyph("cl_decline_first_notification");
+		auto confirmHint = dynamic_cast<CExLabel *>(FindChildByName("ConfirmButtonHintIcon"));
+		auto cancelHint = dynamic_cast<CExLabel *>(FindChildByName("CancelButtonHintIcon"));
+		if(confirmHint)
 		{
-			confirmHint->SetText( iconConfirm );
+			confirmHint->SetText(iconConfirm);
 		}
 
-		if ( cancelHint )
+		if(cancelHint)
 		{
-			cancelHint->SetText( iconCancel );
+			cancelHint->SetText(iconCancel);
 		}
 	}
 }
@@ -80,120 +76,121 @@ void CConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::Show( bool bMakePopup )
+void CConfirmDialog::Show(bool bMakePopup)
 {
-	SetVisible( true );
-	if ( bMakePopup )
+	SetVisible(true);
+	if(bMakePopup)
 	{
 		MakePopup();
 	}
 	MoveToFront();
-	SetKeyBoardInputEnabled( true );
+	SetKeyBoardInputEnabled(true);
 
-	InvalidateLayout( true, true );
+	InvalidateLayout(true, true);
 
-	if ( ::input->IsSteamControllerActive() )
+	if(::input->IsSteamControllerActive())
 	{
-		auto iconConfirm = GetSCGlyph( "vote_option1" );
-		auto iconCancel = GetSCGlyph( "vote_option2" );
+		auto iconConfirm = GetSCGlyph("vote_option1");
+		auto iconCancel = GetSCGlyph("vote_option2");
 		bool bControllerMapped = iconConfirm[0] && iconCancel[0];
-		if ( bControllerMapped )
+		if(bControllerMapped)
 		{
-			SetMouseInputEnabled( false );
+			SetMouseInputEnabled(false);
 		}
 		else
 		{
-			SetMouseInputEnabled( true );
+			SetMouseInputEnabled(true);
 		}
 	}
 	else
 	{
-		SetMouseInputEnabled( true );
+		SetMouseInputEnabled(true);
 	}
 
-	TFModalStack()->PushModal( this );
+	TFModalStack()->PushModal(this);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::SetIconImage( const char *pszIcon )
+void CConfirmDialog::SetIconImage(const char *pszIcon)
 {
-	Assert( m_pIcon );
-	if ( m_pIcon )
+	Assert(m_pIcon);
+	if(m_pIcon)
 	{
-		m_pIcon->SetImage( pszIcon );
-		m_pIcon->SetVisible( ( pszIcon ? true : false ) );
+		m_pIcon->SetImage(pszIcon);
+		m_pIcon->SetVisible((pszIcon ? true : false));
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::OnCommand( const char *command )
+void CConfirmDialog::OnCommand(const char *command)
 {
-	if ( !Q_strnicmp( command, "cancel", 6 ) )
+	if(!Q_strnicmp(command, "cancel", 6))
 	{
 		FinishUp();
-		PostMessage( GetParent(), new KeyValues( "ConfirmDlgResult", "confirmed", 0 ) );
+		PostMessage(GetParent(), new KeyValues("ConfirmDlgResult", "confirmed", 0));
 	}
-	else if ( !Q_strnicmp( command, "confirm", 7 ) )
+	else if(!Q_strnicmp(command, "confirm", 7))
 	{
 		FinishUp();
-		PostMessage( GetParent(), new KeyValues( "ConfirmDlgResult", "confirmed", 1 ) );
+		PostMessage(GetParent(), new KeyValues("ConfirmDlgResult", "confirmed", 1));
 	}
 	else
 	{
-		engine->ClientCmd( const_cast<char *>( command ) );
+		engine->ClientCmd(const_cast<char *>(command));
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::OnKeyCodeTyped( vgui::KeyCode code )
+void CConfirmDialog::OnKeyCodeTyped(vgui::KeyCode code)
 {
-	if( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
-		OnCommand( "cancel" );
+		OnCommand("cancel");
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
 ///-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::OnKeyCodePressed( vgui::KeyCode code )
+void CConfirmDialog::OnKeyCodePressed(vgui::KeyCode code)
 {
-	ButtonCode_t nButtonCode = GetBaseButtonCode( code );
+	ButtonCode_t nButtonCode = GetBaseButtonCode(code);
 
-	// We map the voting action buttons to the pseudo-buttons F1/F2 so that players can use them to interact with dialogs on the fly
-	if( nButtonCode == KEY_XBUTTON_B || nButtonCode == STEAMCONTROLLER_F2 || nButtonCode == STEAMCONTROLLER_B )
+	// We map the voting action buttons to the pseudo-buttons F1/F2 so that players can use them to interact with
+	// dialogs on the fly
+	if(nButtonCode == KEY_XBUTTON_B || nButtonCode == STEAMCONTROLLER_F2 || nButtonCode == STEAMCONTROLLER_B)
 	{
-		OnCommand( "cancel" );
+		OnCommand("cancel");
 	}
-	else if ( nButtonCode == KEY_ENTER || nButtonCode == KEY_SPACE || nButtonCode == KEY_XBUTTON_A || nButtonCode == STEAMCONTROLLER_F1  || nButtonCode == STEAMCONTROLLER_A )
+	else if(nButtonCode == KEY_ENTER || nButtonCode == KEY_SPACE || nButtonCode == KEY_XBUTTON_A ||
+			nButtonCode == STEAMCONTROLLER_F1 || nButtonCode == STEAMCONTROLLER_A)
 	{
-		OnCommand( "confirm" );
+		OnCommand("confirm");
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 const char *CConfirmDialog::GetResFile()
 {
-	if ( ::input->IsSteamControllerActive() )
+	if(::input->IsSteamControllerActive())
 	{
 		return "Resource/UI/econ/ConfirmDialog_SC.res";
 	}
@@ -208,69 +205,68 @@ const char *CConfirmDialog::GetResFile()
 //-----------------------------------------------------------------------------
 void CConfirmDialog::FinishUp()
 {
-	SetVisible( false );
-	TFModalStack()->PopModal( this );
+	SetVisible(false);
+	TFModalStack()->PopModal(this);
 	MarkForDeletion();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CConfirmDialog::OnSizeChanged( int nNewWide, int nNewTall )
+void CConfirmDialog::OnSizeChanged(int nNewWide, int nNewTall)
 {
 	int nX, nY;
 
 	// Shift buttons up
-	if ( m_pCancelButton )
+	if(m_pCancelButton)
 	{
-		m_pCancelButton->GetPos( nX, nY );
-		m_pCancelButton->SetPos( nX, nNewTall - m_pCancelButton->GetTall() - YRES(15) );
+		m_pCancelButton->GetPos(nX, nY);
+		m_pCancelButton->SetPos(nX, nNewTall - m_pCancelButton->GetTall() - YRES(15));
 	}
 
-	if ( m_pConfirmButton )
+	if(m_pConfirmButton)
 	{
-		m_pConfirmButton->GetPos( nX, nY );
-		m_pConfirmButton->SetPos( nX, nNewTall - m_pConfirmButton->GetTall() - YRES(15) );
+		m_pConfirmButton->GetPos(nX, nY);
+		m_pConfirmButton->SetPos(nX, nNewTall - m_pConfirmButton->GetTall() - YRES(15));
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const char *pTextKey,
-													const char *pConfirmBtnText, const char *pCancelBtnText,
-													GenericConfirmDialogCallback callback, vgui::Panel *pParent )
-:	BaseClass( pParent ),
-	m_pTextKey( pTextKey )
+CTFGenericConfirmDialog::CTFGenericConfirmDialog(const char *pTitle, const char *pTextKey, const char *pConfirmBtnText,
+												 const char *pCancelBtnText, GenericConfirmDialogCallback callback,
+												 vgui::Panel *pParent)
+	: BaseClass(pParent), m_pTextKey(pTextKey)
 {
-	CommonInit( pTitle, pConfirmBtnText, pCancelBtnText, callback, pParent );
+	CommonInit(pTitle, pConfirmBtnText, pCancelBtnText, callback, pParent);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGenericConfirmDialog::CTFGenericConfirmDialog( const char *pTitle, const wchar_t *pText,
-													const char *pConfirmBtnText, const char *pCancelBtnText,
-													GenericConfirmDialogCallback callback, vgui::Panel *pParent )
-:	BaseClass( pParent ),
-	m_pTextKey( NULL )
+CTFGenericConfirmDialog::CTFGenericConfirmDialog(const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText,
+												 const char *pCancelBtnText, GenericConfirmDialogCallback callback,
+												 vgui::Panel *pParent)
+	: BaseClass(pParent), m_pTextKey(NULL)
 {
-	CommonInit( pTitle, pConfirmBtnText, pCancelBtnText, callback, pParent );
+	CommonInit(pTitle, pConfirmBtnText, pCancelBtnText, callback, pParent);
 
-	V_wcsncpy( m_wszBuffer, pText, sizeof( m_wszBuffer ) );
+	V_wcsncpy(m_wszBuffer, pText, sizeof(m_wszBuffer));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmDialog::CommonInit( const char *pTitle, const char *pConfirmBtnText, const char *pCancelBtnText,
-				GenericConfirmDialogCallback callback, vgui::Panel *pParent )
+void CTFGenericConfirmDialog::CommonInit(const char *pTitle, const char *pConfirmBtnText, const char *pCancelBtnText,
+										 GenericConfirmDialogCallback callback, vgui::Panel *pParent)
 {
-	if ( pParent == NULL )
+	if(pParent == NULL)
 	{
-		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+		vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																	"resource/ClientScheme.res", "ClientScheme");
 		SetScheme(scheme);
-		SetProportional( true );
+		SetProportional(true);
 	}
 
 	m_pTitle = pTitle;
@@ -286,7 +282,7 @@ void CTFGenericConfirmDialog::CommonInit( const char *pTitle, const char *pConfi
 //-----------------------------------------------------------------------------
 CTFGenericConfirmDialog::~CTFGenericConfirmDialog()
 {
-	if ( m_pKeyValues )
+	if(m_pKeyValues)
 	{
 		m_pKeyValues->deleteThis();
 	}
@@ -297,9 +293,9 @@ CTFGenericConfirmDialog::~CTFGenericConfirmDialog()
 //-----------------------------------------------------------------------------
 const wchar_t *CTFGenericConfirmDialog::GetText()
 {
-	if ( m_pTextKey )
+	if(m_pTextKey)
 	{
-		g_pVGuiLocalize->ConstructString_safe( m_wszBuffer, m_pTextKey, m_pKeyValues );
+		g_pVGuiLocalize->ConstructString_safe(m_wszBuffer, m_pTextKey, m_pKeyValues);
 		return m_wszBuffer;
 	}
 
@@ -309,27 +305,27 @@ const wchar_t *CTFGenericConfirmDialog::GetText()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CTFGenericConfirmDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	if ( m_pConfirmButton && m_pConfirmBtnText )
+	if(m_pConfirmButton && m_pConfirmBtnText)
 	{
-		m_pConfirmButton->SetText( m_pConfirmBtnText );
+		m_pConfirmButton->SetText(m_pConfirmBtnText);
 	}
 
-	if ( m_pCancelButton && m_pCancelBtnText )
+	if(m_pCancelButton && m_pCancelBtnText)
 	{
-		m_pCancelButton->SetText (m_pCancelBtnText );
+		m_pCancelButton->SetText(m_pCancelBtnText);
 	}
 
-	SetXToRed( m_pConfirmButton );
-	SetXToRed( m_pCancelButton );
+	SetXToRed(m_pConfirmButton);
+	SetXToRed(m_pCancelButton);
 
-	CExLabel *pTitle = dynamic_cast< CExLabel* >( FindChildByName( "TitleLabel" ) );
-	if ( pTitle )
+	CExLabel *pTitle = dynamic_cast<CExLabel *>(FindChildByName("TitleLabel"));
+	if(pTitle)
 	{
-		pTitle->SetText( m_pTitle );
+		pTitle->SetText(m_pTitle);
 	}
 }
 
@@ -340,7 +336,7 @@ void CTFGenericConfirmDialog::PerformLayout()
 {
 	// Center it, keeping requested size
 	int x, y, ww, wt, wide, tall;
-	vgui::surface()->GetWorkspaceBounds( x, y, ww, wt );
+	vgui::surface()->GetWorkspaceBounds(x, y, ww, wt);
 	GetSize(wide, tall);
 	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
 }
@@ -348,41 +344,41 @@ void CTFGenericConfirmDialog::PerformLayout()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmDialog::OnCommand( const char *command )
+void CTFGenericConfirmDialog::OnCommand(const char *command)
 {
 	bool bFinishUp = false;
 	bool bConfirmed = false;
 
-	if ( !Q_strnicmp( command, "cancel", 6 ) )
+	if(!Q_strnicmp(command, "cancel", 6))
 	{
 		bConfirmed = false;
 		bFinishUp = true;
 	}
-	else if ( !Q_strnicmp( command, "confirm", 7 ) )
+	else if(!Q_strnicmp(command, "confirm", 7))
 	{
 		bConfirmed = true;
 		bFinishUp = true;
 	}
 
-	if ( bFinishUp )
+	if(bFinishUp)
 	{
 		FinishUp();
-		if ( m_pCallback )
+		if(m_pCallback)
 		{
-			m_pCallback( bConfirmed, m_pContext );
+			m_pCallback(bConfirmed, m_pContext);
 		}
 		return;
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmDialog::SetStringTokens( KeyValues *pKeyValues )
+void CTFGenericConfirmDialog::SetStringTokens(KeyValues *pKeyValues)
 {
-	if ( m_pKeyValues != NULL )
+	if(m_pKeyValues != NULL)
 	{
 		m_pKeyValues->deleteThis();
 	}
@@ -392,78 +388,71 @@ void CTFGenericConfirmDialog::SetStringTokens( KeyValues *pKeyValues )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmDialog::AddStringToken( const char* pToken, const wchar_t* pValue )
+void CTFGenericConfirmDialog::AddStringToken(const char *pToken, const wchar_t *pValue)
 {
-	if ( m_pKeyValues == NULL )
+	if(m_pKeyValues == NULL)
 	{
-		m_pKeyValues = new KeyValues( "GenericConfirmDialog" );
+		m_pKeyValues = new KeyValues("GenericConfirmDialog");
 	}
-	m_pKeyValues->SetWString( pToken, pValue );
-	InvalidateLayout( false, true );
+	m_pKeyValues->SetWString(pToken, pValue);
+	InvalidateLayout(false, true);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmDialog::SetContext( void *pContext )
+void CTFGenericConfirmDialog::SetContext(void *pContext)
 {
 	m_pContext = pContext;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGenericConfirmOptOutDialog::CTFGenericConfirmOptOutDialog( const char *pTitle,
-																const char *pText,
-																const char *pConfirmBtnText,
-																const char *pCancelBtnText,
-																const char *pOptOutText,
-																const char *pOptOutConVarName,
-																GenericConfirmDialogCallback callback,
-																vgui::Panel *parent ) :
-																CTFGenericConfirmDialog( pTitle, pText, pConfirmBtnText, pCancelBtnText, callback, parent )
+CTFGenericConfirmOptOutDialog::CTFGenericConfirmOptOutDialog(const char *pTitle, const char *pText,
+															 const char *pConfirmBtnText, const char *pCancelBtnText,
+															 const char *pOptOutText, const char *pOptOutConVarName,
+															 GenericConfirmDialogCallback callback, vgui::Panel *parent)
+	: CTFGenericConfirmDialog(pTitle, pText, pConfirmBtnText, pCancelBtnText, callback, parent)
 {
 	m_optOutText = pOptOutText;
 	m_optOutCheckbox = NULL;
 	m_optOutConVarName = pOptOutConVarName;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmOptOutDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CTFGenericConfirmOptOutDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_optOutCheckbox = dynamic_cast< vgui::CheckButton * >( FindChildByName( "OptOutCheckbox" ) );
+	m_optOutCheckbox = dynamic_cast<vgui::CheckButton *>(FindChildByName("OptOutCheckbox"));
 
-	if ( m_optOutCheckbox && m_optOutText )
+	if(m_optOutCheckbox && m_optOutText)
 	{
-		m_optOutCheckbox->SetMouseInputEnabled( true );
-		m_optOutCheckbox->SetText( m_optOutText );
+		m_optOutCheckbox->SetMouseInputEnabled(true);
+		m_optOutCheckbox->SetText(m_optOutText);
 
 		// center horizontally
 		vgui::Panel *parent = m_optOutCheckbox->GetParent();
-		if ( parent )
+		if(parent)
 		{
 			float parentWidth = parent->GetWide();
 
 			int checkBoxWidth, checkBoxHeight;
-			m_optOutCheckbox->GetContentSize( checkBoxWidth, checkBoxHeight );
+			m_optOutCheckbox->GetContentSize(checkBoxWidth, checkBoxHeight);
 
 			// fudge in checkbox width
 			checkBoxWidth += 34.0f;
 
 			int checkX, checkY;
-			m_optOutCheckbox->GetPos( checkX, checkY );
+			m_optOutCheckbox->GetPos(checkX, checkY);
 
-			m_optOutCheckbox->SetPos( ( parentWidth - checkBoxWidth ) / 2.0f, checkY );
+			m_optOutCheckbox->SetPos((parentWidth - checkBoxWidth) / 2.0f, checkY);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -473,70 +462,65 @@ const char *CTFGenericConfirmOptOutDialog::GetResFile()
 	return "Resource/UI/econ/ConfirmDialogOptOut.res";
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGenericConfirmOptOutDialog::OnButtonChecked( KeyValues *pData )
+void CTFGenericConfirmOptOutDialog::OnButtonChecked(KeyValues *pData)
 {
-	ConVarRef var( m_optOutConVarName );
-	if ( !var.IsValid() )
+	ConVarRef var(m_optOutConVarName);
+	if(!var.IsValid())
 		return;
 
-	if ( !m_optOutCheckbox )
+	if(!m_optOutCheckbox)
 		return;
 
-	var.SetValue( m_optOutCheckbox->IsSelected() );
+	var.SetValue(m_optOutCheckbox->IsSelected());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFUpgradeBoxDialog::OnCommand( const char *command )
+void CTFUpgradeBoxDialog::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "upgrade" ) )
+	if(!Q_stricmp(command, "upgrade"))
 	{
 		FinishUp();
 
 		// Open the store, and show the upgrade advice
 		EconUI()->CloseEconUI();
-		EconUI()->OpenStorePanel( STOREPANEL_SHOW_UPGRADESTEPS, false );
+		EconUI()->OpenStorePanel(STOREPANEL_SHOW_UPGRADESTEPS, false);
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFGenericConfirmDialog *ShowConfirmDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, const char *pCancelBtnText, GenericConfirmDialogCallback callback,
-												vgui::Panel *parent/*=NULL*/, void *pContext/*=NULL*/, const char *pSound/*=NULL*/ )
+CTFGenericConfirmDialog *ShowConfirmDialog(const char *pTitle, const char *pText, const char *pConfirmBtnText,
+										   const char *pCancelBtnText, GenericConfirmDialogCallback callback,
+										   vgui::Panel *parent /*=NULL*/, void *pContext /*=NULL*/,
+										   const char *pSound /*=NULL*/)
 {
 	CTFGenericConfirmDialog *pDialog = vgui::SETUP_PANEL(
-		new CTFGenericConfirmDialog(
-			pTitle, pText,
-			pConfirmBtnText, pCancelBtnText,
-			callback, parent
-		)
-	);
+		new CTFGenericConfirmDialog(pTitle, pText, pConfirmBtnText, pCancelBtnText, callback, parent));
 
-	if ( pDialog )
+	if(pDialog)
 	{
 		pDialog->Show();
 
 		// Play a sound, if one was supplied.
-		if ( pSound && pSound[0] )
+		if(pSound && pSound[0])
 		{
-			vgui::surface()->PlaySound( pSound );
+			vgui::surface()->PlaySound(pSound);
 		}
 	}
 
-	if ( pContext )
+	if(pContext)
 	{
-		pDialog->SetContext( pContext );
+		pDialog->SetContext(pContext);
 	}
 
 	return pDialog;
@@ -545,29 +529,26 @@ CTFGenericConfirmDialog *ShowConfirmDialog( const char *pTitle, const char *pTex
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
+CTFMessageBoxDialog *ShowMessageBox(const char *pTitle, const char *pText, const char *pConfirmBtnText,
+									GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext)
 {
-	return	ShowMessageBox( pTitle, pText, NULL, pConfirmBtnText, callback, parent, pContext );
+	return ShowMessageBox(pTitle, pText, NULL, pConfirmBtnText, callback, parent, pContext);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent , void *pContext)
+CTFMessageBoxDialog *ShowMessageBox(const char *pTitle, const wchar_t *pText, const char *pConfirmBtnText,
+									GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext)
 {
-	CTFMessageBoxDialog *pDialog = vgui::SETUP_PANEL(
-		new CTFMessageBoxDialog(
-			pTitle, pText,
-			pConfirmBtnText,
-			callback, parent
-		)
-	);
+	CTFMessageBoxDialog *pDialog =
+		vgui::SETUP_PANEL(new CTFMessageBoxDialog(pTitle, pText, pConfirmBtnText, callback, parent));
 
-	if ( pDialog )
+	if(pDialog)
 	{
-		if ( pContext )
+		if(pContext)
 		{
-			pDialog->SetContext( pContext );
+			pDialog->SetContext(pContext);
 		}
 
 		pDialog->Show();
@@ -579,23 +560,24 @@ CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const wchar_t *pText, c
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, KeyValues *pKeyValues, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent , void *pContext)
+CTFMessageBoxDialog *ShowMessageBox(const char *pTitle, const char *pText, KeyValues *pKeyValues,
+									const char *pConfirmBtnText, GenericConfirmDialogCallback callback,
+									vgui::Panel *parent, void *pContext)
 {
-	CTFMessageBoxDialog *pDialog = vgui::SETUP_PANEL( new CTFMessageBoxDialog( pTitle, pText,
-		pConfirmBtnText,
-		callback, parent ) );
+	CTFMessageBoxDialog *pDialog =
+		vgui::SETUP_PANEL(new CTFMessageBoxDialog(pTitle, pText, pConfirmBtnText, callback, parent));
 
-	if ( pDialog )
+	if(pDialog)
 	{
-		if ( pContext )
+		if(pContext)
 		{
-			pDialog->SetContext( pContext );
+			pDialog->SetContext(pContext);
 		}
 
-		if ( pKeyValues )
+		if(pKeyValues)
 		{
-			pDialog->SetStringTokens( pKeyValues );
-			pDialog->SetDialogVariable( "text", pDialog->GetText() );
+			pDialog->SetStringTokens(pKeyValues);
+			pDialog->SetDialogVariable("text", pDialog->GetText());
 		}
 
 		pDialog->Show();
@@ -607,13 +589,14 @@ CTFMessageBoxDialog *ShowMessageBox( const char *pTitle, const char *pText, KeyV
 //-----------------------------------------------------------------------------
 // Purpose: Pop up a model yes/no dialog with an "opt out" checkbox that persists via a ConVar
 //-----------------------------------------------------------------------------
-CTFGenericConfirmOptOutDialog *ShowConfirmOptOutDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, const char *pCancelBtnText, const char *pOptOutText, const char *pOptOutConVarName, GenericConfirmDialogCallback callback, vgui::Panel *parent)
+CTFGenericConfirmOptOutDialog *ShowConfirmOptOutDialog(const char *pTitle, const char *pText,
+													   const char *pConfirmBtnText, const char *pCancelBtnText,
+													   const char *pOptOutText, const char *pOptOutConVarName,
+													   GenericConfirmDialogCallback callback, vgui::Panel *parent)
 {
-	CTFGenericConfirmOptOutDialog *pDialog = vgui::SETUP_PANEL( new CTFGenericConfirmOptOutDialog( pTitle, pText,
-																									pConfirmBtnText, pCancelBtnText,
-																									pOptOutText, pOptOutConVarName,
-																									callback, parent ) );
-	if ( pDialog )
+	CTFGenericConfirmOptOutDialog *pDialog = vgui::SETUP_PANEL(new CTFGenericConfirmOptOutDialog(
+		pTitle, pText, pConfirmBtnText, pCancelBtnText, pOptOutText, pOptOutConVarName, callback, parent));
+	if(pDialog)
 	{
 		pDialog->Show();
 	}
@@ -621,25 +604,18 @@ CTFGenericConfirmOptOutDialog *ShowConfirmOptOutDialog( const char *pTitle, cons
 	return pDialog;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialog *ShowUpgradeMessageBox( const char *pTitle, const char *pText,
-											const char *pConfirmBtnText,
-											GenericConfirmDialogCallback callback,
-											vgui::Panel *parent, void *pContext )
+CTFMessageBoxDialog *ShowUpgradeMessageBox(const char *pTitle, const char *pText, const char *pConfirmBtnText,
+										   GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext)
 {
-	CTFMessageBoxDialog *pDialog = vgui::SETUP_PANEL(
-		new CTFUpgradeBoxDialog(
-		pTitle, pText,
-		pConfirmBtnText, callback, parent
-		)
-		);
+	CTFMessageBoxDialog *pDialog =
+		vgui::SETUP_PANEL(new CTFUpgradeBoxDialog(pTitle, pText, pConfirmBtnText, callback, parent));
 
-	if ( pDialog )
+	if(pDialog)
 	{
-		pDialog->SetContext( pContext );
+		pDialog->SetContext(pContext);
 		pDialog->Show();
 	}
 
@@ -649,31 +625,38 @@ CTFMessageBoxDialog *ShowUpgradeMessageBox( const char *pTitle, const char *pTex
 //-----------------------------------------------------------------------------
 // Purpose: Pop up a dialog prompting the player to go to the store to upgrade
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialog *ShowUpgradeMessageBox( const char *pTitle, const char *pText )
+CTFMessageBoxDialog *ShowUpgradeMessageBox(const char *pTitle, const char *pText)
 {
-	return ShowUpgradeMessageBox( pTitle, pText, "#GameUI_OK", NULL, NULL, NULL );
+	return ShowUpgradeMessageBox(pTitle, pText, "#GameUI_OK", NULL, NULL, NULL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const char *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
+CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound(const char *pTitle, const char *pText, const char *pszSound,
+													  float flDelay, const char *pConfirmBtnText,
+													  GenericConfirmDialogCallback callback, vgui::Panel *parent,
+													  void *pContext)
 {
-	return ShowMessageBoxWithSound( pTitle, pText, NULL, pszSound, flDelay, pConfirmBtnText, callback, parent, pContext );
+	return ShowMessageBoxWithSound(pTitle, pText, NULL, pszSound, flDelay, pConfirmBtnText, callback, parent, pContext);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const wchar_t *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText , GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
+CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound(const char *pTitle, const wchar_t *pText, const char *pszSound,
+													  float flDelay, const char *pConfirmBtnText,
+													  GenericConfirmDialogCallback callback, vgui::Panel *parent,
+													  void *pContext)
 {
-	CTFMessageBoxDialogWithSound *pDialog = vgui::SETUP_PANEL( new CTFMessageBoxDialogWithSound( pTitle, pText, pszSound, flDelay, pConfirmBtnText, callback, parent ) );
+	CTFMessageBoxDialogWithSound *pDialog = vgui::SETUP_PANEL(
+		new CTFMessageBoxDialogWithSound(pTitle, pText, pszSound, flDelay, pConfirmBtnText, callback, parent));
 
-	if ( pDialog )
+	if(pDialog)
 	{
-		if ( pContext )
+		if(pContext)
 		{
-			pDialog->SetContext( pContext );
+			pDialog->SetContext(pContext);
 		}
 
 		pDialog->Show();
@@ -685,21 +668,25 @@ CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const char *pText, KeyValues *pKeyValues, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent, void *pContext )
+CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound(const char *pTitle, const char *pText, KeyValues *pKeyValues,
+													  const char *pszSound, float flDelay, const char *pConfirmBtnText,
+													  GenericConfirmDialogCallback callback, vgui::Panel *parent,
+													  void *pContext)
 {
-	CTFMessageBoxDialogWithSound *pDialog = vgui::SETUP_PANEL( new CTFMessageBoxDialogWithSound( pTitle, pText, pszSound, flDelay, pConfirmBtnText, callback, parent ) );
+	CTFMessageBoxDialogWithSound *pDialog = vgui::SETUP_PANEL(
+		new CTFMessageBoxDialogWithSound(pTitle, pText, pszSound, flDelay, pConfirmBtnText, callback, parent));
 
-	if ( pDialog )
+	if(pDialog)
 	{
-		if ( pContext )
+		if(pContext)
 		{
-			pDialog->SetContext( pContext );
+			pDialog->SetContext(pContext);
 		}
 
-		if ( pKeyValues )
+		if(pKeyValues)
 		{
-			pDialog->SetStringTokens( pKeyValues );
-			pDialog->SetDialogVariable( "text", pDialog->GetText() );
+			pDialog->SetStringTokens(pKeyValues);
+			pDialog->SetDialogVariable("text", pDialog->GetText());
 		}
 
 		pDialog->Show();
@@ -711,39 +698,44 @@ CTFMessageBoxDialogWithSound *ShowMessageBoxWithSound( const char *pTitle, const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, const char *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
-	: CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent )
+CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound(const char *pTitle, const char *pText, const char *pszSound,
+														   float flDelay, const char *pConfirmBtnText,
+														   GenericConfirmDialogCallback callback, vgui::Panel *parent)
+	: CTFMessageBoxDialog(pTitle, pText, pConfirmBtnText, callback, parent)
 {
 	m_szSound[0] = 0;
 
-	if ( pszSound )
+	if(pszSound)
 	{
-		V_strcpy_safe( m_szSound, pszSound );
+		V_strcpy_safe(m_szSound, pszSound);
 	}
 
 	m_flSoundTime = gpGlobals->curtime + flDelay;
 	m_bPlayedSound = false;
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 50);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound( const char *pTitle, const wchar_t *pText, const char *pszSound, float flDelay, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
-	: CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent )
+CTFMessageBoxDialogWithSound::CTFMessageBoxDialogWithSound(const char *pTitle, const wchar_t *pText,
+														   const char *pszSound, float flDelay,
+														   const char *pConfirmBtnText,
+														   GenericConfirmDialogCallback callback, vgui::Panel *parent)
+	: CTFMessageBoxDialog(pTitle, pText, pConfirmBtnText, callback, parent)
 {
 	m_szSound[0] = 0;
 
-	if ( pszSound )
+	if(pszSound)
 	{
-		V_strcpy_safe( m_szSound, pszSound );
+		V_strcpy_safe(m_szSound, pszSound);
 	}
 
 	m_flSoundTime = gpGlobals->curtime + flDelay;
 	m_bPlayedSound = false;
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 50);
 }
 
 //-----------------------------------------------------------------------------
@@ -753,16 +745,16 @@ void CTFMessageBoxDialogWithSound::OnTick()
 {
 	BaseClass::OnTick();
 
-	if ( !m_bPlayedSound && ( m_flSoundTime < gpGlobals->curtime ) )
+	if(!m_bPlayedSound && (m_flSoundTime < gpGlobals->curtime))
 	{
 		m_bPlayedSound = true;
 
-		if ( Q_strlen( m_szSound ) > 0 )
+		if(Q_strlen(m_szSound) > 0)
 		{
 			C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
-			if ( pLocalPlayer )
+			if(pLocalPlayer)
 			{
-				pLocalPlayer->EmitSound( m_szSound );
+				pLocalPlayer->EmitSound(m_szSound);
 			}
 		}
 	}
@@ -772,14 +764,15 @@ void CTFMessageBoxDialogWithSound::OnTick()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFReviveDialog::CTFReviveDialog( const char *pTitle, const char *pText, const char *pConfirmBtnText, GenericConfirmDialogCallback callback, vgui::Panel *parent )
-: CTFMessageBoxDialog( pTitle, pText, pConfirmBtnText, callback, parent )
+CTFReviveDialog::CTFReviveDialog(const char *pTitle, const char *pText, const char *pConfirmBtnText,
+								 GenericConfirmDialogCallback callback, vgui::Panel *parent)
+	: CTFMessageBoxDialog(pTitle, pText, pConfirmBtnText, callback, parent)
 {
-	m_pTargetHealth = new CTFSpectatorGUIHealth( this, "SpectatorGUIHealth" );
-	m_pTargetHealth->SetAllowAnimations( false );
+	m_pTargetHealth = new CTFSpectatorGUIHealth(this, "SpectatorGUIHealth");
+	m_pTargetHealth->SetAllowAnimations(false);
 	m_pTargetHealth->HideHealthBonusImage();
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 50);
 	OnTick();
 }
 
@@ -798,17 +791,17 @@ void CTFReviveDialog::OnTick()
 {
 	BaseClass::OnTick();
 
-	if ( !m_pTargetHealth )
+	if(!m_pTargetHealth)
 		return;
 
-	if ( !m_hEntity )
+	if(!m_hEntity)
 		return;
 
 	float flHealth = m_hEntity->GetHealth();
-	if ( flHealth != m_flPrevHealth )
+	if(flHealth != m_flPrevHealth)
 	{
 		float flMaxHealth = m_hEntity->GetMaxHealth();
-		m_pTargetHealth->SetHealth( flHealth, flMaxHealth, flMaxHealth );
+		m_pTargetHealth->SetHealth(flHealth, flMaxHealth, flMaxHealth);
 		m_flPrevHealth = flHealth;
 	}
 }
@@ -816,9 +809,9 @@ void CTFReviveDialog::OnTick()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFReviveDialog::SetOwner( CBaseEntity *pEntity )
+void CTFReviveDialog::SetOwner(CBaseEntity *pEntity)
 {
-	if ( pEntity )
+	if(pEntity)
 	{
 		m_hEntity = pEntity;
 	}
@@ -827,22 +820,19 @@ void CTFReviveDialog::SetOwner( CBaseEntity *pEntity )
 //-----------------------------------------------------------------------------
 // Purpose: In-game dialog that avoids the crosshair area and is much smaller
 //-----------------------------------------------------------------------------
-CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
-									const char *pTitle,
-									const char *pText,
-									const char *pConfirmBtnText,
-									GenericConfirmDialogCallback callback,
-									vgui::Panel *parent, void *pContext )
+CTFReviveDialog *ShowRevivePrompt(CBaseEntity *pOwner, const char *pTitle, const char *pText,
+								  const char *pConfirmBtnText, GenericConfirmDialogCallback callback,
+								  vgui::Panel *parent, void *pContext)
 {
-	CTFReviveDialog *pDialog = vgui::SETUP_PANEL( new CTFReviveDialog( pTitle, pText, pConfirmBtnText, callback, parent ) );
-	if ( pDialog )
+	CTFReviveDialog *pDialog = vgui::SETUP_PANEL(new CTFReviveDialog(pTitle, pText, pConfirmBtnText, callback, parent));
+	if(pDialog)
 	{
-		if ( pContext )
+		if(pContext)
 		{
-			pDialog->SetContext( pContext );
+			pDialog->SetContext(pContext);
 		}
 
-		pDialog->SetOwner( pOwner );
+		pDialog->SetOwner(pOwner);
 		pDialog->Show();
 	}
 
@@ -852,9 +842,8 @@ CTFReviveDialog *ShowRevivePrompt( CBaseEntity *pOwner,
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CEconRequirementDialog::CEconRequirementDialog( const char *pTitle, const char *pTextKey, const char *pItemDefName )
-	: CTFGenericConfirmDialog( pTitle, pTextKey, NULL, NULL, NULL, NULL )
-	, m_hItemDef( pItemDefName )
+CEconRequirementDialog::CEconRequirementDialog(const char *pTitle, const char *pTextKey, const char *pItemDefName)
+	: CTFGenericConfirmDialog(pTitle, pTextKey, NULL, NULL, NULL, NULL), m_hItemDef(pItemDefName)
 {
 }
 
@@ -869,56 +858,56 @@ const char *CEconRequirementDialog::GetResFile()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEconRequirementDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CEconRequirementDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	vgui::ImagePanel *pItemImagePanel = dynamic_cast<vgui::ImagePanel *>( FindChildByName( "ItemImagePanel", true ) ); Assert( pItemImagePanel );
-	Assert( pItemImagePanel );
-	if ( pItemImagePanel && m_hItemDef )
+	vgui::ImagePanel *pItemImagePanel = dynamic_cast<vgui::ImagePanel *>(FindChildByName("ItemImagePanel", true));
+	Assert(pItemImagePanel);
+	Assert(pItemImagePanel);
+	if(pItemImagePanel && m_hItemDef)
 	{
-		pItemImagePanel->SetImage( CFmtStr( "../%s_large", m_hItemDef->GetInventoryImage() ) );
+		pItemImagePanel->SetImage(CFmtStr("../%s_large", m_hItemDef->GetInventoryImage()));
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CEconRequirementDialog::OnCommand( const char *command )
+void CEconRequirementDialog::OnCommand(const char *command)
 {
-	if ( m_hItemDef && !Q_stricmp( command, "show_in_store" ) )
+	if(m_hItemDef && !Q_stricmp(command, "show_in_store"))
 	{
 		FinishUp();
 
 		// Open the store, and show the upgrade advice
 		EconUI()->CloseEconUI();
-		EconUI()->OpenStorePanel( m_hItemDef->GetDefinitionIndex(), false );
+		EconUI()->OpenStorePanel(m_hItemDef->GetDefinitionIndex(), false);
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void ShowEconRequirementDialog( const char *pTitle, const char *pText, const char *pItemDefName )
+void ShowEconRequirementDialog(const char *pTitle, const char *pText, const char *pItemDefName)
 {
-	CEconRequirementDialog *pDialog = vgui::SETUP_PANEL( new CEconRequirementDialog( pTitle, pText, pItemDefName ) );
-	if ( pDialog )
+	CEconRequirementDialog *pDialog = vgui::SETUP_PANEL(new CEconRequirementDialog(pTitle, pText, pItemDefName));
+	if(pDialog)
 	{
 		pDialog->Show();
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Get the correct res file to use (depends on Steam Controller state)
 //-----------------------------------------------------------------------------
-const char* CTFMessageBoxDialog::GetResFile()
+const char *CTFMessageBoxDialog::GetResFile()
 {
-	if ( ::input->IsSteamControllerActive() )
+	if(::input->IsSteamControllerActive())
 	{
 		return "Resource/UI/econ/MessageBoxDialog_SC.res";
 	}
@@ -927,6 +916,5 @@ const char* CTFMessageBoxDialog::GetResFile()
 		return "Resource/UI/econ/MessageBoxDialog.res";
 	}
 }
-
 
 #endif // TF_CLIENT_DLL

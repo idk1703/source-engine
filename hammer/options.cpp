@@ -19,7 +19,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 const char GAMECFG_SIG[] = "Game Configurations File\r\n\x1a";
 const float GAMECFG_VERSION = 1.4f;
 
@@ -33,7 +32,6 @@ const int iThisVersion = 2;
 // So File | Open will be in the right directory.
 char *g_pMapDir = NULL;
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -42,23 +40,21 @@ COptionsConfigs::COptionsConfigs(void)
 	nConfigs = 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output :
 //-----------------------------------------------------------------------------
 COptionsConfigs::~COptionsConfigs(void)
 {
-	for (int i = 0; i < nConfigs; i++)
+	for(int i = 0; i < nConfigs; i++)
 	{
 		CGameConfig *pConfig = Configs[i];
-		if (!pConfig)
+		if(!pConfig)
 			continue;
 
 		delete pConfig;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -71,7 +67,6 @@ CGameConfig *COptionsConfigs::AddConfig(void)
 
 	return pConfig;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -94,22 +89,20 @@ CGameConfig *COptionsConfigs::FindConfig(DWORD dwID, int *piIndex)
 	return NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Looks for a game configuration with a given mod directory.
 //-----------------------------------------------------------------------------
 CGameConfig *COptionsConfigs::FindConfigForGame(const char *szGame)
 {
-	for (int i = 0; i < nConfigs; i++)
+	for(int i = 0; i < nConfigs; i++)
 	{
 		char *pszGameDir = Configs[i]->m_szModDir;
-		if ( Q_stricmp( pszGameDir, szGame ) == 0 )
+		if(Q_stricmp(pszGameDir, szGame) == 0)
 			return Configs[i];
 	}
 
 	return NULL;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -122,32 +115,32 @@ int COptionsConfigs::ImportOldGameConfigs(const char *pszFileName)
 	char szRootDir[MAX_PATH];
 	char szFullPath[MAX_PATH];
 	APP()->GetDirectory(DIR_PROGRAM, szRootDir);
-	Q_MakeAbsolutePath( szFullPath, MAX_PATH, pszFileName, szRootDir );
-	std::fstream file( szFullPath, std::ios::in | std::ios::binary );
-	if (file.is_open())
+	Q_MakeAbsolutePath(szFullPath, MAX_PATH, pszFileName, szRootDir);
+	std::fstream file(szFullPath, std::ios::in | std::ios::binary);
+	if(file.is_open())
 	{
 		// Read sig.
 		char szSig[sizeof(GAMECFG_SIG)];
 		file.read(szSig, sizeof szSig);
-		if (!memcmp(szSig, GAMECFG_SIG, sizeof szSig))
+		if(!memcmp(szSig, GAMECFG_SIG, sizeof szSig))
 		{
 			// Read version.
 			float fThisVersion;
 			file.read((char *)&fThisVersion, sizeof(fThisVersion));
-			if ((fThisVersion >= 1.0) && (fThisVersion <= GAMECFG_VERSION))
+			if((fThisVersion >= 1.0) && (fThisVersion <= GAMECFG_VERSION))
 			{
 				// Read number of configs.
 				int nTotalConfigs;
 				file.read((char *)&nTotalConfigs, sizeof(nTotalConfigs));
 
 				// Load each config.
-				for (int i = 0; i < nTotalConfigs; i++)
+				for(int i = 0; i < nTotalConfigs; i++)
 				{
 					CGameConfig *pConfig = AddConfig();
 					pConfig->Import(file, fThisVersion);
 					nConfigsRead++;
 
-					if (!g_pMapDir)
+					if(!g_pMapDir)
 					{
 						g_pMapDir = (char *)pConfig->szMapDir;
 					}
@@ -158,7 +151,7 @@ int COptionsConfigs::ImportOldGameConfigs(const char *pszFileName)
 		file.close();
 	}
 
-	return(nConfigsRead);
+	return (nConfigsRead);
 }
 
 // Our call to "new" will be hosed without this header
@@ -168,14 +161,14 @@ int COptionsConfigs::ImportOldGameConfigs(const char *pszFileName)
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
+bool COptionsConfigs::ResetGameConfigs(bool bOverwrite)
 {
 	CGameConfigManager mgr;
 	int nNumLoaded = 0;
 
-	mgr.SetBaseDirectory( m_strConfigDir );
+	mgr.SetBaseDirectory(m_strConfigDir);
 
-	if ( bOverwrite )
+	if(bOverwrite)
 	{
 		// Reset the configurations on the disk
 		mgr.ResetConfigs();
@@ -186,19 +179,19 @@ bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
 	else
 	{
 		// Simply get the keyvalue block from the manager and parse that
-		KeyValues *pDefaultConfigs = new KeyValues( "Defaults" );
+		KeyValues *pDefaultConfigs = new KeyValues("Defaults");
 
-		if ( mgr.GetDefaultGameBlock( pDefaultConfigs ) == false )
+		if(mgr.GetDefaultGameBlock(pDefaultConfigs) == false)
 			return false;
 
 		// Load from the blocks
-		nNumLoaded = LoadGameConfigsBlock( pDefaultConfigs );
+		nNumLoaded = LoadGameConfigsBlock(pDefaultConfigs);
 
 		// Clean up
 		pDefaultConfigs->deleteThis();
 	}
 
-	return ( nNumLoaded > 0 );
+	return (nNumLoaded > 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -206,19 +199,19 @@ bool COptionsConfigs::ResetGameConfigs( bool bOverwrite )
 // Input  : *pBlock -
 // Output : int
 //-----------------------------------------------------------------------------
-int COptionsConfigs::LoadGameConfigsBlock( KeyValues *pBlock )
+int COptionsConfigs::LoadGameConfigsBlock(KeyValues *pBlock)
 {
-	if ( pBlock == NULL )
+	if(pBlock == NULL)
 		return 0;
 
 	int nConfigsRead = 0;
 
-	for ( KeyValues *pKey = pBlock->GetFirstTrueSubKey(); pKey; pKey = pKey->GetNextTrueSubKey() )
+	for(KeyValues *pKey = pBlock->GetFirstTrueSubKey(); pKey; pKey = pKey->GetNextTrueSubKey())
 	{
 		CGameConfig *pConfig = AddConfig();
-		if ( pConfig != NULL )
+		if(pConfig != NULL)
 		{
-			if ( pConfig->Load( pKey ) )
+			if(pConfig->Load(pKey))
 			{
 				nConfigsRead++;
 			}
@@ -241,40 +234,39 @@ int COptionsConfigs::LoadGameConfigs()
 	// Older versions of the editor used a binary file. Try that first.
 	//
 	int nConfigsRead = ImportOldGameConfigs("GameCfg.wc");
-	if (nConfigsRead > 0)
+	if(nConfigsRead > 0)
 	{
 		// This will cause a double conversion, from .wc to .ini to .txt, but oh well...
 		char szRootDir[MAX_PATH];
 		char szFullPath[MAX_PATH];
 		APP()->GetDirectory(DIR_PROGRAM, szRootDir);
-		Q_MakeAbsolutePath( szFullPath, MAX_PATH, "GameCfg.wc", szRootDir );
-		remove( szFullPath );
+		Q_MakeAbsolutePath(szFullPath, MAX_PATH, "GameCfg.wc", szRootDir);
+		remove(szFullPath);
 		char szSaveName[MAX_PATH];
 		strcpy(szSaveName, m_strConfigDir);
 		Q_AppendSlash(szSaveName, sizeof(szSaveName));
 		Q_strcat(szSaveName, "GameCfg.ini", sizeof(szSaveName));
 		SaveGameConfigs();
-		return(nConfigsRead);
+		return (nConfigsRead);
 	}
 
 	CGameConfigManager mgr;
 
-	if ( !mgr.LoadConfigs( m_strConfigDir ) )
+	if(!mgr.LoadConfigs(m_strConfigDir))
 		return 0;
 
 	KeyValues *pGame = mgr.GetGameBlock();
-	if (!pGame)
+	if(!pGame)
 		return 0;
 
 	// Install the message handler for error messages.
 	GDSetMessageFunc(Msg);
 
 	// Load from the blocks
-	nConfigsRead = LoadGameConfigsBlock( pGame );
+	nConfigsRead = LoadGameConfigsBlock(pGame);
 
 	return nConfigsRead;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Saves all the cgame configurations to disk.
@@ -283,27 +275,27 @@ int COptionsConfigs::LoadGameConfigs()
 void COptionsConfigs::SaveGameConfigs()
 {
 	// Only do this if we've got configs to save!
-	if ( GetGameConfigCount() == 0 )
+	if(GetGameConfigCount() == 0)
 		return;
 
 	CGameConfigManager mgr;
 
-	if ( mgr.LoadConfigs( m_strConfigDir ) == false )
+	if(mgr.LoadConfigs(m_strConfigDir) == false)
 		return;
 
 	// Get the global configuration data
 	KeyValues *pGame = mgr.GetGameBlock();
 
 	// For each Hammer known configuation, update the values in the global configs
-	for ( int i = 0; i < nConfigs; i++ )
+	for(int i = 0; i < nConfigs; i++)
 	{
 		KeyValues *pConfig = pGame->FindKey(Configs.GetAt(i)->szName);
 
 		// Add the configuration if it wasn't found
-		if ( pConfig == NULL )
+		if(pConfig == NULL)
 		{
 			pConfig = pGame->CreateNewKey();
-			if ( pConfig == NULL )
+			if(pConfig == NULL)
 			{
 				// FIXME: fatal error
 				return;
@@ -317,13 +309,13 @@ void COptionsConfigs::SaveGameConfigs()
 	// For each global configuration, remove any configs Hammer has deleted
 	bool bFoundConfig;
 	KeyValues *pConfig = pGame->GetFirstTrueSubKey();
-	while ( pConfig != NULL )
+	while(pConfig != NULL)
 	{
 		// Search through all the configs Hammer knows of for a matching name
 		bFoundConfig = false;
-		for ( int i = 0; i < nConfigs; i++ )
+		for(int i = 0; i < nConfigs; i++)
 		{
-			if ( !Q_stricmp( pConfig->GetName(), Configs.GetAt(i)->szName ) )
+			if(!Q_stricmp(pConfig->GetName(), Configs.GetAt(i)->szName))
 			{
 				bFoundConfig = true;
 				break;
@@ -331,7 +323,7 @@ void COptionsConfigs::SaveGameConfigs()
 		}
 
 		// Move along to the next config
-		if ( bFoundConfig )
+		if(bFoundConfig)
 		{
 			pConfig = pConfig->GetNextTrueSubKey();
 			continue;
@@ -339,23 +331,19 @@ void COptionsConfigs::SaveGameConfigs()
 
 		// Delete the configuration block if we didn't find it
 		KeyValues *pNextConfig = pConfig->GetNextTrueSubKey();
-		pGame->RemoveSubKey( pConfig );
+		pGame->RemoveSubKey(pConfig);
 		pConfig->deleteThis();
 		pConfig = pNextConfig;
 	}
 
 	// Save the resulting changes
-	mgr.SaveConfigs( m_strConfigDir );
+	mgr.SaveConfigs(m_strConfigDir);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-COptions::COptions(void)
-{
-}
-
+COptions::COptions(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Looks for the Valve Hammer Editor registry settings and returns whether
@@ -365,16 +353,16 @@ static bool HammerSettingsFound(void)
 {
 	bool bFound = false;
 	HKEY hkeySoftware;
-	if (RegOpenKeyEx(HKEY_CURRENT_USER, "Software", 0, KEY_READ | KEY_WRITE, &hkeySoftware) == ERROR_SUCCESS)
+	if(RegOpenKeyEx(HKEY_CURRENT_USER, "Software", 0, KEY_READ | KEY_WRITE, &hkeySoftware) == ERROR_SUCCESS)
 	{
 		HKEY hkeyValve;
-		if (RegOpenKeyEx(hkeySoftware, "Valve", 0, KEY_READ | KEY_WRITE, &hkeyValve) == ERROR_SUCCESS)
+		if(RegOpenKeyEx(hkeySoftware, "Valve", 0, KEY_READ | KEY_WRITE, &hkeyValve) == ERROR_SUCCESS)
 		{
 			HKEY hkeyHammer;
-			if (RegOpenKeyEx(hkeyValve, "Hammer", 0, KEY_READ | KEY_WRITE, &hkeyHammer) == ERROR_SUCCESS)
+			if(RegOpenKeyEx(hkeyValve, "Hammer", 0, KEY_READ | KEY_WRITE, &hkeyHammer) == ERROR_SUCCESS)
 			{
 				HKEY hkeyConfigured;
-				if (RegOpenKeyEx(hkeyHammer, "Configured", 0, KEY_READ | KEY_WRITE, &hkeyConfigured) == ERROR_SUCCESS)
+				if(RegOpenKeyEx(hkeyHammer, "Configured", 0, KEY_READ | KEY_WRITE, &hkeyConfigured) == ERROR_SUCCESS)
 				{
 					bFound = true;
 					RegCloseKey(hkeyConfigured);
@@ -388,7 +376,6 @@ static bool HammerSettingsFound(void)
 
 	return bFound;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Looks for the Valve Hammer Editor registry settings and returns whether
@@ -398,16 +385,16 @@ static bool ValveHammerEditorSettingsFound(void)
 {
 	bool bFound = false;
 	HKEY hkeySoftware;
-	if (RegOpenKeyEx(HKEY_CURRENT_USER, "Software", 0, KEY_READ | KEY_WRITE, &hkeySoftware) == ERROR_SUCCESS)
+	if(RegOpenKeyEx(HKEY_CURRENT_USER, "Software", 0, KEY_READ | KEY_WRITE, &hkeySoftware) == ERROR_SUCCESS)
 	{
 		HKEY hkeyValve;
-		if (RegOpenKeyEx(hkeySoftware, "Valve", 0, KEY_READ | KEY_WRITE, &hkeyValve) == ERROR_SUCCESS)
+		if(RegOpenKeyEx(hkeySoftware, "Valve", 0, KEY_READ | KEY_WRITE, &hkeyValve) == ERROR_SUCCESS)
 		{
 			HKEY hkeyHammer;
-			if (RegOpenKeyEx(hkeyValve, "Valve Hammer Editor", 0, KEY_READ | KEY_WRITE, &hkeyHammer) == ERROR_SUCCESS)
+			if(RegOpenKeyEx(hkeyValve, "Valve Hammer Editor", 0, KEY_READ | KEY_WRITE, &hkeyHammer) == ERROR_SUCCESS)
 			{
 				HKEY hkeyConfigured;
-				if (RegOpenKeyEx(hkeyHammer, "Configured", 0, KEY_READ | KEY_WRITE, &hkeyConfigured) == ERROR_SUCCESS)
+				if(RegOpenKeyEx(hkeyHammer, "Configured", 0, KEY_READ | KEY_WRITE, &hkeyConfigured) == ERROR_SUCCESS)
 				{
 					bFound = true;
 					RegCloseKey(hkeyConfigured);
@@ -422,7 +409,6 @@ static bool ValveHammerEditorSettingsFound(void)
 	return bFound;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Looks for the Worldcraft registry settings and returns whether they
 //			were found.
@@ -431,13 +417,13 @@ static bool WorldcraftSettingsFound(void)
 {
 	bool bFound = false;
 	HKEY hkeySoftware;
-	if (RegOpenKeyEx(HKEY_CURRENT_USER, "Software", 0, KEY_READ | KEY_WRITE, &hkeySoftware) == ERROR_SUCCESS)
+	if(RegOpenKeyEx(HKEY_CURRENT_USER, "Software", 0, KEY_READ | KEY_WRITE, &hkeySoftware) == ERROR_SUCCESS)
 	{
 		HKEY hkeyValve;
-		if (RegOpenKeyEx(hkeySoftware, "Valve", 0, KEY_READ | KEY_WRITE, &hkeyValve) == ERROR_SUCCESS)
+		if(RegOpenKeyEx(hkeySoftware, "Valve", 0, KEY_READ | KEY_WRITE, &hkeyValve) == ERROR_SUCCESS)
 		{
 			HKEY hkeyWorldcraft;
-			if (RegOpenKeyEx(hkeyValve, "Worldcraft", 0, KEY_READ | KEY_WRITE, &hkeyWorldcraft) == ERROR_SUCCESS)
+			if(RegOpenKeyEx(hkeyValve, "Worldcraft", 0, KEY_READ | KEY_WRITE, &hkeyWorldcraft) == ERROR_SUCCESS)
 			{
 				bFound = true;
 				RegCloseKey(hkeyWorldcraft);
@@ -449,7 +435,6 @@ static bool WorldcraftSettingsFound(void)
 
 	return bFound;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -463,32 +448,32 @@ bool COptions::Init(void)
 	bool bWCSettingsFound = false;
 	bool bVHESettingsFound = false;
 
-	if (!HammerSettingsFound())
+	if(!HammerSettingsFound())
 	{
 		bVHESettingsFound = ValveHammerEditorSettingsFound();
-		if (!bVHESettingsFound)
+		if(!bVHESettingsFound)
 		{
 			bWCSettingsFound = WorldcraftSettingsFound();
 		}
 	}
 
-	if (bVHESettingsFound)
+	if(bVHESettingsFound)
 	{
 		APP()->BeginImportVHESettings();
 	}
-	else if (bWCSettingsFound)
+	else if(bWCSettingsFound)
 	{
 		APP()->BeginImportWCSettings();
 	}
 
 	SetDefaults();
 
-	if (!Read())
+	if(!Read())
 	{
 		return false;
 	}
 
-	if (bVHESettingsFound || bWCSettingsFound)
+	if(bVHESettingsFound || bWCSettingsFound)
 	{
 		APP()->EndImportSettings();
 	}
@@ -498,19 +483,18 @@ bool COptions::Init(void)
 	// dvs: is all this necessary?
 	//
 	CMainFrame *pMainWnd = GetMainWnd();
-	if (pMainWnd != NULL)
+	if(pMainWnd != NULL)
 	{
 		pMainWnd->SetBrightness(textures.fBrightness);
 
-		pMainWnd->UpdateAllDocViews( MAPVIEW_OPTIONS_CHANGED );
+		pMainWnd->UpdateAllDocViews(MAPVIEW_OPTIONS_CHANGED);
 
 		// FIXME: can't do this before the filesystem is initialized
-		//pMainWnd->GlobalNotify(WM_GAME_CHANGED);
+		// pMainWnd->GlobalNotify(WM_GAME_CHANGED);
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Enables or disables texture locking.
@@ -521,23 +505,22 @@ BOOL COptions::SetLockingTextures(BOOL b)
 {
 	BOOL bOld = general.bLockingTextures;
 	general.bLockingTextures = b;
-	return(bOld);
+	return (bOld);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns TRUE if texture locking is enabled, FALSE if not.
 //-----------------------------------------------------------------------------
 BOOL COptions::IsLockingTextures(void)
 {
-	return(general.bLockingTextures);
+	return (general.bLockingTextures);
 }
 
 BOOL COptions::SetScaleLockingTextures(BOOL b)
 {
 	BOOL bOld = general.bScaleLockingTextures;
 	general.bScaleLockingTextures = b;
-	return(bOld);
+	return (bOld);
 }
 
 BOOL COptions::IsScaleLockingTextures(void)
@@ -550,9 +533,8 @@ BOOL COptions::IsScaleLockingTextures(void)
 //-----------------------------------------------------------------------------
 TextureAlignment_t COptions::GetTextureAlignment(void)
 {
-	return(general.eTextureAlignment);
+	return (general.eTextureAlignment);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets whether new faces should be world aligned or face aligned.
@@ -563,9 +545,8 @@ TextureAlignment_t COptions::SetTextureAlignment(TextureAlignment_t eTextureAlig
 {
 	TextureAlignment_t eOld = general.eTextureAlignment;
 	general.eTextureAlignment = eTextureAlignment;
-	return(eOld);
+	return (eOld);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether helpers should be hidden or shown.
@@ -580,7 +561,6 @@ bool COptions::IsVGUIModelBrowserEnabled()
 	return (general.bUseVGUIModelBrowser == TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Sets whether helpers should be hidden or shown.
 //-----------------------------------------------------------------------------
@@ -589,14 +569,13 @@ void COptions::SetShowHelpers(bool bShow)
 	general.bShowHelpers = bShow ? TRUE : FALSE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Loads the application configuration settings.
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 bool COptions::Read(void)
 {
-	if (!APP()->GetProfileInt("Configured", "Configured", 0))
+	if(!APP()->GetProfileInt("Configured", "Configured", 0))
 	{
 		return false;
 	}
@@ -641,7 +620,8 @@ bool COptions::Read(void)
 	general.iUndoLevels = APP()->GetProfileInt(pszGeneral, "Undo Levels", 50);
 	general.bLockingTextures = APP()->GetProfileInt(pszGeneral, "Locking Textures", TRUE);
 	general.bScaleLockingTextures = APP()->GetProfileInt(pszGeneral, "Scale Locking Textures", FALSE);
-	general.eTextureAlignment = (TextureAlignment_t)APP()->GetProfileInt(pszGeneral, "Texture Alignment", TEXTURE_ALIGN_WORLD);
+	general.eTextureAlignment =
+		(TextureAlignment_t)APP()->GetProfileInt(pszGeneral, "Texture Alignment", TEXTURE_ALIGN_WORLD);
 	general.bLoadwinpos = APP()->GetProfileInt(pszGeneral, "Load Default Positions", TRUE);
 	general.bIndependentwin = APP()->GetProfileInt(pszGeneral, "Independent Windows", FALSE);
 	general.bGroupWhileIgnore = APP()->GetProfileInt(pszGeneral, "GroupWhileIgnore", FALSE);
@@ -658,14 +638,14 @@ bool COptions::Read(void)
 	general.bRadiusCulling = APP()->GetProfileInt(pszGeneral, "Use Radius Culling", FALSE);
 
 	char szDefaultAutosavePath[MAX_PATH];
-	V_strcpy_safe( szDefaultAutosavePath, APP()->GetProfileString( pszGeneral, "Directory", "C:" ) );
-	V_strcpy_safe( szDefaultAutosavePath, "\\HammerAutosave\\" );
-	strcpy( general.szAutosaveDir, APP()->GetProfileString("General", "Autosave Dir", szDefaultAutosavePath));
-	if ( Q_strlen( general.szAutosaveDir ) == 0 )
+	V_strcpy_safe(szDefaultAutosavePath, APP()->GetProfileString(pszGeneral, "Directory", "C:"));
+	V_strcpy_safe(szDefaultAutosavePath, "\\HammerAutosave\\");
+	strcpy(general.szAutosaveDir, APP()->GetProfileString("General", "Autosave Dir", szDefaultAutosavePath));
+	if(Q_strlen(general.szAutosaveDir) == 0)
 	{
-		strcpy( general.szAutosaveDir, szDefaultAutosavePath );
+		strcpy(general.szAutosaveDir, szDefaultAutosavePath);
 	}
-	APP()->SetDirectory( DIR_AUTOSAVE, general.szAutosaveDir );
+	APP()->SetDirectory(DIR_AUTOSAVE, general.szAutosaveDir);
 
 	// read view2d
 	view2d.bCrosshairs = APP()->GetProfileInt(pszView2D, "Crosshairs", FALSE);
@@ -711,23 +691,22 @@ bool COptions::Read(void)
 	//
 	// If we can't load any game configurations, pop up the options screen.
 	//
-	if (configs.LoadGameConfigs() == 0)
+	if(configs.LoadGameConfigs() == 0)
 	{
-		if (!RunConfigurationDialog())
+		if(!RunConfigurationDialog())
 			return false;
 	}
 
 	//
 	// By default use the first config.
 	//
-	if (configs.nConfigs > 0)
+	if(configs.nConfigs > 0)
 	{
 		g_pGameConfig = configs.Configs.GetAt(0);
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -737,7 +716,7 @@ bool COptions::RunConfigurationDialog()
 {
 	CString strText;
 	strText.LoadString(IDS_NO_CONFIGS_AVAILABLE);
-	if (MessageBox(NULL, strText, "First Time Setup", MB_ICONQUESTION | MB_YESNO) == IDYES)
+	if(MessageBox(NULL, strText, "First Time Setup", MB_ICONQUESTION | MB_YESNO) == IDYES)
 	{
 		APP()->OpenURL(ID_HELP_FIRST_TIME_SETUP, GetMainWnd()->GetSafeHwnd());
 	}
@@ -746,22 +725,22 @@ bool COptions::RunConfigurationDialog()
 
 	do
 	{
-		if (dlg.DoModal() != IDOK)
+		if(dlg.DoModal() != IDOK)
 		{
 			return false;
 		}
 
-		if (configs.nConfigs == 0)
+		if(configs.nConfigs == 0)
 		{
-			MessageBox(NULL, "You must create at least one game configuration before using Hammer.", "First Time Setup", MB_ICONEXCLAMATION | MB_OK);
+			MessageBox(NULL, "You must create at least one game configuration before using Hammer.", "First Time Setup",
+					   MB_ICONEXCLAMATION | MB_OK);
 		}
 
-	} while (configs.nConfigs == 0);
+	} while(configs.nConfigs == 0);
 
-	Options.Write( TRUE, TRUE );
+	Options.Write(TRUE, TRUE);
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -769,15 +748,15 @@ bool COptions::RunConfigurationDialog()
 void COptions::ReadColorSettings(void)
 {
 	colors.bUseCustom = (APP()->GetProfileInt(g_szColors, "UseCustom", 0) != 0);
-	if (colors.bUseCustom)
+	if(colors.bUseCustom)
 	{
-		colors.clrAxis = APP()->GetProfileColor(g_szColors, "Grid0", 0 , 100, 100);
+		colors.clrAxis = APP()->GetProfileColor(g_szColors, "Grid0", 0, 100, 100);
 		colors.bScaleAxisColor = (APP()->GetProfileInt(g_szColors, "ScaleGrid0", 0) != 0);
-		colors.clrGrid = APP()->GetProfileColor(g_szColors, "Grid", 50 , 50, 50);
+		colors.clrGrid = APP()->GetProfileColor(g_szColors, "Grid", 50, 50, 50);
 		colors.bScaleGridColor = (APP()->GetProfileInt(g_szColors, "ScaleGrid", 1) != 0);
-		colors.clrGrid10 = APP()->GetProfileColor(g_szColors, "Grid10", 40 , 40, 40);
+		colors.clrGrid10 = APP()->GetProfileColor(g_szColors, "Grid10", 40, 40, 40);
 		colors.bScaleGrid10Color = (APP()->GetProfileInt(g_szColors, "ScaleGrid10", 1) != 0);
-		colors.clrGrid1024 = APP()->GetProfileColor(g_szColors, "Grid1024", 40 , 40, 40);
+		colors.clrGrid1024 = APP()->GetProfileColor(g_szColors, "Grid1024", 40, 40, 40);
 		colors.bScaleGrid1024Color = (APP()->GetProfileInt(g_szColors, "ScaleGrid1024", 1) != 0);
 		colors.clrGridDot = APP()->GetProfileColor(g_szColors, "GridDot", 128, 128, 128);
 		colors.bScaleGridDotColor = (APP()->GetProfileInt(g_szColors, "ScaleGridDot", 1) != 0);
@@ -796,7 +775,7 @@ void COptions::ReadColorSettings(void)
 	}
 	else
 	{
-		if (Options.view2d.bWhiteOnBlack)
+		if(Options.view2d.bWhiteOnBlack)
 		{
 			// BLACK BACKGROUND
 			colors.clrBackground = RGB(0, 0, 0);
@@ -840,17 +819,16 @@ void COptions::ReadColorSettings(void)
 		colors.clrToolMorph = RGB(255, 0, 0);
 		colors.clrToolPath = RGB(255, 0, 0);
 		colors.clrEntity = RGB(220, 30, 220);
-		colors.clrModelCollisionWireframe = RGB( 255, 255, 0 );
-		colors.clrModelCollisionWireframeDisabled = RGB( 220, 30, 220 );
+		colors.clrModelCollisionWireframe = RGB(255, 255, 0);
+		colors.clrModelCollisionWireframeDisabled = RGB(220, 30, 220);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : fOverwrite -
 //-----------------------------------------------------------------------------
-void COptions::Write( BOOL fOverwrite, BOOL fSaveConfigs )
+void COptions::Write(BOOL fOverwrite, BOOL fSaveConfigs)
 {
 	APP()->WriteProfileInt("Configured", "Configured", iThisVersion);
 
@@ -885,12 +863,10 @@ void COptions::Write( BOOL fOverwrite, BOOL fSaveConfigs )
 	APP()->WriteProfileInt(pszGeneral, "Autosaves Enabled", general.bEnableAutosave);
 	APP()->WriteProfileInt(pszGeneral, "Closed Correctly", general.bClosedCorrectly);
 	APP()->WriteProfileString(pszGeneral, "Autosave Dir", general.szAutosaveDir);
-	APP()->SetDirectory( DIR_AUTOSAVE, general.szAutosaveDir );
-	APP()->WriteProfileInt(pszGeneral, "VGUI Model Browser", general.bUseVGUIModelBrowser );
+	APP()->SetDirectory(DIR_AUTOSAVE, general.szAutosaveDir);
+	APP()->WriteProfileInt(pszGeneral, "VGUI Model Browser", general.bUseVGUIModelBrowser);
 	APP()->WriteProfileInt(pszGeneral, "Show Hidden Targets As Broken", general.bShowHiddenTargetsAsBroken);
 	APP()->WriteProfileInt(pszGeneral, "Use Radius Culling", general.bRadiusCulling);
-
-
 
 	// write view2d
 	APP()->WriteProfileInt(pszView2D, "Crosshairs", view2d.bCrosshairs);
@@ -934,16 +910,15 @@ void COptions::Write( BOOL fOverwrite, BOOL fSaveConfigs )
 	//
 
 	// Write out the game configurations
-	if ( fSaveConfigs )
+	if(fSaveConfigs)
 	{
 		configs.SaveGameConfigs();
 	}
 }
 
-
 void COptions::SetClosedCorrectly(BOOL bClosed)
 {
-	APP()->WriteProfileInt( pszGeneral, "Closed Correctly", bClosed );
+	APP()->WriteProfileInt(pszGeneral, "Closed Correctly", bClosed);
 }
 
 //-----------------------------------------------------------------------------
@@ -953,12 +928,12 @@ void COptions::SetDefaults(void)
 {
 	BOOL bWrite = FALSE;
 
-	if (APP()->GetProfileInt("Configured", "Configured", 0) != iThisVersion)
+	if(APP()->GetProfileInt("Configured", "Configured", 0) != iThisVersion)
 	{
 		bWrite = TRUE;
 	}
 
-	if (APP()->GetProfileInt("Configured", "Installed", 42151) == 42151)
+	if(APP()->GetProfileInt("Configured", "Installed", 42151) == 42151)
 	{
 		APP()->WriteProfileInt("Configured", "Installed", time(NULL));
 	}
@@ -1028,12 +1003,11 @@ void COptions::SetDefaults(void)
 	view3d.bReverseSelection = FALSE;
 	view3d.bPreviewModelFade = false;
 
-	if ( bWrite )
+	if(bWrite)
 	{
-		Write( FALSE, FALSE );
+		Write(FALSE, FALSE);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: This is called by the user interface itself when changes are made.
@@ -1044,35 +1018,35 @@ void COptions::PerformChanges(DWORD dwOptionsChanged)
 {
 	CMainFrame *pMainWnd = GetMainWnd();
 
-	if (dwOptionsChanged & secTextures)
+	if(dwOptionsChanged & secTextures)
 	{
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
 			pMainWnd->SetBrightness(textures.fBrightness);
 		}
 	}
 
-	if (dwOptionsChanged & secView2D)
+	if(dwOptionsChanged & secView2D)
 	{
 		ReadColorSettings();
 
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
-			pMainWnd->UpdateAllDocViews( MAPVIEW_UPDATE_ONLY_2D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW );
+			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_2D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW);
 		}
 	}
 
-	if (dwOptionsChanged & secView3D)
+	if(dwOptionsChanged & secView3D)
 	{
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
-			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_3D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW );
+			pMainWnd->UpdateAllDocViews(MAPVIEW_UPDATE_ONLY_3D | MAPVIEW_OPTIONS_CHANGED | MAPVIEW_RENDER_NOW);
 		}
 	}
 
-	if (dwOptionsChanged & secConfigs)
+	if(dwOptionsChanged & secConfigs)
 	{
-		if (pMainWnd != NULL)
+		if(pMainWnd != NULL)
 		{
 			pMainWnd->GlobalNotify(WM_GAME_CHANGED);
 		}

@@ -30,43 +30,42 @@ static const float TARGET_FRAMETIME = 1.0 / 60.0;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-class CHudGeiger: public CHudElement, public vgui::Panel
+class CHudGeiger : public CHudElement, public vgui::Panel
 {
-	DECLARE_CLASS_SIMPLE( CHudGeiger, vgui::Panel );
+	DECLARE_CLASS_SIMPLE(CHudGeiger, vgui::Panel);
+
 public:
-	CHudGeiger( const char *pElementName );
-	void Init( void );
-	void VidInit( void );
-	bool ShouldDraw( void );
-	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
-	virtual void	Paint( void );
+	CHudGeiger(const char *pElementName);
+	void Init(void);
+	void VidInit(void);
+	bool ShouldDraw(void);
+	virtual void ApplySchemeSettings(vgui::IScheme *scheme);
+	virtual void Paint(void);
 	void MsgFunc_Geiger(bf_read &msg);
 
 private:
 	int m_iGeigerRange;
-
 };
 
-DECLARE_HUDELEMENT( CHudGeiger );
-DECLARE_HUD_MESSAGE( CHudGeiger, Geiger );
+DECLARE_HUDELEMENT(CHudGeiger);
+DECLARE_HUD_MESSAGE(CHudGeiger, Geiger);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CHudGeiger::CHudGeiger( const char *pElementName ) :
-	CHudElement( pElementName ), BaseClass( NULL, "HudGeiger" )
+CHudGeiger::CHudGeiger(const char *pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudGeiger")
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( HIDEHUD_HEALTH );
+	SetHiddenBits(HIDEHUD_HEALTH);
 }
 
-void CHudGeiger::ApplySchemeSettings( IScheme *scheme )
+void CHudGeiger::ApplySchemeSettings(IScheme *scheme)
 {
-	BaseClass::ApplySchemeSettings( scheme );
+	BaseClass::ApplySchemeSettings(scheme);
 
-	SetPaintBackgroundEnabled( false );
+	SetPaintBackgroundEnabled(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -74,7 +73,7 @@ void CHudGeiger::ApplySchemeSettings( IScheme *scheme )
 //-----------------------------------------------------------------------------
 void CHudGeiger::Init(void)
 {
-	HOOK_HUD_MESSAGE( CHudGeiger, Geiger );
+	HOOK_HUD_MESSAGE(CHudGeiger, Geiger);
 
 	m_iGeigerRange = 0;
 };
@@ -100,9 +99,9 @@ void CHudGeiger::MsgFunc_Geiger(bf_read &msg)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CHudGeiger::ShouldDraw( void )
+bool CHudGeiger::ShouldDraw(void)
 {
-	return ( CHudElement::ShouldDraw() && ( m_iGeigerRange < 1000 && m_iGeigerRange > 0 ) );
+	return (CHudElement::ShouldDraw() && (m_iGeigerRange < 1000 && m_iGeigerRange > 0));
 }
 
 //-----------------------------------------------------------------------------
@@ -111,106 +110,106 @@ bool CHudGeiger::ShouldDraw( void )
 void CHudGeiger::Paint()
 {
 	int pct;
-	float flvol=0;
+	float flvol = 0;
 	bool highsound = false;
 
 	// piecewise linear is better than continuous formula for this
-	if (m_iGeigerRange > 800)
+	if(m_iGeigerRange > 800)
 	{
-		pct = 0;			//Msg ( "range > 800\n");
+		pct = 0; // Msg ( "range > 800\n");
 	}
-	else if (m_iGeigerRange > 600)
+	else if(m_iGeigerRange > 600)
 	{
 		pct = 2;
-		flvol = 0.4;		//Msg ( "range > 600\n");
+		flvol = 0.4; // Msg ( "range > 600\n");
 	}
-	else if (m_iGeigerRange > 500)
+	else if(m_iGeigerRange > 500)
 	{
 		pct = 4;
-		flvol = 0.5;		//Msg ( "range > 500\n");
+		flvol = 0.5; // Msg ( "range > 500\n");
 	}
-	else if (m_iGeigerRange > 400)
+	else if(m_iGeigerRange > 400)
 	{
 		pct = 8;
-		flvol = 0.6;		//Msg ( "range > 400\n");
+		flvol = 0.6; // Msg ( "range > 400\n");
 		highsound = true;
 	}
-	else if (m_iGeigerRange > 300)
+	else if(m_iGeigerRange > 300)
 	{
 		pct = 8;
-		flvol = 0.7;		//Msg ( "range > 300\n");
+		flvol = 0.7; // Msg ( "range > 300\n");
 		highsound = true;
 	}
-	else if (m_iGeigerRange > 200)
+	else if(m_iGeigerRange > 200)
 	{
 		pct = 28;
-		flvol = 0.78;		//Msg ( "range > 200\n");
+		flvol = 0.78; // Msg ( "range > 200\n");
 		highsound = true;
 	}
-	else if (m_iGeigerRange > 150)
+	else if(m_iGeigerRange > 150)
 	{
 		pct = 40;
-		flvol = 0.80;		//Msg ( "range > 150\n");
+		flvol = 0.80; // Msg ( "range > 150\n");
 		highsound = true;
 	}
-	else if (m_iGeigerRange > 100)
+	else if(m_iGeigerRange > 100)
 	{
 		pct = 60;
-		flvol = 0.85;		//Msg ( "range > 100\n");
+		flvol = 0.85; // Msg ( "range > 100\n");
 		highsound = true;
 	}
-	else if (m_iGeigerRange > 75)
+	else if(m_iGeigerRange > 75)
 	{
 		pct = 80;
-		flvol = 0.9;		//Msg ( "range > 75\n");
-		//gflGeigerDelay = cl.time + GEIGERDELAY * 0.75;
+		flvol = 0.9; // Msg ( "range > 75\n");
+		// gflGeigerDelay = cl.time + GEIGERDELAY * 0.75;
 		highsound = true;
 	}
-	else if (m_iGeigerRange > 50)
+	else if(m_iGeigerRange > 50)
 	{
 		pct = 90;
-		flvol = 0.95;		//Msg ( "range > 50\n");
+		flvol = 0.95; // Msg ( "range > 50\n");
 	}
 	else
 	{
 		pct = 95;
-		flvol = 1.0;		//Msg ( "range < 50\n");
+		flvol = 1.0; // Msg ( "range < 50\n");
 	}
 
-	int n = random->RandomInt( 0, 64 );
+	int n = random->RandomInt(0, 64);
 
 	// Make geiger noise chance framerate independent
-	float flMultiplier = 1 / ( gpGlobals->frametime / TARGET_FRAMETIME );
+	float flMultiplier = 1 / (gpGlobals->frametime / TARGET_FRAMETIME);
 
 	// Constrain the multiplier
-	if ( flMultiplier > 10 )
+	if(flMultiplier > 10)
 	{
 		flMultiplier = 10;
 	}
-	else if ( flMultiplier < 0.1 )
+	else if(flMultiplier < 0.1)
 	{
 		flMultiplier = 0.1;
 	}
 
 	n *= flMultiplier;
 
-	if ( n < pct )
+	if(n < pct)
 	{
 		char sz[256];
-		if ( highsound )
+		if(highsound)
 		{
-			strcpy( sz, "Geiger.BeepHigh" );
+			strcpy(sz, "Geiger.BeepHigh");
 		}
 		else
 		{
-			strcpy( sz, "Geiger.BeepLow" );
+			strcpy(sz, "Geiger.BeepLow");
 		}
 
 		CSoundParameters params;
 
-		if ( C_BaseEntity::GetParametersForSound( sz, params, NULL ) )
+		if(C_BaseEntity::GetParametersForSound(sz, params, NULL))
 		{
-			flvol = ( flvol * ( random->RandomInt( 0,127 ) ) / 255 ) + 0.25;
+			flvol = (flvol * (random->RandomInt(0, 127)) / 255) + 0.25;
 
 			CLocalPlayerFilter filter;
 
@@ -221,7 +220,7 @@ void CHudGeiger::Paint()
 			ep.m_SoundLevel = params.soundlevel;
 			ep.m_nPitch = params.pitch;
 
-			C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, ep );
+			C_BaseEntity::EmitSound(filter, SOUND_FROM_LOCAL_PLAYER, ep);
 		}
 	}
 }

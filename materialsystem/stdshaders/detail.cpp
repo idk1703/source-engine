@@ -10,14 +10,14 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-BEGIN_VS_SHADER( Detail, "Help for Detail" )
+BEGIN_VS_SHADER(Detail, "Help for Detail")
 
 	BEGIN_SHADER_PARAMS
 	END_SHADER_PARAMS
 
 	SHADER_INIT_PARAMS()
 	{
-		SET_FLAGS( MATERIAL_VAR_TRANSLUCENT );
+		SET_FLAGS(MATERIAL_VAR_TRANSLUCENT);
 	}
 
 	SHADER_FALLBACK
@@ -25,12 +25,8 @@ BEGIN_VS_SHADER( Detail, "Help for Detail" )
 		return "UnlitGeneric";
 	}
 
-	SHADER_INIT
-	{
-	}
+	SHADER_INIT {}
 
-	SHADER_DRAW
-	{
-	}
+	SHADER_DRAW {}
 
 END_SHADER

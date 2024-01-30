@@ -10,30 +10,28 @@
 // The number of counter-strike HUD achievements to display
 const int cMaxCSHUDAchievments = 4;
 
-
 using namespace vgui;
 
 class CHudAchievementTracker : public CHudBaseAchievementTracker
 {
-	DECLARE_CLASS_SIMPLE( CHudAchievementTracker, CHudBaseAchievementTracker );
+	DECLARE_CLASS_SIMPLE(CHudAchievementTracker, CHudBaseAchievementTracker);
 
 public:
-	CHudAchievementTracker( const char *pElementName );
+	CHudAchievementTracker(const char *pElementName);
 	virtual void OnThink();
 	virtual void PerformLayout();
-	virtual int  GetMaxAchievementsShown();
-	virtual bool ShouldShowAchievement( IAchievement *pAchievement );
+	virtual int GetMaxAchievementsShown();
+	virtual bool ShouldShowAchievement(IAchievement *pAchievement);
 
 private:
-	CPanelAnimationVarAliasType( int, m_iNormalY, "NormalY", "5", "proportional_int" );
+	CPanelAnimationVarAliasType(int, m_iNormalY, "NormalY", "5", "proportional_int");
 };
 
-DECLARE_HUDELEMENT( CHudAchievementTracker );
+DECLARE_HUDELEMENT(CHudAchievementTracker);
 
-
-CHudAchievementTracker::CHudAchievementTracker( const char *pElementName ) : BaseClass( pElementName )
+CHudAchievementTracker::CHudAchievementTracker(const char *pElementName) : BaseClass(pElementName)
 {
-	RegisterForRenderGroup( "hide_for_scoreboard" );
+	RegisterForRenderGroup("hide_for_scoreboard");
 }
 
 void CHudAchievementTracker::OnThink()
@@ -43,7 +41,7 @@ void CHudAchievementTracker::OnThink()
 
 int CHudAchievementTracker::GetMaxAchievementsShown()
 {
-	return MIN( BaseClass::GetMaxAchievementsShown(), cMaxCSHUDAchievments );
+	return MIN(BaseClass::GetMaxAchievementsShown(), cMaxCSHUDAchievments);
 }
 
 void CHudAchievementTracker::PerformLayout()
@@ -51,17 +49,17 @@ void CHudAchievementTracker::PerformLayout()
 	BaseClass::PerformLayout();
 
 	int x, y;
-	GetPos( x, y );
-	SetPos( x, m_iNormalY );
+	GetPos(x, y);
+	SetPos(x, m_iNormalY);
 }
 
-bool CHudAchievementTracker::ShouldShowAchievement( IAchievement *pAchievement )
+bool CHudAchievementTracker::ShouldShowAchievement(IAchievement *pAchievement)
 {
-	if ( !BaseClass::ShouldShowAchievement(pAchievement) )
+	if(!BaseClass::ShouldShowAchievement(pAchievement))
 		return false;
 
 	C_CSPlayer *pPlayer = CCSPlayer::GetLocalCSPlayer();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return false;
 
 	return true;

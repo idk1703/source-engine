@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "MapDoc.h"
 #include "MainFrm.h"
-#include "MapView2D.h"			// FIXME: for MapView2D::updTool
+#include "MapView2D.h" // FIXME: for MapView2D::updTool
 #include "ToolAxisHandle.h"
 #include "ToolDecal.h"
 #include "ToolDisplace.h"
@@ -38,11 +38,11 @@
 
 static CToolManager s_DummyToolmanager;
 
-CToolManager* ToolManager()
+CToolManager *ToolManager()
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 
-	if ( pDoc )
+	if(pDoc)
 		return pDoc->GetTools();
 
 	return &s_DummyToolmanager;
@@ -51,7 +51,7 @@ CToolManager* ToolManager()
 // Purpose: Prepares the tool manager for use.
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CToolManager::Init( CMapDoc *pDocument )
+bool CToolManager::Init(CMapDoc *pDocument)
 {
 
 	// add default tools
@@ -65,30 +65,28 @@ bool CToolManager::Init( CMapDoc *pDocument )
 
 	m_pDocument = pDocument;
 
-	AddTool( new CToolDisplace );
-	AddTool( new CToolMagnify );
-	AddTool( new CToolDecal );
-	AddTool( new CToolMaterial );
-	AddTool( new CToolAxisHandle );
-	AddTool( new CToolPointHandle );
-	AddTool( new CToolSphere );
-	AddTool( new CToolPickAngles );
-	AddTool( new CToolPickEntity );
-	AddTool( new CToolPickFace );
-	AddTool( new CToolSweptPlayerHull );
-	AddTool( new Selection3D );
-	AddTool( new CToolBlock );
-	AddTool( new CToolEntity );
-	AddTool( new Camera3D );
-	AddTool( new Morph3D );
-	AddTool( new Clipper3D );
-	AddTool( new Cordon3D );
-	AddTool( new CToolOverlay );
-
+	AddTool(new CToolDisplace);
+	AddTool(new CToolMagnify);
+	AddTool(new CToolDecal);
+	AddTool(new CToolMaterial);
+	AddTool(new CToolAxisHandle);
+	AddTool(new CToolPointHandle);
+	AddTool(new CToolSphere);
+	AddTool(new CToolPickAngles);
+	AddTool(new CToolPickEntity);
+	AddTool(new CToolPickFace);
+	AddTool(new CToolSweptPlayerHull);
+	AddTool(new Selection3D);
+	AddTool(new CToolBlock);
+	AddTool(new CToolEntity);
+	AddTool(new Camera3D);
+	AddTool(new Morph3D);
+	AddTool(new Clipper3D);
+	AddTool(new Cordon3D);
+	AddTool(new CToolOverlay);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Shuts down the tool manager - called on app exit.
@@ -100,7 +98,6 @@ void CToolManager::Shutdown()
 	RemoveAllTools();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Allocates the tools.
 //-----------------------------------------------------------------------------
@@ -110,7 +107,6 @@ CToolManager::CToolManager()
 	m_pDocument = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor. Deletes the tools.
 //-----------------------------------------------------------------------------
@@ -119,24 +115,22 @@ CToolManager::~CToolManager()
 	Shutdown();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CToolManager::AddTool(CBaseTool *pTool)
 {
-	if ( GetToolForID( pTool->GetToolID() ) )
+	if(GetToolForID(pTool->GetToolID()))
 	{
-		Assert( !pTool );
+		Assert(!pTool);
 		Msg("CToolManager::AddTool: Tool %i already registered.\n", pTool->GetToolID());
 		return;
 	}
 
-	pTool->Init( m_pDocument );
+	pTool->Init(m_pDocument);
 
 	m_Tools.AddToTail(pTool);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -146,7 +140,6 @@ CBaseTool *CToolManager::GetActiveTool()
 	return m_pActiveTool;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns a tool pointer for a given tool ID, NULL if there is no
 //			corresponding tool.
@@ -154,10 +147,10 @@ CBaseTool *CToolManager::GetActiveTool()
 CBaseTool *CToolManager::GetToolForID(ToolID_t eToolID)
 {
 	int nToolCount = GetToolCount();
-	for (int i = 0; i < nToolCount; i++)
+	for(int i = 0; i < nToolCount; i++)
 	{
 		CBaseTool *pTool = GetTool(i);
-		if (pTool->GetToolID() == eToolID)
+		if(pTool->GetToolID() == eToolID)
 		{
 			return pTool;
 		}
@@ -166,18 +159,16 @@ CBaseTool *CToolManager::GetToolForID(ToolID_t eToolID)
 	return NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the ID of the active tool.
 //-----------------------------------------------------------------------------
 ToolID_t CToolManager::GetActiveToolID()
 {
-	if ( m_pActiveTool )
+	if(m_pActiveTool)
 		return m_pActiveTool->GetToolID();
 	else
 		return TOOL_NONE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Pushes a new tool onto the tool stack and activates it. The active
@@ -188,14 +179,13 @@ void CToolManager::PushTool(ToolID_t eToolID)
 	//
 	// Add the new tool to the top of the tool stack.
 	//
-	if (eToolID != GetActiveToolID())
+	if(eToolID != GetActiveToolID())
 	{
 		m_ToolIDStack.AddToHead(GetActiveToolID());
 	}
 
 	SetTool(eToolID);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Restores the active tool to what it was when PushTool was called.
@@ -204,7 +194,7 @@ void CToolManager::PushTool(ToolID_t eToolID)
 void CToolManager::PopTool()
 {
 	int nCount = m_ToolIDStack.Count();
-	if (nCount > 0)
+	if(nCount > 0)
 	{
 		ToolID_t eNewTool = m_ToolIDStack.Element(0);
 		m_ToolIDStack.Remove(0);
@@ -212,7 +202,6 @@ void CToolManager::PopTool()
 		SetTool(eNewTool);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the current active tool by ID.
@@ -224,10 +213,10 @@ void CToolManager::SetTool(ToolID_t eNewTool)
 	CBaseTool *pOldTool = m_pActiveTool;
 
 	// Check to see that we can deactive the current tool
-	if ( pOldTool && (pOldTool != pNewTool) )
+	if(pOldTool && (pOldTool != pNewTool))
 	{
 		// Deactivate the current tool unless we are just 'reactivating' it.
-		if( !pOldTool->CanDeactivate() )
+		if(!pOldTool->CanDeactivate())
 			return;
 	}
 
@@ -235,13 +224,13 @@ void CToolManager::SetTool(ToolID_t eNewTool)
 	m_pActiveTool = pNewTool;
 
 	// deactivate the old tool if different.
-	if ( pOldTool && (pOldTool != pNewTool) )
+	if(pOldTool && (pOldTool != pNewTool))
 	{
 		pOldTool->Deactivate();
 	}
 
 	// always activate the new tool
-	if ( pNewTool )
+	if(pNewTool)
 	{
 		pNewTool->Activate();
 	}
@@ -250,47 +239,43 @@ void CToolManager::SetTool(ToolID_t eNewTool)
 	//		  CFaceEditDispPage::OnSetActive() calls SetTool(TOOL_FACEEDIT_DISP). This
 	//		  behavior is rather nonsensical during startup.
 	CMainFrame *pwndMain = GetMainWnd();
-	if (pwndMain != NULL)
+	if(pwndMain != NULL)
 	{
 		pwndMain->m_ObjectBar.UpdateListForTool(eNewTool);
 	}
 
-	if ( m_pDocument )
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	if(m_pDocument)
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 }
 
 ChunkFileResult_t CToolManager::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 {
-	for (int i=0;i<m_Tools.Count(); i++)
+	for(int i = 0; i < m_Tools.Count(); i++)
 	{
-		if ( m_Tools[i]->GetVMFChunkName() != NULL  )
+		if(m_Tools[i]->GetVMFChunkName() != NULL)
 		{
-			m_Tools[i]->SaveVMF( pFile, pSaveInfo );
+			m_Tools[i]->SaveVMF(pFile, pSaveInfo);
 		}
 	}
 
 	return ChunkFile_Ok;
 }
 
-
 ChunkFileResult_t CToolManager::LoadCallback(CChunkFile *pFile, CBaseTool *pTool)
 {
-	return pTool->LoadVMF( pFile );
+	return pTool->LoadVMF(pFile);
 }
 
-
-void CToolManager::AddToolHandlers( CChunkHandlerMap *pHandlersMap )
+void CToolManager::AddToolHandlers(CChunkHandlerMap *pHandlersMap)
 {
-	for (int i=0;i<m_Tools.Count(); i++)
+	for(int i = 0; i < m_Tools.Count(); i++)
 	{
-		if ( m_Tools[i]->GetVMFChunkName() != NULL  )
+		if(m_Tools[i]->GetVMFChunkName() != NULL)
 		{
-			pHandlersMap->AddHandler( m_Tools[i]->GetVMFChunkName(), (ChunkHandler_t)LoadCallback, m_Tools[i] );
+			pHandlersMap->AddHandler(m_Tools[i]->GetVMFChunkName(), (ChunkHandler_t)LoadCallback, m_Tools[i]);
 		}
 	}
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Removes all the document-created tools from the tools list.

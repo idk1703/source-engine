@@ -20,7 +20,7 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
-CP4File::CP4File( char const *szFilename )
+CP4File::CP4File(char const *szFilename)
 {
 #ifdef PLATFORM_WINDOWS_PC
 
@@ -28,16 +28,16 @@ CP4File::CP4File( char const *szFilename )
 	// this avoids invalid Adds().  Have to go through GetShortPathName and then GetLongPathName from
 	// the short path name
 
-	TCHAR szShortPathName[ MAX_PATH ] = TEXT( "" );
-	const DWORD shortRetVal = GetShortPathName( szFilename, szShortPathName, ARRAYSIZE( szShortPathName ) );
+	TCHAR szShortPathName[MAX_PATH] = TEXT("");
+	const DWORD shortRetVal = GetShortPathName(szFilename, szShortPathName, ARRAYSIZE(szShortPathName));
 
-	if ( shortRetVal > 0 && shortRetVal <= ARRAYSIZE( szShortPathName ) )
+	if(shortRetVal > 0 && shortRetVal <= ARRAYSIZE(szShortPathName))
 	{
-		TCHAR szLongPathName[ MAX_PATH ] = TEXT( "" );
+		TCHAR szLongPathName[MAX_PATH] = TEXT("");
 
-		const DWORD longRetVal = GetLongPathName( szShortPathName, szLongPathName, ARRAYSIZE( szLongPathName ) );
+		const DWORD longRetVal = GetLongPathName(szShortPathName, szLongPathName, ARRAYSIZE(szLongPathName));
 
-		if ( longRetVal > 0 && longRetVal <= ARRAYSIZE( szLongPathName ) )
+		if(longRetVal > 0 && longRetVal <= ARRAYSIZE(szLongPathName))
 		{
 			m_sFilename = szLongPathName;
 			return;
@@ -49,51 +49,48 @@ CP4File::CP4File( char const *szFilename )
 	m_sFilename = szFilename;
 }
 
-CP4File::~CP4File()
-{
-}
+CP4File::~CP4File() {}
 
-bool CP4File::Edit( void )
+bool CP4File::Edit(void)
 {
-	if ( !p4 )
+	if(!p4)
 		return true;
 
-	return p4->OpenFileForEdit( m_sFilename.String() );
+	return p4->OpenFileForEdit(m_sFilename.String());
 }
 
-bool CP4File::Add( void )
+bool CP4File::Add(void)
 {
-	if ( !p4 )
+	if(!p4)
 		return true;
 
-	return p4->OpenFileForAdd( m_sFilename.String() );
+	return p4->OpenFileForAdd(m_sFilename.String());
 }
 
-bool CP4File::Revert( void )
+bool CP4File::Revert(void)
 {
-	if ( !p4 )
+	if(!p4)
 		return true;
 
-	return p4->RevertFile( m_sFilename.String() );
+	return p4->RevertFile(m_sFilename.String());
 }
 
 // Is the file in perforce?
 bool CP4File::IsFileInPerforce()
 {
-	if ( !p4 )
+	if(!p4)
 		return false;
 
-	return p4->IsFileInPerforce( m_sFilename.String() );
+	return p4->IsFileInPerforce(m_sFilename.String());
 }
 
-bool CP4File::SetFileType(const CUtlString& desiredFileType)
+bool CP4File::SetFileType(const CUtlString &desiredFileType)
 {
-	if ( !p4 )
+	if(!p4)
 		return false;
 
-	return p4->SetFileType( m_sFilename.String(), desiredFileType.String() );
+	return p4->SetFileType(m_sFilename.String(), desiredFileType.String());
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -101,36 +98,30 @@ bool CP4File::SetFileType(const CUtlString& desiredFileType)
 //
 //////////////////////////////////////////////////////////////////////////
 
+CP4Factory::CP4Factory() {}
 
-CP4Factory::CP4Factory()
-{
-}
+CP4Factory::~CP4Factory() {}
 
-CP4Factory::~CP4Factory()
-{
-}
-
-bool CP4Factory::SetDummyMode( bool bDummyMode )
+bool CP4Factory::SetDummyMode(bool bDummyMode)
 {
 	bool bOld = m_bDummyMode;
 	m_bDummyMode = bDummyMode;
 	return bOld;
 }
 
-void CP4Factory::SetOpenFileChangeList( const char *szChangeListName )
+void CP4Factory::SetOpenFileChangeList(const char *szChangeListName)
 {
-	if ( !m_bDummyMode && p4 )
-		p4->SetOpenFileChangeList( szChangeListName );
+	if(!m_bDummyMode && p4)
+		p4->SetOpenFileChangeList(szChangeListName);
 }
 
-CP4File *CP4Factory::AccessFile( char const *szFilename ) const
+CP4File *CP4Factory::AccessFile(char const *szFilename) const
 {
-	if ( !m_bDummyMode )
-		return new CP4File( szFilename );
+	if(!m_bDummyMode)
+		return new CP4File(szFilename);
 	else
-		return new CP4File_Dummy( szFilename );
+		return new CP4File_Dummy(szFilename);
 }
-
 
 // Default p4 factory
 static CP4Factory s_static_p4_factory;

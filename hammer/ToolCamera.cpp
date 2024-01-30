@@ -8,14 +8,14 @@
 #include "stdafx.h"
 #include "ToolCamera.h"
 #include "SaveInfo.h"
-#include "MainFrm.h"			// dvs: remove?
+#include "MainFrm.h" // dvs: remove?
 #include "MapDefs.h"
 #include "MapDoc.h"
 #include "MapView2D.h"
 #include "MapView3D.h"
 #include "Options.h"
 #include "Render2D.h"
-#include "StatusBarIDs.h"		// dvs: remove
+#include "StatusBarIDs.h" // dvs: remove
 #include "ToolManager.h"
 #include "hammer_mathlib.h"
 #include "vgui/Cursor.h"
@@ -24,7 +24,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-#pragma warning(disable:4244)
+#pragma warning(disable : 4244)
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -35,7 +35,6 @@ Camera3D::Camera3D(void)
 	SetEmpty();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if we are dragging a camera, false if not. // dvs: rename
 //-----------------------------------------------------------------------------
@@ -43,7 +42,6 @@ bool Camera3D::IsEmpty(void)
 {
 	return (Cameras.Count() == 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -53,7 +51,6 @@ void Camera3D::SetEmpty(void)
 	Cameras.RemoveAll();
 	m_iActiveCamera = -1;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -65,11 +62,11 @@ int Camera3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandl
 {
 	for(int i = 0; i < Cameras.Count(); i++)
 	{
-		for ( int j=0; j<2; j++ )
+		for(int j = 0; j < 2; j++)
 		{
-			if( HitRect( pView, ptClient, Cameras[i].position[j], HANDLE_RADIUS ) )
+			if(HitRect(pView, ptClient, Cameras[i].position[j], HANDLE_RADIUS))
 			{
-				return MAKELONG(i+1, j);
+				return MAKELONG(i + 1, j);
 			}
 		}
 	}
@@ -82,18 +79,17 @@ int Camera3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandl
 //-----------------------------------------------------------------------------
 void Camera3D::EnsureMaxCameras()
 {
-	int nMax = max( Options.general.nMaxCameras, 1 );
+	int nMax = max(Options.general.nMaxCameras, 1);
 
 	int nToRemove = Cameras.Count() - nMax;
-	if ( nToRemove > 0 )
+	if(nToRemove > 0)
 	{
-		m_iActiveCamera = max( m_iActiveCamera - nToRemove, 0 );
+		m_iActiveCamera = max(m_iActiveCamera - nToRemove, 0);
 
-		while ( nToRemove-- )
-			Cameras.Remove( 0 );
+		while(nToRemove--)
+			Cameras.Remove(0);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -101,9 +97,9 @@ void Camera3D::EnsureMaxCameras()
 //-----------------------------------------------------------------------------
 void Camera3D::FinishTranslation(bool bSave)
 {
-	if (bSave)
+	if(bSave)
 	{
-		if ( m_iActiveCamera == Cameras.Count() )
+		if(m_iActiveCamera == Cameras.Count())
 		{
 			Cameras.AddToTail();
 			EnsureMaxCameras();
@@ -114,7 +110,6 @@ void Camera3D::FinishTranslation(bool bSave)
 
 	Tool3D::FinishTranslation(bSave);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -130,21 +125,20 @@ bool Camera3D::UpdateTranslation(const Vector &vUpdate, UINT uFlags)
 	Vector vNewPos = m_vOrgPos + vUpdate;
 
 	// snap point if need be
-	if ( uFlags & constrainSnap )
-		m_pDocument->Snap( vNewPos, uFlags );
+	if(uFlags & constrainSnap)
+		m_pDocument->Snap(vNewPos, uFlags);
 
 	m_MoveCamera.position[m_nMovePositionIndex] = vNewPos;
 
 	if(uFlags & constrainMoveAll)
 	{
-		m_MoveCamera.position[(m_nMovePositionIndex+1)%2] = vNewPos + vCamDelta;
+		m_MoveCamera.position[(m_nMovePositionIndex + 1) % 2] = vNewPos + vCamDelta;
 	}
 
- 	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -164,7 +158,6 @@ void Camera3D::GetCameraPos(Vector &vViewPos, Vector &vLookAt)
 	vLookAt = Cameras[m_iActiveCamera].position[1];
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pCamPos -
@@ -172,10 +165,9 @@ void Camera3D::GetCameraPos(Vector &vViewPos, Vector &vLookAt)
 //-----------------------------------------------------------------------------
 void Camera3D::AddCamera(CAMSTRUCT &camera)
 {
-	Cameras.AddToTail( camera );
+	Cameras.AddToTail(camera);
 	EnsureMaxCameras();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -183,11 +175,11 @@ void Camera3D::AddCamera(CAMSTRUCT &camera)
 //-----------------------------------------------------------------------------
 void Camera3D::RenderTool2D(CRender2D *pRender)
 {
-	for (int i = 0; i < Cameras.Count(); i++)
+	for(int i = 0; i < Cameras.Count(); i++)
 	{
 		CAMSTRUCT *pDrawCam = &Cameras[i];
 
-		if (IsTranslating() && (i == m_iActiveCamera))
+		if(IsTranslating() && (i == m_iActiveCamera))
 		{
 			pDrawCam = &m_MoveCamera;
 		}
@@ -195,26 +187,25 @@ void Camera3D::RenderTool2D(CRender2D *pRender)
 		//
 		// Draw the line between.
 		//
-		if (i == m_iActiveCamera)
+		if(i == m_iActiveCamera)
 		{
-			pRender->SetDrawColor( 255, 0, 0 );
+			pRender->SetDrawColor(255, 0, 0);
 		}
 		else
 		{
-			pRender->SetDrawColor( 0, 255, 255 );
+			pRender->SetDrawColor(0, 255, 255);
 		}
 
-		pRender->DrawLine( pDrawCam->position[MovePos], pDrawCam->position[MoveLook] );
+		pRender->DrawLine(pDrawCam->position[MovePos], pDrawCam->position[MoveLook]);
 
 		//
 		// Draw camera handle.
 		//
-		pRender->SetHandleStyle(HANDLE_RADIUS, CRender::HANDLE_CIRCLE );
-		pRender->SetHandleColor( 0, 255, 255 );
-		pRender->DrawHandle( pDrawCam->position[MovePos] );
+		pRender->SetHandleStyle(HANDLE_RADIUS, CRender::HANDLE_CIRCLE);
+		pRender->SetHandleColor(0, 255, 255);
+		pRender->DrawHandle(pDrawCam->position[MovePos]);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles key values being read from the MAP file.
@@ -225,18 +216,17 @@ void Camera3D::RenderTool2D(CRender2D *pRender)
 //-----------------------------------------------------------------------------
 ChunkFileResult_t Camera3D::LoadCameraKeyCallback(const char *szKey, const char *szValue, CAMSTRUCT *pCam)
 {
-	if (!stricmp(szKey, "look"))
+	if(!stricmp(szKey, "look"))
 	{
 		CChunkFile::ReadKeyValueVector3(szValue, pCam->position[MoveLook]);
 	}
-	else if (!stricmp(szKey, "position"))
+	else if(!stricmp(szKey, "position"))
 	{
 		CChunkFile::ReadKeyValueVector3(szValue, pCam->position[MovePos]);
 	}
 
-	return(ChunkFile_Ok);
+	return (ChunkFile_Ok);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles key values being read from the MAP file.
@@ -247,14 +237,13 @@ ChunkFileResult_t Camera3D::LoadCameraKeyCallback(const char *szKey, const char 
 //-----------------------------------------------------------------------------
 ChunkFileResult_t Camera3D::LoadCamerasKeyCallback(const char *szKey, const char *szValue, Camera3D *pCameras)
 {
-	if (!stricmp(szKey, "activecamera"))
+	if(!stricmp(szKey, "activecamera"))
 	{
 		pCameras->m_iActiveCamera = atoi(szValue);
 	}
 
-	return(ChunkFile_Ok);
+	return (ChunkFile_Ok);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -269,14 +258,13 @@ ChunkFileResult_t Camera3D::LoadCameraCallback(CChunkFile *pFile, Camera3D *pCam
 
 	ChunkFileResult_t eResult = pFile->ReadChunk((KeyHandler_t)LoadCameraKeyCallback, &Cam);
 
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
-		pCameras->AddCamera( Cam );
+		pCameras->AddCamera(Cam);
 	}
 
-	return(eResult);
+	return (eResult);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -295,24 +283,23 @@ ChunkFileResult_t Camera3D::LoadVMF(CChunkFile *pFile)
 	ChunkFileResult_t eResult = pFile->ReadChunk((KeyHandler_t)LoadCamerasKeyCallback, this);
 	pFile->PopHandlers();
 
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
 		//
 		// Make sure the active camera is legal.
 		//
-		if (Cameras.Count() == 0)
+		if(Cameras.Count() == 0)
 		{
 			m_iActiveCamera = -1;
 		}
-		else if (!inrange(m_iActiveCamera, 0, Cameras.Count()))
+		else if(!inrange(m_iActiveCamera, 0, Cameras.Count()))
 		{
 			m_iActiveCamera = 0;
 		}
 	}
 
-	return(eResult);
+	return (eResult);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -324,8 +311,8 @@ void Camera3D::UpdateActiveCamera(Vector &vViewPos, Vector &vDir)
 	if(!inrange(m_iActiveCamera, 0, Cameras.Count()))
 		return;
 
-	Vector& camPos	= Cameras[m_iActiveCamera].position[MovePos];
-	Vector& lookPos	= Cameras[m_iActiveCamera].position[MoveLook];
+	Vector &camPos = Cameras[m_iActiveCamera].position[MovePos];
+	Vector &lookPos = Cameras[m_iActiveCamera].position[MoveLook];
 
 	// get current length
 	Vector delta;
@@ -334,7 +321,7 @@ void Camera3D::UpdateActiveCamera(Vector &vViewPos, Vector &vDir)
 
 	float length = VectorLength(delta);
 
-	if ( length < 1 )
+	if(length < 1)
 		length = 1;
 
 	camPos = vViewPos;
@@ -342,9 +329,9 @@ void Camera3D::UpdateActiveCamera(Vector &vViewPos, Vector &vDir)
 	for(int i = 0; i < 3; i++)
 		lookPos[i] = camPos[i] + vDir[i] * length;
 
-	if ( IsActiveTool() )
+	if(IsActiveTool())
 	{
-		if (Options.view2d.bCenteroncamera)
+		if(Options.view2d.bCenteroncamera)
 		{
 			VIEW2DINFO vi;
 			vi.wFlags = VI_CENTER;
@@ -352,10 +339,9 @@ void Camera3D::UpdateActiveCamera(Vector &vViewPos, Vector &vDir)
 			m_pDocument->SetView2dInfo(vi);
 		}
 
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -363,7 +349,7 @@ void Camera3D::UpdateActiveCamera(Vector &vViewPos, Vector &vDir)
 //-----------------------------------------------------------------------------
 void Camera3D::SetNextCamera(SNCTYPE type)
 {
-	if(Cameras.Count()==0)
+	if(Cameras.Count() == 0)
 	{
 		m_iActiveCamera = -1;
 		return;
@@ -371,22 +357,21 @@ void Camera3D::SetNextCamera(SNCTYPE type)
 
 	switch(type)
 	{
-	case sncNext:
-		++m_iActiveCamera;
-		if(m_iActiveCamera >= Cameras.Count() )
+		case sncNext:
+			++m_iActiveCamera;
+			if(m_iActiveCamera >= Cameras.Count())
+				m_iActiveCamera = 0;
+			break;
+		case sncPrev:
+			--m_iActiveCamera;
+			if(m_iActiveCamera < 0)
+				m_iActiveCamera = Cameras.Count() - 1;
+			break;
+		case sncFirst:
 			m_iActiveCamera = 0;
-		break;
-	case sncPrev:
-		--m_iActiveCamera;
-		if(m_iActiveCamera < 0)
-			m_iActiveCamera = Cameras.Count()-1;
-		break;
-	case sncFirst:
-		m_iActiveCamera = 0;
-		break;
+			break;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -398,17 +383,16 @@ void Camera3D::DeleteActiveCamera()
 
 	Cameras.Remove(m_iActiveCamera);
 
-	if(m_iActiveCamera >= Cameras.Count() )
-		m_iActiveCamera = Cameras.Count()-1;
+	if(m_iActiveCamera >= Cameras.Count())
+		m_iActiveCamera = Cameras.Count() - 1;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : file -
 //			fIsStoring -
 //-----------------------------------------------------------------------------
-void Camera3D::SerializeRMF(std::fstream& file, BOOL fIsStoring)
+void Camera3D::SerializeRMF(std::fstream &file, BOOL fIsStoring)
 {
 	float fVersion = 0.2f, fThisVersion;
 
@@ -416,25 +400,25 @@ void Camera3D::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 
 	if(fIsStoring)
 	{
-		file.write((char*)&fVersion, sizeof(fVersion) );
+		file.write((char *)&fVersion, sizeof(fVersion));
 
-		file.write((char*)&m_iActiveCamera, sizeof(m_iActiveCamera) );
-		file.write((char*)&nCameras, sizeof(nCameras));
+		file.write((char *)&m_iActiveCamera, sizeof(m_iActiveCamera));
+		file.write((char *)&nCameras, sizeof(nCameras));
 		for(int i = 0; i < nCameras; i++)
 		{
-			file.write((char*)&Cameras[i], sizeof(CAMSTRUCT));
+			file.write((char *)&Cameras[i], sizeof(CAMSTRUCT));
 		}
 	}
 	else
 	{
-		file.read((char*)&fThisVersion, sizeof(fThisVersion) );
+		file.read((char *)&fThisVersion, sizeof(fThisVersion));
 
 		if(fThisVersion >= 0.2f)
 		{
-			file.read((char*)&m_iActiveCamera, sizeof(m_iActiveCamera));
+			file.read((char *)&m_iActiveCamera, sizeof(m_iActiveCamera));
 		}
 
-		file.read((char*)&nCameras, sizeof (nCameras) );
+		file.read((char *)&nCameras, sizeof(nCameras));
 
 		Cameras.RemoveAll();
 		Cameras.EnsureCapacity(nCameras);
@@ -442,15 +426,14 @@ void Camera3D::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 		for(int i = 0; i < nCameras; i++)
 		{
 			CAMSTRUCT cam;
-			file.read((char*)&cam, sizeof(CAMSTRUCT));
-			Cameras.AddToTail( cam );
+			file.read((char *)&cam, sizeof(CAMSTRUCT));
+			Cameras.AddToTail(cam);
 		}
 		EnsureMaxCameras();
 
-		Assert( Cameras.Count() == nCameras );
+		Assert(Cameras.Count() == nCameras);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -459,48 +442,47 @@ void Camera3D::SerializeRMF(std::fstream& file, BOOL fIsStoring)
 //-----------------------------------------------------------------------------
 ChunkFileResult_t Camera3D::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 {
-	ChunkFileResult_t eResult = pFile->BeginChunk( GetVMFChunkName() );
-	if (eResult == ChunkFile_Ok)
+	ChunkFileResult_t eResult = pFile->BeginChunk(GetVMFChunkName());
+	if(eResult == ChunkFile_Ok)
 	{
 		eResult = pFile->WriteKeyValueInt("activecamera", m_iActiveCamera);
 	}
 
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
-		for (int i = 0; i < Cameras.Count(); i++)
+		for(int i = 0; i < Cameras.Count(); i++)
 		{
 			eResult = pFile->BeginChunk("camera");
 
-			if (eResult == ChunkFile_Ok)
+			if(eResult == ChunkFile_Ok)
 			{
 				eResult = pFile->WriteKeyValueVector3("position", Cameras[i].position[MovePos]);
 			}
 
-			if (eResult == ChunkFile_Ok)
+			if(eResult == ChunkFile_Ok)
 			{
 				eResult = pFile->WriteKeyValueVector3("look", Cameras[i].position[MoveLook]);
 			}
 
-			if (eResult == ChunkFile_Ok)
+			if(eResult == ChunkFile_Ok)
 			{
 				eResult = pFile->EndChunk();
 			}
 
-			if (eResult != ChunkFile_Ok)
+			if(eResult != ChunkFile_Ok)
 			{
 				break;
 			}
 		}
 	}
 
-	if (eResult == ChunkFile_Ok)
+	if(eResult == ChunkFile_Ok)
 	{
 		eResult = pFile->EndChunk();
 	}
 
-	return(eResult);
+	return (eResult);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the key down event in the 2D view.
@@ -509,15 +491,15 @@ ChunkFileResult_t Camera3D::SaveVMF(CChunkFile *pFile, CSaveInfo *pSaveInfo)
 //-----------------------------------------------------------------------------
 bool Camera3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_DELETE || nChar == VK_NEXT || nChar == VK_PRIOR)
+	if(nChar == VK_DELETE || nChar == VK_NEXT || nChar == VK_PRIOR)
 	{
 		CMapDoc *pDoc = pView->GetMapDoc();
 
-		if (nChar == VK_DELETE)
+		if(nChar == VK_DELETE)
 		{
 			DeleteActiveCamera();
 		}
-		else if (nChar == VK_NEXT)
+		else if(nChar == VK_NEXT)
 		{
 			SetNextCamera(Camera3D::sncNext);
 		}
@@ -526,14 +508,14 @@ bool Camera3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFl
 			SetNextCamera(Camera3D::sncPrev);
 		}
 
-		Vector viewPos,lookAt;
+		Vector viewPos, lookAt;
 
-		GetCameraPos( viewPos, lookAt );
-		pDoc->UpdateAllCameras( &viewPos, &lookAt, NULL );
+		GetCameraPos(viewPos, lookAt);
+		pDoc->UpdateAllCameras(&viewPos, &lookAt, NULL);
 
 		return true;
 	}
-	else if (nChar == VK_ESCAPE)
+	else if(nChar == VK_ESCAPE)
 	{
 		OnEscape();
 		return true;
@@ -541,7 +523,6 @@ bool Camera3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFl
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button down event in the 2D view.
@@ -560,15 +541,15 @@ bool Camera3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 	//
 
 	Vector vecWorld;
-	pView->ClientToWorld( vecWorld, vPoint );
+	pView->ClientToWorld(vecWorld, vPoint);
 
-	if ( IsEmpty() || (nFlags & MK_SHIFT))
+	if(IsEmpty() || (nFlags & MK_SHIFT))
 	{
 		//
 		// Build a point in world space to place the new camera.
 		//
 
-		if ( !pDoc->GetSelection()->IsEmpty() )
+		if(!pDoc->GetSelection()->IsEmpty())
 		{
 			Vector vecCenter;
 			pDoc->GetSelection()->GetBoundsCenter(vecCenter);
@@ -589,31 +570,31 @@ bool Camera3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vP
 		m_nMovePositionIndex = MoveLook;
 
 		// set as active camera
-		m_iActiveCamera = Cameras.AddToTail(m_MoveCamera);;
+		m_iActiveCamera = Cameras.AddToTail(m_MoveCamera);
+		;
 		EnsureMaxCameras();
 
-		StartTranslation(pView, vPoint );
+		StartTranslation(pView, vPoint);
 	}
 	//
 	// Otherwise, try to drag an existing camera handle.
 	//
 	else
 	{
-		int dwHit = HitTest( pView, vPoint );
+		int dwHit = HitTest(pView, vPoint);
 
-		if ( dwHit )
+		if(dwHit)
 		{
-			m_iActiveCamera = LOWORD(dwHit)-1;
+			m_iActiveCamera = LOWORD(dwHit) - 1;
 			m_MoveCamera = Cameras[m_iActiveCamera];
 			m_nMovePositionIndex = HIWORD(dwHit);
 			m_vOrgPos = m_MoveCamera.position[m_nMovePositionIndex];
-			StartTranslation( pView, vPoint );
+			StartTranslation(pView, vPoint);
 		}
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button up event in the 2D view.
@@ -624,14 +605,14 @@ bool Camera3D::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoi
 {
 	ReleaseCapture();
 
-	if (IsTranslating())
+	if(IsTranslating())
 	{
 		FinishTranslation(true);
 
 		Vector viewPos, lookAt;
-		GetCameraPos( viewPos, lookAt );
+		GetCameraPos(viewPos, lookAt);
 
-		m_pDocument->UpdateAllCameras( &viewPos, &lookAt, NULL );
+		m_pDocument->UpdateAllCameras(&viewPos, &lookAt, NULL);
 	}
 
 	m_pDocument->UpdateStatusbar();
@@ -641,7 +622,7 @@ bool Camera3D::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoi
 
 unsigned int Camera3D::GetConstraints(unsigned int nKeyFlags)
 {
-	unsigned int uConstraints = Tool3D::GetConstraints( nKeyFlags );
+	unsigned int uConstraints = Tool3D::GetConstraints(nKeyFlags);
 
 	if(nKeyFlags & MK_CONTROL)
 	{
@@ -659,18 +640,18 @@ unsigned int Camera3D::GetConstraints(unsigned int nKeyFlags)
 bool Camera3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	CMapDoc *pDoc = pView->GetMapDoc();
-	if (!pDoc)
+	if(!pDoc)
 	{
 		return true;
 	}
 
 	vgui::HCursor hCursor = vgui::dc_arrow;
 
-	unsigned int uConstraints = GetConstraints( nFlags );
+	unsigned int uConstraints = GetConstraints(nFlags);
 
 	// Make sure the point is visible.
 
-	pView->ToolScrollToPoint( vPoint );
+	pView->ToolScrollToPoint(vPoint);
 
 	//
 	// Convert to world coords.
@@ -683,34 +664,33 @@ bool Camera3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 	//
 	char szBuf[128];
 
-	m_pDocument->Snap(vecWorld,uConstraints);
+	m_pDocument->Snap(vecWorld, uConstraints);
 
-	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert] );
+	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert]);
 	SetStatusText(SBI_COORDS, szBuf);
 
-	if (IsTranslating())
+	if(IsTranslating())
 	{
-		Tool3D::UpdateTranslation(pView, vPoint, uConstraints );
+		Tool3D::UpdateTranslation(pView, vPoint, uConstraints);
 
 		hCursor = vgui::dc_none;
 	}
-	else if ( !IsEmpty() )
+	else if(!IsEmpty())
 	{
 		//
 		// If the cursor is on a handle, set it to a cross.
 		//
-		if ( HitTest( pView, vPoint, true) )
+		if(HitTest(pView, vPoint, true))
 		{
 			hCursor = vgui::dc_crosshair;
 		}
 	}
 
-	if ( hCursor != vgui::dc_none )
-		pView->SetCursor( hCursor );
+	if(hCursor != vgui::dc_none)
+		pView->SetCursor(hCursor);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse button down event in the 3D view.
@@ -722,7 +702,6 @@ bool Camera3D::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vP
 	pView->EnableRotating(true);
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the left mouse up down event in the 3D view.
@@ -736,7 +715,6 @@ bool Camera3D::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoi
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the right mouse button down event in the 3D view.
 // Input  : Per CWnd::OnRButtonDown.
@@ -747,7 +725,6 @@ bool Camera3D::OnRMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vP
 	pView->EnableStrafing(true);
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the right mouse button up event in the 3D view.
@@ -761,7 +738,6 @@ bool Camera3D::OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoi
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the key down event in the 3D view.
 // Input  : Per CWnd::OnKeyDown.
@@ -769,15 +745,15 @@ bool Camera3D::OnRMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoi
 //-----------------------------------------------------------------------------
 bool Camera3D::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar == VK_DELETE || nChar == VK_NEXT || nChar == VK_PRIOR)
+	if(nChar == VK_DELETE || nChar == VK_NEXT || nChar == VK_PRIOR)
 	{
 		CMapDoc *pDoc = pView->GetMapDoc();
 
-		if (nChar == VK_DELETE)
+		if(nChar == VK_DELETE)
 		{
 			DeleteActiveCamera();
 		}
-		else if (nChar == VK_NEXT)
+		else if(nChar == VK_NEXT)
 		{
 			SetNextCamera(Camera3D::sncNext);
 		}
@@ -787,13 +763,13 @@ bool Camera3D::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFl
 		}
 
 		Vector viewPos, lookAt;
-		GetCameraPos( viewPos, lookAt );
+		GetCameraPos(viewPos, lookAt);
 
-		pDoc->UpdateAllCameras( &viewPos, &lookAt, NULL );
+		pDoc->UpdateAllCameras(&viewPos, &lookAt, NULL);
 
 		return true;
 	}
-	else if (nChar == VK_ESCAPE)
+	else if(nChar == VK_ESCAPE)
 	{
 		OnEscape();
 		return true;
@@ -801,7 +777,6 @@ bool Camera3D::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFl
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the escape key in the 2D or 3D views.

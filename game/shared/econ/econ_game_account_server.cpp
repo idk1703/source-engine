@@ -15,17 +15,18 @@ using namespace GCSDK;
 //---------------------------------------------------------------------------------
 // Purpose:
 //---------------------------------------------------------------------------------
-IMPLEMENT_CLASS_MEMPOOL( CEconGameServerAccount, 100, UTLMEMORYPOOL_GROW_SLOW );
+IMPLEMENT_CLASS_MEMPOOL(CEconGameServerAccount, 100, UTLMEMORYPOOL_GROW_SLOW);
 
-void GameServerAccount_GenerateIdentityToken( char* pIdentityToken, uint32 unMaxChars )
+void GameServerAccount_GenerateIdentityToken(char *pIdentityToken, uint32 unMaxChars)
 {
-	static const char s_ValidChars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890./+!$%^-_+?<>()&~:";
+	static const char s_ValidChars[] =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890./+!$%^-_+?<>()&~:";
 	const int nLastValidIndex = ARRAYSIZE(s_ValidChars) - 2; // last = size - 1, minus another one for null terminator
 
 	// create a randomized token
-	for ( uint32 i = 0; i < unMaxChars - 1; ++i )
+	for(uint32 i = 0; i < unMaxChars - 1; ++i)
 	{
-		pIdentityToken[i] = s_ValidChars[ RandomInt( 0, nLastValidIndex ) ];
+		pIdentityToken[i] = s_ValidChars[RandomInt(0, nLastValidIndex)];
 	}
 	pIdentityToken[unMaxChars - 1] = 0;
 }
@@ -33,7 +34,7 @@ void GameServerAccount_GenerateIdentityToken( char* pIdentityToken, uint32 unMax
 //---------------------------------------------------------------------------------
 // Purpose: Selective account-level data for game servers
 //---------------------------------------------------------------------------------
-IMPLEMENT_CLASS_MEMPOOL( CEconGameAccountForGameServers, 10 * 1000, UTLMEMORYPOOL_GROW_SLOW );
+IMPLEMENT_CLASS_MEMPOOL(CEconGameAccountForGameServers, 10 * 1000, UTLMEMORYPOOL_GROW_SLOW);
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!

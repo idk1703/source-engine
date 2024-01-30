@@ -31,70 +31,70 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class CHudTeamSwitch : public CHudElement, public EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CHudTeamSwitch, EditablePanel );
+	DECLARE_CLASS_SIMPLE(CHudTeamSwitch, EditablePanel);
 
 public:
-	CHudTeamSwitch( const char *pElementName );
+	CHudTeamSwitch(const char *pElementName);
 
-	virtual void	Init( void );
-	virtual void	OnTick( void );
-	virtual void	LevelInit( void );
-	virtual void	ApplySchemeSettings( IScheme *scheme );
-	virtual bool	ShouldDraw( void );
+	virtual void Init(void);
+	virtual void OnTick(void);
+	virtual void LevelInit(void);
+	virtual void ApplySchemeSettings(IScheme *scheme);
+	virtual bool ShouldDraw(void);
 
-	virtual void	FireGameEvent( IGameEvent * event );
-	void			SetupSwitchPanel( int iNewTeam );
+	virtual void FireGameEvent(IGameEvent *event);
+	void SetupSwitchPanel(int iNewTeam);
 
 private:
-	Label			*m_pBalanceLabel;
-	float			m_flHideAt;
+	Label *m_pBalanceLabel;
+	float m_flHideAt;
 };
 
-DECLARE_HUDELEMENT( CHudTeamSwitch );
+DECLARE_HUDELEMENT(CHudTeamSwitch);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CHudTeamSwitch::CHudTeamSwitch( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTeamSwitch" )
+CHudTeamSwitch::CHudTeamSwitch(const char *pElementName) : CHudElement(pElementName), BaseClass(NULL, "HudTeamSwitch")
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	SetHiddenBits( HIDEHUD_MISCSTATUS );
+	SetHiddenBits(HIDEHUD_MISCSTATUS);
 
 	m_flHideAt = 0;
-	vgui::ivgui()->AddTickSignal( GetVPanel() );
+	vgui::ivgui()->AddTickSignal(GetVPanel());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudTeamSwitch::Init( void )
+void CHudTeamSwitch::Init(void)
 {
 	// listen for events
-	ListenForGameEvent( "teamplay_teambalanced_player" );
+	ListenForGameEvent("teamplay_teambalanced_player");
 
-	SetVisible( false );
+	SetVisible(false);
 	CHudElement::Init();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudTeamSwitch::FireGameEvent( IGameEvent * event )
+void CHudTeamSwitch::FireGameEvent(IGameEvent *event)
 {
 	const char *pEventName = event->GetName();
 
-	if ( Q_strcmp( "teamplay_teambalanced_player", pEventName ) == 0 )
+	if(Q_strcmp("teamplay_teambalanced_player", pEventName) == 0)
 	{
-		int iPlayer = event->GetInt( "player" );
-		int iNewTeam = event->GetInt( "team" );
+		int iPlayer = event->GetInt("player");
+		int iNewTeam = event->GetInt("team");
 		C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-		if ( pPlayer && iPlayer == pPlayer->entindex() )
+		if(pPlayer && iPlayer == pPlayer->entindex())
 		{
-			SetupSwitchPanel( iNewTeam );
+			SetupSwitchPanel(iNewTeam);
 			m_flHideAt = gpGlobals->curtime + 10.0;
-			SetVisible( true );
+			SetVisible(true);
 		}
 	}
 }
@@ -103,11 +103,11 @@ void CHudTeamSwitch::FireGameEvent( IGameEvent * event )
 // Purpose:
 // Input  :  -
 //-----------------------------------------------------------------------------
-void CHudTeamSwitch::OnTick( void )
+void CHudTeamSwitch::OnTick(void)
 {
-	if ( m_flHideAt && m_flHideAt < gpGlobals->curtime )
+	if(m_flHideAt && m_flHideAt < gpGlobals->curtime)
 	{
-		SetVisible( false );
+		SetVisible(false);
 		m_flHideAt = 0;
 	}
 }
@@ -115,34 +115,34 @@ void CHudTeamSwitch::OnTick( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudTeamSwitch::LevelInit( void )
+void CHudTeamSwitch::LevelInit(void)
 {
 	m_flHideAt = 0;
-	SetVisible( false );
+	SetVisible(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CHudTeamSwitch::ShouldDraw( void )
+bool CHudTeamSwitch::ShouldDraw(void)
 {
-	if ( IsTakingAFreezecamScreenshot() )
+	if(IsTakingAFreezecamScreenshot())
 		return false;
 
-	return ( IsVisible() );
+	return (IsVisible());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudTeamSwitch::ApplySchemeSettings( IScheme *pScheme )
+void CHudTeamSwitch::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudTeamSwitch.res" );
+	LoadControlSettings("resource/UI/HudTeamSwitch.res");
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_pBalanceLabel = dynamic_cast<Label *>( FindChildByName("BalanceLabel") );
+	m_pBalanceLabel = dynamic_cast<Label *>(FindChildByName("BalanceLabel"));
 }
 
 extern const char *pszTeamRoleSwitch[NUM_TEAM_ROLES];
@@ -150,27 +150,27 @@ extern const char *pszTeamRoleSwitch[NUM_TEAM_ROLES];
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CHudTeamSwitch::SetupSwitchPanel( int iNewTeam )
+void CHudTeamSwitch::SetupSwitchPanel(int iNewTeam)
 {
-	if ( m_pBalanceLabel )
+	if(m_pBalanceLabel)
 	{
-		C_TFTeam *pNewTeam = GetGlobalTFTeam( iNewTeam );
-		if ( pNewTeam )
+		C_TFTeam *pNewTeam = GetGlobalTFTeam(iNewTeam);
+		if(pNewTeam)
 		{
 			int iRole = pNewTeam->GetRole();
-			if ( iRole > 0 && iRole < NUM_TEAM_ROLES )
+			if(iRole > 0 && iRole < NUM_TEAM_ROLES)
 			{
-				m_pBalanceLabel->SetText( g_pVGuiLocalize->Find( pszTeamRoleSwitch[iRole] ) );
+				m_pBalanceLabel->SetText(g_pVGuiLocalize->Find(pszTeamRoleSwitch[iRole]));
 			}
-			else if ( iRole == 0 )
+			else if(iRole == 0)
 			{
-				if ( iNewTeam == TF_TEAM_RED )
+				if(iNewTeam == TF_TEAM_RED)
 				{
-					m_pBalanceLabel->SetText( g_pVGuiLocalize->Find( "#TF_teamswitch_red" ) );
+					m_pBalanceLabel->SetText(g_pVGuiLocalize->Find("#TF_teamswitch_red"));
 				}
 				else
 				{
-					m_pBalanceLabel->SetText( g_pVGuiLocalize->Find( "#TF_teamswitch_blue" ) );
+					m_pBalanceLabel->SetText(g_pVGuiLocalize->Find("#TF_teamswitch_blue"));
 				}
 			}
 		}

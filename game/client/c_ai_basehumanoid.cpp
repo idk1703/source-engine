@@ -165,5 +165,4 @@ void C_AI_BaseHumanoid::StandardBlendingRules( CStudioHdr *pStudioHdr, Vector po
 #endif
 }
 
-
 #endif

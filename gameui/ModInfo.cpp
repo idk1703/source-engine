@@ -5,7 +5,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #include "ModInfo.h"
 #include "KeyValues.h"
 #include "vgui_controls/Controls.h"
@@ -46,7 +45,7 @@ CModInfo::~CModInfo()
 //-----------------------------------------------------------------------------
 void CModInfo::FreeModInfo()
 {
-	if (m_pModData)
+	if(m_pModData)
 	{
 		m_pModData->deleteThis();
 		m_pModData = NULL;
@@ -87,13 +86,13 @@ const char *CModInfo::GetFallbackDir()
 //-----------------------------------------------------------------------------
 const wchar_t *CModInfo::GetGameTitle()
 {
-	if (!m_wcsGameTitle[0])
+	if(!m_wcsGameTitle[0])
 	{
 		// for some reason, the standard ILocalize::ConvertANSIToUnicode() strips off
 		// the '�' character in 'HALF-LIFE�' - so just do a straight upconvert to unicode
 		const char *title = m_pModData->GetString("title", "");
 		int i = 0;
-		for (; title[i] != 0; ++i)
+		for(; title[i] != 0; ++i)
 		{
 			m_wcsGameTitle[i] = (wchar_t)title[i];
 		}
@@ -108,13 +107,13 @@ const wchar_t *CModInfo::GetGameTitle()
 //-----------------------------------------------------------------------------
 const wchar_t *CModInfo::GetGameTitle2()
 {
-	if (!m_wcsGameTitle2[0])
+	if(!m_wcsGameTitle2[0])
 	{
 		// for some reason, the standard ILocalize::ConvertANSIToUnicode() strips off
 		// the '�' character in 'HALF-LIFE�' - so just do a straight upconvert to unicode
 		const char *title2 = m_pModData->GetString("title2", "");
 		int i = 0;
-		for (; title2[i] != 0; ++i)
+		for(; title2[i] != 0; ++i)
 		{
 			m_wcsGameTitle2[i] = (wchar_t)title2[i];
 		}
@@ -137,7 +136,7 @@ const char *CModInfo::GetGameName()
 //-----------------------------------------------------------------------------
 KeyValues *CModInfo::GetHiddenMaps()
 {
-	return m_pModData->FindKey( "hidden_maps" );
+	return m_pModData->FindKey("hidden_maps");
 }
 
 //-----------------------------------------------------------------------------
@@ -148,7 +147,6 @@ bool CModInfo::HasPortals()
 	return (stricmp(m_pModData->GetString("hasportals", "0"), "1") == 0);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
@@ -156,7 +154,6 @@ bool CModInfo::HasHDContent()
 {
 	return (stricmp(m_pModData->GetString("hashdcontent", "0"), "1") == 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
@@ -195,7 +192,7 @@ bool CModInfo::NoCrosshair()
 //-----------------------------------------------------------------------------
 bool CModInfo::AdvCrosshair()
 {
-	return ( m_pModData->GetInt( "advcrosshair" ) > 0 );
+	return (m_pModData->GetInt("advcrosshair") > 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -203,7 +200,7 @@ bool CModInfo::AdvCrosshair()
 //-----------------------------------------------------------------------------
 int CModInfo::AdvCrosshairLevel()
 {
-	return m_pModData->GetInt( "advcrosshair" );
+	return m_pModData->GetInt("advcrosshair");
 }
 
 //-----------------------------------------------------------------------------
@@ -213,16 +210,16 @@ void CModInfo::LoadCurrentGameInfo()
 {
 	// Load up gameinfo for the current mod
 	char const *filename = "gameinfo.txt";
-	m_pModData->LoadFromFile( g_pFullFileSystem, filename );
+	m_pModData->LoadFromFile(g_pFullFileSystem, filename);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: loads file from null-terminated buffer
 //-----------------------------------------------------------------------------
-void CModInfo::LoadGameInfoFromBuffer( const char *buffer )
+void CModInfo::LoadGameInfoFromBuffer(const char *buffer)
 {
 	// Load up gameinfo.txt for the current mod
-	m_pModData->LoadFromBuffer( "", buffer );
+	m_pModData->LoadFromBuffer("", buffer);
 }
 
 //-----------------------------------------------------------------------------
@@ -230,7 +227,7 @@ void CModInfo::LoadGameInfoFromBuffer( const char *buffer )
 //-----------------------------------------------------------------------------
 bool CModInfo::UseGameLogo()
 {
-	return ( Q_stricmp( m_pModData->GetString( "gamelogo", "0" ), "1" ) == 0 );
+	return (Q_stricmp(m_pModData->GetString("gamelogo", "0"), "1") == 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -238,14 +235,13 @@ bool CModInfo::UseGameLogo()
 //-----------------------------------------------------------------------------
 bool CModInfo::UseBots()
 {
-	return ( Q_stricmp( m_pModData->GetString( "bots", "0" ), "1" ) == 0 );
+	return (Q_stricmp(m_pModData->GetString("bots", "0"), "1") == 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: data accessor
 //-----------------------------------------------------------------------------
 bool CModInfo::SupportsVR()
 {
-	return (m_pModData->GetInt( "supportsvr" ) > 0);
+	return (m_pModData->GetInt("supportsvr") > 0);
 }

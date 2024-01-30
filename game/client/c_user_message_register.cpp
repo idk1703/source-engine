@@ -12,8 +12,7 @@
 
 CUserMessageRegister *CUserMessageRegister::s_pHead = NULL;
 
-
-CUserMessageRegister::CUserMessageRegister( const char *pMessageName, pfnUserMsgHook pHookFn )
+CUserMessageRegister::CUserMessageRegister(const char *pMessageName, pfnUserMsgHook pHookFn)
 {
 	m_pMessageName = pMessageName;
 	m_pHookFn = pHookFn;
@@ -23,11 +22,10 @@ CUserMessageRegister::CUserMessageRegister( const char *pMessageName, pfnUserMsg
 	s_pHead = this;
 }
 
-
 void CUserMessageRegister::RegisterAll()
 {
-	for ( CUserMessageRegister *pCur=s_pHead; pCur; pCur=pCur->m_pNext )
+	for(CUserMessageRegister *pCur = s_pHead; pCur; pCur = pCur->m_pNext)
 	{
-		usermessages->HookMessage( pCur->m_pMessageName, pCur->m_pHookFn );
+		usermessages->HookMessage(pCur->m_pMessageName, pCur->m_pHookFn);
 	}
 }

@@ -16,26 +16,21 @@
 #include <windows.h>
 #include <commctrl.h>
 
+HWND mx_CreateToolTipControl(void);
 
-
-HWND mx_CreateToolTipControl (void);
-
-
-
-void
-mxToolTip::add (mxWidget *widget, const char *text)
+void mxToolTip::add(mxWidget *widget, const char *text)
 {
-	if (!widget)
+	if(!widget)
 		return;
 
 	TOOLINFO ti;
 
-	memset (&ti, 0, sizeof (TOOLINFO));
-	ti.cbSize = sizeof (TOOLINFO);
+	memset(&ti, 0, sizeof(TOOLINFO));
+	ti.cbSize = sizeof(TOOLINFO);
 	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS;
-	ti.uId = (UINT) (HWND) widget->getHandle ();
-	ti.lpszText = (LPTSTR) text;
+	ti.uId = (UINT)(HWND)widget->getHandle();
+	ti.lpszText = (LPTSTR)text;
 
-	HWND ctrl = mx_CreateToolTipControl ();
-	SendMessage (ctrl, TTM_ADDTOOL, 0, (LPARAM) &ti);
+	HWND ctrl = mx_CreateToolTipControl();
+	SendMessage(ctrl, TTM_ADDTOOL, 0, (LPARAM)&ti);
 }

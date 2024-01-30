@@ -21,15 +21,13 @@
 
 static bool s_bInitialized = false;
 
-CPMCData::CPMCData()
-{
-}
+CPMCData::CPMCData() {}
 
-void CPMCData::InitializeOnceProgramWide( void )
+void CPMCData::InitializeOnceProgramWide(void)
 {
-#if !defined( _CERT )
+#if !defined(_CERT)
 	// Select a set of sixteen counters
-	DmPMCInstallAndStart( PMC_SETUP_FLUSHREASONS_PB0T0 );
+	DmPMCInstallAndStart(PMC_SETUP_FLUSHREASONS_PB0T0);
 	// Reset the Performance Monitor Counters in preparation for a new sampling run.
 	DmPMCResetCounters();
 #endif
@@ -43,13 +41,13 @@ bool CPMCData::IsInitialized()
 
 void CPMCData::Start()
 {
-#if !defined( _CERT )
+#if !defined(_CERT)
 	// stop the stopwatches, save off the counter, start them again.
 	DmPMCStop();
 
 	PMCState pmcstate;
 	// Get the counters.
-	DmPMCGetCounters( &pmcstate );
+	DmPMCGetCounters(&pmcstate);
 
 	// in the default state as set up by InitializeOnceProgramWide,
 	// counters 9 and 6 are L2 misses and LHS respectively
@@ -62,13 +60,13 @@ void CPMCData::Start()
 
 void CPMCData::End()
 {
-#if !defined( _CERT )
+#if !defined(_CERT)
 	DmPMCStop();
 
 	// get end-state counters
 	PMCState pmcstate;
 	// Get the counters.
-	DmPMCGetCounters( &pmcstate );
+	DmPMCGetCounters(&pmcstate);
 
 	// in the default state as set up by InitializeOnceProgramWide,
 	// counters 9 and 6 are l2 misses and LHS respectively

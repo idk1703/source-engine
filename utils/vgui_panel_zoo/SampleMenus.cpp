@@ -18,53 +18,50 @@
 
 using namespace vgui;
 
-
-class SampleMenus: public DemoPage
+class SampleMenus : public DemoPage
 {
-	public:
-		SampleMenus(Panel *parent, const char *name);
-		~SampleMenus();
-		void InitMenus();
-		void OnCommand( const char *command );
+public:
+	SampleMenus(Panel *parent, const char *name);
+	~SampleMenus();
+	void InitMenus();
+	void OnCommand(const char *command);
 
 private:
-		// Menu that opens when button is pressed
-		Menu *m_pMenu;
+	// Menu that opens when button is pressed
+	Menu *m_pMenu;
 
-		Menu *m_pOuterMenu;
-		Menu *m_pInnerMenu;
-		Menu *m_pInnerMenu2;
+	Menu *m_pOuterMenu;
+	Menu *m_pInnerMenu;
+	Menu *m_pInnerMenu2;
 
-		Menu *m_pScrollMenu;
+	Menu *m_pScrollMenu;
 
-		// Button to trigger the menu
-		MenuButton *m_pMenuButton;
-		MenuButton *m_pOuterMenuButton;
-		MenuButton *m_pScrollMenuButton;
+	// Button to trigger the menu
+	MenuButton *m_pMenuButton;
+	MenuButton *m_pOuterMenuButton;
+	MenuButton *m_pScrollMenuButton;
 
-		// These are the same menus as above with checkable menu items in them
-		MenuButton *m_pMenuButton2;
-		MenuButton *m_pOuterMenuButton2;
-		MenuButton *m_pScrollMenuButton2;
+	// These are the same menus as above with checkable menu items in them
+	MenuButton *m_pMenuButton2;
+	MenuButton *m_pOuterMenuButton2;
+	MenuButton *m_pScrollMenuButton2;
 
-		Menu *m_pMenu2;
+	Menu *m_pMenu2;
 
-		Menu *m_pOuterMenu2;
-		Menu *m_pInnerMenu_2;
-		Menu *m_pInnerMenu22;
+	Menu *m_pOuterMenu2;
+	Menu *m_pInnerMenu_2;
+	Menu *m_pInnerMenu22;
 
-		Menu *m_pScrollMenu2;
+	Menu *m_pScrollMenu2;
 
+	MenuButton *m_pMenuButton3;
+	Menu *m_pMenu3;
 
-		MenuButton *m_pMenuButton3;
-		Menu *m_pMenu3;
+	MenuButton *m_pMenuButton4;
+	Menu *m_pMenu4;
 
-		MenuButton *m_pMenuButton4;
-		Menu *m_pMenu4;
-
-		MenuButton *m_pMenuButton5;
-		Menu *m_pMenu5;
-
+	MenuButton *m_pMenuButton5;
+	Menu *m_pMenu5;
 };
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -89,10 +86,8 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenuButton->GetSize(wide, tall);
 	m_pMenu->SetFixedWidth(wide);
 
-
 	// Cascading menu
 	InitMenus();
-
 
 	// Scrolling menu
 	m_pScrollMenuButton = new MenuButton(this, "AMenuButton", "Scrolling");
@@ -113,8 +108,6 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pScrollMenu->SetVisible(false);
 	m_pScrollMenuButton->SetMenu(m_pScrollMenu);
 
-
-
 	// A fixed width menu with checkable menu items and items with names longer than the menu width
 	m_pMenuButton2 = new MenuButton(this, "AMenuButton", "A Check menu");
 	m_pMenuButton2->GetContentSize(wide, tall);
@@ -123,8 +116,8 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	// Position the menu button in the window.
 	m_pMenuButton2->SetPos(95, 85);
 	m_pMenu2 = new Menu(m_pMenuButton2, "AMenu");
-	m_pMenu2->AddCheckableMenuItem("Menu Item Long Long Name", "junk", this );
-	m_pMenu2->AddCheckableMenuItem("Another Choice", "junk", this );
+	m_pMenu2->AddCheckableMenuItem("Menu Item Long Long Name", "junk", this);
+	m_pMenu2->AddCheckableMenuItem("Another Choice", "junk", this);
 	// last item not checkable for testing
 	m_pMenu2->AddMenuItem("Menu Item", "junk", this);
 	m_pMenu2->SetVisible(false);
@@ -156,25 +149,23 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pScrollMenu2->SetVisible(false);
 	m_pScrollMenuButton2->SetMenu(m_pScrollMenu2);
 	// Lets check off some stuff
-	m_pMenu2->SetMenuItemChecked( 1, true );
-	m_pScrollMenu2->SetMenuItemChecked( 0, true );
-	m_pScrollMenu2->SetMenuItemChecked( 2, true );
-	m_pScrollMenu2->SetMenuItemChecked( 3, true );
+	m_pMenu2->SetMenuItemChecked(1, true);
+	m_pScrollMenu2->SetMenuItemChecked(0, true);
+	m_pScrollMenu2->SetMenuItemChecked(2, true);
+	m_pScrollMenu2->SetMenuItemChecked(3, true);
 
-
-	Label *buttonLabel = new Label (this, "buttonLabel", "These are the same menus as above with checkable/elipsis menuitems");
+	Label *buttonLabel =
+		new Label(this, "buttonLabel", "These are the same menus as above with checkable/elipsis menuitems");
 	buttonLabel->SetPos(95, 60);
 	buttonLabel->SizeToContents();
 
-
 	// A button to toggle a check setting in a menu
-	Button *toggleMenuCheckButton =  new Button (this, "Toggle Menu Check", "Toggle Simple Menu Check");
+	Button *toggleMenuCheckButton = new Button(this, "Toggle Menu Check", "Toggle Simple Menu Check");
 	toggleMenuCheckButton->SetCommand("Check");
 	toggleMenuCheckButton->AddActionSignalTarget(this);
 	toggleMenuCheckButton->GetContentSize(wide, tall);
 	toggleMenuCheckButton->SetSize(wide + Label::Content, tall + Label::Content);
-	toggleMenuCheckButton->SetPos( 95, 220);
-
+	toggleMenuCheckButton->SetPos(95, 220);
 
 	// A non fixed width menu with checkable menu items
 	m_pMenuButton3 = new MenuButton(this, "AMenuButton", "A menu");
@@ -189,7 +180,6 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenu3->SetVisible(false);
 	m_pMenuButton3->SetMenu(m_pMenu3);
 
-
 	// A non fixed width menu
 	m_pMenuButton4 = new MenuButton(this, "AMenuButton", "A menu");
 	m_pMenuButton4->GetContentSize(wide, tall);
@@ -202,7 +192,6 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenu4->AddMenuItem("Menu Item", "junk", this);
 	m_pMenu4->SetVisible(false);
 	m_pMenuButton4->SetMenu(m_pMenu4);
-
 
 	// A non fixed width menu with a minimum width
 	m_pMenuButton5 = new MenuButton(this, "AMenuButton", "A Minimum Width Menu");
@@ -221,9 +210,7 @@ SampleMenus::SampleMenus(Panel *parent, const char *name) : DemoPage(parent, nam
 	m_pMenuButton5->GetSize(wide, tall);
 	m_pMenu5->SetMinimumWidth(wide);
 	m_pMenuButton5->SetMenu(m_pMenu5);
-
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Create cascading menus.
@@ -238,7 +225,6 @@ void SampleMenus::InitMenus()
 	int wide, tall;
 	m_pOuterMenuButton->GetContentSize(wide, tall);
 	m_pOuterMenuButton->SetSize(wide + Label::Content, tall + Label::Content);
-
 
 	// Create the Menu to go with it.
 	m_pOuterMenu = new Menu(m_pOuterMenuButton, "OuterMenu");
@@ -277,7 +263,6 @@ void SampleMenus::InitMenus()
 	// Add this cascading menu to the top menu as a manu item.
 	m_pOuterMenu->AddCascadingMenuItem("Cascading Choice", this, m_pInnerMenu2);
 
-
 	// Make one of the items in the menu disabled.
 	m_pOuterMenu->AddMenuItem("Normal Menuitem", "junk", this);
 	m_pOuterMenu->AddMenuItem("Disabled Menuitem", "Disabled", this);
@@ -287,11 +272,6 @@ void SampleMenus::InitMenus()
 	menuItem->SetEnabled(false);
 
 	m_pOuterMenu->AddMenuItem("Normal Menuitem", "junk", this);
-
-
-
-
-
 
 	// A drop down menu button for the top most menu
 	m_pOuterMenuButton2 = new MenuButton(this, "OuterMenu", "Cascading");
@@ -337,7 +317,6 @@ void SampleMenus::InitMenus()
 	// Add this cascading menu to the top menu as a manu item.
 	m_pOuterMenu2->AddCascadingMenuItem("Cascading Choice", this, m_pInnerMenu22);
 
-
 	// Make one of the items in the menu disabled.
 	m_pOuterMenu2->AddMenuItem("Normal Menuitem", "junk", this);
 	// checkable so we can see what disabled checkable items look like
@@ -351,27 +330,25 @@ void SampleMenus::InitMenus()
 	m_pOuterMenu2->AddCheckableMenuItem("Normal Checkable", "junk", this);
 
 	// Lets check off some stuff for starters
-	m_pOuterMenu2->SetMenuItemChecked( 3, true );
-	m_pOuterMenu2->SetMenuItemChecked( 5, true );
-	//m_pInnerMenu_2->SetMenuItemChecked( 0, true );
-	m_pInnerMenu22->SetMenuItemChecked( 0, true );
-	m_pInnerMenu22->SetMenuItemChecked( 1, true );
-	m_pInnerMenu22->SetMenuItemChecked( 2, true );
+	m_pOuterMenu2->SetMenuItemChecked(3, true);
+	m_pOuterMenu2->SetMenuItemChecked(5, true);
+	// m_pInnerMenu_2->SetMenuItemChecked( 0, true );
+	m_pInnerMenu22->SetMenuItemChecked(0, true);
+	m_pInnerMenu22->SetMenuItemChecked(1, true);
+	m_pInnerMenu22->SetMenuItemChecked(2, true);
 	// another way of checking a menu item
-	m_pInnerMenu22->GetMenuItem(3)->SetChecked( true );
-
-
+	m_pInnerMenu22->GetMenuItem(3)->SetChecked(true);
 }
 
-void SampleMenus::OnCommand( const char *command )
+void SampleMenus::OnCommand(const char *command)
 {
 	// Hitting the button will toggle the checking and unchecking
 	// of the first item of menu3
-	if (!stricmp(command, "Check"))
+	if(!stricmp(command, "Check"))
 	{
-		if (!m_pMenu3->GetMenuItem(0)->IsChecked())
+		if(!m_pMenu3->GetMenuItem(0)->IsChecked())
 			// check the first menu item in the first menu
-			m_pMenu3->SetMenuItemChecked( 0, true );
+			m_pMenu3->SetMenuItemChecked(0, true);
 		else
 			// another way of setting the checked state.
 			m_pMenu3->GetMenuItem(0)->SetChecked(false);
@@ -383,13 +360,9 @@ void SampleMenus::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleMenus::~SampleMenus()
-{
-}
+SampleMenus::~SampleMenus() {}
 
-
-
-Panel* SampleMenus_Create(Panel *parent)
+Panel *SampleMenus_Create(Panel *parent)
 {
 	return new SampleMenus(parent, "Menus");
 }

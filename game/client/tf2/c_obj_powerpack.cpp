@@ -17,72 +17,77 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define NUM_POWERPACK_GLOWS		6
+#define NUM_POWERPACK_GLOWS 6
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectPowerPack : public C_BaseObject
 {
-	DECLARE_CLASS( C_ObjectPowerPack, C_BaseObject );
+	DECLARE_CLASS(C_ObjectPowerPack, C_BaseObject);
+
 public:
 	DECLARE_CLIENTCLASS();
 
 	C_ObjectPowerPack();
 	~C_ObjectPowerPack();
-	int SocketsLeft() const { return (MAX_OBJECTS_PER_PACK - m_iObjectsAttached); }
+	int SocketsLeft() const
+	{
+		return (MAX_OBJECTS_PER_PACK - m_iObjectsAttached);
+	}
 
 	// Since we have material proxies to show building amount, don't offset origin
-	virtual bool	OffsetObjectOrigin( Vector& origin )
+	virtual bool OffsetObjectOrigin(Vector &origin)
 	{
 		return false;
 	}
 
-	virtual void	OnGoActive( void );
-	virtual void	OnGoInactive( void );
-	void			RemoveGlows( void );
-	virtual void	ClientThink( void );
-	virtual int		DrawModel( int flags );
+	virtual void OnGoActive(void);
+	virtual void OnGoInactive(void);
+	void RemoveGlows(void);
+	virtual void ClientThink(void);
+	virtual int DrawModel(int flags);
 
 private:
-	int					m_iObjectsAttached;
-	int					m_iGlowModelIndex;
-	C_LocalTempEntity	*m_pGlowSprites[ NUM_POWERPACK_GLOWS ];
+	int m_iObjectsAttached;
+	int m_iGlowModelIndex;
+	C_LocalTempEntity *m_pGlowSprites[NUM_POWERPACK_GLOWS];
 
 	// Jacob's laddder
-	Beam_t				*m_pJacobsLadderBeam;
-	float				m_flJacobsLeftPoint;
-	float				m_flJacobsRightPoint;
-	Vector				m_vecJacobsStart;
-	Vector				m_vecJacobsEnd;
-	CMaterialReference	m_hJacobsPointMaterial;
+	Beam_t *m_pJacobsLadderBeam;
+	float m_flJacobsLeftPoint;
+	float m_flJacobsRightPoint;
+	Vector m_vecJacobsStart;
+	Vector m_vecJacobsEnd;
+	CMaterialReference m_hJacobsPointMaterial;
 
 private:
-	C_ObjectPowerPack( const C_ObjectPowerPack & ); // not defined, not accessible
+	C_ObjectPowerPack(const C_ObjectPowerPack &); // not defined, not accessible
 };
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectPowerPack, DT_ObjectPowerPack, CObjectPowerPack)
-	RecvPropInt( RECVINFO(m_iObjectsAttached) ),
-END_RECV_TABLE()
+RecvPropInt(RECVINFO(m_iObjectsAttached)),
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-C_ObjectPowerPack::C_ObjectPowerPack()
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_ObjectPowerPack::C_ObjectPowerPack()
 {
-	for ( int i = 0; i < NUM_POWERPACK_GLOWS; i++ )
+	for(int i = 0; i < NUM_POWERPACK_GLOWS; i++)
 	{
 		m_pGlowSprites[i] = NULL;
 	}
 
-	m_iGlowModelIndex = PrecacheModel( "effects/human_object_glow.vmt" );
+	m_iGlowModelIndex = PrecacheModel("effects/human_object_glow.vmt");
 	m_pJacobsLadderBeam = NULL;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_ObjectPowerPack::~C_ObjectPowerPack( void )
+C_ObjectPowerPack::~C_ObjectPowerPack(void)
 {
 	RemoveGlows();
 }
@@ -90,32 +95,34 @@ C_ObjectPowerPack::~C_ObjectPowerPack( void )
 //-----------------------------------------------------------------------------
 // Purpose: We've just gone active
 //-----------------------------------------------------------------------------
-void C_ObjectPowerPack::OnGoActive( void )
+void C_ObjectPowerPack::OnGoActive(void)
 {
 	// Turn on our glows
-	for ( int i = 0; i < NUM_POWERPACK_GLOWS; i++ )
+	for(int i = 0; i < NUM_POWERPACK_GLOWS; i++)
 	{
 		// Find the attachment point
-		int iAttachment = LookupAttachment( VarArgs("glow_%d",(i+1)) );
+		int iAttachment = LookupAttachment(VarArgs("glow_%d", (i + 1)));
 		Vector vecOrigin;
 		QAngle vecAngles;
-		if ( GetAttachment( iAttachment, vecOrigin, vecAngles ) )
+		if(GetAttachment(iAttachment, vecOrigin, vecAngles))
 		{
 			Vector vecForward;
-			AngleVectors( vecAngles, &vecForward );
-			m_pGlowSprites[i] = tempents->TempSprite( vecOrigin, vec3_origin, 0.35, m_iGlowModelIndex, kRenderTransAdd, 0, 0.5, 1, FTENT_PERSIST | FTENT_NEVERDIE | FTENT_BEOCCLUDED, vecForward );
+			AngleVectors(vecAngles, &vecForward);
+			m_pGlowSprites[i] =
+				tempents->TempSprite(vecOrigin, vec3_origin, 0.35, m_iGlowModelIndex, kRenderTransAdd, 0, 0.5, 1,
+									 FTENT_PERSIST | FTENT_NEVERDIE | FTENT_BEOCCLUDED, vecForward);
 		}
 	}
 
 	m_flJacobsLeftPoint = 0;
 	m_flJacobsRightPoint = 0;
-	m_hJacobsPointMaterial.Init( "sprites/blueflare2", TEXTURE_GROUP_CLIENT_EFFECTS );
+	m_hJacobsPointMaterial.Init("sprites/blueflare2", TEXTURE_GROUP_CLIENT_EFFECTS);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: We've just gone inactive
 //-----------------------------------------------------------------------------
-void C_ObjectPowerPack::OnGoInactive( void )
+void C_ObjectPowerPack::OnGoInactive(void)
 {
 	// Turn off our glows
 	RemoveGlows();
@@ -124,11 +131,11 @@ void C_ObjectPowerPack::OnGoInactive( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectPowerPack::RemoveGlows( void )
+void C_ObjectPowerPack::RemoveGlows(void)
 {
-	for ( int i = 0; i < NUM_POWERPACK_GLOWS; i++ )
+	for(int i = 0; i < NUM_POWERPACK_GLOWS; i++)
 	{
-		if ( m_pGlowSprites[i] )
+		if(m_pGlowSprites[i])
 		{
 			m_pGlowSprites[i]->die = 0;
 			m_pGlowSprites[i] = NULL;
@@ -136,7 +143,7 @@ void C_ObjectPowerPack::RemoveGlows( void )
 	}
 
 	// Stop the jacob's ladder
-	if ( m_pJacobsLadderBeam )
+	if(m_pJacobsLadderBeam)
 	{
 		m_pJacobsLadderBeam->flags &= ~FBEAM_FOREVER;
 		m_pJacobsLadderBeam->die = gpGlobals->curtime;
@@ -147,10 +154,10 @@ void C_ObjectPowerPack::RemoveGlows( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectPowerPack::ClientThink( void )
+void C_ObjectPowerPack::ClientThink(void)
 {
 	// Create the jacob's ladder
-	if ( !m_pJacobsLadderBeam )
+	if(!m_pJacobsLadderBeam)
 	{
 		BeamInfo_t beamInfo;
 		beamInfo.m_vecStart.Init();
@@ -171,7 +178,7 @@ void C_ObjectPowerPack::ClientThink( void )
 		beamInfo.m_flBlue = 127.0f;
 		beamInfo.m_nSegments = 5;
 		beamInfo.m_bRenderable = true;
-		m_pJacobsLadderBeam = beams->CreateBeamPoints( beamInfo );
+		m_pJacobsLadderBeam = beams->CreateBeamPoints(beamInfo);
 	}
 
 	// Update the position of the jacob's ladder
@@ -189,33 +196,33 @@ void C_ObjectPowerPack::ClientThink( void )
 	// Tesla Effect
 	Vector vecRightTop, vecRightBottom;
 	Vector vecLeftTop, vecLeftBottom;
-	iAttachment = LookupAttachment( "Tesla_ll" );
-	GetAttachment( iAttachment, vecLeftBottom, vecAngle );
-	iAttachment = LookupAttachment( "Tesla_ul" );
-	GetAttachment( iAttachment, vecLeftTop, vecAngle );
-	iAttachment = LookupAttachment( "Tesla_lr" );
-	GetAttachment( iAttachment, vecRightBottom, vecAngle );
-	iAttachment = LookupAttachment( "Tesla_ur" );
-	GetAttachment( iAttachment, vecRightTop, vecAngle );
+	iAttachment = LookupAttachment("Tesla_ll");
+	GetAttachment(iAttachment, vecLeftBottom, vecAngle);
+	iAttachment = LookupAttachment("Tesla_ul");
+	GetAttachment(iAttachment, vecLeftTop, vecAngle);
+	iAttachment = LookupAttachment("Tesla_lr");
+	GetAttachment(iAttachment, vecRightBottom, vecAngle);
+	iAttachment = LookupAttachment("Tesla_ur");
+	GetAttachment(iAttachment, vecRightTop, vecAngle);
 
 	float flSpeed = 0.02;
 
-	m_flJacobsLeftPoint += random->RandomFloat( flSpeed * 0.25, flSpeed * 2);
-	m_flJacobsRightPoint += random->RandomFloat( flSpeed * 0.25, flSpeed * 2);
+	m_flJacobsLeftPoint += random->RandomFloat(flSpeed * 0.25, flSpeed * 2);
+	m_flJacobsRightPoint += random->RandomFloat(flSpeed * 0.25, flSpeed * 2);
 
 	// If they've both hit the end, break the ladder
-	if ( m_flJacobsLeftPoint >= 1.0f && m_flJacobsRightPoint >= 1.0f )
+	if(m_flJacobsLeftPoint >= 1.0f && m_flJacobsRightPoint >= 1.0f)
 	{
 		// Snap!
 		m_flJacobsLeftPoint = 0.0f;
 		m_flJacobsRightPoint = 0.0f;
 	}
-	else if ( m_flJacobsLeftPoint > 1.0f )
+	else if(m_flJacobsLeftPoint > 1.0f)
 	{
 		// Only the left point's made it
 		m_flJacobsLeftPoint = 1.0f;
 	}
-	else if ( m_flJacobsRightPoint > 1.0f )
+	else if(m_flJacobsRightPoint > 1.0f)
 	{
 		// Only the right point's made it
 		m_flJacobsRightPoint = 1.0f;
@@ -223,29 +230,29 @@ void C_ObjectPowerPack::ClientThink( void )
 
 	Vector vecLeft = vecLeftTop - vecLeftBottom;
 	Vector vecRight = vecRightTop - vecRightBottom;
-	m_vecJacobsStart = vecLeftBottom + ( m_flJacobsLeftPoint * vecLeft );
-	m_vecJacobsEnd = vecRightBottom + ( m_flJacobsRightPoint * vecRight );
+	m_vecJacobsStart = vecLeftBottom + (m_flJacobsLeftPoint * vecLeft);
+	m_vecJacobsEnd = vecRightBottom + (m_flJacobsRightPoint * vecRight);
 
 	beamInfo.m_vecStart = m_vecJacobsStart;
 	beamInfo.m_vecEnd = m_vecJacobsEnd;
 	beamInfo.m_flRed = color.r;
 	beamInfo.m_flGreen = color.g;
 	beamInfo.m_flBlue = color.b;
-	beams->UpdateBeamInfo( m_pJacobsLadderBeam, beamInfo );
+	beams->UpdateBeamInfo(m_pJacobsLadderBeam, beamInfo);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int C_ObjectPowerPack::DrawModel( int flags )
+int C_ObjectPowerPack::DrawModel(int flags)
 {
-	if ( BaseClass::DrawModel( flags ) )
+	if(BaseClass::DrawModel(flags))
 	{
-		if ( ShouldBeActive() )
+		if(ShouldBeActive())
 		{
 			// Get the distance to the view
 			float flDistance = (GetAbsOrigin() - MainViewOrigin()).LengthSqr();
-			if ( flDistance < (1024 * 1024) )
+			if(flDistance < (1024 * 1024))
 			{
 				// Draw a sprite at the tips.
 				color32 color;
@@ -254,9 +261,9 @@ int C_ObjectPowerPack::DrawModel( int flags )
 				color.b = 255;
 				color.a = 255;
 				float flSize = 25.0f;
-				materials->Bind( m_hJacobsPointMaterial, this );
-				DrawSprite( m_vecJacobsStart, flSize, flSize, color );
-				DrawSprite( m_vecJacobsEnd, flSize, flSize, color );
+				materials->Bind(m_hJacobsPointMaterial, this);
+				DrawSprite(m_vecJacobsStart, flSize, flSize, color);
+				DrawSprite(m_vecJacobsEnd, flSize, flSize, color);
 			}
 		}
 
@@ -271,43 +278,39 @@ int C_ObjectPowerPack::DrawModel( int flags )
 //-----------------------------------------------------------------------------
 class CPowerPackControlPanel : public CObjectControlPanel
 {
-	DECLARE_CLASS( CPowerPackControlPanel, CObjectControlPanel );
+	DECLARE_CLASS(CPowerPackControlPanel, CObjectControlPanel);
 
 public:
-	CPowerPackControlPanel( vgui::Panel *parent, const char *panelName );
-	virtual bool Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData );
+	CPowerPackControlPanel(vgui::Panel *parent, const char *panelName);
+	virtual bool Init(KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData);
 	virtual void OnTick();
 
 private:
 	vgui::Label *m_pSocketsLabel;
 };
 
-
-DECLARE_VGUI_SCREEN_FACTORY( CPowerPackControlPanel, "powerpack_control_panel" );
-
+DECLARE_VGUI_SCREEN_FACTORY(CPowerPackControlPanel, "powerpack_control_panel");
 
 //-----------------------------------------------------------------------------
 // Constructor:
 //-----------------------------------------------------------------------------
-CPowerPackControlPanel::CPowerPackControlPanel( vgui::Panel *parent, const char *panelName )
-	: BaseClass( parent, "CPowerPackControlPanel" )
+CPowerPackControlPanel::CPowerPackControlPanel(vgui::Panel *parent, const char *panelName)
+	: BaseClass(parent, "CPowerPackControlPanel")
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Initialization
 //-----------------------------------------------------------------------------
-bool CPowerPackControlPanel::Init( KeyValues* pKeyValues, VGuiScreenInitData_t* pInitData )
+bool CPowerPackControlPanel::Init(KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData)
 {
-	m_pSocketsLabel = new vgui::Label( GetActivePanel(), "SocketReadout", "" );
+	m_pSocketsLabel = new vgui::Label(GetActivePanel(), "SocketReadout", "");
 
-	if (!BaseClass::Init(pKeyValues, pInitData))
+	if(!BaseClass::Init(pKeyValues, pInitData))
 		return false;
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Frame-based update
@@ -317,22 +320,22 @@ void CPowerPackControlPanel::OnTick()
 	BaseClass::OnTick();
 
 	C_BaseObject *pObj = GetOwningObject();
-	if (!pObj)
+	if(!pObj)
 		return;
 
-	Assert( dynamic_cast<C_ObjectPowerPack*>(pObj) );
-	C_ObjectPowerPack *pPowerPack = static_cast<C_ObjectPowerPack*>(pObj);
+	Assert(dynamic_cast<C_ObjectPowerPack *>(pObj));
+	C_ObjectPowerPack *pPowerPack = static_cast<C_ObjectPowerPack *>(pObj);
 
 	char buf[256];
 	int nSocketsLeft = pPowerPack->SocketsLeft();
-	if (nSocketsLeft > 0)
+	if(nSocketsLeft > 0)
 	{
-		Q_snprintf( buf, sizeof( buf ), "%d sockets left", pPowerPack->SocketsLeft() );
+		Q_snprintf(buf, sizeof(buf), "%d sockets left", pPowerPack->SocketsLeft());
 	}
 	else
 	{
-		Q_strncpy( buf, "No sockets left", sizeof( buf ) );
+		Q_strncpy(buf, "No sockets left", sizeof(buf));
 	}
 
-	m_pSocketsLabel->SetText( buf );
+	m_pSocketsLabel->SetText(buf);
 }

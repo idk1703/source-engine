@@ -2,7 +2,7 @@
 //
 //=======================================================================================//
 
-#if defined( REPLAY_ENABLED )
+#if defined(REPLAY_ENABLED)
 
 #include "replaydemoplayer.h"
 #include "replay/ireplaymoviemanager.h"
@@ -37,21 +37,22 @@ IDemoPlayer *g_pReplayDemoPlayer = &s_ReplayDemoPlayer;
 
 //----------------------------------------------------------------------------------------
 
-ConVar replay_ignorereplayticks( "replay_ignorereplayticks", "0" );
+ConVar replay_ignorereplayticks("replay_ignorereplayticks", "0");
 
 //----------------------------------------------------------------------------------------
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CReplayDemoPlayer, IReplayDemoPlayer, INTERFACEVERSION_REPLAYDEMOPLAYER, s_ReplayDemoPlayer );
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CReplayDemoPlayer, IReplayDemoPlayer, INTERFACEVERSION_REPLAYDEMOPLAYER,
+								  s_ReplayDemoPlayer);
 
 //----------------------------------------------------------------------------------------
 
 CReplayDemoPlayer::CReplayDemoPlayer()
-:	m_pMovie( NULL ),
-	m_nCurReplayIndex( 0 ),
-	m_flStartRenderTime( 0.0f ),
-	m_bInStartPlayback( false ),
-	m_bStopCommandEncountered( false ),
-	m_bFullSignonStateReached( false )
+	: m_pMovie(NULL),
+	  m_nCurReplayIndex(0),
+	  m_flStartRenderTime(0.0f),
+	  m_bInStartPlayback(false),
+	  m_bStopCommandEncountered(false),
+	  m_bFullSignonStateReached(false)
 {
 }
 
@@ -60,11 +61,11 @@ void CReplayDemoPlayer::ClearReplayList()
 	m_vecReplaysToPlay.PurgeAndDeleteElements();
 }
 
-void CReplayDemoPlayer::AddReplayToList( ReplayHandle_t hReplay, int iPerformance )
+void CReplayDemoPlayer::AddReplayToList(ReplayHandle_t hReplay, int iPerformance)
 {
 	// Make sure the replay handle's OK
-	CReplay *pReplay = g_pReplayManager->GetReplay( hReplay );
-	if ( !pReplay )
+	CReplay *pReplay = g_pReplayManager->GetReplay(hReplay);
+	if(!pReplay)
 		return;
 
 	// Create new info
@@ -78,77 +79,77 @@ void CReplayDemoPlayer::AddReplayToList( ReplayHandle_t hReplay, int iPerformanc
 	pNewPlaybackInfo->m_nStartTick = pReplay->m_nSpawnTick;
 	pNewPlaybackInfo->m_nEndTick = -1;
 
-	const int nLengthInTicks = TIME_TO_TICKS( pReplay->m_flLength );
-	if ( nLengthInTicks > 0 )
+	const int nLengthInTicks = TIME_TO_TICKS(pReplay->m_flLength);
+	if(nLengthInTicks > 0)
 	{
 		pNewPlaybackInfo->m_nEndTick = pReplay->m_nSpawnTick + nLengthInTicks;
 	}
 
 	// If a performance was specified, override ticks as appropriate
-	if ( iPerformance >= 0 )
+	if(iPerformance >= 0)
 	{
 		// Get the performance from the replay
-		const CReplayPerformance *pPerformance = pReplay->GetPerformance( iPerformance );
-		if ( pPerformance->m_nTickIn >= 0 )
+		const CReplayPerformance *pPerformance = pReplay->GetPerformance(iPerformance);
+		if(pPerformance->m_nTickIn >= 0)
 		{
 			pNewPlaybackInfo->m_nStartTick = pPerformance->m_nTickIn;
 		}
-		if ( pPerformance->m_nTickOut >= 0 )
+		if(pPerformance->m_nTickOut >= 0)
 		{
 			pNewPlaybackInfo->m_nEndTick = pPerformance->m_nTickOut;
 		}
 	}
 
 	// Cache
-	m_vecReplaysToPlay.AddToTail( pNewPlaybackInfo );
+	m_vecReplaysToPlay.AddToTail(pNewPlaybackInfo);
 }
 
 CReplay *CReplayDemoPlayer::GetCurrentReplay()
 {
 	PlaybackInfo_t *pCurrentPlaybackInfo = GetCurrentPlaybackInfo();
-	if ( !pCurrentPlaybackInfo )
+	if(!pCurrentPlaybackInfo)
 		return NULL;
 
-	return g_pReplayManager->GetReplay( pCurrentPlaybackInfo->m_hReplay );
+	return g_pReplayManager->GetReplay(pCurrentPlaybackInfo->m_hReplay);
 }
 
 const CReplay *CReplayDemoPlayer::GetCurrentReplay() const
 {
-	return const_cast< CReplayDemoPlayer * >( this )->GetCurrentReplay();
+	return const_cast<CReplayDemoPlayer *>(this)->GetCurrentReplay();
 }
 
 CReplayPerformance *CReplayDemoPlayer::GetCurrentPerformance()
 {
 	const PlaybackInfo_t *pCurrentPlaybackInfo = GetCurrentPlaybackInfo();
-	if ( !pCurrentPlaybackInfo )
+	if(!pCurrentPlaybackInfo)
 		return NULL;
 
 	CReplay *pReplay = GetCurrentReplay();
-	if ( !pReplay )
+	if(!pReplay)
 		return NULL;
 
-	if ( pCurrentPlaybackInfo->m_iPerformance < 0 )
+	if(pCurrentPlaybackInfo->m_iPerformance < 0)
 		return NULL;
 
-	return pReplay->GetPerformance( pCurrentPlaybackInfo->m_iPerformance );
+	return pReplay->GetPerformance(pCurrentPlaybackInfo->m_iPerformance);
 }
 
 CReplayDemoPlayer::PlaybackInfo_t *CReplayDemoPlayer::GetCurrentPlaybackInfo()
 {
-	if ( m_vecReplaysToPlay.Count() == 0 )
+	if(m_vecReplaysToPlay.Count() == 0)
 		return NULL;
 
-	return m_vecReplaysToPlay[ m_nCurReplayIndex ];
+	return m_vecReplaysToPlay[m_nCurReplayIndex];
 }
 
 const CReplayDemoPlayer::PlaybackInfo_t *CReplayDemoPlayer::GetCurrentPlaybackInfo() const
 {
-	return const_cast< CReplayDemoPlayer * >( this )->GetCurrentPlaybackInfo();
+	return const_cast<CReplayDemoPlayer *>(this)->GetCurrentPlaybackInfo();
 }
 
 void CReplayDemoPlayer::PauseReplay()
 {
-	PausePlayback( -1.0f );
+	PausePlayback(-1.0f);
 }
 
 bool CReplayDemoPlayer::IsReplayPaused()
@@ -166,9 +167,9 @@ void CReplayDemoPlayer::OnSignonStateFull()
 	m_bFullSignonStateReached = true;
 }
 
-netpacket_t *CReplayDemoPlayer::ReadPacket( void )
+netpacket_t *CReplayDemoPlayer::ReadPacket(void)
 {
-	if ( !m_bStopCommandEncountered )
+	if(!m_bStopCommandEncountered)
 	{
 		return BaseClass::ReadPacket();
 	}
@@ -178,7 +179,7 @@ netpacket_t *CReplayDemoPlayer::ReadPacket( void )
 
 float CReplayDemoPlayer::GetPlaybackTimeScale()
 {
-	if ( g_pReplayPerformanceController )
+	if(g_pReplayPerformanceController)
 	{
 		return g_pReplayPerformanceController->GetPlaybackTimeScale();
 	}
@@ -188,39 +189,39 @@ float CReplayDemoPlayer::GetPlaybackTimeScale()
 
 void CReplayDemoPlayer::OnStopCommand()
 {
-	if ( m_bStopCommandEncountered )
+	if(m_bStopCommandEncountered)
 		return;
 
 	m_bStopCommandEncountered = true;
 
-	if ( !g_pClientReplay->OnEndOfReplayReached() )
+	if(!g_pClientReplay->OnEndOfReplayReached())
 	{
 		BaseClass::OnStopCommand();
 	}
 }
 
-bool CReplayDemoPlayer::StartPlayback( const char *pFilename, bool bAsTimeDemo )
+bool CReplayDemoPlayer::StartPlayback(const char *pFilename, bool bAsTimeDemo)
 {
-	if ( !Replay_IsSupportedModAndPlatform() )
+	if(!Replay_IsSupportedModAndPlatform())
 		return false;
 
-	CInStartPlaybackGuard InStartPlaybackGuard( m_bInStartPlayback );
+	CInStartPlaybackGuard InStartPlaybackGuard(m_bInStartPlayback);
 
 	const PlaybackInfo_t *pPlaybackInfo = GetCurrentPlaybackInfo();
-	if ( !pPlaybackInfo )
+	if(!pPlaybackInfo)
 		return false;
 
 	// always display progress bar to ensure load screen background is redraw
 	EngineVGui()->EnabledProgressBarForNextLoad();
 
-	if ( !BaseClass::StartPlayback( pFilename, bAsTimeDemo ) )
+	if(!BaseClass::StartPlayback(pFilename, bAsTimeDemo))
 	{
-		DisplayFailedToPlayMsg( pPlaybackInfo->m_iPerformance );
+		DisplayFailedToPlayMsg(pPlaybackInfo->m_iPerformance);
 		return false;
 	}
 
 	CReplay *pReplay = GetCurrentReplay();
-	if ( !pReplay )
+	if(!pReplay)
 		return false;
 
 	// Set this flag so we can detect whether the replay made it all the way to full signon state,
@@ -237,16 +238,16 @@ bool CReplayDemoPlayer::StartPlayback( const char *pFilename, bool bAsTimeDemo )
 	g_pReplayMovieManager->ClearRenderCancelledFlag();
 
 	// Setup playback timeframe
-	if ( pPlaybackInfo->m_nStartTick >= 0 && !replay_ignorereplayticks.GetBool() )
+	if(pPlaybackInfo->m_nStartTick >= 0 && !replay_ignorereplayticks.GetBool())
 	{
-		SkipToTick( pPlaybackInfo->m_nStartTick, false, false );
+		SkipToTick(pPlaybackInfo->m_nStartTick, false, false);
 	}
-	if ( pPlaybackInfo->m_nEndTick >= 0 && !replay_ignorereplayticks.GetBool() )
+	if(pPlaybackInfo->m_nEndTick >= 0 && !replay_ignorereplayticks.GetBool())
 	{
-		SetEndTick( pPlaybackInfo->m_nEndTick );
+		SetEndTick(pPlaybackInfo->m_nEndTick);
 	}
 
-	if ( g_pReplayMovieManager->IsRendering() )
+	if(g_pReplayMovieManager->IsRendering())
 	{
 #ifdef USE_WEBM_FOR_REPLAY
 		const char *pExtension = ".webm";
@@ -255,40 +256,39 @@ bool CReplayDemoPlayer::StartPlayback( const char *pFilename, bool bAsTimeDemo )
 #endif
 
 		// Start recording the movie
-		char szIdealFilename[ MAX_OSPATH ];
-		V_FileBase( pFilename, szIdealFilename, sizeof( szIdealFilename ) );
-		V_strcat( szIdealFilename, va( "_%i", pReplay->m_nSpawnTick ), sizeof( szIdealFilename ) );
-		V_SetExtension( szIdealFilename, pExtension, sizeof( szIdealFilename ) );
+		char szIdealFilename[MAX_OSPATH];
+		V_FileBase(pFilename, szIdealFilename, sizeof(szIdealFilename));
+		V_strcat(szIdealFilename, va("_%i", pReplay->m_nSpawnTick), sizeof(szIdealFilename));
+		V_SetExtension(szIdealFilename, pExtension, sizeof(szIdealFilename));
 
-		char szRenderPath[ MAX_OSPATH ];
-		V_snprintf( szRenderPath, sizeof( szRenderPath ), "%s%c%s%c%s%c%s",
-			com_gamedir, CORRECT_PATH_SEPARATOR, SUBDIR_REPLAY, CORRECT_PATH_SEPARATOR,
-			SUBDIR_CLIENT, CORRECT_PATH_SEPARATOR, SUBDIR_RENDERED
-		);
+		char szRenderPath[MAX_OSPATH];
+		V_snprintf(szRenderPath, sizeof(szRenderPath), "%s%c%s%c%s%c%s", com_gamedir, CORRECT_PATH_SEPARATOR,
+				   SUBDIR_REPLAY, CORRECT_PATH_SEPARATOR, SUBDIR_CLIENT, CORRECT_PATH_SEPARATOR, SUBDIR_RENDERED);
 
-		char szActualFilename[ MAX_OSPATH ];
-		Replay_GetFirstAvailableFilename( szActualFilename, sizeof( szActualFilename ), szIdealFilename,
-			pExtension, szRenderPath, 0 );
+		char szActualFilename[MAX_OSPATH];
+		Replay_GetFirstAvailableFilename(szActualFilename, sizeof(szActualFilename), szIdealFilename, pExtension,
+										 szRenderPath, 0);
 
 		// Create an entry in the movie manager & save to disk
-		m_pMovie = g_pReplayMovieManager->CreateAndAddMovie( pReplay->GetHandle() );
-		m_pMovie->SetMovieFilename( szActualFilename );
+		m_pMovie = g_pReplayMovieManager->CreateAndAddMovie(pReplay->GetHandle());
+		m_pMovie->SetMovieFilename(szActualFilename);
 		wchar_t wszMovieTitle[MAX_REPLAY_TITLE_LENGTH] = L"";
-		if ( pPlaybackInfo->m_iPerformance < 0 )
+		if(pPlaybackInfo->m_iPerformance < 0)
 		{
-			g_pReplayMovieManager->GetCachedMovieTitleAndClear( wszMovieTitle, MAX_REPLAY_TITLE_LENGTH );
+			g_pReplayMovieManager->GetCachedMovieTitleAndClear(wszMovieTitle, MAX_REPLAY_TITLE_LENGTH);
 		}
 		else
 		{
-			const CReplayPerformance *pPerformance = pReplay->GetPerformance( pPlaybackInfo->m_iPerformance );	AssertMsg( pPerformance, "Performance should always be valid!" );
-			if ( pPerformance )
+			const CReplayPerformance *pPerformance = pReplay->GetPerformance(pPlaybackInfo->m_iPerformance);
+			AssertMsg(pPerformance, "Performance should always be valid!");
+			if(pPerformance)
 			{
-				V_wcsncpy( wszMovieTitle, pPerformance->m_wszTitle, sizeof( wszMovieTitle ) );
+				V_wcsncpy(wszMovieTitle, pPerformance->m_wszTitle, sizeof(wszMovieTitle));
 			}
 		}
-		m_pMovie->SetMovieTitle( wszMovieTitle );
-		g_pReplayMovieManager->SetPendingMovie( m_pMovie );
-		g_pReplayMovieManager->FlagMovieForFlush( m_pMovie, true );
+		m_pMovie->SetMovieTitle(wszMovieTitle);
+		g_pReplayMovieManager->SetPendingMovie(m_pMovie);
+		g_pReplayMovieManager->FlagMovieForFlush(m_pMovie, true);
 
 		// Setup the start render time
 		m_flStartRenderTime = realtime;
@@ -304,24 +304,24 @@ bool CReplayDemoPlayer::StartPlayback( const char *pFilename, bool bAsTimeDemo )
 void CReplayDemoPlayer::PlayNextReplay()
 {
 	const PlaybackInfo_t *pPlaybackInfo = GetCurrentPlaybackInfo();
-	if ( !pPlaybackInfo )
+	if(!pPlaybackInfo)
 		return;
 
-	CReplay *pReplay = g_pReplayManager->GetReplay( pPlaybackInfo->m_hReplay );
-	if ( !pReplay )
+	CReplay *pReplay = g_pReplayManager->GetReplay(pPlaybackInfo->m_hReplay);
+	if(!pReplay)
 		return;
 
-	Assert ( pReplay->m_nStatus != CReplay::REPLAYSTATUS_DOWNLOADPHASE );
+	Assert(pReplay->m_nStatus != CReplay::REPLAYSTATUS_DOWNLOADPHASE);
 
 	// Reconstruct now if necessary
-	g_pClientReplayContext->ReconstructReplayIfNecessary( pReplay );
+	g_pClientReplayContext->ReconstructReplayIfNecessary(pReplay);
 
 	// Open the demo file so we can read the start tick
 	const char *pFilename = pReplay->m_strReconstructedFilename.Get();
-	if ( !g_pFullFileSystem->FileExists( pFilename ) )
+	if(!g_pFullFileSystem->FileExists(pFilename))
 	{
-		Warning( "\n**  File %s does not exist!\n\n", pFilename );
-		DisplayFailedToPlayMsg( pPlaybackInfo->m_iPerformance );
+		Warning("\n**  File %s does not exist!\n\n", pFilename);
+		DisplayFailedToPlayMsg(pPlaybackInfo->m_iPerformance);
 		return;
 	}
 
@@ -331,7 +331,7 @@ void CReplayDemoPlayer::PlayNextReplay()
 	const char *pCmd = "replay_hidebrowser\ngameui_hide\nprogress_enable\n";
 
 	// Execute the command
-	Cbuf_AddText( pCmd );
+	Cbuf_AddText(pCmd);
 	Cbuf_Execute();
 
 	// Use the replay demo player
@@ -339,13 +339,13 @@ void CReplayDemoPlayer::PlayNextReplay()
 	demoplayer = g_pReplayDemoPlayer;
 
 	// Open the demo file
-	if ( demoplayer->StartPlayback( pFilename, false ) )
+	if(demoplayer->StartPlayback(pFilename, false))
 	{
 		// Remove extension
-		char szBasename[ MAX_OSPATH ];
-		V_StripExtension( pFilename, szBasename, sizeof( szBasename ) );
+		char szBasename[MAX_OSPATH];
+		V_StripExtension(pFilename, szBasename, sizeof(szBasename));
 		extern IBaseClientDLL *g_ClientDLL;
-		g_ClientDLL->OnDemoPlaybackStart( szBasename );
+		g_ClientDLL->OnDemoPlaybackStart(szBasename);
 	}
 	else
 	{
@@ -353,49 +353,50 @@ void CReplayDemoPlayer::PlayNextReplay()
 	}
 }
 
-void CReplayDemoPlayer::PlayReplay( ReplayHandle_t hReplay, int iPerformance )
+void CReplayDemoPlayer::PlayReplay(ReplayHandle_t hReplay, int iPerformance)
 {
 	// Cache the replay (this function will only ever cache one)
 	s_ReplayDemoPlayer.ClearReplayList();
-	s_ReplayDemoPlayer.AddReplayToList( hReplay, iPerformance );
+	s_ReplayDemoPlayer.AddReplayToList(hReplay, iPerformance);
 	s_ReplayDemoPlayer.PlayNextReplay();
 }
 
 void CReplayDemoPlayer::OnLastDemoInLoopPlayed()
 {
-	g_pReplayMovieManager->CompleteRender( true, true );
+	g_pReplayMovieManager->CompleteRender(true, true);
 }
 
 float CReplayDemoPlayer::CalcMovieLength() const
 {
 	const PlaybackInfo_t *pPlaybackInfo = GetCurrentPlaybackInfo();
-	if ( !pPlaybackInfo )
+	if(!pPlaybackInfo)
 		return 0.0f;
 
 	const CReplay *pReplay = GetCurrentReplay();
-	if ( !pReplay )
+	if(!pReplay)
 		return 0.0f;
 
 	const int nStartTick = pPlaybackInfo->m_nStartTick >= 0 ? pPlaybackInfo->m_nStartTick : pReplay->m_nSpawnTick;
-	const int nEndTick = pPlaybackInfo->m_nEndTick >= 0 ? pPlaybackInfo->m_nEndTick : ( pReplay->m_nSpawnTick + TIME_TO_TICKS( pReplay->m_flLength ) );
+	const int nEndTick = pPlaybackInfo->m_nEndTick >= 0 ? pPlaybackInfo->m_nEndTick
+														: (pReplay->m_nSpawnTick + TIME_TO_TICKS(pReplay->m_flLength));
 
 	const bool bInvalidStartTick = nStartTick < 0;
 	const bool bInvalidEndTick = nEndTick < 0;
 
-	if ( bInvalidEndTick )
+	if(bInvalidEndTick)
 	{
-		if ( !bInvalidStartTick )
+		if(!bInvalidStartTick)
 		{
 			// Valid start tick, invalid end tick
-			return TICKS_TO_TIME( nStartTick ) + pReplay->m_flLength;
+			return TICKS_TO_TIME(nStartTick) + pReplay->m_flLength;
 		}
 	}
-	else	// Valid end tick.
+	else // Valid end tick.
 	{
-		if ( !bInvalidStartTick )
+		if(!bInvalidStartTick)
 		{
 			// Valid start tick, valid end tick
-			return TICKS_TO_TIME( nEndTick - nStartTick );
+			return TICKS_TO_TIME(nEndTick - nStartTick);
 		}
 	}
 
@@ -405,64 +406,64 @@ float CReplayDemoPlayer::CalcMovieLength() const
 
 void CReplayDemoPlayer::StopPlayback()
 {
-	if ( !IsPlayingBack() )
+	if(!IsPlayingBack())
 		return;
 
 	BaseClass::StopPlayback();
 
-	if ( m_bInStartPlayback )
+	if(m_bInStartPlayback)
 		return;
 
 	bool bDoneWithBatch = m_nCurReplayIndex >= m_vecReplaysToPlay.Count() - 1;
 	bool bRenderCancelled = g_pReplayMovieManager->RenderingCancelled();
 
-	if ( g_pReplayMovieManager->IsRendering() )
+	if(g_pReplayMovieManager->IsRendering())
 	{
 		// Update the replay's state
 		CReplay *pReplay = GetCurrentReplay();
-		if ( !pReplay )
+		if(!pReplay)
 			return;
 
-		pReplay->m_bRendered = true;	// We have rendered this replay at least once
+		pReplay->m_bRendered = true; // We have rendered this replay at least once
 
 		// Save replay
-		g_pReplayManager->FlagReplayForFlush( pReplay, false );
+		g_pReplayManager->FlagReplayForFlush(pReplay, false);
 
 		// Update the movie's state - the render succeeded
-		m_pMovie->SetIsRendered( true );
+		m_pMovie->SetIsRendered(true);
 
 		// Compute the time it took to render
-		m_pMovie->SetRenderTime( MAX( 0, realtime - m_flStartRenderTime ) );
+		m_pMovie->SetRenderTime(MAX(0, realtime - m_flStartRenderTime));
 
 		// Sets the recorded date & time of the movie
 		m_pMovie->CaptureRecordTime();
 
 		// Get movie length
-		m_pMovie->SetLength( CalcMovieLength() );
+		m_pMovie->SetLength(CalcMovieLength());
 
 		// Save movie
-		g_pReplayMovieManager->FlagMovieForFlush( m_pMovie, true );
+		g_pReplayMovieManager->FlagMovieForFlush(m_pMovie, true);
 
 		// Kill the renderer, show the browser if we're done rendering all replays
-		g_pReplayMovieManager->CompleteRender( true, bDoneWithBatch );
+		g_pReplayMovieManager->CompleteRender(true, bDoneWithBatch);
 	}
-	else if ( !bRenderCancelled )	// Without this check, batch rendering will continue to try and render after cancel
+	else if(!bRenderCancelled) // Without this check, batch rendering will continue to try and render after cancel
 	{
 		CReplay *pReplay = GetCurrentReplay();
-		if ( !pReplay )
+		if(!pReplay)
 			return;
 
 		// Get the 'saved' performance from the performance controller, since the performance we initiated playback
-		// with may not be the one we want to select in the replay browser.  The user may have save as a new performance,
-		// in which case we'll want to highlight that one.
+		// with may not be the one we want to select in the replay browser.  The user may have save as a new
+		// performance, in which case we'll want to highlight that one.
 		CReplayPerformance *pSavedPerformance = g_pReplayPerformanceController->GetSavedPerformance();
 
 		// Get the index - FindPerformance() will set the output index to -1 if it can't find the performance
 		int iHighlightPerformance;
-		pReplay->FindPerformance( pSavedPerformance, iHighlightPerformance );
+		pReplay->FindPerformance(pSavedPerformance, iHighlightPerformance);
 
 		// Notify UI that playback is complete
-		g_pClientReplay->OnPlaybackComplete( pReplay->GetHandle(), iHighlightPerformance );
+		g_pClientReplay->OnPlaybackComplete(pReplay->GetHandle(), iHighlightPerformance);
 
 		// Hide the replay performance editor
 		g_pClientReplay->HidePerformanceEditor();
@@ -477,7 +478,7 @@ void CReplayDemoPlayer::StopPlayback()
 	// Play the next replay, if one was queued
 	++m_nCurReplayIndex;
 
-	if ( !bDoneWithBatch && !bRenderCancelled )
+	if(!bDoneWithBatch && !bRenderCancelled)
 	{
 		g_pReplayMovieManager->RenderNextMovie();
 	}
@@ -486,9 +487,9 @@ void CReplayDemoPlayer::StopPlayback()
 		m_nCurReplayIndex = 0;
 		m_vecReplaysToPlay.PurgeAndDeleteElements();
 
-		if ( !m_bFullSignonStateReached )
+		if(!m_bFullSignonStateReached)
 		{
-			DisplayFailedToPlayMsg( pPlaybackInfo ? pPlaybackInfo->m_iPerformance : -1 );
+			DisplayFailedToPlayMsg(pPlaybackInfo ? pPlaybackInfo->m_iPerformance : -1);
 		}
 	}
 }
@@ -498,14 +499,13 @@ bool CReplayDemoPlayer::ShouldLoopDemos()
 	return false;
 }
 
-void CReplayDemoPlayer::DisplayFailedToPlayMsg( int iPerformance )
+void CReplayDemoPlayer::DisplayFailedToPlayMsg(int iPerformance)
 {
-	g_pClientReplay->DisplayReplayMessage(
-		iPerformance < 0 ? "#Replay_Err_User_FailedToPlayReplay" : "#Replay_Err_User_FailedToPlayTake",
-		false, true, NULL
-	);
+	g_pClientReplay->DisplayReplayMessage(iPerformance < 0 ? "#Replay_Err_User_FailedToPlayReplay"
+														   : "#Replay_Err_User_FailedToPlayTake",
+										  false, true, NULL);
 }
 
 //----------------------------------------------------------------------------------------
 
-#endif	// #if defined( REPLAY_ENABLED )
+#endif // #if defined( REPLAY_ENABLED )

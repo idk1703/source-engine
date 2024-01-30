@@ -42,7 +42,8 @@ bool bSteamCommunityFriendsVersion = false;
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CVGuiSystemModuleLoader, IVGuiModuleLoader, VGUIMODULELOADER_INTERFACE_VERSION, g_VModuleLoader);
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CVGuiSystemModuleLoader, IVGuiModuleLoader, VGUIMODULELOADER_INTERFACE_VERSION,
+								  g_VModuleLoader);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
@@ -57,9 +58,7 @@ CVGuiSystemModuleLoader::CVGuiSystemModuleLoader()
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CVGuiSystemModuleLoader::~CVGuiSystemModuleLoader()
-{
-}
+CVGuiSystemModuleLoader::~CVGuiSystemModuleLoader() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the module loader has acquired the platform mutex and loaded the modules
@@ -74,7 +73,7 @@ bool CVGuiSystemModuleLoader::IsPlatformReady()
 //-----------------------------------------------------------------------------
 bool CVGuiSystemModuleLoader::InitializeAllModules(CreateInterfaceFn *factorylist, int factorycount)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not valid for 360
 		return false;
@@ -84,9 +83,9 @@ bool CVGuiSystemModuleLoader::InitializeAllModules(CreateInterfaceFn *factorylis
 
 	// Init vgui in the modules
 	int i;
-	for ( i = 0; i < m_Modules.Count(); i++ )
+	for(i = 0; i < m_Modules.Count(); i++)
 	{
-		if (!m_Modules[i].moduleInterface->Initialize(factorylist, factorycount))
+		if(!m_Modules[i].moduleInterface->Initialize(factorylist, factorycount))
 		{
 			bSuccess = false;
 			Error("Platform Error: module failed to initialize\n");
@@ -95,15 +94,15 @@ bool CVGuiSystemModuleLoader::InitializeAllModules(CreateInterfaceFn *factorylis
 
 	// create a table of all the loaded modules
 	CreateInterfaceFn *moduleFactories = (CreateInterfaceFn *)_alloca(sizeof(CreateInterfaceFn) * m_Modules.Count());
-	for ( i = 0; i < m_Modules.Count(); i++ )
+	for(i = 0; i < m_Modules.Count(); i++)
 	{
 		moduleFactories[i] = Sys_GetFactory(m_Modules[i].module);
 	}
 
 	// give the modules a chance to link themselves together
-	for (i = 0; i < m_Modules.Count(); i++)
+	for(i = 0; i < m_Modules.Count(); i++)
 	{
-		if (!m_Modules[i].moduleInterface->PostInitialize(moduleFactories, m_Modules.Count()))
+		if(!m_Modules[i].moduleInterface->PostInitialize(moduleFactories, m_Modules.Count()))
 		{
 			bSuccess = false;
 			Error("Platform Error: module failed to initialize\n");
@@ -123,9 +122,10 @@ bool CVGuiSystemModuleLoader::InitializeAllModules(CreateInterfaceFn *factorylis
 //-----------------------------------------------------------------------------
 // Purpose: Loads and initializes all the modules specified in the platform file
 //-----------------------------------------------------------------------------
-bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist, int factorycount, bool useSteamModules)
+bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist, int factorycount,
+												  bool useSteamModules)
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not valid for 360
 		return false;
@@ -135,7 +135,7 @@ bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist
 
 	// load platform menu
 	KeyValues *kv = new KeyValues("Platform");
-	if (!kv->LoadFromFile(g_pFullFileSystem, "steam/games/PlatformMenu.vdf", "PLATFORM"))
+	if(!kv->LoadFromFile(g_pFullFileSystem, "steam/games/PlatformMenu.vdf", "PLATFORM"))
 	{
 		kv->deleteThis();
 		return false;
@@ -143,25 +143,25 @@ bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist
 
 	// walk the platform menu loading all the interfaces
 	KeyValues *menuKeys = kv->FindKey("Menu", true);
-	for (KeyValues *it = menuKeys->GetFirstSubKey(); it != NULL; it = it->GetNextKey())
+	for(KeyValues *it = menuKeys->GetFirstSubKey(); it != NULL; it = it->GetNextKey())
 	{
 		// see if we should skip steam modules
-		if (!useSteamModules && it->GetInt("SteamApp"))
+		if(!useSteamModules && it->GetInt("SteamApp"))
 			continue;
 
 		const char *pchInterface = it->GetString("interface");
 
 		// don't load friends if we are using Steam Community
-		if ( !Q_stricmp( pchInterface, "VGuiModuleTracker001" ) && bSteamCommunityFriendsVersion )
+		if(!Q_stricmp(pchInterface, "VGuiModuleTracker001") && bSteamCommunityFriendsVersion)
 			continue;
 
 		// get copy out of steam cache
 		const char *dllPath = NULL;
-		if ( IsOSX() )
+		if(IsOSX())
 		{
 			dllPath = it->GetString("dll_osx");
 		}
-		else if ( IsLinux() )
+		else if(IsLinux())
 		{
 			dllPath = it->GetString("dll_linux");
 		}
@@ -170,10 +170,9 @@ bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist
 			dllPath = it->GetString("dll");
 		}
 
-
 		// load the module (LoadModule calls GetLocalCopy() under steam)
 		CSysModule *mod = g_pFullFileSystem->LoadModule(dllPath, "EXECUTABLE_PATH");
-		if (!mod)
+		if(!mod)
 		{
 			Error("Platform Error: bad module '%s', not loading\n", it->GetString("dll"));
 			bSuccess = false;
@@ -182,9 +181,10 @@ bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist
 
 		// make sure we get the right version
 		IVGuiModule *moduleInterface = (IVGuiModule *)Sys_GetFactory(mod)(pchInterface, NULL);
-		if (!moduleInterface)
+		if(!moduleInterface)
 		{
-			Warning("Platform Error: module version ('%s, %s) invalid, not loading\n", it->GetString("dll"), it->GetString("interface"));
+			Warning("Platform Error: module version ('%s, %s) invalid, not loading\n", it->GetString("dll"),
+					it->GetString("interface"));
 			bSuccess = false;
 			continue;
 		}
@@ -205,7 +205,7 @@ bool CVGuiSystemModuleLoader::LoadPlatformModules(CreateInterfaceFn *factorylist
 //-----------------------------------------------------------------------------
 void CVGuiSystemModuleLoader::ShutdownPlatformModules()
 {
-	if ( IsX360() )
+	if(IsX360())
 	{
 		// not valid for 360
 		return;
@@ -213,7 +213,7 @@ void CVGuiSystemModuleLoader::ShutdownPlatformModules()
 
 	// static include guard to prevent recursive calls
 	static bool runningFunction = false;
-	if (runningFunction)
+	if(runningFunction)
 		return;
 
 	runningFunction = true;
@@ -223,12 +223,13 @@ void CVGuiSystemModuleLoader::ShutdownPlatformModules()
 
 	// give all the modules notice of quit
 	int i;
-	for ( i = 0; i < m_Modules.Count(); i++ )
+	for(i = 0; i < m_Modules.Count(); i++)
 	{
-		vgui::ivgui()->PostMessage(m_Modules[i].moduleInterface->GetPanel(), new KeyValues("Command", "command", "Quit"), NULL);
+		vgui::ivgui()->PostMessage(m_Modules[i].moduleInterface->GetPanel(),
+								   new KeyValues("Command", "command", "Quit"), NULL);
 	}
 
-	for ( i = 0; i < m_Modules.Count(); i++ )
+	for(i = 0; i < m_Modules.Count(); i++)
 	{
 		m_Modules[i].moduleInterface->Shutdown();
 	}
@@ -241,7 +242,7 @@ void CVGuiSystemModuleLoader::ShutdownPlatformModules()
 //-----------------------------------------------------------------------------
 void CVGuiSystemModuleLoader::DeactivatePlatformModules()
 {
-	for (int i = 0; i < m_Modules.Count(); i++)
+	for(int i = 0; i < m_Modules.Count(); i++)
 	{
 		m_Modules[i].moduleInterface->Deactivate();
 	}
@@ -252,7 +253,7 @@ void CVGuiSystemModuleLoader::DeactivatePlatformModules()
 //-----------------------------------------------------------------------------
 void CVGuiSystemModuleLoader::ReactivatePlatformModules()
 {
-	for (int i = 0; i < m_Modules.Count(); i++)
+	for(int i = 0; i < m_Modules.Count(); i++)
 	{
 		m_Modules[i].moduleInterface->Reactivate();
 	}
@@ -263,14 +264,14 @@ void CVGuiSystemModuleLoader::ReactivatePlatformModules()
 //-----------------------------------------------------------------------------
 void CVGuiSystemModuleLoader::UnloadPlatformModules()
 {
-	for (int i = 0; i < m_Modules.Count(); i++)
+	for(int i = 0; i < m_Modules.Count(); i++)
 	{
 		g_pFullFileSystem->UnloadModule(m_Modules[i].module);
 	}
 
 	m_Modules.RemoveAll();
 
-	if (m_pPlatformModuleData)
+	if(m_pPlatformModuleData)
 	{
 		m_pPlatformModuleData->deleteThis();
 		m_pPlatformModuleData = NULL;
@@ -280,9 +281,7 @@ void CVGuiSystemModuleLoader::UnloadPlatformModules()
 //-----------------------------------------------------------------------------
 // Purpose: Called every frame
 //-----------------------------------------------------------------------------
-void CVGuiSystemModuleLoader::RunFrame()
-{
-}
+void CVGuiSystemModuleLoader::RunFrame() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: returns number of modules loaded
@@ -306,7 +305,7 @@ const char *CVGuiSystemModuleLoader::GetModuleLabel(int moduleIndex)
 //-----------------------------------------------------------------------------
 bool CVGuiSystemModuleLoader::IsModuleVisible(int moduleIndex)
 {
-	return vgui::ipanel()->IsVisible( m_Modules[moduleIndex].moduleInterface->GetPanel() );
+	return vgui::ipanel()->IsVisible(m_Modules[moduleIndex].moduleInterface->GetPanel());
 }
 
 //-----------------------------------------------------------------------------
@@ -322,7 +321,7 @@ bool CVGuiSystemModuleLoader::IsModuleHidden(int moduleIndex)
 //-----------------------------------------------------------------------------
 bool CVGuiSystemModuleLoader::ActivateModule(int moduleIndex)
 {
-	if (!m_Modules.IsValidIndex(moduleIndex))
+	if(!m_Modules.IsValidIndex(moduleIndex))
 		return false;
 
 	m_Modules[moduleIndex].moduleInterface->Activate();
@@ -334,9 +333,9 @@ bool CVGuiSystemModuleLoader::ActivateModule(int moduleIndex)
 //-----------------------------------------------------------------------------
 bool CVGuiSystemModuleLoader::ActivateModule(const char *moduleName)
 {
-	for (int i = 0; i < GetModuleCount(); i++)
+	for(int i = 0; i < GetModuleCount(); i++)
 	{
-		if (!stricmp(GetModuleLabel(i), moduleName) || !stricmp(m_Modules[i].data->GetName(), moduleName))
+		if(!stricmp(GetModuleLabel(i), moduleName) || !stricmp(m_Modules[i].data->GetName(), moduleName))
 		{
 			ActivateModule(i);
 			return true;
@@ -354,13 +353,12 @@ CreateInterfaceFn CVGuiSystemModuleLoader::GetModuleFactory(int moduleIndex)
 	return Sys_GetFactory(m_Modules[moduleIndex].module);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CVGuiSystemModuleLoader::PostMessageToAllModules(KeyValues *message)
 {
-	for (int i = 0; i < m_Modules.Count(); i++)
+	for(int i = 0; i < m_Modules.Count(); i++)
 	{
 		vgui::ivgui()->PostMessage(m_Modules[i].moduleInterface->GetPanel(), message->MakeCopy(), NULL);
 	}

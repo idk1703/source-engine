@@ -21,23 +21,23 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: RecvProxy that converts the Team's player UtlVector to entindexes
 //-----------------------------------------------------------------------------
-void RecvProxy_HealingList(  const CRecvProxyData *pData, void *pStruct, void *pOut )
+void RecvProxy_HealingList(const CRecvProxyData *pData, void *pStruct, void *pOut)
 {
-	C_ObjectDispenser *pDispenser = (C_ObjectDispenser*)pStruct;
+	C_ObjectDispenser *pDispenser = (C_ObjectDispenser *)pStruct;
 
-	CBaseHandle *pHandle = (CBaseHandle*)(&(pDispenser->m_hHealingTargets[pData->m_iElement]));
-	RecvProxy_IntToEHandle( pData, pStruct, pHandle );
+	CBaseHandle *pHandle = (CBaseHandle *)(&(pDispenser->m_hHealingTargets[pData->m_iElement]));
+	RecvProxy_IntToEHandle(pData, pStruct, pHandle);
 
 	// update the heal beams
 	pDispenser->m_bUpdateHealingTargets = true;
 }
 
-void RecvProxyArrayLength_HealingArray( void *pStruct, int objectID, int currentArrayLength )
+void RecvProxyArrayLength_HealingArray(void *pStruct, int objectID, int currentArrayLength)
 {
-	C_ObjectDispenser *pDispenser = (C_ObjectDispenser*)pStruct;
+	C_ObjectDispenser *pDispenser = (C_ObjectDispenser *)pStruct;
 
-	if ( pDispenser->m_hHealingTargets.Size() != currentArrayLength )
-		pDispenser->m_hHealingTargets.SetSize( currentArrayLength );
+	if(pDispenser->m_hHealingTargets.Size() != currentArrayLength)
+		pDispenser->m_hHealingTargets.SetSize(currentArrayLength);
 
 	// update the heal beams
 	pDispenser->m_bUpdateHealingTargets = true;
@@ -48,23 +48,18 @@ void RecvProxyArrayLength_HealingArray( void *pStruct, int objectID, int current
 //-----------------------------------------------------------------------------
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectDispenser, DT_ObjectDispenser, CObjectDispenser)
-	RecvPropInt( RECVINFO( m_iState ) ),
-	RecvPropInt( RECVINFO( m_iAmmoMetal ) ),
-	RecvPropInt( RECVINFO( m_iMiniBombCounter ) ),
+RecvPropInt(RECVINFO(m_iState)), RecvPropInt(RECVINFO(m_iAmmoMetal)), RecvPropInt(RECVINFO(m_iMiniBombCounter)),
 
-	RecvPropArray2(
-		RecvProxyArrayLength_HealingArray,
-		RecvPropInt( "healing_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_HealingList ),
-		MAX_PLAYERS,
-		0,
-		"healing_array"
-		)
-END_RECV_TABLE()
+	RecvPropArray2(RecvProxyArrayLength_HealingArray,
+				   RecvPropInt("healing_array_element", 0, SIZEOF_IGNORE, 0, RecvProxy_HealingList), MAX_PLAYERS, 0,
+				   "healing_array")
+END_RECV_TABLE
+()
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-C_ObjectDispenser::C_ObjectDispenser()
+	//-----------------------------------------------------------------------------
+	// Purpose:
+	//-----------------------------------------------------------------------------
+	C_ObjectDispenser::C_ObjectDispenser()
 {
 	m_bUpdateHealingTargets = false;
 	m_bPlayingSound = false;
@@ -75,14 +70,15 @@ C_ObjectDispenser::C_ObjectDispenser()
 //-----------------------------------------------------------------------------
 C_ObjectDispenser::~C_ObjectDispenser()
 {
-	StopSound( "Building_Dispenser.Heal" );
+	StopSound("Building_Dispenser.Heal");
 	// NVNT see if local player is in the list of targets
 	// temp. fix if dispener is destroyed will stop all healers.
 	if(m_bPlayingSound)
 	{
-		if(tfHaptics.healingDispenserCount>0) {
-			tfHaptics.healingDispenserCount --;
-			if(tfHaptics.healingDispenserCount==0 && !tfHaptics.wasBeingHealedMedic)
+		if(tfHaptics.healingDispenserCount > 0)
+		{
+			tfHaptics.healingDispenserCount--;
+			if(tfHaptics.healingDispenserCount == 0 && !tfHaptics.wasBeingHealedMedic)
 				tfHaptics.isBeingHealed = false;
 		}
 	}
@@ -92,18 +88,18 @@ C_ObjectDispenser::~C_ObjectDispenser()
 // Purpose:
 // Input  : updateType -
 //-----------------------------------------------------------------------------
-void C_ObjectDispenser::OnDataChanged( DataUpdateType_t updateType )
+void C_ObjectDispenser::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
 #ifdef STAGING_ONLY
-	if ( updateType == DATA_UPDATE_CREATED )
+	if(updateType == DATA_UPDATE_CREATED)
 	{
-		SetNextClientThink( CLIENT_THINK_ALWAYS );
+		SetNextClientThink(CLIENT_THINK_ALWAYS);
 	}
 #endif // STAGING_ONLY
 
-	if ( m_bUpdateHealingTargets )
+	if(m_bUpdateHealingTargets)
 	{
 		UpdateEffects();
 		m_bUpdateHealingTargets = false;
@@ -119,7 +115,7 @@ void C_ObjectDispenser::ClientThink()
 
 #ifdef STAGING_ONLY
 	C_TFPlayer *pTFOwner = GetOwner();
-	if ( pTFOwner && pTFOwner->m_Shared.IsEnteringOrExitingFullyInvisible() )
+	if(pTFOwner && pTFOwner->m_Shared.IsEnteringOrExitingFullyInvisible())
 	{
 		UpdateEffects();
 	}
@@ -129,68 +125,69 @@ void C_ObjectDispenser::ClientThink()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectDispenser::SetInvisibilityLevel( float flValue )
+void C_ObjectDispenser::SetInvisibilityLevel(float flValue)
 {
-	if ( IsEnteringOrExitingFullyInvisible( flValue ) )
+	if(IsEnteringOrExitingFullyInvisible(flValue))
 	{
 		UpdateEffects();
 	}
 
-	BaseClass::SetInvisibilityLevel( flValue );
+	BaseClass::SetInvisibilityLevel(flValue);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectDispenser::UpdateEffects( void )
+void C_ObjectDispenser::UpdateEffects(void)
 {
 	C_TFPlayer *pOwner = GetOwner();
 
-	if ( GetInvisibilityLevel() == 1.f || ( pOwner && pOwner->m_Shared.IsFullyInvisible() ) )
+	if(GetInvisibilityLevel() == 1.f || (pOwner && pOwner->m_Shared.IsFullyInvisible()))
 	{
-		StopEffects( true );
+		StopEffects(true);
 		return;
 	}
 
 	StopEffects();
 
 	// Now add any new targets
-	for ( int i = 0; i < m_hHealingTargets.Count(); i++ )
+	for(int i = 0; i < m_hHealingTargets.Count(); i++)
 	{
 		C_BaseEntity *pTarget = m_hHealingTargets[i].Get();
 
 		// Loops through the healing targets, and make sure we have an effect for each of them
-		if ( pTarget )
+		if(pTarget)
 		{
 			// don't want to show this effect for stealthed spies
-			C_TFPlayer *pPlayer = dynamic_cast< C_TFPlayer * >( pTarget );
-			if ( pPlayer && ( pPlayer->m_Shared.IsStealthed() || pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) ) )
+			C_TFPlayer *pPlayer = dynamic_cast<C_TFPlayer *>(pTarget);
+			if(pPlayer && (pPlayer->m_Shared.IsStealthed() || pPlayer->m_Shared.InCond(TF_COND_STEALTHED_BLINK)))
 				continue;
 
 			bool bHaveEffect = false;
-			for ( int targets = 0; targets < m_hHealingTargetEffects.Count(); targets++ )
+			for(int targets = 0; targets < m_hHealingTargetEffects.Count(); targets++)
 			{
-				if ( m_hHealingTargetEffects[targets].pTarget == pTarget )
+				if(m_hHealingTargetEffects[targets].pTarget == pTarget)
 				{
 					bHaveEffect = true;
 					break;
 				}
 			}
 
-			if ( bHaveEffect )
+			if(bHaveEffect)
 				continue;
 			// NVNT if the dispenser has started to heal the local player
 			//   notify the haptics system
-			if(pTarget==C_BasePlayer::GetLocalPlayer())
+			if(pTarget == C_BasePlayer::GetLocalPlayer())
 			{
 				tfHaptics.healingDispenserCount++;
-				if(!tfHaptics.wasBeingHealedMedic) {
+				if(!tfHaptics.wasBeingHealedMedic)
+				{
 					tfHaptics.isBeingHealed = true;
 				}
 			}
 
 			const char *pszEffectName;
-			if ( GetTeamNumber() == TF_TEAM_RED )
+			if(GetTeamNumber() == TF_TEAM_RED)
 			{
 				pszEffectName = "dispenser_heal_red";
 			}
@@ -202,66 +199,66 @@ void C_ObjectDispenser::UpdateEffects( void )
 			CNewParticleEffect *pEffect;
 
 			// if we don't have a model, attach at the origin, otherwise use attachment 'heal_origin'
-			if ( FBitSet( GetObjectFlags(), OF_DOESNT_HAVE_A_MODEL ) )
+			if(FBitSet(GetObjectFlags(), OF_DOESNT_HAVE_A_MODEL))
 			{
 				// offset the origin to player's chest
-				if ( FBitSet( GetObjectFlags(), OF_PLAYER_DESTRUCTION ) )
+				if(FBitSet(GetObjectFlags(), OF_PLAYER_DESTRUCTION))
 				{
-					pEffect = ParticleProp()->Create( pszEffectName, PATTACH_ABSORIGIN_FOLLOW, NULL, Vector( 0, 0, 50 ) );
+					pEffect = ParticleProp()->Create(pszEffectName, PATTACH_ABSORIGIN_FOLLOW, NULL, Vector(0, 0, 50));
 				}
 				else
 				{
-					pEffect = ParticleProp()->Create( pszEffectName, PATTACH_ABSORIGIN_FOLLOW );
+					pEffect = ParticleProp()->Create(pszEffectName, PATTACH_ABSORIGIN_FOLLOW);
 				}
 			}
 			else
 			{
-				pEffect = ParticleProp()->Create( pszEffectName, PATTACH_POINT_FOLLOW, "heal_origin" );
+				pEffect = ParticleProp()->Create(pszEffectName, PATTACH_POINT_FOLLOW, "heal_origin");
 			}
 
-			ParticleProp()->AddControlPoint( pEffect, 1, pTarget, PATTACH_ABSORIGIN_FOLLOW, NULL, Vector(0,0,50) );
+			ParticleProp()->AddControlPoint(pEffect, 1, pTarget, PATTACH_ABSORIGIN_FOLLOW, NULL, Vector(0, 0, 50));
 
 			int iIndex = m_hHealingTargetEffects.AddToTail();
 			m_hHealingTargetEffects[iIndex].pTarget = pTarget;
 			m_hHealingTargetEffects[iIndex].pEffect = pEffect;
 
 			// Start the sound over again every time we start a new beam
-			StopSound( "Building_Dispenser.Heal" );
+			StopSound("Building_Dispenser.Heal");
 
 			CLocalPlayerFilter filter;
-			EmitSound( filter, entindex(), "Building_Dispenser.Heal" );
+			EmitSound(filter, entindex(), "Building_Dispenser.Heal");
 
 			m_bPlayingSound = true;
 		}
 	}
 
 	// Stop the sound if we're not healing anyone
-	if ( m_bPlayingSound && m_hHealingTargets.Count() == 0 )
+	if(m_bPlayingSound && m_hHealingTargets.Count() == 0)
 	{
 		m_bPlayingSound = false;
 
 		// stop the sound
-		StopSound( "Building_Dispenser.Heal" );
+		StopSound("Building_Dispenser.Heal");
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_ObjectDispenser::StopEffects( bool bRemoveAll /* = false */ )
+void C_ObjectDispenser::StopEffects(bool bRemoveAll /* = false */)
 {
 	// Find all the targets we've stopped healing
-	bool bStillHealing[MAX_DISPENSER_HEALING_TARGETS] = { 0 };
-	for ( int i = 0; i < m_hHealingTargetEffects.Count(); i++ )
+	bool bStillHealing[MAX_DISPENSER_HEALING_TARGETS] = {0};
+	for(int i = 0; i < m_hHealingTargetEffects.Count(); i++)
 	{
 		bStillHealing[i] = false;
 
 		// Are we still healing this target?
-		if ( !bRemoveAll )
+		if(!bRemoveAll)
 		{
-			for ( int target = 0; target < m_hHealingTargets.Count(); target++ )
+			for(int target = 0; target < m_hHealingTargets.Count(); target++)
 			{
-				if ( m_hHealingTargets[target] && m_hHealingTargets[target] == m_hHealingTargetEffects[i].pTarget )
+				if(m_hHealingTargets[target] && m_hHealingTargets[target] == m_hHealingTargetEffects[i].pTarget)
 				{
 					bStillHealing[i] = true;
 					break;
@@ -271,23 +268,24 @@ void C_ObjectDispenser::StopEffects( bool bRemoveAll /* = false */ )
 	}
 
 	// Now remove all the dead effects
-	for ( int i = m_hHealingTargetEffects.Count()-1; i >= 0; i-- )
+	for(int i = m_hHealingTargetEffects.Count() - 1; i >= 0; i--)
 	{
-		if ( !bStillHealing[i] )
+		if(!bStillHealing[i])
 		{
 
 			// NVNT if the healing target of this dispenser is the local player.
 			//   inform the haptics system interface we are no longer healing.
-			if(m_hHealingTargetEffects[i].pTarget==C_BasePlayer::GetLocalPlayer())
+			if(m_hHealingTargetEffects[i].pTarget == C_BasePlayer::GetLocalPlayer())
 			{
-				if(tfHaptics.healingDispenserCount>0) {
-					tfHaptics.healingDispenserCount --;
-					if(tfHaptics.healingDispenserCount==0 && !tfHaptics.wasBeingHealedMedic)
+				if(tfHaptics.healingDispenserCount > 0)
+				{
+					tfHaptics.healingDispenserCount--;
+					if(tfHaptics.healingDispenserCount == 0 && !tfHaptics.wasBeingHealedMedic)
 						tfHaptics.isBeingHealed = false;
 				}
 			}
 
-			ParticleProp()->StopEmission( m_hHealingTargetEffects[i].pEffect );
+			ParticleProp()->StopEmission(m_hHealingTargetEffects[i].pEffect);
 			m_hHealingTargetEffects.Remove(i);
 		}
 	}
@@ -296,45 +294,45 @@ void C_ObjectDispenser::StopEffects( bool bRemoveAll /* = false */ )
 //-----------------------------------------------------------------------------
 // Purpose: Damage level has changed, update our effects
 //-----------------------------------------------------------------------------
-void C_ObjectDispenser::UpdateDamageEffects( BuildingDamageLevel_t damageLevel )
+void C_ObjectDispenser::UpdateDamageEffects(BuildingDamageLevel_t damageLevel)
 {
-	if ( m_hDamageEffects )
+	if(m_hDamageEffects)
 	{
-		m_hDamageEffects->StopEmission( false, false );
+		m_hDamageEffects->StopEmission(false, false);
 		m_hDamageEffects = NULL;
 	}
 
 	const char *pszEffect = "";
 
-	switch( damageLevel )
+	switch(damageLevel)
 	{
-	case BUILDING_DAMAGE_LEVEL_LIGHT:
-		pszEffect = "dispenserdamage_1";
-		break;
-	case BUILDING_DAMAGE_LEVEL_MEDIUM:
-		pszEffect = "dispenserdamage_2";
-		break;
-	case BUILDING_DAMAGE_LEVEL_HEAVY:
-		pszEffect = "dispenserdamage_3";
-		break;
-	case BUILDING_DAMAGE_LEVEL_CRITICAL:
-		pszEffect = "dispenserdamage_4";
-		break;
+		case BUILDING_DAMAGE_LEVEL_LIGHT:
+			pszEffect = "dispenserdamage_1";
+			break;
+		case BUILDING_DAMAGE_LEVEL_MEDIUM:
+			pszEffect = "dispenserdamage_2";
+			break;
+		case BUILDING_DAMAGE_LEVEL_HEAVY:
+			pszEffect = "dispenserdamage_3";
+			break;
+		case BUILDING_DAMAGE_LEVEL_CRITICAL:
+			pszEffect = "dispenserdamage_4";
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
-	if ( Q_strlen(pszEffect) > 0 )
+	if(Q_strlen(pszEffect) > 0)
 	{
-		m_hDamageEffects = ParticleProp()->Create( pszEffect, PATTACH_ABSORIGIN );
+		m_hDamageEffects = ParticleProp()->Create(pszEffect, PATTACH_ABSORIGIN);
 	}
 }
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-int C_ObjectDispenser::GetMaxMetal( void )
+int C_ObjectDispenser::GetMaxMetal(void)
 {
 	return DISPENSER_MAX_METAL_AMMO;
 }
@@ -343,46 +341,46 @@ int C_ObjectDispenser::GetMaxMetal( void )
 // Control screen
 //-----------------------------------------------------------------------------
 
-DECLARE_VGUI_SCREEN_FACTORY( CDispenserControlPanel, "screen_obj_dispenser_blue" );
-DECLARE_VGUI_SCREEN_FACTORY( CDispenserControlPanel_Red, "screen_obj_dispenser_red" );
+DECLARE_VGUI_SCREEN_FACTORY(CDispenserControlPanel, "screen_obj_dispenser_blue");
+DECLARE_VGUI_SCREEN_FACTORY(CDispenserControlPanel_Red, "screen_obj_dispenser_red");
 
 //-----------------------------------------------------------------------------
 // Constructor:
 //-----------------------------------------------------------------------------
-CDispenserControlPanel::CDispenserControlPanel( vgui::Panel *parent, const char *panelName )
-: BaseClass( parent, "CDispenserControlPanel" )
+CDispenserControlPanel::CDispenserControlPanel(vgui::Panel *parent, const char *panelName)
+	: BaseClass(parent, "CDispenserControlPanel")
 {
-	m_pAmmoProgress = new RotatingProgressBar( this, "MeterArrow" );
+	m_pAmmoProgress = new RotatingProgressBar(this, "MeterArrow");
 }
 
 //-----------------------------------------------------------------------------
 // Deactivates buttons we can't afford
 //-----------------------------------------------------------------------------
-void CDispenserControlPanel::OnTickActive( C_BaseObject *pObj, C_TFPlayer *pLocalPlayer )
+void CDispenserControlPanel::OnTickActive(C_BaseObject *pObj, C_TFPlayer *pLocalPlayer)
 {
-	BaseClass::OnTickActive( pObj, pLocalPlayer );
+	BaseClass::OnTickActive(pObj, pLocalPlayer);
 
-	Assert( dynamic_cast< C_ObjectDispenser* >( pObj ) );
-	m_hDispenser = static_cast< C_ObjectDispenser* >( pObj );
+	Assert(dynamic_cast<C_ObjectDispenser *>(pObj));
+	m_hDispenser = static_cast<C_ObjectDispenser *>(pObj);
 
 	float flProgress = m_hDispenser ? m_hDispenser->GetMetalAmmoCount() / (float)m_hDispenser->GetMaxMetal() : 0.f;
 
-	m_pAmmoProgress->SetProgress( flProgress );
+	m_pAmmoProgress->SetProgress(flProgress);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CDispenserControlPanel::IsVisible( void )
+bool CDispenserControlPanel::IsVisible(void)
 {
-	if ( m_hDispenser )
+	if(m_hDispenser)
 	{
 #ifdef STAGING_ONLY
-		if ( m_hDispenser->IsMiniBuilding() )
+		if(m_hDispenser->IsMiniBuilding())
 			return false;
 #endif // STAGING_ONLY
 
-		if ( m_hDispenser->GetInvisibilityLevel() == 1.f )
+		if(m_hDispenser->GetInvisibilityLevel() == 1.f)
 			return false;
 	}
 
@@ -390,4 +388,5 @@ bool CDispenserControlPanel::IsVisible( void )
 }
 
 IMPLEMENT_CLIENTCLASS_DT(C_ObjectCartDispenser, DT_ObjectCartDispenser, CObjectCartDispenser)
-END_RECV_TABLE()
+END_RECV_TABLE
+()

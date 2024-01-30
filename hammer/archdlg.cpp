@@ -12,15 +12,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static LPCTSTR pszSection = "Arch";
 
-extern void MakeArc(float x1, float y1, float x2, float y2, int npoints,
-					 float start_ang, float fArc, float points[][2]);
+extern void MakeArc(float x1, float y1, float x2, float y2, int npoints, float start_ang, float fArc,
+					float points[][2]);
 
-
-CArchDlg::CArchDlg(Vector& boxmins, Vector& boxmaxs, CWnd* pParent /*=NULL*/)
-	: CDialog(CArchDlg::IDD, pParent)
+CArchDlg::CArchDlg(Vector &boxmins, Vector &boxmaxs, CWnd *pParent /*=NULL*/) : CDialog(CArchDlg::IDD, pParent)
 {
 	bmins = boxmins;
 	bmaxs = boxmaxs;
@@ -44,7 +41,6 @@ CArchDlg::CArchDlg(Vector& boxmins, Vector& boxmaxs, CWnd* pParent /*=NULL*/)
 	m_iAddHeight = AfxGetApp()->GetProfileInt(pszSection, "Add Height", 0);
 }
 
-
 void CArchDlg::SaveValues()
 {
 	CString str;
@@ -57,8 +53,7 @@ void CArchDlg::SaveValues()
 	AfxGetApp()->WriteProfileInt(pszSection, "Add Height", m_iAddHeight);
 }
 
-
-void CArchDlg::DoDataExchange(CDataExchange* pDX)
+void CArchDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 
@@ -84,7 +79,6 @@ void CArchDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CArchDlg, CDialog)
 	//{{AFX_MSG_MAP(CArchDlg)
 	ON_EN_CHANGE(IDC_ARC, OnChangeArc)
@@ -96,27 +90,16 @@ BEGIN_MESSAGE_MAP(CArchDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
-void CArchDlg::OnChangeArc()
-{
-}
-
+void CArchDlg::OnChangeArc() {}
 
 void CArchDlg::OnCircle()
 {
 	m_cArcSpin.SetPos(360);
 }
 
+void CArchDlg::OnUpdateSides() {}
 
-void CArchDlg::OnUpdateSides()
-{
-}
-
-
-void CArchDlg::OnUpdateWallwidth()
-{
-}
-
+void CArchDlg::OnUpdateWallwidth() {}
 
 BOOL CArchDlg::OnInitDialog()
 {
@@ -132,14 +115,13 @@ BOOL CArchDlg::OnInitDialog()
 	return TRUE;
 }
 
-
 void CArchDlg::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
 	// Do not call CDialog::OnPaint() for painting messages
-	CBrush black(RGB(0,0,0));
-	CBrush grey(RGB(128,128,128));
+	CBrush black(RGB(0, 0, 0));
+	CBrush grey(RGB(128, 128, 128));
 
 	CRect rcPreview;
 	m_cPreview.GetWindowRect(&rcPreview);
@@ -147,12 +129,11 @@ void CArchDlg::OnPaint()
 	dc.FillRect(rcPreview, &black);
 
 	DrawArch(&dc);
-	rcPreview.InflateRect(1,1);
+	rcPreview.InflateRect(1, 1);
 	dc.FrameRect(rcPreview, &grey);
 
 	ValidateRect(rcPreview);
 }
-
 
 void CArchDlg::OnArchPreview()
 {
@@ -164,13 +145,9 @@ void CArchDlg::OnArchPreview()
 	UpdateWindow();
 }
 
+CArchDlg::~CArchDlg() {}
 
-CArchDlg::~CArchDlg()
-{
-}
-
-
-void CArchDlg::DrawArch(CDC* pDC)
+void CArchDlg::DrawArch(CDC *pDC)
 {
 	float fOuterPoints[ARC_MAX_POINTS][2];
 	float fInnerPoints[ARC_MAX_POINTS][2];
@@ -180,7 +157,7 @@ void CArchDlg::DrawArch(CDC* pDC)
 
 	CPen m_hPen, *pOldPen;
 
-	m_hPen.CreatePen(PS_SOLID, 1, RGB(255,255,255));
+	m_hPen.CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 
 	pOldPen = pDC->SelectObject(&m_hPen);
 
@@ -189,16 +166,16 @@ void CArchDlg::DrawArch(CDC* pDC)
 	ScreenToClient(&rcItem);
 
 	CPoint pt;
-	pt.x = rcItem.left + rcItem.Width()  / 2;
-	pt.y = rcItem.top  + rcItem.Height() / 2;
+	pt.x = rcItem.left + rcItem.Width() / 2;
+	pt.y = rcItem.top + rcItem.Height() / 2;
 
-	if (bmaxs[0] - bmins[0])
-		fScaleX = rcItem.Width()/(bmaxs[0] - bmins[0]);
+	if(bmaxs[0] - bmins[0])
+		fScaleX = rcItem.Width() / (bmaxs[0] - bmins[0]);
 	else
 		fScaleX = 1.0f;
 
-	if (bmaxs[1] - bmins[1])
-		fScaleY = rcItem.Height()/(bmaxs[1] - bmins[1]);
+	if(bmaxs[1] - bmins[1])
+		fScaleY = rcItem.Height() / (bmaxs[1] - bmins[1]);
 	else
 		fScaleY = 1.0f;
 
@@ -210,17 +187,10 @@ void CArchDlg::DrawArch(CDC* pDC)
 	iSides = m_iSides;
 	iWallWidth = m_iWallWidth;
 
+	MakeArc(bmins[0], bmins[1], bmaxs[0], bmaxs[1], iSides, fStartAngle, fArc, fOuterPoints);
 
-	MakeArc(bmins[0], bmins[1],
-		bmaxs[0], bmaxs[1], iSides,
-		fStartAngle, fArc, fOuterPoints);
-
-	MakeArc(bmins[0] + iWallWidth,
-		bmins[1] + iWallWidth,
-		bmaxs[0] - iWallWidth,
-		bmaxs[1] - iWallWidth, iSides,
-		fStartAngle, fArc, fInnerPoints);
-
+	MakeArc(bmins[0] + iWallWidth, bmins[1] + iWallWidth, bmaxs[0] - iWallWidth, bmaxs[1] - iWallWidth, iSides,
+			fStartAngle, fArc, fInnerPoints);
 
 	// check wall width - if it's half or more of the total,
 	//  set the inner poinst to the center point of the box
@@ -228,11 +198,10 @@ void CArchDlg::DrawArch(CDC* pDC)
 
 	BOOL bCreateSouthFace = TRUE;
 	float fCenter[3];
-	for (int i = 0; i < 3; i++)
-		fCenter[i] = (bmins[i] + bmaxs[i])/2.0;
+	for(int i = 0; i < 3; i++)
+		fCenter[i] = (bmins[i] + bmaxs[i]) / 2.0;
 
-	if((iWallWidth*2+8)  >= (bmaxs[0] - bmins[0]) ||
-		(iWallWidth*2+8) >= (bmaxs[1] - bmins[1]))
+	if((iWallWidth * 2 + 8) >= (bmaxs[0] - bmins[0]) || (iWallWidth * 2 + 8) >= (bmaxs[1] - bmins[1]))
 	{
 		for(int i = 0; i < ARC_MAX_POINTS; i++)
 		{
@@ -242,10 +211,10 @@ void CArchDlg::DrawArch(CDC* pDC)
 		bCreateSouthFace = FALSE;
 	}
 
-	for (int i = 0; i < iSides; i++)
+	for(int i = 0; i < iSides; i++)
 	{
-		int iNextPoint = i+1;
-		if (iNextPoint >= iSides + 1)
+		int iNextPoint = i + 1;
+		if(iNextPoint >= iSides + 1)
 			iNextPoint = 0;
 
 		Vector points[4];
@@ -262,7 +231,7 @@ void CArchDlg::DrawArch(CDC* pDC)
 		points[3][0] = fInnerPoints[i][0];
 		points[3][1] = fInnerPoints[i][1];
 
-		for (int j = 0; j < 4; j++)
+		for(int j = 0; j < 4; j++)
 		{
 			points[j][0] = fScaleX * (points[j][0] - fCenter[0]);
 			points[j][1] = fScaleY * (points[j][1] - fCenter[1]);
@@ -286,5 +255,4 @@ void CArchDlg::DrawArch(CDC* pDC)
 	pDC->LineTo(pt.x + (int)((bmaxs[0] - fCenter[0])*fScaleX), pt.y - (int)((bmins[1] - fCenter[1])*fScaleY));
 	*/
 	pDC->SelectObject(pOldPen);
-
 }

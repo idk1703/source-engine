@@ -77,8 +77,7 @@
 //-----------------------------------------------------------------------------
 // globals
 //-----------------------------------------------------------------------------
-static Vector s_vecWindVelocity( 0, 0, 0 );
-
+static Vector s_vecWindVelocity(0, 0, 0);
 
 CEnvWindShared::CEnvWindShared() : m_WindAveQueue(10), m_WindVariationQueue(10)
 {
@@ -87,21 +86,20 @@ CEnvWindShared::CEnvWindShared() : m_WindAveQueue(10), m_WindVariationQueue(10)
 
 CEnvWindShared::~CEnvWindShared()
 {
-	if (m_pWindSound)
+	if(m_pWindSound)
 	{
-		CSoundEnvelopeController::GetController().Shutdown( m_pWindSound );
+		CSoundEnvelopeController::GetController().Shutdown(m_pWindSound);
 	}
 }
 
-void CEnvWindShared::Init( int nEntIndex, int iRandomSeed, float flTime,
-						  int iInitialWindYaw, float flInitialWindSpeed )
+void CEnvWindShared::Init(int nEntIndex, int iRandomSeed, float flTime, int iInitialWindYaw, float flInitialWindSpeed)
 {
 	m_iEntIndex = nEntIndex;
 	m_flWindAngleVariation = m_flWindSpeedVariation = 1.0f;
 	m_flStartTime = m_flSimTime = m_flSwitchTime = m_flVariationTime = flTime;
 	m_iWindSeed = iRandomSeed;
-	m_Stream.SetSeed( iRandomSeed );
-	m_WindVariationStream.SetSeed( iRandomSeed );
+	m_Stream.SetSeed(iRandomSeed);
+	m_WindVariationStream.SetSeed(iRandomSeed);
 	m_iWindDir = m_iInitialWindDir = iInitialWindYaw;
 
 	m_flAveWindSpeed = m_flWindSpeed = m_flInitialWindSpeed = flInitialWindSpeed;
@@ -121,65 +119,61 @@ void CEnvWindShared::Init( int nEntIndex, int iRandomSeed, float flTime,
 	m_bGusting = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Computes wind variation
 //-----------------------------------------------------------------------------
 
 #define WIND_VARIATION_UPDATE_TIME 0.1f
 
-void CEnvWindShared::ComputeWindVariation( float flTime )
+void CEnvWindShared::ComputeWindVariation(float flTime)
 {
 	// The wind variation is updated every 10th of a second..
-	while( flTime >= m_flVariationTime )
+	while(flTime >= m_flVariationTime)
 	{
-		m_flWindAngleVariation = m_WindVariationStream.RandomFloat( -10, 10 );
-		m_flWindSpeedVariation = 1.0 + m_WindVariationStream.RandomFloat( -0.2, 0.2 );
+		m_flWindAngleVariation = m_WindVariationStream.RandomFloat(-10, 10);
+		m_flWindSpeedVariation = 1.0 + m_WindVariationStream.RandomFloat(-0.2, 0.2);
 		m_flVariationTime += WIND_VARIATION_UPDATE_TIME;
 	}
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Updates the wind sound
 //-----------------------------------------------------------------------------
-void CEnvWindShared::UpdateWindSound( float flTotalWindSpeed )
+void CEnvWindShared::UpdateWindSound(float flTotalWindSpeed)
 {
-	if (!g_pEffects->IsServer())
+	if(!g_pEffects->IsServer())
 	{
-		float flDuration = random->RandomFloat( 1.0f, 2.0f );
+		float flDuration = random->RandomFloat(1.0f, 2.0f);
 		CSoundEnvelopeController &controller = CSoundEnvelopeController::GetController();
 
 		// FIXME: Tweak with these numbers
 		float flNormalizedWindSpeed = flTotalWindSpeed / 150.0f;
-		if (flNormalizedWindSpeed > 1.0f)
+		if(flNormalizedWindSpeed > 1.0f)
 			flNormalizedWindSpeed = 1.0f;
-		float flPitch = 120 * Bias( flNormalizedWindSpeed, 0.3f ) + 100;
-		float flVolume = 0.3f * Bias( flNormalizedWindSpeed, 0.3f ) + 0.7f;
-		controller.SoundChangePitch( m_pWindSound, flPitch, flDuration );
-		controller.SoundChangeVolume( m_pWindSound, flVolume, flDuration );
+		float flPitch = 120 * Bias(flNormalizedWindSpeed, 0.3f) + 100;
+		float flVolume = 0.3f * Bias(flNormalizedWindSpeed, 0.3f) + 0.7f;
+		controller.SoundChangePitch(m_pWindSound, flPitch, flDuration);
+		controller.SoundChangeVolume(m_pWindSound, flVolume, flDuration);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Updates the wind speed
 //-----------------------------------------------------------------------------
 
-#define WIND_ACCELERATION	150.0f	// wind speed can accelerate this many units per second
-#define WIND_DECELERATION	15.0f	// wind speed can decelerate this many units per second
+#define WIND_ACCELERATION 150.0f // wind speed can accelerate this many units per second
+#define WIND_DECELERATION 15.0f	 // wind speed can decelerate this many units per second
 
-float CEnvWindShared::WindThink( float flTime )
+float CEnvWindShared::WindThink(float flTime)
 {
 	// NOTE: This algorithm can be client-server neutal because we're using
 	// the random number generator to generate *time* at which the wind changes.
 	// We therefore need to structure the algorithm so that no matter the
 	// frequency of calls to this function we produce the same wind speeds...
 
-	ComputeWindVariation( flTime );
+	ComputeWindVariation(flTime);
 
-	while (true)
+	while(true)
 	{
 		// First, simulate up to the next switch time...
 		float flTimeToSwitch = m_flSwitchTime - m_flSimTime;
@@ -192,18 +186,18 @@ float CEnvWindShared::WindThink( float flTime )
 		// Now that we've chosen
 		// either ramp up, or sleep till change
 		bool bReachedSteadyState = true;
-		if ( m_flAveWindSpeed > m_flWindSpeed )
+		if(m_flAveWindSpeed > m_flWindSpeed)
 		{
 			m_flWindSpeed += WIND_ACCELERATION * flSimDeltaTime;
-			if (m_flWindSpeed > m_flAveWindSpeed)
+			if(m_flWindSpeed > m_flAveWindSpeed)
 				m_flWindSpeed = m_flAveWindSpeed;
 			else
 				bReachedSteadyState = false;
 		}
-		else if ( m_flAveWindSpeed < m_flWindSpeed )
+		else if(m_flAveWindSpeed < m_flWindSpeed)
 		{
 			m_flWindSpeed -= WIND_DECELERATION * flSimDeltaTime;
-			if (m_flWindSpeed < m_flAveWindSpeed)
+			if(m_flWindSpeed < m_flAveWindSpeed)
 				m_flWindSpeed = m_flAveWindSpeed;
 			else
 				bReachedSteadyState = false;
@@ -212,13 +206,13 @@ float CEnvWindShared::WindThink( float flTime )
 		// Update the sim time
 
 		// If we didn't get to a switch point, then we're done simulating for now
-		if (!bGotToSwitchTime)
+		if(!bGotToSwitchTime)
 		{
 			m_flSimTime = flTime;
 
 			// We're about to exit, let's set the wind velocity...
-			QAngle vecWindAngle( 0, m_iWindDir + m_flWindAngleVariation, 0 );
-			AngleVectors( vecWindAngle, &s_vecWindVelocity );
+			QAngle vecWindAngle(0, m_iWindDir + m_flWindAngleVariation, 0);
+			AngleVectors(vecWindAngle, &s_vecWindVelocity);
 			float flTotalWindSpeed = m_flWindSpeed * m_flWindSpeedVariation;
 			s_vecWindVelocity *= flTotalWindSpeed;
 
@@ -229,41 +223,41 @@ float CEnvWindShared::WindThink( float flTime )
 			// to only update the sound if it's a new time
 			// Or, we'll need to update the sound elsewhere.
 			// Update the sound....
-//			UpdateWindSound( flTotalWindSpeed );
+			//			UpdateWindSound( flTotalWindSpeed );
 
 			// Always immediately call, the wind is forever varying
-			return ( flTime + 0.01f );
+			return (flTime + 0.01f);
 		}
 
 		m_flSimTime = m_flSwitchTime;
 
 		// Switch gusting state..
-		if( m_bGusting )
+		if(m_bGusting)
 		{
 			// wind is gusting, so return to normal wind
-			m_flAveWindSpeed = m_Stream.RandomInt( m_iMinWind, m_iMaxWind );
+			m_flAveWindSpeed = m_Stream.RandomInt(m_iMinWind, m_iMaxWind);
 
 			// set up for another gust later
 			m_bGusting = false;
-			m_flSwitchTime += m_flMinGustDelay + m_Stream.RandomFloat( 0, m_flMaxGustDelay );
+			m_flSwitchTime += m_flMinGustDelay + m_Stream.RandomFloat(0, m_flMaxGustDelay);
 
 #ifndef CLIENT_DLL
-			m_OnGustEnd.FireOutput( NULL, NULL );
+			m_OnGustEnd.FireOutput(NULL, NULL);
 #endif
 		}
 		else
 		{
 			// time for a gust.
-			m_flAveWindSpeed = m_Stream.RandomInt( m_iMinGust, m_iMaxGust );
+			m_flAveWindSpeed = m_Stream.RandomInt(m_iMinGust, m_iMaxGust);
 
 			// change wind direction, maybe a lot
-			m_iWindDir = anglemod( m_iWindDir + m_Stream.RandomInt(-m_iGustDirChange, m_iGustDirChange) );
+			m_iWindDir = anglemod(m_iWindDir + m_Stream.RandomInt(-m_iGustDirChange, m_iGustDirChange));
 
 			// set up to stop the gust in a short while
 			m_bGusting = true;
 
 #ifndef CLIENT_DLL
-			m_OnGustStart.FireOutput( NULL, NULL );
+			m_OnGustStart.FireOutput(NULL, NULL);
 #endif
 
 			// !!!HACKHACK - gust duration tied to the length of a particular wave file
@@ -272,22 +266,20 @@ float CEnvWindShared::WindThink( float flTime )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Method to reset windspeed..
 //-----------------------------------------------------------------------------
 void ResetWindspeed()
 {
-	s_vecWindVelocity.Init( 0, 0, 0 );
+	s_vecWindVelocity.Init(0, 0, 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Method to sample the windspeed at a particular time
 //-----------------------------------------------------------------------------
-void GetWindspeedAtTime( float flTime, Vector &vecVelocity )
+void GetWindspeedAtTime(float flTime, Vector &vecVelocity)
 {
 	// For now, ignore history and time.. fix later when we use wind to affect
 	// client-side prediction
-	VectorCopy( s_vecWindVelocity, vecVelocity );
+	VectorCopy(s_vecWindVelocity, vecVelocity);
 }

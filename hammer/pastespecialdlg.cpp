@@ -8,17 +8,14 @@
 #include "hammer.h"
 #include "PasteSpecialDlg.h"
 
-#pragma warning(disable:4244)
+#pragma warning(disable : 4244)
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static LPCTSTR pszIni = "Paste Special";
 
-
-CPasteSpecialDlg::CPasteSpecialDlg(CWnd* pParent /*=NULL*/, BoundBox* pBox)
-	: CDialog(CPasteSpecialDlg::IDD, pParent)
+CPasteSpecialDlg::CPasteSpecialDlg(CWnd *pParent /*=NULL*/, BoundBox *pBox) : CDialog(CPasteSpecialDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CPasteSpecialDlg)
 	m_iCopies = 1;
@@ -44,14 +41,14 @@ CPasteSpecialDlg::CPasteSpecialDlg(CWnd* pParent /*=NULL*/, BoundBox* pBox)
 	str = App->GetProfileString(pszIni, "Offset", "0 0 0");
 	p = str.GetBuffer(0);
 	m_iOffsetX = atoi(p);
-	m_iOffsetY = atoi(strchr(p, ' ')+1);
-	m_iOffsetZ = atoi(strrchr(p, ' ')+1);
+	m_iOffsetY = atoi(strchr(p, ' ') + 1);
+	m_iOffsetZ = atoi(strrchr(p, ' ') + 1);
 
 	str = App->GetProfileString(pszIni, "Rotate", "0 0 0");
 	p = str.GetBuffer(0);
 	m_fRotateX = atof(p);
-	m_fRotateY = atof(strchr(p, ' ')+1);
-	m_fRotateZ = atof(strrchr(p, ' ')+1);
+	m_fRotateY = atof(strchr(p, ' ') + 1);
+	m_fRotateZ = atof(strrchr(p, ' ') + 1);
 
 	m_bCenterOriginal = App->GetProfileInt(pszIni, "Center", TRUE);
 
@@ -84,16 +81,15 @@ void CPasteSpecialDlg::SaveToIni()
 	App->WriteProfileString(pszIni, "Prefix", m_strPrefix);
 }
 
-
 BOOL CPasteSpecialDlg::OnInitDialog()
 {
 	BOOL bEnable = m_bAddPrefix ? TRUE : FALSE;
-	GetDlgItem( IDC_PASTE_SPECIAL_PREFIX_TEXT )->EnableWindow( bEnable );
+	GetDlgItem(IDC_PASTE_SPECIAL_PREFIX_TEXT)->EnableWindow(bEnable);
 
 	return CDialog::OnInitDialog();
 }
 
-void CPasteSpecialDlg::DoDataExchange(CDataExchange* pDX)
+void CPasteSpecialDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPasteSpecialDlg)
@@ -116,7 +112,6 @@ void CPasteSpecialDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CPasteSpecialDlg, CDialog)
 	//{{AFX_MSG_MAP(CPasteSpecialDlg)
 	ON_BN_CLICKED(IDC_GETOFFSETX, OnGetoffsetx)
@@ -125,7 +120,6 @@ BEGIN_MESSAGE_MAP(CPasteSpecialDlg, CDialog)
 	ON_BN_CLICKED(IDC_PASTE_SPECIAL_ADD_PREFIX, OnCheckUncheckAddPrefix)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 void CPasteSpecialDlg::GetOffset(int iAxis, int iEditCtrl)
 {
@@ -140,9 +134,9 @@ void CPasteSpecialDlg::GetOffset(int iAxis, int iEditCtrl)
 
 	int iAxisSize = ObjectsBox.bmaxs[iAxis] - ObjectsBox.bmins[iAxis];
 
-	if(iValue == iAxisSize)	// if it's already positive, make it neg
+	if(iValue == iAxisSize) // if it's already positive, make it neg
 		strValue.Format("%d", -iAxisSize);
-	else	// it's negative or !=, set it positive
+	else // it's negative or !=, set it positive
 		strValue.Format("%d", iAxisSize);
 
 	// set the window text
@@ -166,7 +160,7 @@ void CPasteSpecialDlg::OnGetoffsetz()
 
 void CPasteSpecialDlg::OnCheckUncheckAddPrefix()
 {
-	CButton *pButton = ( CButton * )GetDlgItem( IDC_PASTE_SPECIAL_ADD_PREFIX );
+	CButton *pButton = (CButton *)GetDlgItem(IDC_PASTE_SPECIAL_ADD_PREFIX);
 	BOOL bEnable = pButton->GetCheck();
-	GetDlgItem( IDC_PASTE_SPECIAL_PREFIX_TEXT )->EnableWindow( bEnable );
+	GetDlgItem(IDC_PASTE_SPECIAL_PREFIX_TEXT)->EnableWindow(bEnable);
 }

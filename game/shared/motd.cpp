@@ -17,7 +17,7 @@ using namespace GCSDK;
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-CMOTDEntryDefinition::CMOTDEntryDefinition( void )
+CMOTDEntryDefinition::CMOTDEntryDefinition(void)
 {
 	m_pKVMOTD = NULL;
 	m_PostTime = 0;
@@ -27,14 +27,14 @@ CMOTDEntryDefinition::CMOTDEntryDefinition( void )
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-bool CMOTDEntryDefinition::BInitFromKV( KeyValues *pKVMOTD, CUtlVector<CUtlString> *pVecErrors )
+bool CMOTDEntryDefinition::BInitFromKV(KeyValues *pKVMOTD, CUtlVector<CUtlString> *pVecErrors)
 {
 	m_pKVMOTD = pKVMOTD->MakeCopy();
 
-	const char *pszTime = m_pKVMOTD->GetString( "post_time", NULL );
+	const char *pszTime = m_pKVMOTD->GetString("post_time", NULL);
 	m_PostTime = (pszTime && pszTime[0]) ? CRTime::RTime32FromString(pszTime) : 0;
 
-	pszTime = m_pKVMOTD->GetString( "last_changed_time", NULL );
+	pszTime = m_pKVMOTD->GetString("last_changed_time", NULL);
 	m_ChangedTime = (pszTime && pszTime[0]) ? CRTime::RTime32FromString(pszTime) : 0;
 
 	return SCHEMA_INIT_SUCCESS();
@@ -43,21 +43,21 @@ bool CMOTDEntryDefinition::BInitFromKV( KeyValues *pKVMOTD, CUtlVector<CUtlStrin
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-const char *CMOTDEntryDefinition::GetTitle( ELanguage eLang )
+const char *CMOTDEntryDefinition::GetTitle(ELanguage eLang)
 {
-	if ( m_pKVMOTD )
+	if(m_pKVMOTD)
 	{
 		// See if we have a localised block for the specified language.
-		const char *pszLanguage = GetLanguageShortName( eLang );
-		if ( pszLanguage && pszLanguage[0] )
+		const char *pszLanguage = GetLanguageShortName(eLang);
+		if(pszLanguage && pszLanguage[0])
 		{
-			const char *pszText = m_pKVMOTD->GetString( CFmtStr( "title_%s", pszLanguage ), NULL );
-			if ( pszText && pszText[0] )
+			const char *pszText = m_pKVMOTD->GetString(CFmtStr("title_%s", pszLanguage), NULL);
+			if(pszText && pszText[0])
 				return pszText;
 		}
 
 		// Fall back to english
-		return m_pKVMOTD->GetString( "title_english", "No Title" );
+		return m_pKVMOTD->GetString("title_english", "No Title");
 	}
 
 	return "No Title";
@@ -66,21 +66,21 @@ const char *CMOTDEntryDefinition::GetTitle( ELanguage eLang )
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-const char *CMOTDEntryDefinition::GetText( ELanguage eLang )
+const char *CMOTDEntryDefinition::GetText(ELanguage eLang)
 {
-	if ( m_pKVMOTD )
+	if(m_pKVMOTD)
 	{
 		// See if we have a localised block for the specified language.
-		const char *pszLanguage = GetLanguageShortName( eLang );
-		if ( pszLanguage && pszLanguage[0] )
+		const char *pszLanguage = GetLanguageShortName(eLang);
+		if(pszLanguage && pszLanguage[0])
 		{
-			const char *pszText = m_pKVMOTD->GetString( CFmtStr( "text_%s", pszLanguage ), NULL );
-			if ( pszText && pszText[0] )
+			const char *pszText = m_pKVMOTD->GetString(CFmtStr("text_%s", pszLanguage), NULL);
+			if(pszText && pszText[0])
 				return pszText;
 		}
 
 		// Fall back to english
-		return m_pKVMOTD->GetString( "text_english", "No text" );
+		return m_pKVMOTD->GetString("text_english", "No text");
 	}
 
 	return "No text";
@@ -89,61 +89,62 @@ const char *CMOTDEntryDefinition::GetText( ELanguage eLang )
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-const char *CMOTDEntryDefinition::GetHeaderTitle( ELanguage eLang )
+const char *CMOTDEntryDefinition::GetHeaderTitle(ELanguage eLang)
 {
-	if ( m_pKVMOTD )
+	if(m_pKVMOTD)
 	{
 		// See if we have a localised block for the specified language.
-		const char *pszLanguage = GetLanguageShortName( eLang );
-		if ( pszLanguage && pszLanguage[0] )
+		const char *pszLanguage = GetLanguageShortName(eLang);
+		if(pszLanguage && pszLanguage[0])
 		{
-			const char *pszText = m_pKVMOTD->GetString( CFmtStr( "header_%s", pszLanguage ), NULL );
-			if ( pszText && pszText[0] )
+			const char *pszText = m_pKVMOTD->GetString(CFmtStr("header_%s", pszLanguage), NULL);
+			if(pszText && pszText[0])
 				return pszText;
 		}
 
 		// Fall back to english
-		return m_pKVMOTD->GetString( "header_english", "News" );
+		return m_pKVMOTD->GetString("header_english", "News");
 	}
 
 	return "News";
 }
 
 // Sort by ID
-int	MOTDEntriesListLess( const CMOTDEntryDefinition *pLhs, const CMOTDEntryDefinition *pRhs )
+int MOTDEntriesListLess(const CMOTDEntryDefinition *pLhs, const CMOTDEntryDefinition *pRhs)
 {
 	// This is stupid, sort by the KeyID instead
-	return ( pLhs->GetNameInt() > pRhs->GetNameInt() );
+	return (pLhs->GetNameInt() > pRhs->GetNameInt());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:	Initializes the loot lists section of the schema
 //-----------------------------------------------------------------------------
-bool CMOTDManager::BInitMOTDEntries( KeyValues *pKVMOTDEntries, CUtlVector<CUtlString> *pVecErrors )
+bool CMOTDManager::BInitMOTDEntries(KeyValues *pKVMOTDEntries, CUtlVector<CUtlString> *pVecErrors)
 {
 	m_vecMOTDEntries.RemoveAll();
 
 	RTime32 iPrevTime = 0;
 
-	if ( NULL != pKVMOTDEntries )
+	if(NULL != pKVMOTDEntries)
 	{
-		FOR_EACH_TRUE_SUBKEY( pKVMOTDEntries, pKVEntry )
+		FOR_EACH_TRUE_SUBKEY(pKVMOTDEntries, pKVEntry)
 		{
 			const char *listName = pKVEntry->GetName();
 
-			SCHEMA_INIT_CHECK( listName != NULL, "All MOTD entries must have titles." );
+			SCHEMA_INIT_CHECK(listName != NULL, "All MOTD entries must have titles.");
 
 			int idx = m_vecMOTDEntries.AddToTail();
-			SCHEMA_INIT_SUBSTEP( m_vecMOTDEntries[idx].BInitFromKV( pKVEntry, pVecErrors ) );
+			SCHEMA_INIT_SUBSTEP(m_vecMOTDEntries[idx].BInitFromKV(pKVEntry, pVecErrors));
 
 			// Make sure the dates all move forward
-			SCHEMA_INIT_CHECK( m_vecMOTDEntries[idx].GetPostTime() > iPrevTime , "MOTD entry '%s' occurs prior to the previous entry.", m_vecMOTDEntries[idx].GetName() );
+			SCHEMA_INIT_CHECK(m_vecMOTDEntries[idx].GetPostTime() > iPrevTime,
+							  "MOTD entry '%s' occurs prior to the previous entry.", m_vecMOTDEntries[idx].GetName());
 			iPrevTime = m_vecMOTDEntries[idx].GetPostTime();
 		}
 	}
 
 	// Then sort all the MOTDs in order of their changed times, so we can easily send them
-	m_vecMOTDEntries.Sort( MOTDEntriesListLess );
+	m_vecMOTDEntries.Sort(MOTDEntriesListLess);
 
 	return SCHEMA_INIT_SUCCESS();
 }
@@ -151,11 +152,11 @@ bool CMOTDManager::BInitMOTDEntries( KeyValues *pKVMOTDEntries, CUtlVector<CUtlS
 //-----------------------------------------------------------------------------
 // Purpose:	Returns the number of MOTD entries we've got after the specified time
 //-----------------------------------------------------------------------------
-int CMOTDManager::GetNumMOTDAfter( RTime32 iTime )
+int CMOTDManager::GetNumMOTDAfter(RTime32 iTime)
 {
-	FOR_EACH_VEC( m_vecMOTDEntries, i )
+	FOR_EACH_VEC(m_vecMOTDEntries, i)
 	{
-		if ( m_vecMOTDEntries[i].GetChangedTime() > iTime )
+		if(m_vecMOTDEntries[i].GetChangedTime() > iTime)
 		{
 			// We've hit the first MOTD entry after this time. All following posts are assumed after.
 			return (m_vecMOTDEntries.Count() - i);
@@ -168,33 +169,33 @@ int CMOTDManager::GetNumMOTDAfter( RTime32 iTime )
 //-----------------------------------------------------------------------------
 // Remove all unused MOTD: Save memory and whatever
 //-----------------------------------------------------------------------------
-void CMOTDManager::PurgeUnusedMOTDEntries( KeyValues *pKVMOTDEntries )
+void CMOTDManager::PurgeUnusedMOTDEntries(KeyValues *pKVMOTDEntries)
 {
 	// Find the latest entry name and remove all others
 	int iLargest = -1;
-	FOR_EACH_VEC_BACK( m_vecMOTDEntries, i )
+	FOR_EACH_VEC_BACK(m_vecMOTDEntries, i)
 	{
 		int iMOTDindex = m_vecMOTDEntries[i].GetNameInt();
-		if ( iMOTDindex > iLargest )
+		if(iMOTDindex > iLargest)
 		{
 			iLargest = iMOTDindex;
 		}
 	}
 
-	FOR_EACH_VEC_BACK( m_vecMOTDEntries, i )
+	FOR_EACH_VEC_BACK(m_vecMOTDEntries, i)
 	{
 		int iMOTDindex = m_vecMOTDEntries[i].GetNameInt();
-		if ( iMOTDindex < iLargest )
+		if(iMOTDindex < iLargest)
 		{
-			if ( pKVMOTDEntries )
+			if(pKVMOTDEntries)
 			{
-				KeyValues *pKey = pKVMOTDEntries->FindKey( m_vecMOTDEntries[i].GetName() );
-				if ( pKey )
+				KeyValues *pKey = pKVMOTDEntries->FindKey(m_vecMOTDEntries[i].GetName());
+				if(pKey)
 				{
-					pKVMOTDEntries->RemoveSubKey( pKey );
+					pKVMOTDEntries->RemoveSubKey(pKey);
 				}
 			}
-			m_vecMOTDEntries.Remove( i );
+			m_vecMOTDEntries.Remove(i);
 		}
 	}
 }
@@ -202,11 +203,11 @@ void CMOTDManager::PurgeUnusedMOTDEntries( KeyValues *pKVMOTDEntries )
 //-----------------------------------------------------------------------------
 // Purpose:	Returns the definition for the next blog post after the specified time
 //-----------------------------------------------------------------------------
-CMOTDEntryDefinition *CMOTDManager::GetNextMOTDAfter( RTime32 iTime )
+CMOTDEntryDefinition *CMOTDManager::GetNextMOTDAfter(RTime32 iTime)
 {
-	FOR_EACH_VEC( m_vecMOTDEntries, i )
+	FOR_EACH_VEC(m_vecMOTDEntries, i)
 	{
-		if ( m_vecMOTDEntries[i].GetChangedTime() > iTime )
+		if(m_vecMOTDEntries[i].GetChangedTime() > iTime)
 			return &m_vecMOTDEntries[i];
 	}
 
@@ -216,13 +217,12 @@ CMOTDEntryDefinition *CMOTDManager::GetNextMOTDAfter( RTime32 iTime )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CMOTDEntryDefinition *CMOTDManager::GetMOTDByIndex( int iIndex )
+CMOTDEntryDefinition *CMOTDManager::GetMOTDByIndex(int iIndex)
 {
-	if ( iIndex < 0 || iIndex > m_vecMOTDEntries.Count() )
+	if(iIndex < 0 || iIndex > m_vecMOTDEntries.Count())
 		return NULL;
 	return &m_vecMOTDEntries[iIndex];
 }
-
 
 #ifdef GC_DLL
 
@@ -232,50 +232,49 @@ CMOTDEntryDefinition *CMOTDManager::GetMOTDByIndex( int iIndex )
 class CGCMOTDRequest : public CGCGameBaseJob
 {
 public:
-	CGCMOTDRequest( CGCGameBase *pGC ) : CGCGameBaseJob( pGC ) { }
-	bool BYieldingRunJobFromMsg( GCSDK::IMsgNetPacket *pNetPacket );
+	CGCMOTDRequest(CGCGameBase *pGC) : CGCGameBaseJob(pGC) {}
+	bool BYieldingRunJobFromMsg(GCSDK::IMsgNetPacket *pNetPacket);
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Responds to requests from the client for the current MOTD list
 //-----------------------------------------------------------------------------
-bool CGCMOTDRequest::BYieldingRunJobFromMsg( IMsgNetPacket *pNetPacket )
+bool CGCMOTDRequest::BYieldingRunJobFromMsg(IMsgNetPacket *pNetPacket)
 {
-	CGCMsg< MsgGCMOTDRequest_t > msg( pNetPacket );
+	CGCMsg<MsgGCMOTDRequest_t> msg(pNetPacket);
 	ELanguage eLang = (ELanguage)msg.Body().m_eLanguage;
 	RTime32 iMOTDTime = msg.Body().m_nLastMOTDRequest;
 
 	// Send the response to the client
-	GCSDK::CGCMsg<MsgGCMOTDRequestResponse_t> msg_response( k_EMsgGCMOTDRequestResponse );
+	GCSDK::CGCMsg<MsgGCMOTDRequestResponse_t> msg_response(k_EMsgGCMOTDRequestResponse);
 
 	int iEntries = 0;
-	CMOTDEntryDefinition *pMOTD = m_pGCGameBase->GetMOTDManager().GetNextMOTDAfter( iMOTDTime );
-	while ( pMOTD )
+	CMOTDEntryDefinition *pMOTD = m_pGCGameBase->GetMOTDManager().GetNextMOTDAfter(iMOTDTime);
+	while(pMOTD)
 	{
 		// Stuff this MOTD into the message.
-		msg_response.AddStrData( pMOTD->GetName() );
-		msg_response.AddUintData( pMOTD->GetPostTime() );
-		msg_response.AddStrData( pMOTD->GetTitle( eLang ) );
-		msg_response.AddStrData( pMOTD->GetText( eLang ) );
-		msg_response.AddStrData( pMOTD->GetURL() );
-		msg_response.AddStrData( pMOTD->GetImage() );
-		msg_response.AddIntData( pMOTD->GetHeaderType() );
-		msg_response.AddStrData( pMOTD->GetHeaderTitle( eLang ) );
-		msg_response.AddStrData( pMOTD->GetHeaderIcon() );
+		msg_response.AddStrData(pMOTD->GetName());
+		msg_response.AddUintData(pMOTD->GetPostTime());
+		msg_response.AddStrData(pMOTD->GetTitle(eLang));
+		msg_response.AddStrData(pMOTD->GetText(eLang));
+		msg_response.AddStrData(pMOTD->GetURL());
+		msg_response.AddStrData(pMOTD->GetImage());
+		msg_response.AddIntData(pMOTD->GetHeaderType());
+		msg_response.AddStrData(pMOTD->GetHeaderTitle(eLang));
+		msg_response.AddStrData(pMOTD->GetHeaderIcon());
 		iEntries++;
 
 		// Move on to the next message.
 		iMOTDTime = pMOTD->GetChangedTime();
-		pMOTD = m_pGCGameBase->GetMOTDManager().GetNextMOTDAfter( iMOTDTime );
+		pMOTD = m_pGCGameBase->GetMOTDManager().GetNextMOTDAfter(iMOTDTime);
 	}
 	msg_response.Body().m_nEntries = iEntries;
 
-	GGCEcon()->BSendGCMsgToClient( msg.Hdr().m_ulSteamID, msg_response );
+	GGCEcon()->BSendGCMsgToClient(msg.Hdr().m_ulSteamID, msg_response);
 
 	return true;
 }
 
-GC_REG_JOB( CGCGameBase, CGCMOTDRequest, "CGCMOTDRequest", k_EMsgGCMOTDRequest, k_EServerTypeGC );
+GC_REG_JOB(CGCGameBase, CGCMOTDRequest, "CGCMOTDRequest", k_EMsgGCMOTDRequest, k_EServerTypeGC);
 
 #endif // GC_DLL

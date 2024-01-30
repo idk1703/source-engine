@@ -5,7 +5,6 @@
 // $NoKeywords: $
 //=============================================================================//
 
-
 #include "vgui_surfacelib/linuxfont.h"
 
 #include <assert.h>
@@ -26,28 +25,38 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define FT_LOAD_FLAGS	0 //$ (FT_LOAD_TARGET_LIGHT)
+#define FT_LOAD_FLAGS 0 //$ (FT_LOAD_TARGET_LIGHT)
 
-namespace {
+namespace
+{
 
-// Freetype uses a lot of fixed float values that are 26.6 splits of a 32 bit word.
-// to make it an int, shift down the 6 bits and round up if the high bit of the 6
-// bits was set.
-inline int32_t FIXED6_2INT(int32_t x)   { return ( (x>>6) + ( (x&0x20) ? (x<0 ? -1 : 1) : 0) ); }
-inline float   FIXED6_2FLOAT(int32_t x) { return (float)x / 64.0f; }
-inline int32_t INT_2FIXED6(int32_t x)   { return x << 6; }
+	// Freetype uses a lot of fixed float values that are 26.6 splits of a 32 bit word.
+	// to make it an int, shift down the 6 bits and round up if the high bit of the 6
+	// bits was set.
+	inline int32_t FIXED6_2INT(int32_t x)
+	{
+		return ((x >> 6) + ((x & 0x20) ? (x < 0 ? -1 : 1) : 0));
+	}
+	inline float FIXED6_2FLOAT(int32_t x)
+	{
+		return (float)x / 64.0f;
+	}
+	inline int32_t INT_2FIXED6(int32_t x)
+	{
+		return x << 6;
+	}
 
-}
+} // namespace
 
 bool CLinuxFont::ms_bSetFriendlyNameCacheLessFunc = false;
-CUtlRBTree< CLinuxFont::font_name_entry > CLinuxFont::m_FriendlyNameCache;
+CUtlRBTree<CLinuxFont::font_name_entry> CLinuxFont::m_FriendlyNameCache;
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CLinuxFont::CLinuxFont() :
-	m_ExtendedABCWidthsCache(256, 0, &ExtendedABCWidthsCacheLessFunc),
-	m_ExtendedKernedABCWidthsCache( 256, 0, &ExtendedKernedABCWidthsCacheLessFunc )
+CLinuxFont::CLinuxFont()
+	: m_ExtendedABCWidthsCache(256, 0, &ExtendedABCWidthsCacheLessFunc),
+	  m_ExtendedKernedABCWidthsCache(256, 0, &ExtendedKernedABCWidthsCacheLessFunc)
 {
 	m_face = NULL;
 	m_faceValid = false;
@@ -63,10 +72,10 @@ CLinuxFont::CLinuxFont() :
 	m_iScanLines = 0;
 	m_bRotary = false;
 	m_bAdditive = false;
-	if ( !ms_bSetFriendlyNameCacheLessFunc )
+	if(!ms_bSetFriendlyNameCacheLessFunc)
 	{
 		ms_bSetFriendlyNameCacheLessFunc = true;
-		SetDefLessFunc( m_FriendlyNameCache );
+		SetDefLessFunc(m_FriendlyNameCache);
 	}
 }
 
@@ -75,21 +84,21 @@ CLinuxFont::CLinuxFont() :
 //-----------------------------------------------------------------------------
 CLinuxFont::~CLinuxFont()
 {
-	if( m_faceValid )
+	if(m_faceValid)
 	{
-		FT_Done_Face( m_face );
+		FT_Done_Face(m_face);
 		m_face = NULL;
 		m_faceValid = false;
 	}
 }
 
-
 //-----------------------------------------------------------------------------
-// Purpose: build a map of friendly (char *) name to crazy ATSU bytestream, so we can ask for "Tahoma" and actually load it
+// Purpose: build a map of friendly (char *) name to crazy ATSU bytestream, so we can ask for "Tahoma" and actually load
+// it
 //-----------------------------------------------------------------------------
 void CLinuxFont::CreateFontList()
 {
-	if ( m_FriendlyNameCache.Count() > 0 )
+	if(m_FriendlyNameCache.Count() > 0)
 		return;
 
 	if(!FcInit())
@@ -116,44 +125,44 @@ void CLinuxFont::CreateFontList()
 	{
 		FcBool scalable;
 
-		if ( FcPatternGetBool(fontset->fonts[i], FC_SCALABLE, 0, &scalable) == FcResultMatch && !scalable )
+		if(FcPatternGetBool(fontset->fonts[i], FC_SCALABLE, 0, &scalable) == FcResultMatch && !scalable)
 			continue;
 
-		if ( FcPatternGetString(fontset->fonts[i], FC_FAMILY, 0, (FcChar8**)&name) != FcResultMatch )
+		if(FcPatternGetString(fontset->fonts[i], FC_FAMILY, 0, (FcChar8 **)&name) != FcResultMatch)
 			continue;
-		if ( FcPatternGetString(fontset->fonts[i], FC_FILE, 0, (FcChar8**)&file) != FcResultMatch )
+		if(FcPatternGetString(fontset->fonts[i], FC_FILE, 0, (FcChar8 **)&file) != FcResultMatch)
 			continue;
 
 		font_name_entry entry;
-		entry.m_pchFile = (char *)malloc( Q_strlen(file) + 1 );
-		entry.m_pchFriendlyName = (char *)malloc( Q_strlen(name) +1);
-		Q_memcpy( entry.m_pchFile, file, Q_strlen(file) + 1 );
-		Q_memcpy( entry.m_pchFriendlyName, name, Q_strlen(name) +1);
-		m_FriendlyNameCache.Insert( entry );
+		entry.m_pchFile = (char *)malloc(Q_strlen(file) + 1);
+		entry.m_pchFriendlyName = (char *)malloc(Q_strlen(name) + 1);
+		Q_memcpy(entry.m_pchFile, file, Q_strlen(file) + 1);
+		Q_memcpy(entry.m_pchFriendlyName, name, Q_strlen(name) + 1);
+		m_FriendlyNameCache.Insert(entry);
 
 		// substitute Vera Sans for Tahoma on X
-		if ( !V_stricmp( name, "Bitstream Vera Sans" ) )
+		if(!V_stricmp(name, "Bitstream Vera Sans"))
 		{
 			name = "Tahoma";
-			entry.m_pchFile = (char *)malloc( Q_strlen(file) + 1 );
-			entry.m_pchFriendlyName = (char *)malloc( Q_strlen(name) +1);
-			Q_memcpy( entry.m_pchFile, file, Q_strlen(file) + 1 );
-			Q_memcpy( entry.m_pchFriendlyName, name, Q_strlen(name) +1);
-			m_FriendlyNameCache.Insert( entry );
+			entry.m_pchFile = (char *)malloc(Q_strlen(file) + 1);
+			entry.m_pchFriendlyName = (char *)malloc(Q_strlen(name) + 1);
+			Q_memcpy(entry.m_pchFile, file, Q_strlen(file) + 1);
+			Q_memcpy(entry.m_pchFriendlyName, name, Q_strlen(name) + 1);
+			m_FriendlyNameCache.Insert(entry);
 
 			name = "Verdana";
-			entry.m_pchFile = (char *)malloc( Q_strlen(file) + 1 );
-			entry.m_pchFriendlyName = (char *)malloc( Q_strlen(name) +1);
-			Q_memcpy( entry.m_pchFile, file, Q_strlen(file) + 1 );
-			Q_memcpy( entry.m_pchFriendlyName, name, Q_strlen(name) +1);
-			m_FriendlyNameCache.Insert( entry );
+			entry.m_pchFile = (char *)malloc(Q_strlen(file) + 1);
+			entry.m_pchFriendlyName = (char *)malloc(Q_strlen(name) + 1);
+			Q_memcpy(entry.m_pchFile, file, Q_strlen(file) + 1);
+			Q_memcpy(entry.m_pchFriendlyName, name, Q_strlen(name) + 1);
+			m_FriendlyNameCache.Insert(entry);
 
 			name = "Lucidia Console";
-			entry.m_pchFile = (char *)malloc( Q_strlen(file) + 1 );
-			entry.m_pchFriendlyName = (char *)malloc( Q_strlen(name) +1);
-			Q_memcpy( entry.m_pchFile, file, Q_strlen(file) + 1 );
-			Q_memcpy( entry.m_pchFriendlyName, name, Q_strlen(name) +1);
-			m_FriendlyNameCache.Insert( entry );
+			entry.m_pchFile = (char *)malloc(Q_strlen(file) + 1);
+			entry.m_pchFriendlyName = (char *)malloc(Q_strlen(name) + 1);
+			Q_memcpy(entry.m_pchFile, file, Q_strlen(file) + 1);
+			Q_memcpy(entry.m_pchFriendlyName, name, Q_strlen(name) + 1);
+			m_FriendlyNameCache.Insert(entry);
 		}
 	}
 
@@ -162,24 +171,24 @@ void CLinuxFont::CreateFontList()
 	FcPatternDestroy(pat);
 }
 
-static FcPattern* FontMatch(const char* type, FcType vtype, const void* value,
-							...)
+static FcPattern *FontMatch(const char *type, FcType vtype, const void *value, ...)
 {
 	va_list ap;
 	va_start(ap, value);
 
-	FcPattern* pattern = FcPatternCreate();
+	FcPattern *pattern = FcPatternCreate();
 
-	for (;;)
+	for(;;)
 	{
 		FcValue fcvalue;
 		fcvalue.type = vtype;
-		switch (vtype) {
+		switch(vtype)
+		{
 			case FcTypeString:
-				fcvalue.u.s = (FcChar8*) value;
+				fcvalue.u.s = (FcChar8 *)value;
 				break;
 			case FcTypeInteger:
-				fcvalue.u.i = (int) value;
+				fcvalue.u.i = (int)value;
 				break;
 			default:
 				Assert(!"FontMatch unhandled type");
@@ -187,7 +196,7 @@ static FcPattern* FontMatch(const char* type, FcType vtype, const void* value,
 		FcPatternAdd(pattern, type, fcvalue, 0);
 
 		type = va_arg(ap, const char *);
-		if (!type)
+		if(!type)
 			break;
 		// FcType is promoted to int when passed through ...
 		vtype = static_cast<FcType>(va_arg(ap, int));
@@ -199,13 +208,14 @@ static FcPattern* FontMatch(const char* type, FcType vtype, const void* value,
 	FcDefaultSubstitute(pattern);
 
 	FcResult result;
-	FcPattern* match = FcFontMatch(0, pattern, &result);
+	FcPattern *match = FcFontMatch(0, pattern, &result);
 	FcPatternDestroy(pattern);
 
 	return match;
 }
 
-bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int datasize, int tall, int weight, int blur, int scanlines, int flags)
+bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int datasize, int tall, int weight, int blur,
+								  int scanlines, int flags)
 {
 	// setup font properties
 	m_szName = windowsFontName;
@@ -221,32 +231,32 @@ bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int d
 	m_bRotary = flags & vgui::ISurface::FONTFLAG_ROTARY;
 	m_bAdditive = flags & vgui::ISurface::FONTFLAG_ADDITIVE;
 
-	if ( !HushAsserts() )
+	if(!HushAsserts())
 	{
 		// These flags are NYI in Linux right now.
-		Assert( !m_bAntiAliased );
-		Assert( !m_bUnderlined );
-		Assert( !m_bAdditive );
+		Assert(!m_bAntiAliased);
+		Assert(!m_bUnderlined);
+		Assert(!m_bAdditive);
 	}
 
-	Assert( !m_faceValid );
-	FT_Error error = FT_New_Memory_Face( FontManager().GetFontLibraryHandle(), (FT_Byte *)data, datasize, 0, &m_face );
-	if ( error )
+	Assert(!m_faceValid);
+	FT_Error error = FT_New_Memory_Face(FontManager().GetFontLibraryHandle(), (FT_Byte *)data, datasize, 0, &m_face);
+	if(error)
 	{
 		// FT_Err_Unknown_File_Format?
-		Msg( "FT_New_Memory_Face failed. font:%s error:%d\n", windowsFontName, error );
+		Msg("FT_New_Memory_Face failed. font:%s error:%d\n", windowsFontName, error);
 		return false;
 	}
 
-	if ( m_face->charmap == NULL )
+	if(m_face->charmap == NULL)
 	{
-		FT_Error error = FT_Select_Charmap( m_face, FT_ENCODING_APPLE_ROMAN );
-		if ( error )
+		FT_Error error = FT_Select_Charmap(m_face, FT_ENCODING_APPLE_ROMAN);
+		if(error)
 		{
-			FT_Done_Face( m_face );
+			FT_Done_Face(m_face);
 			m_face = NULL;
 
-			Msg( "Font %s has no valid charmap\n", windowsFontName );
+			Msg("Font %s has no valid charmap\n", windowsFontName);
 			return false;
 		}
 	}
@@ -264,58 +274,57 @@ bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int d
 	bool bFirstTimeThrough = true;
 	int IncAmount = -1;
 
-	for ( ;; )
+	for(;;)
 	{
 		bool SetPixelSizesFailed = false;
 
-		FT_Error error = FT_Set_Pixel_Sizes( m_face, 0, m_iHeightRequested );
-		if ( error )
+		FT_Error error = FT_Set_Pixel_Sizes(m_face, 0, m_iHeightRequested);
+		if(error)
 		{
 			SetPixelSizesFailed = true;
 
 			// If FT_Set_Pixel_Sizes fails, it should be because we've got a fixed-size font.
-			Assert( m_face->face_flags & FT_FACE_FLAG_FIXED_SIZES );
-			Assert( !( m_face->face_flags & FT_FACE_FLAG_SCALABLE ) );
+			Assert(m_face->face_flags & FT_FACE_FLAG_FIXED_SIZES);
+			Assert(!(m_face->face_flags & FT_FACE_FLAG_SCALABLE));
 
-			if ( m_face->num_fixed_sizes )
+			if(m_face->num_fixed_sizes)
 			{
 				// Pick width/height of first size.
-				int width = m_face->available_sizes[ 0 ].width;
-				m_iHeightRequested = m_face->available_sizes[ 0 ].height;
+				int width = m_face->available_sizes[0].width;
+				m_iHeightRequested = m_face->available_sizes[0].height;
 
 				// Loop through all the other available sizes and find the closest match.
-				for ( int i = 1; i < m_face->num_fixed_sizes; i++ )
+				for(int i = 1; i < m_face->num_fixed_sizes; i++)
 				{
-					if ( ( m_face->available_sizes[ i ].height <= m_iTall ) &&
-						( m_face->available_sizes[ i ].height > m_iHeightRequested ) )
+					if((m_face->available_sizes[i].height <= m_iTall) &&
+					   (m_face->available_sizes[i].height > m_iHeightRequested))
 					{
-						width = m_face->available_sizes[ i ].width;
-						m_iHeightRequested = m_face->available_sizes[ i ].height;
+						width = m_face->available_sizes[i].width;
+						m_iHeightRequested = m_face->available_sizes[i].height;
 					}
 				}
 
 				FT_Size_RequestRec req;
 
-				Q_memset( &req, 0, sizeof( req ) );
-				req.type           = FT_SIZE_REQUEST_TYPE_REAL_DIM;
-				req.width          = INT_2FIXED6( width );
-				req.height         = INT_2FIXED6( m_iHeightRequested );
+				Q_memset(&req, 0, sizeof(req));
+				req.type = FT_SIZE_REQUEST_TYPE_REAL_DIM;
+				req.width = INT_2FIXED6(width);
+				req.height = INT_2FIXED6(m_iHeightRequested);
 				req.horiResolution = 0;
 				req.vertResolution = 0;
 
-				error = FT_Request_Size( m_face, &req );
-				if ( error )
+				error = FT_Request_Size(m_face, &req);
+				if(error)
 				{
-					Msg( "FT_Request_Size failed on %s / %s\n",
-						m_face->family_name ? m_face->family_name : "??",
-						m_face->style_name ? m_face->style_name : "??" );
+					Msg("FT_Request_Size failed on %s / %s\n", m_face->family_name ? m_face->family_name : "??",
+						m_face->style_name ? m_face->style_name : "??");
 				}
 			}
 		}
 
 		FT_Pos ascender, descender;
 
-		if( SetPixelSizesFailed )
+		if(SetPixelSizesFailed)
 		{
 			// If SetPixelSizesFailed failed, then we've hopefully got a fixed size
 			//	font, and we can just use the metrics.
@@ -327,7 +336,7 @@ bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int d
 			// Full bounding box ascent and descent:
 			//   ( a * b ) / 0x10000. y_scale is 16.16.
 			//$ ascender = FT_MulFix( m_face->bbox.yMax, m_face->size->metrics.y_scale );
-			descender = FT_MulFix( m_face->bbox.yMin, m_face->size->metrics.y_scale );
+			descender = FT_MulFix(m_face->bbox.yMin, m_face->size->metrics.y_scale);
 
 			// Metrics ascent and descent
 			ascender = m_face->size->metrics.ascender;
@@ -339,55 +348,55 @@ bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int d
 			// check for the tallest character we know about (O') and bump up the ascender
 			// value if it is greater than what we've currently got.
 			wchar_t ch = 0xd3;
-			error = FT_Load_Char( m_face, ch, FT_LOAD_RENDER | FT_LOAD_TARGET_NORMAL);
-			if ( !error )
+			error = FT_Load_Char(m_face, ch, FT_LOAD_RENDER | FT_LOAD_TARGET_NORMAL);
+			if(!error)
 			{
-				int glyph_index = FT_Get_Char_Index( m_face, ch );
-				error = FT_Load_Glyph( m_face, glyph_index, FT_LOAD_RENDER );
-				if ( !error )
+				int glyph_index = FT_Get_Char_Index(m_face, ch);
+				error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_RENDER);
+				if(!error)
 				{
 					FT_GlyphSlot slot = m_face->glyph;
-					FT_Pos ascenderTop = INT_2FIXED6( slot->bitmap_top );
+					FT_Pos ascenderTop = INT_2FIXED6(slot->bitmap_top);
 
-					if( ascenderTop > ascender )
+					if(ascenderTop > ascender)
 					{
 						ascender = ascenderTop;
 					}
-					else if ( !slot->bitmap.rows || !slot->bitmap.width )
+					else if(!slot->bitmap.rows || !slot->bitmap.width)
 					{
 						// We didn't find an O' character in this font: use the full BBox.
-						ascender = FT_MulFix( m_face->bbox.yMax, m_face->size->metrics.y_scale );
+						ascender = FT_MulFix(m_face->bbox.yMax, m_face->size->metrics.y_scale);
 					}
 				}
 			}
 		}
 
-		m_iAscent = FIXED6_2INT( ascender );
+		m_iAscent = FIXED6_2INT(ascender);
 
-		m_iMaxCharWidth = FIXED6_2INT( m_face->size->metrics.max_advance );
+		m_iMaxCharWidth = FIXED6_2INT(m_face->size->metrics.max_advance);
 
-		const int fxpHeight = ascender + -descender + INT_2FIXED6( m_iDropShadowOffset + 2 * m_iOutlineSize );
-		m_iHeight = FIXED6_2INT( fxpHeight );
+		const int fxpHeight = ascender + -descender + INT_2FIXED6(m_iDropShadowOffset + 2 * m_iOutlineSize);
+		m_iHeight = FIXED6_2INT(fxpHeight);
 
 		// If we're exact or we got too small, bail.
-		if ( SetPixelSizesFailed || ( m_iHeight == m_iTall ) || ( m_iHeight < 7 ) || ( m_iHeightRequested <= 1 ) )
+		if(SetPixelSizesFailed || (m_iHeight == m_iTall) || (m_iHeight < 7) || (m_iHeightRequested <= 1))
 			break;
 
-		if( bFirstTimeThrough )
+		if(bFirstTimeThrough)
 		{
 			bFirstTimeThrough = false;
 
 			// If we're smaller than requested, start searching up.
-			if ( m_iHeight < m_iTall )
+			if(m_iHeight < m_iTall)
 				IncAmount = +1;
 		}
-		else if( IncAmount > 0 )
+		else if(IncAmount > 0)
 		{
 			// If we're searching up and went too far, drop IncAmount and run down.
-			if( m_iHeight > m_iTall )
+			if(m_iHeight > m_iTall)
 				IncAmount = -1;
 		}
-		else if ( m_iHeight <= m_iTall )
+		else if(m_iHeight <= m_iTall)
 		{
 			// If the height is less than tall, we're done.
 			break;
@@ -403,43 +412,41 @@ bool CLinuxFont::CreateFromMemory(const char *windowsFontName, void *data, int d
 //-----------------------------------------------------------------------------
 // Purpose: Given a font name from windows, match it to the filename and return that.
 //-----------------------------------------------------------------------------
-char *CLinuxFont::GetFontFileName( const char *windowsFontName, int flags )
+char *CLinuxFont::GetFontFileName(const char *windowsFontName, int flags)
 {
 	bool bBold = false;
 	const char *pchFontName = windowsFontName;
 
-	if ( !Q_stricmp( pchFontName, "Tahoma" ) )
+	if(!Q_stricmp(pchFontName, "Tahoma"))
 		pchFontName = "Bitstream Vera Sans";
-	else if ( !Q_stricmp( pchFontName, "Arial Black" ) || Q_stristr( pchFontName, "bold" ) )
+	else if(!Q_stricmp(pchFontName, "Arial Black") || Q_stristr(pchFontName, "bold"))
 		bBold = true;
 
-	const int italic = ( flags & vgui::ISurface::FONTFLAG_ITALIC ) ? FC_SLANT_ITALIC : FC_SLANT_ROMAN;
+	const int italic = (flags & vgui::ISurface::FONTFLAG_ITALIC) ? FC_SLANT_ITALIC : FC_SLANT_ROMAN;
 	const int nFcWeight = bBold ? FC_WEIGHT_BOLD : FC_WEIGHT_NORMAL;
 
-	FcPattern *match = FontMatch( FC_FAMILY, FcTypeString, pchFontName,
-								FC_WEIGHT, FcTypeInteger, nFcWeight,
-								FC_SLANT, FcTypeInteger, italic,
-								NULL);
-	if ( !match )
+	FcPattern *match = FontMatch(FC_FAMILY, FcTypeString, pchFontName, FC_WEIGHT, FcTypeInteger, nFcWeight, FC_SLANT,
+								 FcTypeInteger, italic, NULL);
+	if(!match)
 	{
-		AssertMsg1( false, "Unable to find font named %s\n", windowsFontName );
+		AssertMsg1(false, "Unable to find font named %s\n", windowsFontName);
 		return NULL;
 	}
 	else
 	{
 		char *filenameret = NULL;
-		FcChar8* filename = NULL;
+		FcChar8 *filename = NULL;
 
-		if ( FcPatternGetString(match, FC_FILE, 0, &filename) != FcResultMatch )
+		if(FcPatternGetString(match, FC_FILE, 0, &filename) != FcResultMatch)
 		{
-			AssertMsg1( false, "Unable to find font named %s\n", windowsFontName );
+			AssertMsg1(false, "Unable to find font named %s\n", windowsFontName);
 		}
 		else
 		{
-			filenameret = strdup( ( char * )filename );
+			filenameret = strdup((char *)filename);
 		}
 
-		FcPatternDestroy( match );
+		FcPatternDestroy(match);
 		return filenameret;
 	}
 }
@@ -447,117 +454,119 @@ char *CLinuxFont::GetFontFileName( const char *windowsFontName, int flags )
 //-----------------------------------------------------------------------------
 // Purpose: writes the char into the specified 32bpp texture
 //-----------------------------------------------------------------------------
-void CLinuxFont::GetCharRGBA( wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba )
+void CLinuxFont::GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba)
 {
 	bool bShouldAntialias = m_bAntiAliased;
 
 	// filter out
-	if ( ( ch > 0x00FF ) && !( m_iFlags & vgui::ISurface::FONTFLAG_CUSTOM ) )
+	if((ch > 0x00FF) && !(m_iFlags & vgui::ISurface::FONTFLAG_CUSTOM))
 	{
 		bShouldAntialias = false;
 	}
 
-	FT_Error error = FT_Load_Char( m_face, ch, FT_LOAD_RENDER | FT_LOAD_TARGET_NORMAL );
-	if ( error )
+	FT_Error error = FT_Load_Char(m_face, ch, FT_LOAD_RENDER | FT_LOAD_TARGET_NORMAL);
+	if(error)
 	{
-		Msg( "Error in FT_Load_Char: ch:%x error:%x\n", (int)ch, error );
+		Msg("Error in FT_Load_Char: ch:%x error:%x\n", (int)ch, error);
 		return;
 	}
 
-	int glyph_index = FT_Get_Char_Index( m_face, ch );
-	error = FT_Load_Glyph( m_face, glyph_index, FT_LOAD_RENDER | FT_LOAD_FLAGS );
-	if ( error )
+	int glyph_index = FT_Get_Char_Index(m_face, ch);
+	error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_RENDER | FT_LOAD_FLAGS);
+	if(error)
 	{
-		Msg( "Error in FL_Load_Glyph: glyph_index:%d error:%x\n", glyph_index, error );
+		Msg("Error in FL_Load_Glyph: glyph_index:%d error:%x\n", glyph_index, error);
 		return;
 	}
 
 	int yBitmapStart = 0;
 	FT_GlyphSlot slot = m_face->glyph;
-	int nSkipRows = ( m_iAscent - slot->bitmap_top );
+	int nSkipRows = (m_iAscent - slot->bitmap_top);
 
-	if( nSkipRows < 0 )
+	if(nSkipRows < 0)
 	{
 		yBitmapStart = -nSkipRows;
 		nSkipRows = 0;
 	}
-	if ( nSkipRows >= rgbaTall )
+	if(nSkipRows >= rgbaTall)
 	{
-		Msg( "nSkipRows(%d) > rgbaTall(%d) ch:%d\n", nSkipRows, rgbaTall, (int)ch );
+		Msg("nSkipRows(%d) > rgbaTall(%d) ch:%d\n", nSkipRows, rgbaTall, (int)ch);
 		return;
 	}
 
-	if ( m_face->glyph->bitmap.width == 0 )
+	if(m_face->glyph->bitmap.width == 0)
 	{
-		Msg( "m_face->glyph->bitmap.width is 0 for ch:%d %s\n", (int)ch, m_face->family_name ? m_face->family_name : "??" );
+		Msg("m_face->glyph->bitmap.width is 0 for ch:%d %s\n", (int)ch,
+			m_face->family_name ? m_face->family_name : "??");
 		return;
 	}
 
 	FT_Bitmap bitmap;
 	FT_Library ftLibrary = FontManager().GetFontLibraryHandle();
 
-	FT_Bitmap_New( &bitmap );
+	FT_Bitmap_New(&bitmap);
 
-	error = FT_Bitmap_Convert( ftLibrary, &m_face->glyph->bitmap, &bitmap, 1 );
-	if( error == 0 )
+	error = FT_Bitmap_Convert(ftLibrary, &m_face->glyph->bitmap, &bitmap, 1);
+	if(error == 0)
 	{
 		uint32 alpha_scale = 1;
-		int Width = min( rgbaWide, bitmap.width );
-		unsigned char *rgba = prgba + ( nSkipRows * rgbaWide * 4 );
+		int Width = min(rgbaWide, bitmap.width);
+		unsigned char *rgba = prgba + (nSkipRows * rgbaWide * 4);
 
-		switch( m_face->glyph->bitmap.pixel_mode )
+		switch(m_face->glyph->bitmap.pixel_mode)
 		{
-		case FT_PIXEL_MODE_MONO: // 8-bit per pixel bitmap
-			alpha_scale *= 256;
-			break;
-		case FT_PIXEL_MODE_GRAY2: // 2-bit per pixel bitmap
-			alpha_scale *= 64;
-			break;
-		case FT_PIXEL_MODE_GRAY4: // 4-bit per pixel bitmap
-			alpha_scale *= 16;
-			break;
+			case FT_PIXEL_MODE_MONO: // 8-bit per pixel bitmap
+				alpha_scale *= 256;
+				break;
+			case FT_PIXEL_MODE_GRAY2: // 2-bit per pixel bitmap
+				alpha_scale *= 64;
+				break;
+			case FT_PIXEL_MODE_GRAY4: // 4-bit per pixel bitmap
+				alpha_scale *= 16;
+				break;
 		}
 
 		/* now draw to our target surface */
-		for ( int y = yBitmapStart; y < MIN( bitmap.rows, rgbaTall - nSkipRows ); y++ )
+		for(int y = yBitmapStart; y < MIN(bitmap.rows, rgbaTall - nSkipRows); y++)
 		{
-			for ( int x = 0; x < Width; x++ )
+			for(int x = 0; x < Width; x++)
 			{
-				int rgbaOffset = 4 * ( x + m_iBlur ); // +(rgbaTall-y-1)*rgbaWide*4
-				uint32 alpha = Min( 255U, alpha_scale * bitmap.buffer[ x + y * bitmap.pitch ] );
+				int rgbaOffset = 4 * (x + m_iBlur); // +(rgbaTall-y-1)*rgbaWide*4
+				uint32 alpha = Min(255U, alpha_scale * bitmap.buffer[x + y * bitmap.pitch]);
 
-				rgba[ rgbaOffset + 0 ] =  255;
-				rgba[ rgbaOffset + 1 ] =  255;
-				rgba[ rgbaOffset + 2 ] =  255;
-				rgba[ rgbaOffset + 3 ] =  alpha;
+				rgba[rgbaOffset + 0] = 255;
+				rgba[rgbaOffset + 1] = 255;
+				rgba[rgbaOffset + 2] = 255;
+				rgba[rgbaOffset + 3] = alpha;
 			}
-			rgba += ( rgbaWide * 4 );
+			rgba += (rgbaWide * 4);
 		}
 
 		// apply requested effects in specified order
-		ApplyDropShadowToTexture( rgbaWide, rgbaTall, prgba, m_iDropShadowOffset );
-		ApplyOutlineToTexture( rgbaWide, rgbaTall, prgba, m_iOutlineSize );
-		ApplyGaussianBlurToTexture( rgbaWide, rgbaTall, prgba, m_iBlur );
-		ApplyScanlineEffectToTexture( rgbaWide, rgbaTall, prgba, m_iScanLines );
-		ApplyRotaryEffectToTexture( rgbaWide, rgbaTall, prgba, m_bRotary );
+		ApplyDropShadowToTexture(rgbaWide, rgbaTall, prgba, m_iDropShadowOffset);
+		ApplyOutlineToTexture(rgbaWide, rgbaTall, prgba, m_iOutlineSize);
+		ApplyGaussianBlurToTexture(rgbaWide, rgbaTall, prgba, m_iBlur);
+		ApplyScanlineEffectToTexture(rgbaWide, rgbaTall, prgba, m_iScanLines);
+		ApplyRotaryEffectToTexture(rgbaWide, rgbaTall, prgba, m_bRotary);
 	}
 	else
 	{
-		Msg( "FT_Bitmap_Convert failed: %d on %s\n", error, m_face->family_name ? m_face->family_name : "??" );
+		Msg("FT_Bitmap_Convert failed: %d on %s\n", error, m_face->family_name ? m_face->family_name : "??");
 	}
 
-	FT_Bitmap_Done( ftLibrary, &bitmap );
+	FT_Bitmap_Done(ftLibrary, &bitmap);
 }
 
-void CLinuxFont::GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA, float &abcC )
+void CLinuxFont::GetKernedCharWidth(wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA,
+									float &abcC)
 {
 	abcA = abcC = wide = 0.0f;
 
 	// look for it in the cache
-	kerned_abc_cache_t finder = { ch, chBefore, chAfter };
+	kerned_abc_cache_t finder = {ch, chBefore, chAfter};
 
 	unsigned short iKerned = m_ExtendedKernedABCWidthsCache.Find(finder);
-	if (m_ExtendedKernedABCWidthsCache.IsValidIndex(iKerned))
+	if(m_ExtendedKernedABCWidthsCache.IsValidIndex(iKerned))
 	{
 		abcA = 0; //$ NYI. m_ExtendedKernedABCWidthsCache[iKerned].abc.abcA;
 		abcC = 0; //$ NYI. m_ExtendedKernedABCWidthsCache[iKerned].abc.abcC;
@@ -565,42 +574,41 @@ void CLinuxFont::GetKernedCharWidth( wchar_t ch, wchar_t chBefore, wchar_t chAft
 		return;
 	}
 
-	FT_UInt       glyph_index;
-	FT_Bool       use_kerning;
-	FT_UInt       previous;
-	int32_t       iFxpPenX;
+	FT_UInt glyph_index;
+	FT_Bool use_kerning;
+	FT_UInt previous;
+	int32_t iFxpPenX;
 
 	iFxpPenX = 0;
 	wide = 0;
 
-	use_kerning = FT_HAS_KERNING( m_face );
-	previous    = chBefore;
+	use_kerning = FT_HAS_KERNING(m_face);
+	previous = chBefore;
 
 	/* convert character code to glyph index */
-	glyph_index = FT_Get_Char_Index( m_face, ch );
+	glyph_index = FT_Get_Char_Index(m_face, ch);
 
 	/* retrieve kerning distance and move pen position */
-	if ( use_kerning && previous && glyph_index )
+	if(use_kerning && previous && glyph_index)
 	{
-		FT_Vector  delta;
+		FT_Vector delta;
 
-		FT_Get_Kerning( m_face, previous, glyph_index,
-						FT_KERNING_DEFAULT, &delta );
+		FT_Get_Kerning(m_face, previous, glyph_index, FT_KERNING_DEFAULT, &delta);
 
 		iFxpPenX += delta.x;
 	}
 
 	/* load glyph image into the slot (erase previous one) */
-	int error = FT_Load_Glyph( m_face, glyph_index, FT_LOAD_DEFAULT | FT_LOAD_FLAGS );
-	if ( error )
+	int error = FT_Load_Glyph(m_face, glyph_index, FT_LOAD_DEFAULT | FT_LOAD_FLAGS);
+	if(error)
 	{
-		Error( "Error in FL_Load_Glyph: glyph_index:%d ch:%x error:%x\n", glyph_index, (int)ch, error );
+		Error("Error in FL_Load_Glyph: glyph_index:%d ch:%x error:%x\n", glyph_index, (int)ch, error);
 	}
 
 	FT_GlyphSlot slot = m_face->glyph;
 	iFxpPenX += slot->advance.x;
 
-	if ( FIXED6_2INT(iFxpPenX) > wide )
+	if(FIXED6_2INT(iFxpPenX) > wide)
 		wide = FIXED6_2INT(iFxpPenX);
 
 	//$ NYI: finder.abc.abcA = abcA;
@@ -617,10 +625,10 @@ void CLinuxFont::GetCharABCWidths(int ch, int &a, int &b, int &c)
 	Assert(IsValid());
 
 	// look for it in the cache
-	abc_cache_t finder = { (wchar_t)ch };
+	abc_cache_t finder = {(wchar_t)ch};
 
 	unsigned short i = m_ExtendedABCWidthsCache.Find(finder);
-	if (m_ExtendedABCWidthsCache.IsValidIndex(i))
+	if(m_ExtendedABCWidthsCache.IsValidIndex(i))
 	{
 		a = m_ExtendedABCWidthsCache[i].abc.a;
 		b = m_ExtendedABCWidthsCache[i].abc.b;
@@ -630,10 +638,10 @@ void CLinuxFont::GetCharABCWidths(int ch, int &a, int &b, int &c)
 
 	a = b = c = 0;
 
-	FT_Error error = FT_Load_Char( m_face, ch, 0 );
-	if ( error )
+	FT_Error error = FT_Load_Char(m_face, ch, 0);
+	if(error)
 	{
-		Msg( "Error in FT_Load_Char: ch:%x error:%x\n", ch, error );
+		Msg("Error in FT_Load_Char: ch:%x error:%x\n", ch, error);
 		return;
 	}
 
@@ -643,27 +651,24 @@ void CLinuxFont::GetCharABCWidths(int ch, int &a, int &b, int &c)
 	FT_Glyph_Metrics metrics = m_face->glyph->metrics;
 
 	finder.abc.a = metrics.horiBearingX / 64 - m_iBlur - m_iOutlineSize;
-	finder.abc.b = metrics.width / 64 + ( ( m_iBlur + m_iOutlineSize ) * 2 ) + m_iDropShadowOffset;
-	finder.abc.c = ( metrics.horiAdvance  - metrics.horiBearingX - metrics.width ) / 64 - m_iBlur - m_iDropShadowOffset - m_iOutlineSize;
+	finder.abc.b = metrics.width / 64 + ((m_iBlur + m_iOutlineSize) * 2) + m_iDropShadowOffset;
+	finder.abc.c = (metrics.horiAdvance - metrics.horiBearingX - metrics.width) / 64 - m_iBlur - m_iDropShadowOffset -
+				   m_iOutlineSize;
 
-	m_ExtendedABCWidthsCache.Insert( finder );
+	m_ExtendedABCWidthsCache.Insert(finder);
 
 	a = finder.abc.a;
 	b = finder.abc.b;
 	c = finder.abc.c;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the font is equivalent to that specified
 //-----------------------------------------------------------------------------
 bool CLinuxFont::IsEqualTo(const char *windowsFontName, int tall, int weight, int blur, int scanlines, int flags)
 {
-	if (!Q_stricmp(windowsFontName, m_szName.String() )
-		&& m_iTall == tall
-		&& m_iWeight == weight
-		&& m_iBlur == blur
-		&& m_iFlags == flags)
+	if(!Q_stricmp(windowsFontName, m_szName.String()) && m_iTall == tall && m_iWeight == weight && m_iBlur == blur &&
+	   m_iFlags == flags)
 		return true;
 
 	return false;
@@ -674,12 +679,11 @@ bool CLinuxFont::IsEqualTo(const char *windowsFontName, int tall, int weight, in
 //-----------------------------------------------------------------------------
 bool CLinuxFont::IsValid()
 {
-	if ( !m_szName.IsEmpty() )
+	if(!m_szName.IsEmpty())
 		return true;
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: returns the height of the font, in pixels
@@ -738,14 +742,13 @@ bool CLinuxFont::ExtendedABCWidthsCacheLessFunc(const abc_cache_t &lhs, const ab
 //-----------------------------------------------------------------------------
 bool CLinuxFont::ExtendedKernedABCWidthsCacheLessFunc(const kerned_abc_cache_t &lhs, const kerned_abc_cache_t &rhs)
 {
-	return ( lhs.wch < rhs.wch ) ||
-			( lhs.wch == rhs.wch && lhs.wchBefore < rhs.wchBefore ) ||
-			( lhs.wch == rhs.wch && lhs.wchBefore == rhs.wchBefore && lhs.wchAfter < rhs.wchAfter );
+	return (lhs.wch < rhs.wch) || (lhs.wch == rhs.wch && lhs.wchBefore < rhs.wchBefore) ||
+		   (lhs.wch == rhs.wch && lhs.wchBefore == rhs.wchBefore && lhs.wchAfter < rhs.wchAfter);
 }
 
-void *CLinuxFont::SetAsActiveFont( void *cglContext )
+void *CLinuxFont::SetAsActiveFont(void *cglContext)
 {
-	Assert( false );
+	Assert(false);
 	return NULL;
 }
 
@@ -754,9 +757,8 @@ void *CLinuxFont::SetAsActiveFont( void *cglContext )
 //-----------------------------------------------------------------------------
 bool CLinuxFont::HasChar(wchar_t wch)
 {
-	return FT_Get_Char_Index( m_face, wch ) != 0;
+	return FT_Get_Char_Index(m_face, wch) != 0;
 }
-
 
 #ifdef DBGFLAG_VALIDATE
 //-----------------------------------------------------------------------------
@@ -765,12 +767,12 @@ bool CLinuxFont::HasChar(wchar_t wch)
 // Input:	validator -		Our global validator object
 //			pchName -		Our name (typically a member var in our container)
 //-----------------------------------------------------------------------------
-void CLinuxFont::Validate( CValidator &validator, const char *pchName )
+void CLinuxFont::Validate(CValidator &validator, const char *pchName)
 {
-	validator.Push( "CLinuxFont", this, pchName );
+	validator.Push("CLinuxFont", this, pchName);
 
-	m_ExtendedABCWidthsCache.Validate( validator, "m_ExtendedABCWidthsCache" );
-	m_ExtendedKernedABCWidthsCache.Validate( validator, "m_ExtendedKernedABCWidthsCache" );
+	m_ExtendedABCWidthsCache.Validate(validator, "m_ExtendedABCWidthsCache");
+	m_ExtendedKernedABCWidthsCache.Validate(validator, "m_ExtendedKernedABCWidthsCache");
 
 	validator.Pop();
 }

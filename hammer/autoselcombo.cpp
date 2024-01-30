@@ -12,14 +12,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 BEGIN_MESSAGE_MAP(CAutoSelComboBox, CComboBox)
 	//{{AFX_MSG_MAP(CAutoSelComboBox)
 	ON_WM_CTLCOLOR()
 	ON_CONTROL_REFLECT_EX(CBN_EDITUPDATE, OnEditUpdate)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
@@ -32,7 +30,6 @@ CAutoSelComboBox::CAutoSelComboBox(void)
 	m_nLastSel = -1;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Attaches this object to the given dialog item.
 //-----------------------------------------------------------------------------
@@ -43,7 +40,7 @@ void CAutoSelComboBox::SubclassDlgItem(UINT nID, CWnd *pParent)
 	// necessary because these classes result in multiple message reflections
 	// unless we return TRUE from our message handler.
 	//
-	if (pParent->IsKindOf(RUNTIME_CLASS(CControlBar)))
+	if(pParent->IsKindOf(RUNTIME_CLASS(CControlBar)))
 	{
 		m_bNotifyParent = false;
 	}
@@ -54,7 +51,6 @@ void CAutoSelComboBox::SubclassDlgItem(UINT nID, CWnd *pParent)
 
 	BaseClass::SubclassDlgItem(nID, pParent);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Automatically selects the first matching combo box item when the
@@ -82,30 +78,30 @@ void CAutoSelComboBox::OnUpdateText(void)
 
 	bool bSearched = false;
 	int nIndex = CB_ERR;
-	if (strnicmp(szTypedText, m_szLastText, nTypedLen))
+	if(strnicmp(szTypedText, m_szLastText, nTypedLen))
 	{
 		nIndex = FindString(-1, szTypedText);
 		bSearched = true;
 	}
-	else if (nTypedLen < nLastLen)
+	else if(nTypedLen < nLastLen)
 	{
 		// They deleted characters, try to match the shorter string exactly.
 		nIndex = FindStringExact(-1, szTypedText);
 		bSearched = true;
 	}
 
-	if (bSearched)
+	if(bSearched)
 	{
-		if (nCurSel != nIndex)
+		if(nCurSel != nIndex)
 		{
 			SetCurSel(nIndex);
 			nNewSel = nIndex;
 		}
 
-		if (nIndex != CB_ERR)
+		if(nIndex != CB_ERR)
 		{
 			// Found a match.
-			if ((nEditEnd == -1) || (nEditEnd == (int)strlen(szTypedText)))
+			if((nEditEnd == -1) || (nEditEnd == (int)strlen(szTypedText)))
 			{
 				SetEditSel(strlen(szTypedText), -1);
 			}
@@ -124,13 +120,12 @@ void CAutoSelComboBox::OnUpdateText(void)
 
 	strcpy(m_szLastText, szTypedText);
 
-	if (nNewSel != m_nLastSel)
+	if(nNewSel != m_nLastSel)
 	{
 		GetParent()->SendMessage(WM_COMMAND, MAKEWPARAM(GetDlgCtrlID(), CBN_SELCHANGE), (LPARAM)m_hWnd);
 		m_nLastSel = nNewSel;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -146,7 +141,6 @@ BOOL CAutoSelComboBox::OnEditUpdate(void)
 	return m_bNotifyParent ? FALSE : TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Resets the 'last typed text' buffer every time we gain/lose focus.
 //-----------------------------------------------------------------------------
@@ -154,7 +148,6 @@ void CAutoSelComboBox::OnSetFocus(CWnd *pOldWnd)
 {
 	m_szLastText[0] = '\0';
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -164,7 +157,6 @@ void CAutoSelComboBox::SetTextColor(COLORREF dwColor)
 {
 	m_dwTextColor = dwColor;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called before painting to override default colors.
@@ -177,10 +169,10 @@ HBRUSH CAutoSelComboBox::OnCtlColor(CDC *pDC, CWnd *pWnd, UINT nCtlColor)
 {
 	HBRUSH hBrush = CComboBox::OnCtlColor(pDC, pWnd, nCtlColor);
 
-	if (nCtlColor == CTLCOLOR_EDIT)
+	if(nCtlColor == CTLCOLOR_EDIT)
 	{
 		pDC->SetTextColor(m_dwTextColor);
 	}
 
-	return(hBrush);
+	return (hBrush);
 }

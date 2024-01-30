@@ -23,11 +23,11 @@ CDamageModifier::CDamageModifier()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDamageModifier::AddModifierToEntity( CBaseEntity *pEntity )
+void CDamageModifier::AddModifierToEntity(CBaseEntity *pEntity)
 {
 	RemoveModifier();
 
-	pEntity->m_DamageModifiers.AddToTail( this );
+	pEntity->m_DamageModifiers.AddToTail(this);
 	m_hEnt = pEntity;
 }
 
@@ -36,9 +36,9 @@ void CDamageModifier::AddModifierToEntity( CBaseEntity *pEntity )
 //-----------------------------------------------------------------------------
 void CDamageModifier::RemoveModifier()
 {
-	if ( m_hEnt.Get() )
+	if(m_hEnt.Get())
 	{
-		m_hEnt->m_DamageModifiers.FindAndRemove( this );
+		m_hEnt->m_DamageModifiers.FindAndRemove(this);
 		m_hEnt = 0;
 	}
 }
@@ -46,7 +46,7 @@ void CDamageModifier::RemoveModifier()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDamageModifier::SetModifier( float flScale )
+void CDamageModifier::SetModifier(float flScale)
 {
 	m_flModifier = flScale;
 }
@@ -62,7 +62,7 @@ float CDamageModifier::GetModifier() const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity* CDamageModifier::GetCharacter() const
+CBaseEntity *CDamageModifier::GetCharacter() const
 {
 	return m_hEnt.Get();
 }
@@ -70,7 +70,7 @@ CBaseEntity* CDamageModifier::GetCharacter() const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDamageModifier::SetDoneToMe( bool bDoneToMe )
+void CDamageModifier::SetDoneToMe(bool bDoneToMe)
 {
 	m_bDoneToMe = bDoneToMe;
 }

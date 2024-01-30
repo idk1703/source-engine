@@ -13,7 +13,6 @@
 
 #if !defined(_STATIC_LINKED) || defined(_SHARED_LIB)
 
-
 #ifdef QUIVER
 #include "r_local.h"
 #endif
@@ -26,18 +25,18 @@
 
 // z is coming out of the face.
 
-void GetBumpNormals( const Vector& sVect, const Vector& tVect, const Vector& flatNormal,
-					 const Vector& phongNormal, Vector bumpNormals[NUM_BUMP_VECTS] )
+void GetBumpNormals(const Vector &sVect, const Vector &tVect, const Vector &flatNormal, const Vector &phongNormal,
+					Vector bumpNormals[NUM_BUMP_VECTS])
 {
 	Vector tmpNormal;
 	bool leftHanded;
 	int i;
 
-	assert( NUM_BUMP_VECTS == 3 );
+	assert(NUM_BUMP_VECTS == 3);
 
 	// Are we left or right handed?
-	CrossProduct( sVect, tVect, tmpNormal );
-	if( DotProduct( flatNormal, tmpNormal ) < 0.0f )
+	CrossProduct(sVect, tVect, tmpNormal);
+	if(DotProduct(flatNormal, tmpNormal) < 0.0f)
 	{
 		leftHanded = true;
 	}
@@ -48,21 +47,21 @@ void GetBumpNormals( const Vector& sVect, const Vector& tVect, const Vector& fla
 
 	// Build a basis for the face around the phong normal
 	matrix3x4_t smoothBasis;
-	CrossProduct( phongNormal.Base(), sVect.Base(), smoothBasis[1] );
-	VectorNormalize( smoothBasis[1] );
-	CrossProduct( smoothBasis[1], phongNormal.Base(), smoothBasis[0] );
-	VectorNormalize( smoothBasis[0] );
-	VectorCopy( phongNormal.Base(), smoothBasis[2] );
+	CrossProduct(phongNormal.Base(), sVect.Base(), smoothBasis[1]);
+	VectorNormalize(smoothBasis[1]);
+	CrossProduct(smoothBasis[1], phongNormal.Base(), smoothBasis[0]);
+	VectorNormalize(smoothBasis[0]);
+	VectorCopy(phongNormal.Base(), smoothBasis[2]);
 
-	if( leftHanded )
+	if(leftHanded)
 	{
-		VectorNegate( smoothBasis[1] );
+		VectorNegate(smoothBasis[1]);
 	}
 
 	// move the g_localBumpBasis into world space to create bumpNormals
-	for( i = 0; i < 3; i++ )
+	for(i = 0; i < 3; i++)
 	{
-		VectorIRotate( g_localBumpBasis[i], smoothBasis, bumpNormals[i] );
+		VectorIRotate(g_localBumpBasis[i], smoothBasis, bumpNormals[i]);
 	}
 }
 

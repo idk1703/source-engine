@@ -10,19 +10,16 @@
 #include "tier1/KeyValues.h"
 #include "vgui_controls/ListPanel.h"
 
-
 using namespace vgui;
 
-
-class SampleListPanelColumns: public DemoPage
+class SampleListPanelColumns : public DemoPage
 {
-	public:
-		SampleListPanelColumns(Panel *parent, const char *name);
-		~SampleListPanelColumns();
+public:
+	SampleListPanelColumns(Panel *parent, const char *name);
+	~SampleListPanelColumns();
 
-	private:
-		ListPanel *m_pListPanel;
-
+private:
+	ListPanel *m_pListPanel;
 };
 
 //-----------------------------------------------------------------------------
@@ -44,10 +41,10 @@ SampleListPanelColumns::SampleListPanelColumns(Panel *parent, const char *name) 
 	m_pListPanel->SetSize(400, 150);
 
 	// Add rows of data to the table
-	KeyValues *data = new KeyValues ("item");
+	KeyValues *data = new KeyValues("item");
 	data->SetString("Muppet", "Kermit");
 	data->SetString("Description", "The frog");
-	m_pListPanel->AddItem(data, 0, false, false );
+	m_pListPanel->AddItem(data, 0, false, false);
 
 	data->SetString("Muppet", "Miss Piggy");
 	data->SetString("Description", "The diva");
@@ -85,14 +82,9 @@ SampleListPanelColumns::SampleListPanelColumns(Panel *parent, const char *name) 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleListPanelColumns::~SampleListPanelColumns()
-{
-}
+SampleListPanelColumns::~SampleListPanelColumns() {}
 
-
-
-
-Panel* SampleListPanelColumns_Create(Panel *parent)
+Panel *SampleListPanelColumns_Create(Panel *parent)
 {
 	return new SampleListPanelColumns(parent, "List Panel - columns");
 }

@@ -23,15 +23,35 @@ class BlankImage : public IImage
 public:
 	virtual void Paint() {}
 	virtual void SetPos(int x, int y) {}
-	virtual void GetContentSize(int &wide, int &tall) { wide = 0; tall = 0; }
-	virtual void GetSize(int &wide, int &tall) { wide = 0; tall = 0; }
+	virtual void GetContentSize(int &wide, int &tall)
+	{
+		wide = 0;
+		tall = 0;
+	}
+	virtual void GetSize(int &wide, int &tall)
+	{
+		wide = 0;
+		tall = 0;
+	}
 	virtual void SetSize(int wide, int tall) {}
 	virtual void SetColor(Color col) {}
-	virtual bool Evict() { return false; }
-	virtual int GetNumFrames() { return 0; }
-	virtual void SetFrame( int nFrame ) {}
-	virtual HTexture GetID() { return 0; }
-	virtual void SetRotation( int iRotation ) { return; };
+	virtual bool Evict()
+	{
+		return false;
+	}
+	virtual int GetNumFrames()
+	{
+		return 0;
+	}
+	virtual void SetFrame(int nFrame) {}
+	virtual HTexture GetID()
+	{
+		return 0;
+	}
+	virtual void SetRotation(int iRotation)
+	{
+		return;
+	};
 };
 
 //-----------------------------------------------------------------------------
@@ -48,10 +68,10 @@ ImageList::ImageList(bool deleteImagesWhenDone)
 //-----------------------------------------------------------------------------
 ImageList::~ImageList()
 {
-	if (m_bDeleteImagesWhenDone)
+	if(m_bDeleteImagesWhenDone)
 	{
 		// delete all the images, except for the first image (which is always the blank image)
-		for (int i = 1; i < m_Images.Count(); i++)
+		for(int i = 1; i < m_Images.Count(); i++)
 		{
 			delete m_Images[i];
 		}
@@ -72,7 +92,7 @@ int ImageList::AddImage(vgui::IImage *image)
 void ImageList::SetImageAtIndex(int index, vgui::IImage *image)
 {
 	// allocate more images if necessary
-	while (m_Images.Count() <= index)
+	while(m_Images.Count() <= index)
 	{
 		m_Images.AddToTail(NULL);
 	}

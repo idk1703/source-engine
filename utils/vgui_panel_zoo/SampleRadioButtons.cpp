@@ -10,18 +10,15 @@
 #include <Keyvalues.h>
 #include <vgui_controls/Controls.h>
 
-
 using namespace vgui;
 
-
-class SampleRadioButtons: public DemoPage
+class SampleRadioButtons : public DemoPage
 {
-	public:
-		SampleRadioButtons(Panel *parent, const char *name);
-		~SampleRadioButtons();
+public:
+	SampleRadioButtons(Panel *parent, const char *name);
+	~SampleRadioButtons();
 
-	private:
-
+private:
 };
 
 //-----------------------------------------------------------------------------
@@ -35,14 +32,9 @@ SampleRadioButtons::SampleRadioButtons(Panel *parent, const char *name) : DemoPa
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-SampleRadioButtons::~SampleRadioButtons()
-{
-}
+SampleRadioButtons::~SampleRadioButtons() {}
 
-
-
-
-Panel* SampleRadioButtons_Create(Panel *parent)
+Panel *SampleRadioButtons_Create(Panel *parent)
 {
 	return new SampleRadioButtons(parent, "Radio buttons");
 }

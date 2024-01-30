@@ -8,32 +8,30 @@
 #include "cbase.h"
 #include "weapon_ifmbase.h"
 
-#if defined( CLIENT_DLL )
+#if defined(CLIENT_DLL)
 
-	#include "vgui/ISurface.h"
-	#include "vgui_controls/Controls.h"
-	#include "hud_crosshair.h"
+#include "vgui/ISurface.h"
+#include "vgui_controls/Controls.h"
+#include "hud_crosshair.h"
 
 #endif
-
 
 //-----------------------------------------------------------------------------
 // CWeaponIFMBase tables.
 //-----------------------------------------------------------------------------
-IMPLEMENT_NETWORKCLASS_ALIASED( WeaponIFMBase, DT_WeaponIFMBase )
+IMPLEMENT_NETWORKCLASS_ALIASED(WeaponIFMBase, DT_WeaponIFMBase)
 
-BEGIN_NETWORK_TABLE( CWeaponIFMBase, DT_WeaponIFMBase )
+BEGIN_NETWORK_TABLE(CWeaponIFMBase, DT_WeaponIFMBase)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponIFMBase )
+BEGIN_PREDICTION_DATA(CWeaponIFMBase)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( weapon_ifm_base, CWeaponIFMBase );
-
+LINK_ENTITY_TO_CLASS(weapon_ifm_base, CWeaponIFMBase);
 
 #ifdef GAME_DLL
 
-BEGIN_DATADESC( CWeaponIFMBase )
+BEGIN_DATADESC(CWeaponIFMBase)
 
 END_DATADESC()
 
@@ -44,8 +42,8 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 CWeaponIFMBase::CWeaponIFMBase()
 {
-	SetPredictionEligible( true );
-	AddSolidFlags( FSOLID_TRIGGER ); // Nothing collides with these but it gets touches.
+	SetPredictionEligible(true);
+	AddSolidFlags(FSOLID_TRIGGER); // Nothing collides with these but it gets touches.
 }
 
 bool CWeaponIFMBase::IsPredicted() const
@@ -55,11 +53,11 @@ bool CWeaponIFMBase::IsPredicted() const
 
 #ifdef CLIENT_DLL
 
-void CWeaponIFMBase::OnDataChanged( DataUpdateType_t type )
+void CWeaponIFMBase::OnDataChanged(DataUpdateType_t type)
 {
-	BaseClass::OnDataChanged( type );
+	BaseClass::OnDataChanged(type);
 
-	if ( GetPredictable() && !ShouldPredict() )
+	if(GetPredictable() && !ShouldPredict())
 	{
 		ShutdownPredictable();
 	}
@@ -67,12 +65,11 @@ void CWeaponIFMBase::OnDataChanged( DataUpdateType_t type )
 
 bool CWeaponIFMBase::ShouldPredict()
 {
-	if ( GetOwner() && GetOwner() == C_BasePlayer::GetLocalPlayer() )
+	if(GetOwner() && GetOwner() == C_BasePlayer::GetLocalPlayer())
 		return true;
 
 	return BaseClass::ShouldPredict();
 }
-
 
 #else
 
@@ -81,7 +78,7 @@ void CWeaponIFMBase::Spawn()
 	BaseClass::Spawn();
 
 	// Set this here to allow players to shoot dropped weapons
-	SetCollisionGroup( COLLISION_GROUP_WEAPON );
+	SetCollisionGroup(COLLISION_GROUP_WEAPON);
 }
 
 #endif

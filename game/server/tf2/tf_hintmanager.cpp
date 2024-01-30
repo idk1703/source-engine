@@ -12,21 +12,20 @@
 #define TFHINTMANAGER_THINK_INTERVAL 1.0f
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE(CTFHintManager, DT_TFHintManager)
-END_SEND_TABLE()
+END_SEND_TABLE
+()
 
-LINK_ENTITY_TO_CLASS( tf_hintmanager, CTFHintManager );
-
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-CTFHintManager::CTFHintManager( void )
-{
-}
+	LINK_ENTITY_TO_CLASS(tf_hintmanager, CTFHintManager);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHintManager::Spawn( void )
+CTFHintManager::CTFHintManager(void) {}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CTFHintManager::Spawn(void)
 {
 	Precache();
 }
@@ -34,9 +33,9 @@ void CTFHintManager::Spawn( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHintManager::Think( void )
+void CTFHintManager::Think(void)
 {
-	SetNextThink( gpGlobals->curtime + TFHINTMANAGER_THINK_INTERVAL );
+	SetNextThink(gpGlobals->curtime + TFHINTMANAGER_THINK_INTERVAL);
 }
 
 //-----------------------------------------------------------------------------
@@ -44,7 +43,7 @@ void CTFHintManager::Think( void )
 // Input  : *player -
 //			hintID -
 //-----------------------------------------------------------------------------
-void CTFHintManager::AddHint( CBaseTFPlayer *player, int hintID, int priority, int entityIndex /*=0*/ )
+void CTFHintManager::AddHint(CBaseTFPlayer *player, int hintID, int priority, int entityIndex /*=0*/)
 {
 	// Send a message to the client side entity
 }
@@ -60,5 +59,5 @@ void CTFHintManager::AddHint( CBaseTFPlayer *player, int hintID, int priority, i
 
 int CTFHintManager::UpdateTransmitState()
 {
-	return SetTransmitState( FL_EDICT_ALWAYS );
+	return SetTransmitState(FL_EDICT_ALWAYS);
 }

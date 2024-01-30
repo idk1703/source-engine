@@ -8,7 +8,7 @@
 #include "stdafx.h"
 #include "Box3D.h"
 #include "fgdlib/HelperInfo.h"
-#include "MapDefs.h"		// dvs: For COORD_NOTINIT
+#include "MapDefs.h" // dvs: For COORD_NOTINIT
 #include "MapEntity.h"
 #include "MapLightCone.h"
 #include "Render3D.h"
@@ -18,15 +18,12 @@
 #include "hammer.h"
 #include "Options.h"
 
-
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-#define NUM_LIGHTCONE_ZONES		5
-
+#define NUM_LIGHTCONE_ZONES 5
 
 IMPLEMENT_MAPCLASS(CMapLightCone)
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Factory function. Used for creating a CMapLightCone helper from a
@@ -37,15 +34,15 @@ IMPLEMENT_MAPCLASS(CMapLightCone)
 //-----------------------------------------------------------------------------
 CMapClass *CMapLightCone::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 {
-	CMapLightCone *new1=new CMapLightCone;
-	if( new1 != NULL )
+	CMapLightCone *new1 = new CMapLightCone;
+	if(new1 != NULL)
 	{
 		//
 		// The first parameter should be the inner fov key name. If it isn't
 		// there we assume "_inner_cone".
 		//
 		const char *pszKeyName = pHelperInfo->GetParameter(0);
-		if (pszKeyName != NULL)
+		if(pszKeyName != NULL)
 		{
 			strcpy(new1->m_szInnerConeKeyName, pszKeyName);
 		}
@@ -59,7 +56,7 @@ CMapClass *CMapLightCone::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 		// there we assume "_cone".
 		//
 		pszKeyName = pHelperInfo->GetParameter(1);
-		if (pszKeyName != NULL)
+		if(pszKeyName != NULL)
 		{
 			strcpy(new1->m_szOuterConeKeyName, pszKeyName);
 		}
@@ -73,7 +70,7 @@ CMapClass *CMapLightCone::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 		// there we assume "_light".
 		//
 		pszKeyName = pHelperInfo->GetParameter(2);
-		if (pszKeyName != NULL)
+		if(pszKeyName != NULL)
 		{
 			strcpy(new1->m_szColorKeyName, pszKeyName);
 		}
@@ -83,9 +80,9 @@ CMapClass *CMapLightCone::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 		}
 
 		pszKeyName = pHelperInfo->GetParameter(3);
-		if (pszKeyName != NULL)
+		if(pszKeyName != NULL)
 		{
-			new1->m_flPitchScale = Q_atof( pszKeyName );
+			new1->m_flPitchScale = Q_atof(pszKeyName);
 		}
 		else
 		{
@@ -94,7 +91,6 @@ CMapClass *CMapLightCone::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	}
 	return new1;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -113,25 +109,23 @@ CMapLightCone::CMapLightCone(void)
 	m_fInnerConeAngle = 0;
 	m_fOuterConeAngle = 45;
 
-	m_fFiftyPercentDistance = -1;							// disabled - use attenuation
+	m_fFiftyPercentDistance = -1; // disabled - use attenuation
 	m_Angles.Init();
-	SignalUpdate( EVTYPE_LIGHTING_CHANGED );
+	SignalUpdate(EVTYPE_LIGHTING_CHANGED);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor. Deletes faces allocated by BuildCone.
 //-----------------------------------------------------------------------------
 CMapLightCone::~CMapLightCone(void)
 {
-	for (int i = 0; i < m_Faces.Count(); i++)
+	for(int i = 0; i < m_Faces.Count(); i++)
 	{
 		CMapFace *pFace = m_Faces.Element(i);
 		delete pFace;
 	}
-	SignalUpdate( EVTYPE_LIGHTING_CHANGED );
+	SignalUpdate(EVTYPE_LIGHTING_CHANGED);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Builds the light cone faces in local space. Does NOT call CalcBounds,
@@ -143,7 +137,7 @@ void CMapLightCone::BuildCone(void)
 	//
 	// Delete the current face list.
 	//
-	for (int i = 0; i < m_Faces.Count(); i++)
+	for(int i = 0; i < m_Faces.Count(); i++)
 	{
 		CMapFace *pFace = m_Faces.Element(i);
 		delete pFace;
@@ -153,7 +147,7 @@ void CMapLightCone::BuildCone(void)
 	//
 	// Make sure at least one of the lighting coefficients is nonzero.
 	//
-	if ((m_fQuadraticAttn == 0) && (m_fLinearAttn == 0) && (m_fConstantAttn == 0))
+	if((m_fQuadraticAttn == 0) && (m_fLinearAttn == 0) && (m_fConstantAttn == 0))
 	{
 		m_fConstantAttn = 1;
 	}
@@ -162,7 +156,7 @@ void CMapLightCone::BuildCone(void)
 	// Solve for the lighting scale factor by which the brightness will be multiplied.
 	//
 	float fScaleFactor = m_fQuadraticAttn * 10000 + m_fLinearAttn * 100 + m_fConstantAttn;
-	if (fScaleFactor == 0)
+	if(fScaleFactor == 0)
 	{
 		return;
 	}
@@ -172,27 +166,28 @@ void CMapLightCone::BuildCone(void)
 	//
 	float fOffsetDist = 0;
 	// Constant attenuation factor doesn't actually offset the cone yet. If it does, uncomment this:
-	//SolveQuadratic(fOffsetDist, 0, m_fQuadraticAttn, m_fLinearAttn, -m_fConstantAttn);
+	// SolveQuadratic(fOffsetDist, 0, m_fQuadraticAttn, m_fLinearAttn, -m_fConstantAttn);
 
 	float fZoneDist[NUM_LIGHTCONE_ZONES];
-	memset( fZoneDist, 0, sizeof( fZoneDist ) );
+	memset(fZoneDist, 0, sizeof(fZoneDist));
 	fZoneDist[0] = 0;
 	SolveQuadratic(fZoneDist[1], 0.25 * fScaleFactor, m_fQuadraticAttn, m_fLinearAttn, m_fConstantAttn);
 	SolveQuadratic(fZoneDist[2], fScaleFactor, m_fQuadraticAttn, m_fLinearAttn, m_fConstantAttn);
 	SolveQuadratic(fZoneDist[3], 4 * fScaleFactor, m_fQuadraticAttn, m_fLinearAttn, m_fConstantAttn);
-	SolveQuadratic(fZoneDist[4], Options.view3d.fLightConeLength * fScaleFactor, m_fQuadraticAttn, m_fLinearAttn, m_fConstantAttn);
+	SolveQuadratic(fZoneDist[4], Options.view3d.fLightConeLength * fScaleFactor, m_fQuadraticAttn, m_fLinearAttn,
+				   m_fConstantAttn);
 
 	//
 	// there's no cone if it's greater then 90 degrees
 	//
-	if (m_fOuterConeAngle < 90)
+	if(m_fOuterConeAngle < 90)
 	{
 
 		//
 		// Calculate the cone radius at each zone.
 		//
 		float fZoneRadius[NUM_LIGHTCONE_ZONES];
-		for (int i = 0; i < NUM_LIGHTCONE_ZONES; i++)
+		for(int i = 0; i < NUM_LIGHTCONE_ZONES; i++)
 		{
 			fZoneRadius[i] = (fOffsetDist + fZoneDist[i]) * tan(DEG2RAD(m_fOuterConeAngle));
 		}
@@ -201,7 +196,7 @@ void CMapLightCone::BuildCone(void)
 		// Build the new face list using the new parameters.
 		//
 		float fStepSize = 360.0 / 15.0;
-		for (int nZone = 0; nZone < NUM_LIGHTCONE_ZONES - 1; nZone++)
+		for(int nZone = 0; nZone < NUM_LIGHTCONE_ZONES - 1; nZone++)
 		{
 			float fSin0 = 0;
 			float fCos0 = 1;
@@ -212,7 +207,7 @@ void CMapLightCone::BuildCone(void)
 			float fTopRadius = fZoneRadius[nZone];
 			float fBottomRadius = fZoneRadius[nZone + 1];
 
-			for (int fAngle = fStepSize; fAngle <= 361; fAngle += fStepSize)
+			for(int fAngle = fStepSize; fAngle <= 361; fAngle += fStepSize)
 			{
 				float fSin1 = sin(DEG2RAD(fAngle));
 				float fCos1 = cos(DEG2RAD(fAngle));
@@ -232,7 +227,7 @@ void CMapLightCone::BuildCone(void)
 				Points[2][0] = fTopDist;
 
 				int nPoints = 3;
-				if (fTopRadius != 0)
+				if(fTopRadius != 0)
 				{
 					Points[3][2] = fTopRadius * fCos1;
 					Points[3][1] = fTopRadius * fSin1;
@@ -241,7 +236,9 @@ void CMapLightCone::BuildCone(void)
 				}
 
 				CMapFace *pFace = new CMapFace;
-				pFace->SetRenderColor(r * (1 - nZone / (float)NUM_LIGHTCONE_ZONES), g * (1 - nZone / (float)NUM_LIGHTCONE_ZONES), b * (1 - nZone / (float)NUM_LIGHTCONE_ZONES));
+				pFace->SetRenderColor(r * (1 - nZone / (float)NUM_LIGHTCONE_ZONES),
+									  g * (1 - nZone / (float)NUM_LIGHTCONE_ZONES),
+									  b * (1 - nZone / (float)NUM_LIGHTCONE_ZONES));
 				pFace->SetRenderAlpha(180);
 				pFace->CreateFace(Points, nPoints);
 				pFace->RenderUnlit(true);
@@ -256,7 +253,7 @@ void CMapLightCone::BuildCone(void)
 	//
 	// Lobe's aren't defined for > 90
 	//
-	if (m_fOuterConeAngle > 90)
+	if(m_fOuterConeAngle > 90)
 		return;
 
 	//
@@ -269,17 +266,17 @@ void CMapLightCone::BuildCone(void)
 	float fInnerDot = cos(DEG2RAD(m_fInnerConeAngle));
 	float fOuterDot = cos(DEG2RAD(m_fOuterConeAngle));
 
-	for (float fPitch = fPitchStepSize; fPitch < m_fOuterConeAngle + fPitchStepSize; fPitch += fPitchStepSize)
+	for(float fPitch = fPitchStepSize; fPitch < m_fOuterConeAngle + fPitchStepSize; fPitch += fPitchStepSize)
 	{
 		float fSin0 = 0;
 		float fCos0 = 1;
 
 		// clamp to edge of cone
-		if (fPitch > m_fOuterConeAngle)
+		if(fPitch > m_fOuterConeAngle)
 			fPitch = m_fOuterConeAngle;
 
 		float fIllumination = 0;
-		if (fPitch <= m_fInnerConeAngle)
+		if(fPitch <= m_fInnerConeAngle)
 		{
 			fIllumination = 1.0;
 		}
@@ -289,9 +286,9 @@ void CMapLightCone::BuildCone(void)
 
 			fIllumination = (fPitchDot - fOuterDot) / (fInnerDot - fOuterDot);
 
-			if ((m_fFocus != 1) && (m_fFocus != 0))
+			if((m_fFocus != 1) && (m_fFocus != 0))
 			{
-				fIllumination = pow( fIllumination, m_fFocus );
+				fIllumination = pow(fIllumination, m_fFocus);
 			}
 		}
 
@@ -305,7 +302,7 @@ void CMapLightCone::BuildCone(void)
 		// float fFocusDist1 = fZoneDist[1];
 		// float fFocusRadius1 = sin(DEG2RAD(fPitch)) * fZoneRadius[1] / sin(DEG_RAD * m_fConeAngle);
 
-		for (int fAngle = fStepSize; fAngle <= 361; fAngle += fStepSize)
+		for(int fAngle = fStepSize; fAngle <= 361; fAngle += fStepSize)
 		{
 			float fSin1 = sin(DEG2RAD(fAngle));
 			float fCos1 = cos(DEG2RAD(fAngle));
@@ -326,7 +323,7 @@ void CMapLightCone::BuildCone(void)
 			Points[2][0] = fFocusDist0;
 
 			int nPoints = 3;
-			if (fFocusRadius0 != 0)
+			if(fFocusRadius0 != 0)
 			{
 				Points[3][2] = fFocusRadius0 * fCos0;
 				Points[3][1] = fFocusRadius0 * fSin0;
@@ -349,7 +346,6 @@ void CMapLightCone::BuildCone(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : bFullUpdate -
@@ -361,7 +357,7 @@ void CMapLightCone::CalcBounds(BOOL bFullUpdate)
 	//
 	// HACK: Update our origin to stick to our parent.
 	//
-	if (m_pParent != NULL)
+	if(m_pParent != NULL)
 	{
 		GetParent()->GetOrigin(m_Origin);
 	}
@@ -373,9 +369,8 @@ void CMapLightCone::CalcBounds(BOOL bFullUpdate)
 	m_Render2DBox.ResetBounds();
 	m_Render2DBox.UpdateBounds(m_Origin);
 
-	SetCullBoxFromFaceList( &m_Faces );
+	SetCullBoxFromFaceList(&m_Faces);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -385,12 +380,11 @@ void CMapLightCone::GetAngles(QAngle &Angles)
 {
 	Angles = m_Angles;
 
-	if (m_bPitchSet)
+	if(m_bPitchSet)
 	{
 		Angles[PITCH] = m_fPitch;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -400,14 +394,13 @@ CMapClass *CMapLightCone::Copy(bool bUpdateDependencies)
 {
 	CMapLightCone *pCopy = new CMapLightCone;
 
-	if (pCopy != NULL)
+	if(pCopy != NULL)
 	{
 		pCopy->CopyFrom(this, bUpdateDependencies);
 	}
 
-	return(pCopy);
+	return (pCopy);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -442,16 +435,15 @@ CMapClass *CMapLightCone::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 	m_fZeroPercentDistance = pFrom->m_fZeroPercentDistance;
 	m_LightColor = pFrom->m_LightColor;
 
-	Q_strncpy( m_szColorKeyName, pFrom->m_szColorKeyName, sizeof( m_szColorKeyName ) );
-	Q_strncpy( m_szInnerConeKeyName, pFrom->m_szInnerConeKeyName, sizeof( m_szInnerConeKeyName ) );
-	Q_strncpy( m_szOuterConeKeyName, pFrom->m_szOuterConeKeyName, sizeof( m_szOuterConeKeyName ) );
+	Q_strncpy(m_szColorKeyName, pFrom->m_szColorKeyName, sizeof(m_szColorKeyName));
+	Q_strncpy(m_szInnerConeKeyName, pFrom->m_szInnerConeKeyName, sizeof(m_szInnerConeKeyName));
+	Q_strncpy(m_szOuterConeKeyName, pFrom->m_szOuterConeKeyName, sizeof(m_szOuterConeKeyName));
 
 	BuildCone();
 
-	SignalUpdate( EVTYPE_LIGHTING_CHANGED );
-	return(this);
+	SignalUpdate(EVTYPE_LIGHTING_CHANGED);
+	return (this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Notifies that this object's parent entity has had a key value change.
@@ -462,11 +454,11 @@ void CMapLightCone::OnParentKeyChanged(const char *szKey, const char *szValue)
 {
 	bool bRebuild = true;
 
-	if (!stricmp(szKey, "angles"))
+	if(!stricmp(szKey, "angles"))
 	{
 		sscanf(szValue, "%f %f %f", &m_Angles[PITCH], &m_Angles[YAW], &m_Angles[ROLL]);
 	}
-	else if (!stricmp(szKey, m_szColorKeyName))
+	else if(!stricmp(szKey, m_szColorKeyName))
 	{
 		int nRed;
 		int nGreen;
@@ -479,51 +471,51 @@ void CMapLightCone::OnParentKeyChanged(const char *szKey, const char *szValue)
 		b = m_LightColor.z = nBlue;
 		m_fBrightness = nBrightness;
 	}
-	else if (!stricmp(szKey, "pitch"))
+	else if(!stricmp(szKey, "pitch"))
 	{
 		// Pitch
 		m_bPitchSet = true;
 		m_fPitch = atof(szValue);
 	}
-	else if (!stricmp(szKey, "_constant_attn"))
+	else if(!stricmp(szKey, "_constant_attn"))
 	{
 		// Constant attenuation
 		m_fConstantAttn = atof(szValue);
 	}
-	else if (!stricmp(szKey, "_linear_attn"))
+	else if(!stricmp(szKey, "_linear_attn"))
 	{
 		// Linear attenuation
 		m_fLinearAttn = atof(szValue);
 	}
-	else if (!stricmp(szKey, "_quadratic_attn"))
+	else if(!stricmp(szKey, "_quadratic_attn"))
 	{
 		// Quadratic attenuation
 		m_fQuadraticAttn = atof(szValue);
 	}
-	else if (!stricmp(szKey, "_exponent"))
+	else if(!stricmp(szKey, "_exponent"))
 	{
 		// Focus
 		m_fFocus = atof(szValue);
 	}
-	else if (!stricmp(szKey, "_fifty_percent_distance"))
+	else if(!stricmp(szKey, "_fifty_percent_distance"))
 	{
 		// Focus
 		m_fFiftyPercentDistance = atof(szValue);
 	}
-	else if (!stricmp(szKey, "_zero_percent_distance"))
+	else if(!stricmp(szKey, "_zero_percent_distance"))
 	{
 		// Focus
 		m_fZeroPercentDistance = atof(szValue);
 	}
-	else if (!stricmp(szKey, m_szInnerConeKeyName) || !stricmp(szKey, m_szOuterConeKeyName))
+	else if(!stricmp(szKey, m_szInnerConeKeyName) || !stricmp(szKey, m_szOuterConeKeyName))
 	{
 		// check both of these together since they might be the same key.
-		if( !stricmp(szKey, m_szInnerConeKeyName ))
+		if(!stricmp(szKey, m_szInnerConeKeyName))
 		{
 			// Inner Cone angle
 			m_fInnerConeAngle = atof(szValue);
 		}
-		if( !stricmp(szKey, m_szOuterConeKeyName ))
+		if(!stricmp(szKey, m_szOuterConeKeyName))
 		{
 			// Outer Cone angle
 			m_fOuterConeAngle = atof(szValue);
@@ -534,14 +526,13 @@ void CMapLightCone::OnParentKeyChanged(const char *szKey, const char *szValue)
 		bRebuild = false;
 	}
 
-	if (bRebuild)
+	if(bRebuild)
 	{
-		SignalUpdate( EVTYPE_LIGHTING_CHANGED );
+		SignalUpdate(EVTYPE_LIGHTING_CHANGED);
 		BuildCone();
 		PostUpdate(Notify_Changed);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after the entire map has been loaded. This allows the object
@@ -554,10 +545,9 @@ void CMapLightCone::PostloadWorld(CMapWorld *pWorld)
 	CMapClass::PostloadWorld(pWorld);
 
 	BuildCone();
-	SignalUpdate( EVTYPE_LIGHTING_CHANGED );
+	SignalUpdate(EVTYPE_LIGHTING_CHANGED);
 	CalcBounds();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -565,13 +555,13 @@ void CMapLightCone::PostloadWorld(CMapWorld *pWorld)
 //-----------------------------------------------------------------------------
 void CMapLightCone::Render3D(CRender3D *pRender)
 {
-	if (m_pParent->IsSelected())
+	if(m_pParent->IsSelected())
 	{
-		CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
+		CMatRenderContextPtr pRenderContext(MaterialSystemInterface());
 		pRenderContext->MatrixMode(MATERIAL_MODEL);
 		pRenderContext->PushMatrix();
 
-		pRenderContext->Translate(m_Origin[0],  m_Origin[1],  m_Origin[2]);
+		pRenderContext->Translate(m_Origin[0], m_Origin[1], m_Origin[2]);
 
 		QAngle Angles;
 		GetAngles(Angles);
@@ -580,16 +570,14 @@ void CMapLightCone::Render3D(CRender3D *pRender)
 		pRenderContext->Rotate(m_flPitchScale * Angles[PITCH], 0, -1, 0);
 		pRenderContext->Rotate(Angles[ROLL], 1, 0, 0);
 
-		if (
-			(pRender->GetCurrentRenderMode() != RENDER_MODE_LIGHT_PREVIEW2) &&
-			(pRender->GetCurrentRenderMode() != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) &&
-			(GetSelectionState() != SELECT_MODIFY )
-			)
+		if((pRender->GetCurrentRenderMode() != RENDER_MODE_LIGHT_PREVIEW2) &&
+		   (pRender->GetCurrentRenderMode() != RENDER_MODE_LIGHT_PREVIEW_RAYTRACED) &&
+		   (GetSelectionState() != SELECT_MODIFY))
 		{
 			// Render the cone faces flatshaded.
-			pRender->PushRenderMode( RENDER_MODE_TRANSLUCENT_FLAT );
+			pRender->PushRenderMode(RENDER_MODE_TRANSLUCENT_FLAT);
 
-			for (int i = 0; i < m_Faces.Count(); i++)
+			for(int i = 0; i < m_Faces.Count(); i++)
 			{
 				CMapFace *pFace = m_Faces.Element(i);
 				pFace->Render3D(pRender);
@@ -601,9 +589,9 @@ void CMapLightCone::Render3D(CRender3D *pRender)
 		//
 		// Render the cone faces in yellow wireframe (on top)
 		//
-		pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
+		pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
 
-		for (int i = 0; i < m_Faces.Count(); i++)
+		for(int i = 0; i < m_Faces.Count(); i++)
 		{
 			CMapFace *pFace = m_Faces.Element(i);
 			pFace->Render3D(pRender);
@@ -618,7 +606,6 @@ void CMapLightCone::Render3D(CRender3D *pRender)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : File -
@@ -627,9 +614,8 @@ void CMapLightCone::Render3D(CRender3D *pRender)
 //-----------------------------------------------------------------------------
 int CMapLightCone::SerializeRMF(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -639,9 +625,8 @@ int CMapLightCone::SerializeRMF(std::fstream &File, BOOL bRMF)
 //-----------------------------------------------------------------------------
 int CMapLightCone::SerializeMAP(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Solves a quadratic equation with the given coefficients.
@@ -654,27 +639,26 @@ bool CMapLightCone::SolveQuadratic(float &x, float y, float A, float B, float C)
 {
 	C -= y;
 
-	if (A == 0)
+	if(A == 0)
 	{
-		if (B != 0)
+		if(B != 0)
 		{
 			x = -C / B;
-			return(true);
+			return (true);
 		}
 	}
 	else
 	{
 		float fDeterminant = B * B - 4 * A * C;
-		if (fDeterminant > 0)
+		if(fDeterminant > 0)
 		{
 			x = (-B + sqrt(fDeterminant)) / (2 * A);
-			return(true);
+			return (true);
 		}
 	}
 
-	return(false);
+	return (false);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Never select anything because of this helper.

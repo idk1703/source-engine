@@ -4,7 +4,6 @@
 //
 //=============================================================================//
 
-
 #include "cbase.h"
 #include "store/store_page_halloween.h"
 #include "vgui/ISurface.h"
@@ -26,7 +25,9 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePage_SpecialPromo::CTFStorePage_SpecialPromo( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData ) : BaseClass( parent, pPageData )
+CTFStorePage_SpecialPromo::CTFStorePage_SpecialPromo(Panel *parent,
+													 const CEconStoreCategoryManager::StoreCategory_t *pPageData)
+	: BaseClass(parent, pPageData)
 {
 	pszResFile = pPageData->m_pchPageRes;
 }
@@ -44,42 +45,43 @@ void CTFStorePage_SpecialPromo::OrderItemsForDisplay( CUtlVector<const econ_stor
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFStorePage_Popular::CTFStorePage_Popular( Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData ) : BaseClass( parent, pPageData )
+CTFStorePage_Popular::CTFStorePage_Popular(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData)
+	: BaseClass(parent, pPageData)
 {
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: The popular page draws its list of items from the overall popular items list.
 //-----------------------------------------------------------------------------
-void CTFStorePage_Popular::UpdateFilteredItems( void )
+void CTFStorePage_Popular::UpdateFilteredItems(void)
 {
 	m_FilteredEntries.Purge();
-	m_vecFilterCounts.SetCount( GetNumPrimaryFilters() );
-	if ( !m_vecFilterCounts.Count() )
+	m_vecFilterCounts.SetCount(GetNumPrimaryFilters());
+	if(!m_vecFilterCounts.Count())
 		return;
 
-	FOR_EACH_VEC( m_vecFilterCounts, i )
+	FOR_EACH_VEC(m_vecFilterCounts, i)
 	{
 		m_vecFilterCounts[i] = 0;
 	}
 
 	CStorePanel *pStorePanel = EconUI()->GetStorePanel();
-	if ( !pStorePanel )
+	if(!pStorePanel)
 		return;
 
 	// Add all popular items
-	const CUtlVector<uint32>& popularItems = pStorePanel->GetPopularItems();
+	const CUtlVector<uint32> &popularItems = pStorePanel->GetPopularItems();
 
-	for ( int i=0; i<popularItems.Count(); ++i )
+	for(int i = 0; i < popularItems.Count(); ++i)
 	{
-		const econ_store_entry_t *pEntry = pStorePanel->GetPriceSheet()->GetEntry( popularItems[i] );
-		m_FilteredEntries.AddToTail( pEntry );
+		const econ_store_entry_t *pEntry = pStorePanel->GetPriceSheet()->GetEntry(popularItems[i]);
+		m_FilteredEntries.AddToTail(pEntry);
 	}
 
-	FOR_EACH_VEC( m_vecItemPanels, idx )
+	FOR_EACH_VEC(m_vecItemPanels, idx)
 	{
-		m_vecItemPanels[idx].m_pItemModelPanel->SetShowQuantity( false );
+		m_vecItemPanels[idx].m_pItemModelPanel->SetShowQuantity(false);
 	}
 
-	m_pFilterComboBox->SetVisible( false );
+	m_pFilterComboBox->SetVisible(false);
 }

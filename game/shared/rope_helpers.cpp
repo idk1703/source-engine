@@ -18,39 +18,35 @@
 
 class CHangRope : public CRopePhysics<512>
 {
-DECLARE_CLASS( CHangRope, CRopePhysics<512> );
+	DECLARE_CLASS(CHangRope, CRopePhysics<512>);
 
-// CRopePhysics overrides.
+	// CRopePhysics overrides.
 public:
-
-	virtual void	GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel )
+	virtual void GetNodeForces(CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel)
 	{
-		pAccel->Init( ROPE_GRAVITY );
+		pAccel->Init(ROPE_GRAVITY);
 	}
 
-
-	virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes )
+	virtual void ApplyConstraints(CSimplePhysics::CNode *pNodes, int nNodes)
 	{
 		// Apply spring forces.
-		BaseClass::ApplyConstraints( pNodes, nNodes );
-
+		BaseClass::ApplyConstraints(pNodes, nNodes);
 
 		// Lock the endpoints.
 		pNodes[0].m_vPos = m_vEndPoints[0];
-		pNodes[nNodes-1].m_vPos = m_vEndPoints[1];
-
+		pNodes[nNodes - 1].m_vPos = m_vEndPoints[1];
 
 		// Calculate how far it is hanging down and adjust if necessary.
 		float flCurHangDist = 0;
-		for ( int i=0; i < NumNodes(); i++ )
+		for(int i = 0; i < NumNodes(); i++)
 		{
-			float hang = fabs( m_flStartZ - GetNode(i)->m_vPos.z );
-			if ( hang > flCurHangDist )
+			float hang = fabs(m_flStartZ - GetNode(i)->m_vPos.z);
+			if(hang > flCurHangDist)
 				flCurHangDist = hang;
 		}
 
 		// Adjust our spring length accordingly.
-		if ( flCurHangDist < m_flWantedHangDist )
+		if(flCurHangDist < m_flWantedHangDist)
 			m_flCurSlack += 1;
 		else
 			m_flCurSlack -= 1;
@@ -58,40 +54,27 @@ public:
 		ApplyNewSpringLength();
 	}
 
-
-// Helpers.
+	// Helpers.
 public:
-
-	void	ApplyNewSpringLength()
+	void ApplyNewSpringLength()
 	{
-		ResetSpringLength( (m_flRopeLength + m_flCurSlack + ROPESLACK_FUDGEFACTOR) / (NumNodes() - 1) );
+		ResetSpringLength((m_flRopeLength + m_flCurSlack + ROPESLACK_FUDGEFACTOR) / (NumNodes() - 1));
 	}
 
-
-// Variables used to adjust the rope slack.
+	// Variables used to adjust the rope slack.
 public:
+	Vector m_vEndPoints[2];
+	bool m_bAdjustSlack;
 
-	Vector	m_vEndPoints[2];
-	bool	m_bAdjustSlack;
+	float m_flRopeLength;
+	float m_flCurSlack;
 
-	float	m_flRopeLength;
-	float	m_flCurSlack;
-
-	float	m_flWantedHangDist;
-	float	m_flStartZ;
-
+	float m_flWantedHangDist;
+	float m_flStartZ;
 };
 
-
-
-void CalcRopeStartingConditions(
-	const Vector &vStartPos,
-	const Vector &vEndPos,
-	int const nNodes,
-	float const desiredHang,
-	float *pOutputLength,
-	float *pOutputSlack
-	)
+void CalcRopeStartingConditions(const Vector &vStartPos, const Vector &vEndPos, int const nNodes,
+								float const desiredHang, float *pOutputLength, float *pOutputSlack)
 {
 	CHangRope rope;
 
@@ -113,24 +96,24 @@ void CalcRopeStartingConditions(
 	rope.m_flRopeLength = (vEndPos - vStartPos).Length();
 	rope.m_flWantedHangDist = desiredHang;
 
-	rope.m_flStartZ = MIN( vStartPos.z, vEndPos.z );	// Calculate hang as the Z distance from the
-														// lowest endpoint to the bottom of the rope.
+	rope.m_flStartZ = MIN(vStartPos.z, vEndPos.z); // Calculate hang as the Z distance from the
+												   // lowest endpoint to the bottom of the rope.
 
-	rope.SetNumNodes( nNodes );
+	rope.SetNumNodes(nNodes);
 
 	// Set the node positions.
-	for ( int i=0; i < rope.NumNodes(); i++ )
+	for(int i = 0; i < rope.NumNodes(); i++)
 	{
-		CSimplePhysics::CNode *pNode = rope.GetNode( i );
+		CSimplePhysics::CNode *pNode = rope.GetNode(i);
 
 		float t = (float)i / (rope.NumNodes() - 1);
-		VectorLerp( vStartPos, vEndPos, t, pNode->m_vPos );
+		VectorLerp(vStartPos, vEndPos, t, pNode->m_vPos);
 		pNode->m_vPrevPos = pNode->m_vPos;
 	}
 
 	// Now simulate a little and stretch out to let it hang down.
 	rope.Restart();
-	rope.Simulate( 3 );
+	rope.Simulate(3);
 
 	// Set outputs.
 	*pOutputLength = rope.m_flRopeLength;

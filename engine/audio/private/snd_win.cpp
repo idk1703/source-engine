@@ -6,14 +6,14 @@
 
 #include "audio_pch.h"
 
-#if defined( USE_SDL )
+#if defined(USE_SDL)
 #include "snd_dev_sdl.h"
 #endif
 #ifdef OSX
 #include "snd_dev_openal.h"
 #include "snd_dev_mac_audioqueue.h"
 
-ConVar snd_audioqueue( "snd_audioqueue", "1" );
+ConVar snd_audioqueue("snd_audioqueue", "1");
 
 #endif
 
@@ -33,9 +33,9 @@ IAudioDevice *g_AudioDevice = NULL;
 S_BlockSound
 ==================
 */
-void S_BlockSound( void )
+void S_BlockSound(void)
 {
-	if ( !g_AudioDevice )
+	if(!g_AudioDevice)
 		return;
 
 	g_AudioDevice->Pause();
@@ -46,9 +46,9 @@ void S_BlockSound( void )
 S_UnblockSound
 ==================
 */
-void S_UnblockSound( void )
+void S_UnblockSound(void)
 {
-	if ( !g_AudioDevice )
+	if(!g_AudioDevice)
 		return;
 
 	g_AudioDevice->UnPause();
@@ -62,23 +62,23 @@ Try to find a sound device to mix for.
 Returns a CAudioNULLDevice if nothing is found.
 ==================
 */
-IAudioDevice *IAudioDevice::AutoDetectInit( bool waveOnly )
+IAudioDevice *IAudioDevice::AutoDetectInit(bool waveOnly)
 {
 	IAudioDevice *pDevice = NULL;
 
-	if ( IsPC() )
+	if(IsPC())
 	{
-#if defined( WIN32 ) && !defined( USE_SDL )
-		if ( waveOnly )
+#if defined(WIN32) && !defined(USE_SDL)
+		if(waveOnly)
 		{
 			pDevice = Audio_CreateWaveDevice();
-			if ( !pDevice )
+			if(!pDevice)
 				goto NULLDEVICE;
 		}
 
-		if ( !pDevice )
+		if(!pDevice)
 		{
-			if ( snd_firsttime )
+			if(snd_firsttime)
 			{
 				pDevice = Audio_CreateDirectSoundDevice();
 			}
@@ -89,23 +89,23 @@ IAudioDevice *IAudioDevice::AutoDetectInit( bool waveOnly )
 		// already allocated (in which case the user has already chosen not
 		// to have sound)
 		// UNDONE: JAY: This doesn't test for the hardware being in use anymore, REVISIT
-		if ( !pDevice )
+		if(!pDevice)
 		{
 			pDevice = Audio_CreateWaveDevice();
 		}
 #elif defined(OSX)
-		if ( !CommandLine()->CheckParm( "-snd_openal" ) )
+		if(!CommandLine()->CheckParm("-snd_openal"))
 		{
-			DevMsg( "Using AudioQueue Interface\n" );
+			DevMsg("Using AudioQueue Interface\n");
 			pDevice = Audio_CreateMacAudioQueueDevice();
 		}
-		if ( !pDevice )
+		if(!pDevice)
 		{
-			DevMsg( "Using OpenAL Interface\n" );
+			DevMsg("Using OpenAL Interface\n");
 			pDevice = Audio_CreateOpenALDevice(); // fall back to openAL if the audio queue fails
 		}
-#elif defined( USE_SDL )
-		DevMsg( "Trying SDL Audio Interface\n" );
+#elif defined(USE_SDL)
+		DevMsg("Trying SDL Audio Interface\n");
 		pDevice = Audio_CreateSDLAudioDevice();
 
 #ifdef NEVER
@@ -122,9 +122,9 @@ IAudioDevice *IAudioDevice::AutoDetectInit( bool waveOnly )
 		// concerns about relying on SDL. The SDL codepath is way easier to read,
 		// simpler to maintain, and handles all sorts of strange audio backends,
 		// including Pulse.
-		if ( !pDevice )
+		if(!pDevice)
 		{
-			DevMsg( "Trying PulseAudio Interface\n" );
+			DevMsg("Trying PulseAudio Interface\n");
 			pDevice = Audio_CreatePulseAudioDevice(); // fall back to PulseAudio if SDL fails
 		}
 #endif // NEVER
@@ -133,27 +133,27 @@ IAudioDevice *IAudioDevice::AutoDetectInit( bool waveOnly )
 #error
 #endif
 	}
-#if defined( _X360 )
+#if defined(_X360)
 	else
 	{
-		pDevice = Audio_CreateXAudioDevice( true );
-		if ( pDevice )
+		pDevice = Audio_CreateXAudioDevice(true);
+		if(pDevice)
 		{
 			// xaudio requires threaded mixing
-			S_EnableThreadedMixing( true );
+			S_EnableThreadedMixing(true);
 		}
 	}
 #endif
 
-#if defined( WIN32 ) && !defined( USE_SDL )
+#if defined(WIN32) && !defined(USE_SDL)
 NULLDEVICE:
 #endif
 	snd_firsttime = false;
 
-	if ( !pDevice )
+	if(!pDevice)
 	{
-		if ( snd_firsttime )
-			DevMsg( "No sound device initialized\n" );
+		if(snd_firsttime)
+			DevMsg("No sound device initialized\n");
 
 		return Audio_GetNullDevice();
 	}
@@ -168,11 +168,11 @@ SNDDMA_Shutdown
 Reset the sound device for exiting
 ===============
 */
-void SNDDMA_Shutdown( void )
+void SNDDMA_Shutdown(void)
 {
-	if ( g_AudioDevice != Audio_GetNullDevice() )
+	if(g_AudioDevice != Audio_GetNullDevice())
 	{
-		if ( g_AudioDevice )
+		if(g_AudioDevice)
 		{
 			g_AudioDevice->Shutdown();
 			delete g_AudioDevice;

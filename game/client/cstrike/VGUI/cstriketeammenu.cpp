@@ -20,47 +20,44 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 CCSTeamMenu::CCSTeamMenu(IViewPort *pViewPort) : CTeamMenu(pViewPort)
 {
-	CreateBackground( this );
+	CreateBackground(this);
 	m_backgroundLayoutFinished = false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CCSTeamMenu::~CCSTeamMenu()
-{
-}
+CCSTeamMenu::~CCSTeamMenu() {}
 
 void CCSTeamMenu::ShowPanel(bool bShow)
 {
-	if ( bShow )
+	if(bShow)
 	{
-		engine->CheckPoint( "TeamMenu" );
+		engine->CheckPoint("TeamMenu");
 	}
 
-	BaseClass::ShowPanel( bShow );
+	BaseClass::ShowPanel(bShow);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: called to update the menu with new information
 //-----------------------------------------------------------------------------
-void CCSTeamMenu::Update( void )
+void CCSTeamMenu::Update(void)
 {
 	BaseClass::Update();
 
-	const ConVar *allowspecs =  cvar->FindVar( "mp_allowspectators" );
+	const ConVar *allowspecs = cvar->FindVar("mp_allowspectators");
 
 	C_CSPlayer *pPlayer = C_CSPlayer::GetLocalCSPlayer();
 
-	if ( !pPlayer || !CSGameRules() )
+	if(!pPlayer || !CSGameRules())
 		return;
 
-	if ( allowspecs && allowspecs->GetBool() )
+	if(allowspecs && allowspecs->GetBool())
 	{
 		// if we're not already a CT or T...or the freeze time isn't over yet...or we're dead
-		if ( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ||
-			CSGameRules()->IsFreezePeriod() ||
-			( pPlayer && pPlayer->IsPlayerDead() ) )
+		if(pPlayer->GetTeamNumber() == TEAM_UNASSIGNED || CSGameRules()->IsFreezePeriod() ||
+		   (pPlayer && pPlayer->IsPlayerDead()))
 		{
 			SetVisibleButton("specbutton", true);
 		}
@@ -71,22 +68,22 @@ void CCSTeamMenu::Update( void )
 	}
 	else
 	{
-		SetVisibleButton("specbutton", false );
+		SetVisibleButton("specbutton", false);
 	}
 
 	m_bVIPMap = false;
 
 	char mapName[MAX_MAP_NAME];
 
-	Q_FileBase( engine->GetLevelName(), mapName, sizeof(mapName) );
+	Q_FileBase(engine->GetLevelName(), mapName, sizeof(mapName));
 
-	if ( !Q_strncmp( mapName, "maps/as_", 8 ) )
+	if(!Q_strncmp(mapName, "maps/as_", 8))
 	{
 		m_bVIPMap = true;
 	}
 
 	// if this isn't a VIP map or we're a spectator/terrorist, then disable the VIP button
-	if ( !CSGameRules()->IsVIPMap() || ( pPlayer->GetTeamNumber() != TEAM_CT ) )
+	if(!CSGameRules()->IsVIPMap() || (pPlayer->GetTeamNumber() != TEAM_CT))
 	{
 		SetVisibleButton("vipbutton", false);
 	}
@@ -95,7 +92,7 @@ void CCSTeamMenu::Update( void )
 		SetVisibleButton("vipbutton", true);
 	}
 
-	if( pPlayer->GetTeamNumber() == TEAM_UNASSIGNED ) // we aren't on a team yet
+	if(pPlayer->GetTeamNumber() == TEAM_UNASSIGNED) // we aren't on a team yet
 	{
 		SetVisibleButton("CancelButton", false);
 	}
@@ -112,13 +109,13 @@ void CCSTeamMenu::SetVisible(bool state)
 {
 	BaseClass::SetVisible(state);
 
-	if ( state )
+	if(state)
 	{
-		Button *pAutoButton = dynamic_cast< Button* >( FindChildByName( "autobutton" ) );
-		if ( pAutoButton )
+		Button *pAutoButton = dynamic_cast<Button *>(FindChildByName("autobutton"));
+		if(pAutoButton)
 		{
 			pAutoButton->RequestFocus();
-			pAutoButton->SetArmed( true );
+			pAutoButton->SetArmed(true);
 		}
 	}
 }
@@ -127,34 +124,32 @@ void CCSTeamMenu::SetVisible(bool state)
 // Purpose: When a team button is pressed it triggers this function to
 //			cause the player to join a team
 //-----------------------------------------------------------------------------
-void CCSTeamMenu::OnCommand( const char *command )
+void CCSTeamMenu::OnCommand(const char *command)
 {
-	if ( Q_stricmp( command, "vguicancel" ) )
+	if(Q_stricmp(command, "vguicancel"))
 	{
-		engine->ClientCmd( command );
+		engine->ClientCmd(command);
 	}
-
 
 	BaseClass::OnCommand(command);
 
-	gViewPortInterface->ShowBackGround( false );
+	gViewPortInterface->ShowBackGround(false);
 	OnClose();
 }
 
-
-void CCSTeamMenu::OnKeyCodePressed( vgui::KeyCode code )
+void CCSTeamMenu::OnKeyCodePressed(vgui::KeyCode code)
 {
-	if ( code == KEY_ENTER )
+	if(code == KEY_ENTER)
 	{
-		Button *pAutoButton = dynamic_cast< Button* >( FindChildByName( "autobutton" ) );
-		if ( pAutoButton )
+		Button *pAutoButton = dynamic_cast<Button *>(FindChildByName("autobutton"));
+		if(pAutoButton)
 		{
 			pAutoButton->DoClick();
 		}
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
@@ -164,7 +159,7 @@ void CCSTeamMenu::OnKeyCodePressed( vgui::KeyCode code )
 void CCSTeamMenu::SetVisibleButton(const char *textEntryName, bool state)
 {
 	Button *entry = dynamic_cast<Button *>(FindChildByName(textEntryName));
-	if (entry)
+	if(entry)
 	{
 		entry->SetVisible(state);
 	}
@@ -173,9 +168,7 @@ void CCSTeamMenu::SetVisibleButton(const char *textEntryName, bool state)
 //-----------------------------------------------------------------------------
 // Purpose: The CS background is painted by image panels, so we should do nothing
 //-----------------------------------------------------------------------------
-void CCSTeamMenu::PaintBackground()
-{
-}
+void CCSTeamMenu::PaintBackground() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale / center the window
@@ -185,16 +178,16 @@ void CCSTeamMenu::PerformLayout()
 	BaseClass::PerformLayout();
 
 	// stretch the window to fullscreen
-	if ( !m_backgroundLayoutFinished )
-		LayoutBackgroundPanel( this );
+	if(!m_backgroundLayoutFinished)
+		LayoutBackgroundPanel(this);
 	m_backgroundLayoutFinished = true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CCSTeamMenu::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CCSTeamMenu::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	ApplyBackgroundSchemeSettings( this, pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
+	ApplyBackgroundSchemeSettings(this, pScheme);
 }

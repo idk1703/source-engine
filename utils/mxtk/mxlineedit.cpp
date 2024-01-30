@@ -16,7 +16,6 @@
 #include "mxtk/mxEvent.h"
 #include "mxtk/mxWindow.h"
 
-
 class mxLineEdit_i
 {
 public:
@@ -25,116 +24,107 @@ public:
 
 #include "tier0/dbg.h"
 
-
-typedef LRESULT (CALLBACK * WndProc_t)(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
+typedef LRESULT(CALLBACK *WndProc_t)(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
 
 static WndProc_t s_OldWndProc = 0;
 
-static LRESULT CALLBACK EditWndProc (HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
+static LRESULT CALLBACK EditWndProc(HWND hwnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 {
 	int iret = 0;
 
 	// This lovely bit of hackery ensures we get return key events
-	if ( uMessage == WM_CHAR)
+	if(uMessage == WM_CHAR)
 	{
-		iret = s_OldWndProc( hwnd, uMessage, wParam, lParam );
+		iret = s_OldWndProc(hwnd, uMessage, wParam, lParam);
 
 		// Post the message directly to all windows in the hierarchy until
 		// someone responds
-		mxLineEdit *lineEdit = (mxLineEdit *) GetWindowLong (hwnd, GWL_USERDATA);
+		mxLineEdit *lineEdit = (mxLineEdit *)GetWindowLong(hwnd, GWL_USERDATA);
 		mxEvent event;
 		event.event = mxEvent::KeyDown;
 		event.action = lineEdit->getId();
-		event.key = (int) wParam;
+		event.key = (int)wParam;
 
-		mxWindow* window = lineEdit->getParent();
-		while (window)
+		mxWindow *window = lineEdit->getParent();
+		while(window)
 		{
-			if (window->handleEvent (&event))
+			if(window->handleEvent(&event))
 				break;
 
-			window = window->getParent ();
+			window = window->getParent();
 		}
 	}
 	else
 	{
-		if ( uMessage == WM_LBUTTONDOWN )
+		if(uMessage == WM_LBUTTONDOWN)
 		{
-			SetFocus( hwnd );
+			SetFocus(hwnd);
 		}
-		iret = s_OldWndProc( hwnd, uMessage, wParam, lParam );
+		iret = s_OldWndProc(hwnd, uMessage, wParam, lParam);
 	}
 	return iret;
 }
 
-mxLineEdit::mxLineEdit (mxWindow *parent, int x, int y, int w, int h, const char *label, int id, int style)
-: mxWidget (parent, x, y, w, h, label)
+mxLineEdit::mxLineEdit(mxWindow *parent, int x, int y, int w, int h, const char *label, int id, int style)
+	: mxWidget(parent, x, y, w, h, label)
 {
-	if (!parent)
+	if(!parent)
 		return;
 
 	DWORD dwStyle = WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | WS_TABSTOP; //  | ES_WANTRETURN | ES_MULTILINE;
-	HWND hwndParent = (HWND) ((mxWidget *) parent)->getHandle ();
+	HWND hwndParent = (HWND)((mxWidget *)parent)->getHandle();
 
-	if (style == ReadOnly)
+	if(style == ReadOnly)
 		dwStyle |= ES_READONLY;
-	else if (style == Password)
+	else if(style == Password)
 		dwStyle |= ES_PASSWORD;
 
-	if (!s_OldWndProc)
+	if(!s_OldWndProc)
 	{
 		WNDCLASSEX editClass;
-		GetClassInfoEx( (HINSTANCE) GetModuleHandle (NULL), "EDIT", &editClass );
+		GetClassInfoEx((HINSTANCE)GetModuleHandle(NULL), "EDIT", &editClass);
 		s_OldWndProc = editClass.lpfnWndProc;
 
 		editClass.cbSize = sizeof(WNDCLASSEX);
 		editClass.cbClsExtra = 0;
 		editClass.lpfnWndProc = EditWndProc;
 		editClass.lpszClassName = "mx_edit";
-		RegisterClassEx( &editClass );
+		RegisterClassEx(&editClass);
 	}
 
-	void *handle = (void *) CreateWindowEx (WS_EX_CLIENTEDGE, "mx_edit", label, dwStyle, //WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL,
-				x, y, w, h, hwndParent,
-				(HMENU) id, (HINSTANCE) GetModuleHandle (NULL), NULL);
+	void *handle =
+		(void *)CreateWindowEx(WS_EX_CLIENTEDGE, "mx_edit", label, dwStyle, // WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL,
+							   x, y, w, h, hwndParent, (HMENU)id, (HINSTANCE)GetModuleHandle(NULL), NULL);
 
-	SendMessage ((HWND) handle, WM_SETFONT, (WPARAM) (HFONT) GetStockObject (ANSI_VAR_FONT), MAKELPARAM (TRUE, 0));
-	SendMessage ((HWND) getHandle (), EM_LIMITTEXT, (WPARAM) 256, 0L);
-	SetWindowLong ((HWND) handle, GWL_USERDATA, (LONG) this);
+	SendMessage((HWND)handle, WM_SETFONT, (WPARAM)(HFONT)GetStockObject(ANSI_VAR_FONT), MAKELPARAM(TRUE, 0));
+	SendMessage((HWND)getHandle(), EM_LIMITTEXT, (WPARAM)256, 0L);
+	SetWindowLong((HWND)handle, GWL_USERDATA, (LONG)this);
 
-	setHandle (handle);
-	setType (MX_LINEEDIT);
-	setParent (parent);
-	setId (id);
+	setHandle(handle);
+	setType(MX_LINEEDIT);
+	setParent(parent);
+	setId(id);
 }
 
-
-
-mxLineEdit::~mxLineEdit ()
-{
-}
+mxLineEdit::~mxLineEdit() {}
 
 void mxLineEdit::clear()
 {
-	SendMessage( (HWND)getHandle(), WM_SETTEXT, (WPARAM)0, (LPARAM)"" );
+	SendMessage((HWND)getHandle(), WM_SETTEXT, (WPARAM)0, (LPARAM) "");
 }
 
-void mxLineEdit::getText( char *buf, size_t bufsize )
+void mxLineEdit::getText(char *buf, size_t bufsize)
 {
-	buf[ 0 ] = 0;
-	SendMessage( (HWND) getHandle (), WM_GETTEXT, (WPARAM)bufsize, (LPARAM)buf );
+	buf[0] = 0;
+	SendMessage((HWND)getHandle(), WM_GETTEXT, (WPARAM)bufsize, (LPARAM)buf);
 }
 
-void
-mxLineEdit::setMaxLength (int max)
+void mxLineEdit::setMaxLength(int max)
 {
-	SendMessage ((HWND) getHandle (), EM_LIMITTEXT, (WPARAM) max, 0L);
+	SendMessage((HWND)getHandle(), EM_LIMITTEXT, (WPARAM)max, 0L);
 }
 
-
-
-int
-mxLineEdit::getMaxLength () const
+int mxLineEdit::getMaxLength() const
 {
-	return (int) SendMessage ((HWND) getHandle (), EM_GETLIMITTEXT, 0, 0L);
+	return (int)SendMessage((HWND)getHandle(), EM_GETLIMITTEXT, 0, 0L);
 }

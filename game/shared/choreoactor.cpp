@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CChoreoActor::CChoreoActor( void )
+CChoreoActor::CChoreoActor(void)
 {
 	Init();
 }
@@ -27,10 +27,10 @@ CChoreoActor::CChoreoActor( void )
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-CChoreoActor::CChoreoActor( const char *name )
+CChoreoActor::CChoreoActor(const char *name)
 {
 	Init();
-	SetName( name );
+	SetName(name);
 }
 
 //-----------------------------------------------------------------------------
@@ -38,20 +38,20 @@ CChoreoActor::CChoreoActor( const char *name )
 // Input  : src -
 // Output : CChoreoActor&
 //-----------------------------------------------------------------------------
-CChoreoActor& CChoreoActor::operator=( const CChoreoActor& src )
+CChoreoActor &CChoreoActor::operator=(const CChoreoActor &src)
 {
 	m_bActive = src.m_bActive;
 
-	Q_strncpy( m_szName, src.m_szName, sizeof( m_szName ) );
-	Q_strncpy( m_szFacePoserModelName, src.m_szFacePoserModelName, sizeof( m_szFacePoserModelName ) );
+	Q_strncpy(m_szName, src.m_szName, sizeof(m_szName));
+	Q_strncpy(m_szFacePoserModelName, src.m_szFacePoserModelName, sizeof(m_szFacePoserModelName));
 
-	for ( int i = 0; i < src.m_Channels.Size(); i++ )
+	for(int i = 0; i < src.m_Channels.Size(); i++)
 	{
-		CChoreoChannel *c = src.m_Channels[ i ];
+		CChoreoChannel *c = src.m_Channels[i];
 		CChoreoChannel *newChannel = new CChoreoChannel();
-		newChannel->SetActor( this );
+		newChannel->SetActor(this);
 		*newChannel = *c;
-		AddChannel( newChannel );
+		AddChannel(newChannel);
 	}
 
 	return *this;
@@ -60,10 +60,10 @@ CChoreoActor& CChoreoActor::operator=( const CChoreoActor& src )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CChoreoActor::Init( void )
+void CChoreoActor::Init(void)
 {
-	m_szName[ 0 ] = 0;
-	m_szFacePoserModelName[ 0 ] = 0;
+	m_szName[0] = 0;
+	m_szFacePoserModelName[0] = 0;
 	m_bActive = true;
 }
 
@@ -71,17 +71,17 @@ void CChoreoActor::Init( void )
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-void CChoreoActor::SetName( const char *name )
+void CChoreoActor::SetName(const char *name)
 {
-	assert( strlen( name ) < MAX_ACTOR_NAME );
-	Q_strncpy( m_szName, name, sizeof( m_szName ) );
+	assert(strlen(name) < MAX_ACTOR_NAME);
+	Q_strncpy(m_szName, name, sizeof(m_szName));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CChoreoActor::GetName( void )
+const char *CChoreoActor::GetName(void)
 {
 	return m_szName;
 }
@@ -90,7 +90,7 @@ const char *CChoreoActor::GetName( void )
 // Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CChoreoActor::GetNumChannels( void )
+int CChoreoActor::GetNumChannels(void)
 {
 	return m_Channels.Size();
 }
@@ -100,36 +100,36 @@ int CChoreoActor::GetNumChannels( void )
 // Input  : channel -
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
-CChoreoChannel *CChoreoActor::GetChannel( int channel )
+CChoreoChannel *CChoreoActor::GetChannel(int channel)
 {
-	if ( channel < 0 || channel >= m_Channels.Size() )
+	if(channel < 0 || channel >= m_Channels.Size())
 	{
 		return NULL;
 	}
 
-	return m_Channels[ channel ];
+	return m_Channels[channel];
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *channel -
 //-----------------------------------------------------------------------------
-void CChoreoActor::AddChannel( CChoreoChannel *channel )
+void CChoreoActor::AddChannel(CChoreoChannel *channel)
 {
-	m_Channels.AddToTail( channel );
+	m_Channels.AddToTail(channel);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *channel -
 //-----------------------------------------------------------------------------
-void CChoreoActor::RemoveChannel( CChoreoChannel *channel )
+void CChoreoActor::RemoveChannel(CChoreoChannel *channel)
 {
-	int idx = FindChannelIndex( channel );
-	if ( idx == -1 )
+	int idx = FindChannelIndex(channel);
+	if(idx == -1)
 		return;
 
-	m_Channels.Remove( idx );
+	m_Channels.Remove(idx);
 }
 
 //-----------------------------------------------------------------------------
@@ -145,13 +145,13 @@ void CChoreoActor::RemoveAllChannels()
 // Input  : c1 -
 //			c2 -
 //-----------------------------------------------------------------------------
-void CChoreoActor::SwapChannels( int c1, int c2 )
+void CChoreoActor::SwapChannels(int c1, int c2)
 {
 	CChoreoChannel *temp;
 
-	temp = m_Channels[ c1 ];
-	m_Channels[ c1 ] = m_Channels[ c2 ];
-	m_Channels[ c2 ] = temp;
+	temp = m_Channels[c1];
+	m_Channels[c1] = m_Channels[c2];
+	m_Channels[c2] = temp;
 }
 
 //-----------------------------------------------------------------------------
@@ -159,11 +159,11 @@ void CChoreoActor::SwapChannels( int c1, int c2 )
 // Input  : *channel -
 // Output : int
 //-----------------------------------------------------------------------------
-int CChoreoActor::FindChannelIndex( CChoreoChannel *channel )
+int CChoreoActor::FindChannelIndex(CChoreoChannel *channel)
 {
-	for ( int i = 0; i < m_Channels.Size(); i++ )
+	for(int i = 0; i < m_Channels.Size(); i++)
 	{
-		if ( channel == m_Channels[ i ] )
+		if(channel == m_Channels[i])
 		{
 			return i;
 		}
@@ -175,16 +175,16 @@ int CChoreoActor::FindChannelIndex( CChoreoChannel *channel )
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-void CChoreoActor::SetFacePoserModelName( const char *name )
+void CChoreoActor::SetFacePoserModelName(const char *name)
 {
-	Q_strncpy( m_szFacePoserModelName, name, sizeof( m_szFacePoserModelName ) );
+	Q_strncpy(m_szFacePoserModelName, name, sizeof(m_szFacePoserModelName));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
-const char *CChoreoActor::GetFacePoserModelName( void ) const
+const char *CChoreoActor::GetFacePoserModelName(void) const
 {
 	return m_szFacePoserModelName;
 }
@@ -193,7 +193,7 @@ const char *CChoreoActor::GetFacePoserModelName( void ) const
 // Purpose:
 // Input  : active -
 //-----------------------------------------------------------------------------
-void CChoreoActor::SetActive( bool active )
+void CChoreoActor::SetActive(bool active)
 {
 	m_bActive = active;
 }
@@ -202,7 +202,7 @@ void CChoreoActor::SetActive( bool active )
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CChoreoActor::GetActive( void ) const
+bool CChoreoActor::GetActive(void) const
 {
 	return m_bActive;
 }
@@ -210,15 +210,15 @@ bool CChoreoActor::GetActive( void ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CChoreoActor::MarkForSaveAll( bool mark )
+void CChoreoActor::MarkForSaveAll(bool mark)
 {
-	SetMarkedForSave( mark );
+	SetMarkedForSave(mark);
 
 	int c = GetNumChannels();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CChoreoChannel *channel = GetChannel( i );
-		channel->MarkForSaveAll( mark );
+		CChoreoChannel *channel = GetChannel(i);
+		channel->MarkForSaveAll(mark);
 	}
 }
 
@@ -227,32 +227,32 @@ void CChoreoActor::MarkForSaveAll( bool mark )
 // Input  : *name -
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
-CChoreoChannel *CChoreoActor::FindChannel( const char *name )
+CChoreoChannel *CChoreoActor::FindChannel(const char *name)
 {
 	int c = GetNumChannels();
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CChoreoChannel *channel = GetChannel( i );
-		if ( !Q_stricmp( channel->GetName(), name ) )
+		CChoreoChannel *channel = GetChannel(i);
+		if(!Q_stricmp(channel->GetName(), name))
 			return channel;
 	}
 
 	return NULL;
 }
 
-void CChoreoActor::SaveToBuffer( CUtlBuffer& buf, CChoreoScene *pScene, IChoreoStringPool *pStringPool )
+void CChoreoActor::SaveToBuffer(CUtlBuffer &buf, CChoreoScene *pScene, IChoreoStringPool *pStringPool)
 {
-	buf.PutShort( pStringPool->FindOrAddString( GetName() ) );
+	buf.PutShort(pStringPool->FindOrAddString(GetName()));
 
 	int c = GetNumChannels();
-	Assert( c <= 255 );
-	buf.PutUnsignedChar( c );
+	Assert(c <= 255);
+	buf.PutUnsignedChar(c);
 
-	for ( int i = 0; i < c; i++ )
+	for(int i = 0; i < c; i++)
 	{
-		CChoreoChannel *channel = GetChannel( i );
-		Assert( channel );
-		channel->SaveToBuffer( buf, pScene, pStringPool );
+		CChoreoChannel *channel = GetChannel(i);
+		Assert(channel);
+		channel->SaveToBuffer(buf, pScene, pStringPool);
 	}
 
 	/*
@@ -261,33 +261,33 @@ void CChoreoActor::SaveToBuffer( CUtlBuffer& buf, CChoreoScene *pScene, IChoreoS
 		FilePrintf( buf, level + 1, "faceposermodel \"%s\"\n", a->GetFacePoserModelName() );
 	}
 	*/
-	buf.PutChar( GetActive() ? 1 : 0 );
+	buf.PutChar(GetActive() ? 1 : 0);
 }
 
-bool CChoreoActor::RestoreFromBuffer( CUtlBuffer& buf, CChoreoScene *pScene, IChoreoStringPool *pStringPool )
+bool CChoreoActor::RestoreFromBuffer(CUtlBuffer &buf, CChoreoScene *pScene, IChoreoStringPool *pStringPool)
 {
-	char sz[ 256 ];
-	pStringPool->GetString( buf.GetShort(), sz, sizeof( sz ) );
+	char sz[256];
+	pStringPool->GetString(buf.GetShort(), sz, sizeof(sz));
 
-	SetName( sz );
+	SetName(sz);
 
 	int i;
 	int c = buf.GetUnsignedChar();
-	for ( i = 0; i < c; i++ )
+	for(i = 0; i < c; i++)
 	{
 		CChoreoChannel *channel = pScene->AllocChannel();
-		Assert( channel );
-		if ( channel->RestoreFromBuffer( buf, pScene, this, pStringPool ) )
+		Assert(channel);
+		if(channel->RestoreFromBuffer(buf, pScene, this, pStringPool))
 		{
-			AddChannel( channel );
-			channel->SetActor( this );
+			AddChannel(channel);
+			channel->SetActor(this);
 			continue;
 		}
 
 		return false;
 	}
 
-	SetActive( buf.GetChar() == 1 ? true : false );
+	SetActive(buf.GetChar() == 1 ? true : false);
 
 	return true;
 }

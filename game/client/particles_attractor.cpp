@@ -15,11 +15,11 @@
 //			"attractor" -
 // Output : CParticleAttractor
 //-----------------------------------------------------------------------------
-CParticleAttractor *CParticleAttractor::Create( const Vector &center, const char *pDebugName )
+CParticleAttractor *CParticleAttractor::Create(const Vector &center, const char *pDebugName)
 {
-	CParticleAttractor *pSystem = new CParticleAttractor( pDebugName );
+	CParticleAttractor *pSystem = new CParticleAttractor(pDebugName);
 
-	pSystem->SetAttractorOrigin( center );
+	pSystem->SetAttractorOrigin(center);
 
 	return pSystem;
 }
@@ -29,15 +29,15 @@ CParticleAttractor *CParticleAttractor::Create( const Vector &center, const char
 // Input  : *pParticle -
 //			timeDelta -
 //-----------------------------------------------------------------------------
-void CParticleAttractor::UpdateVelocity( SimpleParticle *pParticle, float timeDelta )
+void CParticleAttractor::UpdateVelocity(SimpleParticle *pParticle, float timeDelta)
 {
-	float	speed = VectorNormalize( pParticle->m_vecVelocity );
-	Vector	offset;
+	float speed = VectorNormalize(pParticle->m_vecVelocity);
+	Vector offset;
 
-	Vector dir = ( m_vecAttractorOrigin - pParticle->m_Pos );
-	VectorNormalize( dir );
+	Vector dir = (m_vecAttractorOrigin - pParticle->m_Pos);
+	VectorNormalize(dir);
 
-	speed = clamp( (speed+speed*0.2f), 0.f, 1024.f );
+	speed = clamp((speed + speed * 0.2f), 0.f, 1024.f);
 	pParticle->m_vecVelocity += dir * speed;
 }
 
@@ -47,9 +47,9 @@ void CParticleAttractor::UpdateVelocity( SimpleParticle *pParticle, float timeDe
 //			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
-float CParticleAttractor::UpdateScale( const SimpleParticle *pParticle )
+float CParticleAttractor::UpdateScale(const SimpleParticle *pParticle)
 {
-	return ( ((float)pParticle->m_uchStartSize) * sin( M_PI * (pParticle->m_flLifetime / pParticle->m_flDieTime) ) );
+	return (((float)pParticle->m_uchStartSize) * sin(M_PI * (pParticle->m_flLifetime / pParticle->m_flDieTime)));
 }
 
 //-----------------------------------------------------------------------------
@@ -58,16 +58,17 @@ float CParticleAttractor::UpdateScale( const SimpleParticle *pParticle )
 //			timeDelta -
 // Output : float
 //-----------------------------------------------------------------------------
-float CParticleAttractor::UpdateAlpha( const SimpleParticle *pParticle )
+float CParticleAttractor::UpdateAlpha(const SimpleParticle *pParticle)
 {
-	return ( ((float)pParticle->m_uchStartAlpha/255.0f) * sin( M_PI * (pParticle->m_flLifetime / pParticle->m_flDieTime) ) );
+	return (((float)pParticle->m_uchStartAlpha / 255.0f) *
+			sin(M_PI * (pParticle->m_flLifetime / pParticle->m_flDieTime)));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : &origin -
 //-----------------------------------------------------------------------------
-void CParticleAttractor::SetAttractorOrigin( const Vector &origin )
+void CParticleAttractor::SetAttractorOrigin(const Vector &origin)
 {
 	m_vecAttractorOrigin = origin;
 }

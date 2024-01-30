@@ -9,23 +9,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // Expose this class to the scene database
 //-----------------------------------------------------------------------------
-IMPLEMENT_ABSTRACT_ELEMENT( DmeInput, CDmeInput );
-
+IMPLEMENT_ABSTRACT_ELEMENT(DmeInput, CDmeInput);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDmeInput::OnConstruction()
-{
-}
+void CDmeInput::OnConstruction() {}
 
-void CDmeInput::OnDestruction()
-{
-}
+void CDmeInput::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
 // IsDirty - ie needs to operate

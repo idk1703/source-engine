@@ -20,23 +20,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
-#define IDC_PROCESSWND_EDIT    1
+#define IDC_PROCESSWND_EDIT	   1
 #define IDC_PROCESSWND_COPYALL 2
 
-
 LPCTSTR GetErrorString();
-
 
 CProcessWnd::CProcessWnd()
 {
 	Font.CreatePointFont(100, "Courier New");
 }
 
-CProcessWnd::~CProcessWnd()
-{
-}
-
+CProcessWnd::~CProcessWnd() {}
 
 BEGIN_MESSAGE_MAP(CProcessWnd, CWnd)
 	ON_BN_CLICKED(IDC_PROCESSWND_COPYALL, OnCopyAll)
@@ -60,7 +54,7 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, ...)
 
 	while(1)
 	{
-		char *p = va_arg(vl, char*);
+		char *p = va_arg(vl, char *);
 		if(!p)
 			break;
 		strBuf += p;
@@ -82,7 +76,7 @@ void CProcessWnd::Clear()
 void CProcessWnd::Append(CString str)
 {
 	m_EditText += str;
-	if (getOSVersion() >= eWinNT)
+	if(getOSVersion() >= eWinNT)
 	{
 		Edit.SetWindowText(m_EditText);
 	}
@@ -93,7 +87,7 @@ void CProcessWnd::Append(CString str)
 		// Gracefully handle 64k edit control display on win9x (display last 64k of text)
 		// Copy to clipboard will work fine, as it copies the m_EditText contents
 		// in its entirety to the clipboard
-		if (length >= 0x0FFFF)
+		if(length >= 0x0FFFF)
 		{
 			LPTSTR string = m_EditText.GetBuffer(length + 1);
 			LPTSTR offset;
@@ -126,7 +120,8 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 	{
 		if(CreatePipe(&hChildStdinRd_, &hChildStdinWr, &saAttr, 0))
 		{
-			if (DuplicateHandle(GetCurrentProcess(),hChildStdoutWr, GetCurrentProcess(),&hChildStderrWr,0, TRUE,DUPLICATE_SAME_ACCESS))
+			if(DuplicateHandle(GetCurrentProcess(), hChildStdoutWr, GetCurrentProcess(), &hChildStderrWr, 0, TRUE,
+							   DUPLICATE_SAME_ACCESS))
 			{
 				/* Now create the child process. */
 				STARTUPINFO si;
@@ -139,8 +134,7 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 				PROCESS_INFORMATION pi;
 				CString str;
 				str.Format("%s %s", pszCmd, pszCmdLine);
-				if (CreateProcess(NULL, (char*) LPCTSTR(str), NULL, NULL, TRUE,
-					DETACHED_PROCESS, NULL, NULL, &si, &pi))
+				if(CreateProcess(NULL, (char *)LPCTSTR(str), NULL, NULL, TRUE, DETACHED_PROCESS, NULL, NULL, &si, &pi))
 				{
 					HANDLE hProcess = pi.hProcess;
 
@@ -155,11 +149,11 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 						DWORD dwRead = 0;
 
 						// read from input handle
-						PeekNamedPipe( hChildStdoutRd_, NULL, NULL, NULL, &dwCount, NULL);
-						if (dwCount)
+						PeekNamedPipe(hChildStdoutRd_, NULL, NULL, NULL, &dwCount, NULL);
+						if(dwCount)
 						{
-							dwCount = min (dwCount, (DWORD)BUFFER_SIZE - 1);
-							ReadFile( hChildStdoutRd_, buffer, dwCount, &dwRead, NULL);
+							dwCount = min(dwCount, (DWORD)BUFFER_SIZE - 1);
+							ReadFile(hChildStdoutRd_, buffer, dwCount, &dwRead, NULL);
 						}
 						if(dwRead)
 						{
@@ -171,7 +165,7 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 						{
 							if(bDone)
 								break;
-							bDone = TRUE;	// next time we get it
+							bDone = TRUE; // next time we get it
 						}
 					}
 					rval = 0;
@@ -201,7 +195,6 @@ int CProcessWnd::Execute(LPCTSTR pszCmd, LPCTSTR pszCmdLine)
 /////////////////////////////////////////////////////////////////////////////
 // CProcessWnd message handlers
 
-
 void CProcessWnd::OnTimer(UINT nIDEvent)
 {
 	CWnd::OnTimer(nIDEvent);
@@ -209,7 +202,7 @@ void CProcessWnd::OnTimer(UINT nIDEvent)
 
 int CProcessWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if (CWnd::OnCreate(lpCreateStruct) == -1)
+	if(CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	// create big CEdit in window
@@ -220,7 +213,9 @@ int CProcessWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	rctEdit = rctClient;
 	rctEdit.bottom = rctClient.bottom - 20;
 
-	Edit.Create(WS_CHILD | WS_BORDER | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN, rctClient, this, IDC_PROCESSWND_EDIT);
+	Edit.Create(WS_CHILD | WS_BORDER | WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_AUTOVSCROLL |
+					ES_WANTRETURN,
+				rctClient, this, IDC_PROCESSWND_EDIT);
 	Edit.SetReadOnly(TRUE);
 	Edit.SetFont(&Font);
 
@@ -253,17 +248,18 @@ void CProcessWnd::OnSize(UINT nType, int cx, int cy)
 	m_btnCopyAll.MoveWindow(rctButton);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Prepare the process window for display. If it has not been created
 //			yet, register the class and create it.
 //-----------------------------------------------------------------------------
 void CProcessWnd::GetReady(void)
 {
-	if (!IsWindow(m_hWnd))
+	if(!IsWindow(m_hWnd))
 	{
-		CString strClass = AfxRegisterWndClass(0, AfxGetApp()->LoadStandardCursor(IDC_ARROW), HBRUSH(GetStockObject(WHITE_BRUSH)));
-		CreateEx(0, strClass, "Compile Process Window", WS_OVERLAPPEDWINDOW, 50, 50, 600, 400, AfxGetMainWnd()->GetSafeHwnd(), HMENU(NULL));
+		CString strClass =
+			AfxRegisterWndClass(0, AfxGetApp()->LoadStandardCursor(IDC_ARROW), HBRUSH(GetStockObject(WHITE_BRUSH)));
+		CreateEx(0, strClass, "Compile Process Window", WS_OVERLAPPEDWINDOW, 50, 50, 600, 400,
+				 AfxGetMainWnd()->GetSafeHwnd(), HMENU(NULL));
 	}
 
 	ShowWindow(SW_SHOW);
@@ -271,7 +267,7 @@ void CProcessWnd::GetReady(void)
 	Clear();
 }
 
-BOOL CProcessWnd::PreTranslateMessage(MSG* pMsg)
+BOOL CProcessWnd::PreTranslateMessage(MSG *pMsg)
 {
 	// The edit control won't get keyboard commands from the window without this (at least in Win2k)
 	// The right mouse context menu still will not work in w2k for some reason either, although
@@ -281,20 +277,20 @@ BOOL CProcessWnd::PreTranslateMessage(MSG* pMsg)
 	return TRUE;
 }
 
-static void CopyToClipboard(const CString& text)
+static void CopyToClipboard(const CString &text)
 {
-	if (OpenClipboard(NULL))
+	if(OpenClipboard(NULL))
 	{
-		if (EmptyClipboard())
+		if(EmptyClipboard())
 		{
 			HGLOBAL hglbCopy;
-			LPTSTR  tstrCopy;
+			LPTSTR tstrCopy;
 
-			hglbCopy = GlobalAlloc(GMEM_DDESHARE, text.GetLength() + sizeof(TCHAR) );
+			hglbCopy = GlobalAlloc(GMEM_DDESHARE, text.GetLength() + sizeof(TCHAR));
 
-			if (hglbCopy != NULL)
+			if(hglbCopy != NULL)
 			{
-				tstrCopy = (LPTSTR) GlobalLock(hglbCopy);
+				tstrCopy = (LPTSTR)GlobalLock(hglbCopy);
 				strcpy(tstrCopy, (LPCTSTR)text);
 				GlobalUnlock(hglbCopy);
 

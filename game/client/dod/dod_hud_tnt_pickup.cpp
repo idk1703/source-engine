@@ -15,31 +15,33 @@
 #include "dod_hud_tnt_pickup.h"
 #include <vgui/ILocalize.h>
 
-DECLARE_HUDELEMENT( CDODHudTNTPickupPanel );
+DECLARE_HUDELEMENT(CDODHudTNTPickupPanel);
 
-ConVar hud_c4pickuppanel( "hud_c4pickuppanel", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Set to 0 to not draw the HUD c4 pickup panel" );
+ConVar hud_c4pickuppanel("hud_c4pickuppanel", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE,
+						 "Set to 0 to not draw the HUD c4 pickup panel");
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODHudTNTPickupPanel::CDODHudTNTPickupPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudTNTPickupPanel" )
+CDODHudTNTPickupPanel::CDODHudTNTPickupPanel(const char *pElementName)
+	: CHudElement(pElementName), BaseClass(NULL, "HudTNTPickupPanel")
 {
-	SetParent( g_pClientMode->GetViewport() );
+	SetParent(g_pClientMode->GetViewport());
 
-	m_pBackground = new vgui::Panel( this, "CapturePanelBackground" );
-	m_pTNTImage = new CIconPanel( this, "TNTImage" );
+	m_pBackground = new vgui::Panel(this, "CapturePanelBackground");
+	m_pTNTImage = new CIconPanel(this, "TNTImage");
 
-	m_pPickupLabel = new vgui::Label( this, "pickupLabel", "..." );
+	m_pPickupLabel = new vgui::Label(this, "pickupLabel", "...");
 
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudTNTPickupPanel.res" );
+	LoadControlSettings("resource/UI/HudTNTPickupPanel.res");
 
-	SetVisible( false );
+	SetVisible(false);
 	m_flShowUntilTime = 0;
 
 	m_bInitLayout = true;
 
-	RegisterForRenderGroup( "winpanel" );
+	RegisterForRenderGroup("winpanel");
 }
 
 //-----------------------------------------------------------------------------
@@ -48,7 +50,7 @@ CDODHudTNTPickupPanel::CDODHudTNTPickupPanel( const char *pElementName ) : CHudE
 void CDODHudTNTPickupPanel::Init()
 {
 	// listen for client side events
-	ListenForGameEvent( "dod_tnt_pickup" );
+	ListenForGameEvent("dod_tnt_pickup");
 }
 
 //-----------------------------------------------------------------------------
@@ -65,9 +67,9 @@ void CDODHudTNTPickupPanel::VidInit()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDODHudTNTPickupPanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
+void CDODHudTNTPickupPanel::OnScreenSizeChanged(int iOldWide, int iOldTall)
 {
-	LoadControlSettings( "resource/UI/HudTNTPickupPanel.res" );
+	LoadControlSettings("resource/UI/HudTNTPickupPanel.res");
 
 	m_bInitLayout = true;
 }
@@ -75,78 +77,78 @@ void CDODHudTNTPickupPanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CDODHudTNTPickupPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDODHudTNTPickupPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings( "resource/UI/HudTNTPickupPanel.res" );
+	LoadControlSettings("resource/UI/HudTNTPickupPanel.res");
 	m_bInitLayout = true;
 
-	if ( m_pBackground )
+	if(m_pBackground)
 	{
-		m_pBackground->SetBgColor( GetSchemeColor( "HintMessageBg", pScheme ) );
-		m_pBackground->SetPaintBackgroundType( 2 );
+		m_pBackground->SetBgColor(GetSchemeColor("HintMessageBg", pScheme));
+		m_pBackground->SetPaintBackgroundType(2);
 	}
 }
 
-void CDODHudTNTPickupPanel::FireGameEvent( IGameEvent *event )
+void CDODHudTNTPickupPanel::FireGameEvent(IGameEvent *event)
 {
 	const char *pszEventName = event->GetName();
 
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
 
-	if ( !Q_strcmp( pszEventName, "dod_tnt_pickup" ) && pPlayer && pPlayer->ShouldShowHints() )
+	if(!Q_strcmp(pszEventName, "dod_tnt_pickup") && pPlayer && pPlayer->ShouldShowHints())
 	{
-		if ( hud_c4pickuppanel.GetBool() )
+		if(hud_c4pickuppanel.GetBool())
 		{
 			// fire the show animation
-			SetVisible( true );
+			SetVisible(true);
 			m_flShowUntilTime = gpGlobals->curtime + 3.5;
 
-			m_pTNTImage->SetVisible( true );
+			m_pTNTImage->SetVisible(true);
 		}
 	}
 }
 
-void CDODHudTNTPickupPanel::OnThink( void )
+void CDODHudTNTPickupPanel::OnThink(void)
 {
 	BaseClass::OnThink();
 
 	// if only vgui had relative layouts for elements..
-	if ( m_bInitLayout )
+	if(m_bInitLayout)
 	{
 		// localize text if we need
-		m_pPickupLabel->SetText( g_pVGuiLocalize->Find( "dod_tnt_pickup_help" ) );
+		m_pPickupLabel->SetText(g_pVGuiLocalize->Find("dod_tnt_pickup_help"));
 
 		// size label to contents
 		m_pPickupLabel->SizeToContents();
 
 		int labelX, labelY, labelW, labelH;
-		m_pPickupLabel->GetBounds( labelX, labelY, labelW, labelH );
+		m_pPickupLabel->GetBounds(labelX, labelY, labelW, labelH);
 
 		int imageX, imageY, imageH, imageW;
-		m_pTNTImage->GetBounds( imageX, imageY, imageH, imageW );
+		m_pTNTImage->GetBounds(imageX, imageY, imageH, imageW);
 
 		// total width is:
 		// margin + image width + margin + text + margin
 		int newWidth = 3 * XRES(10) + imageW + labelW;
 
 		int bgX, bgY, bgW, bgH;
-		m_pBackground->GetBounds( bgX, bgY, bgW, bgH );
+		m_pBackground->GetBounds(bgX, bgY, bgW, bgH);
 
-		int newX = XRES(320) - newWidth/2;
+		int newX = XRES(320) - newWidth / 2;
 
-		m_pBackground->SetBounds( newX, bgY, newWidth, bgH );
+		m_pBackground->SetBounds(newX, bgY, newWidth, bgH);
 
-		m_pTNTImage->SetPos( newX + XRES(10), imageY );
+		m_pTNTImage->SetPos(newX + XRES(10), imageY);
 
-		m_pPickupLabel->SetPos( newX + 2 * XRES(10) + imageW, bgY + ( bgH - labelY) / 2 );
+		m_pPickupLabel->SetPos(newX + 2 * XRES(10) + imageW, bgY + (bgH - labelY) / 2);
 
 		m_bInitLayout = false;
 	}
 
-	if ( IsVisible() && gpGlobals->curtime > m_flShowUntilTime )
+	if(IsVisible() && gpGlobals->curtime > m_flShowUntilTime)
 	{
-		SetVisible( false );
+		SetVisible(false);
 	}
 }

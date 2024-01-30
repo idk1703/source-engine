@@ -11,26 +11,21 @@
 //
 // Sniper Data Table
 //
-BEGIN_RECV_TABLE_NOBASE( C_PlayerClassSniper, DT_PlayerClassSniperData )
+BEGIN_RECV_TABLE_NOBASE(C_PlayerClassSniper, DT_PlayerClassSniperData)
 END_RECV_TABLE()
 
-BEGIN_PREDICTION_DATA_NO_BASE( C_PlayerClassSniper )
+BEGIN_PREDICTION_DATA_NO_BASE(C_PlayerClassSniper)
 
-	DEFINE_PRED_TYPEDESCRIPTION( m_ClassData, PlayerClassSniperData_t ),
+	DEFINE_PRED_TYPEDESCRIPTION(m_ClassData, PlayerClassSniperData_t),
 
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PlayerClassSniper::C_PlayerClassSniper( C_BaseTFPlayer *pPlayer ) :
-	C_PlayerClass( pPlayer )
-{
-}
+C_PlayerClassSniper::C_PlayerClassSniper(C_BaseTFPlayer *pPlayer) : C_PlayerClass(pPlayer) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-C_PlayerClassSniper::~C_PlayerClassSniper()
-{
-}
+C_PlayerClassSniper::~C_PlayerClassSniper() {}

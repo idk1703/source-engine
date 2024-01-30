@@ -41,7 +41,7 @@
 //=========================================================
 // Private activities
 //=========================================================
-int	ACT_MYCUSTOMACTIVITY = -1;
+int ACT_MYCUSTOMACTIVITY = -1;
 
 //=========================================================
 // Custom schedules
@@ -59,7 +59,6 @@ enum
 	TASK_MYCUSTOMTASK = LAST_SHARED_TASK,
 };
 
-
 //=========================================================
 // Custom Conditions
 //=========================================================
@@ -68,17 +67,16 @@ enum
 	COND_MYCUSTOMCONDITION = LAST_SHARED_CONDITION,
 };
 
-
 //=========================================================
 //=========================================================
 class CNewNPC : public CAI_BaseNPC
 {
-	DECLARE_CLASS( CNewNPC, CAI_BaseNPC );
+	DECLARE_CLASS(CNewNPC, CAI_BaseNPC);
 
 public:
-	void	Precache( void );
-	void	Spawn( void );
-	Class_T Classify( void );
+	void Precache(void);
+	void Spawn(void);
+	Class_T Classify(void);
 
 	DECLARE_DATADESC();
 
@@ -87,21 +85,20 @@ public:
 	// for the code to operate on. Delete this field when
 	// you are ready to do your own save/restore for this
 	// character.
-	int		m_iDeleteThisField;
+	int m_iDeleteThisField;
 
 	DEFINE_CUSTOM_AI;
 };
 
-LINK_ENTITY_TO_CLASS( npc_newnpc, CNewNPC );
-IMPLEMENT_CUSTOM_AI( npc_citizen,CNewNPC );
-
+LINK_ENTITY_TO_CLASS(npc_newnpc, CNewNPC);
+IMPLEMENT_CUSTOM_AI(npc_citizen, CNewNPC);
 
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
-BEGIN_DATADESC( CNewNPC )
+BEGIN_DATADESC(CNewNPC)
 
-	DEFINE_FIELD( m_iDeleteThisField, FIELD_INTEGER ),
+	DEFINE_FIELD(m_iDeleteThisField, FIELD_INTEGER),
 
 END_DATADESC()
 
@@ -114,13 +111,13 @@ void CNewNPC::InitCustomSchedules(void)
 {
 	INIT_CUSTOM_AI(CNewNPC);
 
-	ADD_CUSTOM_TASK(CNewNPC,		TASK_MYCUSTOMTASK);
+	ADD_CUSTOM_TASK(CNewNPC, TASK_MYCUSTOMTASK);
 
-	ADD_CUSTOM_SCHEDULE(CNewNPC,	SCHED_MYCUSTOMSCHEDULE);
+	ADD_CUSTOM_SCHEDULE(CNewNPC, SCHED_MYCUSTOMSCHEDULE);
 
-	ADD_CUSTOM_ACTIVITY(CNewNPC,	ACT_MYCUSTOMACTIVITY);
+	ADD_CUSTOM_ACTIVITY(CNewNPC, ACT_MYCUSTOMACTIVITY);
 
-	ADD_CUSTOM_CONDITION(CNewNPC,	COND_MYCUSTOMCONDITION);
+	ADD_CUSTOM_CONDITION(CNewNPC, COND_MYCUSTOMCONDITION);
 }
 
 //-----------------------------------------------------------------------------
@@ -128,41 +125,39 @@ void CNewNPC::InitCustomSchedules(void)
 //
 //
 //-----------------------------------------------------------------------------
-void CNewNPC::Precache( void )
+void CNewNPC::Precache(void)
 {
-	PrecacheModel( "models/mymodel.mdl" );
+	PrecacheModel("models/mymodel.mdl");
 
 	BaseClass::Precache();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //
 //
 //-----------------------------------------------------------------------------
-void CNewNPC::Spawn( void )
+void CNewNPC::Spawn(void)
 {
 	Precache();
 
-	SetModel( "models/mymodel.mdl" );
+	SetModel("models/mymodel.mdl");
 	SetHullType(HULL_HUMAN);
 	SetHullSizeNormal();
 
-	SetSolid( SOLID_BBOX );
-	AddSolidFlags( FSOLID_NOT_STANDABLE );
-	SetMoveType( MOVETYPE_STEP );
-	SetBloodColor( BLOOD_COLOR_RED );
-	m_iHealth			= 20;
-	m_flFieldOfView		= 0.5;
-	m_NPCState			= NPC_STATE_NONE;
+	SetSolid(SOLID_BBOX);
+	AddSolidFlags(FSOLID_NOT_STANDABLE);
+	SetMoveType(MOVETYPE_STEP);
+	SetBloodColor(BLOOD_COLOR_RED);
+	m_iHealth = 20;
+	m_flFieldOfView = 0.5;
+	m_NPCState = NPC_STATE_NONE;
 
 	CapabilitiesClear();
-	//CapabilitiesAdd( bits_CAP_NONE );
+	// CapabilitiesAdd( bits_CAP_NONE );
 
 	NPCInit();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -170,7 +165,7 @@ void CNewNPC::Spawn( void )
 //
 // Output :
 //-----------------------------------------------------------------------------
-Class_T	CNewNPC::Classify( void )
+Class_T CNewNPC::Classify(void)
 {
-	return	CLASS_NONE;
+	return CLASS_NONE;
 }

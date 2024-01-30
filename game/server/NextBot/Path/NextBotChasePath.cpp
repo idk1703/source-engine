@@ -12,12 +12,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //----------------------------------------------------------------------------------------------
 /**
  * Try to cutoff our chase subject
  */
-Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) const
+Vector ChasePath::PredictSubjectPosition(INextBot *bot, CBaseEntity *subject) const
 {
 	ILocomotion *mover = bot->GetLocomotionInterface();
 
@@ -30,28 +29,28 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 	// don't lead if subject is very far away
 	float flLeadRadiusSq = GetLeadRadius();
 	flLeadRadiusSq *= flLeadRadiusSq;
-	if ( flRangeSq > flLeadRadiusSq )
+	if(flRangeSq > flLeadRadiusSq)
 		return subjectPos;
 
 	// Normalize in place
-	float range = sqrt( flRangeSq );
-	to /= ( range + 0.0001f );	// avoid divide by zero
+	float range = sqrt(flRangeSq);
+	to /= (range + 0.0001f); // avoid divide by zero
 
 	// estimate time to reach subject, assuming maximum speed
-	float leadTime = 0.5f + ( range / ( mover->GetRunSpeed() + 0.0001f ) );
+	float leadTime = 0.5f + (range / (mover->GetRunSpeed() + 0.0001f));
 
 	// estimate amount to lead the subject
 	Vector lead = leadTime * subject->GetAbsVelocity();
 	lead.z = 0.0f;
 
-	if ( DotProduct( to, lead ) < 0.0f )
+	if(DotProduct(to, lead) < 0.0f)
 	{
 		// the subject is moving towards us - only pay attention
 		// to his perpendicular velocity for leading
 		Vector2D to2D = to.AsVector2D();
 		to2D.NormalizeInPlace();
 
-		Vector2D perp( -to2D.y, to2D.x );
+		Vector2D perp(-to2D.y, to2D.x);
 
 		float enemyGroundSpeed = lead.x * perp.x + lead.y * perp.y;
 
@@ -65,13 +64,13 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 	// validate this destination
 
 	// don't lead through walls
-	if ( lead.LengthSqr() > 36.0f )
+	if(lead.LengthSqr() > 36.0f)
 	{
 		float fraction;
-		if ( !mover->IsPotentiallyTraversable( subjectPos, pathTarget, ILocomotion::IMMEDIATELY, &fraction ) )
+		if(!mover->IsPotentiallyTraversable(subjectPos, pathTarget, ILocomotion::IMMEDIATELY, &fraction))
 		{
 			// tried to lead through an unwalkable area - clip to walkable space
-			pathTarget = subjectPos + fraction * ( pathTarget - subjectPos );
+			pathTarget = subjectPos + fraction * (pathTarget - subjectPos);
 		}
 	}
 
@@ -80,7 +79,7 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 
 #ifdef NEED_GPGLOBALS_SERVERCOUNT_TO_DO_THIS
 	CBaseCombatCharacter *pBCC = subject->MyCombatCharacterPointer();
-	if ( pBCC && CloseEnough( pathTarget, subjectPos, 3.0 ) )
+	if(pBCC && CloseEnough(pathTarget, subjectPos, 3.0))
 	{
 		pathTarget = subjectPos;
 		leadArea = pBCC->GetLastKnownArea(); // can return null?
@@ -100,9 +99,9 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 		int i;
 
 		bool bFound = false;
-		if ( iServer != gpGlobals->serverCount )
+		if(iServer != gpGlobals->serverCount)
 		{
-			for ( i = 0; i < ARRAYSIZE(cache); i++ )
+			for(i = 0; i < ARRAYSIZE(cache); i++)
 			{
 				cache[i].pArea = NULL;
 			}
@@ -110,9 +109,9 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 		}
 		else
 		{
-			for ( i = 0; i < ARRAYSIZE(cache); i++ )
+			for(i = 0; i < ARRAYSIZE(cache); i++)
 			{
-				if ( cache[i].pArea && CloseEnough( cache[i].target, pathTarget, 2.0 ) )
+				if(cache[i].pArea && CloseEnough(cache[i].target, pathTarget, 2.0))
 				{
 					pathTarget = cache[i].target;
 					leadArea = cache[i].pArea;
@@ -122,23 +121,22 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 			}
 		}
 
-		if ( !bFound )
+		if(!bFound)
 		{
-			leadArea = TheNavMesh->GetNearestNavArea( pathTarget );
-			if ( leadArea )
+			leadArea = TheNavMesh->GetNearestNavArea(pathTarget);
+			if(leadArea)
 			{
 				cache[iNext].target = pathTarget;
 				cache[iNext].pArea = leadArea;
-				iNext = ( iNext + 1 ) % ARRAYSIZE( cache );
+				iNext = (iNext + 1) % ARRAYSIZE(cache);
 			}
 		}
 	}
 #else
-	leadArea = TheNavMesh->GetNearestNavArea( pathTarget );
+	leadArea = TheNavMesh->GetNearestNavArea(pathTarget);
 #endif
 
-
-	if ( !leadArea || leadArea->GetZ( pathTarget.x, pathTarget.y ) < pathTarget.z - mover->GetMaxJumpHeight() )
+	if(!leadArea || leadArea->GetZ(pathTarget.x, pathTarget.y) < pathTarget.z - mover->GetMaxJumpHeight())
 	{
 		// would fall off a cliff
 		return subjectPos;
@@ -156,11 +154,11 @@ Vector ChasePath::PredictSubjectPosition( INextBot *bot, CBaseEntity *subject ) 
 }
 
 // if the victim is a player, poke them so they know they're being chased
-void DirectChasePath::NotifyVictim( INextBot *me, CBaseEntity *victim )
+void DirectChasePath::NotifyVictim(INextBot *me, CBaseEntity *victim)
 {
-	CBaseCombatCharacter *pBCCVictim = ToBaseCombatCharacter( victim );
-	if ( !pBCCVictim )
+	CBaseCombatCharacter *pBCCVictim = ToBaseCombatCharacter(victim);
+	if(!pBCCVictim)
 		return;
 
-	pBCCVictim->OnPursuedBy( me );
+	pBCCVictim->OnPursuedBy(me);
 }

@@ -15,7 +15,7 @@
 class CFuncMonitor : public CFuncBrush
 {
 	DECLARE_DATADESC();
-	DECLARE_CLASS( CFuncMonitor, CFuncBrush );
+	DECLARE_CLASS(CFuncMonitor, CFuncBrush);
 	DECLARE_SERVERCLASS();
 
 public:
@@ -31,29 +31,27 @@ private:
 };
 
 // automatically hooks in the system's callbacks
-BEGIN_DATADESC( CFuncMonitor )
+BEGIN_DATADESC(CFuncMonitor)
 
-	DEFINE_FIELD( m_hInfoCameraLink, FIELD_EHANDLE ),
+	DEFINE_FIELD(m_hInfoCameraLink, FIELD_EHANDLE),
 
-	// Outputs
-	DEFINE_INPUTFUNC( FIELD_STRING, "SetCamera", InputSetCamera ),
+		// Outputs
+		DEFINE_INPUTFUNC(FIELD_STRING, "SetCamera", InputSetCamera),
 
 END_DATADESC()
 
+LINK_ENTITY_TO_CLASS(func_monitor, CFuncMonitor);
 
-LINK_ENTITY_TO_CLASS( func_monitor, CFuncMonitor );
+IMPLEMENT_SERVERCLASS_ST(CFuncMonitor, DT_FuncMonitor)
+END_SEND_TABLE
+()
 
-
-IMPLEMENT_SERVERCLASS_ST( CFuncMonitor, DT_FuncMonitor )
-END_SEND_TABLE()
-
-
-//-----------------------------------------------------------------------------
-// Purpose: Called after all entities have spawned and after a load game.
-//-----------------------------------------------------------------------------
-void CFuncMonitor::Activate()
+	//-----------------------------------------------------------------------------
+	// Purpose: Called after all entities have spawned and after a load game.
+	//-----------------------------------------------------------------------------
+	void CFuncMonitor::Activate()
 {
- 	BaseClass::Activate();
+	BaseClass::Activate();
 	SetCameraByName(STRING(m_target));
 }
 
@@ -63,15 +61,14 @@ void CFuncMonitor::UpdateOnRemove()
 	BaseClass::UpdateOnRemove();
 }
 
-
 //-----------------------------------------------------------------------------
 // Frees the camera.
 //-----------------------------------------------------------------------------
 void CFuncMonitor::ReleaseCameraLink()
 {
-	if ( m_hInfoCameraLink )
+	if(m_hInfoCameraLink)
 	{
-		UTIL_Remove( m_hInfoCameraLink );
+		UTIL_Remove(m_hInfoCameraLink);
 		m_hInfoCameraLink = NULL;
 
 		// Keep the target up-to-date for save/load
@@ -79,31 +76,29 @@ void CFuncMonitor::ReleaseCameraLink()
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Sets camera
 //-----------------------------------------------------------------------------
 void CFuncMonitor::SetCameraByName(const char *szName)
 {
 	ReleaseCameraLink();
-	CBaseEntity *pBaseEnt = gEntList.FindEntityByName( NULL, szName );
-	if( pBaseEnt )
+	CBaseEntity *pBaseEnt = gEntList.FindEntityByName(NULL, szName);
+	if(pBaseEnt)
 	{
-		CPointCamera *pCamera = dynamic_cast<CPointCamera *>( pBaseEnt );
-		if( pCamera )
+		CPointCamera *pCamera = dynamic_cast<CPointCamera *>(pBaseEnt);
+		if(pCamera)
 		{
 			// Keep the target up-to-date for save/load
-			m_target = MAKE_STRING( szName );
-			m_hInfoCameraLink = CreateInfoCameraLink( this, pCamera );
+			m_target = MAKE_STRING(szName);
+			m_hInfoCameraLink = CreateInfoCameraLink(this, pCamera);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMonitor::InputSetCamera(inputdata_t &inputdata)
 {
-	SetCameraByName( inputdata.value.String() );
+	SetCameraByName(inputdata.value.String());
 }

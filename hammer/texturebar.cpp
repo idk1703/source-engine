@@ -23,7 +23,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 BEGIN_MESSAGE_MAP(CTextureBar, CHammerBar)
 	ON_CBN_SELCHANGE(IDC_TEXTURES, OnSelChangeTexture)
 	ON_UPDATE_COMMAND_UI(IDC_TEXTURES, UpdateControl)
@@ -36,24 +35,21 @@ BEGIN_MESSAGE_MAP(CTextureBar, CHammerBar)
 	ON_WM_WINDOWPOSCHANGED()
 END_MESSAGE_MAP()
 
-
 static char szDefaultTexture[128];
 
 static char szNullTexture[128] = {"editor/obsolete"};
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : LPCTSTR
 //-----------------------------------------------------------------------------
-void SetDefaultTextureName( const char *szTexName )
+void SetDefaultTextureName(const char *szTexName)
 {
-	int length = strlen( szTexName );
-	Assert( length < 128 );
+	int length = strlen(szTexName);
+	Assert(length < 128);
 
-	strcpy( szDefaultTexture, szTexName );
+	strcpy(szDefaultTexture, szTexName);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -74,7 +70,6 @@ LPCTSTR GetNullTextureName()
 	return szNullTexture;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *pParentWnd -
@@ -86,9 +81,9 @@ BOOL CTextureBar::Create(CWnd *pParentWnd, int IDD, int iBarID)
 {
 	m_pCurTex = NULL;
 
-	if (!CHammerBar::Create(pParentWnd, IDD, CBRS_RIGHT, iBarID))
+	if(!CHammerBar::Create(pParentWnd, IDD, CBRS_RIGHT, iBarID))
 	{
-		return(FALSE);
+		return (FALSE);
 	}
 
 	SetWindowText("Textures");
@@ -102,16 +97,15 @@ BOOL CTextureBar::Create(CWnd *pParentWnd, int IDD, int iBarID)
 
 	UpdateTexture();
 
-	return(TRUE);
+	return (TRUE);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBar::NotifyGraphicsChanged()
 {
-	if (!IsWindow(m_hWnd))
+	if(!IsWindow(m_hWnd))
 	{
 		return;
 	}
@@ -119,7 +113,7 @@ void CTextureBar::NotifyGraphicsChanged()
 	// load groups into group list
 	CString str;
 	int iCurSel = m_TextureGroupList.GetCurSel();
-	if (iCurSel != LB_ERR)
+	if(iCurSel != LB_ERR)
 	{
 		m_TextureGroupList.GetLBText(iCurSel, str);
 	}
@@ -129,18 +123,18 @@ void CTextureBar::NotifyGraphicsChanged()
 	m_TextureGroupList.AddString("All Textures");
 
 	int nCount = g_Textures.GroupsGetCount();
-	if (nCount > 1)
+	if(nCount > 1)
 	{
 		//
 		// Skip first group ("All Textures").
 		//
-		for (int i = 1; i < nCount; i++)
+		for(int i = 1; i < nCount; i++)
 		{
 			CTextureGroup *pGroup = g_Textures.GroupsGet(i);
-			if (pGroup->GetTextureFormat() == g_pGameConfig->GetTextureFormat())
+			if(pGroup->GetTextureFormat() == g_pGameConfig->GetTextureFormat())
 			{
 				const char *p = strstr(pGroup->GetName(), "textures\\");
-				if (p)
+				if(p)
 				{
 					p += strlen("textures\\");
 				}
@@ -155,7 +149,7 @@ void CTextureBar::NotifyGraphicsChanged()
 	}
 	m_TextureGroupList.SetRedraw(TRUE);
 
-	if (iCurSel == LB_ERR || m_TextureGroupList.SelectString(-1, str) == LB_ERR)
+	if(iCurSel == LB_ERR || m_TextureGroupList.SelectString(-1, str) == LB_ERR)
 	{
 		m_TextureGroupList.SetCurSel(0);
 	}
@@ -174,12 +168,10 @@ void CTextureBar::NotifyGraphicsChanged()
 	UpdateTexture();
 }
 
-
-void CTextureBar::NotifyNewMaterial( IEditorTexture *pTex )
+void CTextureBar::NotifyNewMaterial(IEditorTexture *pTex)
 {
-	m_TextureList.NotifyNewMaterial( pTex );
+	m_TextureList.NotifyNewMaterial(pTex);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Disables the dialog controls when there's no active document.
@@ -190,7 +182,6 @@ void CTextureBar::UpdateControl(CCmdUI *pCmdUI)
 	pCmdUI->Enable(CMapDoc::GetActiveMapDoc() ? TRUE : FALSE);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles user-initiated selection changes. Updates the control state
 //			and adds the selected texture to the MRU list.
@@ -199,12 +190,11 @@ void CTextureBar::OnSelChangeTexture(void)
 {
 	UpdateTexture();
 
-	if (m_pCurTex != NULL)
+	if(m_pCurTex != NULL)
 	{
 		m_TextureList.AddMRU(m_pCurTex);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Updates the m_pTexture data member based on the current selection.
@@ -214,7 +204,7 @@ void CTextureBar::UpdateTexture(void)
 {
 	int iSel = m_TextureList.GetCurSel();
 
-	if (iSel == LB_ERR)
+	if(iSel == LB_ERR)
 	{
 		m_TexturePic.SetTexture(NULL);
 		m_pCurTex = NULL;
@@ -224,7 +214,7 @@ void CTextureBar::UpdateTexture(void)
 	m_pCurTex = (IEditorTexture *)m_TextureList.GetItemDataPtr(iSel);
 	m_TexturePic.SetTexture(m_pCurTex);
 
-	if (m_pCurTex)
+	if(m_pCurTex)
 	{
 		// Make sure the current material is loaded..
 		m_pCurTex->Load();
@@ -234,7 +224,6 @@ void CTextureBar::UpdateTexture(void)
 		m_pCurTex->GetShortName(szDefaultTexture);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -247,7 +236,6 @@ void CTextureBar::OnUpdateTexname(void)
 	IEditorTexture *pTex = g_Textures.FindActiveTexture(strTex);
 	m_TexturePic.SetTexture(pTex);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -269,7 +257,6 @@ void CTextureBar::OnChangeTextureGroup(void)
 	m_TextureList.LoadGraphicList();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -279,10 +266,10 @@ void CTextureBar::OnBrowse(void)
 
 	int iSel = m_TextureList.GetCurSel();
 
-	if (iSel != LB_ERR)
+	if(iSel != LB_ERR)
 	{
 		IEditorTexture *pTex = (IEditorTexture *)m_TextureList.GetItemDataPtr(iSel);
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			char sz[128];
 
@@ -291,27 +278,25 @@ void CTextureBar::OnBrowse(void)
 		}
 	}
 
-	if (pBrowser->DoModal() == IDOK)
+	if(pBrowser->DoModal() == IDOK)
 	{
 		IEditorTexture *pTex = g_Textures.FindActiveTexture(pBrowser->m_cTextureWindow.szCurTexture);
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			int iCount = m_TextureList.GetCount();
-			for (int i = 0; i < iCount; i++)
+			for(int i = 0; i < iCount; i++)
 			{
-				if (pTex == (IEditorTexture *)m_TextureList.GetItemDataPtr(i))
+				if(pTex == (IEditorTexture *)m_TextureList.GetItemDataPtr(i))
 				{
 					m_TextureList.SetCurSel(i);
 					UpdateTexture();
 					m_TextureList.AddMRU(pTex);
 					break;
 				}
-
 			}
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles being shown or hidden.
@@ -319,13 +304,13 @@ void CTextureBar::OnBrowse(void)
 //-----------------------------------------------------------------------------
 void CTextureBar::OnWindowPosChanged(WINDOWPOS *pPos)
 {
-	if (GetMainWnd() != NULL)
+	if(GetMainWnd() != NULL)
 	{
 		//
 		// Rebuild our MRU list if we are being shown, because it may
 		// have changed since we were shown last.
 		//
-		if (pPos->flags & SWP_SHOWWINDOW)
+		if(pPos->flags & SWP_SHOWWINDOW)
 		{
 			m_TextureList.RebuildMRU();
 			UpdateTexture();
@@ -335,21 +320,20 @@ void CTextureBar::OnWindowPosChanged(WINDOWPOS *pPos)
 	CHammerBar::OnWindowPosChanged(pPos);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Invokes the texture replace dialog.
 //-----------------------------------------------------------------------------
 void CTextureBar::OnReplace(void)
 {
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
-	if (!pDoc)
+	if(!pDoc)
 	{
 		return;
 	}
 
 	CReplaceTexDlg dlg(pDoc->GetSelection()->GetCount());
 	dlg.m_strFind = GetDefaultTextureName();
-	if (dlg.DoModal() != IDOK)
+	if(dlg.DoModal() != IDOK)
 	{
 		return;
 	}
@@ -357,7 +341,6 @@ void CTextureBar::OnReplace(void)
 	GetHistory()->MarkUndoPosition(pDoc->GetSelection()->GetList(), "Replace Textures");
 	dlg.DoReplaceTextures();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Selects a texture by name.
@@ -370,10 +353,10 @@ void CTextureBar::SelectTexture(LPCSTR pszTextureName)
 	//
 	// If the texture is not in the list, add it to the list.
 	//
-	if (nIndex == LB_ERR)
+	if(nIndex == LB_ERR)
 	{
 		IEditorTexture *pTex = g_Textures.FindActiveTexture(pszTextureName);
-		if (pTex != NULL)
+		if(pTex != NULL)
 		{
 			nIndex = m_TextureList.AddString(pszTextureName);
 			m_TextureList.SetItemDataPtr(nIndex, pTex);
@@ -383,14 +366,12 @@ void CTextureBar::SelectTexture(LPCSTR pszTextureName)
 
 	UpdateTexture();
 
-	if (nIndex != LB_ERR)
+	if(nIndex != LB_ERR)
 	{
 		IEditorTexture *pTex = (IEditorTexture *)m_TextureList.GetItemDataPtr(nIndex);
 		m_TextureList.AddMRU(pTex);
 	}
-
 }
-
 
 //-----------------------------------------------------------------------------
 // This class renders a given IEditorTexture in its OnPaint handler. It is used in the
@@ -399,7 +380,6 @@ void CTextureBar::SelectTexture(LPCSTR pszTextureName)
 BEGIN_MESSAGE_MAP(wndTex, CStatic)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the texture to render in the window.
@@ -410,7 +390,6 @@ void wndTex::SetTexture(IEditorTexture *pTex)
 	m_pTexture = pTex;
 	Invalidate();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Paints the texture image (if any) in the window. If not, just fills
@@ -424,7 +403,7 @@ void wndTex::OnPaint(void)
 	CRect r;
 	GetClientRect(r);
 
-	if (!m_pTexture)
+	if(!m_pTexture)
 	{
 		FillRect(dc.m_hDC, r, HBRUSH(GetStockObject(BLACK_BRUSH)));
 		return;

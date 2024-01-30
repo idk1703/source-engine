@@ -8,9 +8,7 @@
 #include "stdafx.h"
 #include "idle_dialog.h"
 
-
-#define WM_STARTIDLE					(WM_USER + 565)
-
+#define WM_STARTIDLE (WM_USER + 565)
 
 BEGIN_MESSAGE_MAP(CIdleDialog, CDialog)
 	//{{AFX_MSG_MAP(CVMPIBrowserDlg)
@@ -18,25 +16,19 @@ BEGIN_MESSAGE_MAP(CIdleDialog, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+CIdleDialog::CIdleDialog(int id, CWnd *pParent) : CDialog(id, pParent) {}
 
-CIdleDialog::CIdleDialog( int id, CWnd *pParent )
-	: CDialog( id, pParent )
+void CIdleDialog::StartIdleProcessing(DWORD msInterval)
 {
-}
-
-
-void CIdleDialog::StartIdleProcessing( DWORD msInterval )
-{
-	m_cWinIdle.StartIdle( GetSafeHwnd(), WM_STARTIDLE, 0, 0, msInterval );
+	m_cWinIdle.StartIdle(GetSafeHwnd(), WM_STARTIDLE, 0, 0, msInterval);
 	m_cWinIdle.NextIdle();
 }
 
-
-LONG CIdleDialog::OnStartIdle( UINT, LONG )
+LONG CIdleDialog::OnStartIdle(UINT, LONG)
 {
 	MSG msg;
 
-	if ( !PeekMessage( &msg, GetSafeHwnd(), 0,0, PM_NOREMOVE ) )
+	if(!PeekMessage(&msg, GetSafeHwnd(), 0, 0, PM_NOREMOVE))
 		OnIdle();
 
 	m_cWinIdle.NextIdle();

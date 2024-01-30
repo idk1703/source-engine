@@ -22,30 +22,29 @@
 class CTEBloodStream : public CTEParticleSystem
 {
 public:
-	DECLARE_CLASS( CTEBloodStream, CTEParticleSystem );
+	DECLARE_CLASS(CTEBloodStream, CTEParticleSystem);
 
-					CTEBloodStream( const char *name );
-	virtual			~CTEBloodStream( void );
+	CTEBloodStream(const char *name);
+	virtual ~CTEBloodStream(void);
 
-	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
+	virtual void Test(const Vector &current_origin, const QAngle &current_angles);
 
 	DECLARE_SERVERCLASS();
 
 public:
-	CNetworkVector( m_vecDirection );
-	CNetworkVar( int, r );
-	CNetworkVar( int, g );
-	CNetworkVar( int, b );
-	CNetworkVar( int, a );
-	CNetworkVar( int, m_nAmount );
+	CNetworkVector(m_vecDirection);
+	CNetworkVar(int, r);
+	CNetworkVar(int, g);
+	CNetworkVar(int, b);
+	CNetworkVar(int, a);
+	CNetworkVar(int, m_nAmount);
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *name -
 //-----------------------------------------------------------------------------
-CTEBloodStream::CTEBloodStream( const char *name ) :
-	BaseClass( name )
+CTEBloodStream::CTEBloodStream(const char *name) : BaseClass(name)
 {
 	m_vecDirection.Init();
 	r = 0;
@@ -58,52 +57,48 @@ CTEBloodStream::CTEBloodStream( const char *name ) :
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTEBloodStream::~CTEBloodStream( void )
-{
-}
+CTEBloodStream::~CTEBloodStream(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : *current_origin -
 //			*current_angles -
 //-----------------------------------------------------------------------------
-void CTEBloodStream::Test( const Vector& current_origin, const QAngle& current_angles )
+void CTEBloodStream::Test(const Vector &current_origin, const QAngle &current_angles)
 {
 	// Fill in data
 	r = 247;
 	g = 0;
 	b = 0;
 	a = 255;
-	m_nAmount	= random->RandomInt(50, 150);
+	m_nAmount = random->RandomInt(50, 150);
 	m_vecOrigin = current_origin;
 
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
 
-	AngleVectors( current_angles, &forward );
+	AngleVectors(current_angles, &forward);
 	forward[2] = 0.0;
-	VectorNormalize( forward );
+	VectorNormalize(forward);
 
 	m_vecOrigin += forward * 50;
 
 	m_vecDirection = UTIL_RandomBloodVector();
 
 	CBroadcastRecipientFilter filter;
-	Create( filter, 0.0 );
+	Create(filter, 0.0);
 }
 
 IMPLEMENT_SERVERCLASS_ST(CTEBloodStream, DT_TEBloodStream)
-	SendPropVector( SENDINFO(m_vecDirection), 11, 0, -10.0, 10.0 ),
-	SendPropInt( SENDINFO(r), 8, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO(g), 8, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO(b), 8, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO(a), 8, SPROP_UNSIGNED ),
-	SendPropInt( SENDINFO(m_nAmount), 8, SPROP_UNSIGNED ),
-END_SEND_TABLE()
+SendPropVector(SENDINFO(m_vecDirection), 11, 0, -10.0, 10.0), SendPropInt(SENDINFO(r), 8, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(g), 8, SPROP_UNSIGNED), SendPropInt(SENDINFO(b), 8, SPROP_UNSIGNED),
+	SendPropInt(SENDINFO(a), 8, SPROP_UNSIGNED), SendPropInt(SENDINFO(m_nAmount), 8, SPROP_UNSIGNED),
+END_SEND_TABLE
+()
 
-// Singleton to fire TEBloodStream objects
-static CTEBloodStream g_TEBloodStream( "Blood Stream" );
+	// Singleton to fire TEBloodStream objects
+	static CTEBloodStream g_TEBloodStream("Blood Stream");
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates a blood stream
@@ -119,8 +114,8 @@ static CTEBloodStream g_TEBloodStream( "Blood Stream" );
 //			a -
 //			amount -
 //-----------------------------------------------------------------------------
-void TE_BloodStream( IRecipientFilter& filter, float delay,
-	const Vector* org, const Vector* dir, int r, int g, int b, int a, int amount )
+void TE_BloodStream(IRecipientFilter &filter, float delay, const Vector *org, const Vector *dir, int r, int g, int b,
+					int a, int amount)
 {
 	g_TEBloodStream.m_vecOrigin = *org;
 	g_TEBloodStream.m_vecDirection = *dir;
@@ -131,5 +126,5 @@ void TE_BloodStream( IRecipientFilter& filter, float delay,
 	g_TEBloodStream.m_nAmount = amount;
 
 	// Send it over the wire
-	g_TEBloodStream.Create( filter, delay );
+	g_TEBloodStream.Create(filter, delay);
 }

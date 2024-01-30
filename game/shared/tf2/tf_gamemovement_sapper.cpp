@@ -27,20 +27,20 @@ CTFGameMovementSapper::CTFGameMovementSapper()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFGameMovementSapper::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData )
+void CTFGameMovementSapper::ProcessClassMovement(CBaseTFPlayer *pPlayer, CTFMoveData *pTFMoveData)
 {
 	// Get the class specific data from the TFMoveData structure
-	Assert( PlayerClassSapperData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID );
+	Assert(PlayerClassSapperData_t::PLAYERCLASS_ID == pTFMoveData->m_nClassID);
 	m_pSapperData = &pTFMoveData->SapperData();
 
 	// to test pass it through!!
-	BaseClass::ProcessMovement( (CBasePlayer *)pPlayer, static_cast<CMoveData*>( pTFMoveData ) );
+	BaseClass::ProcessMovement((CBasePlayer *)pPlayer, static_cast<CMoveData *>(pTFMoveData));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementSapper::GetPlayerMins( bool bDucked ) const
+const Vector &CTFGameMovementSapper::GetPlayerMins(bool bDucked) const
 {
 	return bDucked ? m_vDuckMins : m_vStandMins;
 }
@@ -48,7 +48,7 @@ const Vector &CTFGameMovementSapper::GetPlayerMins( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementSapper::GetPlayerMaxs( bool bDucked ) const
+const Vector &CTFGameMovementSapper::GetPlayerMaxs(bool bDucked) const
 {
 	return bDucked ? m_vDuckMaxs : m_vStandMaxs;
 }
@@ -56,7 +56,7 @@ const Vector &CTFGameMovementSapper::GetPlayerMaxs( bool bDucked ) const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const Vector &CTFGameMovementSapper::GetPlayerViewOffset( bool bDucked ) const
+const Vector &CTFGameMovementSapper::GetPlayerViewOffset(bool bDucked) const
 {
 	return bDucked ? m_vDuckViewOffset : m_vStandViewOffset;
 }

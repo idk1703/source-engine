@@ -48,25 +48,25 @@ void CBenchmarkDialog::RunBenchmark()
 	Close();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Displays benchmark results
 //-----------------------------------------------------------------------------
 class CBenchmarkResultsDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CBenchmarkResultsDialog, vgui::Frame );
+	DECLARE_CLASS_SIMPLE(CBenchmarkResultsDialog, vgui::Frame);
+
 public:
-	CBenchmarkResultsDialog( vgui::Panel *parent, const char *name ) : BaseClass( parent, name )
+	CBenchmarkResultsDialog(vgui::Panel *parent, const char *name) : BaseClass(parent, name)
 	{
 		SetTitle("#GameUI_BenchmarkResults_Title", true);
 		SetDeleteSelfOnClose(true);
 		SetSizeable(false);
 
-		m_pUploadCheck = new CheckButton( this, "UploadCheck", "#GameUI_BenchmarkResults_UploadNow" );
+		m_pUploadCheck = new CheckButton(this, "UploadCheck", "#GameUI_BenchmarkResults_UploadNow");
 
 		LoadControlSettings("Resource/BenchmarkResultsDialog.res");
 
-		m_pUploadCheck->SetSelected( true );
+		m_pUploadCheck->SetSelected(true);
 		MoveToCenterOfScreen();
 	}
 
@@ -74,13 +74,13 @@ public:
 	{
 		BaseClass::Activate();
 
-		KeyValues *kv = new KeyValues( "Benchmark" );
-		if ( kv->LoadFromFile( g_pFullFileSystem, "results/results.txt", "MOD" ) )
+		KeyValues *kv = new KeyValues("Benchmark");
+		if(kv->LoadFromFile(g_pFullFileSystem, "results/results.txt", "MOD"))
 		{
 			// get the framerate
 			char szFrameRate[32];
-			Q_snprintf( szFrameRate, sizeof(szFrameRate), "%.2f", kv->GetFloat("framerate") );
-			SetDialogVariable( "framerate", szFrameRate );
+			Q_snprintf(szFrameRate, sizeof(szFrameRate), "%.2f", kv->GetFloat("framerate"));
+			SetDialogVariable("framerate", szFrameRate);
 		}
 		else
 		{
@@ -89,9 +89,9 @@ public:
 		kv->deleteThis();
 	}
 
-	void OnKeyCodePressed( KeyCode code )
+	void OnKeyCodePressed(KeyCode code)
 	{
-		if ( code == KEY_XBUTTON_B )
+		if(code == KEY_XBUTTON_B)
 		{
 			Close();
 		}
@@ -104,9 +104,9 @@ public:
 private:
 	virtual void OnClose()
 	{
-		if ( m_pUploadCheck->IsSelected() )
+		if(m_pUploadCheck->IsSelected())
 		{
-			engine->ClientCmd_Unrestricted( "bench_upload\n" );
+			engine->ClientCmd_Unrestricted("bench_upload\n");
 		}
 		BaseClass::OnClose();
 	}
@@ -117,13 +117,13 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Launches the stats dialog
 //-----------------------------------------------------------------------------
-CON_COMMAND_F( bench_showstatsdialog, "Shows a dialog displaying the most recent benchmark results.", FCVAR_CHEAT )
+CON_COMMAND_F(bench_showstatsdialog, "Shows a dialog displaying the most recent benchmark results.", FCVAR_CHEAT)
 {
 	static vgui::DHANDLE<CBenchmarkResultsDialog> g_BenchmarkResultsDialog;
 
-	if (!g_BenchmarkResultsDialog.Get())
+	if(!g_BenchmarkResultsDialog.Get())
 	{
-		g_BenchmarkResultsDialog = new CBenchmarkResultsDialog( BasePanel(), "BenchmarkResultsDialog" );
+		g_BenchmarkResultsDialog = new CBenchmarkResultsDialog(BasePanel(), "BenchmarkResultsDialog");
 	}
 
 	g_BenchmarkResultsDialog->Activate();

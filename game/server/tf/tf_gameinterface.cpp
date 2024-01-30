@@ -8,14 +8,13 @@
 #include "gameinterface.h"
 #include "mapentities.h"
 
-
 // -------------------------------------------------------------------------------------------- //
 // Mod-specific CServerGameClients implementation.
 // -------------------------------------------------------------------------------------------- //
 
-void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int &defaultMaxPlayers ) const
+void CServerGameClients::GetPlayerLimits(int &minplayers, int &maxplayers, int &defaultMaxPlayers) const
 {
-	minplayers = 2;  // Force multiplayer.
+	minplayers = 2; // Force multiplayer.
 	maxplayers = 32;
 	defaultMaxPlayers = 24;
 }
@@ -24,6 +23,4 @@ void CServerGameClients::GetPlayerLimits( int& minplayers, int& maxplayers, int 
 // Mod-specific CServerGameDLL implementation.
 // -------------------------------------------------------------------------------------------- //
 
-void CServerGameDLL::LevelInit_ParseAllEntities( const char *pMapEntities )
-{
-}
+void CServerGameDLL::LevelInit_ParseAllEntities(const char *pMapEntities) {}

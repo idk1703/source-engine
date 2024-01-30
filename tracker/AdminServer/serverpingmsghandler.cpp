@@ -12,8 +12,9 @@
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CServerPingMsgHandlerDetails::CServerPingMsgHandlerDetails( CServerPing *baseobject, HANDLERTYPE type, void *typeinfo /*= NULL*/ )
-	: CMsgHandler( type, typeinfo )
+CServerPingMsgHandlerDetails::CServerPingMsgHandlerDetails(CServerPing *baseobject, HANDLERTYPE type,
+														   void *typeinfo /*= NULL*/)
+	: CMsgHandler(type, typeinfo)
 {
 	m_pServerPing = baseobject;
 }
@@ -21,7 +22,7 @@ CServerPingMsgHandlerDetails::CServerPingMsgHandlerDetails( CServerPing *baseobj
 //-----------------------------------------------------------------------------
 // Purpose: Process cracked message
 //-----------------------------------------------------------------------------
-bool CServerPingMsgHandlerDetails::Process( netadr_t *from, CMsgBuffer *msg )
+bool CServerPingMsgHandlerDetails::Process(netadr_t *from, CMsgBuffer *msg)
 {
 
 	m_pServerPing->UpdateServer(msg->GetTime());

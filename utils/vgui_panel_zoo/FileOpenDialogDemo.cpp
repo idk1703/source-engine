@@ -13,48 +13,43 @@
 
 using namespace vgui;
 
-
-class FileOpenDemo: public DemoPage
+class FileOpenDemo : public DemoPage
 {
-	public:
-		FileOpenDemo(Panel *parent, const char *name);
-		~FileOpenDemo();
+public:
+	FileOpenDemo(Panel *parent, const char *name);
+	~FileOpenDemo();
 
-		void SetVisible(bool status);
+	void SetVisible(bool status);
 
-	private:
-		void OnFileSelected(const char *fullpath);
+private:
+	void OnFileSelected(const char *fullpath);
 
-		DHANDLE<FileOpenDialog> m_hFileDialog;
+	DHANDLE<FileOpenDialog> m_hFileDialog;
 
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-FileOpenDemo::FileOpenDemo(Panel *parent, const char *name) : DemoPage(parent, name)
-{
-}
+FileOpenDemo::FileOpenDemo(Panel *parent, const char *name) : DemoPage(parent, name) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-FileOpenDemo::~FileOpenDemo()
-{
-}
+FileOpenDemo::~FileOpenDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: When we make this this demo page visible we make the dialog visible.
 //-----------------------------------------------------------------------------
 void FileOpenDemo::SetVisible(bool status)
 {
-	if (status)
+	if(status)
 	{
-		if (!m_hFileDialog.Get())
+		if(!m_hFileDialog.Get())
 		{
 			// Pop up the dialog
-			FileOpenDialog *pFileDialog = new FileOpenDialog (NULL, "Find the TestFile", true);
+			FileOpenDialog *pFileDialog = new FileOpenDialog(NULL, "Find the TestFile", true);
 			m_hFileDialog = pFileDialog;
 			m_hFileDialog->AddActionSignalTarget(this);
 		}
@@ -72,15 +67,13 @@ void FileOpenDemo::OnFileSelected(const char *fullpath)
 	ivgui()->DPrintf("\n");
 }
 
-MessageMapItem_t FileOpenDemo::m_MessageMap[] =
-{
+MessageMapItem_t FileOpenDemo::m_MessageMap[] = {
 	MAP_MESSAGE_CONSTCHARPTR(FileOpenDemo, "FileSelected", OnFileSelected, "fullpath"),
 };
 
 IMPLEMENT_PANELMAP(FileOpenDemo, DemoPage);
 
-
-Panel* FileOpenDemo_Create(Panel *parent)
+Panel *FileOpenDemo_Create(Panel *parent)
 {
 	return new FileOpenDemo(parent, "FileOpenDialogDemo");
 }

@@ -30,7 +30,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Callback function to add objects to the morph selection.
 // Input  : pSolid - Solid to add.
@@ -42,7 +41,6 @@ static BOOL AddToMorph(CMapSolid *pSolid, Morph3D *pMorph)
 	pMorph->SelectObject(pSolid, scSelect);
 	return TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -68,21 +66,17 @@ Morph3D::Morph3D(void)
 	m_bMovingSelected = false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-Morph3D::~Morph3D(void)
-{
-}
-
+Morph3D::~Morph3D(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void Morph3D::OnActivate()
 {
-	if (IsActiveTool())
+	if(IsActiveTool())
 	{
 		//
 		// Already active - change modes and redraw views.
@@ -95,24 +89,24 @@ void Morph3D::OnActivate()
 		// Put all selected objects into morph
 		//
 		const CMapObjectList *pSelection = m_pDocument->GetSelection()->GetList();
-		for (int i = 0; i < pSelection->Count(); i++)
+		for(int i = 0; i < pSelection->Count(); i++)
 		{
 			CMapClass *pobj = pSelection->Element(i);
-			if (pobj->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
+			if(pobj->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
 			{
 				SelectObject((CMapSolid *)pobj, scSelect);
 			}
 			pobj->EnumChildren((ENUMMAPCHILDRENPROC)AddToMorph, (DWORD)this, MAPCLASS_TYPE(CMapSolid));
 		}
 
-		m_pDocument->SelectObject(NULL, scClear|scSaveChanges );
+		m_pDocument->SelectObject(NULL, scClear | scSaveChanges);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Can we deactivate this tool.
 //-----------------------------------------------------------------------------
-bool Morph3D::CanDeactivate( void )
+bool Morph3D::CanDeactivate(void)
 {
 	return CanDeselectList();
 }
@@ -123,14 +117,14 @@ bool Morph3D::CanDeactivate( void )
 //-----------------------------------------------------------------------------
 void Morph3D::OnDeactivate()
 {
-	if (IsScaling())
+	if(IsScaling())
 	{
 		OnScaleCmd();
 	}
 
-	if ( !IsEmpty() )
+	if(!IsEmpty())
 	{
-		CUtlVector <CMapClass *>List;
+		CUtlVector<CMapClass *> List;
 		GetMorphingObjects(List);
 
 		// Empty morph tool (Save contents).
@@ -140,20 +134,19 @@ void Morph3D::OnDeactivate()
 		// Select the solids that we were morphing.
 		//
 		int nObjectCount = List.Count();
-		for (int i = 0; i < nObjectCount; i++)
+		for(int i = 0; i < nObjectCount; i++)
 		{
 			CMapClass *pSolid = List.Element(i);
 			CMapClass *pSelect = pSolid->PrepareSelection(m_pDocument->GetSelection()->GetMode());
-			if (pSelect)
+			if(pSelect)
 			{
 				m_pDocument->SelectObject(pSelect, scSelect);
 			}
 		}
 
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns true if the given solid is being morphed, false if not.
@@ -162,7 +155,7 @@ void Morph3D::OnDeactivate()
 //-----------------------------------------------------------------------------
 BOOL Morph3D::IsMorphing(CMapSolid *pSolid, CSSolid **pStrucSolidRvl)
 {
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
 		CSSolid *pSSolid = m_StrucSolids.Element(pos);
 		if(pSSolid->m_pMapSolid == pSolid)
@@ -176,7 +169,6 @@ BOOL Morph3D::IsMorphing(CMapSolid *pSolid, CSSolid **pStrucSolidRvl)
 	return FALSE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the bounding box of the objects being morphed.
 // Input  : bReset -
@@ -186,7 +178,7 @@ void Morph3D::GetMorphBounds(Vector &mins, Vector &maxs, bool bReset)
 	mins = m_MorphBounds.bmins;
 	maxs = m_MorphBounds.bmaxs;
 
-	if (bReset)
+	if(bReset)
 	{
 		m_MorphBounds.ResetBounds();
 	}
@@ -196,17 +188,17 @@ void Morph3D::GetMorphBounds(Vector &mins, Vector &maxs, bool bReset)
 // Purpose: Can we deslect the list?  All current SSolid with displacements
 //          are valid.
 //-----------------------------------------------------------------------------
-bool Morph3D::CanDeselectList( void )
+bool Morph3D::CanDeselectList(void)
 {
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
-		CSSolid *pSSolid = m_StrucSolids.Element( pos );
-		if ( pSSolid )
+		CSSolid *pSSolid = m_StrucSolids.Element(pos);
+		if(pSSolid)
 		{
-			if ( !pSSolid->IsValidWithDisps() )
+			if(!pSSolid->IsValidWithDisps())
 			{
 				// Ask
-				if( AfxMessageBox( "Invalid solid, destroy displacement(s)?", MB_YESNO ) == IDYES )
+				if(AfxMessageBox("Invalid solid, destroy displacement(s)?", MB_YESNO) == IDYES)
 				{
 					// Destroy the displacement data.
 					pSSolid->DestroyDisps();
@@ -234,18 +226,18 @@ void Morph3D::SelectObject(CMapSolid *pSolid, UINT cmd)
 {
 	// construct temporary list to pass to document functions:
 	CMapObjectList List;
-	List.AddToTail( pSolid );
+	List.AddToTail(pSolid);
 
-	if( cmd & scClear )
+	if(cmd & scClear)
 		SetEmpty();
 
 	CSSolid *pStrucSolid;
-	if ( IsMorphing( pSolid, &pStrucSolid ) )
+	if(IsMorphing(pSolid, &pStrucSolid))
 	{
-		if ( cmd & scToggle || cmd & scUnselect )
+		if(cmd & scToggle || cmd & scUnselect)
 		{
 			// stop morphing solid
-			Vector mins,maxs;
+			Vector mins, maxs;
 			pSolid->GetRender2DBox(mins, maxs);
 			m_MorphBounds.UpdateBounds(mins, maxs);
 			pStrucSolid->Convert(FALSE);
@@ -262,7 +254,7 @@ void Morph3D::SelectObject(CMapSolid *pSolid, UINT cmd)
 			m_StrucSolids.FindAndRemove(pStrucSolid);
 
 			// make sure none of its handles are selected
-			for(int i = m_SelectedHandles.Count()-1; i >=0; i--)
+			for(int i = m_SelectedHandles.Count() - 1; i >= 0; i--)
 			{
 				if(m_SelectedHandles[i].pStrucSolid == pStrucSolid)
 				{
@@ -294,37 +286,32 @@ void Morph3D::SelectObject(CMapSolid *pSolid, UINT cmd)
 	m_StrucSolids.AddToTail(pStrucSolid);
 }
 
-
-int Morph3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandles )
+int Morph3D::HitTest(CMapView *pView, const Vector2D &ptClient, bool bTestHandles)
 {
-	if (m_bBoxSelecting)
+	if(m_bBoxSelecting)
 	{
-		return Box3D::HitTest( pView, ptClient, bTestHandles);
+		return Box3D::HitTest(pView, ptClient, bTestHandles);
 	}
 
 	return FALSE;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CompareMorphHandles(const MORPHHANDLE &mh1, const MORPHHANDLE &mh2)
 {
-	return ((mh1.pMapSolid == mh2.pMapSolid) &&
-			(mh1.pStrucSolid == mh2.pStrucSolid) &&
-			(mh1.ssh == mh2.ssh));
+	return ((mh1.pMapSolid == mh2.pMapSolid) && (mh1.pStrucSolid == mh2.pStrucSolid) && (mh1.ssh == mh2.ssh));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether or not the given morph handle is selected.
 //-----------------------------------------------------------------------------
 bool Morph3D::IsSelected(MORPHHANDLE &mh)
 {
-	for (int i = 0; i < m_SelectedHandles.Count(); i++)
+	for(int i = 0; i < m_SelectedHandles.Count(); i++)
 	{
-		if (CompareMorphHandles(m_SelectedHandles[i], mh))
+		if(CompareMorphHandles(m_SelectedHandles[i], mh))
 		{
 			return true;
 		}
@@ -332,7 +319,6 @@ bool Morph3D::IsSelected(MORPHHANDLE &mh)
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Hit tests against all the handles. Sets the mouse cursor if we are
@@ -347,33 +333,33 @@ bool Morph3D::MorphHitTest(CMapView *pView, const Vector2D &vPoint, MORPHHANDLE 
 
 	bool bIs2D = pView->IsOrthographic();
 
-	if ( pInfo )
+	if(pInfo)
 	{
 		memset(pInfo, 0, sizeof(MORPHHANDLE));
 	}
 
 	// check scaling position first
-	if ( bIs2D && m_bScaling && pInfo)
+	if(bIs2D && m_bScaling && pInfo)
 	{
-		if ( HitRect( pView, vPoint, m_ScaleOrg, 8 )  )
+		if(HitRect(pView, vPoint, m_ScaleOrg, 8))
 		{
 			pInfo->ssh = SSH_SCALEORIGIN;
 			return true;
 		}
 	}
 
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
 		CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 
 		// do a hit test on all handles:
-		if (m_HandleMode & hmVertex)
+		if(m_HandleMode & hmVertex)
 		{
 			for(int i = 0; i < pStrucSolid->m_nVertices; i++)
 			{
 				CSSVertex &v = pStrucSolid->m_Vertices[i];
 
-				if( HitRect( pView, vPoint, v.pos, HANDLE_RADIUS ) )
+				if(HitRect(pView, vPoint, v.pos, HANDLE_RADIUS))
 				{
 					hnd = v.id;
 					break;
@@ -381,13 +367,13 @@ bool Morph3D::MorphHitTest(CMapView *pView, const Vector2D &vPoint, MORPHHANDLE 
 			}
 		}
 
-		if (!hnd && (m_HandleMode & hmEdge))
+		if(!hnd && (m_HandleMode & hmEdge))
 		{
-			for (int i = 0; i < pStrucSolid->m_nEdges; i++)
+			for(int i = 0; i < pStrucSolid->m_nEdges; i++)
 			{
 				CSSEdge &e = pStrucSolid->m_Edges[i];
 
-				if( HitRect( pView, vPoint, e.ptCenter, HANDLE_RADIUS ) )
+				if(HitRect(pView, vPoint, e.ptCenter, HANDLE_RADIUS))
 				{
 					hnd = e.id;
 					break;
@@ -395,16 +381,16 @@ bool Morph3D::MorphHitTest(CMapView *pView, const Vector2D &vPoint, MORPHHANDLE 
 			}
 		}
 
-		if (hnd)
+		if(hnd)
 		{
-			if ( bIs2D )
+			if(bIs2D)
 			{
 				SSHANDLEINFO hi;
 				pStrucSolid->GetHandleInfo(&hi, hnd);
 
 				// see if there is a 2d match that is already selected - if
 				//  there is, select that instead
-				SSHANDLE hMatch = Get2DMatches( dynamic_cast<CMapView2D*>(pView), pStrucSolid, hi);
+				SSHANDLE hMatch = Get2DMatches(dynamic_cast<CMapView2D *>(pView), pStrucSolid, hi);
 
 				if(hMatch)
 					hnd = hMatch;
@@ -423,13 +409,12 @@ bool Morph3D::MorphHitTest(CMapView *pView, const Vector2D &vPoint, MORPHHANDLE 
 	return hnd != 0;
 }
 
-void Morph3D::GetHandlePos(MORPHHANDLE *pInfo, Vector& pt)
+void Morph3D::GetHandlePos(MORPHHANDLE *pInfo, Vector &pt)
 {
 	SSHANDLEINFO hi;
 	pInfo->pStrucSolid->GetHandleInfo(&hi, pInfo->ssh);
 	pt = hi.pos;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Fills out a list of handles in the given solid that are at the same
@@ -441,7 +426,8 @@ void Morph3D::GetHandlePos(MORPHHANDLE *pInfo, Vector& pt)
 // Output : Returns a selected handle at the same position as the given handle,
 //			if one exists, otherwise returns 0.
 //-----------------------------------------------------------------------------
-SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDLEINFO &hi, CUtlVector<SSHANDLE>*pSimilarList)
+SSHANDLE Morph3D::Get2DMatches(CMapView2D *pView, CSSolid *pStrucSolid, SSHANDLEINFO &hi,
+							   CUtlVector<SSHANDLE> *pSimilarList)
 {
 	SSHANDLE hNewMoveHandle = 0;
 
@@ -452,11 +438,10 @@ SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDL
 	{
 		for(int i = 0; i < pStrucSolid->m_nVertices; i++)
 		{
-			CSSVertex & v = pStrucSolid->m_Vertices[i];
+			CSSVertex &v = pStrucSolid->m_Vertices[i];
 
 			// YWB Fixme, scale olerance to zoom amount?
-			if( (fabs(hi.pos[axHorz] - v.pos[axHorz]) < 0.5) &&
-				(fabs(hi.pos[axVert] - v.pos[axVert]) < 0.5) )
+			if((fabs(hi.pos[axHorz] - v.pos[axHorz]) < 0.5) && (fabs(hi.pos[axVert] - v.pos[axVert]) < 0.5))
 			{
 				if(v.m_bSelected)
 				{
@@ -464,7 +449,7 @@ SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDL
 				}
 
 				// add it to the array to select
-				if( pSimilarList )
+				if(pSimilarList)
 					pSimilarList->AddToTail(v.id);
 			}
 		}
@@ -473,10 +458,9 @@ SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDL
 	{
 		for(int i = 0; i < pStrucSolid->m_nEdges; i++)
 		{
-			CSSEdge& e = pStrucSolid->m_Edges[i];
+			CSSEdge &e = pStrucSolid->m_Edges[i];
 
-			if( (fabs(hi.pos[axHorz] - e.ptCenter[axHorz]) < 0.5) &&
-				(fabs(hi.pos[axVert] - e.ptCenter[axVert]) < 0.5) )
+			if((fabs(hi.pos[axHorz] - e.ptCenter[axHorz]) < 0.5) && (fabs(hi.pos[axVert] - e.ptCenter[axVert]) < 0.5))
 			{
 				if(e.m_bSelected)
 				{
@@ -484,7 +468,7 @@ SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDL
 				}
 
 				//  add it to the array to select
-				if( pSimilarList )
+				if(pSimilarList)
 					pSimilarList->AddToTail(e.id);
 			}
 		}
@@ -493,7 +477,6 @@ SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDL
 	return hNewMoveHandle;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Selects all the handles that are of the same type and at the same
 //			position in the current 2D projection as the given handle.
@@ -501,17 +484,17 @@ SSHANDLE Morph3D::Get2DMatches( CMapView2D *pView, CSSolid *pStrucSolid, SSHANDL
 //			cmd -
 // Output : Returns the number of handles that were selected by this call.
 //-----------------------------------------------------------------------------
-void Morph3D::SelectHandle2D( CMapView2D *pView, MORPHHANDLE *pInfo, UINT cmd)
+void Morph3D::SelectHandle2D(CMapView2D *pView, MORPHHANDLE *pInfo, UINT cmd)
 {
 	SSHANDLEINFO hi;
 
-	if ( !pInfo )
+	if(!pInfo)
 		return;
 
-	if( pInfo->ssh == SSH_SCALEORIGIN )
+	if(pInfo->ssh == SSH_SCALEORIGIN)
 		return;
 
-	if (!pInfo->pStrucSolid->GetHandleInfo(&hi, pInfo->ssh))
+	if(!pInfo->pStrucSolid->GetHandleInfo(&hi, pInfo->ssh))
 	{
 		// Can't find the handle info, bail.
 		DeselectHandle(pInfo);
@@ -524,9 +507,9 @@ void Morph3D::SelectHandle2D( CMapView2D *pView, MORPHHANDLE *pInfo, UINT cmd)
 	//
 	CUtlVector<SSHANDLE> addSimilarList;
 
-	Get2DMatches( pView, pInfo->pStrucSolid, hi, &addSimilarList );
+	Get2DMatches(pView, pInfo->pStrucSolid, hi, &addSimilarList);
 
-	for (int i = 0; i < addSimilarList.Count(); i++)
+	for(int i = 0; i < addSimilarList.Count(); i++)
 	{
 		MORPHHANDLE mh;
 		mh.ssh = addSimilarList[i];
@@ -535,17 +518,16 @@ void Morph3D::SelectHandle2D( CMapView2D *pView, MORPHHANDLE *pInfo, UINT cmd)
 
 		SelectHandle(&mh, cmd);
 
-		if (i == 0)
+		if(i == 0)
 		{
 			cmd &= ~scClear;
 		}
 	}
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
 	return;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -553,16 +535,15 @@ void Morph3D::SelectHandle2D( CMapView2D *pView, MORPHHANDLE *pInfo, UINT cmd)
 //-----------------------------------------------------------------------------
 void Morph3D::DeselectHandle(MORPHHANDLE *pInfo)
 {
-	for (int i = 0; i <m_SelectedHandles.Count(); i++)
+	for(int i = 0; i < m_SelectedHandles.Count(); i++)
 	{
-		if (!memcmp(&m_SelectedHandles[i], pInfo, sizeof(*pInfo)))
+		if(!memcmp(&m_SelectedHandles[i], pInfo, sizeof(*pInfo)))
 		{
 			m_SelectedHandles.Remove(i);
 			break;
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -571,22 +552,22 @@ void Morph3D::DeselectHandle(MORPHHANDLE *pInfo)
 //-----------------------------------------------------------------------------
 void Morph3D::SelectHandle(MORPHHANDLE *pInfo, UINT cmd)
 {
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
-	if( pInfo && pInfo->ssh == SSH_SCALEORIGIN )
+	if(pInfo && pInfo->ssh == SSH_SCALEORIGIN)
 		return;
 
 	if(cmd & scSelectAll)
 	{
 		MORPHHANDLE mh;
 
-		FOR_EACH_OBJ( m_StrucSolids, pos )
+		FOR_EACH_OBJ(m_StrucSolids, pos)
 		{
 			CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 
 			for(int i = 0; i < pStrucSolid->m_nVertices; i++)
 			{
-				CSSVertex& v = pStrucSolid->m_Vertices[i];
+				CSSVertex &v = pStrucSolid->m_Vertices[i];
 				mh.ssh = v.id;
 				mh.pStrucSolid = pStrucSolid;
 				mh.pMapSolid = pStrucSolid->m_pMapSolid;
@@ -600,7 +581,7 @@ void Morph3D::SelectHandle(MORPHHANDLE *pInfo, UINT cmd)
 	if(cmd & scClear)
 	{
 		// clear handles first
-		while( m_SelectedHandles.Count()>0)
+		while(m_SelectedHandles.Count() > 0)
 		{
 			SelectHandle(&m_SelectedHandles[0], scUnselect);
 		}
@@ -609,13 +590,13 @@ void Morph3D::SelectHandle(MORPHHANDLE *pInfo, UINT cmd)
 	if(cmd == scClear)
 	{
 		if(m_bScaling)
-			OnScaleCmd(TRUE);	// update scaling
+			OnScaleCmd(TRUE); // update scaling
 
-		return;	// nothing else to do here
+		return; // nothing else to do here
 	}
 
 	SSHANDLEINFO hi;
-	if (!pInfo->pStrucSolid->GetHandleInfo(&hi, pInfo->ssh))
+	if(!pInfo->pStrucSolid->GetHandleInfo(&hi, pInfo->ssh))
 	{
 		// Can't find the handle info, bail.
 		DeselectHandle(pInfo);
@@ -623,7 +604,7 @@ void Morph3D::SelectHandle(MORPHHANDLE *pInfo, UINT cmd)
 	}
 
 	if(hi.Type != m_SelectedType)
-		SelectHandle(NULL, scClear);	// clear selection first
+		SelectHandle(NULL, scClear); // clear selection first
 
 	m_SelectedType = hi.Type;
 
@@ -664,17 +645,15 @@ void Morph3D::SelectHandle(MORPHHANDLE *pInfo, UINT cmd)
 		OnScaleCmd(TRUE);
 }
 
-
 void Morph3D::MoveSelectedHandles(const Vector &Delta)
 {
 
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
 		CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 		pStrucSolid->MoveSelectedHandles(Delta);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -682,29 +661,28 @@ void Morph3D::MoveSelectedHandles(const Vector &Delta)
 //-----------------------------------------------------------------------------
 void Morph3D::RenderTool2D(CRender2D *pRender)
 {
-	pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_SQUARE );
+	pRender->SetHandleStyle(HANDLE_RADIUS, CRender::HANDLE_SQUARE);
 
-	for (int nPass = 0; nPass < 2; nPass++)
+	for(int nPass = 0; nPass < 2; nPass++)
 	{
 
-		FOR_EACH_OBJ( m_StrucSolids, pos )
+		FOR_EACH_OBJ(m_StrucSolids, pos)
 		{
 			CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 
 			//
 			// Draw the edges.
 			//
-			for (int i = 0; i < pStrucSolid->m_nEdges; i++)
+			for(int i = 0; i < pStrucSolid->m_nEdges; i++)
 			{
-				CSSEdge *pEdge = & pStrucSolid->m_Edges[i];
+				CSSEdge *pEdge = &pStrucSolid->m_Edges[i];
 
-				if (((pEdge->m_bSelected) && (nPass == 0)) ||
-					((!pEdge->m_bSelected) && (nPass == 1)))
+				if(((pEdge->m_bSelected) && (nPass == 0)) || ((!pEdge->m_bSelected) && (nPass == 1)))
 				{
 					continue;
 				}
 
-				pRender->SetDrawColor( 255, 0, 0 );
+				pRender->SetDrawColor(255, 0, 0);
 
 				SSHANDLEINFO hi1;
 				SSHANDLEINFO hi2;
@@ -713,7 +691,7 @@ void Morph3D::RenderTool2D(CRender2D *pRender)
 
 				pRender->DrawLine(hi1.pos, hi2.pos);
 
-				if (!(m_HandleMode & hmEdge))
+				if(!(m_HandleMode & hmEdge))
 				{
 					// Don't draw edge handles.
 					continue;
@@ -721,19 +699,21 @@ void Morph3D::RenderTool2D(CRender2D *pRender)
 
 				// Draw the edge center handle.
 
-				if (pEdge->m_bSelected)
+				if(pEdge->m_bSelected)
 				{
-					pRender->SetHandleColor( GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection), GetBValue(Options.colors.clrSelection) );
+					pRender->SetHandleColor(GetRValue(Options.colors.clrSelection),
+											GetGValue(Options.colors.clrSelection),
+											GetBValue(Options.colors.clrSelection));
 				}
 				else
 				{
-					pRender->SetHandleColor( 255,255,0 ) ;
+					pRender->SetHandleColor(255, 255, 0);
 				}
 
-				pRender->DrawHandle( pEdge->ptCenter );
+				pRender->DrawHandle(pEdge->ptCenter);
 			}
 
-			if (!(m_HandleMode & hmVertex))
+			if(!(m_HandleMode & hmVertex))
 			{
 				// Don't draw vertex handles.
 				continue;
@@ -743,50 +723,52 @@ void Morph3D::RenderTool2D(CRender2D *pRender)
 			// Draw vertex handles.
 			bool bClientSpace = pRender->BeginClientSpace();
 
-			for (int i = 0; i < pStrucSolid->m_nVertices; i++)
+			for(int i = 0; i < pStrucSolid->m_nVertices; i++)
 			{
 				CSSVertex &v = pStrucSolid->m_Vertices[i];
 
-				if (((v.m_bSelected) && (nPass == 0)) ||
-					((!v.m_bSelected) && (nPass == 1)))
+				if(((v.m_bSelected) && (nPass == 0)) || ((!v.m_bSelected) && (nPass == 1)))
 				{
 					continue;
 				}
 
-				if (v.m_bSelected)
+				if(v.m_bSelected)
 				{
-					pRender->SetHandleColor( GetRValue(Options.colors.clrSelection), GetGValue(Options.colors.clrSelection), GetBValue(Options.colors.clrSelection) );
+					pRender->SetHandleColor(GetRValue(Options.colors.clrSelection),
+											GetGValue(Options.colors.clrSelection),
+											GetBValue(Options.colors.clrSelection));
 				}
 				else
 				{
-					pRender->SetHandleColor( GetRValue(Options.colors.clrToolHandle), GetGValue(Options.colors.clrToolHandle), GetBValue(Options.colors.clrToolHandle));
+					pRender->SetHandleColor(GetRValue(Options.colors.clrToolHandle),
+											GetGValue(Options.colors.clrToolHandle),
+											GetBValue(Options.colors.clrToolHandle));
 				}
 
-				pRender->DrawHandle( v.pos );
+				pRender->DrawHandle(v.pos);
 			}
 
-			if ( bClientSpace )
+			if(bClientSpace)
 				pRender->EndClientSpace();
-
 		}
 	}
 
 	//
 	// Draw scaling point.
 	//
-	if (m_bScaling && m_SelectedHandles.Count() )
+	if(m_bScaling && m_SelectedHandles.Count())
 	{
-		pRender->SetHandleStyle( 8, CRender::HANDLE_CIRCLE );
-		pRender->SetHandleColor( GetRValue(Options.colors.clrToolHandle), GetGValue(Options.colors.clrToolHandle), GetBValue(Options.colors.clrToolHandle) );
-		pRender->DrawHandle( m_ScaleOrg );
+		pRender->SetHandleStyle(8, CRender::HANDLE_CIRCLE);
+		pRender->SetHandleColor(GetRValue(Options.colors.clrToolHandle), GetGValue(Options.colors.clrToolHandle),
+								GetBValue(Options.colors.clrToolHandle));
+		pRender->DrawHandle(m_ScaleOrg);
 	}
 
-	if ( m_bBoxSelecting )
+	if(m_bBoxSelecting)
 	{
 		Box3D::RenderTool2D(pRender);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Finishes the morph, committing changes made to the selected objects.
@@ -795,7 +777,7 @@ void Morph3D::SetEmpty()
 {
 	GetHistory()->MarkUndoPosition(NULL, "Morphing");
 
-	while(m_StrucSolids.Count()>0)
+	while(m_StrucSolids.Count() > 0)
 	{
 		// keep getting the head position because SelectObject (below)
 		//  removes the object from the list.
@@ -816,14 +798,13 @@ void Morph3D::SetEmpty()
 	}
 }
 
-
 // 3d translation --
-void Morph3D::StartTranslation( CMapView *pView, const Vector2D &vPoint, MORPHHANDLE *pInfo )
+void Morph3D::StartTranslation(CMapView *pView, const Vector2D &vPoint, MORPHHANDLE *pInfo)
 {
 	if(m_bScaling)
 	{
 		// back to 1
-		m_bScaling = false;	// don't want it to update here
+		m_bScaling = false; // don't want it to update here
 		m_ScaleDlg.m_cScale.SetWindowText("1.0");
 		m_bScaling = true;
 	}
@@ -835,20 +816,19 @@ void Morph3D::StartTranslation( CMapView *pView, const Vector2D &vPoint, MORPHHA
 		GetHandlePos(pInfo, m_OrigHandlePos);
 
 	Vector vOrigin, vecHorz, vecVert, vecThird;
-	pView->GetBestTransformPlane( vecHorz, vecVert, vecThird );
-	SetTransformationPlane(  m_OrigHandlePos, vecHorz, vecVert, vecThird );
+	pView->GetBestTransformPlane(vecHorz, vecVert, vecThird);
+	SetTransformationPlane(m_OrigHandlePos, vecHorz, vecVert, vecThird);
 
 	// align translation plane to world origin
-	ProjectOnTranslationPlane( vec3_origin, vOrigin, 0 );
+	ProjectOnTranslationPlane(vec3_origin, vOrigin, 0);
 
 	// set transformation plane
-	SetTransformationPlane(vOrigin, vecHorz, vecVert, vecThird );
+	SetTransformationPlane(vOrigin, vecHorz, vecVert, vecThird);
 
-	Tool3D::StartTranslation( pView, vPoint, false );
+	Tool3D::StartTranslation(pView, vPoint, false);
 
 	m_DragHandle = *pInfo;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -859,23 +839,23 @@ void Morph3D::StartTranslation( CMapView *pView, const Vector2D &vPoint, MORPHHA
 //-----------------------------------------------------------------------------
 bool Morph3D::UpdateTranslation(const Vector &vUpdate, UINT uFlags)
 {
-	if (m_bBoxSelecting)
+	if(m_bBoxSelecting)
 	{
 		return Box3D::UpdateTranslation(vUpdate, uFlags);
 	}
 
-	if ( !Tool3D::UpdateTranslation( vUpdate, uFlags) )
+	if(!Tool3D::UpdateTranslation(vUpdate, uFlags))
 		return false;
 
-	bool bSnap =  uFlags & constrainSnap;
+	bool bSnap = uFlags & constrainSnap;
 
-	if (m_DragHandle.ssh == SSH_SCALEORIGIN)
+	if(m_DragHandle.ssh == SSH_SCALEORIGIN)
 	{
 		m_ScaleOrg = m_OrigHandlePos + vUpdate;
 
-		if (bSnap)
+		if(bSnap)
 		{
-			m_pDocument->Snap( m_ScaleOrg, uFlags );
+			m_pDocument->Snap(m_ScaleOrg, uFlags);
 		}
 
 		m_bUpdateOrg = false;
@@ -892,39 +872,38 @@ bool Morph3D::UpdateTranslation(const Vector &vUpdate, UINT uFlags)
 
 	// We don't want to snap edge handles to the grid, because they don't
 	// necessarily belong on the grid in the first place.
-	if ( uFlags!=0 )
+	if(uFlags != 0)
 	{
-		ProjectOnTranslationPlane( m_OrigHandlePos+m_vTranslation, m_vTranslation, uFlags );
+		ProjectOnTranslationPlane(m_OrigHandlePos + m_vTranslation, m_vTranslation, uFlags);
 		m_vTranslation -= m_OrigHandlePos;
 	}
 
-	Vector vDelta = (m_OrigHandlePos+m_vTranslation)-vCurPos;
+	Vector vDelta = (m_OrigHandlePos + m_vTranslation) - vCurPos;
 
 	//
 	// Create delta and determine if it is large enough to warrant an update.
 	//
 
-	if ( vDelta.Length() < 0.5 )
+	if(vDelta.Length() < 0.5)
 	{
-		return false;	// no need to update.
+		return false; // no need to update.
 	}
 
-	MoveSelectedHandles( vDelta );
+	MoveSelectedHandles(vDelta);
 
 	return true;
 }
 
-bool Morph3D::StartBoxSelection(CMapView *pView, const Vector2D &vPoint, const Vector& vStart)
+bool Morph3D::StartBoxSelection(CMapView *pView, const Vector2D &vPoint, const Vector &vStart)
 {
 	m_bBoxSelecting = true;
 
 	SetDrawColors(RGB(255, 255, 255), RGB(50, 255, 255));
 
-	Box3D::StartNew( pView, vPoint, vStart, Vector(0,0,0) );
+	Box3D::StartNew(pView, vPoint, vStart, Vector(0, 0, 0));
 
 	return true;
 }
-
 
 void Morph3D::SelectInBox()
 {
@@ -934,7 +913,7 @@ void Morph3D::SelectInBox()
 	// select all vertices within the box, and finish box
 	//  selection.
 
-	EndBoxSelection();	// may as well do it here
+	EndBoxSelection(); // may as well do it here
 
 	// expand box along 0-depth axes
 	int countzero = 0;
@@ -950,13 +929,13 @@ void Morph3D::SelectInBox()
 	if(countzero > 1)
 		return;
 
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
 		CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 
 		for(int i = 0; i < pStrucSolid->m_nVertices; i++)
 		{
-			CSSVertex& v = pStrucSolid->m_Vertices[i];
+			CSSVertex &v = pStrucSolid->m_Vertices[i];
 			int i2;
 			for(i2 = 0; i2 < 3; i2++)
 			{
@@ -980,9 +959,8 @@ void Morph3D::SelectInBox()
 void Morph3D::EndBoxSelection()
 {
 	m_bBoxSelecting = false;
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -990,17 +968,17 @@ void Morph3D::EndBoxSelection()
 //-----------------------------------------------------------------------------
 void Morph3D::FinishTranslation(bool bSave)
 {
-	if (m_bBoxSelecting)
+	if(m_bBoxSelecting)
 	{
 		Box3D::FinishTranslation(bSave);
 		return;
 	}
-	else if (bSave && m_DragHandle.ssh != SSH_SCALEORIGIN)
+	else if(bSave && m_DragHandle.ssh != SSH_SCALEORIGIN)
 	{
 		// figure out all the affected solids
-		CUtlVector<CSSolid*> Affected;
+		CUtlVector<CSSolid *> Affected;
 
-		FOR_EACH_OBJ( m_StrucSolids, pos )
+		FOR_EACH_OBJ(m_StrucSolids, pos)
 		{
 			CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 			if(Affected.Find(pStrucSolid) == -1)
@@ -1008,7 +986,7 @@ void Morph3D::FinishTranslation(bool bSave)
 		}
 
 		int iConfirm = -1;
-		FOR_EACH_OBJ( Affected, pos )
+		FOR_EACH_OBJ(Affected, pos)
 		{
 			CSSolid *pStrucSolid = Affected.Element(pos);
 			if(pStrucSolid->CanMergeVertices() && iConfirm != 0)
@@ -1036,7 +1014,7 @@ void Morph3D::FinishTranslation(bool bSave)
 					}
 				}
 			}
-//			pStrucSolid->CheckFaces();
+			//			pStrucSolid->CheckFaces();
 		}
 	}
 
@@ -1055,14 +1033,12 @@ void Morph3D::FinishTranslation(bool bSave)
 	}
 }
 
-
 bool Morph3D::SplitFace()
 {
 	if(!CanSplitFace())
 		return false;
 
-	if(m_SelectedHandles[0].pStrucSolid->SplitFace(m_SelectedHandles[0].ssh,
-		m_SelectedHandles[1].ssh))
+	if(m_SelectedHandles[0].pStrucSolid->SplitFace(m_SelectedHandles[0].ssh, m_SelectedHandles[1].ssh))
 	{
 		// unselect those invalid edges
 		if(m_SelectedType == shtVertex)
@@ -1070,10 +1046,10 @@ bool Morph3D::SplitFace()
 			// proper deselection
 			SelectHandle(NULL, scClear);
 		}
-		else	// selection is invalid; set count to 0
+		else // selection is invalid; set count to 0
 			m_SelectedHandles.RemoveAll();
 
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_OBJECTS );
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_OBJECTS);
 
 		return false;
 	}
@@ -1081,12 +1057,10 @@ bool Morph3D::SplitFace()
 	return true;
 }
 
-
 bool Morph3D::CanSplitFace()
 {
 	// along two edges.
-	if(m_SelectedHandles.Count() != 2 || (m_SelectedType != shtEdge &&
-		m_SelectedType != shtVertex))
+	if(m_SelectedHandles.Count() != 2 || (m_SelectedType != shtEdge && m_SelectedType != shtVertex))
 		return false;
 
 	// make sure same solid.
@@ -1095,7 +1069,6 @@ bool Morph3D::CanSplitFace()
 
 	return true;
 }
-
 
 void Morph3D::ToggleMode()
 {
@@ -1107,32 +1080,31 @@ void Morph3D::ToggleMode()
 		m_HandleMode = hmBoth;
 
 	// run through selected solids and tell them the new mode
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
 		CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 		pStrucSolid->ShowHandles(m_HandleMode & hmVertex, m_HandleMode & hmEdge);
 	}
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the center of the morph selection.
 // Input  : pt - Point at the center of the selection or selected handles.
 //-----------------------------------------------------------------------------
-void Morph3D::GetSelectedCenter(Vector& pt)
+void Morph3D::GetSelectedCenter(Vector &pt)
 {
 	BoundBox box;
 
 	//
 	// If we have selected handles, our bounds center is the center of those handles.
 	//
-	if (m_SelectedHandles.Count() > 0)
+	if(m_SelectedHandles.Count() > 0)
 	{
 		SSHANDLEINFO hi;
 
-		for (int i = 0; i < m_SelectedHandles.Count(); i++)
+		for(int i = 0; i < m_SelectedHandles.Count(); i++)
 		{
 			MORPHHANDLE *mh = &m_SelectedHandles[i];
 			mh->pStrucSolid->GetHandleInfo(&hi, mh->ssh);
@@ -1145,10 +1117,10 @@ void Morph3D::GetSelectedCenter(Vector& pt)
 	//
 	else
 	{
-		FOR_EACH_OBJ( m_StrucSolids, pos )
+		FOR_EACH_OBJ(m_StrucSolids, pos)
 		{
 			CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
-			for (int nVertex = 0; nVertex < pStrucSolid->m_nVertices; nVertex++)
+			for(int nVertex = 0; nVertex < pStrucSolid->m_nVertices; nVertex++)
 			{
 				CSSVertex &v = pStrucSolid->m_Vertices[nVertex];
 				box.UpdateBounds(v.pos);
@@ -1159,19 +1131,17 @@ void Morph3D::GetSelectedCenter(Vector& pt)
 	box.GetBoundsCenter(pt);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Fills out a list of the objects selected for morphing.
 //-----------------------------------------------------------------------------
 void Morph3D::GetMorphingObjects(CUtlVector<CMapClass *> &List)
 {
-	FOR_EACH_OBJ( m_StrucSolids, pos )
+	FOR_EACH_OBJ(m_StrucSolids, pos)
 	{
 		CSSolid *pStrucSolid = m_StrucSolids.Element(pos);
 		List.AddToTail(pStrucSolid->m_pMapSolid);
 	}
 }
-
 
 void Morph3D::OnScaleCmd(BOOL bReInit)
 {
@@ -1201,12 +1171,12 @@ void Morph3D::OnScaleCmd(BOOL bReInit)
 	}
 	else
 	{
-		m_bScaling = false;	// don't want an update
+		m_bScaling = false; // don't want an update
 		m_ScaleDlg.m_cScale.SetWindowText("1.0");
 		m_bScaling = true;
 	}
 
-	if(m_SelectedHandles.Count()==0)
+	if(m_SelectedHandles.Count() == 0)
 	{
 		m_bScaling = true;
 		return;
@@ -1234,11 +1204,10 @@ void Morph3D::OnScaleCmd(BOOL bReInit)
 	if(m_bUpdateOrg)
 		box.GetBoundsCenter(m_ScaleOrg);
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 
 	m_bScaling = true;
 }
-
 
 void Morph3D::UpdateScale()
 {
@@ -1260,32 +1229,28 @@ void Morph3D::UpdateScale()
 			continue;
 
 		// ** scale **
-		Vector& pOrigPos = m_pOrigPosList[iMoved++];
+		Vector &pOrigPos = m_pOrigPosList[iMoved++];
 		Vector newpos;
 		for(int d = 0; d < 3; d++)
 		{
 			float delta = pOrigPos[d] - m_ScaleOrg[d];
 			// YWB rounding
-			newpos[d] = /*V_rint*/(m_ScaleOrg[d] + (delta * fScale));
+			newpos[d] = /*V_rint*/ (m_ScaleOrg[d] + (delta * fScale));
 		}
 
-		hnd.pStrucSolid->SetVertexPosition(hi.iIndex, newpos[0],
-			newpos[1], newpos[2]);
+		hnd.pStrucSolid->SetVertexPosition(hi.iIndex, newpos[0], newpos[1], newpos[2]);
 
 		// find edge that references this vertex
 		int nEdges;
-		CSSEdge **pEdges = hnd.pStrucSolid->FindAffectedEdges(&hnd.ssh, 1,
-			nEdges);
+		CSSEdge **pEdges = hnd.pStrucSolid->FindAffectedEdges(&hnd.ssh, 1, nEdges);
 		for(int e = 0; e < nEdges; e++)
 		{
 			hnd.pStrucSolid->CalcEdgeCenter(pEdges[e]);
 		}
 	}
 
-	m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_TOOL );
+	m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_TOOL);
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders an object that is currently selected for morphing. The
@@ -1300,57 +1265,57 @@ void Morph3D::UpdateScale()
 void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 {
 	VMatrix ViewMatrix;
-	Vector	ViewPos;
+	Vector ViewPos;
 	bool bClientSpace = false;
 
-	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	for (int nPass = 1; nPass <= 3; nPass++)
+	CMatRenderContextPtr pRenderContext(MaterialSystemInterface());
+	for(int nPass = 1; nPass <= 3; nPass++)
 	{
-		if (nPass == 1)
+		if(nPass == 1)
 		{
-			pRender->PushRenderMode( RENDER_MODE_SELECTION_OVERLAY );
+			pRender->PushRenderMode(RENDER_MODE_SELECTION_OVERLAY);
 		}
-		else if (nPass == 2)
+		else if(nPass == 2)
 		{
-			pRender->PushRenderMode( RENDER_MODE_WIREFRAME );
+			pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
 		}
 		else
 		{
-			pRender->PushRenderMode( RENDER_MODE_FLAT_NOZ );
-			pRender->SetHandleStyle( HANDLE_RADIUS, CRender::HANDLE_SQUARE );
+			pRender->PushRenderMode(RENDER_MODE_FLAT_NOZ);
+			pRender->SetHandleStyle(HANDLE_RADIUS, CRender::HANDLE_SQUARE);
 			bClientSpace = pRender->BeginClientSpace();
-			pRender->GetCamera()->GetViewMatrix( ViewMatrix );
+			pRender->GetCamera()->GetViewMatrix(ViewMatrix);
 		}
 
-		IMesh* pMesh = pRenderContext->GetDynamicMesh();
+		IMesh *pMesh = pRenderContext->GetDynamicMesh();
 		CMeshBuilder meshBuilder;
 
 		int nFaceCount = pSolid->GetFaceCount();
-		for (int nFace = 0; nFace < nFaceCount; nFace++)
+		for(int nFace = 0; nFace < nFaceCount; nFace++)
 		{
 			CSSFace *pFace = pSolid->GetFace(nFace);
 
 			int nEdgeCount = pFace->GetEdgeCount();
 
 			unsigned char color[4];
-			if (nPass == 1)
+			if(nPass == 1)
 			{
-				meshBuilder.Begin( pMesh, MATERIAL_POLYGON, nEdgeCount );
+				meshBuilder.Begin(pMesh, MATERIAL_POLYGON, nEdgeCount);
 				color[0] = color[1] = color[2] = color[3] = 128;
 			}
-			else if (nPass == 2)
+			else if(nPass == 2)
 			{
-				meshBuilder.Begin( pMesh, MATERIAL_LINE_LOOP, nEdgeCount );
+				meshBuilder.Begin(pMesh, MATERIAL_LINE_LOOP, nEdgeCount);
 				color[0] = color[1] = color[2] = color[3] = 255;
 			}
 
-			for (int nEdge = 0; nEdge < nEdgeCount; nEdge++)
+			for(int nEdge = 0; nEdge < nEdgeCount; nEdge++)
 			{
 				//
 				// Calc next edge so we can see which is the next clockwise point.
 				//
 				int nEdgeNext = nEdge + 1;
-				if (nEdgeNext == nEdgeCount)
+				if(nEdgeNext == nEdgeCount)
 				{
 					nEdgeNext = 0;
 				}
@@ -1361,23 +1326,23 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 				SSHANDLE hEdgeNext = pFace->GetEdgeHandle(nEdgeNext);
 				CSSEdge *pEdgeNext = (CSSEdge *)pSolid->GetHandleData(hEdgeNext);
 
-				if (!pEdgeCur || !pEdgeNext)
+				if(!pEdgeCur || !pEdgeNext)
 				{
 					return;
 				}
 
-				if ((nPass == 1) || (nPass == 2))
+				if((nPass == 1) || (nPass == 2))
 				{
 					SSHANDLE hVertex = pSolid->GetConnectionVertex(pEdgeCur, pEdgeNext);
 
-					if (!hVertex)
+					if(!hVertex)
 					{
 						return;
 					}
 
 					CSSVertex *pVertex = (CSSVertex *)pSolid->GetHandleData(hVertex);
 
-					if (!pVertex)
+					if(!pVertex)
 					{
 						return;
 					}
@@ -1385,12 +1350,12 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 					Vector Vertex;
 					pVertex->GetPosition(Vertex);
 					meshBuilder.Position3f(Vertex[0], Vertex[1], Vertex[2]);
-					meshBuilder.Color4ubv( color );
+					meshBuilder.Color4ubv(color);
 					meshBuilder.AdvanceVertex();
 				}
 				else
 				{
-					if (pSolid->ShowEdges())
+					if(pSolid->ShowEdges())
 					{
 						//
 						// Project the edge midpoint into screen space.
@@ -1398,9 +1363,9 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 						Vector CenterPoint;
 						pEdgeCur->GetCenterPoint(CenterPoint);
 
-						ViewMatrix.V3Mul( CenterPoint, ViewPos );
+						ViewMatrix.V3Mul(CenterPoint, ViewPos);
 
-						if (ViewPos[2] < 0)
+						if(ViewPos[2] < 0)
 						{
 							Vector2D ClientPos;
 							pRender->TransformPoint(ClientPos, CenterPoint);
@@ -1411,21 +1376,24 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 							pEdgeCur->m_r.right = ClientPos.x + HANDLE_RADIUS + 1;
 							pEdgeCur->m_r.bottom = ClientPos.y + HANDLE_RADIUS + 1;
 
-							if (pEdgeCur->m_bSelected)
+							if(pEdgeCur->m_bSelected)
 							{
-								color[0] = 220; color[1] = color[2] = 0; color[3] = 255;
+								color[0] = 220;
+								color[1] = color[2] = 0;
+								color[3] = 255;
 							}
 							else
 							{
-								color[0] = color[1] = 255; color[2] = 0; color[3] = 255;
-
+								color[0] = color[1] = 255;
+								color[2] = 0;
+								color[3] = 255;
 							}
 
 							//
 							// Render the edge handle as a box.
 							//
-							pRender->SetHandleColor( color[0], color[1], color[2] );
-							pRender->DrawHandle( CenterPoint );
+							pRender->SetHandleColor(color[0], color[1], color[2]);
+							pRender->DrawHandle(CenterPoint);
 						}
 						else
 						{
@@ -1433,7 +1401,7 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 						}
 					}
 
-					if (pSolid->ShowVertices())
+					if(pSolid->ShowVertices())
 					{
 						SSHANDLE hVertex = pSolid->GetConnectionVertex(pEdgeCur, pEdgeNext);
 						CSSVertex *pVertex = (CSSVertex *)pSolid->GetHandleData(hVertex);
@@ -1445,9 +1413,9 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 
 						pVertex->GetPosition(vPoint);
 
-						ViewMatrix.V3Mul( vPoint, ViewPos );
+						ViewMatrix.V3Mul(vPoint, ViewPos);
 
-						if (ViewPos[2] < 0)
+						if(ViewPos[2] < 0)
 						{
 							Vector2D ClientPos;
 							pRender->TransformPoint(ClientPos, vPoint);
@@ -1458,20 +1426,23 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 							pVertex->m_r.right = ClientPos.x + HANDLE_RADIUS + 1;
 							pVertex->m_r.bottom = ClientPos.y + HANDLE_RADIUS + 1;
 
-							if (pVertex->m_bSelected)
+							if(pVertex->m_bSelected)
 							{
-								color[0] = 220; color[1] = color[2] = 0; color[3] = 255;
+								color[0] = 220;
+								color[1] = color[2] = 0;
+								color[3] = 255;
 							}
 							else
 							{
-								color[0] = color[1] = color[2] = 255; color[3] = 255;
+								color[0] = color[1] = color[2] = 255;
+								color[3] = 255;
 							}
 
 							//
 							// Render the vertex as a box.
 							//
-							pRender->SetHandleColor( color[0], color[1], color[2] );
-							pRender->DrawHandle( vPoint );
+							pRender->SetHandleColor(color[0], color[1], color[2]);
+							pRender->DrawHandle(vPoint);
 						}
 						else
 						{
@@ -1481,14 +1452,14 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 				}
 			}
 
-			if ((nPass == 1) || (nPass == 2))
+			if((nPass == 1) || (nPass == 2))
 			{
 				meshBuilder.End();
 				pMesh->Draw();
 			}
 		}
 
-		if ( bClientSpace )
+		if(bClientSpace)
 		{
 			pRender->EndClientSpace();
 			bClientSpace = false;
@@ -1498,24 +1469,22 @@ void Morph3D::RenderSolid3D(CRender3D *pRender, CSSolid *pSolid)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Renders a our selection bounds while we are drag-selecting.
 // Input  : pRender - Rendering interface.
 //-----------------------------------------------------------------------------
 void Morph3D::RenderTool3D(CRender3D *pRender)
 {
-	if (m_bBoxSelecting)
+	if(m_bBoxSelecting)
 	{
 		Box3D::RenderTool3D(pRender);
 	}
 
-	for( int pos=0; pos < m_StrucSolids.Count(); pos++ )
+	for(int pos = 0; pos < m_StrucSolids.Count(); pos++)
 	{
-		RenderSolid3D(pRender, m_StrucSolids[pos] );
+		RenderSolid3D(pRender, m_StrucSolids[pos]);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles key down events in the 2D view.
@@ -1525,17 +1494,17 @@ void Morph3D::RenderTool3D(CRender3D *pRender)
 bool Morph3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	bool bSnap = m_pDocument->IsSnapEnabled() && !(GetKeyState(VK_CONTROL) & 0x8000);
-	if (nChar == VK_UP || nChar == VK_DOWN || nChar == VK_LEFT || nChar == VK_RIGHT)
+	if(nChar == VK_UP || nChar == VK_DOWN || nChar == VK_LEFT || nChar == VK_RIGHT)
 	{
-		if ( NudgeHandles( pView, nChar, bSnap ) )
+		if(NudgeHandles(pView, nChar, bSnap))
 			return true;
 	}
 
-	switch (nChar)
+	switch(nChar)
 	{
 		case VK_RETURN:
 		{
-			if ( IsBoxSelecting() )
+			if(IsBoxSelecting())
 			{
 				SelectInBox();
 			}
@@ -1552,7 +1521,6 @@ bool Morph3D::OnKeyDown2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFla
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles character events in the 2D view.
 // Input  : Per CWnd::OnChar.
@@ -1562,7 +1530,6 @@ bool Morph3D::OnChar2D(CMapView2D *pView, UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles left mouse button down events in the 2D view.
@@ -1580,14 +1547,14 @@ bool Morph3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 	m_DragHandle.ssh = 0;
 
 	MORPHHANDLE mh;
-	if ( IsBoxSelecting() )
+	if(IsBoxSelecting())
 	{
-		if ( HitTest( pView, vPoint, true ) )
+		if(HitTest(pView, vPoint, true))
 		{
-			Box3D::StartTranslation( pView, vPoint, m_LastHitTestHandle );
+			Box3D::StartTranslation(pView, vPoint, m_LastHitTestHandle);
 		}
 	}
-	else if (MorphHitTest( pView, vPoint, &mh))
+	else if(MorphHitTest(pView, vPoint, &mh))
 	{
 		//
 		// If they clicked on a valid handle, remember which one. We may need it in
@@ -1595,17 +1562,17 @@ bool Morph3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 		//
 		m_DragHandle = mh;
 
-		if (!m_bLButtonDownControlState)
+		if(!m_bLButtonDownControlState)
 		{
 			//
 			// If they are not holding down control and they clicked on an unselected
 			// handle, select the handle they clicked on straightaway.
 			//
-			if (!IsSelected(m_DragHandle))
+			if(!IsSelected(m_DragHandle))
 			{
 				// Clear the selected handles and select this handle.
 				UINT cmd = scClear | scSelect;
-				SelectHandle2D( pView, &m_DragHandle, cmd);
+				SelectHandle2D(pView, &m_DragHandle, cmd);
 			}
 		}
 	}
@@ -1618,7 +1585,6 @@ bool Morph3D::OnLMouseDown2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPo
 	return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles left mouse button up events in the 2D view.
 // Input  : Per CWnd::OnLButtonUp.
@@ -1628,21 +1594,21 @@ bool Morph3D::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoin
 {
 	Tool3D::OnLMouseUp2D(pView, nFlags, vPoint);
 
-	if (!IsTranslating())
+	if(!IsTranslating())
 	{
-		if (m_DragHandle.ssh != 0)
+		if(m_DragHandle.ssh != 0)
 		{
 			//
 			// They clicked on a handle and released the left button without moving the mouse.
 			// Change the selection state of the handle that was clicked on.
 			//
 			UINT cmd = scClear | scSelect;
-			if (m_bLButtonDownControlState)
+			if(m_bLButtonDownControlState)
 			{
 				// Control-click: toggle.
 				cmd = scToggle;
 			}
-			SelectHandle2D( pView, &m_DragHandle, cmd);
+			SelectHandle2D(pView, &m_DragHandle, cmd);
 		}
 	}
 	else
@@ -1652,7 +1618,7 @@ bool Morph3D::OnLMouseUp2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoin
 		//
 		FinishTranslation(true);
 
-		if (IsBoxSelecting() && Options.view2d.bAutoSelect)
+		if(IsBoxSelecting() && Options.view2d.bAutoSelect)
 		{
 			SelectInBox();
 		}
@@ -1667,18 +1633,17 @@ unsigned int Morph3D::GetConstraints(unsigned int nFlags)
 {
 	unsigned int uConstraints = Tool3D::GetConstraints(nFlags);
 
-	if ( !IsBoxSelecting() )
+	if(!IsBoxSelecting())
 	{
-		if ( nFlags & MK_CONTROL )
+		if(nFlags & MK_CONTROL)
 			uConstraints |= constrainOnlyVert;
 
-		if ( nFlags & MK_SHIFT )
+		if(nFlags & MK_SHIFT)
 			uConstraints |= constrainOnlyHorz;
 	}
 
 	return uConstraints;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles mouse move events in the 2D view.
@@ -1689,7 +1654,7 @@ bool Morph3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoi
 {
 	vgui::HCursor hCursor = vgui::dc_none;
 
-	unsigned int uConstraints = GetConstraints( nFlags );
+	unsigned int uConstraints = GetConstraints(nFlags);
 
 	Tool3D::OnMouseMove2D(pView, nFlags, vPoint);
 
@@ -1702,58 +1667,58 @@ bool Morph3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoi
 	// Update status bar position display.
 	//
 	char szBuf[128];
-	m_pDocument->Snap(vecWorld,uConstraints);
-	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert] );
+	m_pDocument->Snap(vecWorld, uConstraints);
+	sprintf(szBuf, " @%.0f, %.0f ", vecWorld[pView->axHorz], vecWorld[pView->axVert]);
 	SetStatusText(SBI_COORDS, szBuf);
 
-	if ( m_bMouseDown[MOUSE_LEFT] )
+	if(m_bMouseDown[MOUSE_LEFT])
 	{
-		if ( IsTranslating() )
+		if(IsTranslating())
 		{
 			// If they are dragging a selection box or one or more handles, update
 			// the drag based on the cursor position.
 
-			Tool3D::UpdateTranslation( pView, vPoint, uConstraints );
+			Tool3D::UpdateTranslation(pView, vPoint, uConstraints);
 		}
-		else if ( m_bMouseDragged[MOUSE_LEFT] && m_DragHandle.ssh != 0 )
+		else if(m_bMouseDragged[MOUSE_LEFT] && m_DragHandle.ssh != 0)
 		{
 			//
 			// If they are not already dragging a handle and they clicked on a valid handle,
 			// see if they have moved the mouse far enough to begin dragging the handle.
 			//
 
-			if (m_bLButtonDownControlState && !IsSelected(m_DragHandle))
+			if(m_bLButtonDownControlState && !IsSelected(m_DragHandle))
 			{
 				//
 				// If they control-clicked on an unselected handle and then dragged the mouse,
 				// select the handle that they clicked on now.
 				//
-				SelectHandle2D( pView, &m_DragHandle, scSelect);
+				SelectHandle2D(pView, &m_DragHandle, scSelect);
 			}
 
-			StartTranslation( pView, m_vMouseStart[MOUSE_LEFT], &m_DragHandle );
+			StartTranslation(pView, m_vMouseStart[MOUSE_LEFT], &m_DragHandle);
 		}
-		else if ( m_bMouseDragged[MOUSE_LEFT] && !IsBoxSelecting() )
+		else if(m_bMouseDragged[MOUSE_LEFT] && !IsBoxSelecting())
 		{
 			//
 			// Left dragging, didn't click on a handle, and we aren't yet dragging a
 			// selection box. Start dragging the selection box.
 			//
-			if (!(nFlags & MK_CONTROL))
+			if(!(nFlags & MK_CONTROL))
 			{
 				SelectHandle(NULL, scClear);
 			}
 
 			Vector ptOrg;
-			pView->ClientToWorld(ptOrg, m_vMouseStart[MOUSE_LEFT] );
+			pView->ClientToWorld(ptOrg, m_vMouseStart[MOUSE_LEFT]);
 
 			// set best third axis value
 			ptOrg[pView->axThird] = COORD_NOTINIT;
 			m_pDocument->GetBestVisiblePoint(ptOrg);
-			StartBoxSelection( pView, m_vMouseStart[MOUSE_LEFT], ptOrg);
+			StartBoxSelection(pView, m_vMouseStart[MOUSE_LEFT], ptOrg);
 		}
 	}
-	else if (!IsEmpty())
+	else if(!IsEmpty())
 	{
 		//
 		// Left button is not down, just see what's under the cursor
@@ -1766,16 +1731,16 @@ bool Morph3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoi
 		// Check to see if the mouse is over a vertex handle.
 		//
 
-		if (!IsBoxSelecting() && MorphHitTest( pView, vPoint, NULL))
+		if(!IsBoxSelecting() && MorphHitTest(pView, vPoint, NULL))
 		{
 			hCursor = vgui::dc_crosshair;
 		}
 		//
 		// Check to see if the mouse is over a box handle.
 		//
-		else if ( HitTest(pView, vPoint, true) )
+		else if(HitTest(pView, vPoint, true))
 		{
-			hCursor = UpdateCursor( pView, m_LastHitTestHandle, m_TranslateMode );
+			hCursor = UpdateCursor(pView, m_LastHitTestHandle, m_TranslateMode);
 		}
 	}
 	else
@@ -1783,12 +1748,11 @@ bool Morph3D::OnMouseMove2D(CMapView2D *pView, UINT nFlags, const Vector2D &vPoi
 		hCursor = vgui::dc_arrow;
 	}
 
-	if ( hCursor != vgui::dc_none  )
-		pView->SetCursor( hCursor );
+	if(hCursor != vgui::dc_none)
+		pView->SetCursor(hCursor);
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles left mouse button down events in the 3D view.
@@ -1805,25 +1769,25 @@ bool Morph3D::OnLMouseDown3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPo
 	// Select morph handles?
 	//
 	MORPHHANDLE mh;
-	if ( MorphHitTest(pView, vPoint, &mh) )
+	if(MorphHitTest(pView, vPoint, &mh))
 	{
 		m_bHit = true;
 		m_DragHandle = mh;
 		m_bMorphing = true;
 		m_vLastMouseMovement = vPoint;
-		m_bMovingSelected = false;	// not moving them yet - might just select this
-		StartTranslation( pView, vPoint, &m_DragHandle );
+		m_bMovingSelected = false; // not moving them yet - might just select this
+		StartTranslation(pView, vPoint, &m_DragHandle);
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_CROSS));
 	}
 	else
 	{
-		SelectAt( pView, nFlags, vPoint );
+		SelectAt(pView, nFlags, vPoint);
 	}
 
 	return true;
 }
 
-bool Morph3D::SelectAt( CMapView *pView, UINT nFlags, const Vector2D &vPoint )
+bool Morph3D::SelectAt(CMapView *pView, UINT nFlags, const Vector2D &vPoint)
 {
 	CMapClass *pMorphObject = NULL;
 	bool bUpdateView = false;
@@ -1833,15 +1797,15 @@ bool Morph3D::SelectAt( CMapView *pView, UINT nFlags, const Vector2D &vPoint )
 	// Find out how many (and what) map objects are under the point clicked on.
 
 	HitInfo_t Objects[MAX_PICK_HITS];
-	int nHits = pView->ObjectsAt( vPoint, Objects, sizeof(Objects) / sizeof(Objects[0]));
+	int nHits = pView->ObjectsAt(vPoint, Objects, sizeof(Objects) / sizeof(Objects[0]));
 
 	// We now have an array of pointers to CMapAtoms. Any that can be upcast to CMapClass
 	// we add to a list of hits.
 
-	for (int i = 0; i < nHits; i++)
+	for(int i = 0; i < nHits; i++)
 	{
-		CMapClass *pMapClass = dynamic_cast <CMapClass *>(Objects[i].pObject);
-		if (pMapClass != NULL)
+		CMapClass *pMapClass = dynamic_cast<CMapClass *>(Objects[i].pObject);
+		if(pMapClass != NULL)
 		{
 			SelectList.AddToTail(pMapClass);
 		}
@@ -1850,13 +1814,13 @@ bool Morph3D::SelectAt( CMapView *pView, UINT nFlags, const Vector2D &vPoint )
 	//
 	// Actual selection occurs here.
 	//
-	if (!SelectList.Count())
+	if(!SelectList.Count())
 	{
 		//
 		// Clicked on nothing - clear selection.
 		//
 		pView->GetMapDoc()->SelectFace(NULL, 0, scClear);
-		pView->GetMapDoc()->SelectObject(NULL, scClear );
+		pView->GetMapDoc()->SelectObject(NULL, scClear);
 		return false;
 	}
 
@@ -1864,27 +1828,27 @@ bool Morph3D::SelectAt( CMapView *pView, UINT nFlags, const Vector2D &vPoint )
 	SelectMode_t eSelectMode = m_pDocument->GetSelection()->GetMode();
 
 	// Can we de-select objects?
-	if ( !CanDeselectList() )
+	if(!CanDeselectList())
 		return true;
 
-	FOR_EACH_OBJ( SelectList, pos )
+	FOR_EACH_OBJ(SelectList, pos)
 	{
 		CMapClass *pObject = SelectList.Element(pos);
 
 		// get hit object type and add it to the hit list
-		CMapClass *pHitObject = pObject->PrepareSelection( eSelectMode );
-		if (pHitObject)
+		CMapClass *pHitObject = pObject->PrepareSelection(eSelectMode);
+		if(pHitObject)
 		{
-			m_pDocument->GetSelection()->AddHit( pHitObject );
+			m_pDocument->GetSelection()->AddHit(pHitObject);
 
-			if (bFirst)
+			if(bFirst)
 			{
-				if (pObject->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
+				if(pObject->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
 				{
 					CMapSolid *pSolid = (CMapSolid *)pObject;
 
 					UINT cmd = scClear | scSelect;
-					if (nFlags & MK_CONTROL)
+					if(nFlags & MK_CONTROL)
 					{
 						cmd = scToggle;
 					}
@@ -1900,21 +1864,20 @@ bool Morph3D::SelectAt( CMapView *pView, UINT nFlags, const Vector2D &vPoint )
 	}
 
 	// do we want to deselect all morphs?
-	if (!pMorphObject && !IsEmpty())
+	if(!pMorphObject && !IsEmpty())
 	{
 		SetEmpty();
 		bUpdateView = true;
 	}
 
-	if (bUpdateView)
+	if(bUpdateView)
 	{
 		GetMainWnd()->pObjectProperties->MarkDataDirty();
-		m_pDocument->UpdateAllViews( MAPVIEW_UPDATE_SELECTION );
+		m_pDocument->UpdateAllViews(MAPVIEW_UPDATE_SELECTION);
 	}
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles left mouse button up events in the 3D view.
@@ -1925,11 +1888,11 @@ bool Morph3D::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoin
 {
 	Tool3D::OnLMouseUp3D(pView, nFlags, vPoint);
 
-	if (m_bHit)
+	if(m_bHit)
 	{
 		m_bHit = false;
 		UINT cmd = scClear | scSelect;
-		if (nFlags & MK_CONTROL)
+		if(nFlags & MK_CONTROL)
 		{
 			cmd = scToggle;
 		}
@@ -1937,9 +1900,9 @@ bool Morph3D::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoin
 		SelectHandle(&m_DragHandle, cmd);
 	}
 
-	if (m_bMorphing)
+	if(m_bMorphing)
 	{
-		FinishTranslation( true );
+		FinishTranslation(true);
 		m_bMorphing = false;
 	}
 
@@ -1952,14 +1915,14 @@ bool Morph3D::OnLMouseUp3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoin
 // Purpose: Snap the selected handles to the grid
 // Input  :
 //-----------------------------------------------------------------------------
-void Morph3D::SnapSelectedToGrid( int nGridSpacing )
+void Morph3D::SnapSelectedToGrid(int nGridSpacing)
 {
 	CUtlVector<MORPHHANDLE> vecHandles;
 
-	if ( GetSelectedHandleCount() != 0 )
+	if(GetSelectedHandleCount() != 0)
 	{
 		// Remember selected verts
-		vecHandles.AddVectorToTail( m_SelectedHandles );
+		vecHandles.AddVectorToTail(m_SelectedHandles);
 	}
 	else
 	{
@@ -1967,10 +1930,10 @@ void Morph3D::SnapSelectedToGrid( int nGridSpacing )
 		return;
 	}
 
-	FOR_EACH_VEC( vecHandles, i )
+	FOR_EACH_VEC(vecHandles, i)
 	{
 		// Set as sole-selection
-		SelectHandle( &vecHandles[i], scSelect | scClear );
+		SelectHandle(&vecHandles[i], scSelect | scClear);
 
 		// Get current position
 		Vector vCurPos;
@@ -1979,28 +1942,27 @@ void Morph3D::SnapSelectedToGrid( int nGridSpacing )
 		vCurPos = hi.pos;
 
 		// Get snapped position
-		Vector vSnappedPos( V_rint(vCurPos[0] / nGridSpacing) * nGridSpacing,
-							V_rint(vCurPos[1] / nGridSpacing) * nGridSpacing,
-							V_rint(vCurPos[2] / nGridSpacing) * nGridSpacing );
+		Vector vSnappedPos(V_rint(vCurPos[0] / nGridSpacing) * nGridSpacing,
+						   V_rint(vCurPos[1] / nGridSpacing) * nGridSpacing,
+						   V_rint(vCurPos[2] / nGridSpacing) * nGridSpacing);
 
 		// Get delta to move original position into snapped position
 		Vector vDelta = vSnappedPos - vCurPos;
 
 		// Move!
-		MoveSelectedHandles( vDelta );
+		MoveSelectedHandles(vDelta);
 	}
 
 	// Re-select all the handles
-	SelectHandle( NULL, scClear );
-	FOR_EACH_VEC( vecHandles, i )
+	SelectHandle(NULL, scClear);
+	FOR_EACH_VEC(vecHandles, i)
 	{
-		SelectHandle( &vecHandles[i], scSelect );
+		SelectHandle(&vecHandles[i], scSelect);
 	}
 
-	FinishTranslation( true );
+	FinishTranslation(true);
 	m_pDocument->SetModifiedFlag();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -2010,34 +1972,34 @@ void Morph3D::SnapSelectedToGrid( int nGridSpacing )
 //-----------------------------------------------------------------------------
 bool Morph3D::NudgeHandles(CMapView *pView, UINT nChar, bool bSnap)
 {
-	if ( GetSelectedHandleCount() < 1 || !Options.view2d.bNudge )
+	if(GetSelectedHandleCount() < 1 || !Options.view2d.bNudge)
 		return false;
 
 	Vector vecDelta, vHorz, vVert, vThrd;
-	pView->GetBestTransformPlane( vHorz, vVert, vThrd );
-	m_pDocument->GetNudgeVector( vHorz, vVert,  nChar, bSnap, vecDelta);
+	pView->GetBestTransformPlane(vHorz, vVert, vThrd);
+	m_pDocument->GetNudgeVector(vHorz, vVert, nChar, bSnap, vecDelta);
 
-	if ( bSnap && (GetSelectedHandleCount() == 1) && (GetSelectedType() == shtVertex))
+	if(bSnap && (GetSelectedHandleCount() == 1) && (GetSelectedType() == shtVertex))
 	{
 		// we have one vertex selected, so make sure
 		// it's going to snap to grid.
-		Vector pos;	GetSelectedCenter(pos);
+		Vector pos;
+		GetSelectedCenter(pos);
 
-		SetTransformationPlane( pos, vHorz, vVert, vThrd );
+		SetTransformationPlane(pos, vHorz, vVert, vThrd);
 
 		// calculate new delta
-		ProjectOnTranslationPlane( pos + vecDelta, vecDelta, constrainSnap );
+		ProjectOnTranslationPlane(pos + vecDelta, vecDelta, constrainSnap);
 		vecDelta -= pos;
 	}
 
 	MoveSelectedHandles(vecDelta);
-	FinishTranslation( true );	// force checking for merges
+	FinishTranslation(true); // force checking for merges
 
 	m_pDocument->SetModifiedFlag();
 
 	return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the key down event in the 3D view.
@@ -2048,7 +2010,7 @@ bool Morph3D::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFla
 {
 	bool bSnap = m_pDocument->IsSnapEnabled() && !(GetAsyncKeyState(VK_CONTROL) & 0x8000);
 
-	switch (nChar)
+	switch(nChar)
 	{
 		case VK_ESCAPE:
 		{
@@ -2056,19 +2018,18 @@ bool Morph3D::OnKeyDown3D(CMapView3D *pView, UINT nChar, UINT nRepCnt, UINT nFla
 			return true;
 		}
 
-		case VK_UP :
-		case VK_DOWN :
-		case VK_LEFT :
-		case VK_RIGHT :
-			{
-				if ( NudgeHandles( pView, nChar, bSnap ) )
-					return true;
-			}
+		case VK_UP:
+		case VK_DOWN:
+		case VK_LEFT:
+		case VK_RIGHT:
+		{
+			if(NudgeHandles(pView, nChar, bSnap))
+				return true;
+		}
 	}
 
 	return false;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles the escape key in the 2D or 3D views.
@@ -2078,14 +2039,14 @@ void Morph3D::OnEscape(void)
 	//
 	// If we're box selecting with the morph tool, stop.
 	//
-	if ( IsBoxSelecting() )
+	if(IsBoxSelecting())
 	{
 		EndBoxSelection();
 	}
 	//
 	// If we have handle(s) selected, deselect them.
 	//
-	else if (!IsEmpty() && (GetSelectedHandleCount() != 0))
+	else if(!IsEmpty() && (GetSelectedHandleCount() != 0))
 	{
 		SelectHandle(NULL, scClear);
 	}
@@ -2098,7 +2059,6 @@ void Morph3D::OnEscape(void)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Handles the move move event in the 3D view.
 // Input  : Per CWnd::OnMouseMove.
@@ -2108,27 +2068,27 @@ bool Morph3D::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoi
 {
 	Tool3D::OnMouseMove3D(pView, nFlags, vPoint);
 
-	if (m_bMorphing)
+	if(m_bMorphing)
 	{
 		//
 		// Check distance moved since left button down and don't start
 		// moving unless it's greater than the threshold.
 		//
-		if (!m_bMovingSelected)
+		if(!m_bMovingSelected)
 		{
 			Vector2D sizeMoved = vPoint - m_vLastMouseMovement;
-			if ((abs(sizeMoved.x) > 3) || (abs(sizeMoved.y) > 3))
+			if((abs(sizeMoved.x) > 3) || (abs(sizeMoved.y) > 3))
 			{
 				m_bMovingSelected = true;
 
-				if (m_bHit)
+				if(m_bHit)
 				{
 					m_bHit = false;
 					SSHANDLEINFO hi;
 					m_DragHandle.pStrucSolid->GetHandleInfo(&hi, m_DragHandle.ssh);
 					unsigned uSelFlags = scSelect;
 
-					if (!(nFlags & MK_CONTROL) && !hi.p2DHandle->m_bSelected)
+					if(!(nFlags & MK_CONTROL) && !hi.p2DHandle->m_bSelected)
 					{
 						uSelFlags |= scClear;
 					}
@@ -2142,13 +2102,13 @@ bool Morph3D::OnMouseMove3D(CMapView3D *pView, UINT nFlags, const Vector2D &vPoi
 			}
 		}
 
-		unsigned int uConstraints = GetConstraints( nFlags );
+		unsigned int uConstraints = GetConstraints(nFlags);
 
-		Tool3D::UpdateTranslation( pView, vPoint, uConstraints );
+		Tool3D::UpdateTranslation(pView, vPoint, uConstraints);
 
 		m_vLastMouseMovement = vPoint;
 	}
-	else if ( MorphHitTest(pView, vPoint, NULL ))
+	else if(MorphHitTest(pView, vPoint, NULL))
 	{
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_CROSS));
 	}

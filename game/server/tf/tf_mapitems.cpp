@@ -12,7 +12,6 @@
 #include "tf_timer.h"
 #include "tf_team.h"
 
-
 #if 0
 
 bool ActivateDoResults(CTFGoal *Goal, CTFPlayer *AP, CTFGoal *ActivatingGoal);
@@ -1552,12 +1551,12 @@ void DoGroupWork(CTFGoal *Goal, CTFPlayer *AP)
 				if (pGoal)
 					DoResults(pGoal, AP, (Goal->goal_result & TFGR_ADD_BONUSES));
 			}
-		#ifdef MAP_DEBUG
+#ifdef MAP_DEBUG
 			else
 			{
 				Warning("Not all Active.\n");
 			}
-		#endif
+#endif
 		}
 	}
 
@@ -2333,10 +2332,10 @@ void CTFGoal::tfgoal_timer_tick()
 	// Check criteria
 	if (goal_state != TFGS_REMOVED)
 	{
-	#ifdef MAP_DEBUG
+#ifdef MAP_DEBUG
 		Warning("==========================\n");
 		Warning("Timer Tick for: %s\nChecking Criteria...", GetEntityName().ToCStr());
-	#endif
+#endif
 
 		// Timers don't fire during prematch.
 		// Instead, they setup to fire the correct amount of time past the prematch

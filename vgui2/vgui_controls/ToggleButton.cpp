@@ -16,12 +16,12 @@
 
 using namespace vgui;
 
-DECLARE_BUILD_FACTORY_DEFAULT_TEXT( ToggleButton, ToggleButton );
+DECLARE_BUILD_FACTORY_DEFAULT_TEXT(ToggleButton, ToggleButton);
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-ToggleButton::ToggleButton(Panel *parent, const char *panelName, const char* text) : Button(parent, panelName, text)
+ToggleButton::ToggleButton(Panel *parent, const char *panelName, const char *text) : Button(parent, panelName, text)
 {
 	SetButtonActivationType(ACTIVATE_ONPRESSED);
 }
@@ -39,7 +39,7 @@ void ToggleButton::OnMouseDoublePressed(MouseCode code)
 //-----------------------------------------------------------------------------
 Color ToggleButton::GetButtonFgColor()
 {
-	if (IsSelected())
+	if(IsSelected())
 	{
 		// highlight the text when depressed
 		return _selectedColor;
@@ -63,11 +63,11 @@ bool ToggleButton::CanBeDefaultButton(void)
 //-----------------------------------------------------------------------------
 void ToggleButton::DoClick()
 {
-	if (IsSelected())
+	if(IsSelected())
 	{
 		ForceDepressed(false);
 	}
-	else if (!IsSelected())
+	else if(!IsSelected())
 	{
 		ForceDepressed(true);
 	}
@@ -94,7 +94,7 @@ void ToggleButton::ApplySchemeSettings(IScheme *pScheme)
 
 void ToggleButton::OnKeyCodePressed(KeyCode code)
 {
-	if (code != KEY_ENTER)
+	if(code != KEY_ENTER)
 	{
 		BaseClass::OnKeyCodePressed(code);
 	}

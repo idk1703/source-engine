@@ -37,68 +37,69 @@
 #include "tf_hud_passtime.h"
 #include "c_tf_passtime_logic.h"
 
-void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
+void AddSubKeyNamed(KeyValues *pKeys, const char *pszName);
 
-ConVar tf_hud_show_servertimelimit( "tf_hud_show_servertimelimit", "0", FCVAR_ARCHIVE, "Display time left before the current map ends." );
+ConVar tf_hud_show_servertimelimit("tf_hud_show_servertimelimit", "0", FCVAR_ARCHIVE,
+								   "Display time left before the current map ends.");
 
 extern ConVar tf_arena_round_time;
 
 using namespace vgui;
 
-DECLARE_HUDELEMENT( CTFHudObjectiveStatus );
+DECLARE_HUDELEMENT(CTFHudObjectiveStatus);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFHudObjectiveStatus::CTFHudObjectiveStatus( const char *pElementName )
-	: CHudElement( pElementName )
-	, BaseClass( NULL, "HudObjectiveStatus" )
-	, m_pFlagPanel( NULL )
-	, m_pControlPointIconsPanel( NULL )
-	, m_pControlPointProgressBar( NULL )
-	, m_pEscortPanel( NULL )
-	, m_pMultipleEscortPanel( NULL )
-	, m_pTrainingPanel( NULL )
-	, m_pRobotDestructionPanel( NULL )
+CTFHudObjectiveStatus::CTFHudObjectiveStatus(const char *pElementName)
+	: CHudElement(pElementName),
+	  BaseClass(NULL, "HudObjectiveStatus"),
+	  m_pFlagPanel(NULL),
+	  m_pControlPointIconsPanel(NULL),
+	  m_pControlPointProgressBar(NULL),
+	  m_pEscortPanel(NULL),
+	  m_pMultipleEscortPanel(NULL),
+	  m_pTrainingPanel(NULL),
+	  m_pRobotDestructionPanel(NULL)
 {
 	Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
-	m_pFlagPanel = new CTFHudFlagObjectives( this, "ObjectiveStatusFlagPanel" );
+	m_pFlagPanel = new CTFHudFlagObjectives(this, "ObjectiveStatusFlagPanel");
 	m_pControlPointIconsPanel = NULL;
-	m_pControlPointProgressBar = new CControlPointProgressBar( this );
-	m_pEscortPanel = new CTFHudEscort( this, "ObjectiveStatusEscort" );
-	m_pMultipleEscortPanel = new CTFHudMultipleEscort( this, "ObjectiveStatusMultipleEscort" );
-	m_pTrainingPanel = new CTFHudTraining(this, "ObjectiveStatusTraining" );
-	m_pRobotDestructionPanel = new CTFHUDRobotDestruction( this, "ObjectiveStatusRobotDestruction" );
-	m_pHudPasstime = new CTFHudPasstime( this );
+	m_pControlPointProgressBar = new CControlPointProgressBar(this);
+	m_pEscortPanel = new CTFHudEscort(this, "ObjectiveStatusEscort");
+	m_pMultipleEscortPanel = new CTFHudMultipleEscort(this, "ObjectiveStatusMultipleEscort");
+	m_pTrainingPanel = new CTFHudTraining(this, "ObjectiveStatusTraining");
+	m_pRobotDestructionPanel = new CTFHUDRobotDestruction(this, "ObjectiveStatusRobotDestruction");
+	m_pHudPasstime = new CTFHudPasstime(this);
 
-	SetHiddenBits( 0 );
+	SetHiddenBits(0);
 
-	RegisterForRenderGroup( "mid" );
-	RegisterForRenderGroup( "commentary" );
+	RegisterForRenderGroup("mid");
+	RegisterForRenderGroup("commentary");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHudObjectiveStatus::ApplySchemeSettings( IScheme *pScheme )
+void CTFHudObjectiveStatus::ApplySchemeSettings(IScheme *pScheme)
 {
 	// load control settings...
-	LoadControlSettings( "resource/UI/HudObjectiveStatus.res" );
+	LoadControlSettings("resource/UI/HudObjectiveStatus.res");
 
-	if ( !m_pControlPointIconsPanel )
+	if(!m_pControlPointIconsPanel)
 	{
-		m_pControlPointIconsPanel = GET_HUDELEMENT( CHudControlPointIcons );
-		m_pControlPointIconsPanel->SetParent( this );
+		m_pControlPointIconsPanel = GET_HUDELEMENT(CHudControlPointIcons);
+		m_pControlPointIconsPanel->SetParent(this);
 	}
 
-	if ( m_pControlPointProgressBar )
+	if(m_pControlPointProgressBar)
 	{
-		m_pControlPointProgressBar->InvalidateLayout( true, true );
+		m_pControlPointProgressBar->InvalidateLayout(true, true);
 	}
 
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 }
 
 //-----------------------------------------------------------------------------
@@ -106,32 +107,32 @@ void CTFHudObjectiveStatus::ApplySchemeSettings( IScheme *pScheme )
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::Reset()
 {
-	if ( m_pFlagPanel )
+	if(m_pFlagPanel)
 	{
 		m_pFlagPanel->Reset();
 	}
 
-	if ( m_pEscortPanel )
+	if(m_pEscortPanel)
 	{
 		m_pEscortPanel->Reset();
 	}
 
-	if ( m_pMultipleEscortPanel )
+	if(m_pMultipleEscortPanel)
 	{
 		m_pMultipleEscortPanel->Reset();
 	}
 
-	if ( m_pControlPointProgressBar )
+	if(m_pControlPointProgressBar)
 	{
 		m_pControlPointProgressBar->Reset();
 	}
 
-	if ( m_pRobotDestructionPanel )
+	if(m_pRobotDestructionPanel)
 	{
 		m_pRobotDestructionPanel->Reset();
 	}
 
-	if ( m_pHudPasstime )
+	if(m_pHudPasstime)
 	{
 		m_pHudPasstime->Reset();
 	}
@@ -140,7 +141,7 @@ void CTFHudObjectiveStatus::Reset()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CControlPointProgressBar *CTFHudObjectiveStatus::GetControlPointProgressBar( void )
+CControlPointProgressBar *CTFHudObjectiveStatus::GetControlPointProgressBar(void)
 {
 	return m_pControlPointProgressBar;
 }
@@ -152,23 +153,23 @@ CControlPointProgressBar *CTFHudObjectiveStatus::GetControlPointProgressBar( voi
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHudObjectiveStatus::SetTrainingText( char *text )
+void CTFHudObjectiveStatus::SetTrainingText(char *text)
 {
-	if ( NULL == m_pTrainingPanel )
-  		return;
+	if(NULL == m_pTrainingPanel)
+		return;
 
-	m_pTrainingPanel->SetTrainingText( text );
+	m_pTrainingPanel->SetTrainingText(text);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHudObjectiveStatus::SetTrainingObjective( char *text )
+void CTFHudObjectiveStatus::SetTrainingObjective(char *text)
 {
-	if ( NULL == m_pTrainingPanel )
+	if(NULL == m_pTrainingPanel)
 		return;
 
-	m_pTrainingPanel->SetTrainingObjective( text );
+	m_pTrainingPanel->SetTrainingObjective(text);
 }
 //=============================================================================
 // HPE_END
@@ -177,9 +178,9 @@ void CTFHudObjectiveStatus::SetTrainingObjective( char *text )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFHudObjectiveStatus::SetVisiblePanels( void )
+void CTFHudObjectiveStatus::SetVisiblePanels(void)
 {
-	if ( !TFGameRules() )
+	if(!TFGameRules())
 		return;
 
 	//=============================================================================
@@ -190,115 +191,131 @@ void CTFHudObjectiveStatus::SetVisiblePanels( void )
 	int iHudType = TFGameRules()->GetHUDType();
 
 	bool bIsPlayingRobotDestruction = TFGameRules()->IsPlayingRobotDestructionMode();
-	if ( m_pRobotDestructionPanel && m_pRobotDestructionPanel->IsVisible() != bIsPlayingRobotDestruction )
+	if(m_pRobotDestructionPanel && m_pRobotDestructionPanel->IsVisible() != bIsPlayingRobotDestruction)
 	{
-		m_pRobotDestructionPanel->SetVisible( bIsPlayingRobotDestruction );
+		m_pRobotDestructionPanel->SetVisible(bIsPlayingRobotDestruction);
 	}
 
 	bool bCTFVisible = TFGameRules()->IsPlayingHybrid_CTF_CP();
-	if ( !bCTFVisible )
+	if(!bCTFVisible)
 	{
-		bCTFVisible = ( iGameType == TF_GAMETYPE_CTF || iHudType == TF_HUDTYPE_CTF ) && ( iHudType != TF_HUDTYPE_CP ) && ( iHudType != TF_HUDTYPE_ESCORT );
+		bCTFVisible = (iGameType == TF_GAMETYPE_CTF || iHudType == TF_HUDTYPE_CTF) && (iHudType != TF_HUDTYPE_CP) &&
+					  (iHudType != TF_HUDTYPE_ESCORT);
 	}
 
-	if ( TFGameRules()->IsMannVsMachineMode() )
+	if(TFGameRules()->IsMannVsMachineMode())
 	{
-		bCTFVisible = ( ( TFGameRules()->State_Get() != GR_STATE_BETWEEN_RNDS )
-					 && ( TFGameRules()->State_Get() != GR_STATE_TEAM_WIN )
-					 && ( TFGameRules()->State_Get() != GR_STATE_GAME_OVER ) );
+		bCTFVisible =
+			((TFGameRules()->State_Get() != GR_STATE_BETWEEN_RNDS) &&
+			 (TFGameRules()->State_Get() != GR_STATE_TEAM_WIN) && (TFGameRules()->State_Get() != GR_STATE_GAME_OVER));
 	}
 
-	//First check to see if we have an override HUD for the training simulation.
-	//If we do, ignore any other game play hud displays.
-	if ( iHudType == TF_HUDTYPE_TRAINING )
+	// First check to see if we have an override HUD for the training simulation.
+	// If we do, ignore any other game play hud displays.
+	if(iHudType == TF_HUDTYPE_TRAINING)
 	{
 		m_pTrainingPanel->SetVisible(true);
-		if ( m_pFlagPanel )
+		if(m_pFlagPanel)
 		{
-			m_pFlagPanel->SetVisible( false );
+			m_pFlagPanel->SetVisible(false);
 		}
 
-		if ( m_pControlPointIconsPanel )
+		if(m_pControlPointIconsPanel)
 		{
-			m_pControlPointIconsPanel->SetVisible( false );
+			m_pControlPointIconsPanel->SetVisible(false);
 		}
 
-		if ( m_pEscortPanel )
+		if(m_pEscortPanel)
 		{
-			m_pEscortPanel->SetVisible( false );
+			m_pEscortPanel->SetVisible(false);
 		}
 
-		if ( m_pMultipleEscortPanel )
+		if(m_pMultipleEscortPanel)
 		{
-			m_pMultipleEscortPanel->SetVisible( false );
+			m_pMultipleEscortPanel->SetVisible(false);
 		}
 
-		if ( m_pHudPasstime )
+		if(m_pHudPasstime)
 		{
-			m_pHudPasstime->SetVisible( false );
-			m_pHudPasstime->SetEnabled( false );
+			m_pHudPasstime->SetVisible(false);
+			m_pHudPasstime->SetEnabled(false);
 		}
 
 		return;
 	}
 
-	m_pTrainingPanel->SetVisible( TFGameRules()->IsTrainingHUDVisible() );
+	m_pTrainingPanel->SetVisible(TFGameRules()->IsTrainingHUDVisible());
 
-	if ( m_pFlagPanel && m_pFlagPanel->IsVisible() != bCTFVisible )
+	if(m_pFlagPanel && m_pFlagPanel->IsVisible() != bCTFVisible)
 	{
-		m_pFlagPanel->SetVisible( bCTFVisible );
+		m_pFlagPanel->SetVisible(bCTFVisible);
 	}
 
 	bool bCPVisible = TFGameRules()->IsPlayingHybrid_CTF_CP();
-	if ( !bCPVisible )
+	if(!bCPVisible)
 	{
-		bCPVisible = ( iGameType == TF_GAMETYPE_CP || iGameType == TF_GAMETYPE_ARENA || iHudType == TF_HUDTYPE_CP || iGameType == TF_GAMETYPE_MVM ) && ( iHudType != TF_HUDTYPE_CTF ) && ( iHudType != TF_HUDTYPE_ESCORT ) && !TFGameRules()->IsPlayingHybrid_CTF_CP();
+		bCPVisible = (iGameType == TF_GAMETYPE_CP || iGameType == TF_GAMETYPE_ARENA || iHudType == TF_HUDTYPE_CP ||
+					  iGameType == TF_GAMETYPE_MVM) &&
+					 (iHudType != TF_HUDTYPE_CTF) && (iHudType != TF_HUDTYPE_ESCORT) &&
+					 !TFGameRules()->IsPlayingHybrid_CTF_CP();
 	}
 
-	if ( m_pControlPointIconsPanel && m_pControlPointIconsPanel->IsVisible() != bCPVisible )
+	if(m_pControlPointIconsPanel && m_pControlPointIconsPanel->IsVisible() != bCPVisible)
 	{
-		m_pControlPointIconsPanel->SetVisible( bCPVisible );
+		m_pControlPointIconsPanel->SetVisible(bCPVisible);
 	}
 
-	bool bEscortVisible = ( iGameType == TF_GAMETYPE_ESCORT || iHudType == TF_HUDTYPE_ESCORT ) && ( iHudType != TF_HUDTYPE_CTF ) && ( iHudType != TF_HUDTYPE_CP ) && !TFGameRules()->IsPlayingHybrid_CTF_CP();
-	if ( bEscortVisible )
+	bool bEscortVisible = (iGameType == TF_GAMETYPE_ESCORT || iHudType == TF_HUDTYPE_ESCORT) &&
+						  (iHudType != TF_HUDTYPE_CTF) && (iHudType != TF_HUDTYPE_CP) &&
+						  !TFGameRules()->IsPlayingHybrid_CTF_CP();
+	if(bEscortVisible)
 	{
 		bool bMultipleTrains = TFGameRules()->HasMultipleTrains();
 
-		if ( m_pEscortPanel && m_pEscortPanel->EditablePanel::IsVisible() != !bMultipleTrains ) // intentionally skipping EscortPanel version of IsVisible() to bypass the !m_bHaveValidPointPositions check
+		if(m_pEscortPanel && m_pEscortPanel->EditablePanel::IsVisible() !=
+								 !bMultipleTrains) // intentionally skipping EscortPanel version of IsVisible() to
+												   // bypass the !m_bHaveValidPointPositions check
 		{
-			m_pEscortPanel->SetVisible( !bMultipleTrains );
+			m_pEscortPanel->SetVisible(!bMultipleTrains);
 		}
 
 		// Hide the panel while players are fighting in Helltower's hell
-		if ( TFGameRules()->IsHalloweenScenario( CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER ) && ( TFGameRules()->ArePlayersInHell() == true ) )
+		if(TFGameRules()->IsHalloweenScenario(CTFGameRules::HALLOWEEN_SCENARIO_HIGHTOWER) &&
+		   (TFGameRules()->ArePlayersInHell() == true))
 		{
 			bMultipleTrains = false;
 		}
 
-		if ( m_pMultipleEscortPanel && m_pMultipleEscortPanel->EditablePanel::IsVisible() != bMultipleTrains ) // intentionally skipping EscortPanel version of IsVisible() to bypass the !m_bHaveValidPointPositions check
+		if(m_pMultipleEscortPanel && m_pMultipleEscortPanel->EditablePanel::IsVisible() !=
+										 bMultipleTrains) // intentionally skipping EscortPanel version of IsVisible()
+														  // to bypass the !m_bHaveValidPointPositions check
 		{
-			m_pMultipleEscortPanel->SetVisible( bMultipleTrains );
+			m_pMultipleEscortPanel->SetVisible(bMultipleTrains);
 		}
 	}
 	else
 	{
-		if ( m_pEscortPanel && m_pEscortPanel->EditablePanel::IsVisible() ) // intentionally skipping EscortPanel version of IsVisible() to bypass the !m_bHaveValidPointPositions check
+		if(m_pEscortPanel &&
+		   m_pEscortPanel->EditablePanel::IsVisible()) // intentionally skipping EscortPanel version of IsVisible() to
+													   // bypass the !m_bHaveValidPointPositions check
 		{
-			m_pEscortPanel->SetVisible( false );
+			m_pEscortPanel->SetVisible(false);
 		}
 
-		if ( m_pMultipleEscortPanel && m_pMultipleEscortPanel->EditablePanel::IsVisible() ) // intentionally skipping EscortPanel version of IsVisible() to bypass the !m_bHaveValidPointPositions check
+		if(m_pMultipleEscortPanel &&
+		   m_pMultipleEscortPanel
+			   ->EditablePanel::IsVisible()) // intentionally skipping EscortPanel version of IsVisible() to bypass the
+											 // !m_bHaveValidPointPositions check
 		{
-			m_pMultipleEscortPanel->SetVisible( false );
+			m_pMultipleEscortPanel->SetVisible(false);
 		}
 	}
 
-	if ( m_pHudPasstime )
+	if(m_pHudPasstime)
 	{
 		bool bIsPasstime = iGameType == TF_GAMETYPE_PASSTIME;
-		m_pHudPasstime->SetVisible( bIsPasstime );
-		m_pHudPasstime->SetEnabled( bIsPasstime );
+		m_pHudPasstime->SetVisible(bIsPasstime);
+		m_pHudPasstime->SetEnabled(bIsPasstime);
 	}
 
 	//=============================================================================
@@ -311,12 +328,11 @@ void CTFHudObjectiveStatus::SetVisiblePanels( void )
 //-----------------------------------------------------------------------------
 void CTFHudObjectiveStatus::Think()
 {
-	if ( !TeamplayRoundBasedRules() || !TFGameRules() )
+	if(!TeamplayRoundBasedRules() || !TFGameRules())
 		return;
 
 	SetVisiblePanels();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -324,12 +340,12 @@ void CTFHudObjectiveStatus::Think()
 bool CTFHudObjectiveStatus::ShouldDraw()
 {
 	C_TFPlayer *pPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pPlayer && pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
+	if(pPlayer && pPlayer->m_Shared.InCond(TF_COND_HALLOWEEN_KART))
 	{
 		return false;
 	}
 
-	if ( TFGameRules() && TFGameRules()->ShowMatchSummary() )
+	if(TFGameRules() && TFGameRules()->ShowMatchSummary())
 		return false;
 
 	return CHudElement::ShouldDraw();

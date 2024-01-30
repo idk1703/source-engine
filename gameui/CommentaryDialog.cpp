@@ -25,7 +25,7 @@ using namespace vgui;
 CCommentaryDialog::CCommentaryDialog(vgui::Panel *parent) : BaseClass(parent, "CommentaryDialog")
 {
 	SetDeleteSelfOnClose(true);
-	SetSizeable( false );
+	SetSizeable(false);
 
 	input()->SetAppModalSurface(GetVPanel());
 	vgui::surface()->RestrictPaintToSinglePanel(GetVPanel());
@@ -38,38 +38,36 @@ CCommentaryDialog::CCommentaryDialog(vgui::Panel *parent) : BaseClass(parent, "C
 	MoveToCenterOfScreen();
 
 	bool bCommentaryOn = false;
-	ConVarRef commentary( "commentary" );
-	if ( commentary.IsValid() )
+	ConVarRef commentary("commentary");
+	if(commentary.IsValid())
 	{
 		bCommentaryOn = commentary.GetBool();
 	}
 
 	// Setup the buttons & labels to reflect the current state of the commentary
-	if ( bCommentaryOn )
+	if(bCommentaryOn)
 	{
-		SetControlString( "ModeLabel", "#GAMEUI_Commentary_LabelOn" );
-		SetControlString( "TurnOnButton", "#GAMEUI_Commentary_LeaveOn" );
-		SetControlString( "TurnOffButton", "#GAMEUI_Commentary_TurnOff" );
+		SetControlString("ModeLabel", "#GAMEUI_Commentary_LabelOn");
+		SetControlString("TurnOnButton", "#GAMEUI_Commentary_LeaveOn");
+		SetControlString("TurnOffButton", "#GAMEUI_Commentary_TurnOff");
 	}
 	else
 	{
-		SetControlString( "ModeLabel", "#GAMEUI_Commentary_LabelOff" );
-		SetControlString( "TurnOnButton", "#GAMEUI_Commentary_TurnOn" );
-		SetControlString( "TurnOffButton", "#GAMEUI_Commentary_LeaveOff" );
+		SetControlString("ModeLabel", "#GAMEUI_Commentary_LabelOff");
+		SetControlString("TurnOnButton", "#GAMEUI_Commentary_TurnOn");
+		SetControlString("TurnOffButton", "#GAMEUI_Commentary_LeaveOff");
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CCommentaryDialog::~CCommentaryDialog()
-{
-}
+CCommentaryDialog::~CCommentaryDialog() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CCommentaryDialog::OnClose( void )
+void CCommentaryDialog::OnClose(void)
 {
 	BaseClass::OnClose();
 
@@ -78,9 +76,9 @@ void CCommentaryDialog::OnClose( void )
 
 	// Bring up the post dialog
 	DHANDLE<CPostCommentaryDialog> hPostCommentaryDialog;
-	if ( !hPostCommentaryDialog.Get() )
+	if(!hPostCommentaryDialog.Get())
 	{
-		hPostCommentaryDialog = new CPostCommentaryDialog( BasePanel() );
+		hPostCommentaryDialog = new CPostCommentaryDialog(BasePanel());
 	}
 	hPostCommentaryDialog->Activate();
 }
@@ -89,23 +87,23 @@ void CCommentaryDialog::OnClose( void )
 // Purpose:
 // Input  : *command -
 //-----------------------------------------------------------------------------
-void CCommentaryDialog::OnCommand( const char *command )
+void CCommentaryDialog::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "TurnOn" ) )
+	if(!Q_stricmp(command, "TurnOn"))
 	{
 		ConVarRef commentary("commentary");
-		commentary.SetValue( 1 );
+		commentary.SetValue(1);
 		Close();
 	}
-	else if ( !Q_stricmp( command, "TurnOff" ) )
+	else if(!Q_stricmp(command, "TurnOff"))
 	{
 		ConVarRef commentary("commentary");
-		commentary.SetValue( 0 );
+		commentary.SetValue(0);
 		Close();
 	}
 	else
 	{
-		BaseClass::OnCommand( command );
+		BaseClass::OnCommand(command);
 	}
 }
 
@@ -115,17 +113,17 @@ void CCommentaryDialog::OnCommand( const char *command )
 void CCommentaryDialog::OnKeyCodePressed(KeyCode code)
 {
 	// Ignore escape key
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 		return;
 
-	if ( code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A )
+	if(code == KEY_XBUTTON_A || code == STEAMCONTROLLER_A)
 	{
-		OnCommand( "TurnOn" );
+		OnCommand("TurnOn");
 		return;
 	}
-	else if ( code == KEY_XBUTTON_B || code == STEAMCONTROLLER_B )
+	else if(code == KEY_XBUTTON_B || code == STEAMCONTROLLER_B)
 	{
-		OnCommand( "TurnOff" );
+		OnCommand("TurnOff");
 		return;
 	}
 
@@ -135,12 +133,12 @@ void CCommentaryDialog::OnKeyCodePressed(KeyCode code)
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void OpenCommentaryDialog( void )
+void OpenCommentaryDialog(void)
 {
 	DHANDLE<CCommentaryDialog> hCommentaryDialog;
-	if ( !hCommentaryDialog.Get() )
+	if(!hCommentaryDialog.Get())
 	{
-		hCommentaryDialog = new CCommentaryDialog( BasePanel() );
+		hCommentaryDialog = new CCommentaryDialog(BasePanel());
 	}
 
 	GameUI().ActivateGameUI();
@@ -150,19 +148,18 @@ void OpenCommentaryDialog( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-ConVar commentary_firstrun("commentary_firstrun", "0", FCVAR_ARCHIVE );
-void CC_CommentaryTestFirstRun( void )
+ConVar commentary_firstrun("commentary_firstrun", "0", FCVAR_ARCHIVE);
+void CC_CommentaryTestFirstRun(void)
 {
 	// The enable/disable commentary box in the sound options got lost in time;
 	// always prompt the user for commentary mode instead on new game.
-	//if ( !commentary_firstrun.GetBool() )
+	// if ( !commentary_firstrun.GetBool() )
 	{
 		commentary_firstrun.SetValue(1);
 		OpenCommentaryDialog();
 	}
 }
-static ConCommand commentary_testfirstrun("commentary_testfirstrun", CC_CommentaryTestFirstRun, 0 );
-
+static ConCommand commentary_testfirstrun("commentary_testfirstrun", CC_CommentaryTestFirstRun, 0);
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -170,7 +167,7 @@ static ConCommand commentary_testfirstrun("commentary_testfirstrun", CC_Commenta
 CPostCommentaryDialog::CPostCommentaryDialog(vgui::Panel *parent) : BaseClass(parent, "PostCommentaryDialog")
 {
 	SetDeleteSelfOnClose(true);
-	SetSizeable( false );
+	SetSizeable(false);
 
 	input()->SetAppModalSurface(GetVPanel());
 	vgui::surface()->RestrictPaintToSinglePanel(GetVPanel());
@@ -184,37 +181,35 @@ CPostCommentaryDialog::CPostCommentaryDialog(vgui::Panel *parent) : BaseClass(pa
 
 	bool bCommentaryOn = false;
 	ConVarRef commentary("commentary");
-	if ( commentary.IsValid() )
+	if(commentary.IsValid())
 	{
 		bCommentaryOn = commentary.GetBool();
 	}
 
 	// Setup the buttons & labels to reflect the current state of the commentary
-	if ( bCommentaryOn )
+	if(bCommentaryOn)
 	{
-		SetControlString( "PostModeLabel", "#GAMEUI_PostCommentary_ModeLabelOn" );
+		SetControlString("PostModeLabel", "#GAMEUI_PostCommentary_ModeLabelOn");
 	}
 	else
 	{
-		SetControlString( "PostModeLabel", "#GAMEUI_PostCommentary_ModeLabelOff" );
+		SetControlString("PostModeLabel", "#GAMEUI_PostCommentary_ModeLabelOff");
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CPostCommentaryDialog::~CPostCommentaryDialog()
-{
-}
+CPostCommentaryDialog::~CPostCommentaryDialog() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPostCommentaryDialog::OnFinishedClose( void )
+void CPostCommentaryDialog::OnFinishedClose(void)
 {
 	BaseClass::OnFinishedClose();
 
-	if ( !m_bResetPaintRestrict )
+	if(!m_bResetPaintRestrict)
 	{
 		m_bResetPaintRestrict = true;
 		vgui::surface()->RestrictPaintToSinglePanel(NULL);
@@ -224,7 +219,7 @@ void CPostCommentaryDialog::OnFinishedClose( void )
 
 void CPostCommentaryDialog::OnKeyCodeTyped(KeyCode code)
 {
-	if ( code == KEY_ESCAPE )
+	if(code == KEY_ESCAPE)
 	{
 		Close();
 		vgui::surface()->RestrictPaintToSinglePanel(NULL);
@@ -236,13 +231,12 @@ void CPostCommentaryDialog::OnKeyCodeTyped(KeyCode code)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CPostCommentaryDialog::OnKeyCodePressed(KeyCode code)
 {
-   	if ( code == KEY_XBUTTON_A || code == KEY_XBUTTON_B || code == STEAMCONTROLLER_B )
+	if(code == KEY_XBUTTON_A || code == KEY_XBUTTON_B || code == STEAMCONTROLLER_B)
 	{
 		Close();
 		vgui::surface()->RestrictPaintToSinglePanel(NULL);

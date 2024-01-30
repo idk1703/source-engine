@@ -15,97 +15,45 @@
 //-----------------------------------------------------------------------------
 // Teams.
 //-----------------------------------------------------------------------------
-const char *g_aTeamNames[TF_TEAM_COUNT] =
-{
-	"Unassigned",
-	"Spectator",
-	"Red",
-	"Blue"
-};
+const char *g_aTeamNames[TF_TEAM_COUNT] = {"Unassigned", "Spectator", "Red", "Blue"};
 
-color32 g_aTeamColors[TF_TEAM_COUNT] =
-{
-	{ 0, 0, 0, 0 },
-	{ 0, 0, 0, 0 },
-	{ 255, 0, 0, 0 },
-	{ 0, 0, 255, 0 }
-};
+color32 g_aTeamColors[TF_TEAM_COUNT] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {255, 0, 0, 0}, {0, 0, 255, 0}};
 
 //-----------------------------------------------------------------------------
 // Classes.
 //-----------------------------------------------------------------------------
 
-const char *g_aPlayerClassNames[TF_CLASS_MENU_BUTTONS] =
-{
-	"#TF_Class_Name_Undefined",
-	"#TF_Class_Name_Scout",
-	"#TF_Class_Name_Sniper",
-	"#TF_Class_Name_Soldier",
-	"#TF_Class_Name_Demoman",
-	"#TF_Class_Name_Medic",
-	"#TF_Class_Name_HWGuy",
-	"#TF_Class_Name_Pyro",
-	"#TF_Class_Name_Spy",
-	"#TF_Class_Name_Engineer",
-	"#TF_Class_Name_Civilian",
-	"",
-	"#TF_Random"
-};
+const char *g_aPlayerClassNames[TF_CLASS_MENU_BUTTONS] = {"#TF_Class_Name_Undefined",
+														  "#TF_Class_Name_Scout",
+														  "#TF_Class_Name_Sniper",
+														  "#TF_Class_Name_Soldier",
+														  "#TF_Class_Name_Demoman",
+														  "#TF_Class_Name_Medic",
+														  "#TF_Class_Name_HWGuy",
+														  "#TF_Class_Name_Pyro",
+														  "#TF_Class_Name_Spy",
+														  "#TF_Class_Name_Engineer",
+														  "#TF_Class_Name_Civilian",
+														  "",
+														  "#TF_Random"};
 
-const char *g_aPlayerClassNames_NonLocalized[TF_CLASS_MENU_BUTTONS] =
-{
-	"Undefined",
-	"Scout",
-	"Sniper",
-	"Soldier",
-	"Demoman",
-	"Medic",
-	"Heavy",
-	"Pyro",
-	"Spy",
-	"Engineer",
-	"Civilian",
-	"",
-	"Random"
-};
+const char *g_aPlayerClassNames_NonLocalized[TF_CLASS_MENU_BUTTONS] = {
+	"Undefined", "Scout", "Sniper",	  "Soldier",  "Demoman", "Medic", "Heavy",
+	"Pyro",		 "Spy",	  "Engineer", "Civilian", "",		 "Random"};
 
-const char *g_aRawPlayerClassNamesShort[TF_CLASS_MENU_BUTTONS] =
-{
-	"undefined",
-	"scout",
-	"sniper",
-	"soldier",
-	"demo",	// short
-	"medic",
-	"heavy",// short
-	"pyro",
-	"spy",
-	"engineer",
-	"civilian",
-	"",
-	"random"
-};
+const char *g_aRawPlayerClassNamesShort[TF_CLASS_MENU_BUTTONS] = {"undefined", "scout", "sniper",	"soldier",
+																  "demo", // short
+																  "medic",
+																  "heavy", // short
+																  "pyro",	   "spy",	"engineer", "civilian",
+																  "",		   "random"};
 
-const char *g_aRawPlayerClassNames[TF_CLASS_MENU_BUTTONS] =
-{
-	"undefined",
-	"scout",
-	"sniper",
-	"soldier",
-	"demoman",
-	"medic",
-	"heavyweapons",
-	"pyro",
-	"spy",
-	"engineer",
-	"civilian",
-	"",
-	"random"
-};
+const char *g_aRawPlayerClassNames[TF_CLASS_MENU_BUTTONS] = {
+	"undefined", "scout", "sniper",	  "soldier",  "demoman", "medic", "heavyweapons",
+	"pyro",		 "spy",	  "engineer", "civilian", "",		 "random"};
 
-const char g_szBotModels[][ MAX_PATH ] =
-{
-	"", //TF_CLASS_UNDEFINED
+const char g_szBotModels[][MAX_PATH] = {
+	"", // TF_CLASS_UNDEFINED
 
 	"models/bots/scout/bot_scout.mdl",
 	"models/bots/sniper/bot_sniper.mdl",
@@ -118,9 +66,8 @@ const char g_szBotModels[][ MAX_PATH ] =
 	"models/bots/engineer/bot_engineer.mdl",
 };
 
-const char g_szPlayerRobotModels[][MAX_PATH] =
-{
-	"", //TF_CLASS_UNDEFINED
+const char g_szPlayerRobotModels[][MAX_PATH] = {
+	"", // TF_CLASS_UNDEFINED
 
 	"models/bots/scout/bot_scout_human_anim.mdl",
 	"models/bots/sniper/bot_sniper_human_anim.mdl",
@@ -133,9 +80,8 @@ const char g_szPlayerRobotModels[][MAX_PATH] =
 	"models/bots/engineer/bot_engineer_human_anim.mdl",
 };
 
-const char g_szBotBossModels[][ MAX_PATH ] =
-{
-	"", //TF_CLASS_UNDEFINED
+const char g_szBotBossModels[][MAX_PATH] = {
+	"", // TF_CLASS_UNDEFINED
 
 	"models/bots/scout_boss/bot_scout_boss.mdl",
 	"models/bots/sniper/bot_sniper.mdl",
@@ -148,12 +94,11 @@ const char g_szBotBossModels[][ MAX_PATH ] =
 	"models/bots/engineer/bot_engineer.mdl",
 };
 
-const char g_szBotBossSentryBusterModel[ MAX_PATH ] = "models/bots/demo/bot_sentry_buster.mdl";
+const char g_szBotBossSentryBusterModel[MAX_PATH] = "models/bots/demo/bot_sentry_buster.mdl";
 
 // Rome 2 promo models
-const char g_szRomePromoItems_Hat[][ MAX_PATH ] =
-{
-	"", //TF_CLASS_UNDEFINED
+const char g_szRomePromoItems_Hat[][MAX_PATH] = {
+	"", // TF_CLASS_UNDEFINED
 
 	"tw_scoutbot_hat",
 	"tw_sniperbot_helmet",
@@ -166,9 +111,8 @@ const char g_szRomePromoItems_Hat[][ MAX_PATH ] =
 	"tw_engineerbot_helmet",
 };
 
-const char g_szRomePromoItems_Misc[][ MAX_PATH ] =
-{
-	"", //TF_CLASS_UNDEFINED
+const char g_szRomePromoItems_Misc[][MAX_PATH] = {
+	"", // TF_CLASS_UNDEFINED
 
 	"tw_scoutbot_armor",
 	"tw_sniperbot_armor",
@@ -181,8 +125,7 @@ const char g_szRomePromoItems_Misc[][ MAX_PATH ] =
 	"tw_engineerbot_armor",
 };
 
-const char *g_pszBreadModels[] =
-{
+const char *g_pszBreadModels[] = {
 	"models/weapons/c_models/c_bread/c_bread_baguette.mdl",		// Spy
 	"models/weapons/c_models/c_bread/c_bread_burnt.mdl",		// Pyro
 	"models/weapons/c_models/c_bread/c_bread_cinnamon.mdl",		// Demo?
@@ -191,20 +134,20 @@ const char *g_pszBreadModels[] =
 	"models/weapons/c_models/c_bread/c_bread_plainloaf.mdl",	// Scout
 	"models/weapons/c_models/c_bread/c_bread_pretzel.mdl",		// Medic
 	"models/weapons/c_models/c_bread/c_bread_ration.mdl",		// Soldier
-	"models/weapons/c_models/c_bread/c_bread_russianblack.mdl",	// Heavy?
+	"models/weapons/c_models/c_bread/c_bread_russianblack.mdl", // Heavy?
 };
 
-int GetClassIndexFromString( const char *pClassName, int nLastClassIndex/*=TF_LAST_NORMAL_CLASS*/ )
+int GetClassIndexFromString(const char *pClassName, int nLastClassIndex /*=TF_LAST_NORMAL_CLASS*/)
 {
-	for ( int i = TF_FIRST_NORMAL_CLASS; i <= nLastClassIndex; ++i )
+	for(int i = TF_FIRST_NORMAL_CLASS; i <= nLastClassIndex; ++i)
 	{
 		// compare first N characters to allow matching both "heavy" and "heavyweapons"
-		int classnameLength = V_strlen( g_aPlayerClassNames_NonLocalized[i] );
+		int classnameLength = V_strlen(g_aPlayerClassNames_NonLocalized[i]);
 
-		if ( V_strlen( pClassName ) < classnameLength )
+		if(V_strlen(pClassName) < classnameLength)
 			continue;
 
-		if ( !V_strnicmp( g_aPlayerClassNames_NonLocalized[i], pClassName, classnameLength ) )
+		if(!V_strnicmp(g_aPlayerClassNames_NonLocalized[i], pClassName, classnameLength))
 		{
 			return i;
 		}
@@ -213,30 +156,27 @@ int GetClassIndexFromString( const char *pClassName, int nLastClassIndex/*=TF_LA
 	return TF_CLASS_UNDEFINED;
 }
 
-int iRemapIndexToClass[TF_CLASS_MENU_BUTTONS] =
-{
-	0,
-		TF_CLASS_SCOUT,
-		TF_CLASS_SOLDIER,
-		TF_CLASS_PYRO,
-		TF_CLASS_DEMOMAN,
-		TF_CLASS_HEAVYWEAPONS,
-		TF_CLASS_ENGINEER,
-		TF_CLASS_MEDIC,
-		TF_CLASS_SNIPER,
-		TF_CLASS_SPY,
-		0,
-		0,
-		TF_CLASS_RANDOM
-};
+int iRemapIndexToClass[TF_CLASS_MENU_BUTTONS] = {0,
+												 TF_CLASS_SCOUT,
+												 TF_CLASS_SOLDIER,
+												 TF_CLASS_PYRO,
+												 TF_CLASS_DEMOMAN,
+												 TF_CLASS_HEAVYWEAPONS,
+												 TF_CLASS_ENGINEER,
+												 TF_CLASS_MEDIC,
+												 TF_CLASS_SNIPER,
+												 TF_CLASS_SPY,
+												 0,
+												 0,
+												 TF_CLASS_RANDOM};
 
-int GetRemappedMenuIndexForClass( int iClass )
+int GetRemappedMenuIndexForClass(int iClass)
 {
 	int iIndex = 0;
 
-	for ( int i = 0 ; i < TF_CLASS_MENU_BUTTONS ; i++ )
+	for(int i = 0; i < TF_CLASS_MENU_BUTTONS; i++)
 	{
-		if ( iRemapIndexToClass[i] == iClass )
+		if(iRemapIndexToClass[i] == iClass)
 		{
 			iIndex = i;
 			break;
@@ -246,68 +186,56 @@ int GetRemappedMenuIndexForClass( int iClass )
 	return iIndex;
 }
 
-ETFCond condition_to_attribute_translation[]  =
-{
-	TF_COND_BURNING,					// 1 (1<<0)
-	TF_COND_AIMING,						// 2 (1<<1)
-	TF_COND_ZOOMED,						// 4 (1<<2)
-	TF_COND_DISGUISING,					// 8 (...)
-	TF_COND_DISGUISED,					// 16
-	TF_COND_STEALTHED,					// 32
-	TF_COND_INVULNERABLE,				// 64
-	TF_COND_TELEPORTED,					// 128
-	TF_COND_TAUNTING,					// 256
-	TF_COND_INVULNERABLE_WEARINGOFF,	// 512
-	TF_COND_STEALTHED_BLINK,			// 1024
-	TF_COND_SELECTED_TO_TELEPORT,		// 2048
-	TF_COND_CRITBOOSTED,				// 4096
-	TF_COND_TMPDAMAGEBONUS,				// 8192
-	TF_COND_FEIGN_DEATH,				// 16384
-	TF_COND_PHASE,						// 32768
-	TF_COND_STUNNED,					// 65536
-	TF_COND_HEALTH_BUFF,				// 131072
-	TF_COND_HEALTH_OVERHEALED,			// 262144
-	TF_COND_URINE,						// 524288
-	TF_COND_ENERGY_BUFF,				// 1048576
+ETFCond condition_to_attribute_translation[] = {
+	TF_COND_BURNING,				 // 1 (1<<0)
+	TF_COND_AIMING,					 // 2 (1<<1)
+	TF_COND_ZOOMED,					 // 4 (1<<2)
+	TF_COND_DISGUISING,				 // 8 (...)
+	TF_COND_DISGUISED,				 // 16
+	TF_COND_STEALTHED,				 // 32
+	TF_COND_INVULNERABLE,			 // 64
+	TF_COND_TELEPORTED,				 // 128
+	TF_COND_TAUNTING,				 // 256
+	TF_COND_INVULNERABLE_WEARINGOFF, // 512
+	TF_COND_STEALTHED_BLINK,		 // 1024
+	TF_COND_SELECTED_TO_TELEPORT,	 // 2048
+	TF_COND_CRITBOOSTED,			 // 4096
+	TF_COND_TMPDAMAGEBONUS,			 // 8192
+	TF_COND_FEIGN_DEATH,			 // 16384
+	TF_COND_PHASE,					 // 32768
+	TF_COND_STUNNED,				 // 65536
+	TF_COND_HEALTH_BUFF,			 // 131072
+	TF_COND_HEALTH_OVERHEALED,		 // 262144
+	TF_COND_URINE,					 // 524288
+	TF_COND_ENERGY_BUFF,			 // 1048576
 
-	TF_COND_LAST				// sentinel value checked against when iterating
+	TF_COND_LAST // sentinel value checked against when iterating
 };
 
-ETFCond g_aDebuffConditions[] =
-{
-	TF_COND_BURNING,
-	TF_COND_URINE,
-	TF_COND_BLEEDING,
-	TF_COND_MAD_MILK,
-	TF_COND_LAST
-};
+ETFCond g_aDebuffConditions[] = {TF_COND_BURNING, TF_COND_URINE, TF_COND_BLEEDING, TF_COND_MAD_MILK, TF_COND_LAST};
 
-bool ConditionExpiresFast( ETFCond eCond )
+bool ConditionExpiresFast(ETFCond eCond)
 {
-	return eCond == TF_COND_BURNING
-		|| eCond == TF_COND_URINE
-		|| eCond == TF_COND_BLEEDING
-		|| eCond == TF_COND_MAD_MILK;
+	return eCond == TF_COND_BURNING || eCond == TF_COND_URINE || eCond == TF_COND_BLEEDING || eCond == TF_COND_MAD_MILK;
 }
 
-static const char *g_aConditionNames[] =
-{
-	"TF_COND_AIMING",		// Sniper aiming, Heavy minigun.
+static const char *g_aConditionNames[] = {
+	"TF_COND_AIMING", // Sniper aiming, Heavy minigun.
 	"TF_COND_ZOOMED",
 	"TF_COND_DISGUISING",
 	"TF_COND_DISGUISED",
-	"TF_COND_STEALTHED",		// Spy specific
+	"TF_COND_STEALTHED", // Spy specific
 	"TF_COND_INVULNERABLE",
 	"TF_COND_TELEPORTED",
 	"TF_COND_TAUNTING",
 	"TF_COND_INVULNERABLE_WEARINGOFF",
 	"TF_COND_STEALTHED_BLINK",
 	"TF_COND_SELECTED_TO_TELEPORT",
-	"TF_COND_CRITBOOSTED",	// DO NOT RE-USE THIS -- THIS IS FOR KRITZKRIEG AND REVENGE CRITS ONLY
+	"TF_COND_CRITBOOSTED", // DO NOT RE-USE THIS -- THIS IS FOR KRITZKRIEG AND REVENGE CRITS ONLY
 	"TF_COND_TMPDAMAGEBONUS",
 	"TF_COND_FEIGN_DEATH",
 	"TF_COND_PHASE",
-	"TF_COND_STUNNED",		// Any type of stun. Check iStunFlags for more info.
+	"TF_COND_STUNNED", // Any type of stun. Check iStunFlags for more info.
 	"TF_COND_OFFENSEBUFF",
 	"TF_COND_SHIELD_CHARGE",
 	"TF_COND_DEMO_BUFF",
@@ -318,31 +246,31 @@ static const char *g_aConditionNames[] =
 	"TF_COND_HEALTH_OVERHEALED",
 	"TF_COND_URINE",
 	"TF_COND_BLEEDING",
-	"TF_COND_DEFENSEBUFF",	// 35% defense! No crit damage.
+	"TF_COND_DEFENSEBUFF", // 35% defense! No crit damage.
 	"TF_COND_MAD_MILK",
 	"TF_COND_MEGAHEAL",
 	"TF_COND_REGENONDAMAGEBUFF",
 	"TF_COND_MARKEDFORDEATH",
 	"TF_COND_NOHEALINGDAMAGEBUFF",
-	"TF_COND_SPEED_BOOST",				// = 32
-	"TF_COND_CRITBOOSTED_PUMPKIN",		// Brandon hates bits
+	"TF_COND_SPEED_BOOST",		   // = 32
+	"TF_COND_CRITBOOSTED_PUMPKIN", // Brandon hates bits
 	"TF_COND_CRITBOOSTED_USER_BUFF",
 	"TF_COND_CRITBOOSTED_DEMO_CHARGE",
 	"TF_COND_SODAPOPPER_HYPE",
-	"TF_COND_CRITBOOSTED_FIRST_BLOOD",	// arena mode first blood
+	"TF_COND_CRITBOOSTED_FIRST_BLOOD", // arena mode first blood
 	"TF_COND_CRITBOOSTED_BONUS_TIME",
 	"TF_COND_CRITBOOSTED_CTF_CAPTURE",
-	"TF_COND_CRITBOOSTED_ON_KILL",		// =40. KGB, etc.
+	"TF_COND_CRITBOOSTED_ON_KILL", // =40. KGB, etc.
 	"TF_COND_CANNOT_SWITCH_FROM_MELEE",
-	"TF_COND_DEFENSEBUFF_NO_CRIT_BLOCK",	// 35% defense! Still damaged by crits.
-	"TF_COND_REPROGRAMMED",				// Bots only
+	"TF_COND_DEFENSEBUFF_NO_CRIT_BLOCK", // 35% defense! Still damaged by crits.
+	"TF_COND_REPROGRAMMED",				 // Bots only
 	"TF_COND_CRITBOOSTED_RAGE_BUFF",
-	"TF_COND_DEFENSEBUFF_HIGH",			// 75% defense! Still damaged by crits.
-	"TF_COND_SNIPERCHARGE_RAGE_BUFF",		// Sniper Rage - Charge time speed up
-	"TF_COND_DISGUISE_WEARINGOFF",		// Applied for half-second post-disguise
-	"TF_COND_MARKEDFORDEATH_SILENT",		// Sans sound
+	"TF_COND_DEFENSEBUFF_HIGH",		  // 75% defense! Still damaged by crits.
+	"TF_COND_SNIPERCHARGE_RAGE_BUFF", // Sniper Rage - Charge time speed up
+	"TF_COND_DISGUISE_WEARINGOFF",	  // Applied for half-second post-disguise
+	"TF_COND_MARKEDFORDEATH_SILENT",  // Sans sound
 	"TF_COND_DISGUISED_AS_DISPENSER",
-	"TF_COND_SAPPED",						// =50. Bots only
+	"TF_COND_SAPPED", // =50. Bots only
 	"TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED",
 	"TF_COND_INVULNERABLE_USER_BUFF",
 	"TF_COND_HALLOWEEN_BOMB_HEAD",
@@ -352,35 +280,35 @@ static const char *g_aConditionNames[] =
 	"TF_COND_INVULNERABLE_CARD_EFFECT",
 	"TF_COND_MEDIGUN_UBER_BULLET_RESIST",
 	"TF_COND_MEDIGUN_UBER_BLAST_RESIST",
-	"TF_COND_MEDIGUN_UBER_FIRE_RESIST",		// =60
+	"TF_COND_MEDIGUN_UBER_FIRE_RESIST", // =60
 	"TF_COND_MEDIGUN_SMALL_BULLET_RESIST",
 	"TF_COND_MEDIGUN_SMALL_BLAST_RESIST",
 	"TF_COND_MEDIGUN_SMALL_FIRE_RESIST",
-	"TF_COND_STEALTHED_USER_BUFF",			// Any class can have this
+	"TF_COND_STEALTHED_USER_BUFF", // Any class can have this
 	"TF_COND_MEDIGUN_DEBUFF",
 	"TF_COND_STEALTHED_USER_BUFF_FADING",
 	"TF_COND_BULLET_IMMUNE",
 	"TF_COND_BLAST_IMMUNE",
 	"TF_COND_FIRE_IMMUNE",
-	"TF_COND_PREVENT_DEATH",					// =70
-	"TF_COND_MVM_BOT_STUN_RADIOWAVE", 		// Bots only
+	"TF_COND_PREVENT_DEATH",		  // =70
+	"TF_COND_MVM_BOT_STUN_RADIOWAVE", // Bots only
 	"TF_COND_HALLOWEEN_SPEED_BOOST",
 	"TF_COND_HALLOWEEN_QUICK_HEAL",
 	"TF_COND_HALLOWEEN_GIANT",
 	"TF_COND_HALLOWEEN_TINY",
 	"TF_COND_HALLOWEEN_IN_HELL",
-	"TF_COND_HALLOWEEN_GHOST_MODE",			// =77
+	"TF_COND_HALLOWEEN_GHOST_MODE", // =77
 	"TF_COND_MINICRITBOOSTED_ON_KILL",
 	"TF_COND_OBSCURED_SMOKE",
-	"TF_COND_PARACHUTE_DEPLOYED",				// =80
+	"TF_COND_PARACHUTE_DEPLOYED", // =80
 	"TF_COND_BLASTJUMPING",
 	"TF_COND_HALLOWEEN_KART",
 	"TF_COND_HALLOWEEN_KART_DASH",
-	"TF_COND_BALLOON_HEAD",					// =84 larger head, lower-gravity-feeling jumps
-	"TF_COND_MELEE_ONLY",						// =85 melee only
-	"TF_COND_SWIMMING_CURSE",					// player movement become swimming movement
-	"TF_COND_FREEZE_INPUT",					// freezes player input
-	"TF_COND_HALLOWEEN_KART_CAGE",			// attach cage model to player while in kart
+	"TF_COND_BALLOON_HEAD",		   // =84 larger head, lower-gravity-feeling jumps
+	"TF_COND_MELEE_ONLY",		   // =85 melee only
+	"TF_COND_SWIMMING_CURSE",	   // player movement become swimming movement
+	"TF_COND_FREEZE_INPUT",		   // freezes player input
+	"TF_COND_HALLOWEEN_KART_CAGE", // attach cage model to player while in kart
 	"TF_COND_DONOTUSE_0",
 	"TF_COND_RUNE_STRENGTH",
 	"TF_COND_RUNE_HASTE",
@@ -399,14 +327,14 @@ static const char *g_aConditionNames[] =
 	"TF_COND_RUNE_IMBALANCE",
 	"TF_COND_CRITBOOSTED_RUNE_TEMP",
 	"TF_COND_PASSTIME_INTERCEPTION",
-	"TF_COND_SWIMMING_NO_EFFECTS",			// =107_DNOC_FT
+	"TF_COND_SWIMMING_NO_EFFECTS", // =107_DNOC_FT
 	"TF_COND_PURGATORY",
 	"TF_COND_RUNE_KING",
 	"TF_COND_RUNE_PLAGUE",
 	"TF_COND_RUNE_SUPERNOVA",
 	"TF_COND_PLAGUE",
 	"TF_COND_KING_BUFFED",
-	"TF_COND_TEAM_GLOWS",					// used to show team glows to living players
+	"TF_COND_TEAM_GLOWS", // used to show team glows to living players
 	"TF_COND_KNOCKED_INTO_AIR",
 	"TF_COND_COMPETITIVE_WINNER",
 	"TF_COND_COMPETITIVE_LOSER",
@@ -415,54 +343,51 @@ static const char *g_aConditionNames[] =
 	"TF_COND_GRAPPLED_TO_PLAYER",
 	"TF_COND_GRAPPLED_BY_PLAYER",
 
-	//
-	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
-	//
+//
+// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
+//
 
-	// ******** Keep this block last! ********
-	// Keep experimental conditions below and graduate out of it before shipping
+// ******** Keep this block last! ********
+// Keep experimental conditions below and graduate out of it before shipping
 #ifdef STAGING_ONLY
-	"TF_COND_NO_COMBAT_SPEED_BOOST",		// STAGING_ENGY
-	"TF_COND_TRANQ_SPY_BOOST",			// STAGING_SPY
+	"TF_COND_NO_COMBAT_SPEED_BOOST", // STAGING_ENGY
+	"TF_COND_TRANQ_SPY_BOOST",		 // STAGING_SPY
 	"TF_COND_TRANQ_MARKED",
-//	"TF_COND_SPACE_GRAVITY",
-//	"TF_COND_SELF_CONC",
+	//	"TF_COND_SPACE_GRAVITY",
+	//	"TF_COND_SELF_CONC",
 	"TF_COND_ROCKETPACK",
 	"TF_COND_STEALTHED_PHASE",
 	"TF_COND_CLIP_OVERLOAD",
 	"TF_COND_SPY_CLASS_STEAL",
 #endif // STAGING_ONLY
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_aConditionNames ) == TF_COND_LAST );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_aConditionNames) == TF_COND_LAST);
 
-const char *GetTFConditionName( ETFCond eCond )
+const char *GetTFConditionName(ETFCond eCond)
 {
-	if ( ( eCond >= ARRAYSIZE( g_aConditionNames ) ) || ( eCond < 0 ) )
+	if((eCond >= ARRAYSIZE(g_aConditionNames)) || (eCond < 0))
 		return NULL;
 
 	return g_aConditionNames[eCond];
 }
 
-
-ETFCond GetTFConditionFromName( const char *pszCondName )
+ETFCond GetTFConditionFromName(const char *pszCondName)
 {
-	for( uint i=0; i<TF_COND_LAST; i++ )
+	for(uint i = 0; i < TF_COND_LAST; i++)
 	{
 		ETFCond eCond = (ETFCond)i;
-		if ( !V_stricmp( GetTFConditionName( eCond ), pszCondName ) )
+		if(!V_stricmp(GetTFConditionName(eCond), pszCondName))
 			return eCond;
 	}
 
-	Assert( !!"Invalid Condition Name" );
+	Assert(!!"Invalid Condition Name");
 	return TF_COND_INVALID;
 }
-
 
 //-----------------------------------------------------------------------------
 // Gametypes.
 //-----------------------------------------------------------------------------
-static const char *s_aGameTypeNames[] =
-{
+static const char *s_aGameTypeNames[] = {
 	"Undefined",
 	"#Gametype_CTF",
 	"#Gametype_CP",
@@ -473,37 +398,28 @@ static const char *s_aGameTypeNames[] =
 	"#GameType_Passtime",
 	"#GameType_PlayerDestruction",
 };
-COMPILE_TIME_ASSERT( TF_GAMETYPE_COUNT == ARRAYSIZE( s_aGameTypeNames ) );
+COMPILE_TIME_ASSERT(TF_GAMETYPE_COUNT == ARRAYSIZE(s_aGameTypeNames));
 
-const char *GetGameTypeName( ETFGameType gameType )
+const char *GetGameTypeName(ETFGameType gameType)
 {
-	return s_aGameTypeNames[ gameType ];
+	return s_aGameTypeNames[gameType];
 }
 
-static const char *s_aEnumGameTypeName[] =
-{
-	"TF_GAMETYPE_UNDEFINED",
-	"TF_GAMETYPE_CTF",
-	"TF_GAMETYPE_CP",
-	"TF_GAMETYPE_ESCORT",
-	"TF_GAMETYPE_ARENA",
-	"TF_GAMETYPE_MVM",
-	"TF_GAMETYPE_RD",
-	"TF_GAMETYPE_PASSTIME",
-	"TF_GAMETYPE_PD"
-};
-COMPILE_TIME_ASSERT( TF_GAMETYPE_COUNT == ARRAYSIZE( s_aEnumGameTypeName ) );
+static const char *s_aEnumGameTypeName[] = {"TF_GAMETYPE_UNDEFINED", "TF_GAMETYPE_CTF",		 "TF_GAMETYPE_CP",
+											"TF_GAMETYPE_ESCORT",	 "TF_GAMETYPE_ARENA",	 "TF_GAMETYPE_MVM",
+											"TF_GAMETYPE_RD",		 "TF_GAMETYPE_PASSTIME", "TF_GAMETYPE_PD"};
+COMPILE_TIME_ASSERT(TF_GAMETYPE_COUNT == ARRAYSIZE(s_aEnumGameTypeName));
 
-const char *GetEnumGameTypeName( ETFGameType gameType )
+const char *GetEnumGameTypeName(ETFGameType gameType)
 {
-	return s_aEnumGameTypeName[ gameType ];
+	return s_aEnumGameTypeName[gameType];
 }
 
-ETFGameType GetGameTypeFromName( const char *pszGameType )
+ETFGameType GetGameTypeFromName(const char *pszGameType)
 {
-	for ( int i=0; i<TF_GAMETYPE_COUNT; ++i )
+	for(int i = 0; i < TF_GAMETYPE_COUNT; ++i)
 	{
-		if ( FStrEq( pszGameType, s_aEnumGameTypeName[i] ) )
+		if(FStrEq(pszGameType, s_aEnumGameTypeName[i]))
 			return ETFGameType(i);
 	}
 
@@ -513,26 +429,17 @@ ETFGameType GetGameTypeFromName( const char *pszGameType )
 //-----------------------------------------------------------------------------
 // Ammo.
 //-----------------------------------------------------------------------------
-const char *g_aAmmoNames[] =
-{
-	"DUMMY AMMO",
-	"TF_AMMO_PRIMARY",
-	"TF_AMMO_SECONDARY",
-	"TF_AMMO_METAL",
-	"TF_AMMO_GRENADES1",
-	"TF_AMMO_GRENADES2",
-	"TF_AMMO_GRENADES3"
-};
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_aAmmoNames ) == TF_AMMO_COUNT );
+const char *g_aAmmoNames[] = {"DUMMY AMMO",		   "TF_AMMO_PRIMARY",	"TF_AMMO_SECONDARY", "TF_AMMO_METAL",
+							  "TF_AMMO_GRENADES1", "TF_AMMO_GRENADES2", "TF_AMMO_GRENADES3"};
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_aAmmoNames) == TF_AMMO_COUNT);
 
-const char *GetAmmoName( int iAmmoType )
+const char *GetAmmoName(int iAmmoType)
 {
 	ETFAmmoType eAmmoType = (ETFAmmoType)iAmmoType;
-	return g_aAmmoNames[ eAmmoType ];
+	return g_aAmmoNames[eAmmoType];
 }
 
-const char *g_aCTFEventNames[] =
-{
+const char *g_aCTFEventNames[] = {
 	"",
 	"TF_FLAGEVENT_PICKUP",
 	"TF_FLAGEVENT_CAPTURE",
@@ -540,64 +447,57 @@ const char *g_aCTFEventNames[] =
 	"TF_FLAGEVENT_DROPPED",
 	"TF_FLAGEVENT_RETURNED",
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_aCTFEventNames ) == TF_NUM_FLAG_EVENTS );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_aCTFEventNames) == TF_NUM_FLAG_EVENTS);
 
-const char *GetCTFEventName( ETFFlagEventTypes iEventType )
+const char *GetCTFEventName(ETFFlagEventTypes iEventType)
 {
-	return g_aCTFEventNames[ iEventType ];
+	return g_aCTFEventNames[iEventType];
 }
 
-ETFFlagEventTypes GetCTFEventTypeFromName( const char *pszName )
+ETFFlagEventTypes GetCTFEventTypeFromName(const char *pszName)
 {
-	for( int i=TF_FLAGEVENT_PICKUP; i < TF_NUM_FLAG_EVENTS; ++i )
+	for(int i = TF_FLAGEVENT_PICKUP; i < TF_NUM_FLAG_EVENTS; ++i)
 	{
-		if ( FStrEq( pszName, GetCTFEventName( (ETFFlagEventTypes)i ) ) )
+		if(FStrEq(pszName, GetCTFEventName((ETFFlagEventTypes)i)))
 		{
 			return (ETFFlagEventTypes)i;
 		}
 	}
 
-	Assert( false );
+	Assert(false);
 	return TF_NUM_FLAG_EVENTS;
 }
 
-
-
-const char *GetRDScoreMethodName( RDScoreMethod_t iScoreMethod )
+const char *GetRDScoreMethodName(RDScoreMethod_t iScoreMethod)
 {
-	static const char *aRDScoreMethodNames[] =
-	{
-		"SCORE_UNDEFINED", // -1
-		"SCORE_REACTOR_CAPTURED", // 0
-		"SCORE_CORES_COLLECTED",
-		"SCORE_REACTOR_RETURNED",
-		"SCORE_REACTOR_STEAL",
+	static const char *aRDScoreMethodNames[] = {"SCORE_UNDEFINED",		  // -1
+												"SCORE_REACTOR_CAPTURED", // 0
+												"SCORE_CORES_COLLECTED",  "SCORE_REACTOR_RETURNED",
+												"SCORE_REACTOR_STEAL",
 
-		"NUM_SCORE_TYPES"
-	};
+												"NUM_SCORE_TYPES"};
 
-	return aRDScoreMethodNames[ iScoreMethod + 1 ];
+	return aRDScoreMethodNames[iScoreMethod + 1];
 }
 
-RDScoreMethod_t GetRDScoreMethodFromName( const char *pszName )
+RDScoreMethod_t GetRDScoreMethodFromName(const char *pszName)
 {
-	for( int i=SCORE_UNDEFINED; i < NUM_SCORE_TYPES; ++i )
+	for(int i = SCORE_UNDEFINED; i < NUM_SCORE_TYPES; ++i)
 	{
-		if ( FStrEq( pszName, GetRDScoreMethodName( (RDScoreMethod_t)i ) ) )
+		if(FStrEq(pszName, GetRDScoreMethodName((RDScoreMethod_t)i)))
 		{
 			return (RDScoreMethod_t)i;
 		}
 	}
 
-	Assert( false );
+	Assert(false);
 	return SCORE_UNDEFINED;
 }
 
 //-----------------------------------------------------------------------------
 // Weapons.
 //-----------------------------------------------------------------------------
-const char *g_aWeaponNames[] =
-{
+const char *g_aWeaponNames[] = {
 	"TF_WEAPON_NONE",
 	"TF_WEAPON_BAT",
 	"TF_WEAPON_BAT_WOOD",
@@ -706,121 +606,119 @@ const char *g_aWeaponNames[] =
 #endif
 	"TF_WEAPON_CHARGED_SMG",
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_aWeaponNames ) == TF_WEAPON_COUNT );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_aWeaponNames) == TF_WEAPON_COUNT);
 
-int g_aWeaponDamageTypes[] =
-{
-	DMG_GENERIC,	// TF_WEAPON_NONE
-	DMG_CLUB,		// TF_WEAPON_BAT,
-	DMG_CLUB,		// TF_WEAPON_BAT_WOOD,
-	DMG_CLUB,		// TF_WEAPON_BOTTLE,
-	DMG_CLUB,		// TF_WEAPON_FIREAXE,
-	DMG_CLUB,		// TF_WEAPON_CLUB,
-	DMG_CLUB,		// TF_WEAPON_CROWBAR,
-	DMG_SLASH,		// TF_WEAPON_KNIFE,
-	DMG_CLUB,		// TF_WEAPON_FISTS,
-	DMG_CLUB,		// TF_WEAPON_SHOVEL,
-	DMG_CLUB,		// TF_WEAPON_WRENCH,
-	DMG_SLASH,		// TF_WEAPON_BONESAW,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,	// TF_WEAPON_SHOTGUN_PRIMARY,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,	// TF_WEAPON_SHOTGUN_SOLDIER,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,	// TF_WEAPON_SHOTGUN_HWG,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,	// TF_WEAPON_SHOTGUN_PYRO,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,  // TF_WEAPON_SCATTERGUN,
-	DMG_BULLET | DMG_USE_HITLOCATIONS,	// TF_WEAPON_SNIPERRIFLE,
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_MINIGUN,
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_SMG,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE,		// TF_WEAPON_SYRINGEGUN_MEDIC,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE | DMG_PARALYZE,		// TF_WEAPON_TRANQ,
-	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_ROCKETLAUNCHER,
-	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_GRENADELAUNCHER,
-	DMG_BLAST | DMG_HALF_FALLOFF | DMG_NOCLOSEDISTANCEMOD,		// TF_WEAPON_PIPEBOMBLAUNCHER,
-	DMG_IGNITE | DMG_PREVENT_PHYSICS_FORCE | DMG_PREVENT_PHYSICS_FORCE,		// TF_WEAPON_FLAMETHROWER,
-	DMG_BLAST | DMG_HALF_FALLOFF,		// TF_WEAPON_GRENADE_NORMAL,
-	DMG_SONIC | DMG_HALF_FALLOFF,		// TF_WEAPON_GRENADE_CONCUSSION,
-	DMG_BULLET | DMG_HALF_FALLOFF,		// TF_WEAPON_GRENADE_NAIL,
-	DMG_BLAST | DMG_HALF_FALLOFF,		// TF_WEAPON_GRENADE_MIRV,
-	DMG_BLAST | DMG_HALF_FALLOFF,		// TF_WEAPON_GRENADE_MIRV_DEMOMAN,
-	DMG_BURN | DMG_RADIUS_MAX,		// TF_WEAPON_GRENADE_NAPALM,
-	DMG_POISON | DMG_HALF_FALLOFF,		// TF_WEAPON_GRENADE_GAS,
-	DMG_BLAST | DMG_HALF_FALLOFF | DMG_PREVENT_PHYSICS_FORCE,		// TF_WEAPON_GRENADE_EMP,
-	DMG_GENERIC,	// TF_WEAPON_GRENADE_CALTROP,
-	DMG_BLAST | DMG_HALF_FALLOFF  | DMG_NOCLOSEDISTANCEMOD,		// TF_WEAPON_GRENADE_PIPEBOMB,
-	DMG_GENERIC,	// TF_WEAPON_GRENADE_SMOKE_BOMB,
-	DMG_GENERIC,	// TF_WEAPON_GRENADE_HEAL
-	DMG_CLUB,		// TF_WEAPON_GRENADE_STUNBALL
-	DMG_CLUB,		// TF_WEAPON_GRENADE_JAR
-	DMG_CLUB,		// TF_WEAPON_GRENADE_JAR_MILK
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_PISTOL,
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_PISTOL_SCOUT,
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_REVOLVER,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE,		// TF_WEAPON_NAILGUN,
-	DMG_BULLET,		// TF_WEAPON_PDA,
-	DMG_BULLET,		// TF_WEAPON_PDA_ENGINEER_BUILD,
-	DMG_BULLET,		// TF_WEAPON_PDA_ENGINEER_DESTROY,
-	DMG_BULLET,		// TF_WEAPON_PDA_SPY,
-	DMG_BULLET,		// TF_WEAPON_BUILDER
-	DMG_BULLET,		// TF_WEAPON_MEDIGUN
-	DMG_BLAST,		// TF_WEAPON_GRENADE_MIRVBOMB
-	DMG_BLAST | DMG_IGNITE | DMG_RADIUS_MAX,		// TF_WEAPON_FLAMETHROWER_ROCKET
-	DMG_BLAST | DMG_HALF_FALLOFF,					// TF_WEAPON_GRENADE_DEMOMAN
-	DMG_BULLET,	// TF_WEAPON_SENTRY_BULLET
-	DMG_BLAST,	// TF_WEAPON_SENTRY_ROCKET
-	DMG_GENERIC,	// TF_WEAPON_DISPENSER
-	DMG_GENERIC,	// TF_WEAPON_INVIS
-	DMG_BULLET | DMG_IGNITE,		// TF_WEAPON_FLAREGUN
-	DMG_GENERIC,	// TF_WEAPON_LUNCHBOX
-	DMG_GENERIC,	// TF_WEAPON_JAR
-	DMG_BULLET | DMG_USE_HITLOCATIONS,		// TF_WEAPON_COMPOUND_BOW
-	DMG_GENERIC,	// TF_WEAPON_BUFF_ITEM
-	DMG_CLUB,		// TF_WEAPON_PUMPKIN_BOMB
-	DMG_CLUB,		// TF_WEAPON_SWORD
-	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT,
-	DMG_CLUB,		// TF_WEAPON_LIFELINE
-	DMG_CLUB,		// TF_WEAPON_LASER_POINTER
-	DMG_BULLET,		// TF_WEAPON_DISPENSER_GUN
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD, // TF_WEAPON_SENTRY_REVENGE
-	DMG_GENERIC,	// TF_WEAPON_JAR_MILK
-	DMG_BUCKSHOT | DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_HANDGUN_SCOUT_PRIMARY
-	DMG_CLUB,		// TF_WEAPON_BAT_FISH
+int g_aWeaponDamageTypes[] = {
+	DMG_GENERIC,																		  // TF_WEAPON_NONE
+	DMG_CLUB,																			  // TF_WEAPON_BAT,
+	DMG_CLUB,																			  // TF_WEAPON_BAT_WOOD,
+	DMG_CLUB,																			  // TF_WEAPON_BOTTLE,
+	DMG_CLUB,																			  // TF_WEAPON_FIREAXE,
+	DMG_CLUB,																			  // TF_WEAPON_CLUB,
+	DMG_CLUB,																			  // TF_WEAPON_CROWBAR,
+	DMG_SLASH,																			  // TF_WEAPON_KNIFE,
+	DMG_CLUB,																			  // TF_WEAPON_FISTS,
+	DMG_CLUB,																			  // TF_WEAPON_SHOVEL,
+	DMG_CLUB,																			  // TF_WEAPON_WRENCH,
+	DMG_SLASH,																			  // TF_WEAPON_BONESAW,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,													  // TF_WEAPON_SHOTGUN_PRIMARY,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,													  // TF_WEAPON_SHOTGUN_SOLDIER,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,													  // TF_WEAPON_SHOTGUN_HWG,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,													  // TF_WEAPON_SHOTGUN_PYRO,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,													  // TF_WEAPON_SCATTERGUN,
+	DMG_BULLET | DMG_USE_HITLOCATIONS,													  // TF_WEAPON_SNIPERRIFLE,
+	DMG_BULLET | DMG_USEDISTANCEMOD,													  // TF_WEAPON_MINIGUN,
+	DMG_BULLET | DMG_USEDISTANCEMOD,													  // TF_WEAPON_SMG,
+	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE, // TF_WEAPON_SYRINGEGUN_MEDIC,
+	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE | DMG_PARALYZE,			  // TF_WEAPON_TRANQ,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,									  // TF_WEAPON_ROCKETLAUNCHER,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,									  // TF_WEAPON_GRENADELAUNCHER,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_NOCLOSEDISTANCEMOD,								  // TF_WEAPON_PIPEBOMBLAUNCHER,
+	DMG_IGNITE | DMG_PREVENT_PHYSICS_FORCE | DMG_PREVENT_PHYSICS_FORCE,					  // TF_WEAPON_FLAMETHROWER,
+	DMG_BLAST | DMG_HALF_FALLOFF,														  // TF_WEAPON_GRENADE_NORMAL,
+	DMG_SONIC | DMG_HALF_FALLOFF,							  // TF_WEAPON_GRENADE_CONCUSSION,
+	DMG_BULLET | DMG_HALF_FALLOFF,							  // TF_WEAPON_GRENADE_NAIL,
+	DMG_BLAST | DMG_HALF_FALLOFF,							  // TF_WEAPON_GRENADE_MIRV,
+	DMG_BLAST | DMG_HALF_FALLOFF,							  // TF_WEAPON_GRENADE_MIRV_DEMOMAN,
+	DMG_BURN | DMG_RADIUS_MAX,								  // TF_WEAPON_GRENADE_NAPALM,
+	DMG_POISON | DMG_HALF_FALLOFF,							  // TF_WEAPON_GRENADE_GAS,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_PREVENT_PHYSICS_FORCE, // TF_WEAPON_GRENADE_EMP,
+	DMG_GENERIC,											  // TF_WEAPON_GRENADE_CALTROP,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_NOCLOSEDISTANCEMOD,	  // TF_WEAPON_GRENADE_PIPEBOMB,
+	DMG_GENERIC,											  // TF_WEAPON_GRENADE_SMOKE_BOMB,
+	DMG_GENERIC,											  // TF_WEAPON_GRENADE_HEAL
+	DMG_CLUB,												  // TF_WEAPON_GRENADE_STUNBALL
+	DMG_CLUB,												  // TF_WEAPON_GRENADE_JAR
+	DMG_CLUB,												  // TF_WEAPON_GRENADE_JAR_MILK
+	DMG_BULLET | DMG_USEDISTANCEMOD,						  // TF_WEAPON_PISTOL,
+	DMG_BULLET | DMG_USEDISTANCEMOD,						  // TF_WEAPON_PISTOL_SCOUT,
+	DMG_BULLET | DMG_USEDISTANCEMOD,						  // TF_WEAPON_REVOLVER,
+	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD | DMG_PREVENT_PHYSICS_FORCE, // TF_WEAPON_NAILGUN,
+	DMG_BULLET,																			  // TF_WEAPON_PDA,
+	DMG_BULLET,										   // TF_WEAPON_PDA_ENGINEER_BUILD,
+	DMG_BULLET,										   // TF_WEAPON_PDA_ENGINEER_DESTROY,
+	DMG_BULLET,										   // TF_WEAPON_PDA_SPY,
+	DMG_BULLET,										   // TF_WEAPON_BUILDER
+	DMG_BULLET,										   // TF_WEAPON_MEDIGUN
+	DMG_BLAST,										   // TF_WEAPON_GRENADE_MIRVBOMB
+	DMG_BLAST | DMG_IGNITE | DMG_RADIUS_MAX,		   // TF_WEAPON_FLAMETHROWER_ROCKET
+	DMG_BLAST | DMG_HALF_FALLOFF,					   // TF_WEAPON_GRENADE_DEMOMAN
+	DMG_BULLET,										   // TF_WEAPON_SENTRY_BULLET
+	DMG_BLAST,										   // TF_WEAPON_SENTRY_ROCKET
+	DMG_GENERIC,									   // TF_WEAPON_DISPENSER
+	DMG_GENERIC,									   // TF_WEAPON_INVIS
+	DMG_BULLET | DMG_IGNITE,						   // TF_WEAPON_FLAREGUN
+	DMG_GENERIC,									   // TF_WEAPON_LUNCHBOX
+	DMG_GENERIC,									   // TF_WEAPON_JAR
+	DMG_BULLET | DMG_USE_HITLOCATIONS,				   // TF_WEAPON_COMPOUND_BOW
+	DMG_GENERIC,									   // TF_WEAPON_BUFF_ITEM
+	DMG_CLUB,										   // TF_WEAPON_PUMPKIN_BOMB
+	DMG_CLUB,										   // TF_WEAPON_SWORD
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD, // TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT,
+	DMG_CLUB,										   // TF_WEAPON_LIFELINE
+	DMG_CLUB,										   // TF_WEAPON_LASER_POINTER
+	DMG_BULLET,										   // TF_WEAPON_DISPENSER_GUN
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,				   // TF_WEAPON_SENTRY_REVENGE
+	DMG_GENERIC,									   // TF_WEAPON_JAR_MILK
+	DMG_BUCKSHOT | DMG_BULLET | DMG_USEDISTANCEMOD,	   // TF_WEAPON_HANDGUN_SCOUT_PRIMARY
+	DMG_CLUB,										   // TF_WEAPON_BAT_FISH
 	DMG_BULLET | DMG_USE_HITLOCATIONS,
-	DMG_CLUB, // TF_WEAPON_STICKBOMB
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_HANDGUN_SCOUT_SECONDARY
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,  // TF_WEAPON_SODA_POPPER,
-	DMG_BULLET | DMG_USE_HITLOCATIONS,	// TF_WEAPON_SNIPERRIFLE_DECAP,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD,	// TF_WEAPON_RAYGUN,
-	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		// TF_WEAPON_PARTICLE_CANNON,
-	DMG_BULLET | DMG_USEDISTANCEMOD,	// TF_WEAPON_MECHANICAL_ARM,
-	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD,	// TF_WEAPON_DRG_POMSON,
-	DMG_CLUB,		// TF_WEAPON_BAT_GIFTWRAP,
-	DMG_CLUB,		// TF_WEAPON_GRENADE_ORNAMENT_BALL
-	DMG_BULLET | DMG_IGNITE,	// TF_WEAPON_FLAREGUN_REVENGE,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,  // TF_WEAPON_PEP_BRAWLER_BLASTER,
-	DMG_GENERIC,	// TF_WEAPON_CLEAVER
-	DMG_SLASH,		// TF_WEAPON_GRENADE_CLEAVER
-	DMG_GENERIC,	// TF_WEAPON_STICKY_BALL_LAUNCHER,
-	DMG_GENERIC,	// TF_WEAPON_GRENADE_STICKY_BALL,
-	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,	// TF_WEAPON_SHOTGUN_BUILDING_RESCUE,
-	DMG_BLAST | DMG_HALF_FALLOFF,	// TF_WEAPON_CANNON
-	DMG_BULLET,		// TF_WEAPON_THROWABLE
-	DMG_BULLET,		// TF_WEAPON_GRENADE_THROWABLE
-	DMG_BULLET,		// TF_WEAPON_PDA_SPY_BUILD
-	DMG_BULLET,		// TF_WEAPON_GRENADE_WATERBALLOON
-	DMG_SLASH,		// TF_WEAPON_HARVESTER_SAW
-	DMG_GENERIC,	// TF_WEAPON_SPELLBOOK
-	DMG_GENERIC,	// TF_WEAPON_SPELLBOOK_PROJECTILE
-	DMG_BULLET | DMG_USE_HITLOCATIONS,	// TF_WEAPON_SNIPERRIFLE_CLASSIC,
-	DMG_GENERIC, // TF_WEAPON_PARACHUTE,
-	DMG_GENERIC, // TF_WEAPON_GRAPPLINGHOOK,
-	DMG_GENERIC, // TF_WEAPON_PASSTIME_GUN
+	DMG_CLUB,												  // TF_WEAPON_STICKBOMB
+	DMG_BULLET | DMG_USEDISTANCEMOD,						  // TF_WEAPON_HANDGUN_SCOUT_SECONDARY
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,						  // TF_WEAPON_SODA_POPPER,
+	DMG_BULLET | DMG_USE_HITLOCATIONS,						  // TF_WEAPON_SNIPERRIFLE_DECAP,
+	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD, // TF_WEAPON_RAYGUN,
+	DMG_BLAST | DMG_HALF_FALLOFF | DMG_USEDISTANCEMOD,		  // TF_WEAPON_PARTICLE_CANNON,
+	DMG_BULLET | DMG_USEDISTANCEMOD,						  // TF_WEAPON_MECHANICAL_ARM,
+	DMG_BULLET | DMG_USEDISTANCEMOD | DMG_NOCLOSEDISTANCEMOD, // TF_WEAPON_DRG_POMSON,
+	DMG_CLUB,												  // TF_WEAPON_BAT_GIFTWRAP,
+	DMG_CLUB,												  // TF_WEAPON_GRENADE_ORNAMENT_BALL
+	DMG_BULLET | DMG_IGNITE,								  // TF_WEAPON_FLAREGUN_REVENGE,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,						  // TF_WEAPON_PEP_BRAWLER_BLASTER,
+	DMG_GENERIC,											  // TF_WEAPON_CLEAVER
+	DMG_SLASH,												  // TF_WEAPON_GRENADE_CLEAVER
+	DMG_GENERIC,											  // TF_WEAPON_STICKY_BALL_LAUNCHER,
+	DMG_GENERIC,											  // TF_WEAPON_GRENADE_STICKY_BALL,
+	DMG_BUCKSHOT | DMG_USEDISTANCEMOD,						  // TF_WEAPON_SHOTGUN_BUILDING_RESCUE,
+	DMG_BLAST | DMG_HALF_FALLOFF,							  // TF_WEAPON_CANNON
+	DMG_BULLET,												  // TF_WEAPON_THROWABLE
+	DMG_BULLET,												  // TF_WEAPON_GRENADE_THROWABLE
+	DMG_BULLET,												  // TF_WEAPON_PDA_SPY_BUILD
+	DMG_BULLET,												  // TF_WEAPON_GRENADE_WATERBALLOON
+	DMG_SLASH,												  // TF_WEAPON_HARVESTER_SAW
+	DMG_GENERIC,											  // TF_WEAPON_SPELLBOOK
+	DMG_GENERIC,											  // TF_WEAPON_SPELLBOOK_PROJECTILE
+	DMG_BULLET | DMG_USE_HITLOCATIONS,						  // TF_WEAPON_SNIPERRIFLE_CLASSIC,
+	DMG_GENERIC,											  // TF_WEAPON_PARACHUTE,
+	DMG_GENERIC,											  // TF_WEAPON_GRAPPLINGHOOK,
+	DMG_GENERIC,											  // TF_WEAPON_PASSTIME_GUN
 #ifdef STAGING_ONLY
-	DMG_BULLET | DMG_USE_HITLOCATIONS,	// TF_WEAPON_SNIPERRIFLE_REVOLVER,
+	DMG_BULLET | DMG_USE_HITLOCATIONS, // TF_WEAPON_SNIPERRIFLE_REVOLVER,
 #endif
-	DMG_BULLET | DMG_USEDISTANCEMOD,		// TF_WEAPON_CHARGED_SMG,
+	DMG_BULLET | DMG_USEDISTANCEMOD, // TF_WEAPON_CHARGED_SMG,
 };
 
-const char *g_szSpecialDamageNames[] =
-{
+const char *g_szSpecialDamageNames[] = {
 	"",
 	"TF_DMG_CUSTOM_HEADSHOT",
 	"TF_DMG_CUSTOM_BACKSTAB",
@@ -900,31 +798,30 @@ const char *g_szSpecialDamageNames[] =
 	"TF_DMG_CUSTOM_GIANT_HAMMER",
 	"TF_DMG_CUSTOM_RUNE_REFLECT",
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_szSpecialDamageNames ) == TF_DMG_CUSTOM_END );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_szSpecialDamageNames) == TF_DMG_CUSTOM_END);
 
-const char *GetCustomDamageName( ETFDmgCustom eDmgCustom )
+const char *GetCustomDamageName(ETFDmgCustom eDmgCustom)
 {
-	if ( ( eDmgCustom >= ARRAYSIZE( g_szSpecialDamageNames ) ) || ( eDmgCustom < 0 ) )
+	if((eDmgCustom >= ARRAYSIZE(g_szSpecialDamageNames)) || (eDmgCustom < 0))
 		return NULL;
 
 	return g_szSpecialDamageNames[eDmgCustom];
 }
 
-ETFDmgCustom GetCustomDamageFromName( const char *pszCustomDmgName )
+ETFDmgCustom GetCustomDamageFromName(const char *pszCustomDmgName)
 {
-	for( uint i=0; i<TF_DMG_CUSTOM_END; i++ )
+	for(uint i = 0; i < TF_DMG_CUSTOM_END; i++)
 	{
 		ETFDmgCustom eDmgCustom = (ETFDmgCustom)i;
-		if ( !V_stricmp( GetCustomDamageName( eDmgCustom ), pszCustomDmgName ) )
+		if(!V_stricmp(GetCustomDamageName(eDmgCustom), pszCustomDmgName))
 			return eDmgCustom;
 	}
 
-	Assert( !!"Invalid Custom Damage Name" );
+	Assert(!!"Invalid Custom Damage Name");
 	return TF_DMG_CUSTOM_NONE;
 }
 
-const char *g_szProjectileNames[] =
-{
+const char *g_szProjectileNames[] = {
 	"",
 	"projectile_bullet",
 	"projectile_rocket",
@@ -966,11 +863,10 @@ const char *g_szProjectileNames[] =
 	"projectile_jarate_bolt",
 #endif
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_szProjectileNames ) == TF_NUM_PROJECTILES );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_szProjectileNames) == TF_NUM_PROJECTILES);
 
 // these map to the projectiles named in g_szProjectileNames
-int g_iProjectileWeapons[] =
-{
+int g_iProjectileWeapons[] = {
 	TF_WEAPON_NONE,
 	TF_WEAPON_PISTOL,
 	TF_WEAPON_ROCKETLAUNCHER,
@@ -985,7 +881,7 @@ int g_iProjectileWeapons[] =
 	TF_WEAPON_CROSSBOW,
 	TF_WEAPON_PARTICLE_CANNON,
 	TF_WEAPON_RAYGUN,
-	TF_WEAPON_GRENADELAUNCHER,			// practice pipes should never kill anyone anyway
+	TF_WEAPON_GRENADELAUNCHER, // practice pipes should never kill anyone anyway
 	TF_WEAPON_CLEAVER,
 	TF_WEAPON_STICKY_BALL_LAUNCHER,
 	TF_WEAPON_CANNON,
@@ -1013,13 +909,12 @@ int g_iProjectileWeapons[] =
 #endif
 };
 
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_szProjectileNames ) == ARRAYSIZE( g_iProjectileWeapons ) );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_szProjectileNames) == ARRAYSIZE(g_iProjectileWeapons));
 
 //-----------------------------------------------------------------------------
 // Taunt attacks
 //-----------------------------------------------------------------------------
-static const char* taunt_attack_name[] =
-{
+static const char *taunt_attack_name[] = {
 	"TAUNTATK_NONE",
 	"TAUNTATK_PYRO_HADOUKEN",
 	"TAUNTATK_HEAVY_EAT",
@@ -1058,15 +953,15 @@ static const char* taunt_attack_name[] =
 	//
 };
 
-COMPILE_TIME_ASSERT( ARRAYSIZE( taunt_attack_name ) == TAUNTATK_COUNT );
+COMPILE_TIME_ASSERT(ARRAYSIZE(taunt_attack_name) == TAUNTATK_COUNT);
 
-taunt_attack_t GetTauntAttackByName( const char* pszTauntAttackName )
+taunt_attack_t GetTauntAttackByName(const char *pszTauntAttackName)
 {
-	if ( pszTauntAttackName )
+	if(pszTauntAttackName)
 	{
-		for ( int i=0; i<ARRAYSIZE( taunt_attack_name ); ++i )
+		for(int i = 0; i < ARRAYSIZE(taunt_attack_name); ++i)
 		{
-			if ( !V_stricmp( pszTauntAttackName, taunt_attack_name[i] ) )
+			if(!V_stricmp(pszTauntAttackName, taunt_attack_name[i]))
 			{
 				return (taunt_attack_t)i;
 			}
@@ -1076,8 +971,7 @@ taunt_attack_t GetTauntAttackByName( const char* pszTauntAttackName )
 	return TAUNTATK_NONE;
 }
 
-const char *g_pszHintMessages[] =
-{
+const char *g_pszHintMessages[] = {
 	"#Hint_spotted_a_friend",
 	"#Hint_spotted_an_enemy",
 	"#Hint_killing_enemies_is_good",
@@ -1090,7 +984,7 @@ const char *g_pszHintMessages[] =
 	"#Hint_Cannot_Attack_While_Feign_Armed",
 	"#Hint_ClassMenu",
 
-// Grenades
+	// Grenades
 	"#Hint_gren_caltrops",
 	"#Hint_gren_concussion",
 	"#Hint_gren_emp",
@@ -1100,17 +994,17 @@ const char *g_pszHintMessages[] =
 	"#Hint_gren_napalm",
 	"#Hint_gren_normal",
 
-// Altfires
+	// Altfires
 	"#Hint_altfire_sniperrifle",
 	"#Hint_altfire_flamethrower",
 	"#Hint_altfire_grenadelauncher",
 	"#Hint_altfire_pipebomblauncher",
 	"#Hint_altfire_rotate_building",
 
-// Soldier
+	// Soldier
 	"#Hint_Soldier_rpg_reload",
 
-// Engineer
+	// Engineer
 	"#Hint_Engineer_use_wrench_onown",
 	"#Hint_Engineer_use_wrench_onother",
 	"#Hint_Engineer_use_wrench_onfriend",
@@ -1136,8 +1030,7 @@ const char *g_pszHintMessages[] =
 	"#Hint_Cannot_Arm_Feign_Now",
 };
 
-const char *g_pszArrowModels[] =
-{
+const char *g_pszArrowModels[] = {
 	"models/weapons/w_models/w_arrow.mdl",
 	"models/weapons/w_models/w_repair_claw.mdl",
 	"models/weapons/w_models/w_baseball.mdl",
@@ -1157,10 +1050,9 @@ const char *g_pszArrowModels[] =
 	"models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
 #endif
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_pszArrowModels ) == TF_ARROW_MODEL_COUNT );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_pszArrowModels) == TF_ARROW_MODEL_COUNT);
 
-const char *g_pszCampaignMedalIcons[] =
-{
+const char *g_pszCampaignMedalIcons[] = {
 	"",
 	// Gun Mettle Campaign
 	"../hud/coin_summer2015_gravel",
@@ -1188,46 +1080,44 @@ const char *g_pszCampaignMedalIcons[] =
 	"../HUD/stamp_winter2016_silver2",
 	"../HUD/stamp_winter2016_gold2",
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_pszCampaignMedalIcons ) == CAMPAIGN_MEDAL_DISPLAY_TYPE_COUNT );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_pszCampaignMedalIcons) == CAMPAIGN_MEDAL_DISPLAY_TYPE_COUNT);
 
 //-----------------------------------------------------------------------------
 // Dead Calling Cards
-const char *g_pszDeathCallingCardModels[] =
-{
-	"",			// Empty at zero
-	"models/props_gameplay/tombstone_specialdelivery.mdl",		// Scout PolyCount Set
-	"models/props_gameplay/tombstone_crocostyle.mdl",		// Sniper PolyCount Set
-	"models/props_gameplay/tombstone_tankbuster.mdl",		// Solider PolyCount Set
-	"models/props_gameplay/tombstone_gasjockey.mdl",		// Pyro PolyCount Set
+const char *g_pszDeathCallingCardModels[] = {
+	"",													   // Empty at zero
+	"models/props_gameplay/tombstone_specialdelivery.mdl", // Scout PolyCount Set
+	"models/props_gameplay/tombstone_crocostyle.mdl",	   // Sniper PolyCount Set
+	"models/props_gameplay/tombstone_tankbuster.mdl",	   // Solider PolyCount Set
+	"models/props_gameplay/tombstone_gasjockey.mdl",	   // Pyro PolyCount Set
 };
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int GetWeaponId( const char *pszWeaponName )
+int GetWeaponId(const char *pszWeaponName)
 {
 	// if this doesn't match, you need to add missing weapons to the array
-	COMPILE_TIME_ASSERT( TF_WEAPON_COUNT == ARRAYSIZE( g_aWeaponNames ) );
+	COMPILE_TIME_ASSERT(TF_WEAPON_COUNT == ARRAYSIZE(g_aWeaponNames));
 
-	for ( int iWeapon = 0; iWeapon < ARRAYSIZE( g_aWeaponNames ); ++iWeapon )
+	for(int iWeapon = 0; iWeapon < ARRAYSIZE(g_aWeaponNames); ++iWeapon)
 	{
-		if ( !Q_stricmp( pszWeaponName, g_aWeaponNames[iWeapon] ) )
+		if(!Q_stricmp(pszWeaponName, g_aWeaponNames[iWeapon]))
 			return iWeapon;
 	}
 
 	return TF_WEAPON_NONE;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char *WeaponIdToAlias( int iWeapon )
+const char *WeaponIdToAlias(int iWeapon)
 {
 	// if this doesn't match, you need to add missing weapons to the array
-	COMPILE_TIME_ASSERT( TF_WEAPON_COUNT == ARRAYSIZE( g_aWeaponNames ) );
+	COMPILE_TIME_ASSERT(TF_WEAPON_COUNT == ARRAYSIZE(g_aWeaponNames));
 
-	if ( ( iWeapon >= ARRAYSIZE( g_aWeaponNames ) ) || ( iWeapon < 0 ) )
+	if((iWeapon >= ARRAYSIZE(g_aWeaponNames)) || (iWeapon < 0))
 		return NULL;
 
 	return g_aWeaponNames[iWeapon];
@@ -1238,7 +1128,7 @@ const char *WeaponIdToAlias( int iWeapon )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int GetWeaponFromDamage( const CTakeDamageInfo &info )
+int GetWeaponFromDamage(const CTakeDamageInfo &info)
 {
 	int iWeapon = TF_WEAPON_NONE;
 
@@ -1247,66 +1137,68 @@ int GetWeaponFromDamage( const CTakeDamageInfo &info )
 	// Find the killer & the scorer
 	CBaseEntity *pInflictor = info.GetInflictor();
 	CBaseEntity *pKiller = info.GetAttacker();
-	CBasePlayer *pScorer = TFGameRules()->GetDeathScorer( pKiller, pInflictor, NULL );
+	CBasePlayer *pScorer = TFGameRules()->GetDeathScorer(pKiller, pInflictor, NULL);
 
 	// find the weapon the killer used
 
-	if ( pScorer )	// Is the killer a client?
+	if(pScorer) // Is the killer a client?
 	{
-		if ( pInflictor )
+		if(pInflictor)
 		{
-			if ( pInflictor == pScorer )
+			if(pInflictor == pScorer)
 			{
 				// If the inflictor is the killer,  then it must be their current weapon doing the damage
-				if ( pScorer->GetActiveWeapon() )
+				if(pScorer->GetActiveWeapon())
 				{
 					killer_weapon_name = pScorer->GetActiveWeapon()->GetClassname();
 				}
 			}
 			else
 			{
-				killer_weapon_name = STRING( pInflictor->m_iClassname );  // it's just that easy
+				killer_weapon_name = STRING(pInflictor->m_iClassname); // it's just that easy
 			}
 		}
 	}
-	else if ( pInflictor )
+	else if(pInflictor)
 	{
-		killer_weapon_name = STRING( pInflictor->m_iClassname );
+		killer_weapon_name = STRING(pInflictor->m_iClassname);
 	}
 
-	if ( !Q_strnicmp( killer_weapon_name, "tf_projectile", 13 ) )
+	if(!Q_strnicmp(killer_weapon_name, "tf_projectile", 13))
 	{
-		for( int i = 0; i < ARRAYSIZE( g_szProjectileNames ); i++ )
+		for(int i = 0; i < ARRAYSIZE(g_szProjectileNames); i++)
 		{
-			if ( !Q_stricmp( &killer_weapon_name[ 3 ], g_szProjectileNames[ i ] ) )
+			if(!Q_stricmp(&killer_weapon_name[3], g_szProjectileNames[i]))
 			{
-				iWeapon = g_iProjectileWeapons[ i ];
+				iWeapon = g_iProjectileWeapons[i];
 				break;
 			}
 		}
 	}
 	else
 	{
-		int iLen = Q_strlen( killer_weapon_name );
+		int iLen = Q_strlen(killer_weapon_name);
 
 		// strip off _projectile from projectiles shot from other projectiles
-		if ( ( iLen < 256 ) && ( iLen > 11 ) && !Q_stricmp( &killer_weapon_name[ iLen - 11 ], "_projectile" ) )
+		if((iLen < 256) && (iLen > 11) && !Q_stricmp(&killer_weapon_name[iLen - 11], "_projectile"))
 		{
-			char temp[ 256 ];
-			V_strcpy_safe( temp, killer_weapon_name );
-			temp[ iLen - 11 ] = 0;
+			char temp[256];
+			V_strcpy_safe(temp, killer_weapon_name);
+			temp[iLen - 11] = 0;
 
 			// set the weapon used
-			iWeapon = GetWeaponId( temp );
+			iWeapon = GetWeaponId(temp);
 		}
 		else
 		{
 			// set the weapon used
-			iWeapon = GetWeaponId( killer_weapon_name );
+			iWeapon = GetWeaponId(killer_weapon_name);
 		}
 	}
 
-	AssertMsg( iWeapon >= 0 && iWeapon < TF_WEAPON_COUNT, "Referencing a weapon not in tf_shareddefs.h.  Check to make it's defined and it's mapped correctly in g_szProjectileNames and g_iProjectileWeapons." );
+	AssertMsg(iWeapon >= 0 && iWeapon < TF_WEAPON_COUNT,
+			  "Referencing a weapon not in tf_shareddefs.h.  Check to make it's defined and it's mapped correctly in "
+			  "g_szProjectileNames and g_iProjectileWeapons.");
 	return iWeapon;
 }
 
@@ -1316,7 +1208,7 @@ int GetWeaponFromDamage( const CTakeDamageInfo &info )
 // CObjectInfo tables.
 // ------------------------------------------------------------------------------------------------ //
 
-CObjectInfo::CObjectInfo( const char *pObjectName )
+CObjectInfo::CObjectInfo(const char *pObjectName)
 {
 	m_pObjectName = pObjectName;
 	m_pClassName = NULL;
@@ -1348,44 +1240,39 @@ CObjectInfo::CObjectInfo( const char *pObjectName )
 	m_bRequiresOwnBuilder = false;
 }
 
-
 CObjectInfo::~CObjectInfo()
 {
-	delete [] m_pClassName;
-	delete [] m_pStatusName;
-	delete [] m_pBuilderWeaponName;
-	delete [] m_pBuilderPlacementString;
-	delete [] m_pIconActive;
-	delete [] m_pIconInactive;
-	delete [] m_pIconMenu;
-	delete [] m_pViewModel;
-	delete [] m_pPlayerModel;
-	delete [] m_pExplodeSound;
-	delete [] m_pUpgradeSound;
-	delete [] m_pExplosionParticleEffect;
+	delete[] m_pClassName;
+	delete[] m_pStatusName;
+	delete[] m_pBuilderWeaponName;
+	delete[] m_pBuilderPlacementString;
+	delete[] m_pIconActive;
+	delete[] m_pIconInactive;
+	delete[] m_pIconMenu;
+	delete[] m_pViewModel;
+	delete[] m_pPlayerModel;
+	delete[] m_pExplodeSound;
+	delete[] m_pUpgradeSound;
+	delete[] m_pExplosionParticleEffect;
 }
 
-CObjectInfo g_ObjectInfos[OBJ_LAST] =
-{
-	CObjectInfo( "OBJ_DISPENSER" ),
-	CObjectInfo( "OBJ_TELEPORTER" ),
-	CObjectInfo( "OBJ_SENTRYGUN" ),
-	CObjectInfo( "OBJ_ATTACHMENT_SAPPER" ),
+CObjectInfo g_ObjectInfos[OBJ_LAST] = {
+	CObjectInfo("OBJ_DISPENSER"), CObjectInfo("OBJ_TELEPORTER"),
+	CObjectInfo("OBJ_SENTRYGUN"), CObjectInfo("OBJ_ATTACHMENT_SAPPER"),
 #ifdef STAGING_ONLY
-	CObjectInfo( "OBJ_CATAPULT" ),
-	CObjectInfo( "OBJ_SPY_TRAP" ),
+	CObjectInfo("OBJ_CATAPULT"),  CObjectInfo("OBJ_SPY_TRAP"),
 #endif
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_ObjectInfos ) == OBJ_LAST );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_ObjectInfos) == OBJ_LAST);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int GetBuildableId( const char *pszBuildableName )
+int GetBuildableId(const char *pszBuildableName)
 {
-	for ( int iBuildable = 0; iBuildable < OBJ_LAST; ++iBuildable )
+	for(int iBuildable = 0; iBuildable < OBJ_LAST; ++iBuildable)
 	{
-		if ( !Q_stricmp( pszBuildableName, g_ObjectInfos[iBuildable].m_pObjectName ) )
+		if(!Q_stricmp(pszBuildableName, g_ObjectInfos[iBuildable].m_pObjectName))
 			return iBuildable;
 	}
 
@@ -1397,71 +1284,72 @@ bool AreObjectInfosLoaded()
 	return g_ObjectInfos[0].m_pClassName != NULL;
 }
 
-static void SpewFileInfo( IBaseFileSystem *pFileSystem, const char *resourceName, const char *pathID, KeyValues *pValues )
+static void SpewFileInfo(IBaseFileSystem *pFileSystem, const char *resourceName, const char *pathID, KeyValues *pValues)
 {
-	bool bFileExists = pFileSystem->FileExists( resourceName, pathID );
-	bool bFileWritable = pFileSystem->IsFileWritable( resourceName, pathID );
-	unsigned int nSize = pFileSystem->Size( resourceName, pathID );
+	bool bFileExists = pFileSystem->FileExists(resourceName, pathID);
+	bool bFileWritable = pFileSystem->IsFileWritable(resourceName, pathID);
+	unsigned int nSize = pFileSystem->Size(resourceName, pathID);
 
-	Msg( "resourceName:%s pathID:%s bFileExists:%d size:%u writeable:%d\n", resourceName, pathID, bFileExists, nSize, bFileWritable );
+	Msg("resourceName:%s pathID:%s bFileExists:%d size:%u writeable:%d\n", resourceName, pathID, bFileExists, nSize,
+		bFileWritable);
 
-	unsigned int filesize = ( unsigned int )-1;
-	FileHandle_t f = filesystem->Open( resourceName, "rb", pathID );
-	if ( f )
+	unsigned int filesize = (unsigned int)-1;
+	FileHandle_t f = filesystem->Open(resourceName, "rb", pathID);
+	if(f)
 	{
-		filesize = filesystem->Size( f );
-		filesystem->Close( f );
+		filesize = filesystem->Size(f);
+		filesystem->Close(f);
 	}
 
-	Msg( " FileHandle_t:%p size:%u\n", f, filesize );
+	Msg(" FileHandle_t:%p size:%u\n", f, filesize);
 
-	IFileSystem *pFS = 	(IFileSystem *)filesystem;
+	IFileSystem *pFS = (IFileSystem *)filesystem;
 
-	char cwd[ MAX_PATH ];
-	cwd[ 0 ] = 0;
-	pFS->GetCurrentDirectory( cwd, ARRAYSIZE( cwd ) );
+	char cwd[MAX_PATH];
+	cwd[0] = 0;
+	pFS->GetCurrentDirectory(cwd, ARRAYSIZE(cwd));
 
-	bool bAvailable = pFS->IsFileImmediatelyAvailable( resourceName );
+	bool bAvailable = pFS->IsFileImmediatelyAvailable(resourceName);
 
-	Msg( " IsFileImmediatelyAvailable:%d cwd:%s\n", bAvailable, cwd );
+	Msg(" IsFileImmediatelyAvailable:%d cwd:%s\n", bAvailable, cwd);
 
 	pFS->PrintSearchPaths();
 
-	if ( pValues )
+	if(pValues)
 	{
-		Msg( "Keys:" );
-		KeyValuesDumpAsDevMsg( pValues, 2, 0 );
+		Msg("Keys:");
+		KeyValuesDumpAsDevMsg(pValues, 2, 0);
 	}
 }
 
-void LoadObjectInfos( IBaseFileSystem *pFileSystem )
+void LoadObjectInfos(IBaseFileSystem *pFileSystem)
 {
 	const char *pFilename = "scripts/objects.txt";
 
 	// Make sure this stuff hasn't already been loaded.
-	Assert( !AreObjectInfosLoaded() );
+	Assert(!AreObjectInfosLoaded());
 
-	KeyValues *pValues = new KeyValues( "Object descriptions" );
-	if ( !pValues->LoadFromFile( pFileSystem, pFilename, "GAME" ) )
+	KeyValues *pValues = new KeyValues("Object descriptions");
+	if(!pValues->LoadFromFile(pFileSystem, pFilename, "GAME"))
 	{
 		// Getting "Can't open scripts/objects.txt for object info." errors. Spew file information
 		//  before the Error() call which should show up in the minidumps.
-		SpewFileInfo( pFileSystem, pFilename, "GAME", NULL );
+		SpewFileInfo(pFileSystem, pFilename, "GAME", NULL);
 
-		Error( "Can't open %s for object info.", pFilename );
+		Error("Can't open %s for object info.", pFilename);
 		pValues->deleteThis();
 		return;
 	}
 
 	// Now read each class's information in.
-	for ( int iObj=0; iObj < ARRAYSIZE( g_ObjectInfos ); iObj++ )
+	for(int iObj = 0; iObj < ARRAYSIZE(g_ObjectInfos); iObj++)
 	{
 		CObjectInfo *pInfo = &g_ObjectInfos[iObj];
-		KeyValues *pSub = pValues->FindKey( pInfo->m_pObjectName );
-		if ( !pSub )
+		KeyValues *pSub = pValues->FindKey(pInfo->m_pObjectName);
+		if(!pSub)
 		{
 			// Getting "Missing section 'OBJ_DISPENSER' from scripts/objects.txt" errors.
-			SpewFileInfo( pFileSystem, pFilename, "GAME", pValues );
+			SpewFileInfo(pFileSystem, pFilename, "GAME", pValues);
 
 			// It seems that folks have corrupt files when these errors are seen in http://minidump.
 			// Does it make sense to call the below Steam API so it'll force a validation next startup time?
@@ -1471,90 +1359,91 @@ void LoadObjectInfos( IBaseFileSystem *pFileSystem )
 			//  corrupt, call ISteamApps::MarkContentCorrupt( false ), before you shutdown
 			//  the game. This will cause a content validation in Steam.
 
-			Error( "Missing section '%s' from %s.", pInfo->m_pObjectName, pFilename );
+			Error("Missing section '%s' from %s.", pInfo->m_pObjectName, pFilename);
 			pValues->deleteThis();
 			return;
 		}
 
 		// Read all the info in.
-		if ( (pInfo->m_flBuildTime = pSub->GetFloat( "BuildTime", -999 )) == -999 ||
-			(pInfo->m_nMaxObjects = pSub->GetInt( "MaxObjects", -999 )) == -999 ||
-			(pInfo->m_Cost = pSub->GetInt( "Cost", -999 )) == -999 ||
-			(pInfo->m_CostMultiplierPerInstance = pSub->GetFloat( "CostMultiplier", -999 )) == -999 ||
-			(pInfo->m_flUpgradeDuration = pSub->GetFloat( "UpgradeDuration", -999 )) == -999 ||
-			(pInfo->m_UpgradeCost = pSub->GetInt( "UpgradeCost", -999 )) == -999 ||
-			(pInfo->m_MaxUpgradeLevel = pSub->GetInt( "MaxUpgradeLevel", -999 )) == -999 ||
-			(pInfo->m_SelectionSlot = pSub->GetInt( "SelectionSlot", -999 )) == -999 ||
-			(pInfo->m_iBuildCount = pSub->GetInt( "BuildCount", -999 )) == -999 ||
-			(pInfo->m_SelectionPosition = pSub->GetInt( "SelectionPosition", -999 )) == -999 )
+		if((pInfo->m_flBuildTime = pSub->GetFloat("BuildTime", -999)) == -999 ||
+		   (pInfo->m_nMaxObjects = pSub->GetInt("MaxObjects", -999)) == -999 ||
+		   (pInfo->m_Cost = pSub->GetInt("Cost", -999)) == -999 ||
+		   (pInfo->m_CostMultiplierPerInstance = pSub->GetFloat("CostMultiplier", -999)) == -999 ||
+		   (pInfo->m_flUpgradeDuration = pSub->GetFloat("UpgradeDuration", -999)) == -999 ||
+		   (pInfo->m_UpgradeCost = pSub->GetInt("UpgradeCost", -999)) == -999 ||
+		   (pInfo->m_MaxUpgradeLevel = pSub->GetInt("MaxUpgradeLevel", -999)) == -999 ||
+		   (pInfo->m_SelectionSlot = pSub->GetInt("SelectionSlot", -999)) == -999 ||
+		   (pInfo->m_iBuildCount = pSub->GetInt("BuildCount", -999)) == -999 ||
+		   (pInfo->m_SelectionPosition = pSub->GetInt("SelectionPosition", -999)) == -999)
 		{
-			SpewFileInfo( pFileSystem, pFilename, "GAME", pValues );
+			SpewFileInfo(pFileSystem, pFilename, "GAME", pValues);
 
-			Error( "Missing data for object '%s' in %s.", pInfo->m_pObjectName, pFilename );
+			Error("Missing data for object '%s' in %s.", pInfo->m_pObjectName, pFilename);
 			pValues->deleteThis();
 			return;
 		}
 
-		pInfo->m_pClassName = ReadAndAllocStringValue( pSub, "ClassName", pFilename );
-		pInfo->m_pStatusName = ReadAndAllocStringValue( pSub, "StatusName", pFilename );
-		pInfo->m_pBuilderWeaponName = ReadAndAllocStringValue( pSub, "BuilderWeaponName", pFilename );
-		pInfo->m_pBuilderPlacementString = ReadAndAllocStringValue( pSub, "BuilderPlacementString", pFilename );
-		pInfo->m_bSolidToPlayerMovement = pSub->GetInt( "SolidToPlayerMovement", 0 ) ? true : false;
-		pInfo->m_pIconActive = ReadAndAllocStringValue( pSub, "IconActive", pFilename );
-		pInfo->m_pIconInactive = ReadAndAllocStringValue( pSub, "IconInactive", pFilename );
-		pInfo->m_pIconMenu = ReadAndAllocStringValue( pSub, "IconMenu", pFilename );
-		pInfo->m_bUseItemInfo = ( pSub->GetInt( "UseItemInfo", 0 ) > 0 );
-		pInfo->m_pViewModel = ReadAndAllocStringValue( pSub, "Viewmodel", pFilename );
-		pInfo->m_pPlayerModel = ReadAndAllocStringValue( pSub, "Playermodel", pFilename );
-		pInfo->m_iDisplayPriority = pSub->GetInt( "DisplayPriority", 0 );
-		pInfo->m_pHudStatusIcon = ReadAndAllocStringValue( pSub, "HudStatusIcon", pFilename );
-		pInfo->m_bVisibleInWeaponSelection = ( pSub->GetInt( "VisibleInWeaponSelection", 1 ) > 0 );
-		pInfo->m_pExplodeSound = ReadAndAllocStringValue( pSub, "ExplodeSound", pFilename );
-		pInfo->m_pUpgradeSound = ReadAndAllocStringValue( pSub, "UpgradeSound", pFilename );
-		pInfo->m_pExplosionParticleEffect = ReadAndAllocStringValue( pSub, "ExplodeEffect", pFilename );
-		pInfo->m_bAutoSwitchTo = ( pSub->GetInt( "autoswitchto", 0 ) > 0 );
-		pInfo->m_iMetalToDropInGibs = pSub->GetInt( "MetalToDropInGibs", 0 );
-		pInfo->m_bRequiresOwnBuilder = pSub->GetBool( "RequiresOwnBuilder", 0 );
+		pInfo->m_pClassName = ReadAndAllocStringValue(pSub, "ClassName", pFilename);
+		pInfo->m_pStatusName = ReadAndAllocStringValue(pSub, "StatusName", pFilename);
+		pInfo->m_pBuilderWeaponName = ReadAndAllocStringValue(pSub, "BuilderWeaponName", pFilename);
+		pInfo->m_pBuilderPlacementString = ReadAndAllocStringValue(pSub, "BuilderPlacementString", pFilename);
+		pInfo->m_bSolidToPlayerMovement = pSub->GetInt("SolidToPlayerMovement", 0) ? true : false;
+		pInfo->m_pIconActive = ReadAndAllocStringValue(pSub, "IconActive", pFilename);
+		pInfo->m_pIconInactive = ReadAndAllocStringValue(pSub, "IconInactive", pFilename);
+		pInfo->m_pIconMenu = ReadAndAllocStringValue(pSub, "IconMenu", pFilename);
+		pInfo->m_bUseItemInfo = (pSub->GetInt("UseItemInfo", 0) > 0);
+		pInfo->m_pViewModel = ReadAndAllocStringValue(pSub, "Viewmodel", pFilename);
+		pInfo->m_pPlayerModel = ReadAndAllocStringValue(pSub, "Playermodel", pFilename);
+		pInfo->m_iDisplayPriority = pSub->GetInt("DisplayPriority", 0);
+		pInfo->m_pHudStatusIcon = ReadAndAllocStringValue(pSub, "HudStatusIcon", pFilename);
+		pInfo->m_bVisibleInWeaponSelection = (pSub->GetInt("VisibleInWeaponSelection", 1) > 0);
+		pInfo->m_pExplodeSound = ReadAndAllocStringValue(pSub, "ExplodeSound", pFilename);
+		pInfo->m_pUpgradeSound = ReadAndAllocStringValue(pSub, "UpgradeSound", pFilename);
+		pInfo->m_pExplosionParticleEffect = ReadAndAllocStringValue(pSub, "ExplodeEffect", pFilename);
+		pInfo->m_bAutoSwitchTo = (pSub->GetInt("autoswitchto", 0) > 0);
+		pInfo->m_iMetalToDropInGibs = pSub->GetInt("MetalToDropInGibs", 0);
+		pInfo->m_bRequiresOwnBuilder = pSub->GetBool("RequiresOwnBuilder", 0);
 
 		// Read the other alternate object modes.
-		KeyValues *pAltModesKey = pSub->FindKey( "AltModes" );
-		if ( pAltModesKey )
+		KeyValues *pAltModesKey = pSub->FindKey("AltModes");
+		if(pAltModesKey)
 		{
 			int iIndex = 0;
-			while ( iIndex<OBJECT_MAX_MODES )
+			while(iIndex < OBJECT_MAX_MODES)
 			{
 				char buf[256];
-				Q_snprintf( buf, sizeof(buf), "AltMode%d", iIndex );
-				KeyValues *pCurrentModeKey = pAltModesKey->FindKey( buf );
-				if ( !pCurrentModeKey )
+				Q_snprintf(buf, sizeof(buf), "AltMode%d", iIndex);
+				KeyValues *pCurrentModeKey = pAltModesKey->FindKey(buf);
+				if(!pCurrentModeKey)
 					break;
 
-				pInfo->m_AltModes[iIndex].pszStatusName = ReadAndAllocStringValue( pCurrentModeKey, "StatusName", pFilename );
-				pInfo->m_AltModes[iIndex].pszModeName   = ReadAndAllocStringValue( pCurrentModeKey, "ModeName",   pFilename );
-				pInfo->m_AltModes[iIndex].pszIconMenu   = ReadAndAllocStringValue( pCurrentModeKey, "IconMenu",   pFilename );
+				pInfo->m_AltModes[iIndex].pszStatusName =
+					ReadAndAllocStringValue(pCurrentModeKey, "StatusName", pFilename);
+				pInfo->m_AltModes[iIndex].pszModeName = ReadAndAllocStringValue(pCurrentModeKey, "ModeName", pFilename);
+				pInfo->m_AltModes[iIndex].pszIconMenu = ReadAndAllocStringValue(pCurrentModeKey, "IconMenu", pFilename);
 
 				iIndex++;
 			}
-			pInfo->m_iNumAltModes = iIndex-1;
+			pInfo->m_iNumAltModes = iIndex - 1;
 		}
 
 		// Alternate mode 0 always matches the defaults.
 		pInfo->m_AltModes[0].pszStatusName = pInfo->m_pStatusName;
-		pInfo->m_AltModes[0].pszIconMenu   = pInfo->m_pIconMenu;
+		pInfo->m_AltModes[0].pszIconMenu = pInfo->m_pIconMenu;
 	}
 
 	pValues->deleteThis();
 }
 
-
-const CObjectInfo* GetObjectInfo( int iObject )
+const CObjectInfo *GetObjectInfo(int iObject)
 {
-	Assert( iObject >= 0 && iObject < OBJ_LAST );
-	Assert( AreObjectInfosLoaded() );
+	Assert(iObject >= 0 && iObject < OBJ_LAST);
+	Assert(AreObjectInfosLoaded());
 	return &g_ObjectInfos[iObject];
 }
 
-ConVar tf_cheapobjects( "tf_cheapobjects","0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY | FCVAR_REPLICATED, "Set to 1 and all objects will cost 0" );
+ConVar tf_cheapobjects("tf_cheapobjects", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY | FCVAR_REPLICATED,
+					   "Set to 1 and all objects will cost 0");
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the cost of another object of the specified type
@@ -1563,14 +1452,14 @@ ConVar tf_cheapobjects( "tf_cheapobjects","0", FCVAR_CHEAT | FCVAR_DEVELOPMENTON
 // Note: Used to contain logic from tf2 that multiple instances of the same object
 //       cost different amounts. See tf2/game_shared/tf_shareddefs.cpp for details
 //-----------------------------------------------------------------------------
-int InternalCalculateObjectCost( int iObjectType )
+int InternalCalculateObjectCost(int iObjectType)
 {
-	if ( tf_cheapobjects.GetInt() )
+	if(tf_cheapobjects.GetInt())
 	{
 		return 0;
 	}
 
-	int iCost = GetObjectInfo( iObjectType )->m_Cost;
+	int iCost = GetObjectInfo(iObjectType)->m_Cost;
 
 	return iCost;
 }
@@ -1578,14 +1467,14 @@ int InternalCalculateObjectCost( int iObjectType )
 //-----------------------------------------------------------------------------
 // Purpose: Calculate the cost to upgrade an object of a specific type
 //-----------------------------------------------------------------------------
-int	CalculateObjectUpgrade( int iObjectType, int iObjectLevel )
+int CalculateObjectUpgrade(int iObjectType, int iObjectLevel)
 {
 	// Max level?
-	if ( iObjectLevel >= GetObjectInfo( iObjectType )->m_MaxUpgradeLevel )
+	if(iObjectLevel >= GetObjectInfo(iObjectType)->m_MaxUpgradeLevel)
 		return 0;
 
-	int iCost = GetObjectInfo( iObjectType )->m_UpgradeCost;
-	for ( int i = 0; i < (iObjectLevel - 1); i++ )
+	int iCost = GetObjectInfo(iObjectType)->m_UpgradeCost;
+	for(int i = 0; i < (iObjectLevel - 1); i++)
 	{
 		iCost *= OBJECT_UPGRADE_COST_MULTIPLIER_PER_LEVEL;
 	}
@@ -1596,7 +1485,7 @@ int	CalculateObjectUpgrade( int iObjectType, int iObjectLevel )
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified class is allowed to build the specified object type
 //-----------------------------------------------------------------------------
-bool ClassCanBuild( int iClass, int iObjectType )
+bool ClassCanBuild(int iClass, int iObjectType)
 {
 	/*
 	for ( int i = 0; i < OBJ_LAST; i++ )
@@ -1613,10 +1502,10 @@ bool ClassCanBuild( int iClass, int iObjectType )
 	return false;
 	*/
 
-	return ( iClass == TF_CLASS_ENGINEER );
+	return (iClass == TF_CLASS_ENGINEER);
 }
 
-const unsigned char *GetTFEncryptionKey( void )
+const unsigned char *GetTFEncryptionKey(void)
 {
 	return (unsigned char *)"E2NcUkG2";
 }
@@ -1630,130 +1519,114 @@ struct wpntranslation_class_weapons_t
 	const char *pszClassWpn[TF_LAST_NORMAL_CLASS];
 };
 
-wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
-{
-	{
-		"tf_weapon_shotgun",
-		{
-			"",							// TF_CLASS_UNDEFINED = 0,
-			"",							// TF_CLASS_SCOUT,
-			"",							// TF_CLASS_SNIPER,
-			"tf_weapon_shotgun_soldier",// TF_CLASS_SOLDIER,
-			"",							// TF_CLASS_DEMOMAN,
-			"",							// TF_CLASS_MEDIC,
-			"tf_weapon_shotgun_hwg",	// TF_CLASS_HEAVYWEAPONS,
-			"tf_weapon_shotgun_pyro",	// TF_CLASS_PYRO,
-			"",							// TF_CLASS_SPY,
-			"tf_weapon_shotgun_primary",// TF_CLASS_ENGINEER,
-		}
-	},
+wpntranslation_class_weapons_t pszWpnEntTranslationList[] = {
+	{"tf_weapon_shotgun",
+	 {
+		 "",						  // TF_CLASS_UNDEFINED = 0,
+		 "",						  // TF_CLASS_SCOUT,
+		 "",						  // TF_CLASS_SNIPER,
+		 "tf_weapon_shotgun_soldier", // TF_CLASS_SOLDIER,
+		 "",						  // TF_CLASS_DEMOMAN,
+		 "",						  // TF_CLASS_MEDIC,
+		 "tf_weapon_shotgun_hwg",	  // TF_CLASS_HEAVYWEAPONS,
+		 "tf_weapon_shotgun_pyro",	  // TF_CLASS_PYRO,
+		 "",						  // TF_CLASS_SPY,
+		 "tf_weapon_shotgun_primary", // TF_CLASS_ENGINEER,
+	 }},
 
-	{
-		"tf_weapon_pistol",
-		{
-			"",							// TF_CLASS_UNDEFINED = 0,
-			"tf_weapon_pistol_scout",	// TF_CLASS_SCOUT,
-			"",							// TF_CLASS_SNIPER,
-			"",							// TF_CLASS_SOLDIER,
-			"",							// TF_CLASS_DEMOMAN,
-			"",							// TF_CLASS_MEDIC,
-			"",							// TF_CLASS_HEAVYWEAPONS,
-			"",							// TF_CLASS_PYRO,
-			"",							// TF_CLASS_SPY,
-			"tf_weapon_pistol",			// TF_CLASS_ENGINEER,
-		}
-	},
+	{"tf_weapon_pistol",
+	 {
+		 "",					   // TF_CLASS_UNDEFINED = 0,
+		 "tf_weapon_pistol_scout", // TF_CLASS_SCOUT,
+		 "",					   // TF_CLASS_SNIPER,
+		 "",					   // TF_CLASS_SOLDIER,
+		 "",					   // TF_CLASS_DEMOMAN,
+		 "",					   // TF_CLASS_MEDIC,
+		 "",					   // TF_CLASS_HEAVYWEAPONS,
+		 "",					   // TF_CLASS_PYRO,
+		 "",					   // TF_CLASS_SPY,
+		 "tf_weapon_pistol",	   // TF_CLASS_ENGINEER,
+	 }},
 
-	{
-		"tf_weapon_shovel",
-		{
-			"",							// TF_CLASS_UNDEFINED = 0,
-			"",							// TF_CLASS_SCOUT,
-			"",							// TF_CLASS_SNIPER,
-			"tf_weapon_shovel",			// TF_CLASS_SOLDIER,
-			"tf_weapon_bottle",			// TF_CLASS_DEMOMAN,
-			"",							// TF_CLASS_MEDIC,
-			"",							// TF_CLASS_HEAVYWEAPONS,
-			"",							// TF_CLASS_PYRO,
-			"",							// TF_CLASS_SPY,
-			"",							// TF_CLASS_ENGINEER,
-		}
-	},
-	{
-		"tf_weapon_bottle",
-		{
-			"",							// TF_CLASS_UNDEFINED = 0,
-			"",							// TF_CLASS_SCOUT,
-			"",							// TF_CLASS_SNIPER,
-			"tf_weapon_shovel",			// TF_CLASS_SOLDIER,
-			"tf_weapon_bottle",			// TF_CLASS_DEMOMAN,
-			"",							// TF_CLASS_MEDIC,
-			"",							// TF_CLASS_HEAVYWEAPONS,
-			"",							// TF_CLASS_PYRO,
-			"",							// TF_CLASS_SPY,
-			"",							// TF_CLASS_ENGINEER,
-		}
-	},
-	{
-		"saxxy",
-		{
-			"",							// TF_CLASS_UNDEFINED = 0,
-			"tf_weapon_bat",			// TF_CLASS_SCOUT,
-			"tf_weapon_club",			// TF_CLASS_SNIPER,
-			"tf_weapon_shovel",			// TF_CLASS_SOLDIER,
-			"tf_weapon_bottle",			// TF_CLASS_DEMOMAN,
-			"tf_weapon_bonesaw",		// TF_CLASS_MEDIC,
-			"tf_weapon_fireaxe",		// TF_CLASS_HEAVYWEAPONS,		HWG uses a fireaxe because he doesn't have a default melee weapon of his own; also I am a terrible person
-			"tf_weapon_fireaxe",		// TF_CLASS_PYRO,
-			"tf_weapon_knife",			// TF_CLASS_SPY,
-			"tf_weapon_wrench",			// TF_CLASS_ENGINEER,
-		}
-	},
-	{
-		"tf_weapon_throwable",
-		{
-			"",											// TF_CLASS_UNDEFINED = 0,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_SCOUT,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_SNIPER,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_SOLDIER,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_DEMOMAN,
-			"tf_weapon_throwable_primary",				// TF_CLASS_MEDIC,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_HEAVYWEAPONS
-			"tf_weapon_throwable_secondary",			// TF_CLASS_PYRO,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_SPY,
-			"tf_weapon_throwable_secondary",			// TF_CLASS_ENGINEER,
-		}
-	},
-	{
-		"tf_weapon_parachute",
-		{
-			"",											// TF_CLASS_UNDEFINED = 0,
-			"",			// TF_CLASS_SCOUT,
-			"",			// TF_CLASS_SNIPER,
-			"tf_weapon_parachute_secondary",			// TF_CLASS_SOLDIER,
-			"tf_weapon_parachute_primary",				// TF_CLASS_DEMOMAN,
-			"",			// TF_CLASS_MEDIC,
-			"",			// TF_CLASS_HEAVYWEAPONS
-			"",			// TF_CLASS_PYRO,
-			""			// TF_CLASS_SPY,
-			"",			// TF_CLASS_ENGINEER,
-		}
-	},
-	{
-		"tf_weapon_revolver",
-		{
-			"",											// TF_CLASS_UNDEFINED = 0,
-			"",			// TF_CLASS_SCOUT,
-			"",			// TF_CLASS_SNIPER,
-			"",			// TF_CLASS_SOLDIER,
-			"",				// TF_CLASS_DEMOMAN,
-			"",			// TF_CLASS_MEDIC,
-			"",			// TF_CLASS_HEAVYWEAPONS
-			"",			// TF_CLASS_PYRO,
-			"tf_weapon_revolver",				// TF_CLASS_SPY,
-			"tf_weapon_revolver_secondary",		// TF_CLASS_ENGINEER,
-		}
-	},
+	{"tf_weapon_shovel",
+	 {
+		 "",				 // TF_CLASS_UNDEFINED = 0,
+		 "",				 // TF_CLASS_SCOUT,
+		 "",				 // TF_CLASS_SNIPER,
+		 "tf_weapon_shovel", // TF_CLASS_SOLDIER,
+		 "tf_weapon_bottle", // TF_CLASS_DEMOMAN,
+		 "",				 // TF_CLASS_MEDIC,
+		 "",				 // TF_CLASS_HEAVYWEAPONS,
+		 "",				 // TF_CLASS_PYRO,
+		 "",				 // TF_CLASS_SPY,
+		 "",				 // TF_CLASS_ENGINEER,
+	 }},
+	{"tf_weapon_bottle",
+	 {
+		 "",				 // TF_CLASS_UNDEFINED = 0,
+		 "",				 // TF_CLASS_SCOUT,
+		 "",				 // TF_CLASS_SNIPER,
+		 "tf_weapon_shovel", // TF_CLASS_SOLDIER,
+		 "tf_weapon_bottle", // TF_CLASS_DEMOMAN,
+		 "",				 // TF_CLASS_MEDIC,
+		 "",				 // TF_CLASS_HEAVYWEAPONS,
+		 "",				 // TF_CLASS_PYRO,
+		 "",				 // TF_CLASS_SPY,
+		 "",				 // TF_CLASS_ENGINEER,
+	 }},
+	{"saxxy",
+	 {
+		 "",				  // TF_CLASS_UNDEFINED = 0,
+		 "tf_weapon_bat",	  // TF_CLASS_SCOUT,
+		 "tf_weapon_club",	  // TF_CLASS_SNIPER,
+		 "tf_weapon_shovel",  // TF_CLASS_SOLDIER,
+		 "tf_weapon_bottle",  // TF_CLASS_DEMOMAN,
+		 "tf_weapon_bonesaw", // TF_CLASS_MEDIC,
+		 "tf_weapon_fireaxe", // TF_CLASS_HEAVYWEAPONS,		HWG uses a fireaxe because he doesn't have a default melee
+							  // weapon of his own; also I am a terrible person
+		 "tf_weapon_fireaxe", // TF_CLASS_PYRO,
+		 "tf_weapon_knife",	  // TF_CLASS_SPY,
+		 "tf_weapon_wrench",  // TF_CLASS_ENGINEER,
+	 }},
+	{"tf_weapon_throwable",
+	 {
+		 "",							  // TF_CLASS_UNDEFINED = 0,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_SCOUT,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_SNIPER,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_SOLDIER,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_DEMOMAN,
+		 "tf_weapon_throwable_primary",	  // TF_CLASS_MEDIC,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_HEAVYWEAPONS
+		 "tf_weapon_throwable_secondary", // TF_CLASS_PYRO,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_SPY,
+		 "tf_weapon_throwable_secondary", // TF_CLASS_ENGINEER,
+	 }},
+	{"tf_weapon_parachute",
+	 {
+		 "",							  // TF_CLASS_UNDEFINED = 0,
+		 "",							  // TF_CLASS_SCOUT,
+		 "",							  // TF_CLASS_SNIPER,
+		 "tf_weapon_parachute_secondary", // TF_CLASS_SOLDIER,
+		 "tf_weapon_parachute_primary",	  // TF_CLASS_DEMOMAN,
+		 "",							  // TF_CLASS_MEDIC,
+		 "",							  // TF_CLASS_HEAVYWEAPONS
+		 "",							  // TF_CLASS_PYRO,
+		 ""								  // TF_CLASS_SPY,
+		 "",							  // TF_CLASS_ENGINEER,
+	 }},
+	{"tf_weapon_revolver",
+	 {
+		 "",							 // TF_CLASS_UNDEFINED = 0,
+		 "",							 // TF_CLASS_SCOUT,
+		 "",							 // TF_CLASS_SNIPER,
+		 "",							 // TF_CLASS_SOLDIER,
+		 "",							 // TF_CLASS_DEMOMAN,
+		 "",							 // TF_CLASS_MEDIC,
+		 "",							 // TF_CLASS_HEAVYWEAPONS
+		 "",							 // TF_CLASS_PYRO,
+		 "tf_weapon_revolver",			 // TF_CLASS_SPY,
+		 "tf_weapon_revolver_secondary", // TF_CLASS_ENGINEER,
+	 }},
 };
 
 //-----------------------------------------------------------------------------
@@ -1761,16 +1634,16 @@ wpntranslation_class_weapons_t pszWpnEntTranslationList[] =
 //			For legacy reasons, different classes actually spawn different entities for their shotguns/pistols/etc.
 //			To deal with this, we translate entities into the right one for the class we're playing.
 //-----------------------------------------------------------------------------
-const char *TranslateWeaponEntForClass( const char *pszName, int iClass )
+const char *TranslateWeaponEntForClass(const char *pszName, int iClass)
 {
-	if ( pszName )
+	if(pszName)
 	{
-		for ( int i = 0; i < ARRAYSIZE(pszWpnEntTranslationList); i++ )
+		for(int i = 0; i < ARRAYSIZE(pszWpnEntTranslationList); i++)
 		{
-			if ( !Q_stricmp( pszName, pszWpnEntTranslationList[i].pszWpnString ) )
+			if(!Q_stricmp(pszName, pszWpnEntTranslationList[i].pszWpnString))
 			{
-				const char *pTransName = pszWpnEntTranslationList[i].pszClassWpn[ iClass ];
-				Assert( pTransName && pTransName[0] );
+				const char *pTransName = pszWpnEntTranslationList[i].pszClassWpn[iClass];
+				Assert(pTransName && pTransName[0]);
 				return pTransName;
 			}
 		}
@@ -1782,54 +1655,53 @@ const char *TranslateWeaponEntForClass( const char *pszName, int iClass )
 //-----------------------------------------------------------------------------
 // Helltower Announcer lines for Redmond and Blutarch
 //-----------------------------------------------------------------------------
-helltower_vo_t g_pszHelltowerAnnouncerLines[] =
-{
-// EACH MISC PAIR SHOULD HAVE THE SAME NUMBER OF LINES
-	{ "Announcer.Helltower_Red_Misc%02u",				16 },
-	{ "Announcer.Helltower_Blue_Misc%02u",				16 },
+helltower_vo_t g_pszHelltowerAnnouncerLines[] = {
+	// EACH MISC PAIR SHOULD HAVE THE SAME NUMBER OF LINES
+	{"Announcer.Helltower_Red_Misc%02u", 16},
+	{"Announcer.Helltower_Blue_Misc%02u", 16},
 
-	{ "Announcer.Helltower_Red_Misc_Rare%02u",			21 },
-	{ "Announcer.Helltower_Blue_Misc_Rare%02u",			21 },
+	{"Announcer.Helltower_Red_Misc_Rare%02u", 21},
+	{"Announcer.Helltower_Blue_Misc_Rare%02u", 21},
 
-// THESE PAIRS CAN HAVE DIFFERENT COUNTS
-	{ "Announcer.Helltower_Red_Winning%02u",			12 },
-	{ "Announcer.Helltower_Blue_Winning%02u",			13 },
+	// THESE PAIRS CAN HAVE DIFFERENT COUNTS
+	{"Announcer.Helltower_Red_Winning%02u", 12},
+	{"Announcer.Helltower_Blue_Winning%02u", 13},
 
-	{ "Announcer.Helltower_Red_Winning_Rare%02u",		12 },
-	{ "Announcer.Helltower_Blue_Winning_Rare%02u",		8 },
+	{"Announcer.Helltower_Red_Winning_Rare%02u", 12},
+	{"Announcer.Helltower_Blue_Winning_Rare%02u", 8},
 
-	{ "Announcer.Helltower_Red_Losing%02u",				15 },
-	{ "Announcer.Helltower_Blue_Losing%02u",			16 },
+	{"Announcer.Helltower_Red_Losing%02u", 15},
+	{"Announcer.Helltower_Blue_Losing%02u", 16},
 
-	{ "Announcer.Helltower_Red_Losing_Rare%02u",		6 },
-	{ "Announcer.Helltower_Blue_Losing_Rare%02u",		5 },
+	{"Announcer.Helltower_Red_Losing_Rare%02u", 6},
+	{"Announcer.Helltower_Blue_Losing_Rare%02u", 5},
 
-	{ "Announcer.Helltower_Red_Win%02u",				7 },
-	{ "Announcer.Helltower_Blue_Win%02u",				7 },
+	{"Announcer.Helltower_Red_Win%02u", 7},
+	{"Announcer.Helltower_Blue_Win%02u", 7},
 
-	{ "Announcer.Helltower_Red_Win_Rare%02u",			1 },
-	{ "Announcer.Helltower_Blue_Win_Rare%02u",			3 },
+	{"Announcer.Helltower_Red_Win_Rare%02u", 1},
+	{"Announcer.Helltower_Blue_Win_Rare%02u", 3},
 
-	{ "Announcer.Helltower_Red_Lose%02u",				7 },
-	{ "Announcer.Helltower_Blue_Lose%02u",				7 },
+	{"Announcer.Helltower_Red_Lose%02u", 7},
+	{"Announcer.Helltower_Blue_Lose%02u", 7},
 
-	{ "Announcer.Helltower_Red_Lose_Rare%02u",			1 },
-	{ "Announcer.Helltower_Blue_Lose_Rare%02u",			1 },
+	{"Announcer.Helltower_Red_Lose_Rare%02u", 1},
+	{"Announcer.Helltower_Blue_Lose_Rare%02u", 1},
 
-	{ "Announcer.Helltower_Red_RoundStart%02u",			4 },
-	{ "Announcer.Helltower_Blue_RoundStart%02u",		2 },
+	{"Announcer.Helltower_Red_RoundStart%02u", 4},
+	{"Announcer.Helltower_Blue_RoundStart%02u", 2},
 
-	{ "Announcer.Helltower_Red_RoundStart_Rare%02u",	4 },
-	{ "Announcer.Helltower_Blue_RoundStart_Rare%02u",	2 },
+	{"Announcer.Helltower_Red_RoundStart_Rare%02u", 4},
+	{"Announcer.Helltower_Blue_RoundStart_Rare%02u", 2},
 
-	{ "Announcer.Helltower_Red_Skeleton_King%02u",		4 },
-	{ "Announcer.Helltower_Blue_Skeleton_King%02u",		4 },
+	{"Announcer.Helltower_Red_Skeleton_King%02u", 4},
+	{"Announcer.Helltower_Blue_Skeleton_King%02u", 4},
 
-	{ "Announcer.Helltower_Red_Almost_Win%02u",		1 },
-	{ "Announcer.Helltower_Blue_Almost_Win%02u",		1 },
+	{"Announcer.Helltower_Red_Almost_Win%02u", 1},
+	{"Announcer.Helltower_Blue_Almost_Win%02u", 1},
 
-	{ "Announcer.Helltower_Red_Almost_Lose%02u",		1 },
-	{ "Announcer.Helltower_Blue_Almost_Lose%02u",		1 },
+	{"Announcer.Helltower_Red_Almost_Lose%02u", 1},
+	{"Announcer.Helltower_Blue_Almost_Lose%02u", 1},
 
 };
 
@@ -1837,29 +1709,23 @@ helltower_vo_t g_pszHelltowerAnnouncerLines[] =
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-const char *g_pszInvasionMaps[] =
-{
-	"maps/ctf_2fort_invasion.bsp",
-	"maps/koth_probed.bsp",
-	"maps/arena_byre.bsp",
-	"maps/pd_watergate.bsp"
-};
+const char *g_pszInvasionMaps[] = {"maps/ctf_2fort_invasion.bsp", "maps/koth_probed.bsp", "maps/arena_byre.bsp",
+								   "maps/pd_watergate.bsp"};
 
-bool IsPlayingInvasionMap( void )
+bool IsPlayingInvasionMap(void)
 {
 	const char *pszCurrentMap = engine->GetLevelName();
 
-	for ( int i = 0; i < ARRAYSIZE( g_pszInvasionMaps ); i++ )
+	for(int i = 0; i < ARRAYSIZE(g_pszInvasionMaps); i++)
 	{
-		if ( FStrEq( g_pszInvasionMaps[i], pszCurrentMap ) )
+		if(FStrEq(g_pszInvasionMaps[i], pszCurrentMap))
 			return true;
 	}
 
 	return false;
 }
 
-const char *g_pszClassIcons[SCOREBOARD_CLASS_ICONS] =
-{
+const char *g_pszClassIcons[SCOREBOARD_CLASS_ICONS] = {
 	"",
 	"../hud/leaderboard_class_scout",
 	"../hud/leaderboard_class_sniper",
@@ -1881,8 +1747,7 @@ const char *g_pszClassIcons[SCOREBOARD_CLASS_ICONS] =
 	"../hud/leaderboard_class_engineer_d",
 };
 
-const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
-{
+const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] = {
 	"",
 	"class_icons/class_icon_orange_scout",
 	"class_icons/class_icon_orange_sniper",
@@ -1904,67 +1769,62 @@ const char *g_pszClassIconsAlt[SCOREBOARD_CLASS_ICONS] =
 	"class_icons/class_icon_orange_engineer_d",
 };
 
-const char *g_pszItemClassImagesRed[] =
-{
-	"class_portraits/all_class",	// TF_CLASS_UNDEFINED = 0,
-	"class_portraits/scout",		// TF_CLASS_SCOUT,
-	"class_portraits/sniper",		// TF_CLASS_SNIPER,
-	"class_portraits/soldier",		// TF_CLASS_SOLDIER,
-	"class_portraits/demoman",		// TF_CLASS_DEMOMAN,
-	"class_portraits/medic",		// TF_CLASS_MEDIC,
-	"class_portraits/heavy",		// TF_CLASS_HEAVYWEAPONS,
-	"class_portraits/pyro",			// TF_CLASS_PYRO,
-	"class_portraits/spy",			// TF_CLASS_SPY,
-	"class_portraits/engineer",		// TF_CLASS_ENGINEER,
-	"class_portraits/scout_grey",		// TF_CLASS_SCOUT,
-	"class_portraits/sniper_grey",		// TF_CLASS_SNIPER,
-	"class_portraits/soldier_grey",		// TF_CLASS_SOLDIER,
-	"class_portraits/demoman_grey",		// TF_CLASS_DEMOMAN,
-	"class_portraits/medic_grey",		// TF_CLASS_MEDIC,
-	"class_portraits/heavy_grey",		// TF_CLASS_HEAVYWEAPONS,
-	"class_portraits/pyro_grey",		// TF_CLASS_PYRO,
-	"class_portraits/spy_grey",			// TF_CLASS_SPY,
-	"class_portraits/engineer_grey",	// TF_CLASS_ENGINEER,
+const char *g_pszItemClassImagesRed[] = {
+	"class_portraits/all_class",	 // TF_CLASS_UNDEFINED = 0,
+	"class_portraits/scout",		 // TF_CLASS_SCOUT,
+	"class_portraits/sniper",		 // TF_CLASS_SNIPER,
+	"class_portraits/soldier",		 // TF_CLASS_SOLDIER,
+	"class_portraits/demoman",		 // TF_CLASS_DEMOMAN,
+	"class_portraits/medic",		 // TF_CLASS_MEDIC,
+	"class_portraits/heavy",		 // TF_CLASS_HEAVYWEAPONS,
+	"class_portraits/pyro",			 // TF_CLASS_PYRO,
+	"class_portraits/spy",			 // TF_CLASS_SPY,
+	"class_portraits/engineer",		 // TF_CLASS_ENGINEER,
+	"class_portraits/scout_grey",	 // TF_CLASS_SCOUT,
+	"class_portraits/sniper_grey",	 // TF_CLASS_SNIPER,
+	"class_portraits/soldier_grey",	 // TF_CLASS_SOLDIER,
+	"class_portraits/demoman_grey",	 // TF_CLASS_DEMOMAN,
+	"class_portraits/medic_grey",	 // TF_CLASS_MEDIC,
+	"class_portraits/heavy_grey",	 // TF_CLASS_HEAVYWEAPONS,
+	"class_portraits/pyro_grey",	 // TF_CLASS_PYRO,
+	"class_portraits/spy_grey",		 // TF_CLASS_SPY,
+	"class_portraits/engineer_grey", // TF_CLASS_ENGINEER,
 };
 
-const char *g_pszItemClassImagesBlue[] =
-{
-	"class_portraits/all_class",		// TF_CLASS_UNDEFINED = 0,
-	"class_portraits/scout_blue",		// TF_CLASS_SCOUT,
-	"class_portraits/sniper_blue",		// TF_CLASS_SNIPER,
-	"class_portraits/soldier_blue",		// TF_CLASS_SOLDIER,
-	"class_portraits/demoman_blue",		// TF_CLASS_DEMOMAN,
-	"class_portraits/medic_blue",		// TF_CLASS_MEDIC,
-	"class_portraits/heavy_blue",		// TF_CLASS_HEAVYWEAPONS,
-	"class_portraits/pyro_blue",		// TF_CLASS_PYRO,
-	"class_portraits/spy_blue",			// TF_CLASS_SPY,
-	"class_portraits/engineer_blue",	// TF_CLASS_ENGINEER,
-	"class_portraits/scout_blue_grey",		// TF_CLASS_SCOUT,
-	"class_portraits/sniper_blue_grey",		// TF_CLASS_SNIPER,
-	"class_portraits/soldier_blue_grey",	// TF_CLASS_SOLDIER,
-	"class_portraits/demoman_blue_grey",	// TF_CLASS_DEMOMAN,
-	"class_portraits/medic_blue_grey",		// TF_CLASS_MEDIC,
-	"class_portraits/heavy_blue_grey",		// TF_CLASS_HEAVYWEAPONS,
-	"class_portraits/pyro_blue_grey",		// TF_CLASS_PYRO,
-	"class_portraits/spy_blue_grey",		// TF_CLASS_SPY,
-	"class_portraits/engineer_blue_grey",	// TF_CLASS_ENGINEER,
+const char *g_pszItemClassImagesBlue[] = {
+	"class_portraits/all_class",		  // TF_CLASS_UNDEFINED = 0,
+	"class_portraits/scout_blue",		  // TF_CLASS_SCOUT,
+	"class_portraits/sniper_blue",		  // TF_CLASS_SNIPER,
+	"class_portraits/soldier_blue",		  // TF_CLASS_SOLDIER,
+	"class_portraits/demoman_blue",		  // TF_CLASS_DEMOMAN,
+	"class_portraits/medic_blue",		  // TF_CLASS_MEDIC,
+	"class_portraits/heavy_blue",		  // TF_CLASS_HEAVYWEAPONS,
+	"class_portraits/pyro_blue",		  // TF_CLASS_PYRO,
+	"class_portraits/spy_blue",			  // TF_CLASS_SPY,
+	"class_portraits/engineer_blue",	  // TF_CLASS_ENGINEER,
+	"class_portraits/scout_blue_grey",	  // TF_CLASS_SCOUT,
+	"class_portraits/sniper_blue_grey",	  // TF_CLASS_SNIPER,
+	"class_portraits/soldier_blue_grey",  // TF_CLASS_SOLDIER,
+	"class_portraits/demoman_blue_grey",  // TF_CLASS_DEMOMAN,
+	"class_portraits/medic_blue_grey",	  // TF_CLASS_MEDIC,
+	"class_portraits/heavy_blue_grey",	  // TF_CLASS_HEAVYWEAPONS,
+	"class_portraits/pyro_blue_grey",	  // TF_CLASS_PYRO,
+	"class_portraits/spy_blue_grey",	  // TF_CLASS_SPY,
+	"class_portraits/engineer_blue_grey", // TF_CLASS_ENGINEER,
 };
 
-const char *g_pszCompetitiveMedalImages[] =
-{
+const char *g_pszCompetitiveMedalImages[] = {
 	"",
 	"competitive/competitive_coin_bronze",
 	"competitive/competitive_coin_silver",
 	"competitive/competitive_coin_gold",
 };
-COMPILE_TIME_ASSERT( ARRAYSIZE( g_pszCompetitiveMedalImages ) == StatMedal_Max );
+COMPILE_TIME_ASSERT(ARRAYSIZE(g_pszCompetitiveMedalImages) == StatMedal_Max);
 
 #endif // TF_CLIENT_DLL
 
-
 // rune icons for each team
-static const char *s_pszRuneIcons[2][RUNE_TYPES_MAX] =
-{
+static const char *s_pszRuneIcons[2][RUNE_TYPES_MAX] = {
 	// RED TEAM
 	{
 		"powerup_icon_strength_red",
@@ -1994,17 +1854,16 @@ static const char *s_pszRuneIcons[2][RUNE_TYPES_MAX] =
 		"powerup_icon_king_blue",
 		"powerup_icon_plague_blue",
 		"powerup_icon_supernova_blue",
-	}
-};
-COMPILE_TIME_ASSERT( ARRAYSIZE( s_pszRuneIcons[0] ) == RUNE_TYPES_MAX );
-COMPILE_TIME_ASSERT( ARRAYSIZE( s_pszRuneIcons[1] ) == RUNE_TYPES_MAX );
+	}};
+COMPILE_TIME_ASSERT(ARRAYSIZE(s_pszRuneIcons[0]) == RUNE_TYPES_MAX);
+COMPILE_TIME_ASSERT(ARRAYSIZE(s_pszRuneIcons[1]) == RUNE_TYPES_MAX);
 
-const char *GetPowerupIconName( RuneTypes_t type, int iTeam )
+const char *GetPowerupIconName(RuneTypes_t type, int iTeam)
 {
 	int iTeamIndex = iTeam == TF_TEAM_RED ? 0 : 1;
-	if ( type != RUNE_NONE && type < RUNE_TYPES_MAX )
+	if(type != RUNE_NONE && type < RUNE_TYPES_MAX)
 	{
-		return s_pszRuneIcons[ iTeamIndex ][ type ];
+		return s_pszRuneIcons[iTeamIndex][type];
 	}
 
 	return NULL;

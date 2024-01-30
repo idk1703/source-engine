@@ -25,10 +25,10 @@
 
 #if defined(DEBUG) || defined(_DEBUG)
 #define _DEBUGONLYSTRING(x) #x
-#define DEBUGONLYSTRING(x) _DEBUGONLYSTRING(x)
+#define DEBUGONLYSTRING(x)	_DEBUGONLYSTRING(x)
 static volatile char const *pDebugString = DEBUGONLYSTRING(LIBNAME) ".lib is built debug!";
 #else
-#define _RELONLYINT(x) int x ## _lib_is_a_release_build = 0
-#define RELONLYINT(x) _RELONLYINT(x)
+#define _RELONLYINT(x) int x##_lib_is_a_release_build = 0
+#define RELONLYINT(x)  _RELONLYINT(x)
 RELONLYINT(LIBNAME);
 #endif

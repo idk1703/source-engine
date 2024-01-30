@@ -10,40 +10,35 @@
 
 #define GRENADE_MODEL "models/Weapons/w_stick.mdl"
 
-LINK_ENTITY_TO_CLASS( grenade_frag_ger, CDODStickGrenade );
-PRECACHE_WEAPON_REGISTER( grenade_frag_ger );
+LINK_ENTITY_TO_CLASS(grenade_frag_ger, CDODStickGrenade);
+PRECACHE_WEAPON_REGISTER(grenade_frag_ger);
 
-CDODStickGrenade* CDODStickGrenade::Create(
-	const Vector &position,
-	const QAngle &angles,
-	const Vector &velocity,
-	const AngularImpulse &angVelocity,
-	CBaseCombatCharacter *pOwner,
-	float timer,
-	DODWeaponID weaponID )
+CDODStickGrenade *CDODStickGrenade::Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+										   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, float timer,
+										   DODWeaponID weaponID)
 {
-	CDODStickGrenade *pGrenade = (CDODStickGrenade*)CBaseEntity::Create( "grenade_frag_ger", position, angles, pOwner );
+	CDODStickGrenade *pGrenade = (CDODStickGrenade *)CBaseEntity::Create("grenade_frag_ger", position, angles, pOwner);
 
-	Assert( pGrenade );
+	Assert(pGrenade);
 
-	if( !pGrenade )
+	if(!pGrenade)
 		return NULL;
 
 	IPhysicsObject *pPhysicsObject = pGrenade->VPhysicsGetObject();
-	if ( pPhysicsObject )
+	if(pPhysicsObject)
 	{
-		pPhysicsObject->AddVelocity( &velocity, &angVelocity );
+		pPhysicsObject->AddVelocity(&velocity, &angVelocity);
 	}
 
-	pGrenade->SetupInitialTransmittedGrenadeVelocity( velocity );
+	pGrenade->SetupInitialTransmittedGrenadeVelocity(velocity);
 
 	// Who threw this grenade
-	pGrenade->SetThrower( pOwner );
+	pGrenade->SetThrower(pOwner);
 
-	pGrenade->ChangeTeam( pOwner->GetTeamNumber() );
+	pGrenade->ChangeTeam(pOwner->GetTeamNumber());
 
 	// How long until we explode
-	pGrenade->SetDetonateTimerLength( timer );
+	pGrenade->SetDetonateTimerLength(timer);
 
 	// Save the weapon id for stats purposes
 	pGrenade->m_EmitterWeaponID = weaponID;
@@ -53,25 +48,25 @@ CDODStickGrenade* CDODStickGrenade::Create(
 
 void CDODStickGrenade::Spawn()
 {
-	SetModel( GRENADE_MODEL );
+	SetModel(GRENADE_MODEL);
 	BaseClass::Spawn();
 }
 
 void CDODStickGrenade::Precache()
 {
-	PrecacheModel( GRENADE_MODEL );
+	PrecacheModel(GRENADE_MODEL);
 
-	PrecacheScriptSound( "HEGrenade.Bounce" );
+	PrecacheScriptSound("HEGrenade.Bounce");
 
 	BaseClass::Precache();
 }
 
-void CDODStickGrenade::BounceSound( void )
+void CDODStickGrenade::BounceSound(void)
 {
-	EmitSound( "HEGrenade.Bounce" );
+	EmitSound("HEGrenade.Bounce");
 }
 
-//Pass the classname of the exploding version of this grenade.
+// Pass the classname of the exploding version of this grenade.
 char *CDODStickGrenade::GetExplodingClassname()
 {
 	return "weapon_frag_ger_live";

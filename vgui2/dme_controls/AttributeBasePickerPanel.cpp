@@ -15,28 +15,26 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 using namespace vgui;
-
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CAttributeBasePickerPanel::CAttributeBasePickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info ) :
-	BaseClass( parent, info )
+CAttributeBasePickerPanel::CAttributeBasePickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info)
+	: BaseClass(parent, info)
 {
-	m_pOpen = new vgui::Button( this, "Open", "...", this, "open" );
+	m_pOpen = new vgui::Button(this, "Open", "...", this, "open");
 }
 
-void CAttributeBasePickerPanel::OnCommand( char const *cmd )
+void CAttributeBasePickerPanel::OnCommand(char const *cmd)
 {
-	if ( !Q_stricmp( cmd, "open" ) )
+	if(!Q_stricmp(cmd, "open"))
 	{
 		ShowPickerDialog();
 	}
 	else
 	{
-		BaseClass::OnCommand( cmd );
+		BaseClass::OnCommand(cmd);
 	}
 }
 
@@ -45,15 +43,15 @@ void CAttributeBasePickerPanel::PerformLayout()
 	BaseClass::PerformLayout();
 
 	int x, y, w, h;
-	m_pType->GetBounds( x, y, w, h );
+	m_pType->GetBounds(x, y, w, h);
 
 	int inset = 25;
-	m_pType->SetWide( w - inset );
+	m_pType->SetWide(w - inset);
 
 	x += w;
 	x -= inset;
 
 	h -= 2;
 
-	m_pOpen->SetBounds( x, y, inset, h );
+	m_pOpen->SetBounds(x, y, inset, h);
 }

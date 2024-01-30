@@ -14,22 +14,17 @@
 #include "matsys_controls/MDLPicker.h"
 #include "tier1/KeyValues.h"
 
-
 using namespace vgui;
-
 
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CAttributeMDLPickerPanel::CAttributeMDLPickerPanel( vgui::Panel *parent, const AttributeWidgetInfo_t &info ) :
-	BaseClass( parent, info )
+CAttributeMDLPickerPanel::CAttributeMDLPickerPanel(vgui::Panel *parent, const AttributeWidgetInfo_t &info)
+	: BaseClass(parent, info)
 {
 }
 
-CAttributeMDLPickerPanel::~CAttributeMDLPickerPanel()
-{
-}
-
+CAttributeMDLPickerPanel::~CAttributeMDLPickerPanel() {}
 
 //-----------------------------------------------------------------------------
 // Called when it's time to show the MDL picker
@@ -37,25 +32,24 @@ CAttributeMDLPickerPanel::~CAttributeMDLPickerPanel()
 void CAttributeMDLPickerPanel::ShowPickerDialog()
 {
 	// Open file
-	CMDLPickerFrame *pMDLPickerDialog = new CMDLPickerFrame( this, "Select .MDL File" );
-	pMDLPickerDialog->AddActionSignalTarget( this );
-	pMDLPickerDialog->DoModal( );
+	CMDLPickerFrame *pMDLPickerDialog = new CMDLPickerFrame(this, "Select .MDL File");
+	pMDLPickerDialog->AddActionSignalTarget(this);
+	pMDLPickerDialog->DoModal();
 }
-
 
 //-----------------------------------------------------------------------------
 // Called when it's time to show the MDL picker
 //-----------------------------------------------------------------------------
-void CAttributeMDLPickerPanel::OnMDLSelected( KeyValues *pKeyValues )
+void CAttributeMDLPickerPanel::OnMDLSelected(KeyValues *pKeyValues)
 {
-	const char *pMDLName = pKeyValues->GetString( "mdl", NULL );
-	if ( !pMDLName || !pMDLName[ 0 ] )
+	const char *pMDLName = pKeyValues->GetString("mdl", NULL);
+	if(!pMDLName || !pMDLName[0])
 		return;
 
 	// Apply to text panel
-	m_pData->SetText( pMDLName );
+	m_pData->SetText(pMDLName);
 	SetDirty(true);
-	if ( IsAutoApply() )
+	if(IsAutoApply())
 	{
 		Apply();
 	}

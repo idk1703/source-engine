@@ -30,11 +30,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 IMPLEMENT_MAPCLASS(CMapCylinder);
 
-
-#define CYLINDER_VERTEX_COUNT 16
+#define CYLINDER_VERTEX_COUNT	 16
 #define CYLINDER_VERTEX_COUNT_2D 8
 
 //-----------------------------------------------------------------------------
@@ -56,19 +54,19 @@ CMapClass *CMapCylinder::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	unsigned char chBlue = 255;
 
 	const char *pszParam = pHelperInfo->GetParameter(0);
-	if (pszParam != NULL)
+	if(pszParam != NULL)
 	{
 		chRed = atoi(pszParam);
 	}
 
 	pszParam = pHelperInfo->GetParameter(1);
-	if (pszParam != NULL)
+	if(pszParam != NULL)
 	{
 		chGreen = atoi(pszParam);
 	}
 
 	pszParam = pHelperInfo->GetParameter(2);
-	if (pszParam != NULL)
+	if(pszParam != NULL)
 	{
 		chBlue = atoi(pszParam);
 	}
@@ -83,25 +81,25 @@ CMapClass *CMapCylinder::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 	//
 	// Make sure we'll have at least one endpoint to work with.
 	//
-	if ((pszStartKey == NULL) || (pszStartValueKey == NULL))
+	if((pszStartKey == NULL) || (pszStartValueKey == NULL))
 	{
 		return NULL;
 	}
 
-	pCylinder = new CMapCylinder(pszStartKey, pszStartValueKey, pszStartRadiusKey, pszEndKey, pszEndValueKey, pszEndRadiusKey);
+	pCylinder =
+		new CMapCylinder(pszStartKey, pszStartValueKey, pszStartRadiusKey, pszEndKey, pszEndValueKey, pszEndRadiusKey);
 	pCylinder->SetRenderColor(chRed, chGreen, chBlue);
 
 	//
 	// If they only specified a start entity, use our parent as the end entity.
 	//
-	if ((pszEndKey == NULL) || (pszEndValueKey == NULL))
+	if((pszEndKey == NULL) || (pszEndValueKey == NULL))
 	{
 		pCylinder->m_pEndEntity = pParent;
 	}
 
-	return(pCylinder);
+	return (pCylinder);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -111,39 +109,39 @@ CMapCylinder::CMapCylinder(void)
 	Initialize();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor. Initializes data members.
-// Input  : pszStartKey - The key to search in other entities for a match against the value of pszStartValueKey, ex 'targetname'.
-//			pszStartValueKey - The key in our parent entity from which to get a search term for the start entity ex 'beamstart01'.
-//			pszEndKey - The key to search in other entities for a match against the value of pszEndValueKey ex 'targetname'.
-//			pszEndValueKey - The key in our parent entity from which to get a search term for the end entity ex 'beamend01'.
+// Input  : pszStartKey - The key to search in other entities for a match against the value of pszStartValueKey, ex
+// 'targetname'.
+//			pszStartValueKey - The key in our parent entity from which to get a search term for the start entity ex
+//'beamstart01'. 			pszEndKey - The key to search in other entities for a match against the value of pszEndValueKey ex
+//'targetname'. 			pszEndValueKey - The key in our parent entity from which to get a search term for the end entity ex
+//'beamend01'.
 //-----------------------------------------------------------------------------
 CMapCylinder::CMapCylinder(const char *pszStartKey, const char *pszStartValueKey, const char *pszStartRadiusKey,
-						   const char *pszEndKey, const char *pszEndValueKey, const char *pszEndRadiusKey )
+						   const char *pszEndKey, const char *pszEndValueKey, const char *pszEndRadiusKey)
 {
 	Initialize();
 
 	strcpy(m_szStartKey, pszStartKey);
 	strcpy(m_szStartValueKey, pszStartValueKey);
 
-	if ( pszStartRadiusKey != NULL )
+	if(pszStartRadiusKey != NULL)
 	{
 		strcpy(m_szStartRadiusKey, pszStartRadiusKey);
 	}
 
-	if ((pszEndKey != NULL) && (pszEndValueKey != NULL))
+	if((pszEndKey != NULL) && (pszEndValueKey != NULL))
 	{
 		strcpy(m_szEndKey, pszEndKey);
 		strcpy(m_szEndValueKey, pszEndValueKey);
 
-		if ( pszEndRadiusKey != NULL )
+		if(pszEndRadiusKey != NULL)
 		{
 			strcpy(m_szEndRadiusKey, pszEndRadiusKey);
 		}
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets data members to initial values.
@@ -162,21 +160,17 @@ void CMapCylinder::Initialize(void)
 	m_pEndEntity = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CMapCylinder::~CMapCylinder(void)
-{
-}
-
+CMapCylinder::~CMapCylinder(void) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Calculates the midpoint of the line and sets our origin there.
 //-----------------------------------------------------------------------------
 void CMapCylinder::BuildCylinder(void)
 {
-	if ((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
+	if((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
 	{
 		//
 		// Set our origin to our midpoint. This moves our selection handle box to the
@@ -193,7 +187,6 @@ void CMapCylinder::BuildCylinder(void)
 
 	CalcBounds();
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Recalculates our bounding box.
@@ -214,7 +207,7 @@ void CMapCylinder::CalcBounds(BOOL bFullUpdate)
 	// If our start and end entities are resolved, calcuate our bounds
 	// based on the positions of the start and end entities.
 	//
-	if (m_pStartEntity && m_pEndEntity)
+	if(m_pStartEntity && m_pEndEntity)
 	{
 		//
 		// Update the 3D bounds.
@@ -224,8 +217,8 @@ void CMapCylinder::CalcBounds(BOOL bFullUpdate)
 
 		Vector pStartVerts[CYLINDER_VERTEX_COUNT];
 		Vector pEndVerts[CYLINDER_VERTEX_COUNT];
-		ComputeCylinderPoints( CYLINDER_VERTEX_COUNT, pStartVerts, pEndVerts );
-		for ( int i = 0; i < CYLINDER_VERTEX_COUNT; ++i )
+		ComputeCylinderPoints(CYLINDER_VERTEX_COUNT, pStartVerts, pEndVerts);
+		for(int i = 0; i < CYLINDER_VERTEX_COUNT; ++i)
 		{
 			m_CullBox.UpdateBounds(pStartVerts[i]);
 			m_CullBox.UpdateBounds(pEndVerts[i]);
@@ -233,7 +226,6 @@ void CMapCylinder::CalcBounds(BOOL bFullUpdate)
 		m_BoundingBox = m_CullBox;
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -244,14 +236,13 @@ CMapClass *CMapCylinder::Copy(bool bUpdateDependencies)
 {
 	CMapCylinder *pCopy = new CMapCylinder;
 
-	if (pCopy != NULL)
+	if(pCopy != NULL)
 	{
 		pCopy->CopyFrom(this, bUpdateDependencies);
 	}
 
-	return(pCopy);
+	return (pCopy);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Turns 'this' into an exact replica of 'pObject'.
@@ -261,13 +252,13 @@ CMapClass *CMapCylinder::Copy(bool bUpdateDependencies)
 //-----------------------------------------------------------------------------
 CMapClass *CMapCylinder::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 {
-	CMapCylinder *pFrom = dynamic_cast <CMapCylinder *>(pObject);
+	CMapCylinder *pFrom = dynamic_cast<CMapCylinder *>(pObject);
 
-	if (pFrom != NULL)
+	if(pFrom != NULL)
 	{
 		CMapClass::CopyFrom(pObject, bUpdateDependencies);
 
-		if (bUpdateDependencies)
+		if(bUpdateDependencies)
 		{
 			m_pStartEntity = (CMapEntity *)UpdateDependency(m_pStartEntity, pFrom->m_pStartEntity);
 			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pFrom->m_pEndEntity);
@@ -290,9 +281,8 @@ CMapClass *CMapCylinder::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 		strcpy(m_szEndRadiusKey, pFrom->m_szEndRadiusKey);
 	}
 
-	return(this);
+	return (this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after this object is added to the world.
@@ -313,7 +303,6 @@ void CMapCylinder::OnAddToWorld(CMapWorld *pWorld)
 	UpdateDependencies(pWorld, NULL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Called just after this object has been removed from the world so
 //			that it can unlink itself from other objects in the world.
@@ -331,7 +320,6 @@ void CMapCylinder::OnRemoveFromWorld(CMapWorld *pWorld, bool bNotifyChildren)
 	m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, NULL);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Our start or end entity has changed; recalculate our bounds and midpoint.
 // Input  : pObject - Entity that changed.
@@ -344,51 +332,50 @@ void CMapCylinder::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNot
 	UpdateDependencies(pWorld, pObject);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : key -
 //			value -
 //-----------------------------------------------------------------------------
-void CMapCylinder::OnParentKeyChanged( const char* key, const char* value )
+void CMapCylinder::OnParentKeyChanged(const char *key, const char *value)
 {
 	CMapWorld *pWorld = (CMapWorld *)GetWorldObject(this);
-	if (pWorld != NULL)
+	if(pWorld != NULL)
 	{
-		if (stricmp(key, m_szStartValueKey) == 0)
+		if(stricmp(key, m_szStartValueKey) == 0)
 		{
-			m_pStartEntity = (CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, value));
+			m_pStartEntity =
+				(CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, value));
 			BuildCylinder();
 		}
-		else if (stricmp(key, m_szEndValueKey) == 0)
+		else if(stricmp(key, m_szEndValueKey) == 0)
 		{
 			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, value));
 			BuildCylinder();
 		}
 
-		if (m_pStartEntity && stricmp(key, m_szStartRadiusKey) == 0)
+		if(m_pStartEntity && stricmp(key, m_szStartRadiusKey) == 0)
 		{
-			const char *pRadiusKey = m_pStartEntity->GetKeyValue( m_szStartRadiusKey );
-			m_flStartRadius = pRadiusKey ? atof( pRadiusKey ) : 0.0f;
+			const char *pRadiusKey = m_pStartEntity->GetKeyValue(m_szStartRadiusKey);
+			m_flStartRadius = pRadiusKey ? atof(pRadiusKey) : 0.0f;
 			BuildCylinder();
 		}
 
-		if (m_pEndEntity && stricmp(key, m_szEndRadiusKey) == 0)
+		if(m_pEndEntity && stricmp(key, m_szEndRadiusKey) == 0)
 		{
-			const char *pRadiusKey = m_pEndEntity->GetKeyValue( m_szEndRadiusKey );
-			m_flEndRadius = pRadiusKey ? atof( pRadiusKey ) : 0.0f;
+			const char *pRadiusKey = m_pEndEntity->GetKeyValue(m_szEndRadiusKey);
+			m_flEndRadius = pRadiusKey ? atof(pRadiusKey) : 0.0f;
 			BuildCylinder();
 		}
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Computes the vertices of the cylinder
 //-----------------------------------------------------------------------------
-void CMapCylinder::ComputeCylinderPoints( int nCount, Vector *pStartVerts, Vector *pEndVerts )
+void CMapCylinder::ComputeCylinderPoints(int nCount, Vector *pStartVerts, Vector *pEndVerts)
 {
-	Assert ((m_pStartEntity != NULL) && (m_pEndEntity != NULL));
+	Assert((m_pStartEntity != NULL) && (m_pEndEntity != NULL));
 
 	Vector vecStart;
 	Vector vecEnd;
@@ -397,29 +384,28 @@ void CMapCylinder::ComputeCylinderPoints( int nCount, Vector *pStartVerts, Vecto
 
 	// Compute a basis perpendicular to the entities
 	Vector xvec, yvec, zvec;
-	VectorSubtract( vecEnd, vecStart, zvec );
-	float flLength = VectorNormalize( zvec );
-	if ( flLength < 1e-3 )
+	VectorSubtract(vecEnd, vecStart, zvec);
+	float flLength = VectorNormalize(zvec);
+	if(flLength < 1e-3)
 	{
-		zvec.Init( 0, 0, 1 );
+		zvec.Init(0, 0, 1);
 	}
-	VectorVectors( zvec, xvec, yvec );
+	VectorVectors(zvec, xvec, yvec);
 
 	int i;
 	float flDAngle = 2.0f * M_PI / nCount;
-	for ( i = 0; i < nCount; ++i )
+	for(i = 0; i < nCount; ++i)
 	{
-		float flCosAngle = cos( flDAngle * i );
-		float flSinAngle = sin( flDAngle * i );
+		float flCosAngle = cos(flDAngle * i);
+		float flSinAngle = sin(flDAngle * i);
 
-		VectorMA( vecStart, flCosAngle * m_flStartRadius, xvec, pStartVerts[i] );
-		VectorMA( pStartVerts[i], flSinAngle * m_flStartRadius, yvec, pStartVerts[i] );
+		VectorMA(vecStart, flCosAngle * m_flStartRadius, xvec, pStartVerts[i]);
+		VectorMA(pStartVerts[i], flSinAngle * m_flStartRadius, yvec, pStartVerts[i]);
 
-		VectorMA( vecEnd, flCosAngle * m_flEndRadius, xvec, pEndVerts[i] );
-		VectorMA( pEndVerts[i], flSinAngle * m_flEndRadius, yvec, pEndVerts[i] );
+		VectorMA(vecEnd, flCosAngle * m_flEndRadius, xvec, pEndVerts[i]);
+		VectorMA(pEndVerts[i], flSinAngle * m_flEndRadius, yvec, pEndVerts[i]);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Should we draw the cylinder as a line?
@@ -429,34 +415,32 @@ bool CMapCylinder::ShouldDrawAsLine()
 	return !IsSelected() || ((m_flStartRadius == 0.0f) && (m_flEndRadius == 0.0f)) || !Options.GetShowHelpers();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Renders the line helper in the 2D view.
 // Input  : pRender - 2D rendering interface.
 //-----------------------------------------------------------------------------
 void CMapCylinder::Render2D(CRender2D *pRender)
 {
-	if ((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
+	if((m_pStartEntity != NULL) && (m_pEndEntity != NULL))
 	{
-		if (!ShouldDrawAsLine())
+		if(!ShouldDrawAsLine())
 		{
-			pRender->SetDrawColor( SELECT_FACE_RED, SELECT_FACE_GREEN, SELECT_FACE_BLUE );
+			pRender->SetDrawColor(SELECT_FACE_RED, SELECT_FACE_GREEN, SELECT_FACE_BLUE);
 
 			Vector pStartVerts[CYLINDER_VERTEX_COUNT_2D];
 			Vector pEndVerts[CYLINDER_VERTEX_COUNT_2D];
-			ComputeCylinderPoints( CYLINDER_VERTEX_COUNT_2D, pStartVerts, pEndVerts );
+			ComputeCylinderPoints(CYLINDER_VERTEX_COUNT_2D, pStartVerts, pEndVerts);
 			int j = CYLINDER_VERTEX_COUNT_2D - 1;
-			for (int i = 0; i < CYLINDER_VERTEX_COUNT_2D; j = i++ )
+			for(int i = 0; i < CYLINDER_VERTEX_COUNT_2D; j = i++)
 			{
 				pRender->DrawLine(pStartVerts[i], pStartVerts[j]);
 				pRender->DrawLine(pEndVerts[i], pEndVerts[j]);
 				pRender->DrawLine(pStartVerts[i], pEndVerts[i]);
 			}
-
 		}
 		else
 		{
-			pRender->SetDrawColor( r, g, b );
+			pRender->SetDrawColor(r, g, b);
 
 			Vector Start;
 			Vector End;
@@ -468,26 +452,25 @@ void CMapCylinder::Render2D(CRender2D *pRender)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapCylinder::Render3D(CRender3D *pRender)
 {
-	if ( (m_pStartEntity == NULL) || (m_pEndEntity == NULL))
+	if((m_pStartEntity == NULL) || (m_pEndEntity == NULL))
 		return;
 
 	pRender->BeginRenderHitTarget(this);
 	pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
 
-	Vector Start,End;
+	Vector Start, End;
 
 	m_pStartEntity->GetOrigin(Start);
 	m_pEndEntity->GetOrigin(End);
 
 	unsigned char color[3];
-	if (IsSelected())
+	if(IsSelected())
 	{
 		color[0] = SELECT_EDGE_RED;
 		color[1] = SELECT_EDGE_GREEN;
@@ -501,41 +484,41 @@ void CMapCylinder::Render3D(CRender3D *pRender)
 	}
 
 	CMeshBuilder meshBuilder;
-	CMatRenderContextPtr pRenderContext( MaterialSystemInterface() );
-	IMesh* pMesh = pRenderContext->GetDynamicMesh();
+	CMatRenderContextPtr pRenderContext(MaterialSystemInterface());
+	IMesh *pMesh = pRenderContext->GetDynamicMesh();
 
-	if ( !ShouldDrawAsLine() )
+	if(!ShouldDrawAsLine())
 	{
 		Vector pStartVerts[CYLINDER_VERTEX_COUNT];
 		Vector pEndVerts[CYLINDER_VERTEX_COUNT];
-		ComputeCylinderPoints( CYLINDER_VERTEX_COUNT, pStartVerts, pEndVerts );
+		ComputeCylinderPoints(CYLINDER_VERTEX_COUNT, pStartVerts, pEndVerts);
 
-		meshBuilder.Begin( pMesh, MATERIAL_LINES, 3 * CYLINDER_VERTEX_COUNT );
+		meshBuilder.Begin(pMesh, MATERIAL_LINES, 3 * CYLINDER_VERTEX_COUNT);
 
 		int j = CYLINDER_VERTEX_COUNT - 1;
-		for ( int i = 0; i < CYLINDER_VERTEX_COUNT; j = i++ )
+		for(int i = 0; i < CYLINDER_VERTEX_COUNT; j = i++)
 		{
-			meshBuilder.Color3ubv( color );
+			meshBuilder.Color3ubv(color);
 			meshBuilder.Position3f(pStartVerts[i].x, pStartVerts[i].y, pStartVerts[i].z);
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.Color3ubv( color );
+			meshBuilder.Color3ubv(color);
 			meshBuilder.Position3f(pStartVerts[j].x, pStartVerts[j].y, pStartVerts[j].z);
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.Color3ubv( color );
+			meshBuilder.Color3ubv(color);
 			meshBuilder.Position3f(pEndVerts[i].x, pEndVerts[i].y, pEndVerts[i].z);
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.Color3ubv( color );
+			meshBuilder.Color3ubv(color);
 			meshBuilder.Position3f(pEndVerts[j].x, pEndVerts[j].y, pEndVerts[j].z);
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.Color3ubv( color );
+			meshBuilder.Color3ubv(color);
 			meshBuilder.Position3f(pStartVerts[i].x, pStartVerts[i].y, pStartVerts[i].z);
 			meshBuilder.AdvanceVertex();
 
-			meshBuilder.Color3ubv( color );
+			meshBuilder.Color3ubv(color);
 			meshBuilder.Position3f(pEndVerts[i].x, pEndVerts[i].y, pEndVerts[i].z);
 			meshBuilder.AdvanceVertex();
 		}
@@ -544,13 +527,13 @@ void CMapCylinder::Render3D(CRender3D *pRender)
 	}
 	else
 	{
-		meshBuilder.Begin( pMesh, MATERIAL_LINES, 1 );
+		meshBuilder.Begin(pMesh, MATERIAL_LINES, 1);
 
-		meshBuilder.Color3ubv( color );
+		meshBuilder.Color3ubv(color);
 		meshBuilder.Position3f(Start.x, Start.y, Start.z);
 		meshBuilder.AdvanceVertex();
 
-		meshBuilder.Color3ubv( color );
+		meshBuilder.Color3ubv(color);
 		meshBuilder.Position3f(End.x, End.y, End.z);
 		meshBuilder.AdvanceVertex();
 
@@ -563,7 +546,6 @@ void CMapCylinder::Render3D(CRender3D *pRender)
 	pRender->EndRenderHitTarget();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : File -
@@ -572,9 +554,8 @@ void CMapCylinder::Render3D(CRender3D *pRender)
 //-----------------------------------------------------------------------------
 int CMapCylinder::SerializeRMF(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -584,9 +565,8 @@ int CMapCylinder::SerializeRMF(std::fstream &File, BOOL bRMF)
 //-----------------------------------------------------------------------------
 int CMapCylinder::SerializeMAP(std::fstream &File, BOOL bRMF)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -607,23 +587,25 @@ void CMapCylinder::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 {
 	CMapClass::UpdateDependencies(pWorld, pObject);
 
-	if (pWorld == NULL)
+	if(pWorld == NULL)
 	{
 		return;
 	}
 
-	CMapEntity *pEntity = dynamic_cast <CMapEntity *> (m_pParent);
+	CMapEntity *pEntity = dynamic_cast<CMapEntity *>(m_pParent);
 	Assert(pEntity != NULL);
 
-	if (pEntity != NULL)
+	if(pEntity != NULL)
 	{
 		const char *pszValue = pEntity->GetKeyValue(m_szStartValueKey);
-		m_pStartEntity = (CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, pszValue));
+		m_pStartEntity =
+			(CMapEntity *)UpdateDependency(m_pStartEntity, pWorld->FindChildByKeyValue(m_szStartKey, pszValue));
 
-		if (m_szEndValueKey[0] != '\0')
+		if(m_szEndValueKey[0] != '\0')
 		{
 			pszValue = pEntity->GetKeyValue(m_szEndValueKey);
-			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, pszValue));
+			m_pEndEntity =
+				(CMapEntity *)UpdateDependency(m_pEndEntity, pWorld->FindChildByKeyValue(m_szEndKey, pszValue));
 		}
 		else
 		{
@@ -631,30 +613,29 @@ void CMapCylinder::UpdateDependencies(CMapWorld *pWorld, CMapClass *pObject)
 			m_pEndEntity = (CMapEntity *)UpdateDependency(m_pEndEntity, GetParent());
 		}
 
-		if (pObject == m_pStartEntity)
+		if(pObject == m_pStartEntity)
 		{
 			m_flStartRadius = 0.0f;
-			if ( m_pStartEntity && m_szStartRadiusKey[0] != '\0' )
+			if(m_pStartEntity && m_szStartRadiusKey[0] != '\0')
 			{
-				const char *pRadiusKey = m_pStartEntity->GetKeyValue( m_szStartRadiusKey );
-				m_flStartRadius = pRadiusKey ? atof( pRadiusKey ) : 0.0f;
+				const char *pRadiusKey = m_pStartEntity->GetKeyValue(m_szStartRadiusKey);
+				m_flStartRadius = pRadiusKey ? atof(pRadiusKey) : 0.0f;
 			}
 		}
 
-		if (pObject == m_pEndEntity)
+		if(pObject == m_pEndEntity)
 		{
 			m_flEndRadius = 0.0f;
-			if ( m_pEndEntity && m_szEndRadiusKey[0] != '\0' )
+			if(m_pEndEntity && m_szEndRadiusKey[0] != '\0')
 			{
-				const char *pRadiusKey = m_pEndEntity->GetKeyValue( m_szEndRadiusKey );
-				m_flEndRadius = pRadiusKey ? atof( pRadiusKey ) : 0.0f;
+				const char *pRadiusKey = m_pEndEntity->GetKeyValue(m_szEndRadiusKey);
+				m_flEndRadius = pRadiusKey ? atof(pRadiusKey) : 0.0f;
 			}
 		}
 
 		BuildCylinder();
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Never select anything because of this helper.

@@ -8,17 +8,15 @@
 #include "tf_proxyentity.h"
 #include "materialsystem/imaterialvar.h"
 
-
 CBaseInvisMaterialProxy::CBaseInvisMaterialProxy()
 {
 	m_pPercentInvisible = NULL;
 }
 
-
-bool CBaseInvisMaterialProxy::Init( IMaterial *pMaterial, KeyValues* pKeyValues )
+bool CBaseInvisMaterialProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 {
 	bool bFound;
-	m_pPercentInvisible = pMaterial->FindVar( "$cloakfactor", &bFound );
+	m_pPercentInvisible = pMaterial->FindVar("$cloakfactor", &bFound);
 
 	return bFound;
 }
@@ -30,16 +28,16 @@ void CBaseInvisMaterialProxy::Release()
 
 IMaterial *CBaseInvisMaterialProxy::GetMaterial()
 {
-	if ( !m_pPercentInvisible )
+	if(!m_pPercentInvisible)
 		return NULL;
 
 	return m_pPercentInvisible->GetOwningMaterial();
 }
 
-void CBaseInvisMaterialProxy::OnBindNotEntity( void *pRenderable )
+void CBaseInvisMaterialProxy::OnBindNotEntity(void *pRenderable)
 {
-	if ( m_pPercentInvisible )
+	if(m_pPercentInvisible)
 	{
-		m_pPercentInvisible->SetFloatValue( 0.0f );
+		m_pPercentInvisible->SetFloatValue(0.0f);
 	}
 }

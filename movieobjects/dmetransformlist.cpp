@@ -9,30 +9,25 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 // Expose this class to the scene database
 //-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeTransformList, CDmeTransformList );
-
+IMPLEMENT_ELEMENT_FACTORY(DmeTransformList, CDmeTransformList);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CDmeTransformList::OnConstruction()
 {
-	m_Transforms.Init( this, "transforms" );
+	m_Transforms.Init(this, "transforms");
 }
 
-void CDmeTransformList::OnDestruction()
-{
-}
-
+void CDmeTransformList::OnDestruction() {}
 
 //-----------------------------------------------------------------------------
 // Sets the transform
 //-----------------------------------------------------------------------------
-void CDmeTransformList::SetTransform( int nIndex, const matrix3x4_t& mat )
+void CDmeTransformList::SetTransform(int nIndex, const matrix3x4_t &mat)
 {
-	m_Transforms[nIndex]->SetTransform( mat );
+	m_Transforms[nIndex]->SetTransform(mat);
 }

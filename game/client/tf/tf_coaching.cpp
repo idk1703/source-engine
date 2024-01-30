@@ -45,14 +45,12 @@ static bool g_bCanLikeCoach = false;
 class CCoachingWaitDialog : public CGenericWaitingDialog
 {
 public:
-	CCoachingWaitDialog() : CGenericWaitingDialog( NULL )
-	{
-	}
+	CCoachingWaitDialog() : CGenericWaitingDialog(NULL) {}
 
 protected:
 	virtual void OnTimeout()
 	{
-		ShowMessageBox( "#TF_Coach_Timeout_Title", "#TF_Coach_Timeout_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_Timeout_Title", "#TF_Coach_Timeout_Text", "#GameUI_OK");
 	}
 };
 
@@ -60,10 +58,12 @@ protected:
 
 static bool BInCoachesList()
 {
-	if ( InventoryManager() && TFInventoryManager()->GetLocalTFInventory() && TFInventoryManager()->GetLocalTFInventory()->GetSOC() )
+	if(InventoryManager() && TFInventoryManager()->GetLocalTFInventory() &&
+	   TFInventoryManager()->GetLocalTFInventory()->GetSOC())
 	{
-		CEconGameAccountClient *pGameAccountClient = TFInventoryManager()->GetLocalTFInventory()->GetSOC()->GetSingleton<CEconGameAccountClient>();
-		if ( pGameAccountClient )
+		CEconGameAccountClient *pGameAccountClient =
+			TFInventoryManager()->GetLocalTFInventory()->GetSOC()->GetSingleton<CEconGameAccountClient>();
+		if(pGameAccountClient)
 			return pGameAccountClient->Obj().in_coaches_list();
 	}
 	return false;
@@ -72,28 +72,28 @@ static bool BInCoachesList()
 // send a message to the GC requesting to be added to the list of coaches
 static void RequestAddToCoaches()
 {
-	GCSDK::CProtoBufMsg< CMsgTFCoaching_AddToCoaches > msg( k_EMsgGCCoaching_AddToCoaches );
-	bool bSent = GCClientSystem()->BSendMessage( msg );
-	if ( bSent )
+	GCSDK::CProtoBufMsg<CMsgTFCoaching_AddToCoaches> msg(k_EMsgGCCoaching_AddToCoaches);
+	bool bSent = GCClientSystem()->BSendMessage(msg);
+	if(bSent)
 	{
-		ShowWaitingDialog( new CCoachingWaitDialog(), "#TF_Coach_WaitingForServer", true, false, 20.0f );
+		ShowWaitingDialog(new CCoachingWaitDialog(), "#TF_Coach_WaitingForServer", true, false, 20.0f);
 	}
 }
 
 // send a message to the GC requesting to be removed from the list of coaches
 static void RequestRemoveFromCoaches()
 {
-	GCSDK::CProtoBufMsg< CMsgTFCoaching_RemoveFromCoaches > msg( k_EMsgGCCoaching_RemoveFromCoaches );
-	GCClientSystem()->BSendMessage( msg );
-	ShowWaitingDialog( new CCoachingWaitDialog(), "#TF_Coach_WaitingForServer", true, false, 20.0f );
+	GCSDK::CProtoBufMsg<CMsgTFCoaching_RemoveFromCoaches> msg(k_EMsgGCCoaching_RemoveFromCoaches);
+	GCClientSystem()->BSendMessage(msg);
+	ShowWaitingDialog(new CCoachingWaitDialog(), "#TF_Coach_WaitingForServer", true, false, 20.0f);
 }
 
 // alternates between asking to be added/removed from the list of coaches
-static void ToggleCoachingConfirm( bool bConfirmed, void *pContext )
+static void ToggleCoachingConfirm(bool bConfirmed, void *pContext)
 {
-	if ( bConfirmed )
+	if(bConfirmed)
 	{
-		if ( BInCoachesList() )
+		if(BInCoachesList())
 		{
 			RequestRemoveFromCoaches();
 		}
@@ -108,13 +108,13 @@ static bool IsServerFull()
 {
 	int iNumPlayers = 0;
 
-	for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
+	for(int iPlayerIndex = 1; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++)
 	{
-		if ( g_PR->IsConnected( iPlayerIndex ) == false )
+		if(g_PR->IsConnected(iPlayerIndex) == false)
 			continue;
 
 		player_info_t pi;
-		if ( !engine->GetPlayerInfo( iPlayerIndex, &pi ) )
+		if(!engine->GetPlayerInfo(iPlayerIndex, &pi))
 			continue;
 
 		++iNumPlayers;
@@ -129,24 +129,30 @@ static bool IsServerFull()
  */
 class CSelectPlayerForCoachDialog : public CSelectPlayerDialog
 {
-	DECLARE_CLASS_SIMPLE( CSelectPlayerForCoachDialog, CSelectPlayerDialog );
+	DECLARE_CLASS_SIMPLE(CSelectPlayerForCoachDialog, CSelectPlayerDialog);
+
 public:
 	CSelectPlayerForCoachDialog();
 	virtual ~CSelectPlayerForCoachDialog();
-	virtual void OnSelectPlayer( const CSteamID &steamID );
-	virtual void OnCommand( const char *command );
-	virtual bool AllowOutOfGameFriends() { return false; }
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	virtual void OnSelectPlayer(const CSteamID &steamID);
+	virtual void OnCommand(const char *command);
+	virtual bool AllowOutOfGameFriends()
+	{
+		return false;
+	}
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 protected:
-	virtual const char *GetResFile() { return "resource/ui/SelectPlayerDialog_Coach.res"; }
-	bool CanAskPlayerToCoach( const CSteamID &steamID );
+	virtual const char *GetResFile()
+	{
+		return "resource/ui/SelectPlayerDialog_Coach.res";
+	}
+	bool CanAskPlayerToCoach(const CSteamID &steamID);
 };
 
-static vgui::DHANDLE< CSelectPlayerForCoachDialog > g_pSelectPlayerForCoachDialog;
+static vgui::DHANDLE<CSelectPlayerForCoachDialog> g_pSelectPlayerForCoachDialog;
 
-CSelectPlayerForCoachDialog::CSelectPlayerForCoachDialog()
-	: CSelectPlayerDialog( NULL )
+CSelectPlayerForCoachDialog::CSelectPlayerForCoachDialog() : CSelectPlayerDialog(NULL)
 {
 	g_pSelectPlayerForCoachDialog = this;
 	m_bAllowSameTeam = true;
@@ -158,71 +164,71 @@ CSelectPlayerForCoachDialog::~CSelectPlayerForCoachDialog()
 	g_pSelectPlayerForCoachDialog = NULL;
 }
 
-void CSelectPlayerForCoachDialog::OnSelectPlayer( const CSteamID &steamID )
+void CSelectPlayerForCoachDialog::OnSelectPlayer(const CSteamID &steamID)
 {
-	if ( CanAskPlayerToCoach( steamID ) )
+	if(CanAskPlayerToCoach(steamID))
 	{
 		g_bCanLikeCoach = false;
-		GCSDK::CProtoBufMsg< CMsgTFCoaching_FindCoach > msg( k_EMsgGCCoaching_FindCoach );
-		msg.Body().set_account_id_friend_as_coach( steamID.GetAccountID() );
-		GCClientSystem()->BSendMessage( msg );
-		ShowWaitingDialog( new CCoachingWaitDialog(), "#TF_Coach_AskingFriend", true, false, 20.0f );
+		GCSDK::CProtoBufMsg<CMsgTFCoaching_FindCoach> msg(k_EMsgGCCoaching_FindCoach);
+		msg.Body().set_account_id_friend_as_coach(steamID.GetAccountID());
+		GCClientSystem()->BSendMessage(msg);
+		ShowWaitingDialog(new CCoachingWaitDialog(), "#TF_Coach_AskingFriend", true, false, 20.0f);
 	}
 }
 
-void CSelectPlayerForCoachDialog::OnCommand( const char *command )
+void CSelectPlayerForCoachDialog::OnCommand(const char *command)
 {
-	if ( !Q_stricmp( command, "performmatchmaking" ) )
+	if(!Q_stricmp(command, "performmatchmaking"))
 	{
-		if ( CanAskPlayerToCoach( CSteamID() ) )
+		if(CanAskPlayerToCoach(CSteamID()))
 		{
 			// close dialog
-			OnCommand( "cancel" );
+			OnCommand("cancel");
 			// send message
 			g_bCanLikeCoach = true;
-			GCSDK::CProtoBufMsg< CMsgTFCoaching_FindCoach > msg( k_EMsgGCCoaching_FindCoach );
-			GCClientSystem()->BSendMessage( msg );
-			ShowWaitingDialog( new CCoachingWaitDialog(), "#TF_Coach_CoachSearching", true, false, 20.0f );
+			GCSDK::CProtoBufMsg<CMsgTFCoaching_FindCoach> msg(k_EMsgGCCoaching_FindCoach);
+			GCClientSystem()->BSendMessage(msg);
+			ShowWaitingDialog(new CCoachingWaitDialog(), "#TF_Coach_CoachSearching", true, false, 20.0f);
 		}
 		return;
 	}
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
-void CSelectPlayerForCoachDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CSelectPlayerForCoachDialog::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	CSelectPlayerDialog::ApplySchemeSettings( pScheme );
-	SetDialogVariable( "title", g_pVGuiLocalize->Find( "TF_FindCoachDialog_Title" ) );
+	CSelectPlayerDialog::ApplySchemeSettings(pScheme);
+	SetDialogVariable("title", g_pVGuiLocalize->Find("TF_FindCoachDialog_Title"));
 }
 
-bool CSelectPlayerForCoachDialog::CanAskPlayerToCoach( const CSteamID &steamID )
+bool CSelectPlayerForCoachDialog::CanAskPlayerToCoach(const CSteamID &steamID)
 {
 	bool bMatchesFriend = false;
 	const int iMaxPlayers = gpGlobals->maxClients;
 	int iNumPlayers = 0;
-	for( int iPlayerIndex = 1 ; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++ )
+	for(int iPlayerIndex = 1; iPlayerIndex <= MAX_PLAYERS; iPlayerIndex++)
 	{
-		if ( g_PR->IsConnected( iPlayerIndex ) == false )
+		if(g_PR->IsConnected(iPlayerIndex) == false)
 			continue;
 
 		player_info_t pi;
-		if ( !engine->GetPlayerInfo( iPlayerIndex, &pi ) )
+		if(!engine->GetPlayerInfo(iPlayerIndex, &pi))
 			continue;
 
 		// friend on this server?
-		if ( pi.friendsID != 0 && pi.friendsID == steamID.GetAccountID() )
+		if(pi.friendsID != 0 && pi.friendsID == steamID.GetAccountID())
 		{
 			bMatchesFriend = true;
 		}
 
 		++iNumPlayers;
 	}
-	if ( iMaxPlayers <= iNumPlayers )
+	if(iMaxPlayers <= iNumPlayers)
 	{
-		ShowMessageBox( "#TF_Coach_ServerFull_Title", "#TF_Coach_ServerFull_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_ServerFull_Title", "#TF_Coach_ServerFull_Text", "#GameUI_OK");
 		return false;
 	}
-	if ( bMatchesFriend )
+	if(bMatchesFriend)
 	{
 		return true;
 	}
@@ -231,39 +237,37 @@ bool CSelectPlayerForCoachDialog::CanAskPlayerToCoach( const CSteamID &steamID )
 
 static void ShowFindCoachDialog()
 {
-	CSelectPlayerForCoachDialog *pDialog = vgui::SETUP_PANEL( new CSelectPlayerForCoachDialog() );
-	pDialog->InvalidateLayout( false, true );
+	CSelectPlayerForCoachDialog *pDialog = vgui::SETUP_PANEL(new CSelectPlayerForCoachDialog());
+	pDialog->InvalidateLayout(false, true);
 
 	pDialog->Reset();
-	pDialog->SetVisible( true );
+	pDialog->SetVisible(true);
 	pDialog->MakePopup();
 	pDialog->MoveToFront();
 	pDialog->SetKeyBoardInputEnabled(true);
 	pDialog->SetMouseInputEnabled(true);
-	TFModalStack()->PushModal( pDialog );
+	TFModalStack()->PushModal(pDialog);
 }
 
 //-----------------------------------------------------------------------------
 
 // sent from main menu
-CON_COMMAND( cl_coach_toggle, "Toggle coach status" )
+CON_COMMAND(cl_coach_toggle, "Toggle coach status")
 {
-	if ( IsFreeTrialAccount() )
+	if(IsFreeTrialAccount())
 	{
-		ShowMessageBox( "#TF_Coach_FreeAccount_Title", "#TF_Coach_FreeAccount_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_FreeAccount_Title", "#TF_Coach_FreeAccount_Text", "#GameUI_OK");
 		return;
 	}
-	if ( BInCoachesList() )
+	if(BInCoachesList())
 	{
-		ShowConfirmDialog( "#TF_Coach_RemoveCoach_Title", "#TF_Coach_RemoveCoach_Text",
-						   "#TF_Coach_Yes", "#TF_Coach_No",
-						   &ToggleCoachingConfirm );
+		ShowConfirmDialog("#TF_Coach_RemoveCoach_Title", "#TF_Coach_RemoveCoach_Text", "#TF_Coach_Yes", "#TF_Coach_No",
+						  &ToggleCoachingConfirm);
 	}
 	else
 	{
-		ShowConfirmDialog( "#TF_Coach_AddCoach_Title", "#TF_Coach_AddCoach_Text",
-						   "#TF_Coach_Yes", "#TF_Coach_No",
-						   &ToggleCoachingConfirm );
+		ShowConfirmDialog("#TF_Coach_AddCoach_Title", "#TF_Coach_AddCoach_Text", "#TF_Coach_Yes", "#TF_Coach_No",
+						  &ToggleCoachingConfirm);
 	}
 }
 
@@ -272,67 +276,70 @@ CON_COMMAND( cl_coach_toggle, "Toggle coach status" )
 class CGCCoaching_AddToCoachesResponse : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_AddToCoachesResponse( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCoaching_AddToCoachesResponse(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg( pNetPacket );
+		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg(pNetPacket);
 
 		CloseWaitingDialog();
 
-		if ( msg.Body().m_eResponse == k_EGCMsgResponseOK )
+		if(msg.Body().m_eResponse == k_EGCMsgResponseOK)
 		{
-			ShowMessageBox( "#TF_Coach_AddedCoach_Title", "#TF_Coach_AddedCoach_Text", "#GameUI_OK" );
+			ShowMessageBox("#TF_Coach_AddedCoach_Title", "#TF_Coach_AddedCoach_Text", "#GameUI_OK");
 		}
-		else if ( msg.Body().m_eResponse == k_EGCMsgResponseDenied )
+		else if(msg.Body().m_eResponse == k_EGCMsgResponseDenied)
 		{
-			ShowMessageBox( "#TF_Coach_Denied_Title", "#TF_Coach_Denied_Text", "#GameUI_OK" );
+			ShowMessageBox("#TF_Coach_Denied_Title", "#TF_Coach_Denied_Text", "#GameUI_OK");
 		}
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_AddToCoachesResponse, "CGCCoaching_AddToCoachesResponse", k_EMsgGCCoaching_AddToCoachesResponse, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_AddToCoachesResponse, "CGCCoaching_AddToCoachesResponse",
+		   k_EMsgGCCoaching_AddToCoachesResponse, GCSDK::k_EServerTypeGCClient);
 
 //-----------------------------------------------------------------------------
 
 class CGCCoaching_RemoveFromCoachesResponse : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_RemoveFromCoachesResponse( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCoaching_RemoveFromCoachesResponse(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg( pNetPacket );
+		GCSDK::CGCMsg<MsgGCStandardResponse_t> msg(pNetPacket);
 
 		CloseWaitingDialog();
 
-		if ( msg.Body().m_eResponse == k_EGCMsgResponseOK )
+		if(msg.Body().m_eResponse == k_EGCMsgResponseOK)
 		{
-			ShowMessageBox( "#TF_Coach_RemovedCoach_Title", "#TF_Coach_RemovedCoach_Text", "#GameUI_OK" );
+			ShowMessageBox("#TF_Coach_RemovedCoach_Title", "#TF_Coach_RemovedCoach_Text", "#GameUI_OK");
 		}
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_RemoveFromCoachesResponse, "CGCCoaching_RemoveFromCoachesResponse", k_EMsgGCCoaching_RemoveFromCoachesResponse, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_RemoveFromCoachesResponse, "CGCCoaching_RemoveFromCoachesResponse",
+		   k_EMsgGCCoaching_RemoveFromCoachesResponse, GCSDK::k_EServerTypeGCClient);
 
 //-----------------------------------------------------------------------------
 
 class CGCCoaching_RemovedAsCoach : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_RemovedAsCoach( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCoaching_RemovedAsCoach(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		ShowMessageBox( "#TF_Coach_SessionEnded_Title", "#TF_Coach_SessionEnded_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_SessionEnded_Title", "#TF_Coach_SessionEnded_Text", "#GameUI_OK");
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_RemovedAsCoach, "CGCCoaching_RemovedAsCoach", k_EMsgGCCoaching_RemoveCurrentCoach, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_RemovedAsCoach, "CGCCoaching_RemovedAsCoach",
+		   k_EMsgGCCoaching_RemoveCurrentCoach, GCSDK::k_EServerTypeGCClient);
 
-static void FindCoach( bool bConfirmed, void *pContext )
+static void FindCoach(bool bConfirmed, void *pContext)
 {
-	if ( bConfirmed )
+	if(bConfirmed)
 	{
 		ShowFindCoachDialog();
 	}
@@ -341,39 +348,38 @@ static void FindCoach( bool bConfirmed, void *pContext )
 static void PromptFindCoach()
 {
 	C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pLocalTFPlayer == NULL )
+	if(pLocalTFPlayer == NULL)
 	{
-		ShowMessageBox( "#TF_Coach_NotInGame_Title", "#TF_Coach_NotInGame_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_NotInGame_Title", "#TF_Coach_NotInGame_Text", "#GameUI_OK");
 	}
-	else if ( pLocalTFPlayer->m_hCoach != NULL )
+	else if(pLocalTFPlayer->m_hCoach != NULL)
 	{
-		ShowMessageBox( "#TF_Coach_AlreadyBeingCoached_Title", "#TF_Coach_AlreadyBeingCoached_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_AlreadyBeingCoached_Title", "#TF_Coach_AlreadyBeingCoached_Text", "#GameUI_OK");
 	}
-	else if ( pLocalTFPlayer->m_hStudent != NULL )
+	else if(pLocalTFPlayer->m_hStudent != NULL)
 	{
-		ShowMessageBox( "#TF_Coach_AlreadyCoaching_Title", "#TF_Coach_AlreadyCoaching_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_AlreadyCoaching_Title", "#TF_Coach_AlreadyCoaching_Text", "#GameUI_OK");
 	}
-	else if ( TFGameRules() && TFGameRules()->IsInTraining() )
+	else if(TFGameRules() && TFGameRules()->IsInTraining())
 	{
-		ShowMessageBox( "#TF_Coach_Training_Title", "#TF_Coach_Training_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_Training_Title", "#TF_Coach_Training_Text", "#GameUI_OK");
 	}
-	else if ( IsServerFull() )
+	else if(IsServerFull())
 	{
-		ShowMessageBox( "#TF_Coach_ServerFull_Title", "#TF_Coach_ServerFull_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_ServerFull_Title", "#TF_Coach_ServerFull_Text", "#GameUI_OK");
 	}
-	else if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+	else if(TFGameRules() && TFGameRules()->IsMannVsMachineMode())
 	{
-		ShowMessageBox( "#TF_Coach_MannVsMachine_Title", "#TF_Coach_MannVsMachine_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_MannVsMachine_Title", "#TF_Coach_MannVsMachine_Text", "#GameUI_OK");
 	}
 	else
 	{
-		ShowConfirmDialog( "#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text",
-						   "#TF_Coach_Yes", "#TF_Coach_No",
-						   &FindCoach );
+		ShowConfirmDialog("#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text", "#TF_Coach_Yes", "#TF_Coach_No",
+						  &FindCoach);
 	}
 }
 
-CON_COMMAND( cl_coach_find_coach, "Request a coach for the current game" )
+CON_COMMAND(cl_coach_find_coach, "Request a coach for the current game")
 {
 	PromptFindCoach();
 }
@@ -381,87 +387,88 @@ CON_COMMAND( cl_coach_find_coach, "Request a coach for the current game" )
 class CGCCoaching_FindCoachResponse : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_FindCoachResponse( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCoaching_FindCoachResponse(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CProtoBufMsg< CMsgTFCoaching_FindCoachResponse > msg( pNetPacket );
+		GCSDK::CProtoBufMsg<CMsgTFCoaching_FindCoachResponse> msg(pNetPacket);
 
 		CloseWaitingDialog();
 
-		if ( msg.Body().found_coach() )
+		if(msg.Body().found_coach())
 		{
-			const char* pText = "#TF_Coach_FoundCoach_Text";
-			if ( msg.Body().num_likes() > 2 )
+			const char *pText = "#TF_Coach_FoundCoach_Text";
+			if(msg.Body().num_likes() > 2)
 			{
 				pText = "#TF_Coach_FoundCoachLike_Text";
 			}
-			CTFMessageBoxDialog *pDialog = ShowMessageBox( "#TF_Coach_FoundCoach_Title", pText, "#GameUI_OK" );
-			if ( pDialog )
+			CTFMessageBoxDialog *pDialog = ShowMessageBox("#TF_Coach_FoundCoach_Title", pText, "#GameUI_OK");
+			if(pDialog)
 			{
 				wchar_t szPlayerName[MAX_PLAYER_NAME_LENGTH];
-				g_pVGuiLocalize->ConvertANSIToUnicode( msg.Body().coach_name().c_str(), szPlayerName, sizeof(szPlayerName) );
-				pDialog->AddStringToken( "coachname", szPlayerName );
+				g_pVGuiLocalize->ConvertANSIToUnicode(msg.Body().coach_name().c_str(), szPlayerName,
+													  sizeof(szPlayerName));
+				pDialog->AddStringToken("coachname", szPlayerName);
 
 				wchar_t szNumLikes[32];
-				V_snwprintf( szNumLikes, ARRAYSIZE(szNumLikes), L"%d", msg.Body().num_likes() );
-				pDialog->AddStringToken( "numlikes", szNumLikes );
+				V_snwprintf(szNumLikes, ARRAYSIZE(szNumLikes), L"%d", msg.Body().num_likes());
+				pDialog->AddStringToken("numlikes", szNumLikes);
 			}
 		}
 		else
 		{
 			// retry?
-			ShowConfirmDialog( "#TF_Coach_StudentRetry_Title", "#TF_Coach_StudentRetry_Text",
-							   "#TF_Coach_Yes", "#TF_Coach_No",
-							   &FindCoach );
+			ShowConfirmDialog("#TF_Coach_StudentRetry_Title", "#TF_Coach_StudentRetry_Text", "#TF_Coach_Yes",
+							  "#TF_Coach_No", &FindCoach);
 		}
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_FindCoachResponse, "CGCCoaching_FindCoachResponse", k_EMsgGCCoaching_FindCoachResponse, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_FindCoachResponse, "CGCCoaching_FindCoachResponse",
+		   k_EMsgGCCoaching_FindCoachResponse, GCSDK::k_EServerTypeGCClient);
 
 //-----------------------------------------------------------------------------
 
 class CTFAskCoachNotification : public CEconNotification
 {
 public:
-	CTFAskCoachNotification( bool bStudentIsFriend )
-		: CEconNotification()
-		, m_bStudentIsFriend( bStudentIsFriend )
+	CTFAskCoachNotification(bool bStudentIsFriend) : CEconNotification(), m_bStudentIsFriend(bStudentIsFriend)
 	{
-		SetLifetime( 20.0f );
-		SetText( bStudentIsFriend ? "#TF_Coach_AskCoachForFriend_Text" : "#TF_Coach_AskCoach_Text" );
+		SetLifetime(20.0f);
+		SetText(bStudentIsFriend ? "#TF_Coach_AskCoachForFriend_Text" : "#TF_Coach_AskCoach_Text");
 	}
 
-	virtual EType NotificationType() { return eType_AcceptDecline; }
+	virtual EType NotificationType()
+	{
+		return eType_AcceptDecline;
+	}
 
 	// XXX(JohnS): Dead code? This notification type was accept/decline, so how was it being triggered?
 	virtual void Trigger()
 	{
 		// prompt coach
-		ShowConfirmDialog( "#TF_Coach_AskCoach_Title",
-		                   m_bStudentIsFriend ? "#TF_Coach_AskCoachForFriend_Text" : "#TF_Coach_AskCoach_Text",
-		                   "#TF_Coach_Yes", "#TF_Coach_No",
-		                   &AskCoachCallback );
+		ShowConfirmDialog("#TF_Coach_AskCoach_Title",
+						  m_bStudentIsFriend ? "#TF_Coach_AskCoachForFriend_Text" : "#TF_Coach_AskCoach_Text",
+						  "#TF_Coach_Yes", "#TF_Coach_No", &AskCoachCallback);
 	}
 
 	virtual void Accept()
 	{
-		AskCoachCallback( true, this );
+		AskCoachCallback(true, this);
 	}
 	virtual void Decline()
 	{
-		AskCoachCallback( false, this );
+		AskCoachCallback(false, this);
 	}
-	static void AskCoachCallback( bool bConfirmed, void *pContext )
+	static void AskCoachCallback(bool bConfirmed, void *pContext)
 	{
-		CTFAskCoachNotification *pNotification = (CTFAskCoachNotification*)pContext;
-		GCSDK::CProtoBufMsg< CMsgTFCoaching_AskCoachResponse > msg( k_EMsgGCCoaching_AskCoachResponse );
-		msg.Body().set_accept_coaching_assignment( bConfirmed );
-		GCClientSystem()->BSendMessage( msg );
-		if ( bConfirmed )
+		CTFAskCoachNotification *pNotification = (CTFAskCoachNotification *)pContext;
+		GCSDK::CProtoBufMsg<CMsgTFCoaching_AskCoachResponse> msg(k_EMsgGCCoaching_AskCoachResponse);
+		msg.Body().set_accept_coaching_assignment(bConfirmed);
+		GCClientSystem()->BSendMessage(msg);
+		if(bConfirmed)
 		{
-			ShowWaitingDialog( new CCoachingWaitDialog(), "#TF_Coach_JoiningStudent", true, false, 30.0f );
+			ShowWaitingDialog(new CCoachingWaitDialog(), "#TF_Coach_JoiningStudent", true, false, 30.0f);
 		}
 		pNotification->MarkForDeletion();
 	}
@@ -475,106 +482,110 @@ protected:
 class CGCCoaching_AskCoach : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_AskCoach( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	CGCCoaching_AskCoach(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CProtoBufMsg< CMsgTFCoaching_AskCoach > msg( pNetPacket );
-		if ( steamapicontext && steamapicontext->SteamUtils() )
+		GCSDK::CProtoBufMsg<CMsgTFCoaching_AskCoach> msg(pNetPacket);
+		if(steamapicontext && steamapicontext->SteamUtils())
 		{
 			bool bStudentIsFriend = msg.Body().has_student_is_friend() && msg.Body().student_is_friend();
-			CTFAskCoachNotification *pNotification = new CTFAskCoachNotification( bStudentIsFriend );
-			if ( bStudentIsFriend )
+			CTFAskCoachNotification *pNotification = new CTFAskCoachNotification(bStudentIsFriend);
+			if(bStudentIsFriend)
 			{
-				wchar_t wszPlayerName[ MAX_PLAYER_NAME_LENGTH ];
-				g_pVGuiLocalize->ConvertANSIToUnicode( InventoryManager()->PersonaName_Get( msg.Body().account_id_student() ), wszPlayerName, sizeof( wszPlayerName ) );
-				pNotification->AddStringToken( "friend", wszPlayerName );
+				wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH];
+				g_pVGuiLocalize->ConvertANSIToUnicode(
+					InventoryManager()->PersonaName_Get(msg.Body().account_id_student()), wszPlayerName,
+					sizeof(wszPlayerName));
+				pNotification->AddStringToken("friend", wszPlayerName);
 			}
-			CSteamID steamID( msg.Body().account_id_student(), 1, GetUniverse(), k_EAccountTypeIndividual );
-			pNotification->SetSteamID( steamID );
-			NotificationQueue_Add( pNotification );
+			CSteamID steamID(msg.Body().account_id_student(), 1, GetUniverse(), k_EAccountTypeIndividual);
+			pNotification->SetSteamID(steamID);
+			NotificationQueue_Add(pNotification);
 		}
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_AskCoach, "CGCCoaching_AskCoach", k_EMsgGCCoaching_AskCoach, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_AskCoach, "CGCCoaching_AskCoach", k_EMsgGCCoaching_AskCoach,
+		   GCSDK::k_EServerTypeGCClient);
 
 //-----------------------------------------------------------------------------
 
 class CGCCoaching_CoachJoinGame : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_CoachJoinGame( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCoaching_CoachJoinGame(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		GCSDK::CProtoBufMsg< CMsgTFCoaching_CoachJoinGame > msg( pNetPacket );
+		GCSDK::CProtoBufMsg<CMsgTFCoaching_CoachJoinGame> msg(pNetPacket);
 
 		CloseWaitingDialog();
 
-		if ( msg.Body().join_game() )
+		if(msg.Body().join_game())
 		{
-			if ( msg.Body().has_server_address() && msg.Body().has_server_port() )
+			if(msg.Body().has_server_address() && msg.Body().has_server_port())
 			{
 				// join the game
 				uint32 iAddress = msg.Body().server_address();
 				uint16 iPort = msg.Body().server_port();
 				char command[256];
-				Q_snprintf( command, sizeof(command), "connect %d.%d.%d.%d:%d coaching\n", (iAddress >> 24) & 0xff, (iAddress >> 16) & 0xff, (iAddress >> 8) & 0xff, iAddress & 0xff, iPort);
-				engine->ClientCmd_Unrestricted( command );
+				Q_snprintf(command, sizeof(command), "connect %d.%d.%d.%d:%d coaching\n", (iAddress >> 24) & 0xff,
+						   (iAddress >> 16) & 0xff, (iAddress >> 8) & 0xff, iAddress & 0xff, iPort);
+				engine->ClientCmd_Unrestricted(command);
 			}
 		}
 		else
 		{
-			ShowMessageBox( "#TF_Coach_JoinFail_Title", "#TF_Coach_JoinFail_Text", "#GameUI_OK" );
+			ShowMessageBox("#TF_Coach_JoinFail_Title", "#TF_Coach_JoinFail_Text", "#GameUI_OK");
 		}
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_CoachJoinGame, "CGCCoaching_CoachJoinGame", k_EMsgGCCoaching_CoachJoinGame, GCSDK::k_EServerTypeGCClient );
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_CoachJoinGame, "CGCCoaching_CoachJoinGame", k_EMsgGCCoaching_CoachJoinGame,
+		   GCSDK::k_EServerTypeGCClient);
 
 class CGCCoaching_AlreadyRatedCoach : public GCSDK::CGCClientJob
 {
 public:
-	CGCCoaching_AlreadyRatedCoach( GCSDK::CGCClient *pClient ) : GCSDK::CGCClientJob( pClient ) {}
+	CGCCoaching_AlreadyRatedCoach(GCSDK::CGCClient *pClient) : GCSDK::CGCClientJob(pClient) {}
 
-	virtual bool BYieldingRunGCJob( GCSDK::IMsgNetPacket *pNetPacket )
+	virtual bool BYieldingRunGCJob(GCSDK::IMsgNetPacket *pNetPacket)
 	{
-		ShowMessageBox( "#TF_Coach_AlreadyRatedCoach_Title", "#TF_Coach_AlreadyRatedCoach_Text", "#GameUI_OK" );
+		ShowMessageBox("#TF_Coach_AlreadyRatedCoach_Title", "#TF_Coach_AlreadyRatedCoach_Text", "#GameUI_OK");
 		return true;
 	}
 };
-GC_REG_JOB( GCSDK::CGCClient, CGCCoaching_AlreadyRatedCoach, "CGCCoaching_AlreadyRatedCoach", k_EMsgGCCoaching_AlreadyRatedCoach, GCSDK::k_EServerTypeGCClient );
-
+GC_REG_JOB(GCSDK::CGCClient, CGCCoaching_AlreadyRatedCoach, "CGCCoaching_AlreadyRatedCoach",
+		   k_EMsgGCCoaching_AlreadyRatedCoach, GCSDK::k_EServerTypeGCClient);
 
 //-----------------------------------------------------------------------------
 
-static void LikeCoachCallback( bool bConfirmed, void *pContext )
+static void LikeCoachCallback(bool bConfirmed, void *pContext)
 {
-	GCSDK::CProtoBufMsg< CMsgTFCoaching_LikeCurrentCoach > msg( k_EMsgGCCoaching_LikeCurrentCoach );
-	msg.Body().set_like_coach( bConfirmed );
-	GCClientSystem()->BSendMessage( msg );
+	GCSDK::CProtoBufMsg<CMsgTFCoaching_LikeCurrentCoach> msg(k_EMsgGCCoaching_LikeCurrentCoach);
+	msg.Body().set_like_coach(bConfirmed);
+	GCClientSystem()->BSendMessage(msg);
 	g_bCanLikeCoach = false;
 }
 
 static void PromptIfLikeCoach()
 {
-	if ( g_bCanLikeCoach )
+	if(g_bCanLikeCoach)
 	{
-		ShowConfirmDialog( "#TF_Coach_LikeCoach_Title", "#TF_Coach_LikeCoach_Text",
-						   "#TF_Coach_Yes", "#TF_Coach_No",
-						   &LikeCoachCallback );
+		ShowConfirmDialog("#TF_Coach_LikeCoach_Title", "#TF_Coach_LikeCoach_Text", "#TF_Coach_Yes", "#TF_Coach_No",
+						  &LikeCoachCallback);
 	}
 }
 
 void CL_Coaching_LevelShutdown()
 {
-	if ( g_pSelectPlayerForCoachDialog )
+	if(g_pSelectPlayerForCoachDialog)
 	{
-		g_pSelectPlayerForCoachDialog->OnCommand( "cancel" );
+		g_pSelectPlayerForCoachDialog->OnCommand("cancel");
 	}
 	bool bHadCoach = g_bHadCoach;
 	g_bHadCoach = false;
-	if ( bHadCoach )
+	if(bHadCoach)
 	{
 		PromptIfLikeCoach();
 	}
@@ -582,65 +593,66 @@ void CL_Coaching_LevelShutdown()
 
 //-----------------------------------------------------------------------------
 
-ConVar tf_coach_min_time_played( "tf_coach_min_time_played", "7200", FCVAR_CLIENTDLL | FCVAR_HIDDEN );
-ConVar tf_coach_request_nevershowagain( "tf_coach_request_nevershowagain", "0", FCVAR_ARCHIVE | FCVAR_CLIENTDLL | FCVAR_HIDDEN );
+ConVar tf_coach_min_time_played("tf_coach_min_time_played", "7200", FCVAR_CLIENTDLL | FCVAR_HIDDEN);
+ConVar tf_coach_request_nevershowagain("tf_coach_request_nevershowagain", "0",
+									   FCVAR_ARCHIVE | FCVAR_CLIENTDLL | FCVAR_HIDDEN);
 
 // @return true if the current player has played less than a certain threshold of hours and
 // so is deemed eligible for coaching
 static bool Coaching_ShouldRequestCoach()
 {
 	// cannot request a coach while in training
-	if ( TFGameRules() && TFGameRules()->IsInTraining() )
+	if(TFGameRules() && TFGameRules()->IsInTraining())
 	{
 		return false;
 	}
 	// cannot request a coach if server is full
-	if ( IsServerFull() )
+	if(IsServerFull())
 	{
 		return false;
 	}
 
 	// Grab generic stats and add time played to total time played
 	int totalTimePlayed = 0;
-	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
+	for(int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++)
 	{
-		ClassStats_t &classStats = CTFStatPanel::GetClassStats( iClass );
-		totalTimePlayed += classStats.accumulated.m_iStat[TFSTAT_PLAYTIME] + classStats.accumulatedMVM.m_iStat[TFSTAT_PLAYTIME];
+		ClassStats_t &classStats = CTFStatPanel::GetClassStats(iClass);
+		totalTimePlayed +=
+			classStats.accumulated.m_iStat[TFSTAT_PLAYTIME] + classStats.accumulatedMVM.m_iStat[TFSTAT_PLAYTIME];
 	}
 
 	// Better to not risk losing slots needed for bot opponents to coaches, as this could
 	// inadvertently reduce difficulty and/or induce undefined behaviors/conditions
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+	if(TFGameRules() && TFGameRules()->IsMannVsMachineMode())
 	{
 		return false;
 	}
 
 	// check how many hours this player has played
 	const int minTimePlayedForCoachingEligibility = tf_coach_min_time_played.GetInt();
-	return ( totalTimePlayed < minTimePlayedForCoachingEligibility );
+	return (totalTimePlayed < minTimePlayedForCoachingEligibility);
 }
 
 // If the player is eligible for coaching, then prompt them
 void Coaching_CheckIfEligibleForCoaching()
 {
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( pLocalPlayer == NULL )
+	if(pLocalPlayer == NULL)
 	{
 		return;
 	}
 
 	// first time only...better way to do this?
-	if ( pLocalPlayer->GetTeamNumber() != TEAM_UNASSIGNED )
+	if(pLocalPlayer->GetTeamNumber() != TEAM_UNASSIGNED)
 	{
 		return;
 	}
 
-	if ( !tf_coach_request_nevershowagain.GetBool() && Coaching_ShouldRequestCoach() )
+	if(!tf_coach_request_nevershowagain.GetBool() && Coaching_ShouldRequestCoach())
 	{
-		ShowConfirmOptOutDialog( "#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text",
-								 "#TF_Coach_Yes", "#TF_Coach_No",
-								 "#TF_Coach_AskStudent_DoNotShowAgain", "tf_coach_request_nevershowagain",
-								 &FindCoach );
+		ShowConfirmOptOutDialog("#TF_Coach_AskStudent_Title", "#TF_Coach_AskStudent_Text", "#TF_Coach_Yes",
+								"#TF_Coach_No", "#TF_Coach_AskStudent_DoNotShowAgain",
+								"tf_coach_request_nevershowagain", &FindCoach);
 	}
 }
 
@@ -648,48 +660,45 @@ void Coaching_CheckIfEligibleForCoaching()
 
 class CCoachedByPanel : public CHudElement, public vgui::EditablePanel
 {
-	DECLARE_CLASS_SIMPLE( CCoachedByPanel, vgui::EditablePanel );
+	DECLARE_CLASS_SIMPLE(CCoachedByPanel, vgui::EditablePanel);
+
 public:
-	CCoachedByPanel( const char *pElementName )
-		: CHudElement( pElementName )
-		, BaseClass( NULL, "CoachedByPanel" )
-		, m_bCanLikeCoach( false )
+	CCoachedByPanel(const char *pElementName)
+		: CHudElement(pElementName), BaseClass(NULL, "CoachedByPanel"), m_bCanLikeCoach(false)
 	{
 		vgui::Panel *pParent = g_pClientMode->GetViewport();
-		SetParent( pParent );
+		SetParent(pParent);
 
-		SetHiddenBits( HIDEHUD_MISCSTATUS );
+		SetHiddenBits(HIDEHUD_MISCSTATUS);
 
-		ListenForGameEvent( "localplayer_changeteam" );
-		ListenForGameEvent( "player_changename" );
+		ListenForGameEvent("localplayer_changeteam");
+		ListenForGameEvent("player_changename");
 	}
 
-	virtual ~CCoachedByPanel()
-	{
+	virtual ~CCoachedByPanel() {}
 
-	}
-
-	virtual bool ShouldDraw( void )
+	virtual bool ShouldDraw(void)
 	{
-		if ( !CHudElement::ShouldDraw() )
+		if(!CHudElement::ShouldDraw())
 		{
 			return false;
 		}
 
 		C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalTFPlayer == NULL || pLocalTFPlayer->m_hCoach == NULL || pLocalTFPlayer->GetObserverMode() > OBS_MODE_NONE )
+		if(pLocalTFPlayer == NULL || pLocalTFPlayer->m_hCoach == NULL ||
+		   pLocalTFPlayer->GetObserverMode() > OBS_MODE_NONE)
 		{
 			return false;
 		}
 
-		if ( !IsVisible() )
+		if(!IsVisible())
 		{
 			g_bHadCoach = true;
 			m_bCanLikeCoach = g_bCanLikeCoach;
 			UpdateUI();
 			InvalidateLayout();
 		}
-		if ( m_bCanLikeCoach != g_bCanLikeCoach )
+		if(m_bCanLikeCoach != g_bCanLikeCoach)
 		{
 			m_bCanLikeCoach = g_bCanLikeCoach;
 			UpdateUI();
@@ -698,7 +707,7 @@ public:
 		return true;
 	}
 
-	virtual void PerformLayout( void )
+	virtual void PerformLayout(void)
 	{
 		int iXIndent = XRES(5);
 		int iXPostdent = XRES(10);
@@ -708,92 +717,92 @@ public:
 
 		C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
 
-		if ( m_pCoachNameLabel && pLocalTFPlayer)
+		if(m_pCoachNameLabel && pLocalTFPlayer)
 		{
-			m_pCoachNameLabel->GetContentSize( iTextW, iTextH );
-			iWidth += MAX( iTextW, m_minCoachNameLabelWidth );
-			m_pCoachNameLabel->SetWide( iTextW );
+			m_pCoachNameLabel->GetContentSize(iTextW, iTextH);
+			iWidth += MAX(iTextW, m_minCoachNameLabelWidth);
+			m_pCoachNameLabel->SetWide(iTextW);
 
-			if ( m_pAvatar )
+			if(m_pAvatar)
 			{
 				iWidth += m_pAvatar->GetWide();
 			}
 
-			SetSize( iWidth, GetTall() );
+			SetSize(iWidth, GetTall());
 
-			if ( m_pBGPanel_Blue )
+			if(m_pBGPanel_Blue)
 			{
-				m_pBGPanel_Blue->SetSize( iWidth, GetTall() );
+				m_pBGPanel_Blue->SetSize(iWidth, GetTall());
 			}
 
-			if ( m_pBGPanel_Red )
+			if(m_pBGPanel_Red)
 			{
-				m_pBGPanel_Red->SetSize( iWidth, GetTall() );
+				m_pBGPanel_Red->SetSize(iWidth, GetTall());
 			}
 
-			if ( m_pBGPanel_Blue && m_pBGPanel_Red )
+			if(m_pBGPanel_Blue && m_pBGPanel_Red)
 			{
-				bool bRed = ( pLocalTFPlayer->GetTeamNumber() == TF_TEAM_RED );
-				m_pBGPanel_Blue->SetVisible( !bRed );
-				m_pBGPanel_Red->SetVisible( bRed );
+				bool bRed = (pLocalTFPlayer->GetTeamNumber() == TF_TEAM_RED);
+				m_pBGPanel_Blue->SetVisible(!bRed);
+				m_pBGPanel_Red->SetVisible(bRed);
 			}
 		}
 	}
 
-	virtual void ApplySchemeSettings( vgui::IScheme *scheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *scheme)
 	{
-		LoadControlSettings( "resource/UI/CoachedByPanel.res" );
+		LoadControlSettings("resource/UI/CoachedByPanel.res");
 
-		BaseClass::ApplySchemeSettings( scheme );
+		BaseClass::ApplySchemeSettings(scheme);
 
-		m_pCoachNameLabel = dynamic_cast< vgui::Label* >( FindChildByName("CoachNameLabel") );
+		m_pCoachNameLabel = dynamic_cast<vgui::Label *>(FindChildByName("CoachNameLabel"));
 
 		m_minCoachNameLabelWidth = 0;
-		if ( m_pCoachNameLabel )
+		if(m_pCoachNameLabel)
 		{
 			m_minCoachNameLabelWidth = m_pCoachNameLabel->GetWide();
 		}
 		m_pBGPanel_Blue = FindChildByName("Background_Blue");
 		m_pBGPanel_Red = FindChildByName("Background_Red");
 
-		if ( m_pBGPanel_Blue )
+		if(m_pBGPanel_Blue)
 		{
-			m_pBGPanel_Blue->SetVisible( true );
+			m_pBGPanel_Blue->SetVisible(true);
 		}
 
-		m_pAvatar = dynamic_cast<CAvatarImagePanel *>( FindChildByName("AvatarImage") );
+		m_pAvatar = dynamic_cast<CAvatarImagePanel *>(FindChildByName("AvatarImage"));
 
 		UpdateUI();
 	}
 
-	virtual void FireGameEvent( IGameEvent *event )
+	virtual void FireGameEvent(IGameEvent *event)
 	{
 		C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalTFPlayer == NULL || pLocalTFPlayer->m_hCoach == NULL )
+		if(pLocalTFPlayer == NULL || pLocalTFPlayer->m_hCoach == NULL)
 		{
 			return;
 		}
 		const char *name = event->GetName();
-		if ( FStrEq( name, "localplayer_changeteam" ) ||
-			 ( FStrEq( name, "player_changename" ) && event->GetInt( "userid" ) == pLocalTFPlayer->m_hCoach->GetUserID() ) )
+		if(FStrEq(name, "localplayer_changeteam") ||
+		   (FStrEq(name, "player_changename") && event->GetInt("userid") == pLocalTFPlayer->m_hCoach->GetUserID()))
 		{
 			UpdateUI();
 			InvalidateLayout();
 		}
 	}
 
-	int	HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+	int HudElementKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 	{
-		if ( !IsVisible() )
+		if(!IsVisible())
 			return 1; // key not handled
 
-		if ( !down )
+		if(!down)
 			return 1; // key not handled
 
 		C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalTFPlayer != NULL && pLocalTFPlayer->m_hCoach != NULL )
+		if(pLocalTFPlayer != NULL && pLocalTFPlayer->m_hCoach != NULL)
 		{
-			switch ( keynum )
+			switch(keynum)
 			{
 				case KEY_F7:
 				{
@@ -802,8 +811,8 @@ public:
 				break;
 				case KEY_F8:
 				{
-					GCSDK::CProtoBufMsg< CMsgTFCoaching_RemoveCurrentCoach > msg( k_EMsgGCCoaching_RemoveCurrentCoach );
-					GCClientSystem()->BSendMessage( msg );
+					GCSDK::CProtoBufMsg<CMsgTFCoaching_RemoveCurrentCoach> msg(k_EMsgGCCoaching_RemoveCurrentCoach);
+					GCClientSystem()->BSendMessage(msg);
 					return 0;
 				}
 				break;
@@ -816,30 +825,31 @@ public:
 	void UpdateUI()
 	{
 		C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
-		if ( pLocalTFPlayer == NULL || m_pCoachNameLabel == NULL || pLocalTFPlayer->m_hCoach == NULL )
+		if(pLocalTFPlayer == NULL || m_pCoachNameLabel == NULL || pLocalTFPlayer->m_hCoach == NULL)
 		{
 			return;
 		}
 
 		C_TFPlayer *pCoachPlayer = pLocalTFPlayer->m_hCoach;
-		const char* pCoachName = pCoachPlayer->GetPlayerName();
+		const char *pCoachName = pCoachPlayer->GetPlayerName();
 
-		wchar_t wszPlayerName[ MAX_PLAYER_NAME_LENGTH ];
-		g_pVGuiLocalize->ConvertANSIToUnicode(pCoachName, wszPlayerName, sizeof( wszPlayerName ) );
-		wchar_t wszText[ 256 ] = L"";
-		g_pVGuiLocalize->ConstructString_safe( wszText, g_pVGuiLocalize->Find( "#TF_Coach_Coach_Prefix" ), 1, wszPlayerName );
-		m_pCoachNameLabel->SetText( wszText );
+		wchar_t wszPlayerName[MAX_PLAYER_NAME_LENGTH];
+		g_pVGuiLocalize->ConvertANSIToUnicode(pCoachName, wszPlayerName, sizeof(wszPlayerName));
+		wchar_t wszText[256] = L"";
+		g_pVGuiLocalize->ConstructString_safe(wszText, g_pVGuiLocalize->Find("#TF_Coach_Coach_Prefix"), 1,
+											  wszPlayerName);
+		m_pCoachNameLabel->SetText(wszText);
 
-		if ( m_pAvatar )
+		if(m_pAvatar)
 		{
-			m_pAvatar->SetShouldDrawFriendIcon( false );
+			m_pAvatar->SetShouldDrawFriendIcon(false);
 
-			if ( steamapicontext && steamapicontext->SteamUser() )
+			if(steamapicontext && steamapicontext->SteamUser())
 			{
 				CSteamID coachSteamID;
-				if ( pCoachPlayer->GetSteamID( &coachSteamID ) )
+				if(pCoachPlayer->GetSteamID(&coachSteamID))
 				{
-					m_pAvatar->SetPlayer( coachSteamID, k_EAvatarSize64x64 );
+					m_pAvatar->SetPlayer(coachSteamID, k_EAvatarSize64x64);
 				}
 				else
 				{
@@ -848,31 +858,30 @@ public:
 			}
 		}
 
-		SetChildPanelVisible( this, "LikeCoachLabel", m_bCanLikeCoach );
+		SetChildPanelVisible(this, "LikeCoachLabel", m_bCanLikeCoach);
 	}
 
 protected:
-
-	CAvatarImagePanel	*m_pAvatar;
-	vgui::Label			*m_pCoachNameLabel;
-	vgui::Panel			*m_pBGPanel_Blue;
-	vgui::Panel			*m_pBGPanel_Red;
-	int					m_minCoachNameLabelWidth;
-	bool				m_bCanLikeCoach;
+	CAvatarImagePanel *m_pAvatar;
+	vgui::Label *m_pCoachNameLabel;
+	vgui::Panel *m_pBGPanel_Blue;
+	vgui::Panel *m_pBGPanel_Red;
+	int m_minCoachNameLabelWidth;
+	bool m_bCanLikeCoach;
 };
 
-DECLARE_HUDELEMENT( CCoachedByPanel );
+DECLARE_HUDELEMENT(CCoachedByPanel);
 
 //-----------------------------------------------------------------------------
 
 // @return true if the coaching panel handled the input
 // false otherwise
-bool CoachingHandlesKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
+bool CoachingHandlesKeyInput(int down, ButtonCode_t keynum, const char *pszCurrentBinding)
 {
-	CCoachedByPanel *pCoachingPanel = ( CCoachedByPanel * )GET_HUDELEMENT( CCoachedByPanel );
-	if ( pCoachingPanel )
+	CCoachedByPanel *pCoachingPanel = (CCoachedByPanel *)GET_HUDELEMENT(CCoachedByPanel);
+	if(pCoachingPanel)
 	{
-		return pCoachingPanel->HudElementKeyInput( down, keynum, pszCurrentBinding ) == 0;
+		return pCoachingPanel->HudElementKeyInput(down, keynum, pszCurrentBinding) == 0;
 	}
 	return false;
 }

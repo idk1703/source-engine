@@ -13,7 +13,6 @@
 #include <vgui_controls/Button.h>
 #include <vgui_controls/QueryBox.h>
 
-
 using namespace vgui;
 
 // Query boxes are windows that pop up in response to events.
@@ -24,21 +23,21 @@ using namespace vgui;
 // each button may be linked to an additional command in order to trigger an
 // appropriate response.
 
-class QueryBoxDemo: public DemoPage
+class QueryBoxDemo : public DemoPage
 {
-	public:
-		QueryBoxDemo(Panel *parent, const char *name);
-		~QueryBoxDemo();
+public:
+	QueryBoxDemo(Panel *parent, const char *name);
+	~QueryBoxDemo();
 
-		void OnButtonClicked();
-		void ShowQueryBox();
-		void OnOK();
-		void OnCancel();
+	void OnButtonClicked();
+	void ShowQueryBox();
+	void OnOK();
+	void OnCancel();
 
-	private:
-		Button *m_pButton;
+private:
+	Button *m_pButton;
 
-		DECLARE_PANELMAP();
+	DECLARE_PANELMAP();
 };
 
 //-----------------------------------------------------------------------------
@@ -58,17 +57,13 @@ QueryBoxDemo::QueryBoxDemo(Panel *parent, const char *name) : DemoPage(parent, n
 	// Install a command that will be executed when the button is pressed
 	// Here we use a KeyValues command, this is mapped using the Message map
 	// below to a function.
-	m_pButton->SetCommand(new KeyValues ("ButtonClicked"));
-
+	m_pButton->SetCommand(new KeyValues("ButtonClicked"));
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-QueryBoxDemo::~QueryBoxDemo()
-{
-}
-
+QueryBoxDemo::~QueryBoxDemo() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:	 Respond to a message based action signal
@@ -87,11 +82,11 @@ void QueryBoxDemo::OnButtonClicked()
 //-----------------------------------------------------------------------------
 void QueryBoxDemo::ShowQueryBox()
 {
-   	// create a new message box.
+	// create a new message box.
 	// The first arg is the name of the window and will be across the top.
 	// The second arg is the text that will appear in the message box.
 
-	QueryBox *pQuery = new QueryBox ("Message Window", "Will you pick OK or Cancel?");
+	QueryBox *pQuery = new QueryBox("Message Window", "Will you pick OK or Cancel?");
 
 	// Make ourselves the target of the button messages
 	pQuery->AddActionSignalTarget(this);
@@ -125,21 +120,16 @@ void QueryBoxDemo::OnCancel()
 	ivgui()->DPrintf("Query was canceled.\n");
 }
 
-
-
-MessageMapItem_t QueryBoxDemo::m_MessageMap[] =
-{
-	MAP_MESSAGE( QueryBoxDemo, "ButtonClicked", OnButtonClicked ),
-	MAP_MESSAGE( QueryBoxDemo, "OKClicked", OnOK ),
-	MAP_MESSAGE( QueryBoxDemo, "Cancel", OnCancel ),
+MessageMapItem_t QueryBoxDemo::m_MessageMap[] = {
+	MAP_MESSAGE(QueryBoxDemo, "ButtonClicked", OnButtonClicked),
+	MAP_MESSAGE(QueryBoxDemo, "OKClicked", OnOK),
+	MAP_MESSAGE(QueryBoxDemo, "Cancel", OnCancel),
 
 };
 
 IMPLEMENT_PANELMAP(QueryBoxDemo, DemoPage);
 
-
-
-Panel* QueryBoxDemo_Create(Panel *parent)
+Panel *QueryBoxDemo_Create(Panel *parent)
 {
 	return new QueryBoxDemo(parent, "QueryBoxDemo");
 }

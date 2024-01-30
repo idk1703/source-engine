@@ -12,14 +12,14 @@
 
 //----------------------------------------------------------------------------------------
 
-CClientRecordingSessionBlockManager::CClientRecordingSessionBlockManager( IReplayContext *pContext )
-:	CBaseRecordingSessionBlockManager( pContext )
+CClientRecordingSessionBlockManager::CClientRecordingSessionBlockManager(IReplayContext *pContext)
+	: CBaseRecordingSessionBlockManager(pContext)
 {
 }
 
 CBaseRecordingSessionBlock *CClientRecordingSessionBlockManager::Create()
 {
-	return new CClientRecordingSessionBlock( m_pContext );
+	return new CClientRecordingSessionBlock(m_pContext);
 }
 
 IReplayContext *CClientRecordingSessionBlockManager::GetReplayContext() const

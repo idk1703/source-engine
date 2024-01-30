@@ -21,19 +21,19 @@
 class CItemAntidote : public CItem
 {
 public:
-	DECLARE_CLASS( CItemAntidote, CItem );
+	DECLARE_CLASS(CItemAntidote, CItem);
 
-	void Spawn( void )
+	void Spawn(void)
 	{
-		Precache( );
-		SetModel( "models/w_antidote.mdl" );
-		BaseClass::Spawn( );
+		Precache();
+		SetModel("models/w_antidote.mdl");
+		BaseClass::Spawn();
 	}
-	void Precache( void )
+	void Precache(void)
 	{
-		PrecacheModel ("models/w_antidote.mdl");
+		PrecacheModel("models/w_antidote.mdl");
 	}
-	bool MyTouch( CBasePlayer *pPlayer )
+	bool MyTouch(CBasePlayer *pPlayer)
 	{
 		pPlayer->SetSuitUpdate("!HEV_DET4", FALSE, SUIT_NEXT_IN_1MIN);
 

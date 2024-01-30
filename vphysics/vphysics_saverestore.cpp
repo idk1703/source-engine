@@ -11,38 +11,34 @@
 //-----------------------------------------------------------------------------
 // Phys pointer association
 //-----------------------------------------------------------------------------
-static CUtlMap<void *, void *> s_VPhysPtrMap( 0, 0, DefLessFunc(void *) );
-
+static CUtlMap<void *, void *> s_VPhysPtrMap(0, 0, DefLessFunc(void *));
 
 CVPhysPtrSaveRestoreOps g_VPhysPtrSaveRestoreOps;
 CVPhysPtrUtlVectorSaveRestoreOps g_VPhysPtrUtlVectorSaveRestoreOps;
 
-
 //-----------------------------------------------------------------------------
 // Phys pointer association
 //-----------------------------------------------------------------------------
-static void AddPtrAssociation( void *pOldValue, void *pNewValue )
+static void AddPtrAssociation(void *pOldValue, void *pNewValue)
 {
-	s_VPhysPtrMap.Insert( pOldValue, pNewValue );
+	s_VPhysPtrMap.Insert(pOldValue, pNewValue);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Save/load part of CPhysicsEnvironment
 //-----------------------------------------------------------------------------
-static bool NoPhysSaveFunc( const physsaveparams_t &params, void * )
+static bool NoPhysSaveFunc(const physsaveparams_t &params, void *)
 {
-	AssertMsg( 0, "Physics cannot save the specified type" );
+	AssertMsg(0, "Physics cannot save the specified type");
 	return false;
 }
 
-bool CPhysicsEnvironment::Save( const physsaveparams_t &params )
+bool CPhysicsEnvironment::Save(const physsaveparams_t &params)
 {
 	const PhysInterfaceId_t type = params.type;
-	Assert( type >= 0 && type < PIID_NUM_TYPES );
+	Assert(type >= 0 && type < PIID_NUM_TYPES);
 
-	static PhysSaveFunc_t saveFuncs[PIID_NUM_TYPES] =
-	{
+	static PhysSaveFunc_t saveFuncs[PIID_NUM_TYPES] = {
 		NoPhysSaveFunc,
 		(PhysSaveFunc_t)SavePhysicsObject,
 		(PhysSaveFunc_t)SavePhysicsFluidController,
@@ -55,41 +51,37 @@ bool CPhysicsEnvironment::Save( const physsaveparams_t &params )
 		(PhysSaveFunc_t)SavePhysicsVehicleController,
 	};
 
-	if ( type >= 0 && type < PIID_NUM_TYPES )
+	if(type >= 0 && type < PIID_NUM_TYPES)
 	{
-		params.pSave->WriteInt( (int *)&params.pObject );
-		return (*saveFuncs[type])( params, params.pObject );
+		params.pSave->WriteInt((int *)&params.pObject);
+		return (*saveFuncs[type])(params, params.pObject);
 	}
 	return false;
 }
 
-static bool NoPhysRestoreFunc( const physrestoreparams_t &params, void ** )
+static bool NoPhysRestoreFunc(const physrestoreparams_t &params, void **)
 {
-	AssertMsg( 0, "Physics cannot save the specified type" );
+	AssertMsg(0, "Physics cannot save the specified type");
 	return false;
 }
 
-CVPhysPtrSaveRestoreOps::CVPhysPtrSaveRestoreOps()
-{
-}
+CVPhysPtrSaveRestoreOps::CVPhysPtrSaveRestoreOps() {}
 
-
-void CPhysicsEnvironment::PreRestore( const physprerestoreparams_t &params )
+void CPhysicsEnvironment::PreRestore(const physprerestoreparams_t &params)
 {
 	g_VPhysPtrSaveRestoreOps.PreRestore();
-	for ( int i = 0; i < params.recreatedObjectCount; i++ )
+	for(int i = 0; i < params.recreatedObjectCount; i++)
 	{
-		AddPtrAssociation( params.recreatedObjectList[i].pOldObject, params.recreatedObjectList[i].pNewObject );
+		AddPtrAssociation(params.recreatedObjectList[i].pOldObject, params.recreatedObjectList[i].pNewObject);
 	}
 }
 
-bool CPhysicsEnvironment::Restore( const physrestoreparams_t &params )
+bool CPhysicsEnvironment::Restore(const physrestoreparams_t &params)
 {
 	const PhysInterfaceId_t type = params.type;
-	Assert( type >= 0 && type < PIID_NUM_TYPES );
+	Assert(type >= 0 && type < PIID_NUM_TYPES);
 
-	static PhysRestoreFunc_t restoreFuncs[PIID_NUM_TYPES] =
-	{
+	static PhysRestoreFunc_t restoreFuncs[PIID_NUM_TYPES] = {
 		NoPhysRestoreFunc,
 		(PhysRestoreFunc_t)RestorePhysicsObject,
 		(PhysRestoreFunc_t)RestorePhysicsFluidController,
@@ -102,16 +94,16 @@ bool CPhysicsEnvironment::Restore( const physrestoreparams_t &params )
 		(PhysRestoreFunc_t)RestorePhysicsVehicleController,
 	};
 
-	if ( type >= 0 && type < PIID_NUM_TYPES )
+	if(type >= 0 && type < PIID_NUM_TYPES)
 	{
 		void *pOldObject;
-		params.pRestore->ReadInt( (int *)&pOldObject );
-		if ( (*restoreFuncs[type])( params, params.ppObject ) )
+		params.pRestore->ReadInt((int *)&pOldObject);
+		if((*restoreFuncs[type])(params, params.ppObject))
 		{
-			AddPtrAssociation( pOldObject, *params.ppObject );
-			if ( type == PIID_IPHYSICSOBJECT )
+			AddPtrAssociation(pOldObject, *params.ppObject);
+			if(type == PIID_IPHYSICSOBJECT)
 			{
-				m_objects.AddToTail( (IPhysicsObject *)(*params.ppObject) );
+				m_objects.AddToTail((IPhysicsObject *)(*params.ppObject));
 			}
 			return true;
 		}
@@ -124,18 +116,17 @@ void CPhysicsEnvironment::PostRestore()
 	g_VPhysPtrSaveRestoreOps.PostRestore();
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Fixes up pointers beteween vphysics objects
 //-----------------------------------------------------------------------------
 
-void CVPhysPtrSaveRestoreOps::Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
+void CVPhysPtrSaveRestoreOps::Save(const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave)
 {
 	int *pField = (int *)fieldInfo.pField;
 	int nObjects = fieldInfo.pTypeDesc->fieldSize;
-	for ( int i = 0; i < nObjects; i++ )
+	for(int i = 0; i < nObjects; i++)
 	{
-		pSave->WriteInt( pField );
+		pSave->WriteInt(pField);
 		++pField;
 	}
 }
@@ -144,21 +135,21 @@ void CVPhysPtrSaveRestoreOps::Save( const SaveRestoreFieldInfo_t &fieldInfo, ISa
 
 void CVPhysPtrSaveRestoreOps::PreRestore()
 {
-	Assert( s_VPhysPtrMap.Count() == 0 );
+	Assert(s_VPhysPtrMap.Count() == 0);
 }
 
 //-------------------------------------
 
-void CVPhysPtrSaveRestoreOps::Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
+void CVPhysPtrSaveRestoreOps::Restore(const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore)
 {
 	void **ppField = (void **)fieldInfo.pField;
 	int nObjects = fieldInfo.pTypeDesc->fieldSize;
-	for ( int i = 0; i < nObjects; i++ )
+	for(int i = 0; i < nObjects; i++)
 	{
-		pRestore->ReadInt( (int *)ppField );
+		pRestore->ReadInt((int *)ppField);
 
-		int iNewVal = s_VPhysPtrMap.Find( *ppField );
-		if ( iNewVal != s_VPhysPtrMap.InvalidIndex() )
+		int iNewVal = s_VPhysPtrMap.Find(*ppField);
+		if(iNewVal != s_VPhysPtrMap.InvalidIndex())
 		{
 			*ppField = s_VPhysPtrMap[iNewVal];
 		}
@@ -182,35 +173,35 @@ void CVPhysPtrSaveRestoreOps::PostRestore()
 
 //-----------------------------------------------------------------------------
 
-void CVPhysPtrUtlVectorSaveRestoreOps::Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
+void CVPhysPtrUtlVectorSaveRestoreOps::Save(const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave)
 {
-	Assert( fieldInfo.pTypeDesc->fieldSize == 1 );
+	Assert(fieldInfo.pTypeDesc->fieldSize == 1);
 
-	VPhysPtrVector *pUtlVector = (VPhysPtrVector*)fieldInfo.pField;
+	VPhysPtrVector *pUtlVector = (VPhysPtrVector *)fieldInfo.pField;
 	int nObjects = pUtlVector->Count();
-	pSave->WriteInt( &nObjects );
-	for ( int i = 0; i < nObjects; i++ )
+	pSave->WriteInt(&nObjects);
+	for(int i = 0; i < nObjects; i++)
 	{
-		pSave->WriteInt( &pUtlVector->Element(i) );
+		pSave->WriteInt(&pUtlVector->Element(i));
 	}
 }
 
-void CVPhysPtrUtlVectorSaveRestoreOps::Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore )
+void CVPhysPtrUtlVectorSaveRestoreOps::Restore(const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore)
 {
-	Assert( fieldInfo.pTypeDesc->fieldSize == 1 );
+	Assert(fieldInfo.pTypeDesc->fieldSize == 1);
 
-	VPhysPtrVector *pUtlVector = (VPhysPtrVector*)fieldInfo.pField;
+	VPhysPtrVector *pUtlVector = (VPhysPtrVector *)fieldInfo.pField;
 
 	int nObjects;
-	pRestore->ReadInt( &nObjects );
-	pUtlVector->AddMultipleToTail( nObjects );
-	for ( int i = 0; i < nObjects; i++ )
+	pRestore->ReadInt(&nObjects);
+	pUtlVector->AddMultipleToTail(nObjects);
+	for(int i = 0; i < nObjects; i++)
 	{
-		void **ppElem = (void**)(&pUtlVector->Element(i));
-		pRestore->ReadInt( (int*)ppElem );
+		void **ppElem = (void **)(&pUtlVector->Element(i));
+		pRestore->ReadInt((int *)ppElem);
 
-		int iNewVal = s_VPhysPtrMap.Find( *ppElem );
-		if ( iNewVal != s_VPhysPtrMap.InvalidIndex() )
+		int iNewVal = s_VPhysPtrMap.Find(*ppElem);
+		if(iNewVal != s_VPhysPtrMap.InvalidIndex())
 		{
 			*ppElem = s_VPhysPtrMap[iNewVal];
 		}

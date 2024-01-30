@@ -24,38 +24,38 @@
 extern ConVar cl_deathicon_width;
 extern ConVar cl_deathicon_height;
 
-//DECLARE_HUDELEMENT( CDODDeathStatsPanel );
+// DECLARE_HUDELEMENT( CDODDeathStatsPanel );
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CDODDeathStatsPanel::CDODDeathStatsPanel( const char *pElementName )
-: EditablePanel( NULL, "DeathStats" ), CHudElement( pElementName )
+CDODDeathStatsPanel::CDODDeathStatsPanel(const char *pElementName)
+	: EditablePanel(NULL, "DeathStats"), CHudElement(pElementName)
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
-	SetVisible( false );
-	SetAlpha( 0 );
-	SetScheme( "ClientScheme" );
+	SetParent(pParent);
+	SetVisible(false);
+	SetAlpha(0);
+	SetScheme("ClientScheme");
 
-	m_pAttackerHistoryLabel = new vgui::Label( this, "AttackerDmgLabel", "..." );
-	m_pSummaryLabel = new vgui::Label( this, "LifeSummaryLabel", "..." );
+	m_pAttackerHistoryLabel = new vgui::Label(this, "AttackerDmgLabel", "...");
+	m_pSummaryLabel = new vgui::Label(this, "LifeSummaryLabel", "...");
 
-	memset( &m_DeathRecord, 0, sizeof(m_DeathRecord) );
+	memset(&m_DeathRecord, 0, sizeof(m_DeathRecord));
 
 	LoadControlSettings("Resource/UI/DeathStats.res");
 }
 
-void CDODDeathStatsPanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
+void CDODDeathStatsPanel::OnScreenSizeChanged(int iOldWide, int iOldTall)
 {
-	LoadControlSettings( "resource/UI/DeathStats.res" );
+	LoadControlSettings("resource/UI/DeathStats.res");
 }
 
-void CDODDeathStatsPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CDODDeathStatsPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetBgColor( GetSchemeColor("TransparentLightBlack", pScheme) );
+	SetBgColor(GetSchemeColor("TransparentLightBlack", pScheme));
 }
 
 //-----------------------------------------------------------------------------
@@ -70,53 +70,53 @@ void CDODDeathStatsPanel::Init()
 {
 	Hide();
 
-	ListenForGameEvent( "player_death" );
+	ListenForGameEvent("player_death");
 
 	m_iMaterialTexture = vgui::surface()->CreateNewTextureID();
 
 	CHudElement::Init();
 }
 
-void CDODDeathStatsPanel::VidInit( void )
+void CDODDeathStatsPanel::VidInit(void)
 {
-	m_iconD_skull	= gHUD.GetIcon( "d_skull_dod" );
-	m_pIconKill		= gHUD.GetIcon( "stats_kill" );
-	m_pIconWounded	= gHUD.GetIcon( "stats_wounded" );
-	m_pIconCap		= gHUD.GetIcon( "stats_cap" );
-	m_pIconDefended	= gHUD.GetIcon( "stats_defended" );
+	m_iconD_skull = gHUD.GetIcon("d_skull_dod");
+	m_pIconKill = gHUD.GetIcon("stats_kill");
+	m_pIconWounded = gHUD.GetIcon("stats_wounded");
+	m_pIconCap = gHUD.GetIcon("stats_cap");
+	m_pIconDefended = gHUD.GetIcon("stats_defended");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Handle player_death message
 //-----------------------------------------------------------------------------
-void CDODDeathStatsPanel::FireGameEvent( IGameEvent * event)
+void CDODDeathStatsPanel::FireGameEvent(IGameEvent *event)
 {
-	if ( Q_strcmp( "player_death", event->GetName() ) == 0 )
+	if(Q_strcmp("player_death", event->GetName()) == 0)
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 
-		if ( !pLocalPlayer )
+		if(!pLocalPlayer)
 			return;
 
-		if ( !g_PR )
+		if(!g_PR)
 			return;
 
-		int victim = engine->GetPlayerForUserID( event->GetInt("userid") );
+		int victim = engine->GetPlayerForUserID(event->GetInt("userid"));
 
 		// only deal with deathnotices where we die
-		if ( victim != pLocalPlayer->entindex() )
+		if(victim != pLocalPlayer->entindex())
 		{
 			return;
 		}
 
-		int killer = engine->GetPlayerForUserID( event->GetInt("attacker") );
+		int killer = engine->GetPlayerForUserID(event->GetInt("attacker"));
 
-		const char *killedwith = event->GetString( "weapon" );
+		const char *killedwith = event->GetString("weapon");
 
 		char fullkilledwith[128];
-		if ( killedwith && *killedwith )
+		if(killedwith && *killedwith)
 		{
-			Q_snprintf( fullkilledwith, sizeof(fullkilledwith), "d_%s", killedwith );
+			Q_snprintf(fullkilledwith, sizeof(fullkilledwith), "d_%s", killedwith);
 		}
 		else
 		{
@@ -124,24 +124,24 @@ void CDODDeathStatsPanel::FireGameEvent( IGameEvent * event)
 		}
 
 		// Get the names of the players
-		const char *killer_name = g_PR->GetPlayerName( killer );
-		const char *victim_name = g_PR->GetPlayerName( victim );
+		const char *killer_name = g_PR->GetPlayerName(killer);
+		const char *victim_name = g_PR->GetPlayerName(victim);
 
-		if ( !killer_name )
+		if(!killer_name)
 			killer_name = "";
-		if ( !victim_name )
+		if(!victim_name)
 			victim_name = "";
 
 		m_DeathRecord.Killer.iEntIndex = killer;
 		m_DeathRecord.Victim.iEntIndex = victim;
-		Q_strncpy( m_DeathRecord.Killer.szName, killer_name, MAX_PLAYER_NAME_LENGTH );
-		Q_strncpy( m_DeathRecord.Victim.szName, victim_name, MAX_PLAYER_NAME_LENGTH );
-		m_DeathRecord.bSuicide = ( !killer || killer == victim );
+		Q_strncpy(m_DeathRecord.Killer.szName, killer_name, MAX_PLAYER_NAME_LENGTH);
+		Q_strncpy(m_DeathRecord.Victim.szName, victim_name, MAX_PLAYER_NAME_LENGTH);
+		m_DeathRecord.bSuicide = (!killer || killer == victim);
 
 		// Try and find the death identifier in the icon list
-		m_DeathRecord.iconDeath = gHUD.GetIcon( fullkilledwith );
+		m_DeathRecord.iconDeath = gHUD.GetIcon(fullkilledwith);
 
-		if ( !m_DeathRecord.iconDeath )
+		if(!m_DeathRecord.iconDeath)
 		{
 			// Can't find it, so use the default skull & crossbones icon
 			m_DeathRecord.iconDeath = m_iconD_skull;
@@ -161,222 +161,196 @@ void CDODDeathStatsPanel::FireGameEvent( IGameEvent * event)
 	}
 }
 
-const char *szHitgroupNames[] =
-{
-	"head",
-	"chest",
-	"arm",
-	"leg"
-};
+const char *szHitgroupNames[] = {"head", "chest", "arm", "leg"};
 
-void CDODDeathStatsPanel::Paint( void )
+void CDODDeathStatsPanel::Paint(void)
 {
 	int deathNoticeWidth = 0;
 
-	if ( m_DeathRecord.Victim.iEntIndex > 0 )
-		deathNoticeWidth = DrawDeathNoticeItem( m_iDeathNoticeX, m_iDeathNoticeY );
+	if(m_DeathRecord.Victim.iEntIndex > 0)
+		deathNoticeWidth = DrawDeathNoticeItem(m_iDeathNoticeX, m_iDeathNoticeY);
 
 	const int minWidth = XRES(160);
 
-	int panelWidth = ( deathNoticeWidth < minWidth ? minWidth : deathNoticeWidth );
+	int panelWidth = (deathNoticeWidth < minWidth ? minWidth : deathNoticeWidth);
 
 	int wide, tall;
 
 	// set width of summary label to death notice width
-	m_pSummaryLabel->GetSize( wide, tall );
-	m_pSummaryLabel->SetSize( panelWidth, tall );
+	m_pSummaryLabel->GetSize(wide, tall);
+	m_pSummaryLabel->SetSize(panelWidth, tall);
 
 	C_DODPlayer *pLocalPlayer = C_DODPlayer::GetLocalDODPlayer();
 
-	if ( !pLocalPlayer )
+	if(!pLocalPlayer)
 		return;
 
 	char buf[512];
 	buf[0] = '\0';
 
-	if ( !m_DeathRecord.bSuicide )
+	if(!m_DeathRecord.bSuicide)
 	{
 		bool bStart = true;
 		bool bHit = false;
 
-		for ( int i=0;i<4;i++ )
+		for(int i = 0; i < 4; i++)
 		{
-			if ( pLocalPlayer->m_iHitsOnAttacker[i] > 0 )
+			if(pLocalPlayer->m_iHitsOnAttacker[i] > 0)
 			{
 				bHit = true;
-				if ( bStart )
+				if(bStart)
 				{
-					Q_snprintf( buf, sizeof(buf), "You hit %s %i %s in the %s\n",
-						m_DeathRecord.Killer.szName,
-						pLocalPlayer->m_iHitsOnAttacker[i],
-						pLocalPlayer->m_iHitsOnAttacker[i] == 1 ? "time" : "times",
-						szHitgroupNames[i] );
+					Q_snprintf(buf, sizeof(buf), "You hit %s %i %s in the %s\n", m_DeathRecord.Killer.szName,
+							   pLocalPlayer->m_iHitsOnAttacker[i],
+							   pLocalPlayer->m_iHitsOnAttacker[i] == 1 ? "time" : "times", szHitgroupNames[i]);
 
 					bStart = false;
 				}
 				else
 				{
-					Q_snprintf( buf, sizeof(buf), "%s and %i %s in the %s\n",
-						buf,
-						pLocalPlayer->m_iHitsOnAttacker[i],
-						pLocalPlayer->m_iHitsOnAttacker[i] == 1 ? "time" : "times",
-						szHitgroupNames[i] );
+					Q_snprintf(buf, sizeof(buf), "%s and %i %s in the %s\n", buf, pLocalPlayer->m_iHitsOnAttacker[i],
+							   pLocalPlayer->m_iHitsOnAttacker[i] == 1 ? "time" : "times", szHitgroupNames[i]);
 				}
 			}
 		}
 	}
 
-	Q_strncat( buf, "\n", sizeof(buf), COPY_ALL_CHARACTERS );
+	Q_strncat(buf, "\n", sizeof(buf), COPY_ALL_CHARACTERS);
 
-	if ( pLocalPlayer->m_iPerLifeKills )
+	if(pLocalPlayer->m_iPerLifeKills)
 	{
-		Q_snprintf( buf, sizeof(buf), "%sKills: %i\n\n",
-			buf,
-			pLocalPlayer->m_iPerLifeKills );
+		Q_snprintf(buf, sizeof(buf), "%sKills: %i\n\n", buf, pLocalPlayer->m_iPerLifeKills);
 	}
 
-	if ( pLocalPlayer->m_iPerLifeWounded )
+	if(pLocalPlayer->m_iPerLifeWounded)
 	{
-		Q_snprintf( buf, sizeof(buf), "%sWounded: %i\n\n",
-			buf,
-			pLocalPlayer->m_iPerLifeWounded );
+		Q_snprintf(buf, sizeof(buf), "%sWounded: %i\n\n", buf, pLocalPlayer->m_iPerLifeWounded);
 	}
 
-	if ( pLocalPlayer->m_iPerLifeCaptures )
+	if(pLocalPlayer->m_iPerLifeCaptures)
 	{
-		Q_snprintf( buf, sizeof(buf), "%sFlag Captures: %i\n\n",
-			buf,
-			pLocalPlayer->m_iPerLifeCaptures );
+		Q_snprintf(buf, sizeof(buf), "%sFlag Captures: %i\n\n", buf, pLocalPlayer->m_iPerLifeCaptures);
 	}
 
-	if ( pLocalPlayer->m_iPerLifeDefenses )
+	if(pLocalPlayer->m_iPerLifeDefenses)
 	{
-		Q_snprintf( buf, sizeof(buf), "%sFlag Defenses: %i\n\n",
-			buf,
-			pLocalPlayer->m_iPerLifeDefenses );
+		Q_snprintf(buf, sizeof(buf), "%sFlag Defenses: %i\n\n", buf, pLocalPlayer->m_iPerLifeDefenses);
 	}
 
-	m_pAttackerHistoryLabel->SetText( buf );
+	m_pAttackerHistoryLabel->SetText(buf);
 	m_pAttackerHistoryLabel->SizeToContents();
 
 	int panel_h = YRES(160);
 
-	SetSize( panelWidth, panel_h );
+	SetSize(panelWidth, panel_h);
 }
 
-float GetScale( int nIconWidth, int nIconHeight, int nWidth, int nHeight );
+float GetScale(int nIconWidth, int nIconHeight, int nWidth, int nHeight);
 
-int CDODDeathStatsPanel::DrawDeathNoticeItem( int x, int y )
+int CDODDeathStatsPanel::DrawDeathNoticeItem(int x, int y)
 {
 	// Get the team numbers for the players involved
 	int iKillerTeam = TEAM_UNASSIGNED;
 	int iVictimTeam = TEAM_UNASSIGNED;
 
-	if( g_PR )
+	if(g_PR)
 	{
-		iKillerTeam = g_PR->GetTeam( m_DeathRecord.Killer.iEntIndex );
-		iVictimTeam = g_PR->GetTeam( m_DeathRecord.Victim.iEntIndex );
+		iKillerTeam = g_PR->GetTeam(m_DeathRecord.Killer.iEntIndex);
+		iVictimTeam = g_PR->GetTeam(m_DeathRecord.Victim.iEntIndex);
 	}
 
-	wchar_t victim[ 256 ];
-	wchar_t killer[ 256 ];
+	wchar_t victim[256];
+	wchar_t killer[256];
 
-	g_pVGuiLocalize->ConvertANSIToUnicode( m_DeathRecord.Victim.szName, victim, sizeof( victim ) );
-	g_pVGuiLocalize->ConvertANSIToUnicode( m_DeathRecord.Killer.szName, killer, sizeof( killer ) );
+	g_pVGuiLocalize->ConvertANSIToUnicode(m_DeathRecord.Victim.szName, victim, sizeof(victim));
+	g_pVGuiLocalize->ConvertANSIToUnicode(m_DeathRecord.Killer.szName, killer, sizeof(killer));
 
 	// Get the local position for this notice
-	int len = UTIL_ComputeStringWidth( m_hTextFont, victim );
+	int len = UTIL_ComputeStringWidth(m_hTextFont, victim);
 
 	int iconWide;
 	int iconTall;
 
 	CHudTexture *icon = m_DeathRecord.iconDeath;
 
-	Assert( icon );
+	Assert(icon);
 
-	if ( !icon )
+	if(!icon)
 		return 0;
 
-	if( icon->bRenderUsingFont )
+	if(icon->bRenderUsingFont)
 	{
-		iconWide = surface()->GetCharacterWidth( icon->hFont, icon->cCharacterInFont );
-		iconTall = surface()->GetFontTall( icon->hFont );
+		iconWide = surface()->GetCharacterWidth(icon->hFont, icon->cCharacterInFont);
+		iconTall = surface()->GetFontTall(icon->hFont);
 	}
 	else
 	{
-		float scale = GetScale( icon->Width(), icon->Height(), XRES(cl_deathicon_width.GetInt()), YRES(cl_deathicon_height.GetInt()) );
-		iconWide = (int)( scale * (float)icon->Width() );
-		iconTall = (int)( scale * (float)icon->Height() );
+		float scale = GetScale(icon->Width(), icon->Height(), XRES(cl_deathicon_width.GetInt()),
+							   YRES(cl_deathicon_height.GetInt()));
+		iconWide = (int)(scale * (float)icon->Width());
+		iconTall = (int)(scale * (float)icon->Height());
 	}
 
 	int spacerX = XRES(5);
 
-	//int x = xRight - len - spacerX - iconWide - XRES(10);
+	// int x = xRight - len - spacerX - iconWide - XRES(10);
 
-	surface()->DrawSetTextFont( m_hTextFont );
-	int iFontTall = vgui::surface()->GetFontTall( m_hTextFont );
-	int yText = y + ( iconTall - iFontTall ) / 2;
+	surface()->DrawSetTextFont(m_hTextFont);
+	int iFontTall = vgui::surface()->GetFontTall(m_hTextFont);
+	int yText = y + (iconTall - iFontTall) / 2;
 
 	int boxWidth = len + iconWide + spacerX;
-	int boxHeight = MIN( iconTall, m_flLineHeight );
+	int boxHeight = MIN(iconTall, m_flLineHeight);
 	int boxBorder = XRES(2);
 
 	// Only draw killers name if it wasn't a suicide
-	if ( !m_DeathRecord.bSuicide )
+	if(!m_DeathRecord.bSuicide)
 	{
-		int nameWidth = UTIL_ComputeStringWidth( m_hTextFont, killer ) + spacerX;	// gap
+		int nameWidth = UTIL_ComputeStringWidth(m_hTextFont, killer) + spacerX; // gap
 
-		//x -= nameWidth;
+		// x -= nameWidth;
 		boxWidth += nameWidth;
 
-		Panel::DrawBox( x-boxBorder,
-			y-boxBorder,
-			boxWidth+2*boxBorder,
-			boxHeight+2*boxBorder,
-			m_ActiveBackgroundColor,
-			1.0 );
+		Panel::DrawBox(x - boxBorder, y - boxBorder, boxWidth + 2 * boxBorder, boxHeight + 2 * boxBorder,
+					   m_ActiveBackgroundColor, 1.0);
 
-		Color c = g_PR->GetTeamColor( iKillerTeam );
-		surface()->DrawSetTextColor( c );
+		Color c = g_PR->GetTeamColor(iKillerTeam);
+		surface()->DrawSetTextColor(c);
 
 		// Draw killer's name
-		surface()->DrawSetTextPos( x, yText );
+		surface()->DrawSetTextPos(x, yText);
 		const wchar_t *p = killer;
-		while ( *p )
+		while(*p)
 		{
-			surface()->DrawUnicodeChar( *p++ );
+			surface()->DrawUnicodeChar(*p++);
 		}
-		surface()->DrawGetTextPos( x, yText );
+		surface()->DrawGetTextPos(x, yText);
 
 		x += spacerX;
 	}
 	else
 	{
-		Panel::DrawBox( x-boxBorder,
-			y-boxBorder,
-			boxWidth+2*boxBorder,
-			boxHeight+2*boxBorder,
-			m_ActiveBackgroundColor,
-			1.0 );
+		Panel::DrawBox(x - boxBorder, y - boxBorder, boxWidth + 2 * boxBorder, boxHeight + 2 * boxBorder,
+					   m_ActiveBackgroundColor, 1.0);
 	}
 
-	Color iconColor( 255, 80, 0, 255 );
+	Color iconColor(255, 80, 0, 255);
 
 	// Draw death weapon
-	//If we're using a font char, this will ignore iconTall and iconWide
-	icon->DrawSelf( x, y, iconWide, iconTall, iconColor );
+	// If we're using a font char, this will ignore iconTall and iconWide
+	icon->DrawSelf(x, y, iconWide, iconTall, iconColor);
 	x += iconWide + spacerX;
 
-	Color c = g_PR->GetTeamColor( iVictimTeam );
-	surface()->DrawSetTextColor( c );
+	Color c = g_PR->GetTeamColor(iVictimTeam);
+	surface()->DrawSetTextColor(c);
 
 	// Draw victims name
-	surface()->DrawSetTextFont( m_hTextFont );	//reset the font, draw icon can change it
-	surface()->DrawSetTextPos( x, yText );
+	surface()->DrawSetTextFont(m_hTextFont); // reset the font, draw icon can change it
+	surface()->DrawSetTextPos(x, yText);
 	const wchar_t *p = victim;
-	while ( *p )
+	while(*p)
 	{
-		surface()->DrawUnicodeChar( *p++ );
+		surface()->DrawUnicodeChar(*p++);
 	}
 
 	return boxWidth;

@@ -7,7 +7,7 @@
 
 #include "cbase.h"
 
-#include "animation.h"		// for NOMOTION
+#include "animation.h" // for NOMOTION
 
 #include "ai_motor.h"
 #include "ai_navigator.h"
@@ -20,30 +20,28 @@
 #include "tier0/memdbgon.h"
 
 #ifdef DEBUG
-ConVar	ai_draw_motor_movement( "ai_draw_motor_movement","0" );
+ConVar ai_draw_motor_movement("ai_draw_motor_movement", "0");
 #endif
 
-extern float	GetFloorZ(const Vector &origin);
+extern float GetFloorZ(const Vector &origin);
 
 //-----------------------------------------------------------------------------
 
 // Use these functions to set breakpoints to find out where movement is failing
 #ifdef DEBUG
-void DebugNoteMovementFailure()
-{
-}
+void DebugNoteMovementFailure() {}
 
 // a place to put breakpoints
 #pragma warning(push)
-#pragma warning(disable:4189)
-AIMoveResult_t DbgResult( AIMoveResult_t result )
+#pragma warning(disable : 4189)
+AIMoveResult_t DbgResult(AIMoveResult_t result)
 {
-	if ( result < AIMR_OK )
+	if(result < AIMR_OK)
 	{
 		int breakHere = 1;
 	}
 
-	switch ( result )
+	switch(result)
 	{
 		case AIMR_BLOCKED_ENTITY:
 			return AIMR_BLOCKED_ENTITY;
@@ -67,51 +65,46 @@ AIMoveResult_t DbgResult( AIMoveResult_t result )
 // class CAI_Motor
 //
 
-BEGIN_SIMPLE_DATADESC( CAI_Motor )
+BEGIN_SIMPLE_DATADESC(CAI_Motor)
 	//							m_flMoveInterval	(think transient)
-  	DEFINE_FIELD( m_IdealYaw,			FIELD_FLOAT ),
-  	DEFINE_FIELD( m_YawSpeed,			FIELD_FLOAT ),
-  	DEFINE_FIELD( m_vecVelocity,		FIELD_VECTOR ),
-  	DEFINE_FIELD( m_vecAngularVelocity, FIELD_VECTOR ),
-	DEFINE_FIELD( m_nDismountSequence,	FIELD_INTEGER ),
-	DEFINE_FIELD( m_vecDismount,		FIELD_VECTOR ),
-	DEFINE_UTLVECTOR( m_facingQueue,	FIELD_EMBEDDED ),
-	DEFINE_FIELD( m_bYawLocked,			FIELD_BOOLEAN ),
+	DEFINE_FIELD(m_IdealYaw, FIELD_FLOAT), DEFINE_FIELD(m_YawSpeed, FIELD_FLOAT),
+		DEFINE_FIELD(m_vecVelocity, FIELD_VECTOR), DEFINE_FIELD(m_vecAngularVelocity, FIELD_VECTOR),
+		DEFINE_FIELD(m_nDismountSequence, FIELD_INTEGER), DEFINE_FIELD(m_vecDismount, FIELD_VECTOR),
+		DEFINE_UTLVECTOR(m_facingQueue, FIELD_EMBEDDED), DEFINE_FIELD(m_bYawLocked, FIELD_BOOLEAN),
 	//							m_pMoveProbe
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
 
-CAI_Motor::CAI_Motor(CAI_BaseNPC *pOuter)
- :	CAI_Component( pOuter )
+CAI_Motor::CAI_Motor(CAI_BaseNPC *pOuter) : CAI_Component(pOuter)
 {
 	m_flMoveInterval = 0;
 
 	m_IdealYaw = 0;
 	m_YawSpeed = 0;
-	m_vecVelocity = Vector( 0, 0, 0 );
+	m_vecVelocity = Vector(0, 0, 0);
 	m_pMoveProbe = NULL;
 	m_bYawLocked = false;
 }
 
 //-----------------------------------------------------------------------------
 
-CAI_Motor::~CAI_Motor()
-{
-}
+CAI_Motor::~CAI_Motor() {}
 
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::Init( IAI_MovementSink *pMovementServices )
+void CAI_Motor::Init(IAI_MovementSink *pMovementServices)
 {
-	CAI_ProxyMovementSink::Init( pMovementServices );
-	m_pMoveProbe = GetOuter()->GetMoveProbe(); // @TODO (toml 03-30-03): this is a "bad" way to grab this pointer. Components should have an explcit "init" phase.
+	CAI_ProxyMovementSink::Init(pMovementServices);
+	m_pMoveProbe = GetOuter()->GetMoveProbe(); // @TODO (toml 03-30-03): this is a "bad" way to grab this pointer.
+											   // Components should have an explcit "init" phase.
 }
 
 //-----------------------------------------------------------------------------
 // Step iteratively toward a destination position
 //-----------------------------------------------------------------------------
-AIMotorMoveResult_t CAI_Motor::MoveGroundStep( const Vector &newPos, CBaseEntity *pMoveTarget, float yaw, bool bAsFarAsCan, bool bTestZ, AIMoveTrace_t *pTraceResult )
+AIMotorMoveResult_t CAI_Motor::MoveGroundStep(const Vector &newPos, CBaseEntity *pMoveTarget, float yaw,
+											  bool bAsFarAsCan, bool bTestZ, AIMoveTrace_t *pTraceResult)
 {
 	// By definition, this will produce different results than GroundMoveLimit()
 	// because there's no guarantee that it will step exactly one step
@@ -122,31 +115,32 @@ AIMotorMoveResult_t CAI_Motor::MoveGroundStep( const Vector &newPos, CBaseEntity
 	AIMoveTrace_t moveTrace;
 	unsigned testFlags = AITGM_IGNORE_FLOOR;
 
-	if ( !bTestZ )
+	if(!bTestZ)
 		testFlags |= AITGM_2D;
 
 #ifdef DEBUG
-	if ( ai_draw_motor_movement.GetBool() )
+	if(ai_draw_motor_movement.GetBool())
 		testFlags |= AITGM_DRAW_RESULTS;
 #endif
 
-	GetMoveProbe()->TestGroundMove( GetLocalOrigin(), newPos, MASK_NPCSOLID, testFlags, &moveTrace );
-	if ( pTraceResult )
+	GetMoveProbe()->TestGroundMove(GetLocalOrigin(), newPos, MASK_NPCSOLID, testFlags, &moveTrace);
+	if(pTraceResult)
 	{
 		*pTraceResult = moveTrace;
 	}
 
-	bool bHitTarget = (moveTrace.pObstruction && (pMoveTarget == moveTrace.pObstruction ));
+	bool bHitTarget = (moveTrace.pObstruction && (pMoveTarget == moveTrace.pObstruction));
 
 	// Move forward either if there was no obstruction or if we're told to
 	// move as far as we can, regardless
 	bool bIsBlocked = IsMoveBlocked(moveTrace.fStatus);
-	if ( !bIsBlocked || bAsFarAsCan || bHitTarget )
+	if(!bIsBlocked || bAsFarAsCan || bHitTarget)
 	{
 #ifdef DEBUG
-		if ( GetMoveProbe()->CheckStandPosition( GetLocalOrigin(), MASK_NPCSOLID ) && !GetMoveProbe()->CheckStandPosition( moveTrace.vEndPosition, MASK_NPCSOLID ) )
+		if(GetMoveProbe()->CheckStandPosition(GetLocalOrigin(), MASK_NPCSOLID) &&
+		   !GetMoveProbe()->CheckStandPosition(moveTrace.vEndPosition, MASK_NPCSOLID))
 		{
-			DevMsg( 2, "Warning: AI motor probably given invalid instructions\n" );
+			DevMsg(2, "Warning: AI motor probably given invalid instructions\n");
 		}
 #endif
 
@@ -158,38 +152,38 @@ AIMotorMoveResult_t CAI_Motor::MoveGroundStep( const Vector &newPos, CBaseEntity
 		// NOTE: This is to detect changes in ground entity as the movement code has optimized out
 		// ground checks.  So now we have to do a simple recheck to make sure we detect when we've
 		// stepped onto a new entity.
-		if ( GetOuter()->GetFlags() & FL_ONGROUND )
+		if(GetOuter()->GetFlags() & FL_ONGROUND)
 		{
 			GetOuter()->PhysicsStepRecheckGround();
 		}
 
 		// skip tiny steps, but notify the shadow object of any large steps
-		if ( moveTrace.flStepUpDistance > 0.1f )
+		if(moveTrace.flStepUpDistance > 0.1f)
 		{
-			float height = clamp( moveTrace.flStepUpDistance, 0.f, StepHeight() );
+			float height = clamp(moveTrace.flStepUpDistance, 0.f, StepHeight());
 			IPhysicsObject *pPhysicsObject = GetOuter()->VPhysicsGetObject();
-			if ( pPhysicsObject )
+			if(pPhysicsObject)
 			{
 				IPhysicsShadowController *pShadow = pPhysicsObject->GetShadowController();
-				if ( pShadow )
+				if(pShadow)
 				{
-					pShadow->StepUp( height );
+					pShadow->StepUp(height);
 				}
 			}
 		}
-		if ( yaw != -1 )
+		if(yaw != -1)
 		{
 			QAngle angles = GetLocalAngles();
 			angles.y = yaw;
-			SetLocalAngles( angles );
+			SetLocalAngles(angles);
 		}
-		if ( bHitTarget )
+		if(bHitTarget)
 			return AIM_PARTIAL_HIT_TARGET;
 
-		if ( !bIsBlocked )
+		if(!bIsBlocked)
 			return AIM_SUCCESS;
 
-		if ( moveTrace.fStatus == AIMR_BLOCKED_NPC )
+		if(moveTrace.fStatus == AIMR_BLOCKED_NPC)
 			return AIM_PARTIAL_HIT_NPC;
 
 		return AIM_PARTIAL_HIT_WORLD;
@@ -197,14 +191,13 @@ AIMotorMoveResult_t CAI_Motor::MoveGroundStep( const Vector &newPos, CBaseEntity
 	return AIM_FAILED;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:	Motion for climbing
 // Input  :
 // Output :	Returns bits (MoveStatus_b) regarding the move status
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::MoveClimbStart(  const Vector &climbDest, const Vector &climbDir, float climbDist, float yaw  )
+void CAI_Motor::MoveClimbStart(const Vector &climbDest, const Vector &climbDir, float climbDist, float yaw)
 {
 	// @Note (toml 06-11-02): the following code is somewhat suspect. It
 	// originated in CAI_BaseNPC::MoveClimb() from early June 2002
@@ -235,59 +228,60 @@ void CAI_Motor::MoveClimbStart(  const Vector &climbDest, const Vector &climbDir
 	//	> code are not reciprocal for all state, and furthermore, stomp
 	//	> other state?
 
-	if ( fabsf( climbDir.z ) < .1 )
+	if(fabsf(climbDir.z) < .1)
 	{
-		SetActivity( GetNavigator()->GetMovementActivity() );
+		SetActivity(GetNavigator()->GetMovementActivity());
 	}
 	else
 	{
-		SetActivity( (climbDir.z > -0.01 ) ? ACT_CLIMB_UP : ACT_CLIMB_DOWN );
+		SetActivity((climbDir.z > -0.01) ? ACT_CLIMB_UP : ACT_CLIMB_DOWN);
 	}
 
-	m_nDismountSequence = SelectWeightedSequence( ACT_CLIMB_DISMOUNT );
-	if (m_nDismountSequence != ACT_INVALID)
+	m_nDismountSequence = SelectWeightedSequence(ACT_CLIMB_DISMOUNT);
+	if(m_nDismountSequence != ACT_INVALID)
 	{
-		GetOuter()->GetSequenceLinearMotion( m_nDismountSequence, &m_vecDismount );
+		GetOuter()->GetSequenceLinearMotion(m_nDismountSequence, &m_vecDismount);
 	}
 	else
 	{
 		m_vecDismount.Init();
 	}
 
-	GetOuter()->AddFlag( FL_FLY );		// No gravity
-	SetSolid( SOLID_BBOX );
-	SetGravity( 0.0 );
-	SetGroundEntity( NULL );
+	GetOuter()->AddFlag(FL_FLY); // No gravity
+	SetSolid(SOLID_BBOX);
+	SetGravity(0.0);
+	SetGroundEntity(NULL);
 }
 
-AIMoveResult_t CAI_Motor::MoveClimbExecute( const Vector &climbDest, const Vector &climbDir, float climbDist, float yaw, int climbNodesLeft )
+AIMoveResult_t CAI_Motor::MoveClimbExecute(const Vector &climbDest, const Vector &climbDir, float climbDist, float yaw,
+										   int climbNodesLeft)
 {
-	if ( fabsf( climbDir.z ) > .1 )
+	if(fabsf(climbDir.z) > .1)
 	{
-		if ( GetActivity() != ACT_CLIMB_DISMOUNT )
+		if(GetActivity() != ACT_CLIMB_DISMOUNT)
 		{
-			Activity desiredActivity = (climbDir.z > -0.01 ) ? ACT_CLIMB_UP : ACT_CLIMB_DOWN;
-			if ( GetActivity() != desiredActivity )
+			Activity desiredActivity = (climbDir.z > -0.01) ? ACT_CLIMB_UP : ACT_CLIMB_DOWN;
+			if(GetActivity() != desiredActivity)
 			{
-				SetActivity( desiredActivity );
+				SetActivity(desiredActivity);
 			}
 		}
 
-		if ( GetActivity() != ACT_CLIMB_UP && GetActivity() != ACT_CLIMB_DOWN && GetActivity() != ACT_CLIMB_DISMOUNT )
+		if(GetActivity() != ACT_CLIMB_UP && GetActivity() != ACT_CLIMB_DOWN && GetActivity() != ACT_CLIMB_DISMOUNT)
 		{
-			DevMsg( "Climber not in a climb activity!\n" );
+			DevMsg("Climber not in a climb activity!\n");
 			return AIMR_ILLEGAL;
 		}
 
-		if (m_nDismountSequence != ACT_INVALID)
+		if(m_nDismountSequence != ACT_INVALID)
 		{
-			if (GetActivity() == ACT_CLIMB_UP )
+			if(GetActivity() == ACT_CLIMB_UP)
 			{
-				if (climbNodesLeft <= 2 && climbDist < fabs( m_vecDismount.z ))
+				if(climbNodesLeft <= 2 && climbDist < fabs(m_vecDismount.z))
 				{
 					// fixme: No other way to force m_nIdealSequence?
-					GetOuter()->SetActivity( ACT_CLIMB_DISMOUNT );
-					GetOuter()->SetCycle( GetOuter()->GetMovementFrame( m_vecDismount.z - climbDist ) );
+					GetOuter()->SetActivity(ACT_CLIMB_DISMOUNT);
+					GetOuter()->SetCycle(GetOuter()->GetMovementFrame(m_vecDismount.z - climbDist));
 				}
 			}
 		}
@@ -295,10 +289,10 @@ AIMoveResult_t CAI_Motor::MoveClimbExecute( const Vector &climbDest, const Vecto
 
 	float climbSpeed = GetOuter()->GetInstantaneousVelocity();
 
-	if (m_nDismountSequence != ACT_INVALID)
+	if(m_nDismountSequence != ACT_INVALID)
 	{
 		// catch situations where the climb mount/dismount finished before reaching goal
-		climbSpeed = MAX( climbSpeed, 30.0 );
+		climbSpeed = MAX(climbSpeed, 30.0);
 	}
 	else
 	{
@@ -306,43 +300,43 @@ AIMoveResult_t CAI_Motor::MoveClimbExecute( const Vector &climbDest, const Vecto
 		climbSpeed = 100.0;
 	}
 
-	SetSmoothedVelocity( climbDir * climbSpeed );
+	SetSmoothedVelocity(climbDir * climbSpeed);
 
-	if ( climbDist < climbSpeed * GetMoveInterval() )
+	if(climbDist < climbSpeed * GetMoveInterval())
 	{
-		if (climbDist <= 1e-2)
+		if(climbDist <= 1e-2)
 			climbDist = 0;
 
 		const float climbTime = climbDist / climbSpeed;
 
-		SetMoveInterval( GetMoveInterval() - climbTime );
-		SetLocalOrigin( climbDest );
+		SetMoveInterval(GetMoveInterval() - climbTime);
+		SetLocalOrigin(climbDest);
 
 		return AIMR_CHANGE_TYPE;
 	}
 	else
 	{
-		SetMoveInterval( 0 );
+		SetMoveInterval(0);
 	}
 
 	// --------------------------------------------
 	// Turn to face the climb
 	// --------------------------------------------
-	SetIdealYawAndUpdate( yaw );
+	SetIdealYawAndUpdate(yaw);
 
 	return AIMR_OK;
 }
 
 void CAI_Motor::MoveClimbStop()
 {
-	if ( GetNavigator()->GetMovementActivity() > ACT_RESET )
-		SetActivity( GetNavigator()->GetMovementActivity() );
+	if(GetNavigator()->GetMovementActivity() > ACT_RESET)
+		SetActivity(GetNavigator()->GetMovementActivity());
 	else
-		SetActivity( ACT_IDLE );
+		SetActivity(ACT_IDLE);
 
-	GetOuter()->RemoveFlag( FL_FLY );
-	SetSmoothedVelocity( vec3_origin );
-	SetGravity( 1.0 );
+	GetOuter()->RemoveFlag(FL_FLY);
+	SetSmoothedVelocity(vec3_origin);
+	SetGravity(1.0);
 }
 
 //-----------------------------------------------------------------------------
@@ -351,58 +345,58 @@ void CAI_Motor::MoveClimbStop()
 // Output : Returns bits (MoveStatus_b) regarding the move status
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::MoveJumpStart( const Vector &velocity )
+void CAI_Motor::MoveJumpStart(const Vector &velocity)
 {
 	// take the npc off the ground and throw them in the air
-	SetSmoothedVelocity( velocity );
-	SetGravity( GetOuter()->GetJumpGravity() );
-	SetGroundEntity( NULL );
+	SetSmoothedVelocity(velocity);
+	SetGravity(GetOuter()->GetJumpGravity());
+	SetGroundEntity(NULL);
 
-	SetActivity( ACT_JUMP );
+	SetActivity(ACT_JUMP);
 
-	SetIdealYawAndUpdate( velocity );
+	SetIdealYawAndUpdate(velocity);
 }
 
-int CAI_Motor::MoveJumpExecute( )
+int CAI_Motor::MoveJumpExecute()
 {
 	// needs to detect being hit
-	UpdateYaw( );
+	UpdateYaw();
 
-	if (GetOuter()->GetActivity() == ACT_JUMP && GetOuter()->IsActivityFinished())
+	if(GetOuter()->GetActivity() == ACT_JUMP && GetOuter()->IsActivityFinished())
 	{
-		SetActivity( ACT_GLIDE );
+		SetActivity(ACT_GLIDE);
 	}
 
 	// use all the time
-	SetMoveInterval( 0 );
+	SetMoveInterval(0);
 
 	return AIMR_OK;
 }
 
 AIMoveResult_t CAI_Motor::MoveJumpStop()
 {
-	SetSmoothedVelocity( Vector(0,0,0) );
+	SetSmoothedVelocity(Vector(0, 0, 0));
 
-	if (GetOuter()->GetActivity() == ACT_GLIDE)
+	if(GetOuter()->GetActivity() == ACT_GLIDE)
 	{
 		float flTime = GetOuter()->GetGroundChangeTime();
-		GetOuter()->AddStepDiscontinuity( flTime, GetAbsOrigin(), GetAbsAngles() );
+		GetOuter()->AddStepDiscontinuity(flTime, GetAbsOrigin(), GetAbsAngles());
 
-		if ( SelectWeightedSequence( ACT_LAND ) == ACT_INVALID )
+		if(SelectWeightedSequence(ACT_LAND) == ACT_INVALID)
 			return AIMR_CHANGE_TYPE;
 
-		SetActivity( ACT_LAND );
+		SetActivity(ACT_LAND);
 		// FIXME: find out why the client doesn't interpolate immediatly after sequence change
 		// GetOuter()->SetCycle( flTime - gpGlobals->curtime );
 	}
-	if (GetOuter()->GetActivity() != ACT_LAND || GetOuter()->IsActivityFinished())
+	if(GetOuter()->GetActivity() != ACT_LAND || GetOuter()->IsActivityFinished())
 	{
 		return AIMR_CHANGE_TYPE;
 	}
 
-	SetMoveInterval( 0 );
+	SetMoveInterval(0);
 
-	SetGravity( 1.0f );
+	SetGravity(1.0f);
 
 	return AIMR_OK;
 }
@@ -414,7 +408,6 @@ float CAI_Motor::GetIdealSpeed() const
 	return GetOuter()->GetIdealSpeed();
 }
 
-
 float CAI_Motor::GetIdealAccel() const
 {
 	return GetOuter()->GetIdealAccel();
@@ -423,12 +416,12 @@ float CAI_Motor::GetIdealAccel() const
 //-----------------------------------------------------------------------------
 
 // how far will I go?
-float CAI_Motor::MinStoppingDist( float flMinResult )
+float CAI_Motor::MinStoppingDist(float flMinResult)
 {
 	// FIXME: should this be a constant rate or a constant time like it is now?
 	float flDecelRate = GetIdealAccel();
 
-	if (flDecelRate > 0.0)
+	if(flDecelRate > 0.0)
 	{
 		// assuming linear deceleration, how long till my V hits 0?
 		float t = GetCurSpeed() / flDecelRate;
@@ -436,18 +429,17 @@ float CAI_Motor::MinStoppingDist( float flMinResult )
 		float flDist = GetCurSpeed() * t - 0.5 * flDecelRate * t * t;
 
 		// this should always be some reasonable non-zero distance
-		if (flDist > flMinResult)
+		if(flDist > flMinResult)
 			return flDist;
 		return flMinResult;
 	}
 	return flMinResult;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: how fast should I be going ideally
 //-----------------------------------------------------------------------------
-float CAI_Motor::IdealVelocity( void )
+float CAI_Motor::IdealVelocity(void)
 {
 	// FIXME: this should be a per-entity setting so run speeds are not based on animation speeds
 	return GetIdealSpeed() * GetPlaybackRate();
@@ -455,38 +447,31 @@ float CAI_Motor::IdealVelocity( void )
 
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::ResetMoveCalculations()
-{
-}
+void CAI_Motor::ResetMoveCalculations() {}
 
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::MoveStart()
-{
-}
+void CAI_Motor::MoveStart() {}
 
 //-----------------------------------------------------------------------------
 
 void CAI_Motor::MoveStop()
 {
-	memset( &m_vecVelocity, 0, sizeof(m_vecVelocity) );
+	memset(&m_vecVelocity, 0, sizeof(m_vecVelocity));
 	GetOuter()->GetLocalNavigator()->ResetMoveCalculations();
 }
 
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::MovePaused()
-{
-}
+void CAI_Motor::MovePaused() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: what linear accel/decel rate do I need to hit V1 in d distance?
 //-----------------------------------------------------------------------------
-float DeltaV( float v0, float v1, float d )
+float DeltaV(float v0, float v1, float d)
 {
-	return 0.5 * (v1 * v1 - v0 * v0 ) / d;
+	return 0.5 * (v1 * v1 - v0 * v0) / d;
 }
-
 
 //-----------------------------------------------------------------------------
 float CAI_Motor::CalcIntervalMove()
@@ -504,64 +489,63 @@ float CAI_Motor::CalcIntervalMove()
 //			flGoalVelocity - target velocity
 //-----------------------------------------------------------------------------
 
-AIMotorMoveResult_t CAI_Motor::MoveGroundExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult )
+AIMotorMoveResult_t CAI_Motor::MoveGroundExecute(const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult)
 {
 	// --------------------------------------------
 	// turn in the direction of movement
 	// --------------------------------------------
-	MoveFacing( move );
+	MoveFacing(move);
 
 	// --------------------------------------------
-	return MoveGroundExecuteWalk( move, GetIdealSpeed(), CalcIntervalMove(), pTraceResult );
+	return MoveGroundExecuteWalk(move, GetIdealSpeed(), CalcIntervalMove(), pTraceResult);
 }
 
-
-AIMotorMoveResult_t CAI_Motor::MoveGroundExecuteWalk( const AILocalMoveGoal_t &move, float speed, float dist, AIMoveTrace_t *pTraceResult )
+AIMotorMoveResult_t CAI_Motor::MoveGroundExecuteWalk(const AILocalMoveGoal_t &move, float speed, float dist,
+													 AIMoveTrace_t *pTraceResult)
 {
-	bool bReachingLocalGoal = ( dist > move.maxDist );
+	bool bReachingLocalGoal = (dist > move.maxDist);
 
 	// can I move farther in this interval than I'm supposed to?
-	if ( bReachingLocalGoal )
+	if(bReachingLocalGoal)
 	{
-		if ( !(move.flags & AILMG_CONSUME_INTERVAL) )
+		if(!(move.flags & AILMG_CONSUME_INTERVAL))
 		{
 			// only use a portion of the time interval
-			SetMoveInterval( GetMoveInterval() * (1 - move.maxDist / dist) );
+			SetMoveInterval(GetMoveInterval() * (1 - move.maxDist / dist));
 		}
 		else
-			SetMoveInterval( 0 );
+			SetMoveInterval(0);
 		dist = move.maxDist;
 	}
 	else
 	{
 		// use all the time
-		SetMoveInterval( 0 );
+		SetMoveInterval(0);
 	}
 
-	SetMoveVel( move.dir * speed );
+	SetMoveVel(move.dir * speed);
 
 	// --------------------------------------------
 	// walk the distance
 	// --------------------------------------------
 	AIMotorMoveResult_t result = AIM_SUCCESS;
-	if ( dist > 0.0 )
+	if(dist > 0.0)
 	{
 		Vector vecFrom = GetLocalOrigin();
 		Vector vecTo = vecFrom + move.dir * dist;
 
-		result = MoveGroundStep( vecTo, move.pMoveTarget, -1, true, bReachingLocalGoal, pTraceResult );
+		result = MoveGroundStep(vecTo, move.pMoveTarget, -1, true, bReachingLocalGoal, pTraceResult);
 
-		if ( result == AIM_FAILED )
+		if(result == AIM_FAILED)
 			MoveStop();
 	}
-	else if ( !OnMoveStalled( move ) )
+	else if(!OnMoveStalled(move))
 	{
 		result = AIM_FAILED;
 	}
 
 	return result;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Move the npc to the next location on its route.
@@ -570,46 +554,46 @@ AIMotorMoveResult_t CAI_Motor::MoveGroundExecuteWalk( const AILocalMoveGoal_t &m
 //			flInterval - Time interval for this movement.
 //-----------------------------------------------------------------------------
 
-AIMotorMoveResult_t CAI_Motor::MoveFlyExecute( const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult )
+AIMotorMoveResult_t CAI_Motor::MoveFlyExecute(const AILocalMoveGoal_t &move, AIMoveTrace_t *pTraceResult)
 {
 	// turn in the direction of movement
-	MoveFacing( move );
+	MoveFacing(move);
 
 	// calc accel/decel rates
 	float flNewSpeed = GetIdealSpeed();
-	SetMoveVel( move.dir * flNewSpeed );
+	SetMoveVel(move.dir * flNewSpeed);
 
 	float flTotal = 0.5 * (GetCurSpeed() + flNewSpeed) * GetMoveInterval();
 
 	float distance = move.maxDist;
 
 	// can I move farther in this interval than I'm supposed to?
-	if (flTotal > distance)
+	if(flTotal > distance)
 	{
 		// only use a portion of the time interval
-		SetMoveInterval( GetMoveInterval() * (1 - distance / flTotal) );
+		SetMoveInterval(GetMoveInterval() * (1 - distance / flTotal));
 		flTotal = distance;
 	}
 	else
 	{
 		// use all the time
-		SetMoveInterval( 0 );
+		SetMoveInterval(0);
 	}
 
 	Vector vecStart, vecEnd;
 	vecStart = GetLocalOrigin();
-	VectorMA( vecStart, flTotal, move.dir, vecEnd );
+	VectorMA(vecStart, flTotal, move.dir, vecEnd);
 
 	AIMoveTrace_t moveTrace;
-	GetMoveProbe()->MoveLimit( NAV_FLY, vecStart, vecEnd, MASK_NPCSOLID, NULL, &moveTrace );
-	if ( pTraceResult )
+	GetMoveProbe()->MoveLimit(NAV_FLY, vecStart, vecEnd, MASK_NPCSOLID, NULL, &moveTrace);
+	if(pTraceResult)
 		*pTraceResult = moveTrace;
 
 	// Check for total blockage
-	if (fabs(moveTrace.flDistObstructed - flTotal) <= 1e-1)
+	if(fabs(moveTrace.flDistObstructed - flTotal) <= 1e-1)
 	{
 		// But if we bumped into our target, then we succeeded!
-		if ( move.pMoveTarget && (moveTrace.pObstruction == move.pMoveTarget) )
+		if(move.pMoveTarget && (moveTrace.pObstruction == move.pMoveTarget))
 			return AIM_PARTIAL_HIT_TARGET;
 
 		return AIM_FAILED;
@@ -622,48 +606,47 @@ AIMotorMoveResult_t CAI_Motor::MoveFlyExecute( const AILocalMoveGoal_t &move, AI
 	return (IsMoveBlocked(moveTrace.fStatus)) ? AIM_PARTIAL_HIT_WORLD : AIM_SUCCESS;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: turn in the direction of movement
 // Output :
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::MoveFacing( const AILocalMoveGoal_t &move )
+void CAI_Motor::MoveFacing(const AILocalMoveGoal_t &move)
 {
-	if ( GetOuter()->OverrideMoveFacing( move, GetMoveInterval() ) )
+	if(GetOuter()->OverrideMoveFacing(move, GetMoveInterval()))
 		return;
 
 	// required movement direction
-	float flMoveYaw = UTIL_VecToYaw( move.dir );
+	float flMoveYaw = UTIL_VecToYaw(move.dir);
 
 	int nSequence = GetSequence();
-	float fSequenceMoveYaw = GetSequenceMoveYaw( nSequence );
-	if ( fSequenceMoveYaw == NOMOTION )
+	float fSequenceMoveYaw = GetSequenceMoveYaw(nSequence);
+	if(fSequenceMoveYaw == NOMOTION)
 	{
 		fSequenceMoveYaw = 0;
 	}
 
-	if (!HasPoseParameter( nSequence, GetOuter()->LookupPoseMoveYaw() ))
+	if(!HasPoseParameter(nSequence, GetOuter()->LookupPoseMoveYaw()))
 	{
-		SetIdealYawAndUpdate( UTIL_AngleMod( flMoveYaw - fSequenceMoveYaw ) );
+		SetIdealYawAndUpdate(UTIL_AngleMod(flMoveYaw - fSequenceMoveYaw));
 	}
 	else
 	{
 		// FIXME: move this up to navigator so that path goals can ignore these overrides.
 		Vector dir;
-		float flInfluence = GetFacingDirection( dir );
+		float flInfluence = GetFacingDirection(dir);
 		dir = move.facing * (1 - flInfluence) + dir * flInfluence;
-		VectorNormalize( dir );
+		VectorNormalize(dir);
 
 		// ideal facing direction
-		float idealYaw = UTIL_AngleMod( UTIL_VecToYaw( dir ) );
+		float idealYaw = UTIL_AngleMod(UTIL_VecToYaw(dir));
 
 		// FIXME: facing has important max velocity issues
-		SetIdealYawAndUpdate( idealYaw );
+		SetIdealYawAndUpdate(idealYaw);
 
 		// find movement direction to compensate for not being turned far enough
-		float flDiff = UTIL_AngleDiff( flMoveYaw, GetLocalAngles().y );
-		SetPoseParameter( GetOuter()->LookupPoseMoveYaw(), flDiff );
+		float flDiff = UTIL_AngleDiff(flMoveYaw, GetLocalAngles().y);
+		SetPoseParameter(GetOuter()->LookupPoseMoveYaw(), flDiff);
 		/*
 		if ((GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT))
 		{
@@ -678,52 +661,51 @@ void CAI_Motor::MoveFacing( const AILocalMoveGoal_t &move )
 //			worth of rotation.
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::SetIdealYawAndUpdate( float idealYaw, float yawSpeed)
+void CAI_Motor::SetIdealYawAndUpdate(float idealYaw, float yawSpeed)
 {
-	SetIdealYaw( idealYaw );
-	if (yawSpeed == AI_CALC_YAW_SPEED)
+	SetIdealYaw(idealYaw);
+	if(yawSpeed == AI_CALC_YAW_SPEED)
 		RecalculateYawSpeed();
-	else if (yawSpeed != AI_KEEP_YAW_SPEED)
-		SetYawSpeed( yawSpeed );
+	else if(yawSpeed != AI_KEEP_YAW_SPEED)
+		SetYawSpeed(yawSpeed);
 	UpdateYaw(-1);
 }
-
 
 //-----------------------------------------------------------------------------
 
 void CAI_Motor::RecalculateYawSpeed()
 {
-	SetYawSpeed( CalcYawSpeed() );
+	SetYawSpeed(CalcYawSpeed());
 }
 
 //-----------------------------------------------------------------------------
 
-float AI_ClampYaw( float yawSpeedPerSec, float current, float target, float time )
+float AI_ClampYaw(float yawSpeedPerSec, float current, float target, float time)
 {
-	if (current != target)
+	if(current != target)
 	{
 		float speed = yawSpeedPerSec * time;
 		float move = target - current;
 
-		if (target > current)
+		if(target > current)
 		{
-			if (move >= 180)
+			if(move >= 180)
 				move = move - 360;
 		}
 		else
 		{
-			if (move <= -180)
+			if(move <= -180)
 				move = move + 360;
 		}
 
-		if (move > 0)
-		{// turning to the npc's left
-			if (move > speed)
+		if(move > 0)
+		{ // turning to the npc's left
+			if(move > speed)
 				move = speed;
 		}
 		else
-		{// turning to the npc's right
-			if (move < -speed)
+		{ // turning to the npc's right
+			if(move < -speed)
 				move = -speed;
 		}
 
@@ -739,37 +721,36 @@ float AI_ClampYaw( float yawSpeedPerSec, float current, float target, float time
 //			flInterval - Time interval to turn, -1 uses time since last think.
 // Output : Returns the number of degrees turned.
 //-----------------------------------------------------------------------------
-void CAI_Motor::UpdateYaw( int yawSpeed )
+void CAI_Motor::UpdateYaw(int yawSpeed)
 {
 	// Don't do this if our yaw is locked
-	if ( IsYawLocked() )
+	if(IsYawLocked())
 		return;
 
 	GetOuter()->SetUpdatedYaw();
 
 	float ideal, current, newYaw;
 
-	if ( yawSpeed == -1 )
+	if(yawSpeed == -1)
 		yawSpeed = GetYawSpeed();
 
 	// NOTE: GetIdealYaw() will never exactly be reached because UTIL_AngleMod
 	// also truncates the angle to 16 bits of resolution. So lets truncate it here.
-	current = UTIL_AngleMod( GetLocalAngles().y );
-	ideal = UTIL_AngleMod( GetIdealYaw() );
+	current = UTIL_AngleMod(GetLocalAngles().y);
+	ideal = UTIL_AngleMod(GetIdealYaw());
 
 	// FIXME: this needs a proper interval
-	float dt = MIN( 0.2, gpGlobals->curtime - GetLastThink() );
+	float dt = MIN(0.2, gpGlobals->curtime - GetLastThink());
 
-	newYaw = AI_ClampYaw( (float)yawSpeed * 10.0, current, ideal, dt );
+	newYaw = AI_ClampYaw((float)yawSpeed * 10.0, current, ideal, dt);
 
-	if (newYaw != current)
+	if(newYaw != current)
 	{
 		QAngle angles = GetLocalAngles();
 		angles.y = newYaw;
-		SetLocalAngles( angles );
+		SetLocalAngles(angles);
 	}
 }
-
 
 //=========================================================
 // DeltaIdealYaw - returns the difference ( in degrees ) between
@@ -777,81 +758,77 @@ void CAI_Motor::UpdateYaw( int yawSpeed )
 //
 // Positive result is left turn, negative is right turn
 //=========================================================
-float CAI_Motor::DeltaIdealYaw ( void )
+float CAI_Motor::DeltaIdealYaw(void)
 {
-	float	flCurrentYaw;
+	float flCurrentYaw;
 
-	flCurrentYaw = UTIL_AngleMod( GetLocalAngles().y );
+	flCurrentYaw = UTIL_AngleMod(GetLocalAngles().y);
 
-	if ( flCurrentYaw == GetIdealYaw() )
+	if(flCurrentYaw == GetIdealYaw())
 	{
 		return 0;
 	}
 
-
-	return UTIL_AngleDiff( GetIdealYaw(), flCurrentYaw );
+	return UTIL_AngleDiff(GetIdealYaw(), flCurrentYaw);
 }
-
 
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::SetIdealYawToTarget( const Vector &target, float noise, float offset )
+void CAI_Motor::SetIdealYawToTarget(const Vector &target, float noise, float offset)
 {
-	float base = CalcIdealYaw( target );
+	float base = CalcIdealYaw(target);
 	base += offset;
-	if ( noise > 0 )
+	if(noise > 0)
 	{
 		noise *= 0.5;
-		base += random->RandomFloat( -noise, noise );
-		if ( base < 0 )
+		base += random->RandomFloat(-noise, noise);
+		if(base < 0)
 			base += 360;
-		else if ( base >= 360 )
+		else if(base >= 360)
 			base -= 360;
 	}
-	SetIdealYaw( base );
+	SetIdealYaw(base);
 }
 
 //-----------------------------------------------------------------------------
 
-void CAI_Motor::SetIdealYawToTargetAndUpdate( const Vector &target, float yawSpeed )
+void CAI_Motor::SetIdealYawToTargetAndUpdate(const Vector &target, float yawSpeed)
 {
-	SetIdealYawAndUpdate( CalcIdealYaw( target ), yawSpeed );
+	SetIdealYawAndUpdate(CalcIdealYaw(target), yawSpeed);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Keep track of multiple objects that the npc is interested in facing
 //-----------------------------------------------------------------------------
-void CAI_Motor::AddFacingTarget( CBaseEntity *pTarget, float flImportance, float flDuration, float flRamp )
+void CAI_Motor::AddFacingTarget(CBaseEntity *pTarget, float flImportance, float flDuration, float flRamp)
 {
-	m_facingQueue.Add( pTarget, flImportance, flDuration, flRamp );
+	m_facingQueue.Add(pTarget, flImportance, flDuration, flRamp);
 }
 
-
-void CAI_Motor::AddFacingTarget( const Vector &vecPosition, float flImportance, float flDuration, float flRamp )
+void CAI_Motor::AddFacingTarget(const Vector &vecPosition, float flImportance, float flDuration, float flRamp)
 {
-	m_facingQueue.Add( vecPosition, flImportance, flDuration, flRamp );
+	m_facingQueue.Add(vecPosition, flImportance, flDuration, flRamp);
 }
 
-void CAI_Motor::AddFacingTarget( CBaseEntity *pTarget, const Vector &vecPosition, float flImportance, float flDuration, float flRamp )
+void CAI_Motor::AddFacingTarget(CBaseEntity *pTarget, const Vector &vecPosition, float flImportance, float flDuration,
+								float flRamp)
 {
-	m_facingQueue.Add( pTarget, vecPosition, flImportance, flDuration, flRamp );
+	m_facingQueue.Add(pTarget, vecPosition, flImportance, flDuration, flRamp);
 }
 
-
-float CAI_Motor::GetFacingDirection( Vector &vecDir )
+float CAI_Motor::GetFacingDirection(Vector &vecDir)
 {
 	float flTotalInterest = 0.0;
-	vecDir = Vector( 0, 0, 0 );
+	vecDir = Vector(0, 0, 0);
 
 	int i;
 
 	// clean up facing targets
-	for (i = 0; i < m_facingQueue.Count();)
+	for(i = 0; i < m_facingQueue.Count();)
 	{
-		if (!m_facingQueue[i].IsActive())
+		if(!m_facingQueue[i].IsActive())
 		{
-			m_facingQueue.Remove( i );
+			m_facingQueue.Remove(i);
 		}
 		else
 		{
@@ -859,98 +836,95 @@ float CAI_Motor::GetFacingDirection( Vector &vecDir )
 		}
 	}
 
-	for (i = 0; i < m_facingQueue.Count(); i++)
+	for(i = 0; i < m_facingQueue.Count(); i++)
 	{
-		float flInterest = m_facingQueue[i].Interest( );
+		float flInterest = m_facingQueue[i].Interest();
 		Vector tmp = m_facingQueue[i].GetPosition() - GetAbsOrigin();
 
 		// NDebugOverlay::Line( m_facingQueue[i].GetPosition(), GetAbsOrigin(), 255, 0, 0, false, 0.1 );
 
-		VectorNormalize( tmp );
+		VectorNormalize(tmp);
 
 		vecDir = vecDir * (1 - flInterest) + tmp * flInterest;
 
 		flTotalInterest = (1 - (1 - flTotalInterest) * (1 - flInterest));
 
-		VectorNormalize( vecDir );
+		VectorNormalize(vecDir);
 	}
 
 	return flTotalInterest;
 }
 
-
 //-----------------------------------------------------------------------------
 
-AIMoveResult_t CAI_Motor::MoveNormalExecute( const AILocalMoveGoal_t &move )
+AIMoveResult_t CAI_Motor::MoveNormalExecute(const AILocalMoveGoal_t &move)
 {
 	AI_PROFILE_SCOPE(CAI_Motor_MoveNormalExecute);
 
 	// --------------------------------
 
 	AIMotorMoveResult_t fMotorResult;
-	AIMoveTrace_t 		moveTrace;
+	AIMoveTrace_t moveTrace;
 
-	if ( move.navType == NAV_GROUND )
+	if(move.navType == NAV_GROUND)
 	{
-		fMotorResult = MoveGroundExecute( move, &moveTrace );
+		fMotorResult = MoveGroundExecute(move, &moveTrace);
 	}
 	else
 	{
-		Assert( move.navType == NAV_FLY );
-		fMotorResult = MoveFlyExecute( move, &moveTrace );
+		Assert(move.navType == NAV_FLY);
+		fMotorResult = MoveFlyExecute(move, &moveTrace);
 	}
 
-	static AIMoveResult_t moveResults[] =
-	{
-		AIMR_ILLEGAL,	                         // AIM_FAILED
-		AIMR_OK,                                 // AIM_SUCCESS
-		AIMR_BLOCKED_NPC,						 // AIM_PARTIAL_HIT_NPC
-		AIMR_BLOCKED_WORLD,                      // AIM_PARTIAL_HIT_WORLD
-		AIMR_BLOCKED_WORLD,                      // AIM_PARTIAL_HIT_TARGET
+	static AIMoveResult_t moveResults[] = {
+		AIMR_ILLEGAL,		// AIM_FAILED
+		AIMR_OK,			// AIM_SUCCESS
+		AIMR_BLOCKED_NPC,	// AIM_PARTIAL_HIT_NPC
+		AIMR_BLOCKED_WORLD, // AIM_PARTIAL_HIT_WORLD
+		AIMR_BLOCKED_WORLD, // AIM_PARTIAL_HIT_TARGET
 	};
-	Assert( ARRAYSIZE( moveResults ) == AIM_NUM_RESULTS && fMotorResult >= 0 && fMotorResult <= ARRAYSIZE( moveResults ) );
+	Assert(ARRAYSIZE(moveResults) == AIM_NUM_RESULTS && fMotorResult >= 0 && fMotorResult <= ARRAYSIZE(moveResults));
 
 	AIMoveResult_t result = moveResults[fMotorResult];
 
-	if ( result != AIMR_OK )
+	if(result != AIMR_OK)
 	{
-		OnMoveExecuteFailed( move, moveTrace, fMotorResult, &result );
-		SetMoveInterval( 0 ); // always consume interval on failure, even if overridden by OnMoveExecuteFailed()
+		OnMoveExecuteFailed(move, moveTrace, fMotorResult, &result);
+		SetMoveInterval(0); // always consume interval on failure, even if overridden by OnMoveExecuteFailed()
 	}
 
-	return DbgResult( result );
+	return DbgResult(result);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Look ahead my stopping distance, or at least my hull width
 //-----------------------------------------------------------------------------
-float CAI_Motor::MinCheckDist( void )
+float CAI_Motor::MinCheckDist(void)
 {
 	// Take the groundspeed into account
 	float flMoveDist = GetMoveInterval() * GetIdealSpeed();
-	float flMinDist = MAX( MinStoppingDist(), flMoveDist);
-	if ( flMinDist < GetHullWidth() )
+	float flMinDist = MAX(MinStoppingDist(), flMoveDist);
+	if(flMinDist < GetHullWidth())
 		flMinDist = GetHullWidth();
 	return flMinDist;
 }
 
 //-----------------------------------------------------------------------------
 
-CAI_Navigator *CAI_Motor::GetNavigator( void )
+CAI_Navigator *CAI_Motor::GetNavigator(void)
 {
 	return GetOuter()->GetNavigator();
 }
 
-int CAI_Motor::SelectWeightedSequence ( Activity activity )
+int CAI_Motor::SelectWeightedSequence(Activity activity)
 {
-	return GetOuter()->SelectWeightedSequence ( activity );
+	return GetOuter()->SelectWeightedSequence(activity);
 }
 
-float	CAI_Motor::GetSequenceGroundSpeed( int iSequence )
+float CAI_Motor::GetSequenceGroundSpeed(int iSequence)
 {
-	return GetOuter()->GetSequenceGroundSpeed( iSequence );
+	return GetOuter()->GetSequenceGroundSpeed(iSequence);
 }
-
 
 //-----------------------------------------------------------------------------
 
@@ -969,29 +943,29 @@ float CAI_Motor::StepHeight() const
 	return GetOuter()->StepHeight();
 }
 
-bool CAI_Motor::CanStandOn( CBaseEntity *pSurface ) const
+bool CAI_Motor::CanStandOn(CBaseEntity *pSurface) const
 {
-	return GetOuter()->CanStandOn( pSurface );
+	return GetOuter()->CanStandOn(pSurface);
 }
 
-float CAI_Motor::CalcIdealYaw( const Vector &vecTarget )
+float CAI_Motor::CalcIdealYaw(const Vector &vecTarget)
 {
-	return GetOuter()->CalcIdealYaw( vecTarget );
+	return GetOuter()->CalcIdealYaw(vecTarget);
 }
 
-float CAI_Motor::SetBoneController( int iController, float flValue )
+float CAI_Motor::SetBoneController(int iController, float flValue)
 {
-	return GetOuter()->SetBoneController( iController, flValue );
+	return GetOuter()->SetBoneController(iController, flValue);
 }
 
-float CAI_Motor::GetSequenceMoveYaw( int iSequence )
+float CAI_Motor::GetSequenceMoveYaw(int iSequence)
 {
-	return GetOuter()->GetSequenceMoveYaw( iSequence );
+	return GetOuter()->GetSequenceMoveYaw(iSequence);
 }
 
-void CAI_Motor::SetPlaybackRate( float flRate )
+void CAI_Motor::SetPlaybackRate(float flRate)
 {
-	return GetOuter()->SetPlaybackRate( flRate );
+	return GetOuter()->SetPlaybackRate(flRate);
 }
 
 float CAI_Motor::GetPlaybackRate()
@@ -999,34 +973,34 @@ float CAI_Motor::GetPlaybackRate()
 	return GetOuter()->GetPlaybackRate();
 }
 
-float CAI_Motor::SetPoseParameter( const char *szName, float flValue )
+float CAI_Motor::SetPoseParameter(const char *szName, float flValue)
 {
-	return GetOuter()->SetPoseParameter( szName, flValue );
+	return GetOuter()->SetPoseParameter(szName, flValue);
 }
 
-float CAI_Motor::GetPoseParameter( const char *szName )
+float CAI_Motor::GetPoseParameter(const char *szName)
 {
-	return GetOuter()->GetPoseParameter( szName );
+	return GetOuter()->GetPoseParameter(szName);
 }
 
-bool CAI_Motor::HasPoseParameter( int iSequence, const char *szName )
+bool CAI_Motor::HasPoseParameter(int iSequence, const char *szName)
 {
-	return GetOuter()->HasPoseParameter( iSequence, szName );
+	return GetOuter()->HasPoseParameter(iSequence, szName);
 }
 
-float CAI_Motor::SetPoseParameter( int iParameter, float flValue )
+float CAI_Motor::SetPoseParameter(int iParameter, float flValue)
 {
-	return GetOuter()->SetPoseParameter( iParameter, flValue );
+	return GetOuter()->SetPoseParameter(iParameter, flValue);
 }
 
-bool CAI_Motor::HasPoseParameter( int iSequence, int iParameter )
+bool CAI_Motor::HasPoseParameter(int iSequence, int iParameter)
 {
-	return GetOuter()->HasPoseParameter( iSequence, iParameter );
+	return GetOuter()->HasPoseParameter(iSequence, iParameter);
 }
 
-void CAI_Motor::SetMoveType( MoveType_t val, MoveCollide_t moveCollide )
+void CAI_Motor::SetMoveType(MoveType_t val, MoveCollide_t moveCollide)
 {
-	GetOuter()->SetMoveType( val, moveCollide );
+	GetOuter()->SetMoveType(val, moveCollide);
 }
 
 //=============================================================================

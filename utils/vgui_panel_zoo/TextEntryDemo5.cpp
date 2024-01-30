@@ -20,17 +20,16 @@ using namespace vgui;
 // We override the enter key to clear the text. To add a newline manually you can
 // type ctrl-enter
 //-----------------------------------------------------------------------------
-class TextEntryDemo5: public DemoPage
+class TextEntryDemo5 : public DemoPage
 {
-	public:
-		TextEntryDemo5(Panel *parent, const char *name);
-		~TextEntryDemo5();
-	private:
+public:
+	TextEntryDemo5(Panel *parent, const char *name);
+	~TextEntryDemo5();
 
-		void OnKeyCodeTyped(KeyCode code);
+private:
+	void OnKeyCodeTyped(KeyCode code);
 
-		TextEntry *m_pTextEntry;
-
+	TextEntry *m_pTextEntry;
 };
 
 //-----------------------------------------------------------------------------
@@ -43,7 +42,6 @@ TextEntryDemo5::TextEntryDemo5(Panel *parent, const char *name) : DemoPage(paren
 	// Position the window and make it nice and wide.
 	// Make it tall enough to fit several lines of text.
 	m_pTextEntry->SetBounds(100, 100, 200, 100);
-
 
 	// Make this window hold multiple lines of text.
 	// This will turn off horizontal scrolling,
@@ -61,9 +59,7 @@ TextEntryDemo5::TextEntryDemo5(Panel *parent, const char *name) : DemoPage(paren
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-TextEntryDemo5::~TextEntryDemo5()
-{
-}
+TextEntryDemo5::~TextEntryDemo5() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: When the enter key is pressed we clear the textentry.
@@ -71,7 +67,7 @@ TextEntryDemo5::~TextEntryDemo5()
 //-----------------------------------------------------------------------------
 void TextEntryDemo5::OnKeyCodeTyped(KeyCode code)
 {
-	if (code == KEY_ENTER)
+	if(code == KEY_ENTER)
 	{
 		m_pTextEntry->SetText("");
 	}
@@ -79,7 +75,7 @@ void TextEntryDemo5::OnKeyCodeTyped(KeyCode code)
 	DemoPage::OnKeyCodeTyped(code);
 }
 
-Panel* TextEntryDemo5_Create(Panel *parent)
+Panel *TextEntryDemo5_Create(Panel *parent)
 {
 	return new TextEntryDemo5(parent, "TextEntryDemo5");
 }

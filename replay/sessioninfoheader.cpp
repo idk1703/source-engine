@@ -10,16 +10,16 @@
 
 //----------------------------------------------------------------------------------------
 
-bool ReadSessionInfoHeader( const void *pBuf, int nBufSize, SessionInfoHeader_t &outHeader )
+bool ReadSessionInfoHeader(const void *pBuf, int nBufSize, SessionInfoHeader_t &outHeader)
 {
-	if ( nBufSize < sizeof( SessionInfoHeader_t ) )
+	if(nBufSize < sizeof(SessionInfoHeader_t))
 	{
-		AssertMsg( 0, "Buffer size too small to read session info header" );
+		AssertMsg(0, "Buffer size too small to read session info header");
 		return false;
 	}
 
 	// Read the header
-	V_memcpy( &outHeader, pBuf, sizeof( SessionInfoHeader_t ) );
+	V_memcpy(&outHeader, pBuf, sizeof(SessionInfoHeader_t));
 
 	return true;
 }

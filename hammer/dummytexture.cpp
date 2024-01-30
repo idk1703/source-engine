@@ -17,13 +17,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Constructor.
 //-----------------------------------------------------------------------------
 CDummyTexture::CDummyTexture(const char *pszName, TEXTUREFORMAT eFormat)
 {
-	if (pszName != NULL)
+	if(pszName != NULL)
 	{
 		strcpy(m_szName, pszName);
 	}
@@ -35,14 +34,10 @@ CDummyTexture::CDummyTexture(const char *pszName, TEXTUREFORMAT eFormat)
 	m_eTextureFormat = eFormat;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Destructor.
 //-----------------------------------------------------------------------------
-CDummyTexture::~CDummyTexture()
-{
-}
-
+CDummyTexture::~CDummyTexture() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns an empty string, since we have no source file.
@@ -50,9 +45,8 @@ CDummyTexture::~CDummyTexture()
 const char *CDummyTexture::GetFileName() const
 {
 	static char *pszEmpty = "";
-	return(pszEmpty);
+	return (pszEmpty);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns a string of comma delimited keywords associated with this
@@ -62,14 +56,13 @@ const char *CDummyTexture::GetFileName() const
 //-----------------------------------------------------------------------------
 int CDummyTexture::GetKeywords(char *pszKeywords) const
 {
-	if (pszKeywords != NULL)
+	if(pszKeywords != NULL)
 	{
 		*pszKeywords = '\0';
 	}
 
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -81,15 +74,15 @@ int CDummyTexture::GetShortName(char *pszName) const
 {
 	char szBuf[MAX_PATH];
 
-	if (pszName == NULL)
+	if(pszName == NULL)
 	{
 		pszName = szBuf;
 	}
 
-	if (m_eTextureFormat == tfWAL)
+	if(m_eTextureFormat == tfWAL)
 	{
 		const char *psz = strstr(m_szName, "textures");
-		if (psz == NULL)
+		if(psz == NULL)
 		{
 			psz = m_szName;
 		}
@@ -102,7 +95,7 @@ int CDummyTexture::GetShortName(char *pszName) const
 
 		// remove extension
 		char *pszExtension = strstr(pszName, ".wal");
-		if (pszExtension)
+		if(pszExtension)
 		{
 			*pszExtension = 0;
 		}
@@ -112,9 +105,8 @@ int CDummyTexture::GetShortName(char *pszName) const
 		strcpy(pszName, m_szName);
 	}
 
-	return(strlen(pszName));
+	return (strlen(pszName));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: If the buffer pointer passed in is not NULL, copies the image data
@@ -123,11 +115,10 @@ int CDummyTexture::GetShortName(char *pszName) const
 //				pointer is NULL, no data is copied, only the data size is returned.
 // Output : Returns a the size of the RGB image in bytes.
 //-----------------------------------------------------------------------------
-int CDummyTexture::GetImageDataRGB( void *pImageRGB )
+int CDummyTexture::GetImageDataRGB(void *pImageRGB)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: If the buffer pointer passed in is not NULL, copies the image data
@@ -136,22 +127,20 @@ int CDummyTexture::GetImageDataRGB( void *pImageRGB )
 //				pointer is NULL, no data is copied, only the data size is returned.
 // Output : Returns a the size of the RGBA image in bytes.
 //-----------------------------------------------------------------------------
-int CDummyTexture::GetImageDataRGBA( void *pImageRGBA )
+int CDummyTexture::GetImageDataRGBA(void *pImageRGBA)
 {
-	return(0);
+	return (0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : size -
 //-----------------------------------------------------------------------------
-void CDummyTexture::GetSize( SIZE &size ) const
+void CDummyTexture::GetSize(SIZE &size) const
 {
 	size.cx = 0;
 	size.cy = 0;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Renders "No Image" into a device context as a placeholder for the
@@ -175,12 +164,11 @@ void CDummyTexture::Draw(CDC *pDC, RECT &rect, int iFontHeight, int iIconHeight,
 	pDC->SetBkColor(crBack);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Loads this texture from disk if it is not already loaded.
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CDummyTexture::Load( void )
+bool CDummyTexture::Load(void)
 {
-	return(true);
+	return (true);
 }

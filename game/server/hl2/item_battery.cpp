@@ -18,25 +18,24 @@
 class CItemBattery : public CItem
 {
 public:
-	DECLARE_CLASS( CItemBattery, CItem );
+	DECLARE_CLASS(CItemBattery, CItem);
 
-	void Spawn( void )
+	void Spawn(void)
 	{
-		Precache( );
-		SetModel( "models/items/battery.mdl" );
-		BaseClass::Spawn( );
+		Precache();
+		SetModel("models/items/battery.mdl");
+		BaseClass::Spawn();
 	}
-	void Precache( void )
+	void Precache(void)
 	{
-		PrecacheModel ("models/items/battery.mdl");
+		PrecacheModel("models/items/battery.mdl");
 
-		PrecacheScriptSound( "ItemBattery.Touch" );
-
+		PrecacheScriptSound("ItemBattery.Touch");
 	}
-	bool MyTouch( CBasePlayer *pPlayer )
+	bool MyTouch(CBasePlayer *pPlayer)
 	{
-		CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player *>( pPlayer );
-		return ( pHL2Player && pHL2Player->ApplyBattery() );
+		CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player *>(pPlayer);
+		return (pHL2Player && pHL2Player->ApplyBattery());
 	}
 };
 

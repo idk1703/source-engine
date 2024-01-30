@@ -19,50 +19,49 @@ extern bool uselogfile;
 //			*fmt -
 //			... -
 //-----------------------------------------------------------------------------
-void vprint( int depth, const char *fmt, ... )
+void vprint(int depth, const char *fmt, ...)
 {
-	char string[ 8192 ];
+	char string[8192];
 	va_list va;
-	va_start( va, fmt );
-	vsprintf( string, fmt, va );
-	va_end( va );
+	va_start(va, fmt);
+	vsprintf(string, fmt, va);
+	va_end(va);
 
 	FILE *fp = NULL;
 
-	if ( uselogfile )
+	if(uselogfile)
 	{
-		fp = fopen( "log.txt", "ab" );
+		fp = fopen("log.txt", "ab");
 	}
 
-	while ( depth-- > 0 )
+	while(depth-- > 0)
 	{
-		printf( "  " );
-		OutputDebugString( "  " );
-		if ( fp )
+		printf("  ");
+		OutputDebugString("  ");
+		if(fp)
 		{
-			fprintf( fp, "  " );
+			fprintf(fp, "  ");
 		}
 	}
 
-	::printf( "%s", string );
-	OutputDebugString( string );
+	::printf("%s", string);
+	OutputDebugString(string);
 
-	if ( fp )
+	if(fp)
 	{
 		char *p = string;
-		while ( *p )
+		while(*p)
 		{
-			if ( *p == '\n' )
+			if(*p == '\n')
 			{
-				fputc( '\r', fp );
+				fputc('\r', fp);
 			}
-			fputc( *p, fp );
+			fputc(*p, fp);
 			p++;
 		}
-		fclose( fp );
+		fclose(fp);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -70,24 +69,24 @@ void vprint( int depth, const char *fmt, ... )
 //			*len -
 // Output : unsigned char
 //-----------------------------------------------------------------------------
-unsigned char *COM_LoadFile( const char *name, int *len)
+unsigned char *COM_LoadFile(const char *name, int *len)
 {
 	FILE *fp;
-	fp = fopen( name, "rb" );
-	if ( !fp )
+	fp = fopen(name, "rb");
+	if(!fp)
 	{
 		*len = 0;
 		return NULL;
 	}
 
-	fseek( fp, 0, SEEK_END );
-	*len = ftell( fp );
-	fseek( fp, 0, SEEK_SET );
+	fseek(fp, 0, SEEK_END);
+	*len = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
 
-	unsigned char *buffer = new unsigned char[ *len + 1 ];
-	fread( buffer, *len, 1, fp );
-	fclose( fp );
-	buffer[ *len ] = 0;
+	unsigned char *buffer = new unsigned char[*len + 1];
+	fread(buffer, *len, 1, fp);
+	fclose(fp);
+	buffer[*len] = 0;
 
 	return buffer;
 }
@@ -96,7 +95,7 @@ unsigned char *COM_LoadFile( const char *name, int *len)
 // Purpose:
 // Input  : *buffer -
 //-----------------------------------------------------------------------------
-void COM_FreeFile( unsigned char *buffer )
+void COM_FreeFile(unsigned char *buffer)
 {
 	delete[] buffer;
 }
@@ -106,9 +105,9 @@ void COM_FreeFile( unsigned char *buffer )
 // Input  : *dir -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool COM_DirectoryExists( const char *dir )
+bool COM_DirectoryExists(const char *dir)
 {
-	if ( !_access( dir, 0 ) )
+	if(!_access(dir, 0))
 		return true;
 
 	return false;

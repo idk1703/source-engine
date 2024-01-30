@@ -36,22 +36,20 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CCSTextWindow::CCSTextWindow(IViewPort *pViewPort) : CTextWindow( pViewPort )
+CCSTextWindow::CCSTextWindow(IViewPort *pViewPort) : CTextWindow(pViewPort)
 {
-	SetProportional( true );
+	SetProportional(true);
 
 	m_iScoreBoardKey = BUTTON_CODE_INVALID; // this is looked up in Activate()
 
-	CreateBackground( this );
+	CreateBackground(this);
 	m_backgroundLayoutFinished = false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CCSTextWindow::~CCSTextWindow()
-{
-}
+CCSTextWindow::~CCSTextWindow() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -70,7 +68,7 @@ void CCSTextWindow::SetVisible(bool state)
 {
 	BaseClass::SetVisible(state);
 
-	if ( state )
+	if(state)
 	{
 		m_pOK->RequestFocus();
 	}
@@ -81,46 +79,44 @@ void CCSTextWindow::SetVisible(bool state)
 //-----------------------------------------------------------------------------
 void CCSTextWindow::ShowPanel(bool bShow)
 {
-	if ( bShow )
+	if(bShow)
 	{
 		// get key binding if shown
-		if ( m_iScoreBoardKey == BUTTON_CODE_INVALID ) // you need to lookup the jump key AFTER the engine has loaded
+		if(m_iScoreBoardKey == BUTTON_CODE_INVALID) // you need to lookup the jump key AFTER the engine has loaded
 		{
-			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind( "showscores" );
+			m_iScoreBoardKey = gameuifuncs->GetButtonCodeForBind("showscores");
 		}
 	}
 
-	BaseClass::ShowPanel( bShow );
+	BaseClass::ShowPanel(bShow);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CCSTextWindow::OnKeyCodePressed( KeyCode code )
+void CCSTextWindow::OnKeyCodePressed(KeyCode code)
 {
-	//We manually intercept the ENTER key so in case the button loses focus
-	//ENTER still moves you through the MOTD screen.
-	if ( code == KEY_ENTER || code == KEY_XBUTTON_A || code == KEY_XBUTTON_B )
+	// We manually intercept the ENTER key so in case the button loses focus
+	// ENTER still moves you through the MOTD screen.
+	if(code == KEY_ENTER || code == KEY_XBUTTON_A || code == KEY_XBUTTON_B)
 	{
 		m_pOK->DoClick();
 	}
-	else if ( m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code )
+	else if(m_iScoreBoardKey != BUTTON_CODE_INVALID && m_iScoreBoardKey == code)
 	{
-		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
-		gViewPortInterface->PostMessageToPanel( PANEL_SCOREBOARD, new KeyValues( "PollHideCode", "code", code ) );
+		gViewPortInterface->ShowPanel(PANEL_SCOREBOARD, true);
+		gViewPortInterface->PostMessageToPanel(PANEL_SCOREBOARD, new KeyValues("PollHideCode", "code", code));
 	}
 	else
 	{
-		BaseClass::OnKeyCodePressed( code );
+		BaseClass::OnKeyCodePressed(code);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: The CS background is painted by image panels, so we should do nothing
 //-----------------------------------------------------------------------------
-void CCSTextWindow::PaintBackground()
-{
-}
+void CCSTextWindow::PaintBackground() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale / center the window
@@ -130,16 +126,16 @@ void CCSTextWindow::PerformLayout()
 	BaseClass::PerformLayout();
 
 	// stretch the window to fullscreen
-	if ( !m_backgroundLayoutFinished )
-		LayoutBackgroundPanel( this );
+	if(!m_backgroundLayoutFinished)
+		LayoutBackgroundPanel(this);
 	m_backgroundLayoutFinished = true;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CCSTextWindow::ApplySchemeSettings( vgui::IScheme *pScheme )
+void CCSTextWindow::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
-	ApplyBackgroundSchemeSettings( this, pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
+	ApplyBackgroundSchemeSettings(this, pScheme);
 }

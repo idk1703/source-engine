@@ -7,7 +7,6 @@ VertexCache::VertexCache()
 	VertexCache(16);
 }
 
-
 VertexCache::VertexCache(int size)
 {
 	numEntries = size;
@@ -18,24 +17,20 @@ VertexCache::VertexCache(int size)
 		entries[i] = -1;
 }
 
-
 VertexCache::~VertexCache()
 {
 	delete[] entries;
 }
-
 
 int VertexCache::At(int index)
 {
 	return entries[index];
 }
 
-
 void VertexCache::Set(int index, int value)
 {
 	entries[index] = value;
 }
-
 
 void VertexCache::Clear()
 {
@@ -43,7 +38,7 @@ void VertexCache::Clear()
 		entries[i] = -1;
 }
 
-void VertexCache::Copy(VertexCache* inVcache)
+void VertexCache::Copy(VertexCache *inVcache)
 {
 	for(int i = 0; i < numEntries; i++)
 	{
@@ -67,14 +62,13 @@ bool VertexCache::InCache(int entry)
 	return returnVal;
 }
 
-
 int VertexCache::AddEntry(int entry)
 {
 	int removed;
 
 	removed = entries[numEntries - 1];
 
-	//push everything right one
+	// push everything right one
 	for(int i = numEntries - 2; i >= 0; i--)
 	{
 		entries[i + 1] = entries[i];

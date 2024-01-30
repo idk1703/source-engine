@@ -11,48 +11,38 @@
 #include "engine/IEngineSound.h"
 #include "weapon_flashbang.h"
 
-
 #ifdef CLIENT_DLL
-
 
 #else
 
-	#include "cs_player.h"
-	#include "items.h"
-	#include "flashbang_projectile.h"
+#include "cs_player.h"
+#include "items.h"
+#include "flashbang_projectile.h"
 
 #endif
 
+#define GRENADE_TIMER 3.0f // Seconds
 
-#define GRENADE_TIMER	3.0f //Seconds
-
-
-
-IMPLEMENT_NETWORKCLASS_ALIASED( Flashbang, DT_Flashbang )
+IMPLEMENT_NETWORKCLASS_ALIASED(Flashbang, DT_Flashbang)
 
 BEGIN_NETWORK_TABLE(CFlashbang, DT_Flashbang)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CFlashbang )
+BEGIN_PREDICTION_DATA(CFlashbang)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( weapon_flashbang, CFlashbang );
-PRECACHE_WEAPON_REGISTER( weapon_flashbang );
-
+LINK_ENTITY_TO_CLASS(weapon_flashbang, CFlashbang);
+PRECACHE_WEAPON_REGISTER(weapon_flashbang);
 
 #ifndef CLIENT_DLL
 
-	BEGIN_DATADESC( CFlashbang )
-	END_DATADESC()
+BEGIN_DATADESC(CFlashbang)
+END_DATADESC()
 
-	void CFlashbang::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse, CBasePlayer *pPlayer )
-	{
-		CFlashbangProjectile::Create(
-			vecSrc,
-			vecAngles,
-			vecVel,
-			angImpulse,
-			pPlayer );
-	}
+void CFlashbang::EmitGrenade(Vector vecSrc, QAngle vecAngles, Vector vecVel, AngularImpulse angImpulse,
+							 CBasePlayer *pPlayer)
+{
+	CFlashbangProjectile::Create(vecSrc, vecAngles, vecVel, angImpulse, pPlayer);
+}
 
 #endif

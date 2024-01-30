@@ -31,80 +31,80 @@
 //
 // Weapon Jar tables.
 //
-IMPLEMENT_NETWORKCLASS_ALIASED( TFJar, DT_TFWeaponJar )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFJar, DT_TFWeaponJar)
 
-BEGIN_NETWORK_TABLE( CTFJar, DT_TFWeaponJar )
+BEGIN_NETWORK_TABLE(CTFJar, DT_TFWeaponJar)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFJar )
+BEGIN_PREDICTION_DATA(CTFJar)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_jar, CTFJar );
-PRECACHE_WEAPON_REGISTER( tf_weapon_jar );
+LINK_ENTITY_TO_CLASS(tf_weapon_jar, CTFJar);
+PRECACHE_WEAPON_REGISTER(tf_weapon_jar);
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFJarMilk, DT_TFWeaponJarMilk )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFJarMilk, DT_TFWeaponJarMilk)
 
-BEGIN_NETWORK_TABLE( CTFJarMilk, DT_TFWeaponJarMilk )
+BEGIN_NETWORK_TABLE(CTFJarMilk, DT_TFWeaponJarMilk)
 END_NETWORK_TABLE()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_jar_milk, CTFJarMilk );
-PRECACHE_WEAPON_REGISTER( tf_weapon_jar_milk );
+LINK_ENTITY_TO_CLASS(tf_weapon_jar_milk, CTFJarMilk);
+PRECACHE_WEAPON_REGISTER(tf_weapon_jar_milk);
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFCleaver, DT_TFWeaponCleaver )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFCleaver, DT_TFWeaponCleaver)
 
-BEGIN_NETWORK_TABLE( CTFCleaver, DT_TFWeaponCleaver )
+BEGIN_NETWORK_TABLE(CTFCleaver, DT_TFWeaponCleaver)
 END_NETWORK_TABLE()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_cleaver, CTFCleaver );
-PRECACHE_WEAPON_REGISTER( tf_weapon_cleaver );
+LINK_ENTITY_TO_CLASS(tf_weapon_cleaver, CTFCleaver);
+PRECACHE_WEAPON_REGISTER(tf_weapon_cleaver);
 
 // Projectile tables.
-IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_Jar, DT_TFProjectile_Jar )
-BEGIN_NETWORK_TABLE( CTFProjectile_Jar, DT_TFProjectile_Jar )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFProjectile_Jar, DT_TFProjectile_Jar)
+BEGIN_NETWORK_TABLE(CTFProjectile_Jar, DT_TFProjectile_Jar)
 END_NETWORK_TABLE()
 
-LINK_ENTITY_TO_CLASS( tf_projectile_jar, CTFProjectile_Jar );
-PRECACHE_WEAPON_REGISTER( tf_projectile_jar );
+LINK_ENTITY_TO_CLASS(tf_projectile_jar, CTFProjectile_Jar);
+PRECACHE_WEAPON_REGISTER(tf_projectile_jar);
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_JarMilk, DT_TFProjectile_JarMilk )
-BEGIN_NETWORK_TABLE( CTFProjectile_JarMilk, DT_TFProjectile_JarMilk )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFProjectile_JarMilk, DT_TFProjectile_JarMilk)
+BEGIN_NETWORK_TABLE(CTFProjectile_JarMilk, DT_TFProjectile_JarMilk)
 END_NETWORK_TABLE()
 
-LINK_ENTITY_TO_CLASS( tf_projectile_jar_milk, CTFProjectile_JarMilk );
-PRECACHE_WEAPON_REGISTER( tf_projectile_jar_milk );
+LINK_ENTITY_TO_CLASS(tf_projectile_jar_milk, CTFProjectile_JarMilk);
+PRECACHE_WEAPON_REGISTER(tf_projectile_jar_milk);
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFProjectile_Cleaver, DT_TFProjectile_Cleaver )
-BEGIN_NETWORK_TABLE( CTFProjectile_Cleaver, DT_TFProjectile_Cleaver )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFProjectile_Cleaver, DT_TFProjectile_Cleaver)
+BEGIN_NETWORK_TABLE(CTFProjectile_Cleaver, DT_TFProjectile_Cleaver)
 END_NETWORK_TABLE()
 
-LINK_ENTITY_TO_CLASS( tf_projectile_cleaver, CTFProjectile_Cleaver );
-PRECACHE_WEAPON_REGISTER( tf_projectile_cleaver );
+LINK_ENTITY_TO_CLASS(tf_projectile_cleaver, CTFProjectile_Cleaver);
+PRECACHE_WEAPON_REGISTER(tf_projectile_cleaver);
 
-#define TF_JAR_LAUNCH_SPEED		1000.f
-#define TF_CLEAVER_LAUNCH_SPEED		7000.f
-#define TF_WEAPON_PEEJAR_MODEL	"models/weapons/c_models/urinejar.mdl"
-#define TF_WEAPON_FESTIVE_PEEJAR_MODEL	"models/weapons/c_models/c_xms_urinejar.mdl"
+#define TF_JAR_LAUNCH_SPEED			   1000.f
+#define TF_CLEAVER_LAUNCH_SPEED		   7000.f
+#define TF_WEAPON_PEEJAR_MODEL		   "models/weapons/c_models/urinejar.mdl"
+#define TF_WEAPON_FESTIVE_PEEJAR_MODEL "models/weapons/c_models/c_xms_urinejar.mdl"
 #ifdef STAGING_ONLY
-#define TF_WEAPON_MILKJAR_MODEL	"models/workshop/weapons/c_models/c_madmilk/c_madmilk.mdl"
-#define TF_WEAPON_CLEAVER_MODEL	"models/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
+#define TF_WEAPON_MILKJAR_MODEL "models/workshop/weapons/c_models/c_madmilk/c_madmilk.mdl"
+#define TF_WEAPON_CLEAVER_MODEL "models/workshop_partner/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
 #else
-#define TF_WEAPON_MILKJAR_MODEL	"models/weapons/c_models/c_madmilk/c_madmilk.mdl"
-#define TF_WEAPON_CLEAVER_MODEL	"models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
+#define TF_WEAPON_MILKJAR_MODEL "models/weapons/c_models/c_madmilk/c_madmilk.mdl"
+#define TF_WEAPON_CLEAVER_MODEL "models/weapons/c_models/c_sd_cleaver/c_sd_cleaver.mdl"
 #endif
-#define TF_WEAPON_PEEJAR_EXPLODE_SOUND	"Jar.Explode"
-#define TF_WEAPON_CLEAVER_IMPACT_FLESH_SOUND	"Cleaver.ImpactFlesh"
-#define TF_WEAPON_CLEAVER_IMPACT_WORLD_SOUND	"Cleaver.ImpactWorld"
+#define TF_WEAPON_PEEJAR_EXPLODE_SOUND		 "Jar.Explode"
+#define TF_WEAPON_CLEAVER_IMPACT_FLESH_SOUND "Cleaver.ImpactFlesh"
+#define TF_WEAPON_CLEAVER_IMPACT_WORLD_SOUND "Cleaver.ImpactWorld"
 
 #ifdef STAGING_ONLY
-#define TF_WEAPON_WATER_BALLOON_KILL_SOUND		"Game.PenetrationKill"
-#define TF_WEAPON_WATER_BALLOON_HIT_SOUND		"Weapon_waterbomb.hit"
-#define TF_WEAPON_WATER_BALLOON_SCORE_SOUND		"Weapon_waterbomb.score"
+#define TF_WEAPON_WATER_BALLOON_KILL_SOUND	"Game.PenetrationKill"
+#define TF_WEAPON_WATER_BALLOON_HIT_SOUND	"Weapon_waterbomb.hit"
+#define TF_WEAPON_WATER_BALLOON_SCORE_SOUND "Weapon_waterbomb.score"
 
-#define TF_BREAD_MODEL			"models/props_gameplay/small_loaf.mdl"
+#define TF_BREAD_MODEL "models/props_gameplay/small_loaf.mdl"
 
-#define TF_WATERBALLOON_RADIUS				32
-#define TF_WATERBALLOON_CHARGEDRADIUS		64
-#define TF_WATERBALLOON_EXPLODE_SOUND		"Weapon_waterbomb.explode"
+#define TF_WATERBALLOON_RADIUS		  32
+#define TF_WATERBALLOON_CHARGEDRADIUS 64
+#define TF_WATERBALLOON_EXPLODE_SOUND "Weapon_waterbomb.explode"
 #endif
 
 //=============================================================================
@@ -115,11 +115,9 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_cleaver );
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFJar::CTFJar()
-{
-}
+CTFJar::CTFJar() {}
 
-float CTFJar::GetProjectileSpeed( void )
+float CTFJar::GetProjectileSpeed(void)
 {
 	return TF_JAR_LAUNCH_SPEED;
 }
@@ -127,17 +125,17 @@ float CTFJar::GetProjectileSpeed( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFJar::PrimaryAttack( void )
+void CTFJar::PrimaryAttack(void)
 {
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
-	int iJarCount = pPlayer->GetAmmoCount( m_iPrimaryAmmoType );
-	if ( iJarCount == 0 )
+	int iJarCount = pPlayer->GetAmmoCount(m_iPrimaryAmmoType);
+	if(iJarCount == 0)
 		return;
 
-	if ( ( pPlayer->GetWaterLevel() == WL_Eyes ) && !CanThrowUnderWater() )
+	if((pPlayer->GetWaterLevel() == WL_Eyes) && !CanThrowUnderWater())
 		return;
 
 	BaseClass::PrimaryAttack();
@@ -146,10 +144,10 @@ void CTFJar::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CBaseEntity *CTFJar::FireJar( CTFPlayer *pPlayer )
+CBaseEntity *CTFJar::FireJar(CTFPlayer *pPlayer)
 {
 	StartEffectBarRegen();
-	SetContextThink( &CTFJar::TossJarThink, gpGlobals->curtime + 0.1f, "TOSS_JAR_THINK" );
+	SetContextThink(&CTFJar::TossJarThink, gpGlobals->curtime + 0.1f, "TOSS_JAR_THINK");
 
 	return NULL;
 }
@@ -158,28 +156,29 @@ CBaseEntity *CTFJar::FireJar( CTFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_Jar *CTFJar::CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity,
-												   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
+CTFProjectile_Jar *CTFJar::CreateJarProjectile(const Vector &position, const QAngle &angles, const Vector &velocity,
+											   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner,
+											   const CTFWeaponInfo &weaponInfo)
 {
-	return CTFProjectile_Jar::Create( position, angles, velocity, angVelocity, pOwner, weaponInfo );
+	return CTFProjectile_Jar::Create(position, angles, velocity, angVelocity, pOwner, weaponInfo);
 }
 #endif
 
 #ifdef GAME_DLL
-Vector CTFJar::GetVelocityVector( const Vector &vecForward, const Vector &vecRight, const Vector &vecUp )
+Vector CTFJar::GetVelocityVector(const Vector &vecForward, const Vector &vecRight, const Vector &vecUp)
 {
-	return ( ( vecForward * GetProjectileSpeed() ) + ( vecUp * 200.0f ) + ( random->RandomFloat( -10.0f, 10.0f ) * vecRight ) +
-		( random->RandomFloat( -10.0f, 10.0f ) * vecUp ) );
+	return ((vecForward * GetProjectileSpeed()) + (vecUp * 200.0f) + (random->RandomFloat(-10.0f, 10.0f) * vecRight) +
+			(random->RandomFloat(-10.0f, 10.0f) * vecUp));
 }
 #endif
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFJar::TossJarThink( void )
+void CTFJar::TossJarThink(void)
 {
 	CTFPlayer *pPlayer = GetTFPlayerOwner();
-	if ( !pPlayer )
+	if(!pPlayer)
 		return;
 
 	PlayWeaponShootSound();
@@ -187,52 +186,52 @@ void CTFJar::TossJarThink( void )
 #ifdef GAME_DLL
 
 	Vector vecForward, vecRight, vecUp;
-	AngleVectors( pPlayer->EyeAngles(), &vecForward, &vecRight, &vecUp );
+	AngleVectors(pPlayer->EyeAngles(), &vecForward, &vecRight, &vecUp);
 
 	float fRight = 8.f;
-	if ( IsViewModelFlipped() )
+	if(IsViewModelFlipped())
 	{
 		fRight *= -1;
 	}
 	Vector vecSrc = pPlayer->Weapon_ShootPosition();
-	vecSrc +=  vecForward * 16.0f + vecRight * fRight + vecUp * -6.0f;
+	vecSrc += vecForward * 16.0f + vecRight * fRight + vecUp * -6.0f;
 
 	trace_t trace;
 	Vector vecEye = pPlayer->EyePosition();
-	CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
-	UTIL_TraceHull( vecEye, vecSrc, -Vector(8,8,8), Vector(8,8,8), MASK_SOLID_BRUSHONLY, &traceFilter, &trace );
+	CTraceFilterSimple traceFilter(this, COLLISION_GROUP_NONE);
+	UTIL_TraceHull(vecEye, vecSrc, -Vector(8, 8, 8), Vector(8, 8, 8), MASK_SOLID_BRUSHONLY, &traceFilter, &trace);
 
 	// If we started in solid, don't let them fire at all
-	if ( trace.startsolid )
+	if(trace.startsolid)
 		return;
 
-	Vector vecVelocity = GetVelocityVector( vecForward, vecRight, vecUp );
+	Vector vecVelocity = GetVelocityVector(vecForward, vecRight, vecUp);
 
-	CTFProjectile_Jar *pProjectile = CreateJarProjectile( trace.endpos, pPlayer->EyeAngles(), vecVelocity,
-		GetAngularImpulse(), pPlayer, GetTFWpnData() );
+	CTFProjectile_Jar *pProjectile = CreateJarProjectile(trace.endpos, pPlayer->EyeAngles(), vecVelocity,
+														 GetAngularImpulse(), pPlayer, GetTFWpnData());
 
-	if ( pProjectile )
+	if(pProjectile)
 	{
-		pProjectile->SetCritical( IsCurrentAttackACrit() );
-		pProjectile->SetLauncher( this );
+		pProjectile->SetCritical(IsCurrentAttackACrit());
+		pProjectile->SetLauncher(this);
 	}
 
-	if ( ShouldSpeakWhenFiring() )
+	if(ShouldSpeakWhenFiring())
 	{
-		pPlayer->SpeakWeaponFire( MP_CONCEPT_JARATE_LAUNCH );
+		pPlayer->SpeakWeaponFire(MP_CONCEPT_JARATE_LAUNCH);
 	}
 
 #endif
 }
 //-----------------------------------------------------------------------------
-void CTFJar::GetProjectileEntityName( CAttribute_String *attrProjectileEntityName )
+void CTFJar::GetProjectileEntityName(CAttribute_String *attrProjectileEntityName)
 {
-	static CSchemaAttributeDefHandle pAttrDef_ProjectileEntityName( "projectile entity name" );
+	static CSchemaAttributeDefHandle pAttrDef_ProjectileEntityName("projectile entity name");
 	CEconItemView *pItem = GetAttributeContainer()->GetItem();
-	if ( pAttrDef_ProjectileEntityName && pItem )
+	if(pAttrDef_ProjectileEntityName && pItem)
 	{
-		//CAttribute_String attrProjectileEntityName;
-		pItem->FindAttribute( pAttrDef_ProjectileEntityName, attrProjectileEntityName );
+		// CAttribute_String attrProjectileEntityName;
+		pItem->FindAttribute(pAttrDef_ProjectileEntityName, attrProjectileEntityName);
 	}
 }
 
@@ -243,7 +242,7 @@ void CTFJar::GetProjectileEntityName( CAttribute_String *attrProjectileEntityNam
 //-----------------------------------------------------------------------------
 CTFProjectile_Jar::CTFProjectile_Jar()
 {
-	m_vCollisionVelocity = Vector( 0,0,0 );
+	m_vCollisionVelocity = Vector(0, 0, 0);
 	m_iProjectileType = TF_PROJECTILE_JAR;
 }
 
@@ -252,11 +251,11 @@ CTFProjectile_Jar::CTFProjectile_Jar()
 //-----------------------------------------------------------------------------
 void CTFProjectile_Jar::Precache()
 {
-	PrecacheModel( TF_WEAPON_PEEJAR_MODEL );
-	PrecacheModel( TF_WEAPON_FESTIVE_PEEJAR_MODEL );
-	PrecacheModel( "models/weapons/c_models/c_breadmonster/c_breadmonster.mdl" );
+	PrecacheModel(TF_WEAPON_PEEJAR_MODEL);
+	PrecacheModel(TF_WEAPON_FESTIVE_PEEJAR_MODEL);
+	PrecacheModel("models/weapons/c_models/c_breadmonster/c_breadmonster.mdl");
 
-	PrecacheScriptSound( TF_WEAPON_PEEJAR_EXPLODE_SOUND );
+	PrecacheScriptSound(TF_WEAPON_PEEJAR_EXPLODE_SOUND);
 	BaseClass::Precache();
 }
 
@@ -267,200 +266,198 @@ void CTFProjectile_Jar::SetCustomPipebombModel()
 {
 	// Check for Model Override
 	int iProjectile = 0;
-	CTFPlayer *pThrower = ToTFPlayer( GetThrower() );
-	if ( pThrower && pThrower->GetActiveWeapon() )
+	CTFPlayer *pThrower = ToTFPlayer(GetThrower());
+	if(pThrower && pThrower->GetActiveWeapon())
 	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pThrower->GetActiveWeapon(), iProjectile, override_projectile_type );
-		switch ( iProjectile )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pThrower->GetActiveWeapon(), iProjectile, override_projectile_type);
+		switch(iProjectile)
 		{
-		case TF_PROJECTILE_FESTIVE_JAR :
-			m_iProjectileType = iProjectile;
-			SetModel( TF_WEAPON_FESTIVE_PEEJAR_MODEL );
-			return;
-		case TF_PROJECTILE_BREADMONSTER_JARATE:
-		case TF_PROJECTILE_BREADMONSTER_MADMILK:
-			m_iProjectileType = iProjectile;
-			SetModel( "models/weapons/c_models/c_breadmonster/c_breadmonster.mdl" );
-			return;
+			case TF_PROJECTILE_FESTIVE_JAR:
+				m_iProjectileType = iProjectile;
+				SetModel(TF_WEAPON_FESTIVE_PEEJAR_MODEL);
+				return;
+			case TF_PROJECTILE_BREADMONSTER_JARATE:
+			case TF_PROJECTILE_BREADMONSTER_MADMILK:
+				m_iProjectileType = iProjectile;
+				SetModel("models/weapons/c_models/c_breadmonster/c_breadmonster.mdl");
+				return;
 		}
 	}
 
-	SetModel( TF_WEAPON_PEEJAR_MODEL );
+	SetModel(TF_WEAPON_PEEJAR_MODEL);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_Jar* CTFProjectile_Jar::Create( const Vector &position, const QAngle &angles,
-												const Vector &velocity, const AngularImpulse &angVelocity,
-												CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
+CTFProjectile_Jar *CTFProjectile_Jar::Create(const Vector &position, const QAngle &angles, const Vector &velocity,
+											 const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner,
+											 const CTFWeaponInfo &weaponInfo)
 {
-	CTFProjectile_Jar *pGrenade = static_cast<CTFProjectile_Jar*>( CBaseEntity::CreateNoSpawn( "tf_projectile_jar", position, angles, pOwner ) );
-	if ( pGrenade )
+	CTFProjectile_Jar *pGrenade =
+		static_cast<CTFProjectile_Jar *>(CBaseEntity::CreateNoSpawn("tf_projectile_jar", position, angles, pOwner));
+	if(pGrenade)
 	{
 		// Set the pipebomb mode before calling spawn, so the model & associated vphysics get setup properly.
 		pGrenade->SetPipebombMode();
-		DispatchSpawn( pGrenade );
+		DispatchSpawn(pGrenade);
 
-		pGrenade->InitGrenade( velocity, angVelocity, pOwner, weaponInfo );
+		pGrenade->InitGrenade(velocity, angVelocity, pOwner, weaponInfo);
 
 #ifdef _X360
-		if ( pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE )
+		if(pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE)
 		{
-			pGrenade->SetDamage( TF_WEAPON_GRENADE_XBOX_DAMAGE );
+			pGrenade->SetDamage(TF_WEAPON_GRENADE_XBOX_DAMAGE);
 		}
 #endif
 		pGrenade->m_flFullDamage = 0;
 
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
+		pGrenade->ApplyLocalAngularVelocityImpulse(angVelocity);
 	}
 
 	return pGrenade;
 }
 
-extern void ExtinguishPlayer( CEconEntity *pExtinguisher, CTFPlayer *pOwner, CTFPlayer *pTarget, const char *pExtinguisherName );
+extern void ExtinguishPlayer(CEconEntity *pExtinguisher, CTFPlayer *pOwner, CTFPlayer *pTarget,
+							 const char *pExtinguisherName);
 
-void JarExplode( int iEntIndex, CTFPlayer *pAttacker, CBaseEntity *pOriginalWeapon, CBaseEntity *pWeapon, const Vector& vContactPoint, int iTeam, float flRadius, ETFCond cond, float flDuration, const char *pszImpactEffect )
+void JarExplode(int iEntIndex, CTFPlayer *pAttacker, CBaseEntity *pOriginalWeapon, CBaseEntity *pWeapon,
+				const Vector &vContactPoint, int iTeam, float flRadius, ETFCond cond, float flDuration,
+				const char *pszImpactEffect)
 {
 	// Splash!
-	CPVSFilter particleFilter( vContactPoint );
-	TE_TFParticleEffect( particleFilter, 0.0, pszImpactEffect, vContactPoint, vec3_angle );
+	CPVSFilter particleFilter(vContactPoint);
+	TE_TFParticleEffect(particleFilter, 0.0, pszImpactEffect, vContactPoint, vec3_angle);
 
 	// Explosion effect.
 	CBroadcastRecipientFilter soundFilter;
 	Vector vecOrigin = vContactPoint;
-	CBaseEntity::EmitSound( soundFilter, iEntIndex, TF_WEAPON_PEEJAR_EXPLODE_SOUND, &vecOrigin );
+	CBaseEntity::EmitSound(soundFilter, iEntIndex, TF_WEAPON_PEEJAR_EXPLODE_SOUND, &vecOrigin);
 
 	// Treat this trace exactly like radius damage
-	CTraceFilterIgnorePlayers traceFilter( pAttacker, COLLISION_GROUP_PROJECTILE );
+	CTraceFilterIgnorePlayers traceFilter(pAttacker, COLLISION_GROUP_PROJECTILE);
 
 	// Splash pee on everyone nearby.
 	CBaseEntity *pListOfEntities[32];
-	int iEntities = UTIL_EntitiesInSphere( pListOfEntities, 32, vContactPoint, flRadius, FL_CLIENT );
-	for ( int i = 0; i < iEntities; ++i )
+	int iEntities = UTIL_EntitiesInSphere(pListOfEntities, 32, vContactPoint, flRadius, FL_CLIENT);
+	for(int i = 0; i < iEntities; ++i)
 	{
-		CTFPlayer *pPlayer = ToTFPlayer( pListOfEntities[i] );
+		CTFPlayer *pPlayer = ToTFPlayer(pListOfEntities[i]);
 
-		if ( !pPlayer || !pPlayer->IsAlive() )
+		if(!pPlayer || !pPlayer->IsAlive())
 			continue;
 
 		// Do a quick trace to see if there's any geometry in the way.
 		// Pee isn't stopped by other entities. Splishy splashy.
 		trace_t trace;
-		UTIL_TraceLine( vContactPoint, pPlayer->GetAbsOrigin(), ( MASK_SHOT & ~( CONTENTS_HITBOX ) ), &traceFilter, &trace );
-		if ( trace.DidHitWorld() )
+		UTIL_TraceLine(vContactPoint, pPlayer->GetAbsOrigin(), (MASK_SHOT & ~(CONTENTS_HITBOX)), &traceFilter, &trace);
+		if(trace.DidHitWorld())
 			continue;
 
 		// Drench the target.
-		if ( pPlayer->GetTeamNumber() != iTeam )
+		if(pPlayer->GetTeamNumber() != iTeam)
 		{
-			if ( pPlayer->m_Shared.IsInvulnerable() )
+			if(pPlayer->m_Shared.IsInvulnerable())
 				continue;
 
-			if ( pPlayer->m_Shared.InCond( TF_COND_PHASE ) || pPlayer->m_Shared.InCond( TF_COND_PASSTIME_INTERCEPTION ) )
+			if(pPlayer->m_Shared.InCond(TF_COND_PHASE) || pPlayer->m_Shared.InCond(TF_COND_PASSTIME_INTERCEPTION))
 				continue;
 
-			if ( !pPlayer->CanGetWet() )
+			if(!pPlayer->CanGetWet())
 				continue;
 
-			pPlayer->m_Shared.AddCond( cond, flDuration, pAttacker );
-			pPlayer->m_Shared.SetPeeAttacker( pAttacker );
-			pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_JARATE_HIT );
+			pPlayer->m_Shared.AddCond(cond, flDuration, pAttacker);
+			pPlayer->m_Shared.SetPeeAttacker(pAttacker);
+			pPlayer->SpeakConceptIfAllowed(MP_CONCEPT_JARATE_HIT);
 
-			if ( pAttacker )
+			if(pAttacker)
 			{
-				if ( pPlayer->IsPlayerClass( TF_CLASS_SPY ) && pPlayer->m_Shared.GetPercentInvisible() == 1.0f )
+				if(pPlayer->IsPlayerClass(TF_CLASS_SPY) && pPlayer->m_Shared.GetPercentInvisible() == 1.0f)
 				{
-					pAttacker->AwardAchievement( ACHIEVEMENT_TF_SNIPER_JARATE_REVEAL_SPY );
+					pAttacker->AwardAchievement(ACHIEVEMENT_TF_SNIPER_JARATE_REVEAL_SPY);
 				}
 
 				float flStun = 1.0f;
-				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pAttacker, flStun, applies_snare_effect );
-				if ( flStun != 1.0f )
+				CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pAttacker, flStun, applies_snare_effect);
+				if(flStun != 1.0f)
 				{
-					pPlayer->m_Shared.StunPlayer( flDuration, flStun, TF_STUN_MOVEMENT, pAttacker );
+					pPlayer->m_Shared.StunPlayer(flDuration, flStun, TF_STUN_MOVEMENT, pAttacker);
 				}
 
 				// Stats tracking?
-				if ( cond == TF_COND_URINE || cond == TF_COND_MAD_MILK )
+				if(cond == TF_COND_URINE || cond == TF_COND_MAD_MILK)
 				{
-					if ( TFGameRules() && TFGameRules()->IsPVEModeActive() )
+					if(TFGameRules() && TFGameRules()->IsPVEModeActive())
 					{
-						// These if statements are intentionally split to avoid falling through to the normal kKillEaterEvent_PeeVictims event if we're in
-						// IsPVEModeActive() but not a robot, or don't have the stun.
-						if ( pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS && flStun != 1.0f )
+						// These if statements are intentionally split to avoid falling through to the normal
+						// kKillEaterEvent_PeeVictims event if we're in IsPVEModeActive() but not a robot, or don't have
+						// the stun.
+						if(pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS && flStun != 1.0f)
 						{
-							EconEntity_OnOwnerKillEaterEvent( dynamic_cast<CEconEntity *>( pWeapon ), pAttacker, pPlayer, kKillEaterEvent_RobotsSlowed );
+							EconEntity_OnOwnerKillEaterEvent(dynamic_cast<CEconEntity *>(pWeapon), pAttacker, pPlayer,
+															 kKillEaterEvent_RobotsSlowed);
 						}
 					}
 					else
 					{
-						EconEntity_OnOwnerKillEaterEvent( dynamic_cast<CEconEntity *>( pWeapon ), pAttacker, pPlayer, kKillEaterEvent_PeeVictims );
+						EconEntity_OnOwnerKillEaterEvent(dynamic_cast<CEconEntity *>(pWeapon), pAttacker, pPlayer,
+														 kKillEaterEvent_PeeVictims);
 					}
 				}
 
 				// Tell the clients involved in the jarate
 				CRecipientFilter involved_filter;
-				involved_filter.AddRecipient( pPlayer );
-				involved_filter.AddRecipient( pAttacker );
-				UserMessageBegin( involved_filter, "PlayerJarated" );
-					WRITE_BYTE( pAttacker->entindex() );
-					WRITE_BYTE( pPlayer->entindex() );
+				involved_filter.AddRecipient(pPlayer);
+				involved_filter.AddRecipient(pAttacker);
+				UserMessageBegin(involved_filter, "PlayerJarated");
+				WRITE_BYTE(pAttacker->entindex());
+				WRITE_BYTE(pPlayer->entindex());
 				MessageEnd();
 
 				const char *pszEvent = NULL;
-				switch( cond )
+				switch(cond)
 				{
-				case TF_COND_URINE:
-					pszEvent = "jarate_attack";
-					break;
-				case TF_COND_MAD_MILK:
-					pszEvent = "milk_attack";
-					break;
+					case TF_COND_URINE:
+						pszEvent = "jarate_attack";
+						break;
+					case TF_COND_MAD_MILK:
+						pszEvent = "milk_attack";
+						break;
 				}
 
-				if ( pszEvent && pszEvent[0] )
+				if(pszEvent && pszEvent[0])
 				{
-					UTIL_LogPrintf( "\"%s<%i><%s><%s>\" triggered \"%s\" against \"%s<%i><%s><%s>\" with \"%s\" (attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",
-						pAttacker->GetPlayerName(),
-						pAttacker->GetUserID(),
-						pAttacker->GetNetworkIDString(),
-						pAttacker->GetTeam()->GetName(),
-						pszEvent,
-						pPlayer->GetPlayerName(),
-						pPlayer->GetUserID(),
-						pPlayer->GetNetworkIDString(),
-						pPlayer->GetTeam()->GetName(),
-						"tf_weapon_jar",
-						(int)pAttacker->GetAbsOrigin().x,
-						(int)pAttacker->GetAbsOrigin().y,
-						(int)pAttacker->GetAbsOrigin().z,
-						(int)pPlayer->GetAbsOrigin().x,
-						(int)pPlayer->GetAbsOrigin().y,
-						(int)pPlayer->GetAbsOrigin().z );
+					UTIL_LogPrintf("\"%s<%i><%s><%s>\" triggered \"%s\" against \"%s<%i><%s><%s>\" with \"%s\" "
+								   "(attacker_position \"%d %d %d\") (victim_position \"%d %d %d\")\n",
+								   pAttacker->GetPlayerName(), pAttacker->GetUserID(), pAttacker->GetNetworkIDString(),
+								   pAttacker->GetTeam()->GetName(), pszEvent, pPlayer->GetPlayerName(),
+								   pPlayer->GetUserID(), pPlayer->GetNetworkIDString(), pPlayer->GetTeam()->GetName(),
+								   "tf_weapon_jar", (int)pAttacker->GetAbsOrigin().x, (int)pAttacker->GetAbsOrigin().y,
+								   (int)pAttacker->GetAbsOrigin().z, (int)pPlayer->GetAbsOrigin().x,
+								   (int)pPlayer->GetAbsOrigin().y, (int)pPlayer->GetAbsOrigin().z);
 				}
 			}
 		}
 		else
 		{
-			if ( pAttacker && pPlayer->m_Shared.InCond( TF_COND_BURNING ) )
+			if(pAttacker && pPlayer->m_Shared.InCond(TF_COND_BURNING))
 			{
-				ExtinguishPlayer( dynamic_cast<CEconEntity *>( pWeapon ), pAttacker, pPlayer, "tf_weapon_jar" );
+				ExtinguishPlayer(dynamic_cast<CEconEntity *>(pWeapon), pAttacker, pPlayer, "tf_weapon_jar");
 
 				// Return some percentage of the jar to the thrown weapon if extinguishing an ally
-				auto pLauncher = dynamic_cast< CTFWeaponBase* >( pOriginalWeapon );
-				if ( pLauncher && pAttacker != pPlayer && pLauncher->HasEffectBarRegeneration() )
+				auto pLauncher = dynamic_cast<CTFWeaponBase *>(pOriginalWeapon);
+				if(pLauncher && pAttacker != pPlayer && pLauncher->HasEffectBarRegeneration())
 				{
 					float fCooldown = 1.0f;
-					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pLauncher, fCooldown, extinguish_reduces_cooldown );
+					CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(pLauncher, fCooldown, extinguish_reduces_cooldown);
 					fCooldown = 1.0f - fCooldown;
-					if ( fCooldown > 0 )
+					if(fCooldown > 0)
 					{
-						if ( pLauncher->GetEffectBarProgress() < fCooldown )
+						if(pLauncher->GetEffectBarProgress() < fCooldown)
 						{
 							float fDuration = pLauncher->GetEffectBarRechargeTime();
 							float fIncrement = fDuration * fCooldown;
-							pLauncher->DecrementBarRegenTime( fIncrement );
+							pLauncher->DecrementBarRegenTime(fIncrement);
 						}
 					}
 				}
@@ -469,57 +466,57 @@ void JarExplode( int iEntIndex, CTFPlayer *pAttacker, CBaseEntity *pOriginalWeap
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::Explode( trace_t *pTrace, int bitsDamageType )
+void CTFProjectile_Jar::Explode(trace_t *pTrace, int bitsDamageType)
 {
-	SetModelName( NULL_STRING );//invisible
-	AddSolidFlags( FSOLID_NOT_SOLID );
+	SetModelName(NULL_STRING); // invisible
+	AddSolidFlags(FSOLID_NOT_SOLID);
 
 	m_takedamage = DAMAGE_NO;
 
 	// Pull out of the wall a bit.
-	if ( pTrace->fraction != 1.0 )
+	if(pTrace->fraction != 1.0)
 	{
-		SetAbsOrigin( pTrace->endpos + ( pTrace->plane.normal * 1.0f ) );
+		SetAbsOrigin(pTrace->endpos + (pTrace->plane.normal * 1.0f));
 	}
 
-	CTFPlayer *pThrower = ToTFPlayer( GetThrower() );
-	JarExplode( entindex(), pThrower, GetOriginalLauncher(), GetLauncher(), GetAbsOrigin(), GetTeamNumber(), GetDamageRadius(), GetEffectCondition(), 10.f, GetImpactEffect() );
+	CTFPlayer *pThrower = ToTFPlayer(GetThrower());
+	JarExplode(entindex(), pThrower, GetOriginalLauncher(), GetLauncher(), GetAbsOrigin(), GetTeamNumber(),
+			   GetDamageRadius(), GetEffectCondition(), 10.f, GetImpactEffect());
 
 	// Debug radius draw.
-	//DrawRadius( GetDamageRadius() );
+	// DrawRadius( GetDamageRadius() );
 
-	SetContextThink( &CBaseGrenade::SUB_Remove, gpGlobals->curtime, "RemoveThink" );
-	SetTouch( NULL );
+	SetContextThink(&CBaseGrenade::SUB_Remove, gpGlobals->curtime, "RemoveThink");
+	SetTouch(NULL);
 
-	AddEffects( EF_NODRAW );
-	SetAbsVelocity( vec3_origin );
+	AddEffects(EF_NODRAW);
+	SetAbsVelocity(vec3_origin);
 }
 
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::PipebombTouch( CBaseEntity *pOther )
+void CTFProjectile_Jar::PipebombTouch(CBaseEntity *pOther)
 {
-	if ( pOther == GetThrower() )
+	if(pOther == GetThrower())
 		return;
 
-	if ( !pOther->IsSolid() || pOther->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) )
+	if(!pOther->IsSolid() || pOther->IsSolidFlagSet(FSOLID_VOLUME_CONTENTS))
 		return;
 
-	if ( !pOther->IsWorld() && !pOther->IsPlayer() )
+	if(!pOther->IsWorld() && !pOther->IsPlayer())
 		return;
 
 	// Don't collide with teammate if we're still in the grace period.
-	if ( pOther->IsPlayer() && pOther->GetTeamNumber() == GetTeamNumber() && !CanCollideWithTeammates() )
+	if(pOther->IsPlayer() && pOther->GetTeamNumber() == GetTeamNumber() && !CanCollideWithTeammates())
 	{
-		// Exception to this rule - if we're a jar or milk, and our potential victim is on fire, then allow collision after all.
-		// If we're a jar or milk, then still allow collision if our potential victim is on fire.
-		if (m_iProjectileType == TF_PROJECTILE_JAR || m_iProjectileType == TF_PROJECTILE_JAR_MILK)
+		// Exception to this rule - if we're a jar or milk, and our potential victim is on fire, then allow collision
+		// after all. If we're a jar or milk, then still allow collision if our potential victim is on fire.
+		if(m_iProjectileType == TF_PROJECTILE_JAR || m_iProjectileType == TF_PROJECTILE_JAR_MILK)
 		{
 			auto victim = ToTFPlayer(pOther);
-			if (!victim->m_Shared.InCond(TF_COND_BURNING))
+			if(!victim->m_Shared.InCond(TF_COND_BURNING))
 			{
 				return;
 			}
@@ -533,81 +530,83 @@ void CTFProjectile_Jar::PipebombTouch( CBaseEntity *pOther )
 	// Handle hitting skybox (disappear).
 	trace_t pTrace;
 	Vector velDir = GetAbsVelocity();
-	if ( velDir.IsZero() && pOther && pOther->IsPlayer() )
+	if(velDir.IsZero() && pOther && pOther->IsPlayer())
 	{
 		velDir = pOther->WorldSpaceCenter() - GetAbsOrigin();
 	}
 
-	VectorNormalize( velDir );
+	VectorNormalize(velDir);
 	Vector vecSpot = GetAbsOrigin() - velDir * 32;
-	UTIL_TraceLine( vecSpot, vecSpot + velDir * 64, MASK_SOLID, this, COLLISION_GROUP_NONE, &pTrace );
+	UTIL_TraceLine(vecSpot, vecSpot + velDir * 64, MASK_SOLID, this, COLLISION_GROUP_NONE, &pTrace);
 
-	if ( pTrace.fraction < 1.0 && pTrace.surface.flags & SURF_SKY )
+	if(pTrace.fraction < 1.0 && pTrace.surface.flags & SURF_SKY)
 	{
-		UTIL_Remove( this );
+		UTIL_Remove(this);
 		return;
 	}
 
 	// If we already touched a surface then we're not exploding on contact anymore.
-	if ( m_bTouched == true )
+	if(m_bTouched == true)
 		return;
 
-	OnHit( pOther );
-	if ( m_iProjectileType == TF_PROJECTILE_BREADMONSTER_JARATE || m_iProjectileType == TF_PROJECTILE_BREADMONSTER_MADMILK )
+	OnHit(pOther);
+	if(m_iProjectileType == TF_PROJECTILE_BREADMONSTER_JARATE ||
+	   m_iProjectileType == TF_PROJECTILE_BREADMONSTER_MADMILK)
 	{
-		OnBreadMonsterHit( pOther, &pTrace );
+		OnBreadMonsterHit(pOther, &pTrace);
 	}
 
-	if ( ExplodesOnHit() )
+	if(ExplodesOnHit())
 	{
 		// Save this entity as enemy, they will take 100% damage if applicable
 		m_hEnemy = pOther;
-		Explode( &pTrace, GetDamageType() );
+		Explode(&pTrace, GetDamageType());
 	}
 }
 
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::OnBreadMonsterHit( CBaseEntity *pOther, trace_t *pTrace )
+void CTFProjectile_Jar::OnBreadMonsterHit(CBaseEntity *pOther, trace_t *pTrace)
 {
-	if ( m_iProjectileType != TF_PROJECTILE_BREADMONSTER_JARATE && m_iProjectileType != TF_PROJECTILE_BREADMONSTER_MADMILK )
+	if(m_iProjectileType != TF_PROJECTILE_BREADMONSTER_JARATE &&
+	   m_iProjectileType != TF_PROJECTILE_BREADMONSTER_MADMILK)
 		return;
 
-	CTFPlayer *pVictim = ToTFPlayer( pOther );
-	if ( !pVictim || pVictim->GetTeamNumber() == GetTeamNumber() )
+	CTFPlayer *pVictim = ToTFPlayer(pOther);
+	if(!pVictim || pVictim->GetTeamNumber() == GetTeamNumber())
 		return;
 
 	// This is a player on the other team, attach a breadmonster
 
-	CTFPlayer *pOwner = ToTFPlayer( GetThrower() );
+	CTFPlayer *pOwner = ToTFPlayer(GetThrower());
 
 	// Attach Breadmonster to Victim
-	CreateStickyAttachmentToTarget( pOwner, pVictim, pTrace );
+	CreateStickyAttachmentToTarget(pOwner, pVictim, pTrace);
 }
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
+void CTFProjectile_Jar::VPhysicsCollision(int index, gamevcollisionevent_t *pEvent)
 {
-	BaseClass::VPhysicsCollision( index, pEvent );
+	BaseClass::VPhysicsCollision(index, pEvent);
 
 	int otherIndex = !index;
 	CBaseEntity *pHitEntity = pEvent->pEntities[otherIndex];
 
-	if ( !pHitEntity )
+	if(!pHitEntity)
 		return;
 
-	if ( pHitEntity->IsWorld() )
+	if(pHitEntity->IsWorld())
 	{
 		OnHitWorld();
 	}
 
 	// Break if we hit the world.
-	bool bIsDynamicProp = ( NULL != dynamic_cast<CDynamicProp *>( pHitEntity ) );
-	if ( ExplodesOnHit() && pHitEntity && ( pHitEntity->IsWorld() || bIsDynamicProp ) )
+	bool bIsDynamicProp = (NULL != dynamic_cast<CDynamicProp *>(pHitEntity));
+	if(ExplodesOnHit() && pHitEntity && (pHitEntity->IsWorld() || bIsDynamicProp))
 	{
 		// Explode immediately next frame. (Can't explode in the collision callback.)
 		m_vCollisionVelocity = pEvent->preVelocity[index];
-		SetContextThink( &CTFProjectile_Jar::VPhysicsCollisionThink, gpGlobals->curtime, "JarCollisionThink" );
+		SetContextThink(&CTFProjectile_Jar::VPhysicsCollisionThink, gpGlobals->curtime, "JarCollisionThink");
 	}
 }
 
@@ -615,91 +614,91 @@ void CTFProjectile_Jar::VPhysicsCollision( int index, gamevcollisionevent_t *pEv
 // Purpose: Handles exploding after a vphysics collision has happened.
 // This prevents changing collision properties during the vphysics callback itself.
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::VPhysicsCollisionThink( void )
+void CTFProjectile_Jar::VPhysicsCollisionThink(void)
 {
-	if ( !ExplodesOnHit() )
+	if(!ExplodesOnHit())
 		return;
 
 	trace_t pTrace;
 	Vector velDir = m_vCollisionVelocity;
-	VectorNormalize( velDir );
+	VectorNormalize(velDir);
 	Vector vecSpot = GetAbsOrigin() - velDir * 16;
-	UTIL_TraceLine( vecSpot, vecSpot + velDir * 32, MASK_SOLID, this, COLLISION_GROUP_NONE, &pTrace );
+	UTIL_TraceLine(vecSpot, vecSpot + velDir * 32, MASK_SOLID, this, COLLISION_GROUP_NONE, &pTrace);
 
-	Explode( &pTrace, GetDamageType() );
+	Explode(&pTrace, GetDamageType());
 }
 
-
 //-----------------------------------------------------------------------------
-bool CTFProjectile_Jar::PositionArrowOnBone( mstudiobbox_t *pBox, CBaseAnimating *pOtherAnim )
+bool CTFProjectile_Jar::PositionArrowOnBone(mstudiobbox_t *pBox, CBaseAnimating *pOtherAnim)
 {
 	CStudioHdr *pStudioHdr = pOtherAnim->GetModelPtr();
-	if ( !pStudioHdr )
+	if(!pStudioHdr)
 		return false;
 
-	mstudiohitboxset_t *set = pStudioHdr->pHitboxSet( pOtherAnim->GetHitboxSet() );
-	if ( !set )
+	mstudiohitboxset_t *set = pStudioHdr->pHitboxSet(pOtherAnim->GetHitboxSet());
+	if(!set)
 		return false;
-	if ( !set->numhitboxes )			// Target must have hit boxes.
+	if(!set->numhitboxes) // Target must have hit boxes.
 		return false;
 
-	if ( pBox->bone < 0 || pBox->bone >= pStudioHdr->numbones() )	// Bone index must be valid.
+	if(pBox->bone < 0 || pBox->bone >= pStudioHdr->numbones()) // Bone index must be valid.
 		return false;
 
 	CBoneCache *pCache = pOtherAnim->GetBoneCache();
-	if ( !pCache )
+	if(!pCache)
 		return false;
 
-	matrix3x4_t *bone_matrix = pCache->GetCachedBone( pBox->bone );
-	if ( !bone_matrix )
+	matrix3x4_t *bone_matrix = pCache->GetCachedBone(pBox->bone);
+	if(!bone_matrix)
 		return false;
 
 	Vector vecBoxAbsMins, vecBoxAbsMaxs;
-	TransformAABB( *bone_matrix, pBox->bbmin, pBox->bbmax, vecBoxAbsMins, vecBoxAbsMaxs );
+	TransformAABB(*bone_matrix, pBox->bbmin, pBox->bbmax, vecBoxAbsMins, vecBoxAbsMaxs);
 
 	// Adjust the arrow so it isn't exactly in the center of the box.
 	Vector position;
 	Vector vecDelta = vecBoxAbsMaxs - vecBoxAbsMins;
 	float frand = (float)rand() / VALVE_RAND_MAX;
-	position.x = vecBoxAbsMins.x + vecDelta.x*0.6f - vecDelta.x*frand*0.2f;
+	position.x = vecBoxAbsMins.x + vecDelta.x * 0.6f - vecDelta.x * frand * 0.2f;
 	frand = (float)rand() / VALVE_RAND_MAX;
-	position.y = vecBoxAbsMins.y + vecDelta.y*0.6f - vecDelta.y*frand*0.2f;
+	position.y = vecBoxAbsMins.y + vecDelta.y * 0.6f - vecDelta.y * frand * 0.2f;
 	frand = (float)rand() / VALVE_RAND_MAX;
-	position.z = vecBoxAbsMins.z + vecDelta.z*0.6f - vecDelta.z*frand*0.2f;
-	SetAbsOrigin( position );
+	position.z = vecBoxAbsMins.z + vecDelta.z * 0.6f - vecDelta.z * frand * 0.2f;
+	SetAbsOrigin(position);
 
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::GetBoneAttachmentInfo( mstudiobbox_t *pBox, CBaseAnimating *pOtherAnim, Vector &bonePosition, QAngle &boneAngles, int &boneIndexAttached, int &physicsBoneIndex )
+void CTFProjectile_Jar::GetBoneAttachmentInfo(mstudiobbox_t *pBox, CBaseAnimating *pOtherAnim, Vector &bonePosition,
+											  QAngle &boneAngles, int &boneIndexAttached, int &physicsBoneIndex)
 {
 	// Find a bone to stick to.
 	matrix3x4_t arrowWorldSpace;
-	MatrixCopy( EntityToWorldTransform(), arrowWorldSpace );
+	MatrixCopy(EntityToWorldTransform(), arrowWorldSpace);
 
 	// Get the bone info so we can follow the bone.
 	boneIndexAttached = pBox->bone;
-	physicsBoneIndex = pOtherAnim->GetPhysicsBone( boneIndexAttached );
+	physicsBoneIndex = pOtherAnim->GetPhysicsBone(boneIndexAttached);
 	matrix3x4_t boneToWorld;
-	pOtherAnim->GetBoneTransform( boneIndexAttached, boneToWorld );
+	pOtherAnim->GetBoneTransform(boneIndexAttached, boneToWorld);
 
 	Vector attachedBonePos;
 	QAngle attachedBoneAngles;
-	pOtherAnim->GetBonePosition( boneIndexAttached, attachedBonePos, attachedBoneAngles );
+	pOtherAnim->GetBonePosition(boneIndexAttached, attachedBonePos, attachedBoneAngles);
 
 	// Transform my current position/orientation into the hit bone's space.
 	matrix3x4_t worldToBone, localMatrix;
-	MatrixInvert( boneToWorld, worldToBone );
-	ConcatTransforms( worldToBone, arrowWorldSpace, localMatrix );
-	MatrixAngles( localMatrix, boneAngles, bonePosition );
+	MatrixInvert(boneToWorld, worldToBone);
+	ConcatTransforms(worldToBone, arrowWorldSpace, localMatrix);
+	MatrixAngles(localMatrix, boneAngles, bonePosition);
 }
 
 //-----------------------------------------------------------------------------
-void CTFProjectile_Jar::CreateStickyAttachmentToTarget( CTFPlayer *pOwner, CTFPlayer *pVictim, trace_t *trace )
+void CTFProjectile_Jar::CreateStickyAttachmentToTarget(CTFPlayer *pOwner, CTFPlayer *pVictim, trace_t *trace)
 {
 	// Dont stick to the sky!
-	if ( trace->surface.flags & SURF_SKY )
+	if(trace->surface.flags & SURF_SKY)
 	{
 		return;
 	}
@@ -708,47 +707,47 @@ void CTFProjectile_Jar::CreateStickyAttachmentToTarget( CTFPlayer *pOwner, CTFPl
 	CStudioHdr *pStudioHdr = NULL;
 	mstudiohitboxset_t *set = NULL;
 	pStudioHdr = pVictim->GetModelPtr();
-	if ( pStudioHdr )
+	if(pStudioHdr)
 	{
-		set = pStudioHdr->pHitboxSet( pVictim->GetHitboxSet() );
+		set = pStudioHdr->pHitboxSet(pVictim->GetHitboxSet());
 	}
 
 	// Look for nearest hitbox
 	mstudiobbox_t *closest_box = NULL;
-	if ( trace->m_pEnt && trace->m_pEnt->GetTeamNumber() != GetTeamNumber() )
+	if(trace->m_pEnt && trace->m_pEnt->GetTeamNumber() != GetTeamNumber())
 	{
-		closest_box = set->pHitbox( trace->hitbox );
+		closest_box = set->pHitbox(trace->hitbox);
 	}
 
-	if ( closest_box )
+	if(closest_box)
 	{
-		if ( !PositionArrowOnBone( closest_box, pVictim ) )
+		if(!PositionArrowOnBone(closest_box, pVictim))
 			return;
 
 		// See if we're supposed to stick in the target.
 		Vector bonePosition = vec3_origin;
-		QAngle boneAngles = QAngle( 0, 0, 0 );
+		QAngle boneAngles = QAngle(0, 0, 0);
 		int boneIndexAttached = -1;
 		int physicsBoneIndex = -1;
 
-		GetBoneAttachmentInfo( closest_box, pVictim, bonePosition, boneAngles, boneIndexAttached, physicsBoneIndex );
+		GetBoneAttachmentInfo(closest_box, pVictim, bonePosition, boneAngles, boneIndexAttached, physicsBoneIndex);
 
-		IGameEvent * event = gameeventmanager->CreateEvent( "arrow_impact" );
-		if ( event )
+		IGameEvent *event = gameeventmanager->CreateEvent("arrow_impact");
+		if(event)
 		{
-			event->SetInt( "attachedEntity", pVictim->entindex() );
-			event->SetInt( "shooter", pOwner->entindex() );
-			event->SetInt( "attachedEntity", pVictim->entindex() );
-			event->SetInt( "boneIndexAttached", boneIndexAttached );
-			event->SetFloat( "bonePositionX", bonePosition.x );
-			event->SetFloat( "bonePositionY", bonePosition.y );
-			event->SetFloat( "bonePositionZ", bonePosition.z );
-			event->SetFloat( "boneAnglesX", boneAngles.x );
-			event->SetFloat( "boneAnglesY", boneAngles.y );
-			event->SetFloat( "boneAnglesZ", boneAngles.z );
-			event->SetInt( "projectileType", GetProjectileType() );
-			event->SetBool( "isCrit", IsCritical() );
-			gameeventmanager->FireEvent( event );
+			event->SetInt("attachedEntity", pVictim->entindex());
+			event->SetInt("shooter", pOwner->entindex());
+			event->SetInt("attachedEntity", pVictim->entindex());
+			event->SetInt("boneIndexAttached", boneIndexAttached);
+			event->SetFloat("bonePositionX", bonePosition.x);
+			event->SetFloat("bonePositionY", bonePosition.y);
+			event->SetFloat("bonePositionZ", bonePosition.z);
+			event->SetFloat("boneAnglesX", boneAngles.x);
+			event->SetFloat("boneAnglesY", boneAngles.y);
+			event->SetFloat("boneAnglesZ", boneAngles.z);
+			event->SetInt("projectileType", GetProjectileType());
+			event->SetBool("isCrit", IsCritical());
+			gameeventmanager->FireEvent(event);
 		}
 	}
 }
@@ -760,9 +759,9 @@ void CTFProjectile_Jar::CreateStickyAttachmentToTarget( CTFPlayer *pOwner, CTFPl
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFProjectile_Jar::GetTrailParticleName( void )
+const char *CTFProjectile_Jar::GetTrailParticleName(void)
 {
-	if ( GetTeamNumber() == TF_TEAM_BLUE )
+	if(GetTeamNumber() == TF_TEAM_BLUE)
 	{
 		return "peejar_trail_blu";
 	}
@@ -778,10 +777,11 @@ const char *CTFProjectile_Jar::GetTrailParticleName( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_Jar *CTFJarMilk::CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity,
-												 const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
+CTFProjectile_Jar *CTFJarMilk::CreateJarProjectile(const Vector &position, const QAngle &angles, const Vector &velocity,
+												   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner,
+												   const CTFWeaponInfo &weaponInfo)
 {
-	return CTFProjectile_JarMilk::Create( position, angles, velocity, angVelocity, pOwner, weaponInfo );
+	return CTFProjectile_JarMilk::Create(position, angles, velocity, angVelocity, pOwner, weaponInfo);
 }
 #endif
 
@@ -790,7 +790,7 @@ CTFProjectile_Jar *CTFJarMilk::CreateJarProjectile( const Vector &position, cons
 //-----------------------------------------------------------------------------
 void CTFProjectile_JarMilk::Precache()
 {
-	PrecacheModel( TF_WEAPON_MILKJAR_MODEL );
+	PrecacheModel(TF_WEAPON_MILKJAR_MODEL);
 
 	BaseClass::Precache();
 }
@@ -799,33 +799,33 @@ void CTFProjectile_JarMilk::Precache()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_JarMilk* CTFProjectile_JarMilk::Create( const Vector &position, const QAngle &angles,
-											 const Vector &velocity, const AngularImpulse &angVelocity,
-											 CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
+CTFProjectile_JarMilk *CTFProjectile_JarMilk::Create(const Vector &position, const QAngle &angles,
+													 const Vector &velocity, const AngularImpulse &angVelocity,
+													 CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo)
 {
-	CTFProjectile_JarMilk *pGrenade = static_cast<CTFProjectile_JarMilk*>( CBaseEntity::CreateNoSpawn( "tf_projectile_jar_milk", position, angles, pOwner ) );
-	if ( pGrenade )
+	CTFProjectile_JarMilk *pGrenade = static_cast<CTFProjectile_JarMilk *>(
+		CBaseEntity::CreateNoSpawn("tf_projectile_jar_milk", position, angles, pOwner));
+	if(pGrenade)
 	{
 		// Set the pipebomb mode before calling spawn, so the model & associated vphysics get setup properly.
 		pGrenade->SetPipebombMode();
-		DispatchSpawn( pGrenade );
+		DispatchSpawn(pGrenade);
 
-		pGrenade->InitGrenade( velocity, angVelocity, pOwner, weaponInfo );
+		pGrenade->InitGrenade(velocity, angVelocity, pOwner, weaponInfo);
 
 #ifdef _X360
-		if ( pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE )
+		if(pGrenade->m_iType != TF_GL_MODE_REMOTE_DETONATE)
 		{
-			pGrenade->SetDamage( TF_WEAPON_GRENADE_XBOX_DAMAGE );
+			pGrenade->SetDamage(TF_WEAPON_GRENADE_XBOX_DAMAGE);
 		}
 #endif
 		pGrenade->m_flFullDamage = 0;
 
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
+		pGrenade->ApplyLocalAngularVelocityImpulse(angVelocity);
 	}
 
 	return pGrenade;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -834,21 +834,21 @@ void CTFProjectile_JarMilk::SetCustomPipebombModel()
 {
 	// Check for Model Override
 	int iProjectile = 0;
-	CTFPlayer *pThrower = ToTFPlayer( GetThrower() );
-	if ( pThrower && pThrower->GetActiveWeapon() )
+	CTFPlayer *pThrower = ToTFPlayer(GetThrower());
+	if(pThrower && pThrower->GetActiveWeapon())
 	{
-		CALL_ATTRIB_HOOK_INT_ON_OTHER( pThrower->GetActiveWeapon(), iProjectile, override_projectile_type );
-		switch ( iProjectile )
+		CALL_ATTRIB_HOOK_INT_ON_OTHER(pThrower->GetActiveWeapon(), iProjectile, override_projectile_type);
+		switch(iProjectile)
 		{
-		case TF_PROJECTILE_BREADMONSTER_JARATE:
-		case TF_PROJECTILE_BREADMONSTER_MADMILK:
-			m_iProjectileType = iProjectile;
-			SetModel( "models/weapons/c_models/c_breadmonster/c_breadmonster_milk.mdl" );
-			return;
+			case TF_PROJECTILE_BREADMONSTER_JARATE:
+			case TF_PROJECTILE_BREADMONSTER_MADMILK:
+				m_iProjectileType = iProjectile;
+				SetModel("models/weapons/c_models/c_breadmonster/c_breadmonster_milk.mdl");
+				return;
 		}
 	}
 
-	SetModel( TF_WEAPON_MILKJAR_MODEL );
+	SetModel(TF_WEAPON_MILKJAR_MODEL);
 }
 #endif
 
@@ -857,41 +857,41 @@ void CTFProjectile_JarMilk::SetCustomPipebombModel()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char* CTFJarMilk::ModifyEventParticles( const char* token )
+const char *CTFJarMilk::ModifyEventParticles(const char *token)
 {
-	if ( FStrEq( token, "energydrink_splash") )
+	if(FStrEq(token, "energydrink_splash"))
 	{
 		CEconItemView *pItem = m_AttributeManager.GetItem();
-		int iSystems = pItem->GetStaticData()->GetNumAttachedParticles( GetTeamNumber() );
-		for ( int i = 0; i < iSystems; i++ )
+		int iSystems = pItem->GetStaticData()->GetNumAttachedParticles(GetTeamNumber());
+		for(int i = 0; i < iSystems; i++)
 		{
-			attachedparticlesystem_t *pSystem = pItem->GetStaticData()->GetAttachedParticleData( GetTeamNumber(),i );
-			if ( pSystem->iCustomType == 1 )
+			attachedparticlesystem_t *pSystem = pItem->GetStaticData()->GetAttachedParticleData(GetTeamNumber(), i);
+			if(pSystem->iCustomType == 1)
 			{
 				return pSystem->pszSystemName;
 			}
 		}
 	}
 
-	return BaseClass::ModifyEventParticles( token );
+	return BaseClass::ModifyEventParticles(token);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFJarMilk::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CTFJarMilk::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
-	CTFPlayer *pOwner = ToTFPlayer( GetPlayerOwner() );
-	if ( pOwner && pOwner->IsLocalPlayer() )
+	CTFPlayer *pOwner = ToTFPlayer(GetPlayerOwner());
+	if(pOwner && pOwner->IsLocalPlayer())
 	{
 		C_BaseEntity *pParticleEnt = pOwner->GetViewModel(0);
-		if ( pParticleEnt )
+		if(pParticleEnt)
 		{
-			pOwner->StopViewModelParticles( pParticleEnt );
+			pOwner->StopViewModelParticles(pParticleEnt);
 		}
 	}
 
-	return BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster(pSwitchingTo);
 }
 
 #endif
@@ -900,15 +900,15 @@ bool CTFJarMilk::Holster( CBaseCombatWeapon *pSwitchingTo )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-Vector CTFCleaver::GetVelocityVector( const Vector &vecForward, const Vector &vecRight, const Vector &vecUp )
+Vector CTFCleaver::GetVelocityVector(const Vector &vecForward, const Vector &vecRight, const Vector &vecUp)
 {
 	Vector vecVelocity;
 
 	// Calculate the initial impulse on the item.
-	vecVelocity = Vector( 0.0f, 0.0f, 0.0f );
+	vecVelocity = Vector(0.0f, 0.0f, 0.0f);
 	vecVelocity += vecForward * 10;
 	vecVelocity += vecUp * 1;
-	VectorNormalize( vecVelocity );
+	VectorNormalize(vecVelocity);
 	vecVelocity *= 3000;
 
 	return vecVelocity;
@@ -917,23 +917,24 @@ Vector CTFCleaver::GetVelocityVector( const Vector &vecForward, const Vector &ve
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_Jar *CTFCleaver::CreateJarProjectile( const Vector &position, const QAngle &angles, const Vector &velocity,
-	const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
+CTFProjectile_Jar *CTFCleaver::CreateJarProjectile(const Vector &position, const QAngle &angles, const Vector &velocity,
+												   const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner,
+												   const CTFWeaponInfo &weaponInfo)
 {
-	return CTFProjectile_Cleaver::Create( position, angles, velocity, angVelocity, pOwner, weaponInfo, GetSkin() );
+	return CTFProjectile_Cleaver::Create(position, angles, velocity, angVelocity, pOwner, weaponInfo, GetSkin());
 }
 #endif
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-float CTFCleaver::GetProjectileSpeed( void )
+float CTFCleaver::GetProjectileSpeed(void)
 {
 	return TF_CLEAVER_LAUNCH_SPEED;
 }
 
 //-----------------------------------------------------------------------------
-void CTFCleaver::SecondaryAttack( void )
+void CTFCleaver::SecondaryAttack(void)
 {
 	PrimaryAttack();
 }
@@ -942,7 +943,7 @@ void CTFCleaver::SecondaryAttack( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char* CTFCleaver::ModifyEventParticles( const char* token )
+const char *CTFCleaver::ModifyEventParticles(const char *token)
 {
 	return NULL;
 }
@@ -950,9 +951,9 @@ const char* CTFCleaver::ModifyEventParticles( const char* token )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CTFCleaver::Holster( CBaseCombatWeapon *pSwitchingTo )
+bool CTFCleaver::Holster(CBaseCombatWeapon *pSwitchingTo)
 {
-	return BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster(pSwitchingTo);
 }
 #endif
 
@@ -961,9 +962,9 @@ bool CTFCleaver::Holster( CBaseCombatWeapon *pSwitchingTo )
 //-----------------------------------------------------------------------------
 void CTFProjectile_Cleaver::Precache()
 {
-	PrecacheModel( TF_WEAPON_CLEAVER_MODEL );
-	PrecacheScriptSound( TF_WEAPON_CLEAVER_IMPACT_FLESH_SOUND );
-	PrecacheScriptSound( TF_WEAPON_CLEAVER_IMPACT_WORLD_SOUND );
+	PrecacheModel(TF_WEAPON_CLEAVER_MODEL);
+	PrecacheScriptSound(TF_WEAPON_CLEAVER_IMPACT_FLESH_SOUND);
+	PrecacheScriptSound(TF_WEAPON_CLEAVER_IMPACT_WORLD_SOUND);
 
 	BaseClass::Precache();
 }
@@ -973,7 +974,7 @@ void CTFProjectile_Cleaver::Precache()
 //-----------------------------------------------------------------------------
 void CTFProjectile_Cleaver::SetCustomPipebombModel()
 {
-	SetModel( TF_WEAPON_CLEAVER_MODEL );
+	SetModel(TF_WEAPON_CLEAVER_MODEL);
 }
 
 CTFProjectile_Cleaver::CTFProjectile_Cleaver()
@@ -985,34 +986,34 @@ CTFProjectile_Cleaver::CTFProjectile_Cleaver()
 }
 
 #ifdef GAME_DLL
-#define FLIGHT_TIME_TO_MAX_DMG	1.f
+#define FLIGHT_TIME_TO_MAX_DMG 1.f
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFProjectile_Cleaver::OnHit( CBaseEntity *pOther )
+void CTFProjectile_Cleaver::OnHit(CBaseEntity *pOther)
 {
-	SetModelName( NULL_STRING );//invisible
-	AddSolidFlags( FSOLID_NOT_SOLID );
+	SetModelName(NULL_STRING); // invisible
+	AddSolidFlags(FSOLID_NOT_SOLID);
 
-	CTFPlayer *pOwner = ToTFPlayer( GetThrower() );
-	if ( !pOwner )
+	CTFPlayer *pOwner = ToTFPlayer(GetThrower());
+	if(!pOwner)
 		return;
 
-	if ( !pOther || !pOther->IsPlayer() )
+	if(!pOther || !pOther->IsPlayer())
 		return;
 
-	CTFPlayer *pPlayer = ToTFPlayer( pOther );
-	if ( !pPlayer )
+	CTFPlayer *pPlayer = ToTFPlayer(pOther);
+	if(!pPlayer)
 		return;
 
 	// Can't bleed an invul player.
-	if ( pPlayer->m_Shared.IsInvulnerable() || pPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_WEARINGOFF ) )
+	if(pPlayer->m_Shared.IsInvulnerable() || pPlayer->m_Shared.InCond(TF_COND_INVULNERABLE_WEARINGOFF))
 		return;
 
-	if ( pPlayer->GetTeamNumber() == pOwner->GetTeamNumber() )
+	if(pPlayer->GetTeamNumber() == pOwner->GetTeamNumber())
 		return;
 
-	if ( TFGameRules() && TFGameRules()->IsTruceActive() && pOwner->IsTruceValidForEnt() )
+	if(TFGameRules() && TFGameRules()->IsTruceActive() && pOwner->IsTruceValidForEnt())
 		return;
 
 	bool bIsCriticalHit = IsCritical();
@@ -1020,38 +1021,38 @@ void CTFProjectile_Cleaver::OnHit( CBaseEntity *pOther )
 	float flBleedTime = 5.0f;
 
 	float flLifeTime = gpGlobals->curtime - m_flCreationTime;
-	if ( flLifeTime >= FLIGHT_TIME_TO_MAX_DMG )
+	if(flLifeTime >= FLIGHT_TIME_TO_MAX_DMG)
 	{
 		bIsMiniCrit = true;
 	}
 
 	// just do the bleed effect directly since the bleed
 	// attribute comes from the inflictor, which is the cleaver.
-	pPlayer->m_Shared.MakeBleed( pOwner, (CTFCleaver *)GetLauncher(), flBleedTime );
+	pPlayer->m_Shared.MakeBleed(pOwner, (CTFCleaver *)GetLauncher(), flBleedTime);
 
 	// Give 'em a love tap.
 	const trace_t *pTrace = &CBaseEntity::GetTouchTrace();
-	trace_t *pNewTrace = const_cast<trace_t*>( pTrace );
+	trace_t *pNewTrace = const_cast<trace_t *>(pTrace);
 
 	CBaseEntity *pInflictor = GetLauncher();
 	CTakeDamageInfo info;
-	info.SetAttacker( pOwner );
-	info.SetInflictor( pInflictor );
-	info.SetWeapon( pInflictor );
-	info.SetDamage( GetDamage() );
-	info.SetDamageCustom( bIsMiniCrit ? TF_DMG_CUSTOM_CLEAVER_CRIT : TF_DMG_CUSTOM_CLEAVER );
-	info.SetDamagePosition( GetAbsOrigin() );
+	info.SetAttacker(pOwner);
+	info.SetInflictor(pInflictor);
+	info.SetWeapon(pInflictor);
+	info.SetDamage(GetDamage());
+	info.SetDamageCustom(bIsMiniCrit ? TF_DMG_CUSTOM_CLEAVER_CRIT : TF_DMG_CUSTOM_CLEAVER);
+	info.SetDamagePosition(GetAbsOrigin());
 	int iDamageType = GetDamageType();
-	if ( bIsCriticalHit )
+	if(bIsCriticalHit)
 	{
 		iDamageType |= DMG_CRITICAL;
 	}
-	info.SetDamageType( iDamageType );
+	info.SetDamageType(iDamageType);
 
 	// Hurt 'em.
 	Vector dir;
-	AngleVectors( GetAbsAngles(), &dir );
-	pPlayer->DispatchTraceAttack( info, dir, pNewTrace );
+	AngleVectors(GetAbsAngles(), &dir);
+	pPlayer->DispatchTraceAttack(info, dir, pNewTrace);
 	ApplyMultiDamage();
 
 	// sound effects
@@ -1060,18 +1061,18 @@ void CTFProjectile_Cleaver::OnHit( CBaseEntity *pOther )
 	params.m_pflSoundDuration = 0;
 	params.m_pSoundName = TF_WEAPON_CLEAVER_IMPACT_FLESH_SOUND;
 
-	CPASFilter filter( GetAbsOrigin() );
-	filter.RemoveRecipient( pOwner );
-	EmitSound( filter, entindex(), params );
+	CPASFilter filter(GetAbsOrigin());
+	filter.RemoveRecipient(pOwner);
+	EmitSound(filter, entindex(), params);
 
-	CSingleUserRecipientFilter attackerFilter( pOwner );
-	EmitSound( attackerFilter, pOwner->entindex(), params );
+	CSingleUserRecipientFilter attackerFilter(pOwner);
+	EmitSound(attackerFilter, pOwner->entindex(), params);
 
-	AddEffects( EF_NODRAW );
-	SetAbsVelocity( vec3_origin );
+	AddEffects(EF_NODRAW);
+	SetAbsVelocity(vec3_origin);
 
-	SetContextThink( &CBaseGrenade::SUB_Remove, gpGlobals->curtime + 2, "RemoveThink" );
-	SetTouch( NULL );
+	SetContextThink(&CBaseGrenade::SUB_Remove, gpGlobals->curtime + 2, "RemoveThink");
+	SetTouch(NULL);
 
 	m_bHitPlayer = true;
 }
@@ -1079,58 +1080,60 @@ void CTFProjectile_Cleaver::OnHit( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFProjectile_Cleaver::Explode( trace_t *pTrace, int bitsDamageType )
+void CTFProjectile_Cleaver::Explode(trace_t *pTrace, int bitsDamageType)
 {
-	if ( !m_bHitPlayer )
+	if(!m_bHitPlayer)
 	{
-		if ( !m_bSoundPlayed )
+		if(!m_bSoundPlayed)
 		{
-			EmitSound( TF_WEAPON_CLEAVER_IMPACT_WORLD_SOUND );
+			EmitSound(TF_WEAPON_CLEAVER_IMPACT_WORLD_SOUND);
 			m_bSoundPlayed = true;
 		}
 
-		SetContextThink( &CBaseGrenade::SUB_Remove, gpGlobals->curtime + 2, "RemoveThink" );
-		SetTouch( NULL );
+		SetContextThink(&CBaseGrenade::SUB_Remove, gpGlobals->curtime + 2, "RemoveThink");
+		SetTouch(NULL);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFProjectile_Cleaver::Detonate( void )
+void CTFProjectile_Cleaver::Detonate(void)
 {
-	trace_t		tr;
-	Vector		vecSpot;// trace starts here!
+	trace_t tr;
+	Vector vecSpot; // trace starts here!
 
-	SetThink( NULL );
+	SetThink(NULL);
 
-	vecSpot = GetAbsOrigin() + Vector ( 0 , 0 , 8 );
-	UTIL_TraceLine ( vecSpot, vecSpot + Vector ( 0, 0, -32 ), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, & tr);
+	vecSpot = GetAbsOrigin() + Vector(0, 0, 8);
+	UTIL_TraceLine(vecSpot, vecSpot + Vector(0, 0, -32), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr);
 
-	Explode( &tr, GetDamageType() );
+	Explode(&tr, GetDamageType());
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFProjectile_Cleaver* CTFProjectile_Cleaver::Create( const Vector &position, const QAngle &angles,
-	const Vector &velocity, const AngularImpulse &angVelocity,
-	CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo, int nSkin )
+CTFProjectile_Cleaver *CTFProjectile_Cleaver::Create(const Vector &position, const QAngle &angles,
+													 const Vector &velocity, const AngularImpulse &angVelocity,
+													 CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo,
+													 int nSkin)
 {
-	CTFProjectile_Cleaver *pGrenade = static_cast<CTFProjectile_Cleaver*>( CBaseEntity::CreateNoSpawn( "tf_projectile_cleaver", position, angles, pOwner ) );
-	if ( pGrenade )
+	CTFProjectile_Cleaver *pGrenade = static_cast<CTFProjectile_Cleaver *>(
+		CBaseEntity::CreateNoSpawn("tf_projectile_cleaver", position, angles, pOwner));
+	if(pGrenade)
 	{
 		// Set the pipebomb mode before calling spawn, so the model & associated vphysics get setup properly.
 		pGrenade->SetPipebombMode();
-		DispatchSpawn( pGrenade );
+		DispatchSpawn(pGrenade);
 
 		pGrenade->m_nSkin = nSkin;
 
-		pGrenade->InitGrenade( velocity, angVelocity, pOwner, weaponInfo );
+		pGrenade->InitGrenade(velocity, angVelocity, pOwner, weaponInfo);
 
 		pGrenade->m_flFullDamage = 0;
 
-		pGrenade->ApplyLocalAngularVelocityImpulse( angVelocity );
+		pGrenade->ApplyLocalAngularVelocityImpulse(angVelocity);
 	}
 
 	return pGrenade;
@@ -1140,9 +1143,9 @@ CTFProjectile_Cleaver* CTFProjectile_Cleaver::Create( const Vector &position, co
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFProjectile_Cleaver::GetTrailParticleName( void )
+const char *CTFProjectile_Cleaver::GetTrailParticleName(void)
 {
-	if ( GetTeamNumber() == TF_TEAM_BLUE )
+	if(GetTeamNumber() == TF_TEAM_BLUE)
 	{
 		return "peejar_trail_blu_glow";
 	}

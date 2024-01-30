@@ -11,11 +11,10 @@ class MenuDemo;
 
 using namespace vgui;
 
-
 class MenuDemo2 : public MenuDemo
 {
-	public:
-		MenuDemo2(Panel *parent, const char *name);
+public:
+	MenuDemo2(Panel *parent, const char *name);
 };
 
 //-----------------------------------------------------------------------------
@@ -33,8 +32,7 @@ MenuDemo2::MenuDemo2(Panel *parent, const char *name) : MenuDemo(parent, name)
 	m_pMenuButton->SetOpenDirection(Menu::UP);
 }
 
-
-Panel* MenuDemo2_Create(Panel *parent)
+Panel *MenuDemo2_Create(Panel *parent)
 {
 	return new MenuDemo2(parent, "MenuDemo2");
 }

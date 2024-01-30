@@ -14,57 +14,49 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 static DWORD holdrand;
-
 
 void randomize()
 {
 	holdrand = DWORD(time(NULL));
 }
 
-
 DWORD random()
 {
-	return(holdrand = holdrand * 214013L + 2531011L);
+	return (holdrand = holdrand * 214013L + 2531011L);
 }
-
 
 // MapCheckDlg.cpp:
 BOOL DoesContainDuplicates(CMapSolid *pSolid);
 static BOOL bCheckDupes = FALSE;
 
-
 void NotifyDuplicates(CMapSolid *pSolid)
 {
 	if(!bCheckDupes)
-		return;	// stop that
+		return; // stop that
 
 	if(DoesContainDuplicates(pSolid))
 	{
-		if(IDNO == AfxMessageBox("Duplicate Plane! Do you want more messages?",
-			MB_YESNO))
+		if(IDNO == AfxMessageBox("Duplicate Plane! Do you want more messages?", MB_YESNO))
 		{
 			bCheckDupes = FALSE;
 		}
 	}
 }
 
-
 void NotifyDuplicates(const CMapObjectList *pList)
 {
 	if(!bCheckDupes)
-		return;	// stop that
+		return; // stop that
 
-	FOR_EACH_OBJ( *pList, pos )
+	FOR_EACH_OBJ(*pList, pos)
 	{
 		CMapClass *pobj = pList->Element(pos);
 		if(!pobj->IsMapClass(MAPCLASS_TYPE(CMapSolid)))
-			continue;	// not a solid
-		NotifyDuplicates((CMapSolid*) pobj);
+			continue; // not a solid
+		NotifyDuplicates((CMapSolid *)pobj);
 	}
 }
-
 
 int mychdir(LPCTSTR pszDir)
 {
@@ -82,7 +74,6 @@ int mychdir(LPCTSTR pszDir)
 
 	return 0;
 }
-
 
 void WriteDebug(char *pszStr)
 {
@@ -108,15 +99,15 @@ void WriteDebug(char *pszStr)
 //-----------------------------------------------------------------------------
 BOOL AddLeavesToListCallback(CMapClass *pObject, CMapObjectList *pList)
 {
-	if (pObject->GetChildCount() == 0)
+	if(pObject->GetChildCount() == 0)
 	{
 		pList->AddToTail(pObject);
 	}
 
-	return(TRUE);
+	return (TRUE);
 }
 
 bool IsWorldObject(CMapAtom *pObject)
 {
-	return (dynamic_cast<CMapWorld*>(pObject) != NULL);
+	return (dynamic_cast<CMapWorld *>(pObject) != NULL);
 }

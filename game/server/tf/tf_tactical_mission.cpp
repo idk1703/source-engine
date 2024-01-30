@@ -11,7 +11,6 @@
 
 extern ConVar tf_bot_max_point_defend_range;
 
-
 /*
 //-----------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
@@ -97,113 +96,98 @@ CTFDefendPointZone::CTFDefendPointZone( CTeamControlPoint *point )
 			isKingOfTheHill = ( master->GetNumPoints() == 1 );
 		}
 
-		// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the point quickly
-		CCollectPointDefenseAreas collector( pointArea, isKingOfTheHill, &m_areaVector );
-		SearchSurroundingAreas( pointArea, collector );
+		// search outwards from the point along walkable areas (not drop downs) to make sure we can get back to the
+point quickly CCollectPointDefenseAreas collector( pointArea, isKingOfTheHill, &m_areaVector ); SearchSurroundingAreas(
+pointArea, collector );
 	}
 }
 */
-
 
 //-----------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
 /**
  * Create a zone of areas that are good sniper spots to defend the given point
  */
-CTFDefendPointSniperZone::CTFDefendPointSniperZone( CTeamControlPoint *point )
-{
+CTFDefendPointSniperZone::CTFDefendPointSniperZone(CTeamControlPoint *point) {}
 
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+CTFDefendPointMission::CTFDefendPointMission(CTeamControlPoint *point)
+{
+	//	m_defenseZone = new CTFDefendPointZone( point );
+	m_sniperZone = new CTFDefendPointSniperZone(point);
+
+	m_name.sprintf("DefendPoint%d", point->GetPointIndex());
 }
 
-
 //-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-CTFDefendPointMission::CTFDefendPointMission( CTeamControlPoint *point )
+CTFDefendPointMission::~CTFDefendPointMission(void)
 {
-//	m_defenseZone = new CTFDefendPointZone( point );
-	m_sniperZone = new CTFDefendPointSniperZone( point );
-
-	m_name.sprintf( "DefendPoint%d", point->GetPointIndex() );
-}
-
-
-//-----------------------------------------------------------------------------------------------------
-CTFDefendPointMission::~CTFDefendPointMission( void )
-{
-//	delete m_defenseZone;
+	//	delete m_defenseZone;
 	delete m_sniperZone;
 }
 
-
 //-----------------------------------------------------------------------------------------------------
 // where give player should be during this mission
-const CTacticalMissionZone *CTFDefendPointMission::GetDeployZone( CBasePlayer *baseWho ) const
+const CTacticalMissionZone *CTFDefendPointMission::GetDeployZone(CBasePlayer *baseWho) const
 {
-//	CTFPlayer *who = ToTFPlayer( baseWho );
+	//	CTFPlayer *who = ToTFPlayer( baseWho );
 
-// 	if ( who->IsPlayerClass( TF_CLASS_SNIPER ) )
-// 		return m_sniperZone;
+	// 	if ( who->IsPlayerClass( TF_CLASS_SNIPER ) )
+	// 		return m_sniperZone;
 
 	return m_defenseZone;
 }
 
-
 //-----------------------------------------------------------------------------------------------------
 // control points, setup gates, sections of cart path, etc.
-const CTacticalMissionZone *CTFDefendPointMission::GetObjectiveZone( void ) const
+const CTacticalMissionZone *CTFDefendPointMission::GetObjectiveZone(void) const
 {
 	return NULL;
 }
-
 
 //-----------------------------------------------------------------------------------------------------
 // where we expect enemies to be during this mission
-const CTacticalMissionZone *CTFDefendPointMission::GetEnemyZone( void ) const
+const CTacticalMissionZone *CTFDefendPointMission::GetEnemyZone(void) const
 {
 	return NULL;
 }
-
-
 
 //-----------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------
 /**
  * Invoked when server loads a new map, after everything has been created/spawned
  */
-void CTFTacticalMissionManager::OnServerActivate( void )
-{
-}
-
+void CTFTacticalMissionManager::OnServerActivate(void) {}
 
 //-----------------------------------------------------------------------------------------------------
 /**
  * Invoked when a game round restarts
  */
-void CTFTacticalMissionManager::OnRoundRestart( void )
+void CTFTacticalMissionManager::OnRoundRestart(void)
 {
 	// for now, delete and rebuild all the missions
 	// @todo only delete/rebuild generated missions
-	FOR_EACH_VEC( m_missionVector, it )
+	FOR_EACH_VEC(m_missionVector, it)
 	{
-		delete m_missionVector[ it ];
+		delete m_missionVector[it];
 	}
 	m_missionVector.RemoveAll();
 
-
 	// generate a defensive mission for each control point
 	CTeamControlPointMaster *pMaster = g_hControlPointMasters.Count() ? g_hControlPointMasters[0] : NULL;
-	if ( pMaster )
+	if(pMaster)
 	{
-		for( int i=0; i<pMaster->GetNumPoints(); ++i )
+		for(int i = 0; i < pMaster->GetNumPoints(); ++i)
 		{
-			CTeamControlPoint *point = pMaster->GetControlPoint( i );
-			if ( point && pMaster->IsInRound( point ) )
+			CTeamControlPoint *point = pMaster->GetControlPoint(i);
+			if(point && pMaster->IsInRound(point))
 			{
-				CTFNavArea *pointArea = (CTFNavArea *)TheNavMesh->GetNearestNavArea( point->WorldSpaceCenter() );
-				if ( pointArea && pointArea->IsReachableByTeam( TF_TEAM_BLUE ) )
+				CTFNavArea *pointArea = (CTFNavArea *)TheNavMesh->GetNearestNavArea(point->WorldSpaceCenter());
+				if(pointArea && pointArea->IsReachableByTeam(TF_TEAM_BLUE))
 				{
-					CTacticalMission *defendPointMission = new CTFDefendPointMission( point );
-					TheTacticalMissions().Register( defendPointMission );
+					CTacticalMission *defendPointMission = new CTFDefendPointMission(point);
+					TheTacticalMissions().Register(defendPointMission);
 				}
 			}
 		}

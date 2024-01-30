@@ -38,24 +38,22 @@ CFavoriteGames::CFavoriteGames(vgui::Panel *parent) : CBaseGamesPage(parent, "Fa
 {
 	m_iServerRefreshCount = 0;
 	m_pImportFavoritesdlg = NULL;
-	m_bSaveRcon=false;
+	m_bSaveRcon = false;
 	StartRefresh();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Destructor
 //-----------------------------------------------------------------------------
-CFavoriteGames::~CFavoriteGames()
-{
-}
+CFavoriteGames::~CFavoriteGames() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CFavoriteGames::LoadFavoritesList(KeyValues *favoritesData,bool loadrcon)
+void CFavoriteGames::LoadFavoritesList(KeyValues *favoritesData, bool loadrcon)
 {
 	// load in favorites
-	for (KeyValues *dat = favoritesData->GetFirstSubKey(); dat != NULL; dat = dat->GetNextKey())
+	for(KeyValues *dat = favoritesData->GetFirstSubKey(); dat != NULL; dat = dat->GetNextKey())
 	{
 		serveritem_t server;
 		memset(&server, 0, sizeof(server));
@@ -77,7 +75,7 @@ void CFavoriteGames::LoadFavoritesList(KeyValues *favoritesData,bool loadrcon)
 
 		if(loadrcon)
 		{
-			v_strncpy(server.rconPassword,dat->GetString("rconpassword"),sizeof(server.rconPassword));
+			v_strncpy(server.rconPassword, dat->GetString("rconpassword"), sizeof(server.rconPassword));
 		}
 
 		// add to main list
@@ -91,16 +89,15 @@ void CFavoriteGames::LoadFavoritesList(KeyValues *favoritesData,bool loadrcon)
 
 void CFavoriteGames::UpdateServer(serveritem_t &serverIn)
 {
-	for (int i = 0; i < m_Servers.ServerCount(); i++)
+	for(int i = 0; i < m_Servers.ServerCount(); i++)
 	{
 		serveritem_t &serverOut = m_Servers.GetServer(i);
 
-		if( !memcmp(serverOut.ip,serverIn.ip,sizeof(serverIn.ip)) &&
-			serverOut.port==serverIn.port)
+		if(!memcmp(serverOut.ip, serverIn.ip, sizeof(serverIn.ip)) && serverOut.port == serverIn.port)
 		{
 			// we have a match!
 
-			v_strncpy(serverOut.rconPassword,serverIn.rconPassword,sizeof(serverOut.rconPassword));
+			v_strncpy(serverOut.rconPassword, serverIn.rconPassword, sizeof(serverOut.rconPassword));
 		}
 	}
 }
@@ -108,17 +105,17 @@ void CFavoriteGames::UpdateServer(serveritem_t &serverIn)
 //-----------------------------------------------------------------------------
 // Purpose: saves the current list of servers to the favorites section of the data file
 //-----------------------------------------------------------------------------
-void CFavoriteGames::SaveFavoritesList(KeyValues *favoritesData,bool savercon)
+void CFavoriteGames::SaveFavoritesList(KeyValues *favoritesData, bool savercon)
 {
 	favoritesData->Clear();
 
 	// loop through all the servers writing them into the doc
-	for (int i = 0; i < m_Servers.ServerCount(); i++)
+	for(int i = 0; i < m_Servers.ServerCount(); i++)
 	{
 		serveritem_t &server = m_Servers.GetServer(i);
 
 		// always save away all the entries, even if they didn't respond this time
-		//if (server.doNotRefresh)
+		// if (server.doNotRefresh)
 		//	continue;
 
 		KeyValues *dat = favoritesData->CreateNewKey();
@@ -130,7 +127,7 @@ void CFavoriteGames::SaveFavoritesList(KeyValues *favoritesData,bool savercon)
 		dat->SetString("map", server.map);
 		if(savercon)
 		{
-			dat->SetString("rconpassword",server.rconPassword);
+			dat->SetString("rconpassword", server.rconPassword);
 		}
 
 		char buf[64];
@@ -146,12 +143,12 @@ void CFavoriteGames::SaveFavoritesList(KeyValues *favoritesData,bool savercon)
 //-----------------------------------------------------------------------------
 bool CFavoriteGames::SupportsItem(InterfaceItem_e item)
 {
-	switch (item)
+	switch(item)
 	{
-	case GETNEWLIST:
-	case FILTERS:
-	default:
-		return false;
+		case GETNEWLIST:
+		case FILTERS:
+		default:
+			return false;
 	}
 }
 
@@ -164,10 +161,10 @@ void CFavoriteGames::StartRefresh()
 	m_Servers.StopRefresh();
 
 	// build the refresh list from the server list
-	for (int i = 0; i < m_Servers.ServerCount(); i++)
+	for(int i = 0; i < m_Servers.ServerCount(); i++)
 	{
 		// When managing servers it doesn't matter if they don't respond
-		//if (m_Servers.GetServer(i).doNotRefresh)
+		// if (m_Servers.GetServer(i).doNotRefresh)
 		//	continue;
 
 		m_Servers.AddServerToRefreshList(i);
@@ -181,9 +178,7 @@ void CFavoriteGames::StartRefresh()
 //-----------------------------------------------------------------------------
 // Purpose: gets a new server list
 //-----------------------------------------------------------------------------
-void CFavoriteGames::GetNewServerList()
-{
-}
+void CFavoriteGames::GetNewServerList() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: stops current refresh/GetNewServerList()
@@ -241,7 +236,7 @@ void CFavoriteGames::ListReceived(bool moreAvailable, int lastUnique)
 //-----------------------------------------------------------------------------
 void CFavoriteGames::OnBeginConnect()
 {
-	if (!m_pGameList->GetNumSelectedRows())
+	if(!m_pGameList->GetNumSelectedRows())
 		return;
 
 	// get the server
@@ -259,7 +254,7 @@ void CFavoriteGames::OnBeginConnect()
 //-----------------------------------------------------------------------------
 void CFavoriteGames::OnViewGameInfo()
 {
-	if (!m_pGameList->GetNumSelectedRows())
+	if(!m_pGameList->GetNumSelectedRows())
 		return;
 
 	// get the server
@@ -275,9 +270,7 @@ void CFavoriteGames::OnViewGameInfo()
 //-----------------------------------------------------------------------------
 // Purpose: reapplies filters (does nothing with this)
 //-----------------------------------------------------------------------------
-void CFavoriteGames::ApplyFilters()
-{
-}
+void CFavoriteGames::ApplyFilters() {}
 
 //-----------------------------------------------------------------------------
 // Purpose: called when the server has successfully responded
@@ -287,7 +280,7 @@ void CFavoriteGames::ServerResponded(serveritem_t &server)
 {
 	// update UI
 	KeyValues *kv;
-	if (server.listEntry)
+	if(server.listEntry)
 	{
 		// we're updating an existing entry
 		kv = server.listEntry->kv;
@@ -299,7 +292,7 @@ void CFavoriteGames::ServerResponded(serveritem_t &server)
 		kv = new KeyValues("Server");
 	}
 
-	if (server.name[0] && server.maxPlayers)
+	if(server.name[0] && server.maxPlayers)
 	{
 		kv->SetString("name", server.name);
 		kv->SetString("map", server.map);
@@ -312,7 +305,7 @@ void CFavoriteGames::ServerResponded(serveritem_t &server)
 		kv->SetString("Players", buf);
 	}
 
-	if(server.ping==TIMEOUT)
+	if(server.ping == TIMEOUT)
 	{
 		kv->SetString("Ping", "timeout");
 	}
@@ -321,7 +314,7 @@ void CFavoriteGames::ServerResponded(serveritem_t &server)
 		kv->SetInt("Ping", server.ping);
 	}
 
-	if (!server.listEntry)
+	if(!server.listEntry)
 	{
 		// new server, add to list
 		int index = m_pGameList->AddItem(kv, server.serverID);
@@ -334,7 +327,7 @@ void CFavoriteGames::ServerResponded(serveritem_t &server)
 
 	m_iServerRefreshCount++;
 
-	if (m_pGameList->GetItemCount() > 1)
+	if(m_pGameList->GetItemCount() > 1)
 	{
 		char buf[64];
 		sprintf(buf, " Servers (%d)", m_pGameList->GetItemCount());
@@ -353,7 +346,7 @@ void CFavoriteGames::ServerResponded(serveritem_t &server)
 //-----------------------------------------------------------------------------
 void CFavoriteGames::ServerFailedToRespond(serveritem_t &server)
 {
-	server.ping=TIMEOUT;
+	server.ping = TIMEOUT;
 	ServerResponded(server);
 }
 
@@ -373,24 +366,23 @@ void CFavoriteGames::RefreshComplete()
 void CFavoriteGames::OnOpenContextMenu(int row)
 {
 	CServerContextMenu *menu = CServerPage::GetInstance()->GetContextMenu();
-	if (m_pGameList->GetNumSelectedRows())
+	if(m_pGameList->GetNumSelectedRows())
 	{
 		// get the server
 		unsigned int serverID = m_pGameList->GetDataItem(m_pGameList->GetSelectedRow(0))->userData;
 		serveritem_t &server = m_Servers.GetServer(serverID);
 
 		// activate context menu
-		menu->ShowMenu(this, serverID, true, true, false,true);
+		menu->ShowMenu(this, serverID, true, true, false, true);
 		menu->AddMenuItem("RemoveServer", "R&emove server from favorites", new KeyValues("RemoveFromFavorites"), this);
 	}
 	else
 	{
 		// no selected rows, so don't display default stuff in menu
-		menu->ShowMenu(this, -1, false, false, false,false);
+		menu->ShowMenu(this, -1, false, false, false, false);
 	}
 
 	menu->AddMenuItem("AddServerByName", "&Add server by IP address", new KeyValues("AddServerByName"), this);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -399,12 +391,12 @@ void CFavoriteGames::OnOpenContextMenu(int row)
 void CFavoriteGames::OnRefreshServer(int serverID)
 {
 	// walk the list of selected servers refreshing them
-	for (int i = 0; i < m_pGameList->GetNumSelectedRows(); i++)
+	for(int i = 0; i < m_pGameList->GetNumSelectedRows(); i++)
 	{
 		int row = m_pGameList->GetSelectedRow(i);
 
 		ListPanel::DATAITEM *data = m_pGameList->GetDataItem(row);
-		if (data)
+		if(data)
 		{
 			serverID = data->userData;
 
@@ -424,18 +416,18 @@ void CFavoriteGames::OnRefreshServer(int serverID)
 void CFavoriteGames::OnRemoveFromFavorites()
 {
 	// iterate the selection
-	while (m_pGameList->GetNumSelectedRows() > 0)
+	while(m_pGameList->GetNumSelectedRows() > 0)
 	{
 		int row = m_pGameList->GetSelectedRow(0);
 		int serverID = m_pGameList->GetDataItem(row)->userData;
 
-		if (serverID >= m_Servers.ServerCount())
+		if(serverID >= m_Servers.ServerCount())
 			continue;
 
 		serveritem_t &server = m_Servers.GetServer(serverID);
 
 		// remove from favorites list
-		if (server.listEntry)
+		if(server.listEntry)
 		{
 			// find the row in the list and kill
 			m_pGameList->RemoveItem(server.listEntry->row);
@@ -465,24 +457,23 @@ void CFavoriteGames::OnAddServerByName()
 int LoadFileIntoBuffer(CUtlBuffer &buf, char *pszFilename)
 {
 	// Open the file
-	FileHandle_t fh = g_pFullFileSystem->Open( pszFilename, "rb" );
-	if (fh == 0)
+	FileHandle_t fh = g_pFullFileSystem->Open(pszFilename, "rb");
+	if(fh == 0)
 	{
-		MessageBox *dlg = new MessageBox ("Unable to open datafile.", false);
+		MessageBox *dlg = new MessageBox("Unable to open datafile.", false);
 		dlg->DoModal();
-		return 0;	//file didn't load
+		return 0; // file didn't load
 	}
 
 	int nFileSize = g_pFullFileSystem->Size(fh);
 
 	// Read the file in one gulp
-	buf.EnsureCapacity( nFileSize );
-	int result = g_pFullFileSystem->Read( buf.Base(), nFileSize, fh );
-	g_pFullFileSystem->Close( fh );
+	buf.EnsureCapacity(nFileSize);
+	int result = g_pFullFileSystem->Read(buf.Base(), nFileSize, fh);
+	g_pFullFileSystem->Close(fh);
 
 	return nFileSize;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Import Favorite Servers from previous installations of
@@ -495,13 +486,15 @@ void CFavoriteGames::ImportFavorites()
 
 	char name[512];
 	// check if halflife is installed
-	if (vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Valve\\Half-life\\InstallPath", name, sizeof(name)))
+	if(vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Valve\\Half-life\\InstallPath", name,
+										 sizeof(name)))
 	{
 		// attach name of favorites file
 		strcat(name, "\\favsvrs.dat");
 	}
 	// check if counterstrike is installed
-	else if (vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Sierra OnLine\\Setup\\CSTRIKE\\Directory", name, sizeof(name)))
+	else if(vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Sierra OnLine\\Setup\\CSTRIKE\\Directory",
+											  name, sizeof(name)))
 	{
 		// attach name of favorites file
 		strcat(name, "\\favsvrs.dat");
@@ -513,17 +506,17 @@ void CFavoriteGames::ImportFavorites()
 
 	// see if the favorite server list file exists.
 	FileHandle_t fh = g_pFullFileSystem->Open(name, "rb");
-	if ( !fh )
+	if(!fh)
 	{
 		return;
 	}
 	g_pFullFileSystem->Close(fh);
 
-
 	// it exists! yay lets transfer the servers over into the server browser
 
 	// pop up a message about what we are doing
-	m_pImportFavoritesdlg = new MessageBox ("Updating Favorites", "Transferring your Favorites. This may take a minute...", this);
+	m_pImportFavoritesdlg =
+		new MessageBox("Updating Favorites", "Transferring your Favorites. This may take a minute...", this);
 	m_pImportFavoritesdlg->SetCommand("OnImportFavoritesFile");
 	m_pImportFavoritesdlg->AddActionSignalTarget(this);
 	// hide the ok button since they dont have to do anything
@@ -547,7 +540,7 @@ void CFavoriteGames::ImportFavorites()
 //-----------------------------------------------------------------------------
 void CFavoriteGames::OnCommand(const char *command)
 {
-	if (!strcmp(command, "OnImportFavoritesFile"))
+	if(!strcmp(command, "OnImportFavoritesFile"))
 	{
 		OnImportFavoritesFile();
 	}
@@ -557,7 +550,6 @@ void CFavoriteGames::OnCommand(const char *command)
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Import Favorite Servers from previous installations of
 //			Halflife
@@ -566,13 +558,15 @@ void CFavoriteGames::OnImportFavoritesFile()
 {
 	char name[512];
 	// check if they have halflife
-	if (vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Valve\\Half-life\\InstallPath", name, sizeof(name)))
+	if(vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Valve\\Half-life\\InstallPath", name,
+										 sizeof(name)))
 	{
 		// add filename
 		strcat(name, "\\favsvrs.dat");
 	}
 	// check if they have counterstrike
-	else if (vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Sierra OnLine\\Setup\\CSTRIKE\\Directory", name, sizeof(name)))
+	else if(vgui::system()->GetRegistryString("HKEY_LOCAL_MACHINE\\Software\\Sierra OnLine\\Setup\\CSTRIKE\\Directory",
+											  name, sizeof(name)))
 	{
 		// add filename
 		strcat(name, "\\favsvrs.dat");
@@ -583,39 +577,39 @@ void CFavoriteGames::OnImportFavoritesFile()
 	}
 
 	// load the file in one gulp
-	CUtlBuffer buf ( 0, 1024, true);
+	CUtlBuffer buf(0, 1024, true);
 	int fileSize = LoadFileIntoBuffer(buf, name);
-	if ( fileSize == 0)
+	if(fileSize == 0)
 	{
-		MessageBox *dlg = new MessageBox ("Unable to load favorites", "Error loading file.",  this);
+		MessageBox *dlg = new MessageBox("Unable to load favorites", "Error loading file.", this);
 		dlg->DoModal();
-		return;	//file didn't load
+		return; // file didn't load
 	}
 
 	// scan for the favorite servers
 	char data[255];
 	buf.GetString(data);
-	while (buf.TellGet() < fileSize)
+	while(buf.TellGet() < fileSize)
 	{
 		// store the start of the server description so we can go back
 		// if its a favorite
 		int serverStart;
-		if ( strstr (data, "server") != NULL)
+		if(strstr(data, "server") != NULL)
 		{
 			buf.GetString(data); // get the '{'
 			serverStart = buf.TellGet();
 		}
 
 		// check if server is a favorite
-		if ( strstr (data, "favorite") != NULL)
+		if(strstr(data, "favorite") != NULL)
 		{
 			buf.GetString(data);
-			if ( strstr(data, "1") )// server is a favorite
+			if(strstr(data, "1")) // server is a favorite
 			{
 				// go back to the start and load the details
-				buf.SeekGet( CUtlBuffer::SEEK_HEAD, serverStart);
+				buf.SeekGet(CUtlBuffer::SEEK_HEAD, serverStart);
 				// try and add this server
-				if (!LoadAFavoriteServer (buf))
+				if(!LoadAFavoriteServer(buf))
 				{
 					// file may be corrupt, had trouble parsing it
 					break;
@@ -630,16 +624,15 @@ void CFavoriteGames::OnImportFavoritesFile()
 	m_pImportFavoritesdlg->SetVisible(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Check to make sure we are reading what is expected
 //
 //-----------------------------------------------------------------------------
 bool CFavoriteGames::CheckForCorruption(char *data, const char *checkString)
 {
-	if (strcmp(data, checkString) != 0)
+	if(strcmp(data, checkString) != 0)
 	{
-		MessageBox *dlg = new MessageBox ("Unable to load favorites", "Error loading. File may be corrupt.");
+		MessageBox *dlg = new MessageBox("Unable to load favorites", "Error loading. File may be corrupt.");
 		dlg->DoModal();
 		return true;
 	}
@@ -650,146 +643,166 @@ bool CFavoriteGames::CheckForCorruption(char *data, const char *checkString)
 // Purpose: Parse throught the details of a server and populate a serveritem_t structure
 //			Add it to the favorites list at the end.
 //-----------------------------------------------------------------------------
-bool CFavoriteGames::LoadAFavoriteServer (CUtlBuffer &buf)
+bool CFavoriteGames::LoadAFavoriteServer(CUtlBuffer &buf)
 {
 	serveritem_t fav;
 	char data[255];
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"address\""))
-		return false;;
+	if(CheckForCorruption(data, "\"address\""))
+		return false;
+	;
 	buf.GetString(data);
 	int temp[4];
-	sscanf (data, "\"%d.%d.%d.%d\"\n", &temp[0], &temp[1], &temp[2], &temp[3]);
+	sscanf(data, "\"%d.%d.%d.%d\"\n", &temp[0], &temp[1], &temp[2], &temp[3]);
 	fav.ip[0] = temp[0];
 	fav.ip[1] = temp[1];
 	fav.ip[2] = temp[2];
 	fav.ip[3] = temp[3];
 
 	buf.EatWhiteSpace();
-	buf.Scanf ("\"port\" \"%d\"", &fav.port );
-	if (fav.port < 0)
+	buf.Scanf("\"port\" \"%d\"", &fav.port);
+	if(fav.port < 0)
 		fav.port += 65536;
 	buf.EatWhiteSpace();
-	buf.Scanf ("\"name\" \"%s\"", fav.name );
-	fav.name[strlen(fav.name)-1]='\0';	// remove trailing quote
+	buf.Scanf("\"name\" \"%s\"", fav.name);
+	fav.name[strlen(fav.name) - 1] = '\0'; // remove trailing quote
 	buf.EatWhiteSpace();
-	buf.Scanf ("\"map\" \"%s\"", fav.map );
-	fav.map[strlen(fav.map)-1]='\0';	// remove trailing quote
-
-	buf.EatWhiteSpace();
-	buf.Scanf ("\"game\" \"%s\"", fav.gameDescription );
-	fav.gameDescription[strlen(fav.gameDescription)-1]='\0';	// remove trailing quote
-	buf.EatWhiteSpace();
-	buf.Scanf ("\"dir\" \"%s\"", fav.gameDir );
-	fav.gameDir[strlen(fav.gameDir)-1
-		]='\0';	// remove trailing quote
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"url\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"dl\""))
-		return false;;
-	buf.GetString(data);
+	buf.Scanf("\"map\" \"%s\"", fav.map);
+	fav.map[strlen(fav.map) - 1] = '\0'; // remove trailing quote
 
 	buf.EatWhiteSpace();
-	buf.Scanf ("\"maxplayers\" \"%d\"", &fav.maxPlayers );
+	buf.Scanf("\"game\" \"%s\"", fav.gameDescription);
+	fav.gameDescription[strlen(fav.gameDescription) - 1] = '\0'; // remove trailing quote
 	buf.EatWhiteSpace();
-	buf.Scanf ("\"currentplayers\" \"%d\"", &fav.players );
+	buf.Scanf("\"dir\" \"%s\"", fav.gameDir);
+	fav.gameDir[strlen(fav.gameDir) - 1] = '\0'; // remove trailing quote
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"protocol\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"favorite\""))
-		return false;;
+	if(CheckForCorruption(data, "\"url\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"ipx\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"mod\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"version\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"size\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"svtype\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"svos\""))
-		return false;;
+	if(CheckForCorruption(data, "\"dl\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.EatWhiteSpace();
-	buf.Scanf ("\"password\" \"%d\"\n", &fav.password );
+	buf.Scanf("\"maxplayers\" \"%d\"", &fav.maxPlayers);
+	buf.EatWhiteSpace();
+	buf.Scanf("\"currentplayers\" \"%d\"", &fav.players);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"svside\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"cldll\""))
-		return false;;
-	buf.GetString(data);
-
-	buf.GetString(data);
-	if (CheckForCorruption(data, "\"lan\""))
-		return false;;
+	if(CheckForCorruption(data, "\"protocol\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"svping\""))
-		return false;;
+	if(CheckForCorruption(data, "\"favorite\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"noresponse\""))
-		return false;;
+	if(CheckForCorruption(data, "\"ipx\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"packetloss\""))
-		return false;;
+	if(CheckForCorruption(data, "\"mod\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"status\""))
-		return false;;
+	if(CheckForCorruption(data, "\"version\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"filtered\""))
-		return false;;
+	if(CheckForCorruption(data, "\"size\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"fullmax\""))
-		return false;;
+	if(CheckForCorruption(data, "\"svtype\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	buf.GetString(data);
-	if (CheckForCorruption(data, "\"hlversion\""))
-		return false;;
+	if(CheckForCorruption(data, "\"svos\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.EatWhiteSpace();
+	buf.Scanf("\"password\" \"%d\"\n", &fav.password);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"svside\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"cldll\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"lan\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"svping\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"noresponse\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"packetloss\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"status\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"filtered\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"fullmax\""))
+		return false;
+	;
+	buf.GetString(data);
+
+	buf.GetString(data);
+	if(CheckForCorruption(data, "\"hlversion\""))
+		return false;
+	;
 	buf.GetString(data);
 
 	AddNewServer(fav);
@@ -797,18 +810,15 @@ bool CFavoriteGames::LoadAFavoriteServer (CUtlBuffer &buf)
 	return true;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
-MessageMapItem_t CFavoriteGames::m_MessageMap[] =
-{
-	MAP_MESSAGE( CFavoriteGames, "ConnectToServer", OnBeginConnect ),
-	MAP_MESSAGE( CFavoriteGames, "ViewGameInfo", OnViewGameInfo ),
-	MAP_MESSAGE( CFavoriteGames, "RemoveFromFavorites", OnRemoveFromFavorites ),
-	MAP_MESSAGE( CFavoriteGames, "AddServerByName", OnAddServerByName ),
-	MAP_MESSAGE_INT( CFavoriteGames, "RefreshServer", OnRefreshServer, "serverID" ),
-	MAP_MESSAGE_INT( CFavoriteGames, "OpenContextMenu", OnOpenContextMenu, "row" ),
+MessageMapItem_t CFavoriteGames::m_MessageMap[] = {
+	MAP_MESSAGE(CFavoriteGames, "ConnectToServer", OnBeginConnect),
+	MAP_MESSAGE(CFavoriteGames, "ViewGameInfo", OnViewGameInfo),
+	MAP_MESSAGE(CFavoriteGames, "RemoveFromFavorites", OnRemoveFromFavorites),
+	MAP_MESSAGE(CFavoriteGames, "AddServerByName", OnAddServerByName),
+	MAP_MESSAGE_INT(CFavoriteGames, "RefreshServer", OnRefreshServer, "serverID"),
+	MAP_MESSAGE_INT(CFavoriteGames, "OpenContextMenu", OnOpenContextMenu, "row"),
 };
 IMPLEMENT_PANELMAP(CFavoriteGames, BaseClass);

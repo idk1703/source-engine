@@ -17,20 +17,20 @@ extern IEngineReplay *g_pEngine;
 
 //----------------------------------------------------------------------------------------
 
-CBaseThinker::CBaseThinker()
-:	m_flNextThinkTime( 0.0f )
+CBaseThinker::CBaseThinker() : m_flNextThinkTime(0.0f)
 {
-	g_pThinkManager->AddThinker( this );
+	g_pThinkManager->AddThinker(this);
 }
 
 CBaseThinker::~CBaseThinker()
 {
-	g_pThinkManager->RemoveThinker( this );
+	g_pThinkManager->RemoveThinker(this);
 }
 
 void CBaseThinker::Think()
 {
-	AssertMsg( ShouldThink(), "Thinking before ready - Think() being called explicitly?  Let the think manager call Think()." );
+	AssertMsg(ShouldThink(),
+			  "Thinking before ready - Think() being called explicitly?  Let the think manager call Think().");
 }
 
 bool CBaseThinker::ShouldThink() const

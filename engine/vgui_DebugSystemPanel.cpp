@@ -39,157 +39,157 @@ class CDebugMenuButton : public MenuButton
 
 public:
 	// Construction
-	CDebugMenuButton( Panel *parent, const char *panelName, const char *text );
+	CDebugMenuButton(Panel *parent, const char *panelName, const char *text);
 
 private:
 	// Menu associated with this button
-	Menu	*m_pMenu;
+	Menu *m_pMenu;
 };
 
 class CDebugCommandButton : public vgui::Button
 {
-typedef vgui::Button BaseClass;
+	typedef vgui::Button BaseClass;
+
 public:
-	CDebugCommandButton( vgui::Panel *parent, const char *panelName, const char *labelText, const char *command )
-		: BaseClass( parent, panelName, labelText )
+	CDebugCommandButton(vgui::Panel *parent, const char *panelName, const char *labelText, const char *command)
+		: BaseClass(parent, panelName, labelText)
 	{
-		AddActionSignalTarget( this );
-		SetCommand( command );
+		AddActionSignalTarget(this);
+		SetCommand(command);
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		Cbuf_AddText( va( "%s\n", (char *)command ) );
+		Cbuf_AddText(va("%s\n", (char *)command));
 	}
 
-	virtual void OnTick( void )
-	{
-	}
+	virtual void OnTick(void) {}
 };
 
 class CDebugCommandCheckbox : public vgui::CheckButton
 {
-typedef vgui::CheckButton BaseClass;
+	typedef vgui::CheckButton BaseClass;
+
 public:
-	CDebugCommandCheckbox( vgui::Panel *parent, const char *panelName, const char *labelText, const char *command )
-		: BaseClass( parent, panelName, labelText )
+	CDebugCommandCheckbox(vgui::Panel *parent, const char *panelName, const char *labelText, const char *command)
+		: BaseClass(parent, panelName, labelText)
 	{
-		m_pVar = ( ConVar * )g_pCVar->FindVar( command );
-		SetCommand( command );
-		AddActionSignalTarget( this );
+		m_pVar = (ConVar *)g_pCVar->FindVar(command);
+		SetCommand(command);
+		AddActionSignalTarget(this);
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
-		if ( m_pVar )
+		if(m_pVar)
 		{
-			Cbuf_AddText( va( "%s %d\n", m_pVar->GetName(), !m_pVar->GetInt() ) );
+			Cbuf_AddText(va("%s %d\n", m_pVar->GetName(), !m_pVar->GetInt()));
 		}
 	}
 
 private:
-	ConVar		*m_pVar;
+	ConVar *m_pVar;
 };
 
 class CDebugIncrementCVarButton : public vgui::Button
 {
-typedef vgui::Button BaseClass;
+	typedef vgui::Button BaseClass;
+
 public:
-	CDebugIncrementCVarButton( vgui::Panel *pParent, const char *pPanelName, const char *pLabelText, const char *pCommand )
-		: BaseClass( pParent, pPanelName, pLabelText )
+	CDebugIncrementCVarButton(vgui::Panel *pParent, const char *pPanelName, const char *pLabelText,
+							  const char *pCommand)
+		: BaseClass(pParent, pPanelName, pLabelText)
 	{
 		CCommand args;
-		args.Tokenize( pCommand );
+		args.Tokenize(pCommand);
 
 		m_pVar = NULL;
-		if ( args.ArgC() >= 4 )
+		if(args.ArgC() >= 4)
 		{
-			m_pVar = ( ConVar * )g_pCVar->FindVar( args[0] );
+			m_pVar = (ConVar *)g_pCVar->FindVar(args[0]);
 
-			m_flMinvalue = (float)atof( args[1] );
-			m_flMaxvalue = (float)atof( args[2] );
-			m_flIncrement = (float)atof( args[3] );
+			m_flMinvalue = (float)atof(args[1]);
+			m_flMaxvalue = (float)atof(args[2]);
+			m_flIncrement = (float)atof(args[3]);
 		}
 
-		SetCommand( "increment" );
-		AddActionSignalTarget( this );
+		SetCommand("increment");
+		AddActionSignalTarget(this);
 
 		m_flPreviousValue = -9999.0f;
 
 		OnTick();
 	}
 
-	virtual void OnCommand( const char *command )
+	virtual void OnCommand(const char *command)
 	{
 		//
-		if ( !m_pVar )
+		if(!m_pVar)
 			return;
 
 		float curValue = m_pVar->GetFloat();
 		curValue += m_flIncrement;
-		if ( curValue > m_flMaxvalue )
+		if(curValue > m_flMaxvalue)
 		{
 			curValue = m_flMinvalue;
 		}
-		else if ( curValue < m_flMinvalue )
+		else if(curValue < m_flMinvalue)
 		{
 			curValue = m_flMaxvalue;
 		}
-		m_pVar->SetValue( curValue );
+		m_pVar->SetValue(curValue);
 	}
 
-	virtual void OnTick( void )
+	virtual void OnTick(void)
 	{
-		if ( !m_pVar )
+		if(!m_pVar)
 			return;
 
-		if ( m_pVar->GetFloat() == m_flPreviousValue )
+		if(m_pVar->GetFloat() == m_flPreviousValue)
 			return;
 
-		char sz[ 512 ];
-		Q_snprintf( sz, sizeof( sz ), "%s %.2f", m_pVar->GetName(), m_pVar->GetFloat() );
-		SetText( sz );
+		char sz[512];
+		Q_snprintf(sz, sizeof(sz), "%s %.2f", m_pVar->GetName(), m_pVar->GetFloat());
+		SetText(sz);
 		SizeToContents();
 		m_flPreviousValue = m_pVar->GetFloat();
 	}
 
 private:
+	ConVar *m_pVar;
+	float m_flMinvalue;
+	float m_flMaxvalue;
+	float m_flIncrement;
 
-	ConVar		*m_pVar;
-	float		m_flMinvalue;
-	float		m_flMaxvalue;
-	float		m_flIncrement;
-
-	float		m_flPreviousValue;
-
+	float m_flPreviousValue;
 };
 
 class CDebugOptionsPage : public vgui::PropertyPage
 {
 	typedef vgui::PropertyPage BaseClass;
+
 public:
-	CDebugOptionsPage ( vgui::Panel *parent, const char *panelName )
-		: BaseClass( parent, panelName )
+	CDebugOptionsPage(vgui::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 	{
-		vgui::ivgui()->AddTickSignal( GetVPanel(), 250 );
+		vgui::ivgui()->AddTickSignal(GetVPanel(), 250);
 	}
 
-	virtual void OnTick( void )
+	virtual void OnTick(void)
 	{
 		BaseClass::OnTick();
 
-		if ( !IsVisible() )
+		if(!IsVisible())
 			return;
 
 		int c = m_LayoutItems.Count();
-		for ( int i = 0; i < c; i++ )
+		for(int i = 0; i < c; i++)
 		{
-			vgui::Panel *p = m_LayoutItems[ i ];
+			vgui::Panel *p = m_LayoutItems[i];
 			p->OnTick();
 		}
 	}
 
-	virtual void PerformLayout( void )
+	virtual void PerformLayout(void)
 	{
 		BaseClass::PerformLayout();
 
@@ -204,124 +204,120 @@ public:
 		int tall = GetTall();
 
 		// LoadControlSettings( va( "resource\\%s.res", kv->GetName() ) );
-		for ( int i = 0; i < c; i++ )
+		for(int i = 0; i < c; i++)
 		{
-			vgui::Panel *p = m_LayoutItems[ i ];
-			p->SetBounds( x, y, w, h );
+			vgui::Panel *p = m_LayoutItems[i];
+			p->SetBounds(x, y, w, h);
 
-			y += ( h + gap );
-			if ( y >= tall - h )
+			y += (h + gap);
+			if(y >= tall - h)
 			{
-				x += ( w + gap );
+				x += (w + gap);
 				y = 5;
 			}
 		}
 	}
 
-	void Init( KeyValues *kv )
+	void Init(KeyValues *kv)
 	{
 		// LoadControlSettings( va( "resource\\%s.res", kv->GetName() ) );
-		for (KeyValues *control = kv->GetFirstSubKey(); control != NULL; control = control->GetNextKey())
+		for(KeyValues *control = kv->GetFirstSubKey(); control != NULL; control = control->GetNextKey())
 		{
 			const char *t;
 
-			t = control->GetString( "command", "" );
-			if ( t && t[0] )
+			t = control->GetString("command", "");
+			if(t && t[0])
 			{
-				CDebugCommandButton *btn = new CDebugCommandButton( this, "CommandButton", control->GetName(), t );
-				m_LayoutItems.AddToTail( btn );
+				CDebugCommandButton *btn = new CDebugCommandButton(this, "CommandButton", control->GetName(), t);
+				m_LayoutItems.AddToTail(btn);
 				continue;
 			}
-			t = control->GetString( "togglecvar", "" );
-			if ( t && t[0] )
+			t = control->GetString("togglecvar", "");
+			if(t && t[0])
 			{
-				CDebugCommandCheckbox *checkbox = new CDebugCommandCheckbox( this, "CommandCheck", control->GetName(), t );
-				m_LayoutItems.AddToTail( checkbox );
+				CDebugCommandCheckbox *checkbox =
+					new CDebugCommandCheckbox(this, "CommandCheck", control->GetName(), t);
+				m_LayoutItems.AddToTail(checkbox);
 				continue;
 			}
-			t = control->GetString( "incrementcvar", "" );
-			if ( t && t[0] )
+			t = control->GetString("incrementcvar", "");
+			if(t && t[0])
 			{
-				CDebugIncrementCVarButton *increment = new CDebugIncrementCVarButton( this, "IncrementCVar", control->GetName(), t );
-				m_LayoutItems.AddToTail( increment );
+				CDebugIncrementCVarButton *increment =
+					new CDebugIncrementCVarButton(this, "IncrementCVar", control->GetName(), t);
+				m_LayoutItems.AddToTail(increment);
 				continue;
 			}
-
 		}
 	}
 
 private:
-
-	CUtlVector< vgui::Panel * >		m_LayoutItems;
+	CUtlVector<vgui::Panel *> m_LayoutItems;
 };
 
 class CDebugOptionsPanel : public vgui::PropertyDialog
 {
 	typedef vgui::PropertyDialog BaseClass;
+
 public:
-
-	CDebugOptionsPanel( vgui::Panel *parent, const char *panelName )
-		: BaseClass( parent, panelName )
+	CDebugOptionsPanel(vgui::Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 	{
-		SetTitle( "Debug Options", true );
+		SetTitle("Debug Options", true);
 
-		KeyValues *kv = new KeyValues( "DebugOptions" );
-		if ( kv )
+		KeyValues *kv = new KeyValues("DebugOptions");
+		if(kv)
 		{
-			if ( kv->LoadFromFile(g_pFullFileSystem, "scripts/DebugOptions.txt") )
+			if(kv->LoadFromFile(g_pFullFileSystem, "scripts/DebugOptions.txt"))
 			{
-				for (KeyValues *dat = kv->GetFirstSubKey(); dat != NULL; dat = dat->GetNextKey())
+				for(KeyValues *dat = kv->GetFirstSubKey(); dat != NULL; dat = dat->GetNextKey())
 				{
-					if ( !Q_strcasecmp( dat->GetName(), "width" ) )
+					if(!Q_strcasecmp(dat->GetName(), "width"))
 					{
-						SetWide( dat->GetInt() );
+						SetWide(dat->GetInt());
 						continue;
 					}
-					else if ( !Q_strcasecmp( dat->GetName(), "height" ) )
+					else if(!Q_strcasecmp(dat->GetName(), "height"))
 					{
-						SetTall( dat->GetInt() );
+						SetTall(dat->GetInt());
 						continue;
 					}
 
-					CDebugOptionsPage *page = new CDebugOptionsPage( this, dat->GetName() );
-					page->Init( dat );
+					CDebugOptionsPage *page = new CDebugOptionsPage(this, dat->GetName());
+					page->Init(dat);
 
-					AddPage( page, dat->GetName() );
+					AddPage(page, dat->GetName());
 				}
 			}
 			kv->deleteThis();
 		}
 
 		GetPropertySheet()->SetTabWidth(72);
-		SetPos( videomode->GetModeStereoWidth() - GetWide() - 10 , 10 );
-		SetVisible( true );
+		SetPos(videomode->GetModeStereoWidth() - GetWide() - 10, 10);
+		SetVisible(true);
 
-		if ( g_pFullFileSystem->FileExists( "resource/DebugOptionsPanel.res" ) )
+		if(g_pFullFileSystem->FileExists("resource/DebugOptionsPanel.res"))
 		{
-			LoadControlSettings( "resource/DebugOptionsPanel.res" );
+			LoadControlSettings("resource/DebugOptionsPanel.res");
 		}
 	}
 
-	void	Init( KeyValues *kv );
+	void Init(KeyValues *kv);
 };
 
-
-void CDebugOptionsPanel::Init( KeyValues *kv )
-{
-}
+void CDebugOptionsPanel::Init(KeyValues *kv) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 CDebugMenuButton::CDebugMenuButton(Panel *parent, const char *panelName, const char *text)
-	: BaseClass( parent, panelName, text )
+	: BaseClass(parent, panelName, text)
 {
 	MakePopup();
 
 	// Assume no menu
-	m_pMenu = new Menu( this, "DebugMenu" );
-	m_pMenu->AddMenuItem( "Debug Panel", "toggledebugpanel", parent );
-	m_pMenu->AddMenuItem( "Quit", "Quit", parent );
+	m_pMenu = new Menu(this, "DebugMenu");
+	m_pMenu->AddMenuItem("Debug Panel", "toggledebugpanel", parent);
+	m_pMenu->AddMenuItem("Quit", "Quit", parent);
 
 	MenuButton::SetMenu(m_pMenu);
 	SetOpenDirection(Menu::DOWN);
@@ -332,55 +328,54 @@ CDebugMenuButton::CDebugMenuButton(Panel *parent, const char *panelName, const c
 // Input  : *parent -
 //			*panelName -
 //-----------------------------------------------------------------------------
-CDebugSystemPanel::CDebugSystemPanel( Panel *parent, const char *panelName )
-	: BaseClass( parent, panelName )
+CDebugSystemPanel::CDebugSystemPanel(Panel *parent, const char *panelName) : BaseClass(parent, panelName)
 {
 
-	SetBounds( 0, 0, videomode->GetModeStereoWidth(), videomode->GetModeStereoHeight() );
+	SetBounds(0, 0, videomode->GetModeStereoWidth(), videomode->GetModeStereoHeight());
 
 	// Show arrow cursor while in this mode
-	SetCursor( vgui::dc_arrow );
-	SetVisible( false );
-	SetPaintEnabled( false );
-	SetPaintBackgroundEnabled( false );
+	SetCursor(vgui::dc_arrow);
+	SetVisible(false);
+	SetPaintEnabled(false);
+	SetPaintBackgroundEnabled(false);
 
-	m_pDebugMenu = new CDebugMenuButton( this, "Debug Menu", "Debug Menu" );
+	m_pDebugMenu = new CDebugMenuButton(this, "Debug Menu", "Debug Menu");
 
 	int h = 24;
 	// Locate it at top left
-	m_pDebugMenu->SetPos( 0, 0 );
-	m_pDebugMenu->SetSize( 110, h );
+	m_pDebugMenu->SetPos(0, 0);
+	m_pDebugMenu->SetSize(110, h);
 
-	m_hDebugOptions = new CDebugOptionsPanel( this, "DebugOptions" );
+	m_hDebugOptions = new CDebugOptionsPanel(this, "DebugOptions");
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Hook so we can force cursor visible
 // Input  : state -
 //-----------------------------------------------------------------------------
-void CDebugSystemPanel::SetVisible( bool state )
+void CDebugSystemPanel::SetVisible(bool state)
 {
-	BaseClass::SetVisible( state );
-	if ( state )
+	BaseClass::SetVisible(state);
+	if(state)
 	{
-		surface()->SetCursor( GetCursor() );
+		surface()->SetCursor(GetCursor());
 	}
 }
 
-void CDebugSystemPanel::OnCommand( const char *command )
+void CDebugSystemPanel::OnCommand(const char *command)
 {
-	if ( !Q_strcasecmp( command, "toggledebugpanel" ) )
+	if(!Q_strcasecmp(command, "toggledebugpanel"))
 	{
-		if ( m_hDebugOptions )
+		if(m_hDebugOptions)
 		{
-			m_hDebugOptions->SetVisible( !m_hDebugOptions->IsVisible() );
+			m_hDebugOptions->SetVisible(!m_hDebugOptions->IsVisible());
 		}
 		return;
 	}
-	else if ( !Q_strcasecmp( command, "quit" ) )
+	else if(!Q_strcasecmp(command, "quit"))
 	{
-		Cbuf_AddText( "quit\n" );
+		Cbuf_AddText("quit\n");
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }

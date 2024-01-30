@@ -26,7 +26,7 @@
 #include "mathlib/IceKey.h"
 #include <filesystem_tools.h>
 
-#define FF_TRYAGAIN 1
+#define FF_TRYAGAIN	   1
 #define FF_DONTPROCESS 2
 
 #undef GetCurrentDirectory
@@ -38,173 +38,168 @@ static bool g_Decrypt = false;
 static char g_ICEKey[16];
 static char g_Extension[16];
 
-static void Pause( void )
+static void Pause(void)
 {
-	if( !g_NoPause )
+	if(!g_NoPause)
 	{
-		printf( "Hit a key to continue\n" );
+		printf("Hit a key to continue\n");
 		getch();
 	}
 }
 
 static void Exit(const char *msg)
 {
-	fprintf( stderr, "%s", msg );
+	fprintf(stderr, "%s", msg);
 	Pause();
-	exit( -1 );
+	exit(-1);
 }
 
-static void Usage( void )
+static void Usage(void)
 {
-	fprintf( stderr, "Usage: vice [-quiet] [-nopause] [-encrypt key] [-decrypt key] [-newext name] file file2 . . .\n" );
-	fprintf( stderr, "-quiet   : don't print anything out, don't pause for input\n" );
-	fprintf( stderr, "-nopause : don't pause for input\n" );
-	fprintf( stderr, "-encrypt : encrypt files with given key\n" );
-	fprintf( stderr, "-decrypt : decypt files with given key\n" );
-	fprintf( stderr, "-newext  : new output file extension\n" );
+	fprintf(stderr, "Usage: vice [-quiet] [-nopause] [-encrypt key] [-decrypt key] [-newext name] file file2 . . .\n");
+	fprintf(stderr, "-quiet   : don't print anything out, don't pause for input\n");
+	fprintf(stderr, "-nopause : don't pause for input\n");
+	fprintf(stderr, "-encrypt : encrypt files with given key\n");
+	fprintf(stderr, "-decrypt : decypt files with given key\n");
+	fprintf(stderr, "-newext  : new output file extension\n");
 	Pause();
-	exit( -1 );
+	exit(-1);
 }
 
-
-bool Process_File( char *pInputBaseName, int maxlen )
+bool Process_File(char *pInputBaseName, int maxlen)
 {
-	Q_FixSlashes( pInputBaseName, '/' );
+	Q_FixSlashes(pInputBaseName, '/');
 	// Q_StripExtension( pInputBaseName, pInputBaseName, maxlen );
 
-	if( !g_Quiet )
+	if(!g_Quiet)
 	{
-		printf( "input file: %s\n", pInputBaseName );
+		printf("input file: %s\n", pInputBaseName);
 	}
 
-	FileHandle_t f = g_pFullFileSystem->Open(pInputBaseName, "rb", "vice" );
+	FileHandle_t f = g_pFullFileSystem->Open(pInputBaseName, "rb", "vice");
 
-	if (!f)
+	if(!f)
 		Error("Could not open input file");
 
 	int fileSize = g_pFullFileSystem->Size(f);
 
-	unsigned char *buffer = (unsigned char*)_alloca(fileSize);
+	unsigned char *buffer = (unsigned char *)_alloca(fileSize);
 
 	g_pFullFileSystem->Read(buffer, fileSize, f); // read into local buffer
-	g_pFullFileSystem->Close( f );	// close file after reading
+	g_pFullFileSystem->Close(f);				  // close file after reading
 
-	IceKey ice( 0 ); // level 0 = 64bit key
-	ice.set( (unsigned char*) g_ICEKey ); // set key
+	IceKey ice(0);						// level 0 = 64bit key
+	ice.set((unsigned char *)g_ICEKey); // set key
 
 	int blockSize = ice.blockSize();
 
-	unsigned char *temp = (unsigned char *)_alloca( fileSize );
+	unsigned char *temp = (unsigned char *)_alloca(fileSize);
 	unsigned char *p1 = buffer;
 	unsigned char *p2 = temp;
 
 	// encrypt data in 8 byte blocks
 	int bytesLeft = fileSize;
-	while ( bytesLeft >= blockSize )
+	while(bytesLeft >= blockSize)
 	{
-		if ( g_Encrypt )
+		if(g_Encrypt)
 		{
-			ice.encrypt( p1, p2 );
+			ice.encrypt(p1, p2);
 		}
-		else if ( g_Decrypt )
+		else if(g_Decrypt)
 		{
-			ice.decrypt( p1, p2 );
+			ice.decrypt(p1, p2);
 		}
 		else
 		{
-			memcpy( p2, p1, blockSize );
+			memcpy(p2, p1, blockSize);
 		}
 
 		bytesLeft -= blockSize;
-		p1+=blockSize;
-		p2+=blockSize;
+		p1 += blockSize;
+		p2 += blockSize;
 	}
 
-	memcpy( p2, p1, bytesLeft );
+	memcpy(p2, p1, bytesLeft);
 
-	Q_SetExtension( pInputBaseName, g_Extension, maxlen );
+	Q_SetExtension(pInputBaseName, g_Extension, maxlen);
 
-	if( !g_Quiet )
+	if(!g_Quiet)
 	{
-		printf( "output file: %s\n", pInputBaseName );
+		printf("output file: %s\n", pInputBaseName);
 	}
 
-	f = g_pFullFileSystem->Open(pInputBaseName, "wb", "vice" );
+	f = g_pFullFileSystem->Open(pInputBaseName, "wb", "vice");
 
-	if (!f)
+	if(!f)
 		Exit("Could not open output file");
 
-	g_pFullFileSystem->Write( temp, fileSize, f ); // read into local buffer
-	g_pFullFileSystem->Close( f );	// close file after reading
+	g_pFullFileSystem->Write(temp, fileSize, f); // read into local buffer
+	g_pFullFileSystem->Close(f);				 // close file after reading
 
 	return TRUE;
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-	CommandLine()->CreateCmdLine( argc, argv );
+	CommandLine()->CreateCmdLine(argc, argv);
 
-
-	if( argc < 2 )
+	if(argc < 2)
 	{
 		Usage();
 	}
 	char *pInputBaseName = NULL;
 	int i = 1;
-	strcpy( g_Extension, ".dat" );
-	while( i < argc )
+	strcpy(g_Extension, ".dat");
+	while(i < argc)
 	{
-		if( stricmp( argv[i], "-quiet" ) == 0 )
+		if(stricmp(argv[i], "-quiet") == 0)
 		{
 			i++;
 			g_Quiet = true;
 			g_NoPause = true; // no point in pausing if we aren't going to print anything out.
 		}
-		if( stricmp( argv[i], "-nopause" ) == 0 )
+		if(stricmp(argv[i], "-nopause") == 0)
 		{
 			i++;
 			g_NoPause = true;
 		}
-		if( stricmp( argv[i], "-encrypt" ) == 0 )
+		if(stricmp(argv[i], "-encrypt") == 0)
 		{
 			g_Encrypt = true;
 			i++;
 
-			if ( strlen( argv[i] ) != 8 )
+			if(strlen(argv[i]) != 8)
 			{
 				Exit("Error - ICE key must be a 8 char text.\n");
 			}
 
-			Q_strncpy( g_ICEKey, argv[i], sizeof(g_ICEKey) );
+			Q_strncpy(g_ICEKey, argv[i], sizeof(g_ICEKey));
 			i++;
-
 		}
-		if( stricmp( argv[i], "-decrypt" ) == 0 )
+		if(stricmp(argv[i], "-decrypt") == 0)
 		{
 			g_Decrypt = true;
 			i++;
 
-			if ( strlen( argv[i] ) != 8 )
+			if(strlen(argv[i]) != 8)
 			{
 				Exit("Error - ICE key must be a 8 char text.\n");
 			}
 
-			Q_strncpy( g_ICEKey, argv[i], sizeof(g_ICEKey) );
+			Q_strncpy(g_ICEKey, argv[i], sizeof(g_ICEKey));
 			i++;
-
 		}
-		if( stricmp( argv[i], "-newext" ) == 0 )
+		if(stricmp(argv[i], "-newext") == 0)
 		{
 			i++;
 
-			if ( strlen( argv[i] ) > 5 )
+			if(strlen(argv[i]) > 5)
 			{
 				Exit("Error - extension must be smaller than 4 chars.\n");
 			}
 
-			Q_strncpy( g_Extension, argv[i], sizeof(g_Extension) );
+			Q_strncpy(g_Extension, argv[i], sizeof(g_Extension));
 			i++;
-
 		}
 		else
 		{
@@ -212,62 +207,59 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if ( i >= argc )
+	if(i >= argc)
 	{
 		Exit("Error - missing files in commandline.\n");
 	}
 
-	CmdLib_InitFileSystem( argv[i] );
+	CmdLib_InitFileSystem(argv[i]);
 
-	g_pFullFileSystem->GetCurrentDirectory( gamedir, sizeof(gamedir) );
-	g_pFullFileSystem->AddSearchPath( gamedir, "vice" );
+	g_pFullFileSystem->GetCurrentDirectory(gamedir, sizeof(gamedir));
+	g_pFullFileSystem->AddSearchPath(gamedir, "vice");
 
+	Q_FixSlashes(gamedir, '/');
 
-	Q_FixSlashes( gamedir, '/' );
-
-	for( ; i < argc; i++ )
+	for(; i < argc; i++)
 	{
 		pInputBaseName = argv[i];
-		int maxlen = Q_strlen( pInputBaseName ) + 1;
+		int maxlen = Q_strlen(pInputBaseName) + 1;
 
-
-		if ( strstr( pInputBaseName, "*.") )
+		if(strstr(pInputBaseName, "*."))
 		{
-			char	search[ MAX_PATH ];
-			char	fname[ MAX_PATH ];
-			char	ext[_MAX_EXT];
+			char search[MAX_PATH];
+			char fname[MAX_PATH];
+			char ext[_MAX_EXT];
 
-			_splitpath( pInputBaseName, NULL, NULL, fname, ext ); //find extension wanted
-			fname[strlen(fname)-1] = 0; // remove *
+			_splitpath(pInputBaseName, NULL, NULL, fname, ext); // find extension wanted
+			fname[strlen(fname) - 1] = 0;						// remove *
 
-			sprintf( search, "%s\\*%s", gamedir, ext );
+			sprintf(search, "%s\\*%s", gamedir, ext);
 
-			Q_FixSlashes( search, '/' );
+			Q_FixSlashes(search, '/');
 
 			WIN32_FIND_DATA wfd;
 			HANDLE hResult;
 			memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
 
-			hResult = FindFirstFile( search, &wfd );
+			hResult = FindFirstFile(search, &wfd);
 
-			while ( hResult != INVALID_HANDLE_VALUE )
+			while(hResult != INVALID_HANDLE_VALUE)
 			{
-				if ( !strnicmp( fname, wfd.cFileName, strlen(fname) ) )
+				if(!strnicmp(fname, wfd.cFileName, strlen(fname)))
 				{
-					if ( !Process_File( wfd.cFileName, sizeof( wfd.cFileName ) ) )
+					if(!Process_File(wfd.cFileName, sizeof(wfd.cFileName)))
 						break;
 				}
 
-				if ( !FindNextFile( hResult, &wfd) )
+				if(!FindNextFile(hResult, &wfd))
 					break;
-
 			}
 
-			FindClose( hResult );
+			FindClose(hResult);
 		}
 		else
 		{
-			Process_File( pInputBaseName, maxlen );
+			Process_File(pInputBaseName, maxlen);
 		}
 	}
 

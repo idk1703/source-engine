@@ -21,13 +21,13 @@
 
 //----------------------------------------------------------------------------------------
 
-CSharedReplayContext::CSharedReplayContext( IReplayContext *pOwnerContext )
-:	m_pOwnerContext( pOwnerContext ),
-	m_pRecordingSessionManager( NULL ),
-	m_pRecordingSessionBlockManager( NULL ),
-	m_pErrorSystem( NULL ),
-	m_pThreadPool( NULL ),
-	m_bInit( false )
+CSharedReplayContext::CSharedReplayContext(IReplayContext *pOwnerContext)
+	: m_pOwnerContext(pOwnerContext),
+	  m_pRecordingSessionManager(NULL),
+	  m_pRecordingSessionBlockManager(NULL),
+	  m_pErrorSystem(NULL),
+	  m_pThreadPool(NULL),
+	  m_bInit(false)
 {
 }
 
@@ -39,22 +39,12 @@ CSharedReplayContext::~CSharedReplayContext()
 	delete m_pThreadPool;
 }
 
-bool CSharedReplayContext::Init( CreateInterfaceFn fnFactory )
+bool CSharedReplayContext::Init(CreateInterfaceFn fnFactory)
 {
-	m_strRelativeBasePath.Format(
-		"%s%c%s%c",
-		SUBDIR_REPLAY,
-		CORRECT_PATH_SEPARATOR,
-		m_strSubDir.Get(),
-		CORRECT_PATH_SEPARATOR
-	);
+	m_strRelativeBasePath.Format("%s%c%s%c", SUBDIR_REPLAY, CORRECT_PATH_SEPARATOR, m_strSubDir.Get(),
+								 CORRECT_PATH_SEPARATOR);
 
-	m_strBasePath.Format(
-		"%s%c%s",
-		g_pEngine->GetGameDir(),
-		CORRECT_PATH_SEPARATOR,
-		m_strRelativeBasePath.Get()
-	);
+	m_strBasePath.Format("%s%c%s", g_pEngine->GetGameDir(), CORRECT_PATH_SEPARATOR, m_strRelativeBasePath.Get());
 
 	// Owning context should have initialized these by now
 	// NOTE: Session manager init must come after block manager init since session manager
@@ -63,7 +53,7 @@ bool CSharedReplayContext::Init( CreateInterfaceFn fnFactory )
 	m_pRecordingSessionBlockManager->Init();
 	m_pRecordingSessionManager->Init();
 
-	if ( !InitThreadPool() )
+	if(!InitThreadPool())
 		return false;
 
 	m_bInit = true;
@@ -74,21 +64,21 @@ bool CSharedReplayContext::Init( CreateInterfaceFn fnFactory )
 bool CSharedReplayContext::InitThreadPool()
 {
 	// Create thread pool
-	Log( "Replay: Creating thread pool..." );
+	Log("Replay: Creating thread pool...");
 	IThreadPool *pThreadPool = CreateThreadPool();
-	if ( !pThreadPool )
+	if(!pThreadPool)
 	{
-		Log( "failed!\n" );
+		Log("failed!\n");
 		return false;
 	}
-	Log( "succeeded.\n" );
+	Log("succeeded.\n");
 
 	// Jon says: The client only really needs a single "ReplayContext" thread, so that the replay editor can write
 	//  data asynchronously. The game server does in fact require 4 threads, and can be configured to use more
 	//	via the replay_max_publish_threads convar.
 	int nMaxThreads = 1;
 
-	if ( g_pEngine->IsDedicated() )
+	if(g_pEngine->IsDedicated())
 	{
 		// Use the convar for max threads on servers
 		extern ConVar replay_max_publish_threads;
@@ -96,13 +86,13 @@ bool CSharedReplayContext::InitThreadPool()
 	}
 
 	// Start thread pool
-	Log( "Replay: Starting thread pool with %i threads...", nMaxThreads );
-	if ( !pThreadPool->Start( ThreadPoolStartParams_t( true, nMaxThreads ), "ReplayContext" ) )
+	Log("Replay: Starting thread pool with %i threads...", nMaxThreads);
+	if(!pThreadPool->Start(ThreadPoolStartParams_t(true, nMaxThreads), "ReplayContext"))
 	{
-		Log( "failed!\n" );
+		Log("failed!\n");
 		return false;
 	}
-	Log( "succeeded.\n" );
+	Log("succeeded.\n");
 
 	m_pThreadPool = pThreadPool;
 
@@ -116,9 +106,7 @@ void CSharedReplayContext::Shutdown()
 	m_pThreadPool->Stop();
 }
 
-void CSharedReplayContext::Think()
-{
-}
+void CSharedReplayContext::Think() {}
 
 const char *CSharedReplayContext::GetRelativeBaseDir() const
 {
@@ -137,14 +125,14 @@ const char *CSharedReplayContext::GetReplaySubDir() const
 
 void CSharedReplayContext::EnsureDirHierarchy()
 {
-	g_pFullFileSystem->CreateDirHierarchy( m_strBasePath.Get() );
+	g_pFullFileSystem->CreateDirHierarchy(m_strBasePath.Get());
 }
 
 //----------------------------------------------------------------------------------------
 
-bool RunJobToCompletion( IThreadPool *pThreadPool, CJob *pJob )
+bool RunJobToCompletion(IThreadPool *pThreadPool, CJob *pJob)
 {
-	pThreadPool->AddJob( pJob );
+	pThreadPool->AddJob(pJob);
 	pJob->WaitForFinish();
 	return pJob->Executed();
 }

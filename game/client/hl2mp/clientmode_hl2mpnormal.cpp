@@ -26,7 +26,6 @@
 //-----------------------------------------------------------------------------
 vgui::HScheme g_hVGuiCombineScheme = 0;
 
-
 // Instance the singleton and expose the interface to it.
 IClientMode *GetClientModeNormal()
 {
@@ -34,11 +33,11 @@ IClientMode *GetClientModeNormal()
 	return &g_ClientModeNormal;
 }
 
-ClientModeHL2MPNormal* GetClientModeHL2MPNormal()
+ClientModeHL2MPNormal *GetClientModeHL2MPNormal()
 {
-	Assert( dynamic_cast< ClientModeHL2MPNormal* >( GetClientModeNormal() ) );
+	Assert(dynamic_cast<ClientModeHL2MPNormal *>(GetClientModeNormal()));
 
-	return static_cast< ClientModeHL2MPNormal* >( GetClientModeNormal() );
+	return static_cast<ClientModeHL2MPNormal *>(GetClientModeNormal());
 }
 
 //-----------------------------------------------------------------------------
@@ -47,48 +46,47 @@ ClientModeHL2MPNormal* GetClientModeHL2MPNormal()
 class CHudViewport : public CBaseViewport
 {
 private:
-	DECLARE_CLASS_SIMPLE( CHudViewport, CBaseViewport );
+	DECLARE_CLASS_SIMPLE(CHudViewport, CBaseViewport);
 
 protected:
-	virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme)
 	{
-		BaseClass::ApplySchemeSettings( pScheme );
+		BaseClass::ApplySchemeSettings(pScheme);
 
-		gHUD.InitColors( pScheme );
+		gHUD.InitColors(pScheme);
 
-		SetPaintBackgroundEnabled( false );
+		SetPaintBackgroundEnabled(false);
 	}
 
-	virtual IViewPortPanel *CreatePanelByName( const char *szPanelName );
+	virtual IViewPortPanel *CreatePanelByName(const char *szPanelName);
 };
 
-int ClientModeHL2MPNormal::GetDeathMessageStartHeight( void )
+int ClientModeHL2MPNormal::GetDeathMessageStartHeight(void)
 {
 	return m_pViewport->GetDeathMessageStartHeight();
 }
 
-IViewPortPanel* CHudViewport::CreatePanelByName( const char *szPanelName )
+IViewPortPanel *CHudViewport::CreatePanelByName(const char *szPanelName)
 {
-	IViewPortPanel* newpanel = NULL;
+	IViewPortPanel *newpanel = NULL;
 
-	if ( Q_strcmp( PANEL_SCOREBOARD, szPanelName) == 0 )
+	if(Q_strcmp(PANEL_SCOREBOARD, szPanelName) == 0)
 	{
-		newpanel = new CHL2MPClientScoreBoardDialog( this );
+		newpanel = new CHL2MPClientScoreBoardDialog(this);
 		return newpanel;
 	}
-	else if ( Q_strcmp(PANEL_INFO, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_INFO, szPanelName) == 0)
 	{
-		newpanel = new CHL2MPTextWindow( this );
+		newpanel = new CHL2MPTextWindow(this);
 		return newpanel;
 	}
-	else if ( Q_strcmp(PANEL_SPECGUI, szPanelName) == 0 )
+	else if(Q_strcmp(PANEL_SPECGUI, szPanelName) == 0)
 	{
-		newpanel = new CHL2MPSpectatorGUI( this );
+		newpanel = new CHL2MPSpectatorGUI(this);
 		return newpanel;
 	}
 
-
-	return BaseClass::CreatePanelByName( szPanelName );
+	return BaseClass::CreatePanelByName(szPanelName);
 }
 
 //-----------------------------------------------------------------------------
@@ -97,17 +95,13 @@ IViewPortPanel* CHudViewport::CreatePanelByName( const char *szPanelName )
 ClientModeHL2MPNormal::ClientModeHL2MPNormal()
 {
 	m_pViewport = new CHudViewport();
-	m_pViewport->Start( gameuifuncs, gameeventmanager );
+	m_pViewport->Start(gameuifuncs, gameeventmanager);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-ClientModeHL2MPNormal::~ClientModeHL2MPNormal()
-{
-}
-
+ClientModeHL2MPNormal::~ClientModeHL2MPNormal() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -117,9 +111,10 @@ void ClientModeHL2MPNormal::Init()
 	BaseClass::Init();
 
 	// Load up the combine control panel scheme
-	g_hVGuiCombineScheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/CombinePanelScheme.res", "CombineScheme" );
-	if (!g_hVGuiCombineScheme)
+	g_hVGuiCombineScheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/CombinePanelScheme.res", "CombineScheme");
+	if(!g_hVGuiCombineScheme)
 	{
-		Warning( "Couldn't load combine panel scheme!\n" );
+		Warning("Couldn't load combine panel scheme!\n");
 	}
 }

@@ -18,9 +18,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CEditPathNodeDlg dialog
 
-
-CEditPathNodeDlg::CEditPathNodeDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CEditPathNodeDlg::IDD, pParent)
+CEditPathNodeDlg::CEditPathNodeDlg(CWnd *pParent /*=NULL*/) : CDialog(CEditPathNodeDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CEditPathNodeDlg)
 	m_bRetrigger = FALSE;
@@ -31,8 +29,7 @@ CEditPathNodeDlg::CEditPathNodeDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
-void CEditPathNodeDlg::DoDataExchange(CDataExchange* pDX)
+void CEditPathNodeDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CEditPathNodeDlg)
@@ -45,10 +42,9 @@ void CEditPathNodeDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CEditPathNodeDlg, CDialog)
 	//{{AFX_MSG_MAP(CEditPathNodeDlg)
-		// NOTE: the ClassWizard will add message map macros here
+	// NOTE: the ClassWizard will add message map macros here
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 

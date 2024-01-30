@@ -13,12 +13,11 @@
 #include "snd_wave_source.h"
 #include "snd_wave_mixer_private.h"
 #include "soundsystem/snd_audio_source.h"
-#include <mmsystem.h>		// wave format
-#include <mmreg.h>			// adpcm format
+#include <mmsystem.h> // wave format
+#include <mmreg.h>	  // adpcm format
 #include "soundsystem.h"
 #include "filesystem.h"
 #include "tier1/utlbuffer.h"
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Implements the RIFF i/o interface on stdio
@@ -26,68 +25,66 @@
 class StdIOReadBinary : public IFileReadBinary
 {
 public:
-	int open( const char *pFileName )
+	int open(const char *pFileName)
 	{
-		return (int)g_pFullFileSystem->Open( pFileName, "rb", "GAME" );
+		return (int)g_pFullFileSystem->Open(pFileName, "rb", "GAME");
 	}
 
-	int read( void *pOutput, int size, int file )
+	int read(void *pOutput, int size, int file)
 	{
-		if ( !file )
+		if(!file)
 			return 0;
 
-		return g_pFullFileSystem->Read( pOutput, size, (FileHandle_t)file );
+		return g_pFullFileSystem->Read(pOutput, size, (FileHandle_t)file);
 	}
 
-	void seek( int file, int pos )
+	void seek(int file, int pos)
 	{
-		if ( !file )
+		if(!file)
 			return;
 
-		g_pFullFileSystem->Seek( (FileHandle_t)file, pos, FILESYSTEM_SEEK_HEAD );
+		g_pFullFileSystem->Seek((FileHandle_t)file, pos, FILESYSTEM_SEEK_HEAD);
 	}
 
-	unsigned int tell( int file )
+	unsigned int tell(int file)
 	{
-		if ( !file )
+		if(!file)
 			return 0;
 
-		return g_pFullFileSystem->Tell( (FileHandle_t)file );
+		return g_pFullFileSystem->Tell((FileHandle_t)file);
 	}
 
-	unsigned int size( int file )
+	unsigned int size(int file)
 	{
-		if ( !file )
+		if(!file)
 			return 0;
 
-		return g_pFullFileSystem->Size( (FileHandle_t)file );
+		return g_pFullFileSystem->Size((FileHandle_t)file);
 	}
 
-	void close( int file )
+	void close(int file)
 	{
-		if ( !file )
+		if(!file)
 			return;
 
-		g_pFullFileSystem->Close( (FileHandle_t)file );
+		g_pFullFileSystem->Close((FileHandle_t)file);
 	}
 };
 
 static StdIOReadBinary io;
 
-#define RIFF_WAVE			MAKEID('W','A','V','E')
-#define WAVE_FMT			MAKEID('f','m','t',' ')
-#define WAVE_DATA			MAKEID('d','a','t','a')
-#define WAVE_FACT			MAKEID('f','a','c','t')
-#define WAVE_CUE			MAKEID('c','u','e',' ')
+#define RIFF_WAVE MAKEID('W', 'A', 'V', 'E')
+#define WAVE_FMT  MAKEID('f', 'm', 't', ' ')
+#define WAVE_DATA MAKEID('d', 'a', 't', 'a')
+#define WAVE_FACT MAKEID('f', 'a', 'c', 't')
+#define WAVE_CUE  MAKEID('c', 'u', 'e', ' ')
 
-void ChunkError( unsigned int id )
-{
-}
+void ChunkError(unsigned int id) {}
 
 //-----------------------------------------------------------------------------
 // Purpose: Init to empty wave
 //-----------------------------------------------------------------------------
-CAudioSourceWave::CAudioSourceWave( void )
+CAudioSourceWave::CAudioSourceWave(void)
 {
 	m_bits = 0;
 	m_rate = 0;
@@ -100,8 +97,7 @@ CAudioSourceWave::CAudioSourceWave( void )
 	m_sampleCount = 0;
 }
 
-
-CAudioSourceWave::~CAudioSourceWave( void )
+CAudioSourceWave::~CAudioSourceWave(void)
 {
 	// for non-standard waves, we store a copy of the header in RAM
 	delete[] m_pHeader;
@@ -113,7 +109,7 @@ CAudioSourceWave::~CAudioSourceWave( void )
 // Input  : *pHeaderBuffer - the RIFF fmt chunk
 //			headerSize - size of that chunk
 //-----------------------------------------------------------------------------
-void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
+void CAudioSourceWave::Init(const char *pHeaderBuffer, int headerSize)
 {
 	const WAVEFORMATEX *pHeader = (const WAVEFORMATEX *)pHeaderBuffer;
 
@@ -127,15 +123,15 @@ void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
 
 	// this can never be zero -- other functions divide by this.
 	// This should never happen, but avoid crashing
-	if ( m_sampleSize <= 0 )
+	if(m_sampleSize <= 0)
 		m_sampleSize = 1;
 
 	// For non-standard waves (like ADPCM) store the header, it has some useful data
-	if ( m_format != WAVE_FORMAT_PCM )
+	if(m_format != WAVE_FORMAT_PCM)
 	{
 		m_pHeader = new char[headerSize];
-		memcpy( m_pHeader, pHeader, headerSize );
-		if ( m_format == WAVE_FORMAT_ADPCM )
+		memcpy(m_pHeader, pHeader, headerSize);
+		if(m_format == WAVE_FORMAT_ADPCM)
 		{
 			// treat ADPCM sources as a file of bytes.  They are decoded by the mixer
 			m_sampleSize = 1;
@@ -147,9 +143,9 @@ void CAudioSourceWave::Init( const char *pHeaderBuffer, int headerSize )
 // Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
-float CAudioSourceWave::TrueSampleSize( void )
+float CAudioSourceWave::TrueSampleSize(void)
 {
-	if ( m_format == WAVE_FORMAT_ADPCM )
+	if(m_format == WAVE_FORMAT_ADPCM)
 	{
 		return 0.5f;
 	}
@@ -160,12 +156,12 @@ float CAudioSourceWave::TrueSampleSize( void )
 // Purpose: Total number of samples in this source
 // Output : int
 //-----------------------------------------------------------------------------
-int CAudioSourceWave::SampleCount( void )
+int CAudioSourceWave::SampleCount(void)
 {
-	if ( m_format == WAVE_FORMAT_ADPCM )
+	if(m_format == WAVE_FORMAT_ADPCM)
 	{
 		ADPCMWAVEFORMAT *pFormat = (ADPCMWAVEFORMAT *)m_pHeader;
-		int blockSize = ((pFormat->wSamplesPerBlock - 2) * pFormat->wfx.nChannels ) / 2;
+		int blockSize = ((pFormat->wSamplesPerBlock - 2) * pFormat->wfx.nChannels) / 2;
 		blockSize += 7 * pFormat->wfx.nChannels;
 
 		int blockCount = m_sampleCount / blockSize;
@@ -175,7 +171,7 @@ int CAudioSourceWave::SampleCount( void )
 		int sampleCount = blockCount * pFormat->wSamplesPerBlock;
 
 		// add remaining in a short block
-		if ( blockRem )
+		if(blockRem)
 		{
 			sampleCount += pFormat->wSamplesPerBlock - (((blockSize - blockRem) * 2) / m_channels);
 		}
@@ -190,15 +186,15 @@ int CAudioSourceWave::SampleCount( void )
 // Input  : *pData - pointer to sample data
 //			sampleCount - number of samples
 //-----------------------------------------------------------------------------
-void CAudioSourceWave::ConvertSamples( char *pData, int sampleCount )
+void CAudioSourceWave::ConvertSamples(char *pData, int sampleCount)
 {
-	if ( m_format == WAVE_FORMAT_PCM )
+	if(m_format == WAVE_FORMAT_PCM)
 	{
-		if ( m_bits == 8 )
+		if(m_bits == 8)
 		{
-			for ( int i = 0; i < sampleCount; i++ )
+			for(int i = 0; i < sampleCount; i++)
 			{
-				for ( int j = 0; j < m_channels; j++ )
+				for(int j = 0; j < m_channels; j++)
 				{
 					*pData = (unsigned char)((int)((unsigned)*pData) - 128);
 					pData++;
@@ -208,20 +204,19 @@ void CAudioSourceWave::ConvertSamples( char *pData, int sampleCount )
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose:
 // Input  : &walk -
 //-----------------------------------------------------------------------------
-void CAudioSourceWave::ParseSentence( IterateRIFF &walk )
+void CAudioSourceWave::ParseSentence(IterateRIFF &walk)
 {
-	CUtlBuffer buf( 0, 0, CUtlBuffer::TEXT_BUFFER );
+	CUtlBuffer buf(0, 0, CUtlBuffer::TEXT_BUFFER);
 
-	buf.EnsureCapacity( walk.ChunkSize() );
-	walk.ChunkRead( buf.Base() );
-	buf.SeekPut( CUtlBuffer::SEEK_HEAD, walk.ChunkSize() );
+	buf.EnsureCapacity(walk.ChunkSize());
+	walk.ChunkRead(buf.Base());
+	buf.SeekPut(CUtlBuffer::SEEK_HEAD, walk.ChunkSize());
 
-	m_Sentence.InitFromDataChunk( buf.Base(), buf.TellPut() );
+	m_Sentence.InitFromDataChunk(buf.Base(), buf.TellPut());
 }
 
 //-----------------------------------------------------------------------------
@@ -231,26 +226,26 @@ void CAudioSourceWave::ParseSentence( IterateRIFF &walk )
 //-----------------------------------------------------------------------------
 // UNDONE: Move parsing loop here and drop each chunk into a virtual function
 //			instead of this being virtual.
-void CAudioSourceWave::ParseChunk( IterateRIFF &walk, int chunkName )
+void CAudioSourceWave::ParseChunk(IterateRIFF &walk, int chunkName)
 {
-	switch( chunkName )
+	switch(chunkName)
 	{
 		case WAVE_CUE:
-			{
-				m_loopStart = ParseCueChunk( walk );
-			}
-			break;
+		{
+			m_loopStart = ParseCueChunk(walk);
+		}
+		break;
 		case WAVE_VALVEDATA:
-			{
-				ParseSentence( walk );
-			}
-			break;
+		{
+			ParseSentence(walk);
+		}
+		break;
 			// unknown/don't care
 		default:
-			{
-				ChunkError( walk.ChunkName() );
-			}
-			break;
+		{
+			ChunkError(walk.ChunkName());
+		}
+		break;
 	}
 }
 
@@ -258,7 +253,7 @@ void CAudioSourceWave::ParseChunk( IterateRIFF &walk, int chunkName )
 // Purpose:
 // Output : CSentence
 //-----------------------------------------------------------------------------
-CSentence *CAudioSourceWave::GetSentence( void )
+CSentence *CAudioSourceWave::GetSentence(void)
 {
 	return &m_Sentence;
 }
@@ -270,13 +265,13 @@ CSentence *CAudioSourceWave::GetSentence( void )
 //			formatSize - header size
 //			&walk - RIFF file
 //-----------------------------------------------------------------------------
-void CAudioSourceWave::Setup( const char *pFormatBuffer, int formatSize, IterateRIFF &walk )
+void CAudioSourceWave::Setup(const char *pFormatBuffer, int formatSize, IterateRIFF &walk)
 {
-	Init( pFormatBuffer, formatSize );
+	Init(pFormatBuffer, formatSize);
 
-	while ( walk.ChunkAvailable() )
+	while(walk.ChunkAvailable())
 	{
-		ParseChunk( walk, walk.ChunkName() );
+		ParseChunk(walk, walk.ChunkName());
 		walk.ChunkNext();
 	}
 }
@@ -288,24 +283,26 @@ void CAudioSourceWave::Setup( const char *pFormatBuffer, int formatSize, Iterate
 class CAudioSourceMemWave : public CAudioSourceWave
 {
 public:
-	CAudioSourceMemWave( void );
-	~CAudioSourceMemWave( void );
+	CAudioSourceMemWave(void);
+	~CAudioSourceMemWave(void);
 
 	// Create an instance (mixer) of this audio source
-	virtual CAudioMixer		*CreateMixer( void );
+	virtual CAudioMixer *CreateMixer(void);
 
-	virtual void			ParseChunk( IterateRIFF &walk, int chunkName );
-	void					ParseDataChunk( IterateRIFF &walk );
+	virtual void ParseChunk(IterateRIFF &walk, int chunkName);
+	void ParseDataChunk(IterateRIFF &walk);
 
-	virtual int				GetOutputData( void **pData, int samplePosition, int sampleCount, bool forward = true );
-	virtual float			GetRunningLength( void ) { return CAudioSourceWave::GetRunningLength(); };
+	virtual int GetOutputData(void **pData, int samplePosition, int sampleCount, bool forward = true);
+	virtual float GetRunningLength(void)
+	{
+		return CAudioSourceWave::GetRunningLength();
+	};
 
-	virtual int				GetNumChannels();
+	virtual int GetNumChannels();
 
 private:
-	char	*m_pData;		// wave data
+	char *m_pData; // wave data
 };
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Iterator for wave data (this is to abstract streaming/buffering)
@@ -313,33 +310,35 @@ private:
 class CWaveDataMemory : public CWaveData
 {
 public:
-	CWaveDataMemory( CAudioSourceWave &source ) : m_source(source) {}
-	~CWaveDataMemory( void ) {}
-	CAudioSourceWave &Source( void ) { return m_source; }
+	CWaveDataMemory(CAudioSourceWave &source) : m_source(source) {}
+	~CWaveDataMemory(void) {}
+	CAudioSourceWave &Source(void)
+	{
+		return m_source;
+	}
 
 	// this file is in memory, simply pass along the data request to the source
-	virtual int ReadSourceData( void **pData, int sampleIndex, int sampleCount, bool forward /*= true*/ )
+	virtual int ReadSourceData(void **pData, int sampleIndex, int sampleCount, bool forward /*= true*/)
 	{
-		return m_source.GetOutputData( pData, sampleIndex, sampleCount, forward );
+		return m_source.GetOutputData(pData, sampleIndex, sampleCount, forward);
 	}
-private:
-	CAudioSourceWave		&m_source;	// pointer to source
-};
 
+private:
+	CAudioSourceWave &m_source; // pointer to source
+};
 
 //-----------------------------------------------------------------------------
 // Purpose: NULL the wave data pointer (we haven't loaded yet)
 //-----------------------------------------------------------------------------
-CAudioSourceMemWave::CAudioSourceMemWave( void )
+CAudioSourceMemWave::CAudioSourceMemWave(void)
 {
 	m_pData = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Free any wave data we've allocated
 //-----------------------------------------------------------------------------
-CAudioSourceMemWave::~CAudioSourceMemWave( void )
+CAudioSourceMemWave::~CAudioSourceMemWave(void)
 {
 	delete[] m_pData;
 }
@@ -347,36 +346,35 @@ CAudioSourceMemWave::~CAudioSourceMemWave( void )
 //-----------------------------------------------------------------------------
 // Purpose: Creates a mixer and initializes it with an appropriate mixer
 //-----------------------------------------------------------------------------
-CAudioMixer *CAudioSourceMemWave::CreateMixer( void )
+CAudioMixer *CAudioSourceMemWave::CreateMixer(void)
 {
-	return CreateWaveMixer( new CWaveDataMemory(*this), m_format, m_channels, m_bits );
+	return CreateWaveMixer(new CWaveDataMemory(*this), m_format, m_channels, m_bits);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: parse chunks with unique processing to in-memory waves
 // Input  : &walk - RIFF file
 //-----------------------------------------------------------------------------
-void CAudioSourceMemWave::ParseChunk( IterateRIFF &walk, int chunkName )
+void CAudioSourceMemWave::ParseChunk(IterateRIFF &walk, int chunkName)
 {
-	switch( chunkName )
+	switch(chunkName)
 	{
-		// this is the audio data
-	case WAVE_DATA:
+			// this is the audio data
+		case WAVE_DATA:
 		{
-			ParseDataChunk( walk );
+			ParseDataChunk(walk);
 		}
-		return;
+			return;
 	}
 
-	CAudioSourceWave::ParseChunk( walk, chunkName );
+	CAudioSourceWave::ParseChunk(walk, chunkName);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: reads the actual sample data and parses it
 // Input  : &walk - RIFF file
 //-----------------------------------------------------------------------------
-void CAudioSourceMemWave::ParseDataChunk( IterateRIFF &walk )
+void CAudioSourceMemWave::ParseDataChunk(IterateRIFF &walk)
 {
 	int size = walk.ChunkSize();
 
@@ -384,17 +382,17 @@ void CAudioSourceMemWave::ParseDataChunk( IterateRIFF &walk )
 	m_pData = new char[size];
 
 	// load them into memory
-	walk.ChunkRead( m_pData );
+	walk.ChunkRead(m_pData);
 
-	if ( m_format == WAVE_FORMAT_PCM )
+	if(m_format == WAVE_FORMAT_PCM)
 	{
 		// number of samples loaded
 		m_sampleCount = size / m_sampleSize;
 
 		// some samples need to be converted
-		ConvertSamples( m_pData, m_sampleCount );
+		ConvertSamples(m_pData, m_sampleCount);
 	}
-	else if ( m_format == WAVE_FORMAT_ADPCM )
+	else if(m_format == WAVE_FORMAT_ADPCM)
 	{
 		// The ADPCM mixers treat the wave source as a flat file of bytes.
 		m_sampleSize = 1;
@@ -411,14 +409,12 @@ int CAudioSourceMemWave::GetNumChannels()
 	return m_channels;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Purpose: parses loop information from a cue chunk
 // Input  : &walk - RIFF iterator
 // Output : int loop start position
 //-----------------------------------------------------------------------------
-int CAudioSourceWave::ParseCueChunk( IterateRIFF &walk )
+int CAudioSourceWave::ParseCueChunk(IterateRIFF &walk)
 {
 	// Cue chunk as specified by RIFF format
 	// see $/research/jay/sound/riffnew.htm
@@ -438,40 +434,39 @@ int CAudioSourceWave::ParseCueChunk( IterateRIFF &walk )
 	// assume only one cue chunk, UNDONE: Test this assumption here?
 	cueCount = walk.ChunkReadInt();
 
-	walk.ChunkReadPartial( &cue_chunk, sizeof(cue_chunk) );
+	walk.ChunkReadPartial(&cue_chunk, sizeof(cue_chunk));
 	return cue_chunk.dwSampleOffset;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: get the wave header
 //-----------------------------------------------------------------------------
-void *CAudioSourceWave::GetHeader( void )
+void *CAudioSourceWave::GetHeader(void)
 {
 	return m_pHeader;
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: wrap the position wrt looping
 // Input  : samplePosition - absolute position
 // Output : int - looped position
 //-----------------------------------------------------------------------------
-int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
+int CAudioSourceWave::ConvertLoopedPosition(int samplePosition)
 {
 	// if the wave is looping and we're past the end of the sample
 	// convert to a position within the loop
 	// At the end of the loop, we return a short buffer, and subsequent call
 	// will loop back and get the rest of the buffer
-	if ( m_loopStart >= 0 )
+	if(m_loopStart >= 0)
 	{
-		if ( samplePosition >= m_sampleCount )
+		if(samplePosition >= m_sampleCount)
 		{
 			// size of loop
 			int loopSize = m_sampleCount - m_loopStart;
 			// subtract off starting bit of the wave
 			samplePosition -= m_loopStart;
 
-			if ( loopSize )
+			if(loopSize)
 			{
 				// "real" position in memory (mod off extra loops)
 				samplePosition = m_loopStart + (samplePosition % loopSize);
@@ -490,16 +485,16 @@ int CAudioSourceWave::ConvertLoopedPosition( int samplePosition )
 //			sampleCount - number of samples (not bytes)
 // Output : int - number of samples available
 //-----------------------------------------------------------------------------
-int CAudioSourceMemWave::GetOutputData( void **pData, int samplePosition, int sampleCount, bool forward /*= true*/ )
+int CAudioSourceMemWave::GetOutputData(void **pData, int samplePosition, int sampleCount, bool forward /*= true*/)
 {
 	// handle position looping
-	samplePosition = ConvertLoopedPosition( samplePosition );
+	samplePosition = ConvertLoopedPosition(samplePosition);
 
 	// how many samples are available (linearly not counting looping)
 	int availableSampleCount = m_sampleCount - samplePosition;
-	if ( !forward )
+	if(!forward)
 	{
-		if ( samplePosition >= m_sampleCount )
+		if(samplePosition >= m_sampleCount)
 		{
 			availableSampleCount = 0;
 		}
@@ -510,18 +505,18 @@ int CAudioSourceMemWave::GetOutputData( void **pData, int samplePosition, int sa
 	}
 
 	// may be asking for a sample out of range, clip at zero
-	if ( availableSampleCount < 0 )
+	if(availableSampleCount < 0)
 		availableSampleCount = 0;
 
 	// clip max output samples to max available
-	if ( sampleCount > availableSampleCount )
+	if(sampleCount > availableSampleCount)
 		sampleCount = availableSampleCount;
 
 	// byte offset in sample database
 	samplePosition *= m_sampleSize;
 
 	// if we are returning some samples, store the pointer
-	if ( sampleCount )
+	if(sampleCount)
 	{
 		*pData = m_pData + samplePosition;
 	}
@@ -536,42 +531,42 @@ int CAudioSourceMemWave::GetOutputData( void **pData, int samplePosition, int sa
 // Output : CAudioSource * - a new source
 //-----------------------------------------------------------------------------
 // UNDONE : Pool these and check for duplicates?
-CAudioSource *CreateWave( const char *pName )
+CAudioSource *CreateWave(const char *pName)
 {
 	char formatBuffer[1024];
-	InFileRIFF riff( pName, io );
+	InFileRIFF riff(pName, io);
 
-	if ( riff.RIFFName() != RIFF_WAVE )
+	if(riff.RIFFName() != RIFF_WAVE)
 	{
-		Warning("Bad RIFF file type %s\n", pName );
+		Warning("Bad RIFF file type %s\n", pName);
 		return NULL;
 	}
 
 	// set up the iterator for the whole file (root RIFF is a chunk)
-	IterateRIFF walk( riff, riff.RIFFSize() );
+	IterateRIFF walk(riff, riff.RIFFSize());
 
 	int format = 0;
 	int formatSize = 0;
 
 	// This chunk must be first as it contains the wave's format
 	// break out when we've parsed it
-	while ( walk.ChunkAvailable() && format == 0 )
+	while(walk.ChunkAvailable() && format == 0)
 	{
-		switch( walk.ChunkName() )
+		switch(walk.ChunkName())
 		{
-		case WAVE_FMT:
+			case WAVE_FMT:
 			{
-				if ( walk.ChunkSize() <= 1024 )
+				if(walk.ChunkSize() <= 1024)
 				{
-					walk.ChunkRead( formatBuffer );
+					walk.ChunkRead(formatBuffer);
 					formatSize = walk.ChunkSize();
 					format = ((WAVEFORMATEX *)formatBuffer)->wFormatTag;
 				}
 			}
 			break;
-		default:
+			default:
 			{
-				ChunkError( walk.ChunkName() );
+				ChunkError(walk.ChunkName());
 			}
 			break;
 		}
@@ -579,7 +574,7 @@ CAudioSource *CreateWave( const char *pName )
 	}
 
 	// Not really a WAVE file or no format chunk, bail
-	if ( !format )
+	if(!format)
 		return NULL;
 
 	CAudioSourceWave *pWave;
@@ -588,7 +583,7 @@ CAudioSource *CreateWave( const char *pName )
 	pWave = new CAudioSourceMemWave();
 
 	// init the wave source
-	pWave->Setup( formatBuffer, formatSize, walk );
+	pWave->Setup(formatBuffer, formatSize, walk);
 
 	return pWave;
 }
@@ -596,7 +591,7 @@ CAudioSource *CreateWave( const char *pName )
 //-----------------------------------------------------------------------------
 // Purpose: Wrapper for CreateWave()
 //-----------------------------------------------------------------------------
-CAudioSource *Audio_CreateMemoryWave( const char *pName )
+CAudioSource *Audio_CreateMemoryWave(const char *pName)
 {
-	return CreateWave( pName );
+	return CreateWave(pName);
 }

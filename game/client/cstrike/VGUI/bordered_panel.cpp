@@ -9,7 +9,7 @@
 
 #include "cbase.h"
 #include "bordered_panel.h"
-#include "backgroundpanel.h"	// rounded border support
+#include "backgroundpanel.h" // rounded border support
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -17,10 +17,10 @@
 void BorderedPanel::PaintBackground()
 {
 	int wide, tall;
-	GetSize( wide, tall );
+	GetSize(wide, tall);
 
-	DrawRoundedBackground( GetBgColor(), wide, tall );
-	DrawRoundedBorder( GetFgColor(), wide, tall );
+	DrawRoundedBackground(GetBgColor(), wide, tall);
+	DrawRoundedBorder(GetFgColor(), wide, tall);
 }
 
-DECLARE_BUILD_FACTORY( BorderedPanel );
+DECLARE_BUILD_FACTORY(BorderedPanel);

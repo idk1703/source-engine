@@ -20,24 +20,24 @@ void CKamikazeAward::getWinner()
 {
 	CEventListIterator it;
 
-	for (it=g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
+	for(it = g_pMatchInfo->eventList()->begin(); it != g_pMatchInfo->eventList()->end(); ++it)
 	{
-		if ((*it)->getType()==CLogEvent::SUICIDE || (*it)->getType()==CLogEvent::KILLED_BY_WORLD)
+		if((*it)->getType() == CLogEvent::SUICIDE || (*it)->getType() == CLogEvent::KILLED_BY_WORLD)
 		{
-			PID kami=(*it)->getArgument(0)->asPlayerGetPID();
+			PID kami = (*it)->getArgument(0)->asPlayerGetPID();
 			numdeaths[kami]++;
-			winnerID=kami;
-			fNoWinner=false;
+			winnerID = kami;
+			fNoWinner = false;
 		}
 	}
 
-	map<PID,int>::iterator kamiter;
+	map<PID, int>::iterator kamiter;
 
-	for (kamiter=numdeaths.begin();kamiter!=numdeaths.end();++kamiter)
+	for(kamiter = numdeaths.begin(); kamiter != numdeaths.end(); ++kamiter)
 	{
-		int currID=(*kamiter).first;
-		if (numdeaths[currID]>numdeaths[winnerID])
-			winnerID=currID;
+		int currID = (*kamiter).first;
+		if(numdeaths[currID] > numdeaths[winnerID])
+			winnerID = currID;
 	}
 }
 
@@ -46,7 +46,7 @@ void CKamikazeAward::getWinner()
 // Purpose:	writes html indicating that no one won this award
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CKamikazeAward::noWinner(CHTMLFile& html)
+void CKamikazeAward::noWinner(CHTMLFile &html)
 {
 	html.write("No one killed themselves during this match! Good work!");
 }
@@ -56,10 +56,10 @@ void CKamikazeAward::noWinner(CHTMLFile& html)
 // Purpose:	 reports how many times the winner killed him/herself
 // Input:	html - the html file to write to
 //------------------------------------------------------------------------------------------------------
-void CKamikazeAward::extendedinfo(CHTMLFile& html)
+void CKamikazeAward::extendedinfo(CHTMLFile &html)
 {
-	if (numdeaths[winnerID]==1)
-		html.write("%s suicided once.",winnerName.c_str());
+	if(numdeaths[winnerID] == 1)
+		html.write("%s suicided once.", winnerName.c_str());
 	else
-		html.write("%s was self-victimized %li times.",winnerName.c_str(),numdeaths[winnerID]);
+		html.write("%s was self-victimized %li times.", winnerName.c_str(), numdeaths[winnerID]);
 }

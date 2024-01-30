@@ -16,7 +16,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-
 //-----------------------------------------------------------------------------
 //
 // CDmeChannelRecordingMgr
@@ -28,7 +27,6 @@
 //-----------------------------------------------------------------------------
 static CDmeChannelRecordingMgr s_ChannelRecordingMgr;
 CDmeChannelRecordingMgr *g_pChannelRecordingMgr = &s_ChannelRecordingMgr;
-
 
 //-----------------------------------------------------------------------------
 // Constructor
@@ -42,22 +40,22 @@ CDmeChannelRecordingMgr::CDmeChannelRecordingMgr()
 	m_pRevealTarget = NULL;
 }
 
-
 //-----------------------------------------------------------------------------
 // Activates, deactivates layer recording.
 //-----------------------------------------------------------------------------
-void CDmeChannelRecordingMgr::StartLayerRecording( const char *pUndoRedoDesc, const DmeLog_TimeSelection_t *pTimeSelection )
+void CDmeChannelRecordingMgr::StartLayerRecording(const char *pUndoRedoDesc,
+												  const DmeLog_TimeSelection_t *pTimeSelection)
 {
-	g_pDataModel->StartUndo( pUndoRedoDesc, pUndoRedoDesc );
+	g_pDataModel->StartUndo(pUndoRedoDesc, pUndoRedoDesc);
 	m_bSavedUndoState = g_pDataModel->IsUndoEnabled();
-	g_pDataModel->SetUndoEnabled( false );
+	g_pDataModel->SetUndoEnabled(false);
 
-	Assert( !m_bActive );
-	Assert( m_LayerChannels.Count() == 0 );
+	Assert(!m_bActive);
+	Assert(m_LayerChannels.Count() == 0);
 	m_LayerChannels.Purge();
 	m_bActive = true;
-	m_bUseTimeSelection = ( pTimeSelection != NULL );
-	if ( pTimeSelection )
+	m_bUseTimeSelection = (pTimeSelection != NULL);
+	if(pTimeSelection)
 	{
 		m_TimeSelection = *pTimeSelection;
 	}
@@ -69,18 +67,18 @@ void CDmeChannelRecordingMgr::StartLayerRecording( const char *pUndoRedoDesc, co
 	m_TimeSelection.ResetTimeAdvancing();
 }
 
-void CDmeChannelRecordingMgr::FinishLayerRecording( float flThreshhold, bool bFlattenLayers /*=true*/ )
+void CDmeChannelRecordingMgr::FinishLayerRecording(float flThreshhold, bool bFlattenLayers /*=true*/)
 {
-	Assert( m_bActive );
+	Assert(m_bActive);
 
 	RemoveAllChannelsFromRecordingLayer();
 	m_bUseTimeSelection = false;
 	m_TimeSelection.ResetTimeAdvancing();
 
-	g_pDataModel->SetUndoEnabled( m_bSavedUndoState );
-	if ( bFlattenLayers )
+	g_pDataModel->SetUndoEnabled(m_bSavedUndoState);
+	if(bFlattenLayers)
 	{
-		FlattenLayers( flThreshhold );
+		FlattenLayers(flThreshhold);
 	}
 	g_pDataModel->FinishUndo();
 
@@ -91,26 +89,25 @@ void CDmeChannelRecordingMgr::FinishLayerRecording( float flThreshhold, bool bFl
 	m_PasteTarget.RemoveAll();
 }
 
-
 //-----------------------------------------------------------------------------
 // Adds a channel to the recording layer
 //-----------------------------------------------------------------------------
-void CDmeChannelRecordingMgr::AddChannelToRecordingLayer( CDmeChannel *pChannel, CDmeClip *pRoot, CDmeClip *pShot )
+void CDmeChannelRecordingMgr::AddChannelToRecordingLayer(CDmeChannel *pChannel, CDmeClip *pRoot, CDmeClip *pShot)
 {
-	Assert( pChannel->m_nRecordLayerIndex == -1 );
+	Assert(pChannel->m_nRecordLayerIndex == -1);
 
 	CDmeLog *pLog = pChannel->GetLog();
-	if ( !pLog )
+	if(!pLog)
 		return;
 
 	int nRecordLayerIndex = m_LayerChannels.AddToTail();
-	LayerChannelInfo_t& info = m_LayerChannels[nRecordLayerIndex];
+	LayerChannelInfo_t &info = m_LayerChannels[nRecordLayerIndex];
 	info.m_Channel = pChannel;
-	if ( pRoot )
+	if(pRoot)
 	{
-		if ( !pChannel->BuildClipStack( &info.m_ClipStack, pRoot, pShot ) )
+		if(!pChannel->BuildClipStack(&info.m_ClipStack, pRoot, pShot))
 		{
-			m_LayerChannels.Remove( nRecordLayerIndex );
+			m_LayerChannels.Remove(nRecordLayerIndex);
 			return;
 		}
 	}
@@ -120,63 +117,60 @@ void CDmeChannelRecordingMgr::AddChannelToRecordingLayer( CDmeChannel *pChannel,
 	// This operation is undoable
 	CEnableUndoScopeGuard guard;
 	pLog->AddNewLayer();
-	pChannel->SetMode( CM_RECORD );
+	pChannel->SetMode(CM_RECORD);
 }
-
 
 //-----------------------------------------------------------------------------
 // Removes all channels from the recording layer
 //-----------------------------------------------------------------------------
-void CDmeChannelRecordingMgr::RemoveAllChannelsFromRecordingLayer( )
+void CDmeChannelRecordingMgr::RemoveAllChannelsFromRecordingLayer()
 {
 	int c = m_LayerChannels.Count();
-	for ( int i = 0 ; i < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
-		CDmeChannel *pChannel = m_LayerChannels[ i ].m_Channel.Get();
-		if ( !pChannel )
+		CDmeChannel *pChannel = m_LayerChannels[i].m_Channel.Get();
+		if(!pChannel)
 			continue;
 
 		CDmeLog *pLog = pChannel->GetLog();
-		if ( pLog && IsUsingTimeSelection() )
+		if(pLog && IsUsingTimeSelection())
 		{
 			// Computes local times for the time selection
 			DmeLog_TimeSelection_t timeSelection;
-			GetLocalTimeSelection( timeSelection, pChannel->m_nRecordLayerIndex );
-			pLog->FinishTimeSelection( pChannel->GetCurrentTime(), timeSelection );
+			GetLocalTimeSelection(timeSelection, pChannel->m_nRecordLayerIndex);
+			pLog->FinishTimeSelection(pChannel->GetCurrentTime(), timeSelection);
 		}
 		pChannel->m_nRecordLayerIndex = -1;
-		pChannel->SetMode( CM_PLAY );
+		pChannel->SetMode(CM_PLAY);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Flattens recorded layers into the base layer
 //-----------------------------------------------------------------------------
-void CDmeChannelRecordingMgr::FlattenLayers( float flThreshhold )
+void CDmeChannelRecordingMgr::FlattenLayers(float flThreshhold)
 {
 	int nFlags = 0;
-	if ( IsUsingDetachedTimeSelection() && IsTimeAdvancing() )
+	if(IsUsingDetachedTimeSelection() && IsTimeAdvancing())
 	{
 		nFlags |= CDmeLog::FLATTEN_NODISCONTINUITY_FIXUP;
 	}
 
 	int c = m_LayerChannels.Count();
-	for ( int i = 0 ; i < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
-		CDmeChannel *pChannel = m_LayerChannels[ i ].m_Channel.Get();
-		if ( !pChannel )
+		CDmeChannel *pChannel = m_LayerChannels[i].m_Channel.Get();
+		if(!pChannel)
 			continue;
 
 		CDmeLog *pLog = pChannel->GetLog();
-		Assert( pLog );
-		if ( !pLog )
+		Assert(pLog);
+		if(!pLog)
 			continue;
 
-		pLog->FlattenLayers( flThreshhold, nFlags );
+		pLog->FlattenLayers(flThreshhold, nFlags);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Used to iterate over all channels currently being recorded
@@ -186,88 +180,85 @@ int CDmeChannelRecordingMgr::GetLayerRecordingChannelCount()
 	return m_LayerChannels.Count();
 }
 
-CDmeChannel* CDmeChannelRecordingMgr::GetLayerRecordingChannel( int nIndex )
+CDmeChannel *CDmeChannelRecordingMgr::GetLayerRecordingChannel(int nIndex)
 {
 	return m_LayerChannels[nIndex].m_Channel.Get();
 }
 
-
 //-----------------------------------------------------------------------------
 // Computes time selection info in log time for a particular recorded channel
 //-----------------------------------------------------------------------------
-void CDmeChannelRecordingMgr::GetLocalTimeSelection( DmeLog_TimeSelection_t& selection, int nIndex )
+void CDmeChannelRecordingMgr::GetLocalTimeSelection(DmeLog_TimeSelection_t &selection, int nIndex)
 {
-	Assert( m_bUseTimeSelection );
-	LayerChannelInfo_t& info = m_LayerChannels[nIndex];
+	Assert(m_bUseTimeSelection);
+	LayerChannelInfo_t &info = m_LayerChannels[nIndex];
 	selection = m_TimeSelection;
-	for ( int i = 0; i < TS_TIME_COUNT; ++i )
+	for(int i = 0; i < TS_TIME_COUNT; ++i)
 	{
-		selection.m_nTimes[i] = CDmeClip::ToChildMediaTime( info.m_ClipStack, selection.m_nTimes[i], false );
+		selection.m_nTimes[i] = CDmeClip::ToChildMediaTime(info.m_ClipStack, selection.m_nTimes[i], false);
 	}
 	selection.m_pPresetValue = info.m_pPresetValue;
 }
 
-
 //-----------------------------------------------------------------------------
 // Methods which control various aspects of recording
 //-----------------------------------------------------------------------------
-void CDmeChannelRecordingMgr::UpdateTimeAdvancing( bool bPaused, DmeTime_t tCurTime )
+void CDmeChannelRecordingMgr::UpdateTimeAdvancing(bool bPaused, DmeTime_t tCurTime)
 {
-	Assert( m_bActive && m_bUseTimeSelection );
-	if ( !bPaused && !m_TimeSelection.IsTimeAdvancing() )
+	Assert(m_bActive && m_bUseTimeSelection);
+	if(!bPaused && !m_TimeSelection.IsTimeAdvancing())
 	{
 		m_TimeSelection.StartTimeAdvancing();
 
 		// blow away logs after curtime
 		int nCount = m_LayerChannels.Count();
-		for ( int i = 0; i < nCount; ++i )
+		for(int i = 0; i < nCount; ++i)
 		{
-			LayerChannelInfo_t& info = m_LayerChannels[i];
-			DmeTime_t t = CDmeClip::ToChildMediaTime( info.m_ClipStack, tCurTime, false );
-			info.m_Channel->GetLog()->RemoveKeys( t, DMETIME_MAXTIME );
+			LayerChannelInfo_t &info = m_LayerChannels[i];
+			DmeTime_t t = CDmeClip::ToChildMediaTime(info.m_ClipStack, tCurTime, false);
+			info.m_Channel->GetLog()->RemoveKeys(t, DMETIME_MAXTIME);
 		}
 	}
 }
 
-void CDmeChannelRecordingMgr::UpdateRecordingTimeSelectionTimes( const DmeLog_TimeSelection_t& timeSelection )
+void CDmeChannelRecordingMgr::UpdateRecordingTimeSelectionTimes(const DmeLog_TimeSelection_t &timeSelection)
 {
-	Assert( m_bActive );
-	for ( int i = 0; i < TS_TIME_COUNT; ++i )
+	Assert(m_bActive);
+	for(int i = 0; i < TS_TIME_COUNT; ++i)
 	{
 		m_TimeSelection.m_nTimes[i] = timeSelection.m_nTimes[i];
 	}
 	m_TimeSelection.m_nResampleInterval = timeSelection.m_nResampleInterval;
 }
 
-void CDmeChannelRecordingMgr::SetIntensityOnAllLayers( float flIntensity )
+void CDmeChannelRecordingMgr::SetIntensityOnAllLayers(float flIntensity)
 {
 	m_TimeSelection.m_flIntensity = flIntensity;
 }
 
-void CDmeChannelRecordingMgr::SetRecordingMode( RecordingMode_t mode )
+void CDmeChannelRecordingMgr::SetRecordingMode(RecordingMode_t mode)
 {
-	m_TimeSelection.SetRecordingMode( mode );
+	m_TimeSelection.SetRecordingMode(mode);
 }
 
-void CDmeChannelRecordingMgr::SetPresetValue( CDmeChannel* pChannel, CDmAttribute *pPresetValue )
+void CDmeChannelRecordingMgr::SetPresetValue(CDmeChannel *pChannel, CDmAttribute *pPresetValue)
 {
-	Assert( pChannel->m_nRecordLayerIndex != -1 );
-	m_LayerChannels[ pChannel->m_nRecordLayerIndex ].m_pPresetValue = pPresetValue;
+	Assert(pChannel->m_nRecordLayerIndex != -1);
+	m_LayerChannels[pChannel->m_nRecordLayerIndex].m_pPresetValue = pPresetValue;
 }
-
 
 //-----------------------------------------------------------------------------
 // Methods to query aspects of recording
 //-----------------------------------------------------------------------------
 bool CDmeChannelRecordingMgr::IsUsingDetachedTimeSelection() const
 {
-	Assert( m_bActive );
+	Assert(m_bActive);
 	return !m_TimeSelection.m_bAttachedMode;
 }
 
 bool CDmeChannelRecordingMgr::IsTimeAdvancing() const
 {
-	Assert( m_bActive );
+	Assert(m_bActive);
 	return m_TimeSelection.IsTimeAdvancing();
 }
 
@@ -281,21 +272,21 @@ bool CDmeChannelRecordingMgr::ShouldRecordUsingTimeSelection() const
 	return m_bUseTimeSelection && m_bActive;
 }
 
-void CDmeChannelRecordingMgr::SetProceduralTarget( int nProceduralMode, const CDmAttribute *pTarget )
+void CDmeChannelRecordingMgr::SetProceduralTarget(int nProceduralMode, const CDmAttribute *pTarget)
 {
 	m_nRevealType = nProceduralMode;
 	m_pRevealTarget = pTarget;
 	m_PasteTarget.RemoveAll();
 }
 
-void CDmeChannelRecordingMgr::SetProceduralTarget( int nProceduralMode, const CUtlVector< KeyValues * >& list )
+void CDmeChannelRecordingMgr::SetProceduralTarget(int nProceduralMode, const CUtlVector<KeyValues *> &list)
 {
 	m_nRevealType = nProceduralMode;
 	m_pRevealTarget = NULL;
 	m_PasteTarget.RemoveAll();
-	for ( int i = 0; i < list.Count(); ++i )
+	for(int i = 0; i < list.Count(); ++i)
 	{
-		m_PasteTarget.AddToTail( list[ i ] );
+		m_PasteTarget.AddToTail(list[i]);
 	}
 }
 
@@ -306,11 +297,11 @@ int CDmeChannelRecordingMgr::GetProceduralType() const
 
 const CDmAttribute *CDmeChannelRecordingMgr::GetProceduralTarget() const
 {
-	Assert( m_pRevealTarget );
+	Assert(m_pRevealTarget);
 	return m_pRevealTarget;
 }
 
-const CUtlVector< KeyValues * > &CDmeChannelRecordingMgr::GetPasteTarget() const
+const CUtlVector<KeyValues *> &CDmeChannelRecordingMgr::GetPasteTarget() const
 {
 	return m_PasteTarget;
 }
@@ -318,35 +309,32 @@ const CUtlVector< KeyValues * > &CDmeChannelRecordingMgr::GetPasteTarget() const
 //-----------------------------------------------------------------------------
 // Expose this class to the scene database
 //-----------------------------------------------------------------------------
-IMPLEMENT_ELEMENT_FACTORY( DmeChannel, CDmeChannel );
-
+IMPLEMENT_ELEMENT_FACTORY(DmeChannel, CDmeChannel);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void CDmeChannel::OnConstruction()
 {
-	m_nRecordLayerIndex		= -1;
-	m_nNextCurveType		= CURVE_DEFAULT;
-	m_tCurrentTime			= DMETIME_INVALID;
-	m_tPreviousTime			= DMETIME_INVALID;
-	m_timeOutsideTimeframe	= DMETIME_INVALID;
+	m_nRecordLayerIndex = -1;
+	m_nNextCurveType = CURVE_DEFAULT;
+	m_tCurrentTime = DMETIME_INVALID;
+	m_tPreviousTime = DMETIME_INVALID;
+	m_timeOutsideTimeframe = DMETIME_INVALID;
 
-	m_fromElement	.Init( this, "fromElement",		FATTRIB_HAS_CALLBACK | FATTRIB_NEVERCOPY );
-	m_fromAttribute	.Init( this, "fromAttribute",	FATTRIB_TOPOLOGICAL | FATTRIB_HAS_CALLBACK );
-	m_fromIndex		.Init( this, "fromIndex",		FATTRIB_TOPOLOGICAL );
-	m_toElement		.Init( this, "toElement",		FATTRIB_HAS_CALLBACK | FATTRIB_NEVERCOPY );
-	m_toAttribute	.Init( this, "toAttribute",		FATTRIB_TOPOLOGICAL | FATTRIB_HAS_CALLBACK );
-	m_toIndex		.Init( this, "toIndex",			FATTRIB_TOPOLOGICAL );
-	m_mode			.InitAndSet( this, "mode", (int)CM_PASS );
-	m_log			.Init( this, "log" );
-	m_FromAttributeHandle	= DMATTRIBUTE_HANDLE_INVALID;
-	m_ToAttributeHandle		= DMATTRIBUTE_HANDLE_INVALID;
+	m_fromElement.Init(this, "fromElement", FATTRIB_HAS_CALLBACK | FATTRIB_NEVERCOPY);
+	m_fromAttribute.Init(this, "fromAttribute", FATTRIB_TOPOLOGICAL | FATTRIB_HAS_CALLBACK);
+	m_fromIndex.Init(this, "fromIndex", FATTRIB_TOPOLOGICAL);
+	m_toElement.Init(this, "toElement", FATTRIB_HAS_CALLBACK | FATTRIB_NEVERCOPY);
+	m_toAttribute.Init(this, "toAttribute", FATTRIB_TOPOLOGICAL | FATTRIB_HAS_CALLBACK);
+	m_toIndex.Init(this, "toIndex", FATTRIB_TOPOLOGICAL);
+	m_mode.InitAndSet(this, "mode", (int)CM_PASS);
+	m_log.Init(this, "log");
+	m_FromAttributeHandle = DMATTRIBUTE_HANDLE_INVALID;
+	m_ToAttributeHandle = DMATTRIBUTE_HANDLE_INVALID;
 }
 
-void CDmeChannel::OnDestruction()
-{
-}
+void CDmeChannel::OnDestruction() {}
 
 int CDmeChannel::GetFromArrayIndex() const
 {
@@ -362,11 +350,11 @@ void CDmeChannel::Play()
 {
 	CDmAttribute *pToAttr = GetToAttribute();
 
-	if ( pToAttr == NULL )
+	if(pToAttr == NULL)
 		return;
 
 	CDmeLog *pLog = GetLog();
-	if ( !pLog )
+	if(!pLog)
 		return;
 
 	DmeTime_t time = GetCurrentTime();
@@ -375,70 +363,70 @@ void CDmeChannel::Play()
 	DmeTime_t tn = pLog->GetEndTime();
 
 	PlayMode_t pmode = PM_HOLD;
-	switch ( pmode )
+	switch(pmode)
 	{
-	case PM_HOLD:
-		time = clamp( time, t0, tn );
-		break;
+		case PM_HOLD:
+			time = clamp(time, t0, tn);
+			break;
 
-	case PM_LOOP:
-		if ( tn == t0 )
-		{
-			time = t0;
-		}
-		else
-		{
-			time -= t0;
-			time = time % ( tn - t0 );
-			time += t0;
-		}
-		break;
+		case PM_LOOP:
+			if(tn == t0)
+			{
+				time = t0;
+			}
+			else
+			{
+				time -= t0;
+				time = time % (tn - t0);
+				time += t0;
+			}
+			break;
 	}
 
-	// We might not want to do it this way, but this makes empty logs not get in the way if there is a valid pFromAttr
+		// We might not want to do it this way, but this makes empty logs not get in the way if there is a valid
+		// pFromAttr
 #if 1
-	if ( pLog->IsEmpty() && !pLog->HasDefaultValue() &&
-		GetFromAttribute() != NULL )
+	if(pLog->IsEmpty() && !pLog->HasDefaultValue() && GetFromAttribute() != NULL)
 	{
 		Pass();
 		return;
 	}
 #endif
 
-	pLog->GetValue( time, pToAttr, m_toIndex.Get() );
+	pLog->GetValue(time, pToAttr, m_toIndex.Get());
 }
 
 void CDmeChannel::Pass()
 {
 	CDmAttribute *pFromAttr = GetFromAttribute();
 	CDmAttribute *pToAttr = GetToAttribute();
-	if ( !pFromAttr || !pToAttr )
+	if(!pFromAttr || !pToAttr)
 		return;
 
-	if ( pFromAttr == pToAttr )
+	if(pFromAttr == pToAttr)
 		return;
 
 	DmAttributeType_t type = pFromAttr->GetType();
 	const void *pValue = NULL;
-	if ( IsArrayType( type ) )
+	if(IsArrayType(type))
 	{
-		CDmrGenericArray array( pFromAttr );
-		pValue = array.GetUntyped( m_fromIndex.Get() );
-		type = ArrayTypeToValueType( type );
+		CDmrGenericArray array(pFromAttr);
+		pValue = array.GetUntyped(m_fromIndex.Get());
+		type = ArrayTypeToValueType(type);
 	}
 	else
 	{
 		pValue = pFromAttr->GetValueUntyped();
 	}
 
-	if ( IsArrayType( pToAttr->GetType() ) )
+	if(IsArrayType(pToAttr->GetType()))
 	{
-		CDmrGenericArray array( pToAttr );
-		array.Set( m_toIndex.Get(), type, pValue );
+		CDmrGenericArray array(pToAttr);
+		array.Set(m_toIndex.Get(), type, pValue);
 	}
 	else
 	{
-		pToAttr->SetValue( type, pValue );
+		pToAttr->SetValue(type, pValue);
 	}
 }
 
@@ -447,89 +435,87 @@ void CDmeChannel::Pass()
 //-----------------------------------------------------------------------------
 bool CDmeChannel::IsDirty()
 {
-	if ( BaseClass::IsDirty() )
+	if(BaseClass::IsDirty())
 		return true;
 
-	switch( GetMode() )
+	switch(GetMode())
 	{
-	case CM_PLAY:
-		return true;
-
-	case CM_RECORD:
-		if ( m_nRecordLayerIndex != -1 )
+		case CM_PLAY:
 			return true;
 
-		// NOTE: Fall through!
-	case CM_PASS:
+		case CM_RECORD:
+			if(m_nRecordLayerIndex != -1)
+				return true;
+
+			// NOTE: Fall through!
+		case CM_PASS:
 		{
 			CDmAttribute *pFromAttr = GetFromAttribute();
-			if ( pFromAttr && pFromAttr->IsFlagSet( FATTRIB_OPERATOR_DIRTY ) )
+			if(pFromAttr && pFromAttr->IsFlagSet(FATTRIB_OPERATOR_DIRTY))
 				return true;
 		}
 		break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 	return false;
 }
 
-
 void CDmeChannel::Operate()
 {
-	VPROF( "CDmeChannel::Operate" );
+	VPROF("CDmeChannel::Operate");
 
-	switch ( GetMode() )
+	switch(GetMode())
 	{
-	case CM_OFF:
-		return;
+		case CM_OFF:
+			return;
 
-	case CM_PLAY:
-		Play();
-		return;
+		case CM_PLAY:
+			Play();
+			return;
 
-	case CM_RECORD:
-		Record();
-		return;
+		case CM_RECORD:
+			Record();
+			return;
 
-	case CM_PASS:
-		Pass();
-		return;
+		case CM_PASS:
+			Pass();
+			return;
 	}
 }
 
-void CDmeChannel::GetInputAttributes( CUtlVector< CDmAttribute * > &attrs )
+void CDmeChannel::GetInputAttributes(CUtlVector<CDmAttribute *> &attrs)
 {
 	ChannelMode_t mode = GetMode();
-	if ( mode == CM_OFF || mode == CM_PLAY )
+	if(mode == CM_OFF || mode == CM_PLAY)
 		return; // off and play ignore inputs
 
 	CDmAttribute *pAttr = GetFromAttribute();
-	if ( pAttr != NULL )
+	if(pAttr != NULL)
 	{
-		attrs.AddToTail( pAttr );
+		attrs.AddToTail(pAttr);
 	}
 }
 
-void CDmeChannel::GetOutputAttributes( CUtlVector< CDmAttribute * > &attrs )
+void CDmeChannel::GetOutputAttributes(CUtlVector<CDmAttribute *> &attrs)
 {
 	ChannelMode_t mode = GetMode();
-	if ( mode == CM_OFF )
+	if(mode == CM_OFF)
 		return; // off ignores inputs
 
-	if ( mode == CM_RECORD || mode == CM_PASS )
+	if(mode == CM_RECORD || mode == CM_PASS)
 	{
-		if ( GetFromAttribute() == GetToAttribute() )
+		if(GetFromAttribute() == GetToAttribute())
 			return; // record/pass from and to the same attribute doesn't write anything
 	}
 
 	CDmAttribute *pAttr = GetToAttribute();
-	if ( pAttr != NULL )
+	if(pAttr != NULL)
 	{
-		attrs.AddToTail( pAttr );
+		attrs.AddToTail(pAttr);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // accessors
@@ -544,73 +530,72 @@ CDmElement *CDmeChannel::GetToElement() const
 	return m_toElement;
 }
 
-void CDmeChannel::SetLog( CDmeLog *pLog )
+void CDmeChannel::SetLog(CDmeLog *pLog)
 {
 	m_log = pLog;
 }
 
-CDmeLog *CDmeChannel::CreateLog( DmAttributeType_t type )
+CDmeLog *CDmeChannel::CreateLog(DmAttributeType_t type)
 {
-	CDmeLog *log = CDmeLog::CreateLog( type, GetFileId() );
-	m_log.Set( log );
+	CDmeLog *log = CDmeLog::CreateLog(type, GetFileId());
+	m_log.Set(log);
 	return log;
 }
 
-// HACK:  This is an evil hack since the element and attribute change sequentially, but they really need to change in lockstep or else you're looking
+// HACK:  This is an evil hack since the element and attribute change sequentially, but they really need to change in
+// lockstep or else you're looking
 //  up an attribute from some other element or vice versa.
 
-
-void CDmeChannel::SetInput( CDmElement* pElement, const char* pAttribute, int index )
+void CDmeChannel::SetInput(CDmElement *pElement, const char *pAttribute, int index)
 {
-	m_fromElement.Set( pElement );
-	m_fromAttribute.Set( pAttribute );
-	m_fromIndex.Set( index );
+	m_fromElement.Set(pElement);
+	m_fromAttribute.Set(pAttribute);
+	m_fromIndex.Set(index);
 	SetupFromAttribute();
 }
 
-void CDmeChannel::SetOutput( CDmElement* pElement, const char* pAttribute, int index )
+void CDmeChannel::SetOutput(CDmElement *pElement, const char *pAttribute, int index)
 {
-	m_toElement.Set( pElement );
-	m_toAttribute.Set( pAttribute );
-	m_toIndex.Set( index );
+	m_toElement.Set(pElement);
+	m_toAttribute.Set(pAttribute);
+	m_toIndex.Set(index);
 	SetupToAttribute();
 }
 
-void CDmeChannel::SetInput( CDmAttribute *pAttribute, int index )
+void CDmeChannel::SetInput(CDmAttribute *pAttribute, int index)
 {
-	if ( pAttribute )
+	if(pAttribute)
 	{
-		SetInput( pAttribute->GetOwner(), pAttribute->GetName(), index );
+		SetInput(pAttribute->GetOwner(), pAttribute->GetName(), index);
 	}
 	else
 	{
-		SetInput( NULL, "", index );
+		SetInput(NULL, "", index);
 	}
 }
 
-void CDmeChannel::SetOutput( CDmAttribute *pAttribute, int index )
+void CDmeChannel::SetOutput(CDmAttribute *pAttribute, int index)
 {
-	if ( pAttribute )
+	if(pAttribute)
 	{
-		SetOutput( pAttribute->GetOwner(), pAttribute->GetName(), index );
+		SetOutput(pAttribute->GetOwner(), pAttribute->GetName(), index);
 	}
 	else
 	{
-		SetOutput( NULL, "", index );
+		SetOutput(NULL, "", index);
 	}
 }
-
 
 ChannelMode_t CDmeChannel::GetMode()
 {
-	return static_cast< ChannelMode_t >( m_mode.Get() );
+	return static_cast<ChannelMode_t>(m_mode.Get());
 }
 
-void CDmeChannel::SetMode( ChannelMode_t mode )
+void CDmeChannel::SetMode(ChannelMode_t mode)
 {
-	if ( mode != m_mode )
+	if(mode != m_mode)
 	{
-		m_mode.Set( static_cast< int >( mode ) );
+		m_mode.Set(static_cast<int>(mode));
 		m_tPreviousTime = DMETIME_INVALID;
 	}
 }
@@ -622,14 +607,13 @@ void CDmeChannel::ClearLog()
 
 CDmeLog *CDmeChannel::GetLog()
 {
-	if ( !m_log.GetElement() && ( m_FromAttributeHandle == DMATTRIBUTE_HANDLE_INVALID ) )
+	if(!m_log.GetElement() && (m_FromAttributeHandle == DMATTRIBUTE_HANDLE_INVALID))
 	{
 		// NOTE: This will generate a new log based on the from attribute
 		SetupFromAttribute();
 	}
 	return m_log.GetElement();
 }
-
 
 //-----------------------------------------------------------------------------
 // Used to cache off handles to attributes
@@ -640,38 +624,38 @@ CDmAttribute *CDmeChannel::SetupFromAttribute()
 
 	CDmElement *pObject = m_fromElement.GetElement();
 	const char *pName = m_fromAttribute.Get();
-	if ( pObject == NULL || pName == NULL || !pName[0] )
+	if(pObject == NULL || pName == NULL || !pName[0])
 		return NULL;
 
-	CDmAttribute *pAttr = pObject->GetAttribute( pName );
-	if ( !pAttr )
+	CDmAttribute *pAttr = pObject->GetAttribute(pName);
+	if(!pAttr)
 		return NULL;
 
 	m_FromAttributeHandle = pAttr->GetHandle();
 
 	DmAttributeType_t fromType = pAttr->GetType();
-	if ( IsArrayType( fromType ) )
+	if(IsArrayType(fromType))
 	{
-		fromType = ArrayTypeToValueType( fromType );
+		fromType = ArrayTypeToValueType(fromType);
 	}
 
 	CDmeLog *pLog = m_log.GetElement();
-	if ( pLog == NULL )
+	if(pLog == NULL)
 	{
-		CreateLog( fromType );
+		CreateLog(fromType);
 		return pAttr;
 	}
 
 	DmAttributeType_t logType = pLog->GetDataType();
-	if ( IsArrayType( logType ) )
+	if(IsArrayType(logType))
 	{
-		logType = ArrayTypeToValueType( logType );
+		logType = ArrayTypeToValueType(logType);
 	}
 
-	if ( logType != fromType )
+	if(logType != fromType)
 	{
 		// NOTE: This will release the current log
-		CreateLog( fromType );
+		CreateLog(fromType);
 	}
 
 	return pAttr;
@@ -683,41 +667,37 @@ CDmAttribute *CDmeChannel::SetupToAttribute()
 
 	CDmElement *pObject = m_toElement.GetElement();
 	const char *pName = m_toAttribute.Get();
-	if ( pObject == NULL || pName == NULL || !pName[0] )
+	if(pObject == NULL || pName == NULL || !pName[0])
 		return NULL;
 
-	CDmAttribute *pAttr = pObject->GetAttribute( pName );
-	if ( !pAttr )
+	CDmAttribute *pAttr = pObject->GetAttribute(pName);
+	if(!pAttr)
 		return NULL;
 
 	m_ToAttributeHandle = pAttr->GetHandle();
 	return pAttr;
 }
 
-
 //-----------------------------------------------------------------------------
 // This function gets called whenever an attribute changes
 //-----------------------------------------------------------------------------
-void CDmeChannel::OnAttributeChanged( CDmAttribute *pAttribute )
+void CDmeChannel::OnAttributeChanged(CDmAttribute *pAttribute)
 {
-	if ( ( pAttribute == m_fromElement  .GetAttribute() ) ||
-		( pAttribute == m_fromAttribute.GetAttribute() ) )
+	if((pAttribute == m_fromElement.GetAttribute()) || (pAttribute == m_fromAttribute.GetAttribute()))
 	{
 		// NOTE: This will force a recache of the attribute handle
 		m_FromAttributeHandle = DMATTRIBUTE_HANDLE_INVALID;
 		return;
 	}
 
-	if ( ( pAttribute == m_toElement  .GetAttribute() ) ||
-		( pAttribute == m_toAttribute.GetAttribute() ) )
+	if((pAttribute == m_toElement.GetAttribute()) || (pAttribute == m_toAttribute.GetAttribute()))
 	{
 		m_ToAttributeHandle = DMATTRIBUTE_HANDLE_INVALID;
 		return;
 	}
 
-	BaseClass::OnAttributeChanged( pAttribute );
+	BaseClass::OnAttributeChanged(pAttribute);
 }
-
 
 DmeTime_t CDmeChannel::GetCurrentTime() const
 {
@@ -728,7 +708,7 @@ DmeTime_t CDmeChannel::GetCurrentTime() const
 // Simple version. Only works if multiple active channels clips
 // do not reference the same channels
 //-----------------------------------------------------------------------------
-void CDmeChannel::SetCurrentTime( DmeTime_t time )
+void CDmeChannel::SetCurrentTime(DmeTime_t time)
 {
 	m_tPreviousTime = m_tCurrentTime;
 	m_tCurrentTime = time;
@@ -739,28 +719,28 @@ void CDmeChannel::SetCurrentTime( DmeTime_t time )
 // SetCurrentTime sets the current time on the clip,
 // choosing the time closest to (and after) a timeframe if multiple sets in a frame
 //-----------------------------------------------------------------------------
-void CDmeChannel::SetCurrentTime( DmeTime_t time, DmeTime_t start, DmeTime_t end )
+void CDmeChannel::SetCurrentTime(DmeTime_t time, DmeTime_t start, DmeTime_t end)
 {
 	m_tPreviousTime = m_tCurrentTime;
 
-	DmeTime_t dt( 0 );
-	if ( time < start )
+	DmeTime_t dt(0);
+	if(time < start)
 	{
 		dt = time - start;
 		time = start;
 	}
-	else if ( time >= end )
+	else if(time >= end)
 	{
 		dt = time - end;
 		time = end;
 	}
 	DmeTime_t totf = m_timeOutsideTimeframe;
 
-	const DmeTime_t t0( 0 );
-	if ( ( dt < t0 && totf < t0 && dt < totf ) ||	// both prior to clip, old totf closer
-		( dt < t0 && totf >= t0 ) ||				// new dt prior to clip, old totf in or after
-		( dt >= t0 && totf >= t0 && dt > totf ) )	// both after clip, old totf closer
-		return; // if old todt is a better match, don't update channel time
+	const DmeTime_t t0(0);
+	if((dt < t0 && totf < t0 && dt < totf) || // both prior to clip, old totf closer
+	   (dt < t0 && totf >= t0) ||			  // new dt prior to clip, old totf in or after
+	   (dt >= t0 && totf >= t0 && dt > totf)) // both after clip, old totf closer
+		return;								  // if old todt is a better match, don't update channel time
 
 	m_tCurrentTime = time;
 	m_timeOutsideTimeframe = dt;
@@ -774,97 +754,97 @@ void CDmeChannel::ClearTimeMetric()
 	m_timeOutsideTimeframe = DmeTime_t::MinTime();
 }
 
-void CDmeChannel::SetChannelToPlayToSelf( const char *outputAttributeName, float defaultValue, bool force /*= false*/ )
+void CDmeChannel::SetChannelToPlayToSelf(const char *outputAttributeName, float defaultValue, bool force /*= false*/)
 {
-	if ( !HasAttribute( outputAttributeName ) )
+	if(!HasAttribute(outputAttributeName))
 	{
-		AddAttribute( outputAttributeName, AT_FLOAT );
+		AddAttribute(outputAttributeName, AT_FLOAT);
 	}
 
-	CDmeTypedLog< bool > *log = static_cast< CDmeTypedLog< bool >* >( GetLog() );
+	CDmeTypedLog<bool> *log = static_cast<CDmeTypedLog<bool> *>(GetLog());
 	// Usually we won't put it into playback if it's empty, we'll just read the default value continously
-	if ( force || ( log && !log->IsEmpty() && !log->HasDefaultValue() ) )
+	if(force || (log && !log->IsEmpty() && !log->HasDefaultValue()))
 	{
-		SetMode( CM_PLAY );
-		SetOutput( this, outputAttributeName );
+		SetMode(CM_PLAY);
+		SetOutput(this, outputAttributeName);
 	}
-	SetValue( outputAttributeName, defaultValue );
+	SetValue(outputAttributeName, defaultValue);
 }
 
-void CDmeChannel::SetNextKeyCurveType( int nCurveType )
+void CDmeChannel::SetNextKeyCurveType(int nCurveType)
 {
 	m_nNextCurveType = nCurveType;
 }
 
-CDmeLogLayer *FindLayerInSnapshot( const CDmrElementArray<CDmElement>& snapshotArray, CDmeLog *origLog )
+CDmeLogLayer *FindLayerInSnapshot(const CDmrElementArray<CDmElement> &snapshotArray, CDmeLog *origLog)
 {
-	if ( !snapshotArray.IsValid() )
+	if(!snapshotArray.IsValid())
 		return NULL;
 
 	int c = snapshotArray.Count();
-	for ( int i = 0; i < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
-		CDmeLogLayer *layer = CastElement< CDmeLogLayer >( snapshotArray[ i ] );
-		if ( !layer )
+		CDmeLogLayer *layer = CastElement<CDmeLogLayer>(snapshotArray[i]);
+		if(!layer)
 			continue;
 
-		CDmeLog *pLog = layer->GetValueElement< CDmeLog >( "origLog" );
-		if ( !pLog )
+		CDmeLog *pLog = layer->GetValueElement<CDmeLog>("origLog");
+		if(!pLog)
 		{
-			Assert( 0 );
+			Assert(0);
 			continue;
 		}
 
-		if ( pLog == origLog )
+		if(pLog == origLog)
 			return layer;
 	}
 
 	return NULL;
 }
 
-KeyValues *FindLayerInPasteData( const CUtlVector< KeyValues * > &list, CDmeLog *log )
+KeyValues *FindLayerInPasteData(const CUtlVector<KeyValues *> &list, CDmeLog *log)
 {
 	int c = list.Count();
-	for ( int i = 0; i  < c; ++i )
+	for(int i = 0; i < c; ++i)
 	{
 		CDisableUndoScopeGuard noundo;
 
-		KeyValues *kv = list[ i ];
-		Assert( kv );
+		KeyValues *kv = list[i];
+		Assert(kv);
 
-		if ( Q_stricmp( kv->GetName(), "ControlLayers" ) )
+		if(Q_stricmp(kv->GetName(), "ControlLayers"))
 			continue;
 
-		LayerSelectionData_t *data = reinterpret_cast< LayerSelectionData_t * >( kv->GetPtr( "LayerData" ) );
-		if ( !data )
+		LayerSelectionData_t *data = reinterpret_cast<LayerSelectionData_t *>(kv->GetPtr("LayerData"));
+		if(!data)
 			continue;
 
 		CDmeChannel *ch = data->m_hChannel;
-		if ( !ch )
+		if(!ch)
 			continue;
 
 		CDmeLog *chLog = ch->GetLog();
-		if ( chLog == log )
+		if(chLog == log)
 			return kv;
 	}
 
 	return NULL;
 }
 
-static int FindSpanningLayerAndSetIntensity( DmeLog_TimeSelection_t &ts, LayerSelectionData_t *data )
+static int FindSpanningLayerAndSetIntensity(DmeLog_TimeSelection_t &ts, LayerSelectionData_t *data)
 {
-	Assert( data->m_vecData.Count() >= 2 );
+	Assert(data->m_vecData.Count() >= 2);
 
 	float frac = ts.m_flIntensity;
 	int i = 0;
-	for ( ; i < data->m_vecData.Count() - 1; ++i )
+	for(; i < data->m_vecData.Count() - 1; ++i)
 	{
-		LayerSelectionData_t::DataLayer_t *current = &data->m_vecData[ i ];
-		LayerSelectionData_t::DataLayer_t *next = &data->m_vecData[ i + 1 ];
+		LayerSelectionData_t::DataLayer_t *current = &data->m_vecData[i];
+		LayerSelectionData_t::DataLayer_t *next = &data->m_vecData[i + 1];
 
-		if ( frac >= current->m_flStartFraction && frac <= next->m_flStartFraction )
+		if(frac >= current->m_flStartFraction && frac <= next->m_flStartFraction)
 		{
-			frac = RemapVal( frac, current->m_flStartFraction, next->m_flStartFraction, 0.0f, 1.0f );
+			frac = RemapVal(frac, current->m_flStartFraction, next->m_flStartFraction, 0.0f, 1.0f);
 			ts.m_flIntensity = frac;
 			break;
 		}
@@ -875,79 +855,81 @@ static int FindSpanningLayerAndSetIntensity( DmeLog_TimeSelection_t &ts, LayerSe
 
 void CDmeChannel::Record()
 {
-	VPROF( "CDmeChannel::Record" );
+	VPROF("CDmeChannel::Record");
 
 	CDmAttribute *pFromAttr = GetFromAttribute();
-	if ( pFromAttr == NULL )
+	if(pFromAttr == NULL)
 		return; // or clear out the log?
 
 	CDmeLog *pLog = GetLog();
 	DmeTime_t time = GetCurrentTime();
-	if ( m_tPreviousTime == DMETIME_INVALID )
+	if(m_tPreviousTime == DMETIME_INVALID)
 	{
 		m_tPreviousTime = time;
 	}
 
-	if ( g_pChannelRecordingMgr->ShouldRecordUsingTimeSelection() )
+	if(g_pChannelRecordingMgr->ShouldRecordUsingTimeSelection())
 	{
-		Assert( m_nRecordLayerIndex != -1 );
+		Assert(m_nRecordLayerIndex != -1);
 
 		// Computes local times for the time selection
 		DmeLog_TimeSelection_t timeSelection;
-		g_pChannelRecordingMgr->GetLocalTimeSelection( timeSelection, m_nRecordLayerIndex );
+		g_pChannelRecordingMgr->GetLocalTimeSelection(timeSelection, m_nRecordLayerIndex);
 
 		int nType = g_pChannelRecordingMgr->GetProceduralType();
-		switch ( nType )
+		switch(nType)
 		{
-		default:
-		case PROCEDURAL_PRESET_NOT:
+			default:
+			case PROCEDURAL_PRESET_NOT:
 			{
-				pLog->StampKeyAtHead( time, m_tPreviousTime, timeSelection, pFromAttr, m_fromIndex.Get() );
+				pLog->StampKeyAtHead(time, m_tPreviousTime, timeSelection, pFromAttr, m_fromIndex.Get());
 			}
 			break;
-		case PROCEDURAL_PRESET_REVEAL:
+			case PROCEDURAL_PRESET_REVEAL:
 			{
 				// Find the matching layer in the "target" data array
-				const CDmrElementArray<CDmElement> snapshotArray = const_cast< CDmAttribute * >( g_pChannelRecordingMgr->GetProceduralTarget() );
-				CDmeLogLayer *snapshotLayer = FindLayerInSnapshot( snapshotArray, pLog );
-				if ( snapshotLayer )
+				const CDmrElementArray<CDmElement> snapshotArray =
+					const_cast<CDmAttribute *>(g_pChannelRecordingMgr->GetProceduralTarget());
+				CDmeLogLayer *snapshotLayer = FindLayerInSnapshot(snapshotArray, pLog);
+				if(snapshotLayer)
 				{
-					Assert( pLog );
-					pLog->RevealUsingTimeSelection( timeSelection, snapshotLayer );
+					Assert(pLog);
+					pLog->RevealUsingTimeSelection(timeSelection, snapshotLayer);
 				}
 			}
 			break;
-		case PROCEDURAL_PRESET_JITTER:
-		case PROCEDURAL_PRESET_SMOOTH:
-		case PROCEDURAL_PRESET_SHARPEN:
-		case PROCEDURAL_PRESET_SOFTEN:
-		case PROCEDURAL_PRESET_STAGGER:
-		case PROCEDURAL_PRESET_PASTE:
+			case PROCEDURAL_PRESET_JITTER:
+			case PROCEDURAL_PRESET_SMOOTH:
+			case PROCEDURAL_PRESET_SHARPEN:
+			case PROCEDURAL_PRESET_SOFTEN:
+			case PROCEDURAL_PRESET_STAGGER:
+			case PROCEDURAL_PRESET_PASTE:
 			{
-				const CUtlVector< KeyValues * > &pasteTarget = g_pChannelRecordingMgr->GetPasteTarget();
-				KeyValues *layer = FindLayerInPasteData( pasteTarget, pLog );
-				if ( layer )
+				const CUtlVector<KeyValues *> &pasteTarget = g_pChannelRecordingMgr->GetPasteTarget();
+				KeyValues *layer = FindLayerInPasteData(pasteTarget, pLog);
+				if(layer)
 				{
-					LayerSelectionData_t *data = reinterpret_cast< LayerSelectionData_t * >( layer->GetPtr( "LayerData" ) );
-					Assert( data );
+					LayerSelectionData_t *data = reinterpret_cast<LayerSelectionData_t *>(layer->GetPtr("LayerData"));
+					Assert(data);
 
-					int iSourceLayer = FindSpanningLayerAndSetIntensity( timeSelection, data );
+					int iSourceLayer = FindSpanningLayerAndSetIntensity(timeSelection, data);
 
-					CDmeLogLayer *sourceLayer = data->m_vecData[ iSourceLayer ].m_hData.Get();
-					CDmeLogLayer *targetLayer = data->m_vecData[ iSourceLayer + 1 ].m_hData.Get();
-					if ( sourceLayer && sourceLayer->GetKeyCount() > 0 &&
-						 targetLayer && targetLayer->GetKeyCount() > 0 &&
-						 sourceLayer->GetKeyCount() == targetLayer->GetKeyCount() )
+					CDmeLogLayer *sourceLayer = data->m_vecData[iSourceLayer].m_hData.Get();
+					CDmeLogLayer *targetLayer = data->m_vecData[iSourceLayer + 1].m_hData.Get();
+					if(sourceLayer && sourceLayer->GetKeyCount() > 0 && targetLayer && targetLayer->GetKeyCount() > 0 &&
+					   sourceLayer->GetKeyCount() == targetLayer->GetKeyCount())
 					{
-						Assert( pLog->GetNumLayers() >= 2 );
-						CDmeLogLayer *outputLayer = pLog->GetLayer( pLog->GetTopmostLayer() );
-						if ( nType == PROCEDURAL_PRESET_STAGGER )
+						Assert(pLog->GetNumLayers() >= 2);
+						CDmeLogLayer *outputLayer = pLog->GetLayer(pLog->GetTopmostLayer());
+						if(nType == PROCEDURAL_PRESET_STAGGER)
 						{
-							pLog->BlendTimesUsingTimeSelection( sourceLayer, targetLayer, outputLayer, timeSelection, data->m_tStartOffset );
+							pLog->BlendTimesUsingTimeSelection(sourceLayer, targetLayer, outputLayer, timeSelection,
+															   data->m_tStartOffset);
 						}
 						else
 						{
-							pLog->BlendLayersUsingTimeSelection( sourceLayer, targetLayer, outputLayer, timeSelection, false, data->m_tStartOffset );
+							pLog->BlendLayersUsingTimeSelection(sourceLayer, targetLayer, outputLayer, timeSelection,
+																false, data->m_tStartOffset);
 						}
 					}
 				}
@@ -957,11 +939,11 @@ void CDmeChannel::Record()
 	}
 	else
 	{
-		if ( m_tPreviousTime != time )
+		if(m_tPreviousTime != time)
 		{
-			pLog->SetDuplicateKeyAtTime( m_tPreviousTime );
+			pLog->SetDuplicateKeyAtTime(m_tPreviousTime);
 		}
-		pLog->SetKey( time, pFromAttr, m_fromIndex.Get(), m_nNextCurveType );
+		pLog->SetKey(time, pFromAttr, m_fromIndex.Get(), m_nNextCurveType);
 		m_nNextCurveType = CURVE_DEFAULT;
 	}
 
@@ -969,38 +951,35 @@ void CDmeChannel::Record()
 	Play();
 }
 
-
 //-----------------------------------------------------------------------------
 // Builds a clip stack that passes through root + shot
 // Returns true if it succeeded
 //-----------------------------------------------------------------------------
-bool CDmeChannel::BuildClipStack( DmeClipStack_t *pClipStack, CDmeClip *pRoot, CDmeClip *pShot )
+bool CDmeChannel::BuildClipStack(DmeClipStack_t *pClipStack, CDmeClip *pRoot, CDmeClip *pShot)
 {
 	DmAttributeReferenceIterator_t it;
-	for ( it = g_pDataModel->FirstAttributeReferencingElement( GetHandle() );
-		it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
-		it = g_pDataModel->NextAttributeReferencingElement( it ) )
+	for(it = g_pDataModel->FirstAttributeReferencingElement(GetHandle()); it != DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
+		it = g_pDataModel->NextAttributeReferencingElement(it))
 	{
-		CDmAttribute *pAttribute = g_pDataModel->GetAttribute( it );
+		CDmAttribute *pAttribute = g_pDataModel->GetAttribute(it);
 		CDmElement *pElement = pAttribute->GetOwner();
-		CDmeChannelsClip *pChannelsClip = CastElement< CDmeChannelsClip >( pElement );
-		if ( !pChannelsClip )
+		CDmeChannelsClip *pChannelsClip = CastElement<CDmeChannelsClip>(pElement);
+		if(!pChannelsClip)
 			continue;
 
-		if ( pChannelsClip->BuildClipStack( pClipStack, pRoot, pShot ) )
+		if(pChannelsClip->BuildClipStack(pClipStack, pRoot, pShot))
 			return true;
 	}
 	return false;
 }
 
-
 //-----------------------------------------------------------------------------
 // Finds the owner clip for a channel which passes through the root
 //-----------------------------------------------------------------------------
-CDmeClip* CDmeChannel::FindOwnerClipForChannel( CDmeClip *pRoot )
+CDmeClip *CDmeChannel::FindOwnerClipForChannel(CDmeClip *pRoot)
 {
 	DmeClipStack_t stack;
-	if ( BuildClipStack( &stack, pRoot, pRoot ) )
-		return stack[ stack.Count() - 1 ];
+	if(BuildClipStack(&stack, pRoot, pRoot))
+		return stack[stack.Count() - 1];
 	return NULL;
 }

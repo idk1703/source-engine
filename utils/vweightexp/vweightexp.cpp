@@ -17,7 +17,6 @@
 #include "vweightexprc.h"
 #include "vweightexp.h"
 
-
 //===================================================================
 // Global variable definitions
 //
@@ -25,32 +24,29 @@
 // For OutputDebugString and misc sprintf's
 static char st_szDBG[300];
 
-
-
 //=====================================================================
 // Methods for VWeightExportClass
 //
 
 CONSTRUCTOR VWeightExportClass::VWeightExportClass(void)
 {
-	m_cMaxNode	= 0;
-	m_cMaxVertex	= 0;
+	m_cMaxNode = 0;
+	m_cMaxVertex = 0;
 }
-
 
 DESTRUCTOR VWeightExportClass::~VWeightExportClass(void)
 {
-	for (int i = 0; i < m_cMaxVertex; i++)
+	for(int i = 0; i < m_cMaxVertex; i++)
 	{
 		delete[] m_MaxVertex[i];
 	}
 }
 
-
-int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface *pi, BOOL suppressPrompts, DWORD options)
+int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface *pi, BOOL suppressPrompts,
+								 DWORD options)
 {
-	ExpInterface	*pexpiface = ei;	// Hungarian
-	Interface		*piface = pi;		// Hungarian
+	ExpInterface *pexpiface = ei; // Hungarian
+	Interface *piface = pi;		  // Hungarian
 
 	// Reset the name-map property manager
 	ResetINodeMap();
@@ -59,8 +55,7 @@ int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface 
 	TSTR strPath, strFile, strExt;
 	TCHAR szFile[MAX_PATH];
 	SplitFilename(TSTR(name), &strPath, &strFile, &strExt);
-		sprintf(szFile,  "%s\\%s.%s",  (char*)strPath, (char*)strFile, DEFAULT_EXT);
-
+	sprintf(szFile, "%s\\%s.%s", (char *)strPath, (char *)strFile, DEFAULT_EXT);
 
 	// Get animation metrics
 	m_intervalOfAnimation = piface->GetAnimRange();
@@ -68,76 +63,74 @@ int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface 
 	m_tvEnd = m_intervalOfAnimation.End();
 	m_tpf = ::GetTicksPerFrame();
 
-
 	Interface *ip = GetCOREInterface();
 
-	ResetINodeMap( );
-	m_cMaxNode = BuildINodeMap( ip->GetRootNode() );
+	ResetINodeMap();
+	m_cMaxNode = BuildINodeMap(ip->GetRootNode());
 
 	// Count nodes, label them, collect into array
-	CollectNodes( ip->GetRootNode() );
+	CollectNodes(ip->GetRootNode());
 
-	CollectModel( pexpiface );
+	CollectModel(pexpiface);
 
 #if 1
 	FILE *pFile;
-	if ((pFile = fopen(szFile, "wb")) == NULL)
-		return FALSE/*failure*/;
+	if((pFile = fopen(szFile, "wb")) == NULL)
+		return FALSE /*failure*/;
 
 	int version = 1;
-	fwrite( &version, 1, sizeof( int ), pFile );
+	fwrite(&version, 1, sizeof(int), pFile);
 
 	int i, j;
 
-	fwrite( &m_cMaxNode, 1, sizeof( int ), pFile );
-	fwrite( &m_cMaxVertex, 1, sizeof( int ), pFile );
+	fwrite(&m_cMaxNode, 1, sizeof(int), pFile);
+	fwrite(&m_cMaxVertex, 1, sizeof(int), pFile);
 
-	for (i = 0; i < m_cMaxNode; i++)
+	for(i = 0; i < m_cMaxNode; i++)
 	{
-		fwrite( &m_MaxNode[i], 1, sizeof(m_MaxNode[i]), pFile );
+		fwrite(&m_MaxNode[i], 1, sizeof(m_MaxNode[i]), pFile);
 	}
 
-	for (j = 0; j < m_cMaxVertex; j++)
+	for(j = 0; j < m_cMaxVertex; j++)
 	{
-		fwrite( m_MaxVertex[j], m_cMaxNode, sizeof(MaxVertWeight), pFile );
+		fwrite(m_MaxVertex[j], m_cMaxNode, sizeof(MaxVertWeight), pFile);
 	}
 
-	fclose( pFile );
+	fclose(pFile);
 #else
 	FILE *pFile;
-	if ((pFile = fopen(szFile, "w")) == NULL)
-		return FALSE/*failure*/;
+	if((pFile = fopen(szFile, "w")) == NULL)
+		return FALSE /*failure*/;
 
-	fprintf( pFile, "version %d\n", 1 );
+	fprintf(pFile, "version %d\n", 1);
 
 	int i, j;
 
-	fprintf(pFile, "%d\n", m_cMaxNode );
-	fprintf(pFile, "%d\n", m_cMaxVertex );
+	fprintf(pFile, "%d\n", m_cMaxNode);
+	fprintf(pFile, "%d\n", m_cMaxVertex);
 
-	for (i = 0; i < m_cMaxNode; i++)
+	for(i = 0; i < m_cMaxNode; i++)
 	{
-		fprintf(pFile, "%5d \"%s\" %3d\n",
-			i, m_MaxNode[i].szNodeName, m_MaxNode[i].imaxnodeParent );
+		fprintf(pFile, "%5d \"%s\" %3d\n", i, m_MaxNode[i].szNodeName, m_MaxNode[i].imaxnodeParent);
 	}
 
-	for (j = 0; j < m_cMaxVertex; j++)
+	for(j = 0; j < m_cMaxVertex; j++)
 	{
-		fprintf( pFile, "%d ", j );
+		fprintf(pFile, "%d ", j);
 
-		for (int i = 0; i < m_cMaxNode; i++)
+		for(int i = 0; i < m_cMaxNode; i++)
 		{
 			// if (strstr(m_MaxNode[i].szNodeName, "Bip01 R Finger"))
 			// if (m_MaxNode[i].szNodeName[0] == 'D')
 			{
-				fprintf(pFile, " %5.3f", m_MaxVertex[j][i].flDist );
-				fprintf(pFile, " %3.0f", m_MaxVertex[j][i].flWeight );
+				fprintf(pFile, " %5.3f", m_MaxVertex[j][i].flDist);
+				fprintf(pFile, " %3.0f", m_MaxVertex[j][i].flWeight);
 			}
 		}
-		fprintf(pFile, "\n" );
+		fprintf(pFile, "\n");
 	}
 
-	fclose( pFile );
+	fclose(pFile);
 #endif
 
 	// Tell user that exporting is finished (it can take a while with no feedback)
@@ -145,28 +138,26 @@ int VWeightExportClass::DoExport(const TCHAR *name, ExpInterface *ei, Interface 
 	sprintf(szExportComplete, "Exported %s.", szFile);
 	MessageBox(GetActiveWindow(), szExportComplete, "Status", MB_OK);
 
-
-	return 1/*success*/;
+	return 1 /*success*/;
 }
 
-
-void VWeightExportClass::CollectNodes( INode *pnode )
+void VWeightExportClass::CollectNodes(INode *pnode)
 {
 	// Get pre-stored "index"
 	int index = ::GetIndexOfINode(pnode);
 
-	if (index >= 0)
+	if(index >= 0)
 	{
 		// Get name, store name in array
 		TSTR strNodeName(pnode->GetName());
-		strcpy(m_MaxNode[index].szNodeName, (char*)strNodeName);
+		strcpy(m_MaxNode[index].szNodeName, (char *)strNodeName);
 
 		// Get Node's time-zero Transformation Matrices
-		m_MaxNode[index].mat3NodeTM		= pnode->GetNodeTM(0);
-		m_MaxNode[index].mat3ObjectTM	= pnode->GetObjectTM(0);
+		m_MaxNode[index].mat3NodeTM = pnode->GetNodeTM(0);
+		m_MaxNode[index].mat3ObjectTM = pnode->GetObjectTM(0);
 	}
 
-	for (int c = 0; c < pnode->NumberOfChildren(); c++)
+	for(int c = 0; c < pnode->NumberOfChildren(); c++)
 	{
 		CollectNodes(pnode->GetChildNode(c));
 	}
@@ -174,9 +165,7 @@ void VWeightExportClass::CollectNodes( INode *pnode )
 	return;
 }
 
-
-
-BOOL VWeightExportClass::CollectModel( ExpInterface *pexpiface)
+BOOL VWeightExportClass::CollectModel(ExpInterface *pexpiface)
 {
 	// Dump mesh info: vertices, normals, UV texture map coords, bone assignments
 	CollectModelTEP procCollectModel;
@@ -184,14 +173,13 @@ BOOL VWeightExportClass::CollectModel( ExpInterface *pexpiface)
 	// init data
 	m_cMaxVertex = 0;
 
-	procCollectModel.m_phec	= this;
-	//fprintf(pFile, "triangles\n" );
+	procCollectModel.m_phec = this;
+	// fprintf(pFile, "triangles\n" );
 	procCollectModel.m_tvToDump = m_tvStart;
-	(void) pexpiface->theScene->EnumTree(&procCollectModel);
-	//fprintf(pFile, "end\n" );
+	(void)pexpiface->theScene->EnumTree(&procCollectModel);
+	// fprintf(pFile, "end\n" );
 	return TRUE;
 }
-
 
 // #define DEBUG_MESH_DUMP
 
@@ -200,10 +188,10 @@ BOOL VWeightExportClass::CollectModel( ExpInterface *pexpiface)
 //
 int CollectModelTEP::callback(INode *pnode)
 {
-	if (::FNodeMarkedToSkip(pnode))
+	if(::FNodeMarkedToSkip(pnode))
 		return TREE_CONTINUE;
 
-	if ( !pnode->Selected())
+	if(!pnode->Selected())
 		return TREE_CONTINUE;
 
 	// clear physique export parameters
@@ -218,12 +206,12 @@ int CollectModelTEP::callback(INode *pnode)
 	TSTR strNodeName(pnode->GetName());
 
 	// The Footsteps node apparently MUST have a dummy mesh attached!  Ignore it explicitly.
-	if (FStrEq((char*)strNodeName, "Bip01 Footsteps"))
+	if(FStrEq((char *)strNodeName, "Bip01 Footsteps"))
 		return TREE_CONTINUE;
 
 	// Helper nodes don't have meshes
 	Object *pobj = pnode->GetObjectRef();
-	if (pobj->SuperClassID() == HELPER_CLASS_ID)
+	if(pobj->SuperClassID() == HELPER_CLASS_ID)
 		return TREE_CONTINUE;
 
 	// Get Node's object, convert to a triangle-mesh object, so I can access the Faces
@@ -231,18 +219,18 @@ int CollectModelTEP::callback(INode *pnode)
 	pobj = os.obj;
 
 	// Shouldn't have gotten this far if it's a helper object
-	if (pobj->SuperClassID() == HELPER_CLASS_ID)
+	if(pobj->SuperClassID() == HELPER_CLASS_ID)
 	{
-		sprintf(st_szDBG, "ERROR--Helper node %s has an attached mesh, and it shouldn't.", (char*)strNodeName);
+		sprintf(st_szDBG, "ERROR--Helper node %s has an attached mesh, and it shouldn't.", (char *)strNodeName);
 		ASSERT_AND_ABORT(FALSE, st_szDBG);
 	}
 
 	// convert mesh to triobject
-	if (!pobj->CanConvertToType(triObjectClassID))
+	if(!pobj->CanConvertToType(triObjectClassID))
 		return TREE_CONTINUE;
-	TriObject *ptriobj = (TriObject*)pobj->ConvertToType(m_tvToDump, triObjectClassID);
+	TriObject *ptriobj = (TriObject *)pobj->ConvertToType(m_tvToDump, triObjectClassID);
 
-	if (ptriobj == NULL)
+	if(ptriobj == NULL)
 		return TREE_CONTINUE;
 
 	Mesh *pmesh = &ptriobj->mesh;
@@ -252,17 +240,17 @@ int CollectModelTEP::callback(INode *pnode)
 
 	// initialize physique export parameters
 	m_phyMod = FindPhysiqueModifier(pnode);
-	if (m_phyMod)
+	if(m_phyMod)
 	{
 		// Physique Modifier exists for given Node
 		m_phyExport = (IPhysiqueExport *)m_phyMod->GetInterface(I_PHYINTERFACE);
 
-		if (m_phyExport)
+		if(m_phyExport)
 		{
 			// create a ModContext Export Interface for the specific node of the Physique Modifier
 			m_mcExport = (IPhyContextExport *)m_phyExport->GetContextInterface(pnode);
 
-			if (m_mcExport)
+			if(m_mcExport)
 			{
 				// convert all vertices to Rigid
 				m_mcExport->ConvertToRigid(TRUE);
@@ -271,13 +259,12 @@ int CollectModelTEP::callback(INode *pnode)
 	}
 
 	// initialize bones pro export parameters
-	m_wa  = NULL;
+	m_wa = NULL;
 	m_bonesProMod = FindBonesProModifier(pnode);
-	if (m_bonesProMod)
+	if(m_bonesProMod)
 	{
-		m_bonesProMod->SetProperty( BP_PROPID_GET_WEIGHTS, &m_wa );
+		m_bonesProMod->SetProperty(BP_PROPID_GET_WEIGHTS, &m_wa);
 	}
-
 
 	int cVerts = pmesh->getNumVerts();
 
@@ -286,14 +273,14 @@ int CollectModelTEP::callback(INode *pnode)
 
 	int *iUsed = new int[cVerts];
 
-	for (int iVert = 0; iVert < cVerts; iVert++)
+	for(int iVert = 0; iVert < cVerts; iVert++)
 	{
 		iUsed[iVert] = 0;
 	}
 
-	for (int iFace = 0; iFace < cFaces; iFace++)
+	for(int iFace = 0; iFace < cFaces; iFace++)
 	{
-		if (pmesh->faces[iFace].flags & HAS_TVERTS)
+		if(pmesh->faces[iFace].flags & HAS_TVERTS)
 		{
 			iUsed[pmesh->faces[iFace].getVert(0)] = 1;
 			iUsed[pmesh->faces[iFace].getVert(1)] = 1;
@@ -301,16 +288,16 @@ int CollectModelTEP::callback(INode *pnode)
 		}
 	}
 
-	for (iVert = 0; iVert < cVerts; iVert++)
+	for(iVert = 0; iVert < cVerts; iVert++)
 	{
-		MaxVertWeight *pweight = m_phec->m_MaxVertex[m_phec->m_cMaxVertex] = new MaxVertWeight [m_phec->m_cMaxNode];
+		MaxVertWeight *pweight = m_phec->m_MaxVertex[m_phec->m_cMaxVertex] = new MaxVertWeight[m_phec->m_cMaxNode];
 
 		Point3 pt3Vertex1 = pmesh->getVert(iVert);
 		Point3 v1 = pt3Vertex1 * mat3ObjectTM;
 
-		GetUnifiedCoord( v1, pweight, m_phec->m_MaxNode, m_phec->m_cMaxNode );
+		GetUnifiedCoord(v1, pweight, m_phec->m_MaxNode, m_phec->m_cMaxNode);
 
-		if (CollectWeights( iVert, pweight ))
+		if(CollectWeights(iVert, pweight))
 		{
 			m_phec->m_cMaxVertex++;
 		}
@@ -321,29 +308,28 @@ int CollectModelTEP::callback(INode *pnode)
 	return TREE_CONTINUE;
 }
 
-
 int CollectModelTEP::CollectWeights(int iVertex, MaxVertWeight *pweight)
 {
-	for (int index = 0; index < m_phec->m_cMaxNode; index++)
+	for(int index = 0; index < m_phec->m_cMaxNode; index++)
 	{
 		pweight[index].flWeight = -1;
 	}
 
-	if (m_mcExport)
+	if(m_mcExport)
 	{
-		return GetBoneWeights( m_mcExport, iVertex, pweight );
+		return GetBoneWeights(m_mcExport, iVertex, pweight);
 	}
 	else
 	{
-		return GetBoneWeights( m_bonesProMod, iVertex, pweight );
+		return GetBoneWeights(m_bonesProMod, iVertex, pweight);
 	}
 }
 
 void CollectModelTEP::cleanup(void)
 {
-	if (m_phyMod && m_phyExport)
+	if(m_phyMod && m_phyExport)
 	{
-		if (m_mcExport)
+		if(m_mcExport)
 		{
 			m_phyExport->ReleaseContextInterface(m_mcExport);
 			m_mcExport = NULL;

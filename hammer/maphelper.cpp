@@ -13,7 +13,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
-
 //-----------------------------------------------------------------------------
 // Purpose: Returns the appropriate object to the selection code.
 // Input  : dwFlags - selectPicky or selectNormal
@@ -25,7 +24,7 @@ CMapClass *CMapHelper::PrepareSelection(SelectMode_t eSelectMode)
 	//
 	// If we have a parent that is not the world, select our parent.
 	//
-	if (m_pParent && !IsWorldObject(m_pParent))
+	if(m_pParent && !IsWorldObject(m_pParent))
 	{
 		return GetParent()->PrepareSelection(eSelectMode);
 	}

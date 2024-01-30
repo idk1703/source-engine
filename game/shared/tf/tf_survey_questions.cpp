@@ -12,13 +12,13 @@
 #include "tf_match_description.h"
 
 #ifdef CLIENT_DLL
-	#include "tf_gc_client.h"
-	#include "vgui_controls/RadioButton.h"
-	#include "iclientmode.h"
-	#include <vgui_controls/AnimationController.h>
-	#include "game/client/iviewport.h"
-	#include "tf_hud_mainmenuoverride.h"
-	#include "tf_gamerules.h"
+#include "tf_gc_client.h"
+#include "vgui_controls/RadioButton.h"
+#include "iclientmode.h"
+#include <vgui_controls/AnimationController.h>
+#include "game/client/iviewport.h"
+#include "tf_hud_mainmenuoverride.h"
+#include "tf_gamerules.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -28,11 +28,11 @@
 // Purpose: Criteria function for competitive inquiry survey
 //			Only include casual matches
 //-----------------------------------------------------------------------------
-bool CompetitiveInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlayerIndex )
+bool CompetitiveInquiry(const CMsgGC_Match_Result &msgMatchResult, uint32 nPlayerIndex)
 {
-	const IMatchGroupDescription* pMatchDesc = GetMatchGroupDescription( (EMatchGroup) msgMatchResult.match_group() );
+	const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription((EMatchGroup)msgMatchResult.match_group());
 
-	if ( pMatchDesc )
+	if(pMatchDesc)
 	{
 		// Only show this in Casual 12v12
 		return pMatchDesc->m_eMatchGroup == k_nMatchGroup_Casual_12v12;
@@ -45,11 +45,11 @@ bool CompetitiveInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlay
 // Purpose: Criteria function for casual inquiry survey
 //			Only include competitive matches
 //-----------------------------------------------------------------------------
-bool CasualInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlayerIndex )
+bool CasualInquiry(const CMsgGC_Match_Result &msgMatchResult, uint32 nPlayerIndex)
 {
-	const IMatchGroupDescription* pMatchDesc = GetMatchGroupDescription( ( EMatchGroup )msgMatchResult.match_group() );
+	const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription((EMatchGroup)msgMatchResult.match_group());
 
-	if ( pMatchDesc )
+	if(pMatchDesc)
 	{
 		// Only show this in Competitive 6v6
 		return pMatchDesc->m_eMatchGroup == k_nMatchGroup_Ladder_6v6;
@@ -61,126 +61,129 @@ bool CasualInquiry( const CMsgGC_Match_Result& msgMatchResult, uint32 nPlayerInd
 //-----------------------------------------------------------------------------
 // Purpose: The actual definition of the survey questions
 //-----------------------------------------------------------------------------
-																		//	  Survey Enum				Help Text String	   Weight	Criteria Function		Active
-const SurveyQuestion_t g_SurveyQuestions[SurveyQuestionType_ARRAYSIZE] =  { { QUESTION_MATCH_QUALITY,	"MatchQuality",			1.f,	NULL,					true },
-																			{ QUESTION_MAP_QUALITY,		"MapQuality",			1.f,	NULL,					true },
-																			{ QUESTION_COMP_INQUIRY,	"CompetitiveInquiry",	1.f,	&CompetitiveInquiry,	true },
-																			{ QUESTION_CASUAL_INQUIRY,	"CasualInquiry",		1.f,	&CasualInquiry,			true } };
+//	  Survey Enum				Help Text String	   Weight	Criteria Function		Active
+const SurveyQuestion_t g_SurveyQuestions[SurveyQuestionType_ARRAYSIZE] = {
+	{QUESTION_MATCH_QUALITY, "MatchQuality", 1.f, NULL, true},
+	{QUESTION_MAP_QUALITY, "MapQuality", 1.f, NULL, true},
+	{QUESTION_COMP_INQUIRY, "CompetitiveInquiry", 1.f, &CompetitiveInquiry, true},
+	{QUESTION_CASUAL_INQUIRY, "CasualInquiry", 1.f, &CasualInquiry, true}};
 
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
 // Purpose: Figure out which survey panel to make
 //-----------------------------------------------------------------------------
-CSurveyQuestionPanel* CreateSurveyQuestionPanel( Panel* pParent, const CMsgGCSurveyRequest& msgSurveyQuestion )
+CSurveyQuestionPanel *CreateSurveyQuestionPanel(Panel *pParent, const CMsgGCSurveyRequest &msgSurveyQuestion)
 {
-	CSurveyQuestionPanel* pSurveyPanel = NULL;
+	CSurveyQuestionPanel *pSurveyPanel = NULL;
 
-	Assert( msgSurveyQuestion.has_question_type() );
-	switch( msgSurveyQuestion.question_type() )
+	Assert(msgSurveyQuestion.has_question_type());
+	switch(msgSurveyQuestion.question_type())
 	{
-	case QUESTION_MATCH_QUALITY:
-		pSurveyPanel = new CMatchQualitySurvey( pParent, msgSurveyQuestion );
-		break;
-	case QUESTION_MAP_QUALITY:
-		pSurveyPanel = new CMapQualitySurvey( pParent, msgSurveyQuestion );
-		break;
-	case QUESTION_COMP_INQUIRY:
-		pSurveyPanel = new CCompInquirySurvey( pParent, msgSurveyQuestion );
-		break;
-	case QUESTION_CASUAL_INQUIRY:
-		pSurveyPanel = new CCasualInquirySurvey( pParent, msgSurveyQuestion );
-		break;
-	default:
-		Assert( !"Unhandled survey question type!" );
+		case QUESTION_MATCH_QUALITY:
+			pSurveyPanel = new CMatchQualitySurvey(pParent, msgSurveyQuestion);
+			break;
+		case QUESTION_MAP_QUALITY:
+			pSurveyPanel = new CMapQualitySurvey(pParent, msgSurveyQuestion);
+			break;
+		case QUESTION_COMP_INQUIRY:
+			pSurveyPanel = new CCompInquirySurvey(pParent, msgSurveyQuestion);
+			break;
+		case QUESTION_CASUAL_INQUIRY:
+			pSurveyPanel = new CCasualInquirySurvey(pParent, msgSurveyQuestion);
+			break;
+		default:
+			Assert(!"Unhandled survey question type!");
 	}
 
 	return pSurveyPanel;
 }
 
-CSurveyQuestionPanel::CSurveyQuestionPanel( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion )
-	: EditablePanel( pParent, "Survey" )
-	, m_msgRequest( msgSurveyQuestion )
-	, m_bResponded( false )
+CSurveyQuestionPanel::CSurveyQuestionPanel(Panel *pParent, CMsgGCSurveyRequest msgSurveyQuestion)
+	: EditablePanel(pParent, "Survey"), m_msgRequest(msgSurveyQuestion), m_bResponded(false)
 {
-	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx( enginevgui->GetPanel( PANEL_CLIENTDLL ), "resource/ClientScheme.res", "ClientScheme");
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFileEx(enginevgui->GetPanel(PANEL_CLIENTDLL),
+																"resource/ClientScheme.res", "ClientScheme");
 	SetScheme(scheme);
-	SetProportional( true );
+	SetProportional(true);
 
-	ListenForGameEvent( "server_spawn" );
-	ListenForGameEvent( "client_disconnect" );
-	ListenForGameEvent( "client_beginconnect" );
+	ListenForGameEvent("server_spawn");
+	ListenForGameEvent("client_disconnect");
+	ListenForGameEvent("client_beginconnect");
 }
 
 CSurveyQuestionPanel::~CSurveyQuestionPanel()
 {
-	if ( !m_bResponded )
+	if(!m_bResponded)
 	{
-		GTFGCClientSystem()->SendSurveyResponse( SEEN_BUT_UNANSWERED_SURVEY_QUESTION );
+		GTFGCClientSystem()->SendSurveyResponse(SEEN_BUT_UNANSWERED_SURVEY_QUESTION);
 		m_bResponded = true;
 	}
 
 	GTFGCClientSystem()->ClearSurveyRequest();
 }
 
-void CSurveyQuestionPanel::OnCommand( const char *command )
+void CSurveyQuestionPanel::OnCommand(const char *command)
 {
-	if ( FStrEq( command, "close" ) )
+	if(FStrEq(command, "close"))
 	{
-		if ( !m_bResponded )
+		if(!m_bResponded)
 		{
-			GTFGCClientSystem()->SendSurveyResponse( SEEN_AND_DISMISSED_SURVEY_QUESTION );
+			GTFGCClientSystem()->SendSurveyResponse(SEEN_AND_DISMISSED_SURVEY_QUESTION);
 			m_bResponded = true;
 		}
 
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( GetParent(), "SurveyHideSequence", false );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(GetParent(), "SurveyHideSequence",
+																				false);
 		return;
 	}
-	else if ( FStrEq( command, "submit" ) )
+	else if(FStrEq(command, "submit"))
 	{
-		if ( !m_bResponded )
+		if(!m_bResponded)
 		{
 			Submit();
 			m_bResponded = true;
 		}
-		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( GetParent(), "SurveySubmitSequence", false );
+		g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(GetParent(), "SurveySubmitSequence",
+																				false);
 
 		return;
 	}
-	else if ( FStrEq( command, "delete" ) )
+	else if(FStrEq(command, "delete"))
 	{
 		MarkForDeletion();
 		return;
 	}
 
-	BaseClass::OnCommand( command );
+	BaseClass::OnCommand(command);
 }
 
-void CSurveyQuestionPanel::ApplySchemeSettings( IScheme *pScheme )
+void CSurveyQuestionPanel::ApplySchemeSettings(IScheme *pScheme)
 {
-	BaseClass::ApplySchemeSettings( pScheme );
+	BaseClass::ApplySchemeSettings(pScheme);
 
-	SetProportional( true );
-	LoadControlSettings( GetResFile() );
-	InvalidateLayout( true );
-	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( GetParent(), "SurveyShowSequence", false );
+	SetProportional(true);
+	LoadControlSettings(GetResFile());
+	InvalidateLayout(true);
+	g_pClientMode->GetViewportAnimationController()->StartAnimationSequence(GetParent(), "SurveyShowSequence", false);
 }
 
-void CSurveyQuestionPanel::FireGameEvent( IGameEvent *event )
+void CSurveyQuestionPanel::FireGameEvent(IGameEvent *event)
 {
 	const char *pEventName = event->GetName();
 
 	// They left/changed servers.  Consider the survey abandoned
-	if ( !Q_stricmp( pEventName, "client_disconnect" ) ||
-		 !Q_stricmp( pEventName, "client_beginconnect" ) ||
-		 !Q_stricmp( pEventName, "server_spawn" ) )
+	if(!Q_stricmp(pEventName, "client_disconnect") || !Q_stricmp(pEventName, "client_beginconnect") ||
+	   !Q_stricmp(pEventName, "server_spawn"))
 	{
 		MarkForDeletion();
 	}
 }
 
-CMultipleChoiceSurveyQuestionPanel::CMultipleChoiceSurveyQuestionPanel( Panel* pParent, CMsgGCSurveyRequest msgSurveyQuestion, uint16 nSurveyResponses )
-	: CSurveyQuestionPanel( pParent, msgSurveyQuestion )
+CMultipleChoiceSurveyQuestionPanel::CMultipleChoiceSurveyQuestionPanel(Panel *pParent,
+																	   CMsgGCSurveyRequest msgSurveyQuestion,
+																	   uint16 nSurveyResponses)
+	: CSurveyQuestionPanel(pParent, msgSurveyQuestion)
 {
 	m_nSurveyResponses = nSurveyResponses;
 }
@@ -198,35 +201,35 @@ void CMultipleChoiceSurveyQuestionPanel::Think()
 	// Radio buttons aren't cool and can ONLY have their labels to the right.
 	// This panel has extra labels under the radio labels that we want to highlight
 	// so set the label's FG colors to the radio buttons FG colors.
-	for( int i = 0; i < m_nSurveyResponses; ++i )
+	for(int i = 0; i < m_nSurveyResponses; ++i)
 	{
-		RadioButton* pRadioButton = FindControl< RadioButton >( CFmtStr( "Radio%d", i ), true );
-		Panel* pRadioLabel = FindChildByName( CFmtStr( "Radio%dLabel", i ), true );
+		RadioButton *pRadioButton = FindControl<RadioButton>(CFmtStr("Radio%d", i), true);
+		Panel *pRadioLabel = FindChildByName(CFmtStr("Radio%dLabel", i), true);
 
-		if ( pRadioButton && pRadioLabel )
+		if(pRadioButton && pRadioLabel)
 		{
-			pRadioLabel->SetFgColor( pRadioButton->GetFgColor() );
+			pRadioLabel->SetFgColor(pRadioButton->GetFgColor());
 			bAnySelected = bAnySelected || pRadioButton->IsSelected();
 		}
 	}
 
-	Panel* pSubmitButton = FindChildByName( "SubmitButton", true );
-	if ( pSubmitButton )
+	Panel *pSubmitButton = FindChildByName("SubmitButton", true);
+	if(pSubmitButton)
 	{
-		pSubmitButton->SetEnabled( bAnySelected );
+		pSubmitButton->SetEnabled(bAnySelected);
 	}
 }
 
 void CMultipleChoiceSurveyQuestionPanel::Submit()
 {
 	// Figure out which radio button is checked, and use that as our response
-	for( int i = 0; i < m_nSurveyResponses; ++i )
+	for(int i = 0; i < m_nSurveyResponses; ++i)
 	{
-		RadioButton* pRadioButton = FindControl< RadioButton >( CFmtStr( "Radio%d", i ), true );
+		RadioButton *pRadioButton = FindControl<RadioButton>(CFmtStr("Radio%d", i), true);
 
-		if ( pRadioButton && pRadioButton->IsSelected() )
+		if(pRadioButton && pRadioButton->IsSelected())
 		{
-			GTFGCClientSystem()->SendSurveyResponse( i );
+			GTFGCClientSystem()->SendSurveyResponse(i);
 			return;
 		}
 	}
@@ -234,46 +237,46 @@ void CMultipleChoiceSurveyQuestionPanel::Submit()
 
 void CMapQualitySurvey::PerformLayout()
 {
-	const MapDef_t* pMapDef = NULL;
+	const MapDef_t *pMapDef = NULL;
 
-	if ( TFGameRules() )
+	if(TFGameRules())
 	{
-		pMapDef = GetItemSchema()->GetMasterMapDefByName ( TFGameRules()->MapName() );
+		pMapDef = GetItemSchema()->GetMasterMapDefByName(TFGameRules()->MapName());
 	}
 	else
 	{
-		pMapDef = GetItemSchema()->GetMasterMapDefByIndex( RandomInt( 1, GetItemSchema()->GetMapCount() - 1 ) );
+		pMapDef = GetItemSchema()->GetMasterMapDefByIndex(RandomInt(1, GetItemSchema()->GetMapCount() - 1));
 	}
 
-	Assert( pMapDef );
-	if ( !pMapDef )
+	Assert(pMapDef);
+	if(!pMapDef)
 		return;
 
-	EditablePanel* pMapChoice = FindControl< EditablePanel >( "QuestionContainer", true );
-	if ( pMapChoice )
+	EditablePanel *pMapChoice = FindControl<EditablePanel>("QuestionContainer", true);
+	if(pMapChoice)
 	{
 		// Label text
-		pMapChoice->SetDialogVariable( "mapname", g_pVGuiLocalize->Find( pMapDef->pszMapNameLocKey ) );
+		pMapChoice->SetDialogVariable("mapname", g_pVGuiLocalize->Find(pMapDef->pszMapNameLocKey));
 	}
 }
 
 #ifdef STAGING_ONLY
-CON_COMMAND( test_survey, "Creates a test survey" )
+CON_COMMAND(test_survey, "Creates a test survey")
 {
-	if( args.ArgC() < 2 )
+	if(args.ArgC() < 2)
 		return;
 
-	int nDefIndex = atoi( args[1] );
-	if ( nDefIndex < 0 || nDefIndex >= SurveyQuestionType_ARRAYSIZE )
+	int nDefIndex = atoi(args[1]);
+	if(nDefIndex < 0 || nDefIndex >= SurveyQuestionType_ARRAYSIZE)
 		return;
 
 	CMsgGCSurveyRequest msgSurvey;
-	msgSurvey.set_match_id( 0 );
-	msgSurvey.set_question_type( (SurveyQuestionType)nDefIndex );
+	msgSurvey.set_match_id(0);
+	msgSurvey.set_question_type((SurveyQuestionType)nDefIndex);
 
-	Panel* pSurvey =  CreateSurveyQuestionPanel( NULL, msgSurvey );
-	IViewPortPanel *pMMOverride = ( gViewPortInterface->FindPanelByName( PANEL_MAINMENUOVERRIDE ) );
-	pSurvey->SetParent( (CHudMainMenuOverride*)pMMOverride );
+	Panel *pSurvey = CreateSurveyQuestionPanel(NULL, msgSurvey);
+	IViewPortPanel *pMMOverride = (gViewPortInterface->FindPanelByName(PANEL_MAINMENUOVERRIDE));
+	pSurvey->SetParent((CHudMainMenuOverride *)pMMOverride);
 }
 #endif
 

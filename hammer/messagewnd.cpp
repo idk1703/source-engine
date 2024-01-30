@@ -18,7 +18,6 @@ IMPLEMENT_DYNCREATE(CMessageWnd, CMDIChildWnd)
 
 const int iMsgPtSize = 10;
 
-
 BEGIN_MESSAGE_MAP(CMessageWnd, CMDIChildWnd)
 	//{{AFX_MSG_MAP(CMessageWnd)
 	ON_WM_PAINT()
@@ -30,7 +29,6 @@ BEGIN_MESSAGE_MAP(CMessageWnd, CMDIChildWnd)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-
 //-----------------------------------------------------------------------------
 // Static factory function to create the message window object. The window
 // itself is created by CMessageWnd::CreateWindow.
@@ -40,7 +38,6 @@ CMessageWnd *CMessageWnd::CreateMessageWndObject()
 	CMessageWnd *pMsgWnd = (CMessageWnd *)RUNTIME_CLASS(CMessageWnd)->CreateObject();
 	return pMsgWnd;
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -54,51 +51,46 @@ CMessageWnd::CMessageWnd()
 	Font.CreatePointFont(iMsgPtSize * 10, "Courier New");
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+CMessageWnd::~CMessageWnd() {}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-CMessageWnd::~CMessageWnd()
+void CMessageWnd::CreateMessageWindow(CMDIFrameWnd *pwndParent, CRect &rect)
 {
-}
-
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-void CMessageWnd::CreateMessageWindow( CMDIFrameWnd *pwndParent, CRect &rect )
-{
-	Create( NULL, "Messages", WS_OVERLAPPEDWINDOW | WS_CHILD, rect, pwndParent );
+	Create(NULL, "Messages", WS_OVERLAPPEDWINDOW | WS_CHILD, rect, pwndParent);
 
 	bool bErrors = true;
 	MWMSGSTRUCT mws;
-	for ( int i = 0; i < iNumMsgs; i++ )
+	for(int i = 0; i < iNumMsgs; i++)
 	{
 		mws = MsgArray[i];
-		if ( ( mws.type == mwError ) || ( mws.type == mwWarning ) )
+		if((mws.type == mwError) || (mws.type == mwWarning))
 		{
 			bErrors = true;
 		}
 	}
 
-	if ( bErrors )
+	if(bErrors)
 	{
-		ShowWindow( SW_SHOW );
+		ShowWindow(SW_SHOW);
 	}
 }
-
 
 //-----------------------------------------------------------------------------
 // Emit a message to our messages array.
 // NOTE: During startup the window itself might not exist yet!
 //-----------------------------------------------------------------------------
-void CMessageWnd::AddMsg(MWMSGTYPE type, TCHAR* msg)
+void CMessageWnd::AddMsg(MWMSGTYPE type, TCHAR *msg)
 {
 	int iAddAt = iNumMsgs;
 
 	// Don't allow growth after MAX_MESSAGE_WND_LINES
-	if ( iNumMsgs == MAX_MESSAGE_WND_LINES )
+	if(iNumMsgs == MAX_MESSAGE_WND_LINES)
 	{
 		MWMSGSTRUCT *p = MsgArray.GetData();
-		memcpy(p, p+1, sizeof(*p) * ( MAX_MESSAGE_WND_LINES - 1 ));
+		memcpy(p, p + 1, sizeof(*p) * (MAX_MESSAGE_WND_LINES - 1));
 		iAddAt = MAX_MESSAGE_WND_LINES - 1;
 	}
 	else
@@ -117,77 +109,71 @@ void CMessageWnd::AddMsg(MWMSGTYPE type, TCHAR* msg)
 	MsgArray.SetAtGrow(iAddAt, mws);
 
 	// Don't do stuff that requires the window to exist.
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return;
 
 	CalculateScrollSize();
 	Invalidate();
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::ShowMessageWindow()
 {
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return;
 
-	ShowWindow( SW_SHOW );
+	ShowWindow(SW_SHOW);
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::ToggleMessageWindow()
 {
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return;
 
-	ShowWindow( IsWindowVisible() ? SW_HIDE : SW_SHOWNA );
+	ShowWindow(IsWindowVisible() ? SW_HIDE : SW_SHOWNA);
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::Activate()
 {
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return;
 
-	ShowWindow( SW_SHOW );
-	SetWindowPos( &( CWnd::wndTopMost ), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW );
+	ShowWindow(SW_SHOW);
+	SetWindowPos(&(CWnd::wndTopMost), 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 	BringWindowToTop();
 	SetFocus();
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 bool CMessageWnd::IsVisible()
 {
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return false;
 
-	return ( IsWindowVisible() == TRUE );
+	return (IsWindowVisible() == TRUE);
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::Resize( CRect &rect )
+void CMessageWnd::Resize(CRect &rect)
 {
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return;
 
-	MoveWindow( rect );
+	MoveWindow(rect);
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::CalculateScrollSize()
 {
-	if ( m_hWnd == NULL )
+	if(m_hWnd == NULL)
 		return;
 
 	int iHorz;
@@ -223,14 +209,13 @@ void CMessageWnd::CalculateScrollSize()
 	SetScrollInfo(SB_VERT, &si);
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::OnPaint()
 {
-	CPaintDC	dc(this);		// device context for painting
-	int			nScrollMin;
-	int			nScrollMax;
+	CPaintDC dc(this); // device context for painting
+	int nScrollMin;
+	int nScrollMax;
 
 	// select font
 	dc.SelectObject(&Font);
@@ -243,11 +228,11 @@ void CMessageWnd::OnPaint()
 		CalculateScrollSize();
 	}
 
-	GetScrollRange( SB_VERT, &nScrollMin, &nScrollMax );
+	GetScrollRange(SB_VERT, &nScrollMin, &nScrollMax);
 
 	// paint messages
 	MWMSGSTRUCT mws;
-	CRect r(0, 0, 1, iMsgPtSize+2);
+	CRect r(0, 0, 1, iMsgPtSize + 2);
 
 	dc.SetWindowOrg(GetScrollPos(SB_HORZ), GetScrollPos(SB_VERT));
 
@@ -257,20 +242,20 @@ void CMessageWnd::OnPaint()
 
 		r.right = mws.MsgLen * iCharWidth;
 
-		if ( r.bottom < nScrollMin )
+		if(r.bottom < nScrollMin)
 			continue;
-		if ( r.top > nScrollMax )
+		if(r.top > nScrollMax)
 			break;
 
 		// color of msg
 		switch(mws.type)
 		{
-		case mwError:
-			dc.SetTextColor(RGB(255, 60, 60));
-			break;
-		case mwStatus:
-			dc.SetTextColor(RGB(0, 0, 0));
-			break;
+			case mwError:
+				dc.SetTextColor(RGB(255, 60, 60));
+				break;
+			case mwStatus:
+				dc.SetTextColor(RGB(0, 0, 0));
+				break;
 		}
 
 		// draw text
@@ -281,10 +266,9 @@ void CMessageWnd::OnPaint()
 	}
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	int iPos = int(nPos);
 	SCROLLINFO si;
@@ -295,22 +279,22 @@ void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	switch(nSBCode)
 	{
-	case SB_LINELEFT:
-		iPos = -int(si.nPage / 4);
-		break;
-	case SB_LINERIGHT:
-		iPos = int(si.nPage / 4);
-		break;
-	case SB_PAGELEFT:
-		iPos = -int(si.nPage / 2);
-		break;
-	case SB_PAGERIGHT:
-		iPos = int(si.nPage / 2);
-		break;
-	case SB_THUMBTRACK:
-	case SB_THUMBPOSITION:
-		iPos -= iCurPos;
-		break;
+		case SB_LINELEFT:
+			iPos = -int(si.nPage / 4);
+			break;
+		case SB_LINERIGHT:
+			iPos = int(si.nPage / 4);
+			break;
+		case SB_PAGELEFT:
+			iPos = -int(si.nPage / 2);
+			break;
+		case SB_PAGERIGHT:
+			iPos = int(si.nPage / 2);
+			break;
+		case SB_THUMBTRACK:
+		case SB_THUMBPOSITION:
+			iPos -= iCurPos;
+			break;
 	}
 
 	if(iCurPos + iPos < 0)
@@ -326,10 +310,9 @@ void CMessageWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CMDIChildWnd::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar *pScrollBar)
 {
 	int iPos = int(nPos);
 	SCROLLINFO si;
@@ -340,22 +323,22 @@ void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	switch(nSBCode)
 	{
-	case SB_LINEUP:
-		iPos = -int(si.nPage / 4);
-		break;
-	case SB_LINEDOWN:
-		iPos = int(si.nPage / 4);
-		break;
-	case SB_PAGEUP:
-		iPos = -int(si.nPage / 2);
-		break;
-	case SB_PAGEDOWN:
-		iPos = int(si.nPage / 2);
-		break;
-	case SB_THUMBTRACK:
-	case SB_THUMBPOSITION:
-		iPos -= iCurPos;
-		break;
+		case SB_LINEUP:
+			iPos = -int(si.nPage / 4);
+			break;
+		case SB_LINEDOWN:
+			iPos = int(si.nPage / 4);
+			break;
+		case SB_PAGEUP:
+			iPos = -int(si.nPage / 2);
+			break;
+		case SB_PAGEDOWN:
+			iPos = int(si.nPage / 2);
+			break;
+		case SB_THUMBTRACK:
+		case SB_THUMBPOSITION:
+			iPos -= iCurPos;
+			break;
 	}
 
 	if(iCurPos + iPos < 0)
@@ -372,7 +355,6 @@ void CMessageWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CMDIChildWnd::OnVScroll(nSBCode, nPos, pScrollBar);
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::OnSize(UINT nType, int cx, int cy)
@@ -381,7 +363,6 @@ void CMessageWnd::OnSize(UINT nType, int cx, int cy)
 	CalculateScrollSize();
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMessageWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -389,29 +370,28 @@ void CMessageWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	// up/down
 	switch(nChar)
 	{
-	case VK_UP:
-		OnVScroll(SB_LINEUP, 0, NULL);
-		break;
-	case VK_DOWN:
-		OnVScroll(SB_LINEDOWN, 0, NULL);
-		break;
-	case VK_PRIOR:
-		OnVScroll(SB_PAGEUP, 0, NULL);
-		break;
-	case VK_NEXT:
-		OnVScroll(SB_PAGEDOWN, 0, NULL);
-		break;
-	case VK_HOME:
-		OnVScroll(SB_THUMBPOSITION, 0, NULL);
-		break;
-	case VK_END:
-		OnVScroll(SB_THUMBPOSITION, GetScrollLimit(SB_VERT), NULL);
-		break;
+		case VK_UP:
+			OnVScroll(SB_LINEUP, 0, NULL);
+			break;
+		case VK_DOWN:
+			OnVScroll(SB_LINEDOWN, 0, NULL);
+			break;
+		case VK_PRIOR:
+			OnVScroll(SB_PAGEUP, 0, NULL);
+			break;
+		case VK_NEXT:
+			OnVScroll(SB_PAGEDOWN, 0, NULL);
+			break;
+		case VK_HOME:
+			OnVScroll(SB_THUMBPOSITION, 0, NULL);
+			break;
+		case VK_END:
+			OnVScroll(SB_THUMBPOSITION, GetScrollLimit(SB_VERT), NULL);
+			break;
 	}
 
 	CMDIChildWnd::OnKeyDown(nChar, nRepCnt, nFlags);
 }
-
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ using namespace vgui;
 CHudNumericDisplay::CHudNumericDisplay(vgui::Panel *parent, const char *name) : BaseClass(parent, name)
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
-	SetParent( pParent );
+	SetParent(pParent);
 
 	m_iValue = 0;
 	m_LabelText[0] = 0;
@@ -108,7 +108,7 @@ void CHudNumericDisplay::PaintNumbers(HFont font, int xpos, int ypos, int value)
 {
 	surface()->DrawSetTextFont(font);
 	wchar_t unicode[6];
-	if ( !m_bIsTime )
+	if(!m_bIsTime)
 	{
 		V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d", value);
 	}
@@ -118,42 +118,42 @@ void CHudNumericDisplay::PaintNumbers(HFont font, int xpos, int ypos, int value)
 		int iSeconds = value - iMinutes * 60;
 #ifdef PORTAL
 		// portal uses a normal font for numbers so we need the seperate to be a renderable ':' char
-		if ( iSeconds < 10 )
-			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d:0%d", iMinutes, iSeconds );
+		if(iSeconds < 10)
+			V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d:0%d", iMinutes, iSeconds);
 		else
-			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d:%d", iMinutes, iSeconds );
+			V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d:%d", iMinutes, iSeconds);
 #else
-		if ( iSeconds < 10 )
-			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d`0%d", iMinutes, iSeconds );
+		if(iSeconds < 10)
+			V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d`0%d", iMinutes, iSeconds);
 		else
-			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d`%d", iMinutes, iSeconds );
+			V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d`%d", iMinutes, iSeconds);
 #endif
 	}
 
 	// adjust the position to take into account 3 characters
 	int charWidth = surface()->GetCharacterWidth(font, '0');
-	if (value < 100 && m_bIndent)
+	if(value < 100 && m_bIndent)
 	{
 		xpos += charWidth;
 	}
-	if (value < 10 && m_bIndent)
+	if(value < 10 && m_bIndent)
 	{
 		xpos += charWidth;
 	}
 
 	surface()->DrawSetTextPos(xpos, ypos);
-	surface()->DrawUnicodeString( unicode );
+	surface()->DrawUnicodeString(unicode);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: draws the text
 //-----------------------------------------------------------------------------
-void CHudNumericDisplay::PaintLabel( void )
+void CHudNumericDisplay::PaintLabel(void)
 {
 	surface()->DrawSetTextFont(m_hTextFont);
 	surface()->DrawSetTextColor(GetFgColor());
 	surface()->DrawSetTextPos(text_xpos, text_ypos);
-	surface()->DrawUnicodeString( m_LabelText );
+	surface()->DrawUnicodeString(m_LabelText);
 }
 
 //-----------------------------------------------------------------------------
@@ -161,16 +161,16 @@ void CHudNumericDisplay::PaintLabel( void )
 //-----------------------------------------------------------------------------
 void CHudNumericDisplay::Paint()
 {
-	if (m_bDisplayValue)
+	if(m_bDisplayValue)
 	{
 		// draw our numbers
 		surface()->DrawSetTextColor(GetFgColor());
 		PaintNumbers(m_hNumberFont, digit_xpos, digit_ypos, m_iValue);
 
 		// draw the overbright blur
-		for (float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
+		for(float fl = m_flBlur; fl > 0.0f; fl -= 1.0f)
 		{
-			if (fl >= 1.0f)
+			if(fl >= 1.0f)
 			{
 				PaintNumbers(m_hNumberGlowFont, digit_xpos, digit_ypos, m_iValue);
 			}
@@ -186,7 +186,7 @@ void CHudNumericDisplay::Paint()
 	}
 
 	// total ammo
-	if (m_bDisplaySecondaryValue)
+	if(m_bDisplaySecondaryValue)
 	{
 		surface()->DrawSetTextColor(GetFgColor());
 		PaintNumbers(m_hSmallNumberFont, digit2_xpos, digit2_ypos, m_iSecondaryValue);

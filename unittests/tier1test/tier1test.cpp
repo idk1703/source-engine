@@ -11,28 +11,27 @@
 #include "tier1/convar.h"
 #include "vstdlib/iprocessutils.h"
 
-
 //-----------------------------------------------------------------------------
 // Used to connect/disconnect the DLL
 //-----------------------------------------------------------------------------
-class CTier1TestAppSystem : public CTier1AppSystem< IAppSystem >
+class CTier1TestAppSystem : public CTier1AppSystem<IAppSystem>
 {
-	typedef CTier1AppSystem< IAppSystem > BaseClass;
+	typedef CTier1AppSystem<IAppSystem> BaseClass;
 
 public:
-	virtual bool Connect( CreateInterfaceFn factory )
+	virtual bool Connect(CreateInterfaceFn factory)
 	{
-		if ( !BaseClass::Connect( factory ) )
+		if(!BaseClass::Connect(factory))
 			return false;
 		return true;
 	}
 
 	virtual InitReturnVal_t Init()
 	{
-		MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
+		MathLib_Init(2.2f, 2.2f, 0.0f, 2.0f);
 
 		InitReturnVal_t nRetVal = BaseClass::Init();
-		if ( nRetVal != INIT_OK )
+		if(nRetVal != INIT_OK)
 			return nRetVal;
 
 		return INIT_OK;
@@ -44,4 +43,4 @@ public:
 	}
 };
 
-USE_UNITTEST_APPSYSTEM( CTier1TestAppSystem )
+USE_UNITTEST_APPSYSTEM(CTier1TestAppSystem)

@@ -9,73 +9,68 @@
 #include "eyeball_boss_approach_target.h"
 #include "eyeball_boss_launch_rockets.h"
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CEyeballBoss > CEyeballBossApproachTarget::OnStart( CEyeballBoss *me, Action< CEyeballBoss > *priorAction )
+ActionResult<CEyeballBoss> CEyeballBossApproachTarget::OnStart(CEyeballBoss *me, Action<CEyeballBoss> *priorAction)
 {
-	m_giveUpTimer.Start( 5.0f );
-	m_minChaseTimer.Start( 0.5f );
+	m_giveUpTimer.Start(5.0f);
+	m_minChaseTimer.Start(0.5f);
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-ActionResult< CEyeballBoss > CEyeballBossApproachTarget::Update( CEyeballBoss *me, float interval )
+ActionResult<CEyeballBoss> CEyeballBossApproachTarget::Update(CEyeballBoss *me, float interval)
 {
 	CBaseCombatCharacter *victim = me->GetVictim();
 	CBaseCombatCharacter *closestVictim = me->FindClosestVisibleVictim();
 
-	if ( victim != closestVictim && m_minChaseTimer.IsElapsed() )
+	if(victim != closestVictim && m_minChaseTimer.IsElapsed())
 	{
-		return Done( "Noticed better victim" );
+		return Done("Noticed better victim");
 	}
 
-	if ( !victim || !victim->IsAlive() )
+	if(!victim || !victim->IsAlive())
 	{
-		return Done( "Victim gone" );
+		return Done("Victim gone");
 	}
 
-	if ( m_giveUpTimer.IsElapsed() )
+	if(m_giveUpTimer.IsElapsed())
 	{
-		return Done( "Giving up" );
+		return Done("Giving up");
 	}
 
-	bool isVictimVisible = me->IsLineOfSightClear( victim, CBaseCombatCharacter::IGNORE_ACTORS );
+	bool isVictimVisible = me->IsLineOfSightClear(victim, CBaseCombatCharacter::IGNORE_ACTORS);
 
-	if ( !isVictimVisible )
+	if(!isVictimVisible)
 	{
-		if ( m_lingerTimer.IsElapsed() )
+		if(m_lingerTimer.IsElapsed())
 		{
-			return Done( "Lost victim" );
+			return Done("Lost victim");
 		}
 
 		// wait a bit to see if we catch a glimpse of our victim again
 		return Continue();
 	}
 
-	m_lingerTimer.Start( 1.0f );
+	m_lingerTimer.Start(1.0f);
 
 	float attackRange = tf_eyeball_boss_attack_range.GetFloat();
-	if ( me->IsEnraged() )
+	if(me->IsEnraged())
 	{
 		attackRange *= 2.0f;
 	}
 
-	if ( me->IsRangeLessThan( victim, attackRange ) )
+	if(me->IsRangeLessThan(victim, attackRange))
 	{
-		return ChangeTo( new CEyeballBossLaunchRockets, "Rocket attack!" );
+		return ChangeTo(new CEyeballBossLaunchRockets, "Rocket attack!");
 	}
 
 	// approach victim
-	me->GetLocomotionInterface()->SetDesiredSpeed( tf_eyeball_boss_speed.GetFloat() );
-	me->GetLocomotionInterface()->Approach( victim->WorldSpaceCenter() );
+	me->GetLocomotionInterface()->SetDesiredSpeed(tf_eyeball_boss_speed.GetFloat());
+	me->GetLocomotionInterface()->Approach(victim->WorldSpaceCenter());
 
 	return Continue();
 }
 
-
 //---------------------------------------------------------------------------------------------
-void CEyeballBossApproachTarget::OnEnd( CEyeballBoss *me, Action< CEyeballBoss > *nextAction )
-{
-}
+void CEyeballBossApproachTarget::OnEnd(CEyeballBoss *me, Action<CEyeballBoss> *nextAction) {}

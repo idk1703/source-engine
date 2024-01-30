@@ -10,20 +10,20 @@
 //-----------------------------------------------------------------------------
 // Purpose: Draws little viewmodel attachments
 //-----------------------------------------------------------------------------
-void C_WeaponTwoHandedContainer::ViewModelDrawn( C_BaseViewModel *pBaseViewModel )
+void C_WeaponTwoHandedContainer::ViewModelDrawn(C_BaseViewModel *pBaseViewModel)
 {
-	BaseClass::ViewModelDrawn( pBaseViewModel );
+	BaseClass::ViewModelDrawn(pBaseViewModel);
 
-	if (pBaseViewModel->ViewModelIndex() != 0)
+	if(pBaseViewModel->ViewModelIndex() != 0)
 	{
-		if ( m_hRightWeapon )
+		if(m_hRightWeapon)
 		{
 			m_hRightWeapon->ViewModelDrawn(pBaseViewModel);
 		}
 	}
 	else
 	{
-		if ( m_hLeftWeapon )
+		if(m_hLeftWeapon)
 		{
 			m_hLeftWeapon->ViewModelDrawn(pBaseViewModel);
 		}
@@ -33,27 +33,27 @@ void C_WeaponTwoHandedContainer::ViewModelDrawn( C_BaseViewModel *pBaseViewModel
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool C_WeaponTwoHandedContainer::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin,
-											  const QAngle& angles, int event, const char *options )
+bool C_WeaponTwoHandedContainer::OnFireEvent(C_BaseViewModel *pViewModel, const Vector &origin, const QAngle &angles,
+											 int event, const char *options)
 {
-	bool bRight = m_hRightWeapon->OnFireEvent( pViewModel, origin, angles, event, options );
-	bool bLeft = m_hLeftWeapon->OnFireEvent( pViewModel, origin, angles, event, options );
+	bool bRight = m_hRightWeapon->OnFireEvent(pViewModel, origin, angles, event, options);
+	bool bLeft = m_hLeftWeapon->OnFireEvent(pViewModel, origin, angles, event, options);
 
-	return ( bRight || bLeft );
+	return (bRight || bLeft);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_WeaponTwoHandedContainer::OnDataChanged( DataUpdateType_t updateType )
+void C_WeaponTwoHandedContainer::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
 	// Did we just receive a new weapon?
 	bool rightchanged = m_hOldRightWeapon.Get() != m_hRightWeapon.Get() ? true : false;
 	bool leftchanged = m_hOldLeftWeapon.Get() != m_hLeftWeapon.Get() ? true : false;
 
-	if ( rightchanged || leftchanged )
+	if(rightchanged || leftchanged)
 	{
 		/*
 		// Tell weapons that they're being holstered
@@ -74,16 +74,16 @@ void C_WeaponTwoHandedContainer::OnDataChanged( DataUpdateType_t updateType )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void C_WeaponTwoHandedContainer::HookWeaponEntities( void )
+void C_WeaponTwoHandedContainer::HookWeaponEntities(void)
 {
-	m_hOldRightWeapon	= m_hRightWeapon;
-	m_hOldLeftWeapon	= m_hLeftWeapon;
+	m_hOldRightWeapon = m_hRightWeapon;
+	m_hOldLeftWeapon = m_hLeftWeapon;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Never draw the container
 //-----------------------------------------------------------------------------
-bool C_WeaponTwoHandedContainer::ShouldDraw( void )
+bool C_WeaponTwoHandedContainer::ShouldDraw(void)
 {
 	return false;
 }
@@ -96,11 +96,11 @@ void C_WeaponTwoHandedContainer::Redraw()
 {
 	BaseClass::Redraw();
 
-	if ( m_hRightWeapon.Get() )
+	if(m_hRightWeapon.Get())
 	{
 		m_hRightWeapon->Redraw();
 	}
-	if ( m_hLeftWeapon.Get() )
+	if(m_hLeftWeapon.Get())
 	{
 		m_hLeftWeapon->Redraw();
 	}
@@ -112,11 +112,11 @@ void C_WeaponTwoHandedContainer::Redraw()
 void C_WeaponTwoHandedContainer::DrawAmmo()
 {
 	// Just tell our active weapon to draw it's ammo, since our offhand doesn't use it
-	if ( m_hLeftWeapon )
+	if(m_hLeftWeapon)
 	{
 		m_hLeftWeapon->DrawAmmo();
 	}
-	if ( m_hRightWeapon.Get() )
+	if(m_hRightWeapon.Get())
 	{
 		m_hRightWeapon->DrawAmmo();
 	}
@@ -125,15 +125,15 @@ void C_WeaponTwoHandedContainer::DrawAmmo()
 //-----------------------------------------------------------------------------
 // Purpose: Let each weapon handle input
 //-----------------------------------------------------------------------------
-void C_WeaponTwoHandedContainer::HandleInput( void )
+void C_WeaponTwoHandedContainer::HandleInput(void)
 {
 	BaseClass::HandleInput();
 
-	if ( m_hRightWeapon )
+	if(m_hRightWeapon)
 	{
 		m_hRightWeapon->HandleInput();
 	}
-	if ( m_hLeftWeapon )
+	if(m_hLeftWeapon)
 	{
 		m_hLeftWeapon->HandleInput();
 	}
@@ -142,17 +142,17 @@ void C_WeaponTwoHandedContainer::HandleInput( void )
 //-----------------------------------------------------------------------------
 // Purpose: Let each weapon handle input
 //-----------------------------------------------------------------------------
-void C_WeaponTwoHandedContainer::OverrideMouseInput( float *x, float *y )
+void C_WeaponTwoHandedContainer::OverrideMouseInput(float *x, float *y)
 {
-	BaseClass::OverrideMouseInput( x,y );
+	BaseClass::OverrideMouseInput(x, y);
 
-	if ( m_hRightWeapon )
+	if(m_hRightWeapon)
 	{
-		m_hRightWeapon->OverrideMouseInput( x,y );
+		m_hRightWeapon->OverrideMouseInput(x, y);
 	}
-	if ( m_hLeftWeapon )
+	if(m_hLeftWeapon)
 	{
-		m_hLeftWeapon->OverrideMouseInput( x,y );
+		m_hLeftWeapon->OverrideMouseInput(x, y);
 	}
 }
 
@@ -160,7 +160,7 @@ void C_WeaponTwoHandedContainer::OverrideMouseInput( float *x, float *y )
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool C_WeaponTwoHandedContainer::VisibleInWeaponSelection( void )
+bool C_WeaponTwoHandedContainer::VisibleInWeaponSelection(void)
 {
 	return false;
 }

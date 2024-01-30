@@ -17,74 +17,68 @@
 #include "tf_team.h"
 #include "weapon_builder.h"
 
-ConVar	class_infiltrator_speed( "class_infiltrator_speed","200", FCVAR_NONE, "Infiltrator movement speed" );
+ConVar class_infiltrator_speed("class_infiltrator_speed", "200", FCVAR_NONE, "Infiltrator movement speed");
 
 //=============================================================================
 //
 // Infiltrator Data Table
 //
-BEGIN_SEND_TABLE_NOBASE( CPlayerClassInfiltrator, DT_PlayerClassInfiltratorData )
+BEGIN_SEND_TABLE_NOBASE(CPlayerClassInfiltrator, DT_PlayerClassInfiltratorData)
 END_SEND_TABLE()
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
-const char *CPlayerClassInfiltrator::GetClassModelString( int nTeam )
+const char *CPlayerClassInfiltrator::GetClassModelString(int nTeam)
 {
 	static const char *string = "models/player/spy.mdl";
 	return string;
 }
 
 // Infiltrator
-CPlayerClassInfiltrator::CPlayerClassInfiltrator( CBaseTFPlayer *pPlayer, TFClass iClass ) : CPlayerClass( pPlayer, iClass )
+CPlayerClassInfiltrator::CPlayerClassInfiltrator(CBaseTFPlayer *pPlayer, TFClass iClass) : CPlayerClass(pPlayer, iClass)
 {
-	for (int i = 0; i < MAX_TF_TEAMS; ++i)
+	for(int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
+		SetClassModel(MAKE_STRING(GetClassModelString(i)), i);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CPlayerClassInfiltrator::~CPlayerClassInfiltrator()
-{
-}
+CPlayerClassInfiltrator::~CPlayerClassInfiltrator() {}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::ClassActivate( void )
+void CPlayerClassInfiltrator::ClassActivate(void)
 {
 	BaseClass::ClassActivate();
 
 	// Setup movement data.
 	SetupMoveData();
 
-	//m_hAssassinationWeapon = NULL;
+	// m_hAssassinationWeapon = NULL;
 	m_hSwappedWeapon = NULL;
 
 	m_bCanConsumeCorpses = false;
 	m_flStartCamoAt = 0.0f;
 
-	memset( &m_ClassData, 0, sizeof( m_ClassData ) );
+	memset(&m_ClassData, 0, sizeof(m_ClassData));
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Register for precaching.
 //-----------------------------------------------------------------------------
-void PrecacheInfiltrator(void *pUser)
-{
-}
+void PrecacheInfiltrator(void *pUser) {}
 PRECACHE_REGISTER_FN(PrecacheInfiltrator);
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::RespawnClass( void )
+void CPlayerClassInfiltrator::RespawnClass(void)
 {
 	BaseClass::RespawnClass();
 
@@ -94,18 +88,18 @@ void CPlayerClassInfiltrator::RespawnClass( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-bool CPlayerClassInfiltrator::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
+bool CPlayerClassInfiltrator::ResupplyAmmo(float flFraction, ResupplyReason_t reason)
 {
 	bool bGiven = false;
-	if ((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_AMMO_FROM_STATION))
+	if((reason == RESUPPLY_ALL_FROM_STATION) || (reason == RESUPPLY_AMMO_FROM_STATION))
 	{
-		if (ResupplyAmmoType( 200 * flFraction, "Bullets" ))
+		if(ResupplyAmmoType(200 * flFraction, "Bullets"))
 			bGiven = true;
-		if (ResupplyAmmoType( 20 * flFraction, "Limpets" ))
+		if(ResupplyAmmoType(20 * flFraction, "Limpets"))
 			bGiven = true;
 	}
 
-	if ( BaseClass::ResupplyAmmo(flFraction, reason) )
+	if(BaseClass::ResupplyAmmo(flFraction, reason))
 		bGiven = true;
 	return bGiven;
 }
@@ -113,7 +107,7 @@ bool CPlayerClassInfiltrator::ResupplyAmmo( float flFraction, ResupplyReason_t r
 //-----------------------------------------------------------------------------
 // Purpose: Set infiltrator class specific movement data here.
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::SetupMoveData( void )
+void CPlayerClassInfiltrator::SetupMoveData(void)
 {
 	// Setup Class statistics
 	m_flMaxWalkingSpeed = class_infiltrator_speed.GetFloat();
@@ -122,37 +116,37 @@ void CPlayerClassInfiltrator::SetupMoveData( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::SetupSizeData( void )
+void CPlayerClassInfiltrator::SetupSizeData(void)
 {
 	// Initially set the player to the base player class standing hull size.
-	m_pPlayer->SetCollisionBounds( INFILTRATORCLASS_HULL_STAND_MIN, INFILTRATORCLASS_HULL_STAND_MAX );
-	m_pPlayer->SetViewOffset( INFILTRATORCLASS_VIEWOFFSET_STAND );
+	m_pPlayer->SetCollisionBounds(INFILTRATORCLASS_HULL_STAND_MIN, INFILTRATORCLASS_HULL_STAND_MAX);
+	m_pPlayer->SetViewOffset(INFILTRATORCLASS_VIEWOFFSET_STAND);
 	m_pPlayer->m_Local.m_flStepSize = INFILTRATORCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: New technology has been gained. Recalculate any class specific technology dependencies.
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::GainedNewTechnology( CBaseTechnology *pTechnology )
+void CPlayerClassInfiltrator::GainedNewTechnology(CBaseTechnology *pTechnology)
 {
 	// Consume corpse technology?
-	m_bCanConsumeCorpses = m_pPlayer->HasNamedTechnology( "inf_consume_corpse" );
+	m_bCanConsumeCorpses = m_pPlayer->HasNamedTechnology("inf_consume_corpse");
 
-	BaseClass::GainedNewTechnology( pTechnology );
+	BaseClass::GainedNewTechnology(pTechnology);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if this player's allowed to build another one of the specified objects
 //-----------------------------------------------------------------------------
-int CPlayerClassInfiltrator::CanBuild( int iObjectType )
+int CPlayerClassInfiltrator::CanBuild(int iObjectType)
 {
-	return BaseClass::CanBuild( iObjectType );
+	return BaseClass::CanBuild(iObjectType);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Called every frame by postthink
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::ClassThink( void )
+void CPlayerClassInfiltrator::ClassThink(void)
 {
 	BaseClass::ClassThink();
 
@@ -162,10 +156,10 @@ void CPlayerClassInfiltrator::ClassThink( void )
 //-----------------------------------------------------------------------------
 // Purpose: The player's just had his camo cleared
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::ClearCamouflage( void )
+void CPlayerClassInfiltrator::ClearCamouflage(void)
 {
 	float flNewTime = gpGlobals->curtime + INFILTRATOR_RECAMO_TIME;
-	if ( flNewTime > m_flStartCamoAt )
+	if(flNewTime > m_flStartCamoAt)
 	{
 		m_flStartCamoAt = flNewTime;
 	}
@@ -174,7 +168,7 @@ void CPlayerClassInfiltrator::ClearCamouflage( void )
 //-----------------------------------------------------------------------------
 // Purpose: Player's finished disguising.
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::FinishedDisguising( void )
+void CPlayerClassInfiltrator::FinishedDisguising(void)
 {
 	// Remove my camo
 	m_pPlayer->ClearCamouflage();
@@ -183,7 +177,7 @@ void CPlayerClassInfiltrator::FinishedDisguising( void )
 //-----------------------------------------------------------------------------
 // Purpose: Player's lost his disguise.
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::StopDisguising( void )
+void CPlayerClassInfiltrator::StopDisguising(void)
 {
 	// Remove & restart my camo
 	m_pPlayer->ClearCamouflage();
@@ -192,25 +186,24 @@ void CPlayerClassInfiltrator::StopDisguising( void )
 //-----------------------------------------------------------------------------
 // Purpose: Handle custom commands for this playerclass
 //-----------------------------------------------------------------------------
-bool CPlayerClassInfiltrator::ClientCommand( const char *pcmd )
+bool CPlayerClassInfiltrator::ClientCommand(const char *pcmd)
 {
 	// Toggle thermal vision
-	if ( FStrEq( pcmd, "special" ) )
+	if(FStrEq(pcmd, "special"))
 	{
-		Assert( m_pPlayer );
+		Assert(m_pPlayer);
 		// Toggle
-		m_pPlayer->SetUsingThermalVision( !m_pPlayer->IsUsingThermalVision() );
+		m_pPlayer->SetUsingThermalVision(!m_pPlayer->IsUsingThermalVision());
 		return true;
 	}
 
-	return BaseClass::ClientCommand( pcmd );
+	return BaseClass::ClientCommand(pcmd);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose: Check to see if I can assassinate anyone
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::CheckForAssassination( void )
+void CPlayerClassInfiltrator::CheckForAssassination(void)
 {
 	/*
 	// Find my assassination weapon if I haven't already
@@ -251,25 +244,25 @@ void CPlayerClassInfiltrator::CheckForAssassination( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::SetPlayerHull( void )
+void CPlayerClassInfiltrator::SetPlayerHull(void)
 {
-	if ( m_pPlayer->GetFlags() & FL_DUCKING )
+	if(m_pPlayer->GetFlags() & FL_DUCKING)
 	{
-		m_pPlayer->SetCollisionBounds( INFILTRATORCLASS_HULL_DUCK_MIN, INFILTRATORCLASS_HULL_DUCK_MAX );
+		m_pPlayer->SetCollisionBounds(INFILTRATORCLASS_HULL_DUCK_MIN, INFILTRATORCLASS_HULL_DUCK_MAX);
 	}
 	else
 	{
-		m_pPlayer->SetCollisionBounds( INFILTRATORCLASS_HULL_STAND_MIN, INFILTRATORCLASS_HULL_STAND_MAX );
+		m_pPlayer->SetCollisionBounds(INFILTRATORCLASS_HULL_STAND_MIN, INFILTRATORCLASS_HULL_STAND_MAX);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CPlayerClassInfiltrator::ResetViewOffset( void )
+void CPlayerClassInfiltrator::ResetViewOffset(void)
 {
-	if ( m_pPlayer )
+	if(m_pPlayer)
 	{
-		m_pPlayer->SetViewOffset( INFILTRATORCLASS_VIEWOFFSET_STAND );
+		m_pPlayer->SetViewOffset(INFILTRATORCLASS_VIEWOFFSET_STAND);
 	}
 }

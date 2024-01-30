@@ -26,16 +26,16 @@
 // TF Smoke Bomb tables.
 //
 
-IMPLEMENT_NETWORKCLASS_ALIASED( TFGrenadeSmokeBomb, DT_TFGrenadeSmokeBomb )
+IMPLEMENT_NETWORKCLASS_ALIASED(TFGrenadeSmokeBomb, DT_TFGrenadeSmokeBomb)
 
-BEGIN_NETWORK_TABLE( CTFGrenadeSmokeBomb, DT_TFGrenadeSmokeBomb )
+BEGIN_NETWORK_TABLE(CTFGrenadeSmokeBomb, DT_TFGrenadeSmokeBomb)
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CTFGrenadeSmokeBomb )
+BEGIN_PREDICTION_DATA(CTFGrenadeSmokeBomb)
 END_PREDICTION_DATA()
 
-LINK_ENTITY_TO_CLASS( tf_weapon_grenade_smoke_bomb, CTFGrenadeSmokeBomb );
-PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_smoke_bomb );
+LINK_ENTITY_TO_CLASS(tf_weapon_grenade_smoke_bomb, CTFGrenadeSmokeBomb);
+PRECACHE_WEAPON_REGISTER(tf_weapon_grenade_smoke_bomb);
 
 //=============================================================================
 //
@@ -45,7 +45,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_grenade_smoke_bomb );
 // Server specific.
 #ifdef GAME_DLL
 
-BEGIN_DATADESC( CTFGrenadeSmokeBomb )
+BEGIN_DATADESC(CTFGrenadeSmokeBomb)
 END_DATADESC()
 
 extern ConVar tf_smoke_bomb_time;
@@ -53,8 +53,9 @@ extern ConVar tf_smoke_bomb_time;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngle vecAngles, Vector vecVel,
-													 AngularImpulse angImpulse, CBasePlayer *pPlayer, float flTime, int iflags )
+CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade(Vector vecSrc, QAngle vecAngles, Vector vecVel,
+														   AngularImpulse angImpulse, CBasePlayer *pPlayer,
+														   float flTime, int iflags)
 {
 #if 0
 	CTFPlayer *pTFPlayer = ToTFPlayer( pPlayer );
@@ -87,7 +88,7 @@ CTFWeaponBaseGrenadeProj *CTFGrenadeSmokeBomb::EmitGrenade( Vector vecSrc, QAngl
 //-----------------------------------------------------------------------------
 // Purpose: Don't explode automatically
 //-----------------------------------------------------------------------------
-bool CTFGrenadeSmokeBomb::ShouldDetonate( void )
+bool CTFGrenadeSmokeBomb::ShouldDetonate(void)
 {
 	return false;
 }

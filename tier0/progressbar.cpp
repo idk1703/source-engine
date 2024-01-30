@@ -19,16 +19,15 @@
 #include "tier0/memdbgon.h"
 #endif
 
-
 static ProgressReportHandler_t pReportHandlerFN;
 
 PLATFORM_INTERFACE void ReportProgress(char const *job_name, int total_units_to_do, int n_units_completed)
 {
-	if ( pReportHandlerFN )
-		(*pReportHandlerFN)( job_name, total_units_to_do, n_units_completed );
+	if(pReportHandlerFN)
+		(*pReportHandlerFN)(job_name, total_units_to_do, n_units_completed);
 }
 
-PLATFORM_INTERFACE ProgressReportHandler_t InstallProgressReportHandler( ProgressReportHandler_t pfn)
+PLATFORM_INTERFACE ProgressReportHandler_t InstallProgressReportHandler(ProgressReportHandler_t pfn)
 {
 	ProgressReportHandler_t old = pReportHandlerFN;
 	pReportHandlerFN = pfn;

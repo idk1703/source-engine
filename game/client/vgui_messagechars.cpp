@@ -29,62 +29,53 @@
 class CMessageCharsPanel : public vgui::Panel
 {
 	typedef vgui::Panel BaseClass;
+
 public:
 	// Internal pool of such messages
 	typedef struct message_s
 	{
-		struct		message_s *next;
-		int			x, y;
-		byte		r, g, b, a;
-		char		*text;
-		vgui::HFont	hCustomFont;
-		float		fTTL;
-		int			messageID;
+		struct message_s *next;
+		int x, y;
+		byte r, g, b, a;
+		char *text;
+		vgui::HFont hCustomFont;
+		float fTTL;
+		int messageID;
 	} message_t;
 
 	// Construct/destruct
-						CMessageCharsPanel( vgui::VPANEL parent );
-	virtual				~CMessageCharsPanel( void );
+	CMessageCharsPanel(vgui::VPANEL parent);
+	virtual ~CMessageCharsPanel(void);
 
 	// Add block of text to list
-	virtual int			AddText(
-		float flTime,
-		vgui::HFont hCustomFont,
-		int x,
-		int y,
-		int r,
-		int g,
-		int b,
-		int a,
-		char *fmt,
-		int messageID,
-		... );
+	virtual int AddText(float flTime, vgui::HFont hCustomFont, int x, int y, int r, int g, int b, int a, char *fmt,
+						int messageID, ...);
 
 	// Determine text side and height
-	virtual void		GetTextExtents( vgui::HFont hCustomFont, int *wide, int *tall, const char *string );
+	virtual void GetTextExtents(vgui::HFont hCustomFont, int *wide, int *tall, const char *string);
 
-	virtual void		ApplySchemeSettings(vgui::IScheme *pScheme);
-	virtual void		Paint();
-	virtual void		OnTick( void );
+	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
+	virtual void Paint();
+	virtual void OnTick(void);
 
-	virtual bool		ShouldDraw( void );
+	virtual bool ShouldDraw(void);
 
-	void				RemoveStringsByID( int messageID );
+	void RemoveStringsByID(int messageID);
 
-	void				Clear( void );
+	void Clear(void);
 
 private:
 	// Allocate a new message
-	message_t			*AllocMessage( void );
+	message_t *AllocMessage(void);
 	// Clear out all messages
-	void				Reset( void );
+	void Reset(void);
 
-	vgui::HFont			m_hFont;
+	vgui::HFont m_hFont;
 
 	// Pool of messages
-	message_t			m_Messages[ MAX_MESSAGECHARS_MESSAGES ];
-	message_t			*m_pActive;
-	message_t			*m_pFree;
+	message_t m_Messages[MAX_MESSAGECHARS_MESSAGES];
+	message_t *m_pActive;
+	message_t *m_pFree;
 };
 
 //-----------------------------------------------------------------------------
@@ -92,53 +83,49 @@ private:
 // Input  : *parent -
 // Output :
 //-----------------------------------------------------------------------------
-CMessageCharsPanel::CMessageCharsPanel( vgui::VPANEL parent ) :
-	BaseClass( NULL, "CMessageCharsPanel" )
+CMessageCharsPanel::CMessageCharsPanel(vgui::VPANEL parent) : BaseClass(NULL, "CMessageCharsPanel")
 {
-	SetParent( parent );
-	SetSize( ScreenWidth(), ScreenHeight() );
-	SetPos( 0, 0 );
-	SetVisible( true );
-	SetCursor( null );
-	SetKeyBoardInputEnabled( false );
-	SetMouseInputEnabled( false );
+	SetParent(parent);
+	SetSize(ScreenWidth(), ScreenHeight());
+	SetPos(0, 0);
+	SetVisible(true);
+	SetCursor(null);
+	SetKeyBoardInputEnabled(false);
+	SetMouseInputEnabled(false);
 
 	m_hFont = vgui::INVALID_FONT;
 
-	SetFgColor( Color( 0, 0, 0, 255 ) );
-	SetPaintBackgroundEnabled( false );
+	SetFgColor(Color(0, 0, 0, 255));
+	SetPaintBackgroundEnabled(false);
 
-	Q_memset( m_Messages, 0, sizeof( m_Messages ) );
+	Q_memset(m_Messages, 0, sizeof(m_Messages));
 
 	Reset();
 
-	vgui::ivgui()->AddTickSignal( GetVPanel(), 100 );
+	vgui::ivgui()->AddTickSignal(GetVPanel(), 100);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 // Output :
 //-----------------------------------------------------------------------------
-CMessageCharsPanel::~CMessageCharsPanel( void )
-{
-}
+CMessageCharsPanel::~CMessageCharsPanel(void) {}
 
 void CMessageCharsPanel::ApplySchemeSettings(vgui::IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	m_hFont = pScheme->GetFont( "Default" );
-	Assert( m_hFont != vgui::INVALID_FONT );
+	m_hFont = pScheme->GetFont("Default");
+	Assert(m_hFont != vgui::INVALID_FONT);
 
-	SetSize( ScreenWidth(), ScreenHeight() );
-	SetPos( 0, 0 );
+	SetSize(ScreenWidth(), ScreenHeight());
+	SetPos(0, 0);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CMessageCharsPanel::Clear( void )
+void CMessageCharsPanel::Clear(void)
 {
 	Reset();
 }
@@ -146,44 +133,44 @@ void CMessageCharsPanel::Clear( void )
 //-----------------------------------------------------------------------------
 // Purpose: Reset all messages
 //-----------------------------------------------------------------------------
-void CMessageCharsPanel::Reset( void )
+void CMessageCharsPanel::Reset(void)
 {
 	m_pActive = NULL;
 	int i;
-	for( i = 0; i < MAX_MESSAGECHARS_MESSAGES-1; i++ )
+	for(i = 0; i < MAX_MESSAGECHARS_MESSAGES - 1; i++)
 	{
-		if ( m_Messages[ i ].text )
+		if(m_Messages[i].text)
 		{
-			delete[] m_Messages[ i ].text;
-			m_Messages[ i ].text = NULL;
+			delete[] m_Messages[i].text;
+			m_Messages[i].text = NULL;
 		}
-		m_Messages[ i ].next = &m_Messages[ i + 1 ];
+		m_Messages[i].next = &m_Messages[i + 1];
 	}
-	m_Messages[ i ].next = NULL;
-	m_pFree = &m_Messages[ 0 ];
-	SetVisible( false );
+	m_Messages[i].next = NULL;
+	m_pFree = &m_Messages[0];
+	SetVisible(false);
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Allocate a message if possible
 // Output : CMessageCharsPanel::message_t
 //-----------------------------------------------------------------------------
-CMessageCharsPanel::message_t *CMessageCharsPanel::AllocMessage( void )
+CMessageCharsPanel::message_t *CMessageCharsPanel::AllocMessage(void)
 {
 	CMessageCharsPanel::message_t *msg;
 
-	if ( !m_pFree )
+	if(!m_pFree)
 		return NULL;
 
-	msg			= m_pFree;
-	m_pFree		= m_pFree->next;
+	msg = m_pFree;
+	m_pFree = m_pFree->next;
 
-	msg->next	= m_pActive;
-	m_pActive	= msg;
+	msg->next = m_pActive;
+	m_pActive = msg;
 
-	msg->x		= 0;
-	msg->y		= 0;
-	msg->text	= NULL;
+	msg->x = 0;
+	msg->y = 0;
+	msg->text = NULL;
 
 	msg->hCustomFont = NULL;
 
@@ -198,31 +185,21 @@ CMessageCharsPanel::message_t *CMessageCharsPanel::AllocMessage( void )
 //			... -
 // Output : int
 //-----------------------------------------------------------------------------
-int CMessageCharsPanel::AddText(
-	float flTime,
-	vgui::HFont hCustomFont,
-	int x,
-	int y,
-	int r,
-	int g,
-	int b,
-	int a,
-	char *fmt,
-	int messageID,
-	... )
+int CMessageCharsPanel::AddText(float flTime, vgui::HFont hCustomFont, int x, int y, int r, int g, int b, int a,
+								char *fmt, int messageID, ...)
 {
 	va_list argptr;
-	char data[ MAX_MESSAGECHARSPANEL_LEN ];
+	char data[MAX_MESSAGECHARSPANEL_LEN];
 	int len;
 
 	va_start(argptr, messageID);
-	len = Q_vsnprintf(data, sizeof( data ), fmt, argptr);
+	len = Q_vsnprintf(data, sizeof(data), fmt, argptr);
 	va_end(argptr);
 
-	data[ MAX_MESSAGECHARSPANEL_LEN - 1 ] = 0;
+	data[MAX_MESSAGECHARSPANEL_LEN - 1] = 0;
 
 	CMessageCharsPanel::message_t *msg = AllocMessage();
-	if ( !msg )
+	if(!msg)
 		return x;
 
 	msg->x = x;
@@ -233,26 +210,26 @@ int CMessageCharsPanel::AddText(
 	msg->a = a;
 	msg->messageID = messageID;
 
-	Assert( !msg->text );
+	Assert(!msg->text);
 
-	int textLength = Q_strlen( data ) + 1;
-	msg->text = new char[ textLength ];
-	Assert( msg->text );
-	Q_strncpy( msg->text, data, textLength );
+	int textLength = Q_strlen(data) + 1;
+	msg->text = new char[textLength];
+	Assert(msg->text);
+	Q_strncpy(msg->text, data, textLength);
 
-	if ( flTime )
+	if(flTime)
 		msg->fTTL = gpGlobals->curtime + flTime;
 	else
 		msg->fTTL = 0;
-	SetVisible( true );
+	SetVisible(true);
 
-	if ( hCustomFont )
+	if(hCustomFont)
 		msg->hCustomFont = hCustomFont;
 	else
 		msg->hCustomFont = m_hFont;
 
 	// Return new cursor position
-	return x + g_pMatSystemSurface->DrawTextLen( msg->hCustomFont, "%s", data );
+	return x + g_pMatSystemSurface->DrawTextLen(msg->hCustomFont, "%s", data);
 }
 
 //-----------------------------------------------------------------------------
@@ -261,31 +238,30 @@ int CMessageCharsPanel::AddText(
 //			*tall -
 //			*string -
 //-----------------------------------------------------------------------------
-void CMessageCharsPanel::GetTextExtents( vgui::HFont hCustomFont, int *wide, int *tall, const char *string )
+void CMessageCharsPanel::GetTextExtents(vgui::HFont hCustomFont, int *wide, int *tall, const char *string)
 {
-	if ( !hCustomFont )
+	if(!hCustomFont)
 	{
 		// Make sure we actually have the font...
-		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme( GetScheme() );
-		hCustomFont = pScheme->GetFont( "Default" );
+		vgui::IScheme *pScheme = vgui::scheme()->GetIScheme(GetScheme());
+		hCustomFont = pScheme->GetFont("Default");
 	}
 
-	Assert( hCustomFont );
+	Assert(hCustomFont);
 
-	*wide = g_pMatSystemSurface->DrawTextLen( hCustomFont, "%s", (char *)string );
-	*tall = vgui::surface()->GetFontTall( hCustomFont );
+	*wide = g_pMatSystemSurface->DrawTextLen(hCustomFont, "%s", (char *)string);
+	*tall = vgui::surface()->GetFontTall(hCustomFont);
 }
-
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CMessageCharsPanel::OnTick( void )
+void CMessageCharsPanel::OnTick(void)
 {
 	bool bVisible = ShouldDraw();
-	if ( IsVisible() != bVisible )
+	if(IsVisible() != bVisible)
 	{
-		SetVisible( bVisible );
+		SetVisible(bVisible);
 	}
 }
 
@@ -293,9 +269,9 @@ void CMessageCharsPanel::OnTick( void )
 // Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CMessageCharsPanel::ShouldDraw( void )
+bool CMessageCharsPanel::ShouldDraw(void)
 {
-	if ( !m_pActive )
+	if(!m_pActive)
 		return false;
 
 	return true;
@@ -308,21 +284,22 @@ bool CMessageCharsPanel::ShouldDraw( void )
 void CMessageCharsPanel::Paint()
 {
 	CMessageCharsPanel::message_t *msg = m_pActive;
-	while ( msg )
+	while(msg)
 	{
-		g_pMatSystemSurface->DrawColoredText( msg->hCustomFont, msg->x, msg->y, msg->r, msg->g, msg->b, msg->a, "%s", msg->text );
+		g_pMatSystemSurface->DrawColoredText(msg->hCustomFont, msg->x, msg->y, msg->r, msg->g, msg->b, msg->a, "%s",
+											 msg->text);
 		msg = msg->next;
 	}
 
 	// Clear our dead messages
 	message_t *pPrev = NULL;
 	message_t *pCurrent = m_pActive;
-	while ( pCurrent )
+	while(pCurrent)
 	{
-		if ( pCurrent->fTTL <= gpGlobals->curtime )
+		if(pCurrent->fTTL <= gpGlobals->curtime)
 		{
 			// Move it to the free list
-			if ( !pPrev )
+			if(!pPrev)
 			{
 				m_pActive = pCurrent->next;
 			}
@@ -348,12 +325,11 @@ void CMessageCharsPanel::Paint()
 	}
 }
 
-
-void CMessageCharsPanel::RemoveStringsByID( int messageID )
+void CMessageCharsPanel::RemoveStringsByID(int messageID)
 {
-	for ( message_t *pCurrent = m_pActive; pCurrent; pCurrent = pCurrent->next )
+	for(message_t *pCurrent = m_pActive; pCurrent; pCurrent = pCurrent->next)
 	{
-		if ( pCurrent->messageID == messageID )
+		if(pCurrent->messageID == messageID)
 			pCurrent->fTTL = gpGlobals->curtime - 1000;
 	}
 }
@@ -362,106 +338,109 @@ class CMessageChars : public IMessageChars
 {
 private:
 	CMessageCharsPanel *messageCharsPanel;
+
 public:
-	CMessageChars( void )
+	CMessageChars(void)
 	{
 		messageCharsPanel = NULL;
 	}
 
-	void Create( vgui::VPANEL parent )
+	void Create(vgui::VPANEL parent)
 	{
-		messageCharsPanel = new CMessageCharsPanel( parent );
+		messageCharsPanel = new CMessageCharsPanel(parent);
 	}
 
-	void Destroy( void )
+	void Destroy(void)
 	{
-		if ( messageCharsPanel )
+		if(messageCharsPanel)
 		{
-			messageCharsPanel->SetParent( (vgui::Panel *)NULL );
+			messageCharsPanel->SetParent((vgui::Panel *)NULL);
 			messageCharsPanel->MarkForDeletion();
 			messageCharsPanel = NULL;
 		}
 	}
 
-	int DrawStringForTime( float flTime, vgui::HFont hCustomFont, int x, int y, int r, int g, int b, int a, const char *fmt, int messageID, ... )
+	int DrawStringForTime(float flTime, vgui::HFont hCustomFont, int x, int y, int r, int g, int b, int a,
+						  const char *fmt, int messageID, ...)
 	{
 		va_list argptr;
-		char data[ MAX_MESSAGECHARSPANEL_LEN ];
+		char data[MAX_MESSAGECHARSPANEL_LEN];
 		int len;
 
 		va_start(argptr, messageID);
-		len = Q_vsnprintf(data, sizeof( data ), fmt, argptr);
+		len = Q_vsnprintf(data, sizeof(data), fmt, argptr);
 		va_end(argptr);
 
-		data[ MAX_MESSAGECHARSPANEL_LEN - 1 ] = 0;
+		data[MAX_MESSAGECHARSPANEL_LEN - 1] = 0;
 
-		if ( !messageCharsPanel )
+		if(!messageCharsPanel)
 			return x;
 
-		return messageCharsPanel->AddText( flTime, hCustomFont, x, y, r, g, b, a, data, messageID );
+		return messageCharsPanel->AddText(flTime, hCustomFont, x, y, r, g, b, a, data, messageID);
 	}
 
-	int DrawStringForTime( float flTime, vgui::HFont hCustomFont, int x, int y, const char *fmt, int messageID, ... )
+	int DrawStringForTime(float flTime, vgui::HFont hCustomFont, int x, int y, const char *fmt, int messageID, ...)
 	{
 		int r = 192, g = 192, b = 192;
 
 		va_list argptr;
 		va_start(argptr, messageID);
-		int result = DrawString( hCustomFont, x, y, r, g, b, 255, fmt, messageID, argptr );
-		va_end( argptr );
+		int result = DrawString(hCustomFont, x, y, r, g, b, 255, fmt, messageID, argptr);
+		va_end(argptr);
 		return result;
 	}
 
-	virtual void RemoveStringsByID( int messageID )
+	virtual void RemoveStringsByID(int messageID)
 	{
-		messageCharsPanel->RemoveStringsByID( messageID );
+		messageCharsPanel->RemoveStringsByID(messageID);
 	}
 
-	int DrawString( vgui::HFont hCustomFont, int x, int y, int r, int g, int b, int a, const char *fmt, int messageID, ... )
+	int DrawString(vgui::HFont hCustomFont, int x, int y, int r, int g, int b, int a, const char *fmt, int messageID,
+				   ...)
 	{
 		va_list argptr;
 		va_start(argptr, messageID);
-		int result = DrawStringForTime( 0, hCustomFont, x, y, r, g, b, a, fmt, messageID, argptr );
-		va_end( argptr );
+		int result = DrawStringForTime(0, hCustomFont, x, y, r, g, b, a, fmt, messageID, argptr);
+		va_end(argptr);
 		return result;
 	}
 
-	int DrawString( vgui::HFont hCustomFont, int x, int y, const char *fmt, int messageID, ... )
+	int DrawString(vgui::HFont hCustomFont, int x, int y, const char *fmt, int messageID, ...)
 	{
 		va_list argptr;
 		va_start(argptr, messageID);
-		int result = DrawStringForTime( 0, hCustomFont, x, y, fmt, messageID, argptr );
-		va_end( argptr );
+		int result = DrawStringForTime(0, hCustomFont, x, y, fmt, messageID, argptr);
+		va_end(argptr);
 		return result;
 	}
 
-	void GetStringLength( vgui::HFont hCustomFont, int *width, int *height, const char *fmt, ... )
+	void GetStringLength(vgui::HFont hCustomFont, int *width, int *height, const char *fmt, ...)
 	{
-		if ( !messageCharsPanel )
+		if(!messageCharsPanel)
 		{
 			return;
 		}
 
 		va_list argptr;
-		char data[ MAX_MESSAGECHARSPANEL_LEN ];
+		char data[MAX_MESSAGECHARSPANEL_LEN];
 		int len;
 
 		va_start(argptr, fmt);
-		len = Q_vsnprintf(data, sizeof( data ), fmt, argptr);
+		len = Q_vsnprintf(data, sizeof(data), fmt, argptr);
 		va_end(argptr);
 
-		data[ MAX_MESSAGECHARSPANEL_LEN - 1 ] = 0;
+		data[MAX_MESSAGECHARSPANEL_LEN - 1] = 0;
 
-		messageCharsPanel->GetTextExtents( hCustomFont, width, height, data );
+		messageCharsPanel->GetTextExtents(hCustomFont, width, height, data);
 	}
 
-	void Clear( void )
+	void Clear(void)
 	{
-		if ( !messageCharsPanel )
+		if(!messageCharsPanel)
 			return;
 		messageCharsPanel->Clear();
 	}
 };
 
 static CMessageChars g_MessageChars;
-IMessageChars *messagechars = ( IMessageChars * )&g_MessageChars;
+IMessageChars *messagechars = (IMessageChars *)&g_MessageChars;
