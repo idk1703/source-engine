@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -148,7 +148,7 @@ void CVertexBufferBase::PrintVertexFormat( VertexFormat_t vertexFormat )
 //-----------------------------------------------------------------------------
 // Used to construct vertex data
 //-----------------------------------------------------------------------------
-void CVertexBufferBase::ComputeVertexDescription( unsigned char *pBuffer, 
+void CVertexBufferBase::ComputeVertexDescription( unsigned char *pBuffer,
 	VertexFormat_t vertexFormat, VertexDesc_t &desc )
 {
 	ComputeVertexDesc( pBuffer, vertexFormat, desc );
@@ -156,7 +156,7 @@ void CVertexBufferBase::ComputeVertexDescription( unsigned char *pBuffer,
 
 
 //-----------------------------------------------------------------------------
-// Returns the vertex format size 
+// Returns the vertex format size
 //-----------------------------------------------------------------------------
 int CVertexBufferBase::VertexFormatSize( VertexFormat_t vertexFormat )
 {
@@ -385,7 +385,7 @@ void CIndexBufferBase::Spew( int nIndexCount, const IndexDesc_t &indexDesc )
 		}
 	}
 	Q_snprintf( pTemp, sizeof(pTempBuf) - nLen - 1, "\n" );
-	Warning( "%s", pTempBuf ); 
+	Warning( "%s", pTempBuf );
 }
 
 
@@ -393,9 +393,9 @@ void CIndexBufferBase::Spew( int nIndexCount, const IndexDesc_t &indexDesc )
 // Call this in debug mode to make sure our data is good.
 //-----------------------------------------------------------------------------
 void CIndexBufferBase::ValidateData( int nIndexCount, const IndexDesc_t& desc )
-{ 
-	/* FIXME */ 
-	// NOTE: Is there anything reasonable to do here at all? 
+{
+	/* FIXME */
+	// NOTE: Is there anything reasonable to do here at all?
 	// Or is this a bogus method altogether?
 }
 
@@ -415,5 +415,5 @@ CMeshBase::CMeshBase()
 }
 
 CMeshBase::~CMeshBase()
-{			   
+{
 }

@@ -42,7 +42,7 @@ bool CTFTips::Init()
 			m_iTipCount[iClass] = iClassTipCount;
 			m_iTipCountAll += iClassTipCount;
 
-			m_iArenaTipCount = g_pVGuiLocalize->Find( "Tip_arena_Count" ) ? _wtoi( g_pVGuiLocalize->Find( "Tip_arena_Count" ) ) : 0;	
+			m_iArenaTipCount = g_pVGuiLocalize->Find( "Tip_arena_Count" ) ? _wtoi( g_pVGuiLocalize->Find( "Tip_arena_Count" ) ) : 0;
 		}
 
 		// Captain Canteen mascot parts!
@@ -93,7 +93,7 @@ bool CTFTips::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Returns a random tip, selected from tips for all classes, 
+// Purpose: Returns a random tip, selected from tips for all classes,
 //          fills in iClassUsed with the class the tip is for
 //-----------------------------------------------------------------------------
 const wchar_t *CTFTips::GetRandomTip( int &iClassUsed )
@@ -121,10 +121,10 @@ const wchar_t *CTFTips::GetRandomTip( int &iClassUsed )
 	for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass <= TF_LAST_NORMAL_CLASS; iClass++ )
 	{
 		Assert( iTip >= 0 );
-		int iClassTipCount = m_iTipCount[iClass]; 
+		int iClassTipCount = m_iTipCount[iClass];
 		if ( iTip < iClassTipCount )
 		{
-			iClassUsed = iClass; 
+			iClassUsed = iClass;
 
 			// return the tip
 			return GetTip( iClass, iTip+1 );
@@ -152,7 +152,7 @@ const wchar_t *CTFTips::GetNextClassTip( int iClass )
 	{
 		return GetArenaTip();
 	}
-	
+
 	int iClassTipCount = m_iTipCount[iClass];
 	Assert( 0 != iClassTipCount );
 	if ( 0 == iClassTipCount )

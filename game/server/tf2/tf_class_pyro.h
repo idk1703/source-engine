@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ public:
 
 // Overrides.
 public:
-	
+
 	virtual void	SetupSizeData();
 	virtual void	CreateClass();
 	virtual void	SetPlayerHull();

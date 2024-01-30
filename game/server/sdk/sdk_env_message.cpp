@@ -31,7 +31,7 @@ END_DATADESC()
 
 void CGameMessageEntity::InputDisplayMessage( inputdata_t &data )
 {
-	// Only send this message the local player	
+	// Only send this message the local player
 	CSingleUserRecipientFilter user( UTIL_PlayerByIndex(1) );
 	user.MakeReliable();
 

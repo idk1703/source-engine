@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -23,7 +23,7 @@ public:
 		m_pObject = initVal;
 		m_RefCount = 0;
 	}
-	
+
 	void Init( T pObj )
 	{
 		Assert( ThreadInMainThread() );
@@ -32,7 +32,7 @@ public:
 		m_pObject = pObj;
 		m_RefCount = 1;
 	}
-	
+
 	// Threads that access the object need to use AddRef/Release to access it.
 	T AddRef()
 	{
@@ -66,17 +66,17 @@ public:
 	void ResetWhenNoRemainingReferences( T newValue )
 	{
 		Assert( ThreadInMainThread() );
-		
+
 		// Wait until we can free it.
 		while ( m_RefCount > 0 )
 		{
 			CThread::Sleep( 20 );
 		}
-		
+
 		m_pObject = newValue;
 	}
 
-private:	
+private:
 	CInterlockedIntT<long>	m_RefCount;
 	T						m_pObject;
 };

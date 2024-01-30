@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -57,7 +57,7 @@ public:
 	bool	GetActive() const;
 
 	void	AddVisualizer( CFuncRespawnRoomVisualizer *pViz );
-	
+
 private:
 	bool	m_bActive;
 	int		m_iOriginalTeam;

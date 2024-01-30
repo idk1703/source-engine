@@ -41,4 +41,3 @@ ActionResult< CHeadlessHatman >	CHeadlessHatmanDying::Update( CHeadlessHatman *m
 
 	return Continue();
 }
-

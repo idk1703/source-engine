@@ -47,7 +47,7 @@ ActionResult< CTFBot >	CTFBotSpyAttack::Update( CTFBot *me, float interval )
 
 	// opportunistically attack closer threat if they are much closer to us than our existing threat
 	const CKnownEntity *closestThreat = me->GetVisionInterface()->GetPrimaryKnownThreat();
-	
+
 	if ( !threat )
 	{
 		threat = closestThreat;
@@ -57,8 +57,8 @@ ActionResult< CTFBot >	CTFBotSpyAttack::Update( CTFBot *me, float interval )
 			m_victim = ToTFPlayer( closestThreat->GetEntity() );
 		}
 	}
-	else if ( closestThreat && 
-			  closestThreat->GetEntity() && 
+	else if ( closestThreat &&
+			  closestThreat->GetEntity() &&
 			  closestThreat != threat )
 	{
 		float rangeToCurrentThreat = me->GetRangeTo( threat->GetLastKnownPosition() );
@@ -166,7 +166,7 @@ ActionResult< CTFBot >	CTFBotSpyAttack::Update( CTFBot *me, float interval )
 	{
 		m_isCoverBlown |= ( playerThreat->GetTimeSinceWeaponFired() < 0.25f );
 	}
-	
+
 	if ( m_isCoverBlown ||
 		 me->m_Shared.InCond( TF_COND_BURNING ) ||
 		 me->m_Shared.InCond( TF_COND_URINE ) ||
@@ -256,8 +256,8 @@ ActionResult< CTFBot >	CTFBotSpyAttack::Update( CTFBot *me, float interval )
 	if ( isMovingTowardVictim )
 	{
 		// pursue the threat. if not visible, go to the last known position
-		if ( !threat->IsVisibleRecently() || 
-			 me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) || 
+		if ( !threat->IsVisibleRecently() ||
+			 me->IsRangeGreaterThan( threat->GetEntity()->GetAbsOrigin(), me->GetDesiredAttackRange() ) ||
 			 !me->IsLineOfFireClear( threat->GetEntity()->EyePosition() ) )
 		{
 			// if we're at the threat's last known position and he's still not visible, we lost him
@@ -385,9 +385,9 @@ QueryResultType CTFBotSpyAttack::IsHindrance( const INextBot *me, CBaseEntity *b
 
 //---------------------------------------------------------------------------------------------
 // Return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
-const CKnownEntity * CTFBotSpyAttack::SelectMoreDangerousThreat( const INextBot *meBot, 
+const CKnownEntity * CTFBotSpyAttack::SelectMoreDangerousThreat( const INextBot *meBot,
 																 const CBaseCombatCharacter *subject,
-																 const CKnownEntity *threat1, 
+																 const CKnownEntity *threat1,
 																 const CKnownEntity *threat2 ) const
 {
 	CTFBot *me = ToTFBot( meBot->GetEntity() );
@@ -409,4 +409,3 @@ const CKnownEntity * CTFBotSpyAttack::SelectMoreDangerousThreat( const INextBot 
 
 	return NULL;
 }
-

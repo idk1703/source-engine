@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-//========= Copyright © 1996-2003, Valve LLC, All rights reserved. ============
+//========= Copyright ï¿½ 1996-2003, Valve LLC, All rights reserved. ============
 //
 // Purpose: This is the incendiary rifle.
 //
@@ -65,7 +65,7 @@ PRECACHE_WEAPON_REGISTER(weapon_irifle);
 //---------------------------------------------------------
 // Activity table
 //---------------------------------------------------------
-acttable_t	CWeaponIRifle::m_acttable[] = 
+acttable_t	CWeaponIRifle::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_ML, true },
 };
@@ -96,7 +96,7 @@ void CWeaponIRifle::Precache( void )
 void CWeaponIRifle::PrimaryAttack( void )
 {
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 

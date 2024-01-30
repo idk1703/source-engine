@@ -11,7 +11,7 @@
 #define VIDEOSUBSYSTEM_H
 
 #if defined ( WIN32 )
-    #pragma once
+	#pragma once
 #endif
 
 #include "tier2/tier2.h"
@@ -35,17 +35,17 @@ struct VideoFileExtensionInfo_t
 class IVideoCommonServices
 {
 	public:
-		virtual bool			CalculateVideoDimensions( int videoWidth, int videoHeight, int displayWidth, int displayHeight, VideoPlaybackFlags_t playbackFlags, 
-													  int *pOutputWidth, int *pOutputHeight, int *pXOffset, int *pYOffset ) = 0;
+		virtual bool			CalculateVideoDimensions( int videoWidth, int videoHeight, int displayWidth, int displayHeight, VideoPlaybackFlags_t playbackFlags,
+													int *pOutputWidth, int *pOutputHeight, int *pXOffset, int *pYOffset ) = 0;
 
 		virtual	float			GetSystemVolume() = 0;
-													  
+
 		virtual VideoResult_t	InitFullScreenPlaybackInputHandler( VideoPlaybackFlags_t playbackFlags, float forcedMinTime, bool windowed ) = 0;
-		
+
 		virtual bool			ProcessFullScreenInput( bool &bAbortEvent, bool &bPauseEvent, bool &bQuitEvent ) = 0;
-		
+
 		virtual VideoResult_t	TerminateFullScreenPlaybackInputHandler() = 0;
-		
+
 };
 
 
@@ -62,32 +62,32 @@ class IVideoSubSystem : public IAppSystem
 		virtual VideoSystemStatus_t		GetSystemStatus() = 0;
 		virtual VideoSystemFeature_t	GetSupportedFeatures() = 0;
 		virtual const char			   *GetVideoSystemName() = 0;
-		
+
 		// Setup & Shutdown Services
 		virtual bool					InitializeVideoSystem( IVideoCommonServices *pCommonServices ) = 0;
 		virtual bool					ShutdownVideoSystem() = 0;
-		
+
 		virtual VideoResult_t			VideoSoundDeviceCMD( VideoSoundDeviceOperation_t operation, void *pDevice, void *pData = nullptr ) = 0;
-		
+
 		// get list of file extensions and features we support
 		virtual int						GetSupportedFileExtensionCount() = 0;
 		virtual const char			   *GetSupportedFileExtension( int num ) = 0;
 		virtual VideoSystemFeature_t	GetSupportedFileExtensionFeatures( int num ) = 0;
 
 		// Video Playback and Recording Services
-		
+
 		virtual VideoResult_t			PlayVideoFileFullScreen( const char *filename, void *mainWindow, int windowWidth, int windowHeight, int desktopWidth, int desktopHeight, bool windowed, float forcedMinTime, VideoPlaybackFlags_t playbackFlags ) = 0;
 
 		// Create/destroy a video material
 		virtual IVideoMaterial		   *CreateVideoMaterial( const char *pMaterialName, const char *pVideoFileName, VideoPlaybackFlags_t flags ) = 0;
 		virtual VideoResult_t			DestroyVideoMaterial( IVideoMaterial* pVideoMaterial ) = 0;
 
-		// Create/destroy a video encoder		
+		// Create/destroy a video encoder
 		virtual IVideoRecorder		   *CreateVideoRecorder() = 0;
 		virtual VideoResult_t			DestroyVideoRecorder( IVideoRecorder *pRecorder ) = 0;
 
 		virtual VideoResult_t			CheckCodecAvailability( VideoEncodeCodec_t codec ) = 0;
-		
+
 		virtual VideoResult_t			GetLastResult() = 0;
 
 };

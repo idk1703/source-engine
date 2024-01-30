@@ -24,7 +24,7 @@ DECLARE_OVERLAY_FACTORY( CEntityImagePanel, "image" );
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CEntityImagePanel::CEntityImagePanel( vgui::Panel *pParent, const char *panelName ) :	
+CEntityImagePanel::CEntityImagePanel( vgui::Panel *pParent, const char *panelName ) :
 	BaseClass( pParent, panelName ), m_pImage(0)
 {
 	SetPaintBackgroundEnabled( false );
@@ -127,9 +127,9 @@ DECLARE_OVERLAY_FACTORY( CEntityTeamImagePanel, "team_image" );
 //-----------------------------------------------------------------------------
 // Purpose:
 // Constructor:  Same as image panel, except can handle team specific colors/images
-// Input  : pEntity - 
+// Input  : pEntity -
 //-----------------------------------------------------------------------------
-CEntityTeamImagePanel::CEntityTeamImagePanel( vgui::Panel *pParent, const char *panelName ) :	
+CEntityTeamImagePanel::CEntityTeamImagePanel( vgui::Panel *pParent, const char *panelName ) :
 	BaseClass( pParent, panelName )
 {
 	SetPaintBackgroundEnabled( false );
@@ -137,7 +137,7 @@ CEntityTeamImagePanel::CEntityTeamImagePanel( vgui::Panel *pParent, const char *
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEntityTeamImagePanel::~CEntityTeamImagePanel( void )
 {

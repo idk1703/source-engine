@@ -184,7 +184,7 @@ CDmeVertexDataBase *CVertexData::Add( CDmeMesh *pMesh, const char *pName )
 			pBaseVertexData->AddVertexIndices( m_pIndices.Count() );
 			pVertexData = pBaseVertexData;
 		}
-		
+
 		pVertexData->FlipVCoordinate( true );
 
 		const FieldIndex_t pIndex( pVertexData->CreateField( CDmeVertexData::FIELD_POSITION ) );
@@ -1205,7 +1205,7 @@ const char *CDmObjSerializer::FindMtlEntry( const char *pTgaName )
 			return m_mtlLib[i].m_TgaName;
 	}
 	return pTgaName;
-}									 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -1367,7 +1367,7 @@ void CDmObjSerializer::ComputeDeltaStateComputationList( CUtlVector< CUtlVector<
 
 	// Build a list of atomic controls
 	int nCurrentDelta;
-	for ( nCurrentDelta = 0; nCurrentDelta < nCount; ++nCurrentDelta ) 
+	for ( nCurrentDelta = 0; nCurrentDelta < nCount; ++nCurrentDelta )
 	{
 		if ( pInfo[nCurrentDelta].m_nDimensionality != 1 )
 			break;

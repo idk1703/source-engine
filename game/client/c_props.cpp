@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -207,7 +207,7 @@ public:
 		return true;
 	}
 
-	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.	
+	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.
 	CNetworkVar( float, m_fMass );
 
 	DECLARE_CLIENTCLASS();
@@ -250,7 +250,7 @@ class CPhysicsPropMultiplayer : public CPhysicsProp, public IMultiplayerPhysics
 		TransformAABB( EntityToWorldTransform(), m_collisionMins, m_collisionMaxs, *mins, *maxs );
 	}
 
-	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.	
+	CNetworkVar( int, m_iPhysicsMode );	// One of the PHYSICS_MULTIPLAYER_ defines.
 	CNetworkVar( float, m_fMass );
 	CNetworkVector( m_collisionMins );
 	CNetworkVector( m_collisionMaxs );

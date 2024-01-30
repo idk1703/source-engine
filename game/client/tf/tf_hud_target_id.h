@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,14 +27,14 @@ class CAvatarImagePanel;
 #define MAX_PREPEND_STRING		32
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetID : public CHudElement, public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CTargetID, vgui::EditablePanel );
 public:
 	CTargetID( const char *pElementName );
-	
+
 	virtual void	LevelShutdown( void );
 	void			Reset( void );
 	void			VidInit( void );
@@ -119,7 +119,7 @@ public:
 private:
 	vgui::Panel		*m_pBGPanel_Spec_Blue;
 	vgui::Panel		*m_pBGPanel_Spec_Red;
-																					
+
 };
 
 //-----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CFloatingHealthIcon : public vgui::EditablePanel
 {

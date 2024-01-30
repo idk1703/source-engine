@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -159,8 +159,8 @@ inline const CBaseHandle& CBaseHandle::operator=( const IHandleEntity *pEntity )
 	return Set( pEntity );
 }
 
-inline const CBaseHandle& CBaseHandle::Set( const IHandleEntity *pEntity ) 
-{ 
+inline const CBaseHandle& CBaseHandle::Set( const IHandleEntity *pEntity )
+{
 	if ( pEntity )
 	{
 		*this = pEntity->GetRefEHandle();
@@ -169,7 +169,7 @@ inline const CBaseHandle& CBaseHandle::Set( const IHandleEntity *pEntity )
 	{
 		m_Index = INVALID_EHANDLE_INDEX;
 	}
-	
+
 	return *this;
 }
 

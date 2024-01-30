@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -47,7 +47,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudCapturePanelIcon : public vgui::ImagePanel
 {
@@ -106,7 +106,7 @@ private:
 	CPanelAnimationVarAliasType( float, m_nSpaceBetweenIcons, "icon_space", "2", "proportional_float" );
 
 	// For demonstrations of the element in the intro
-	bool m_bFakingCapture;	
+	bool m_bFakingCapture;
 	bool m_bFakingMultCapture;
 	float m_flFakeCaptureTime;
 	C_BaseAnimating	*m_pFakePlayers[INTRO_NUM_FAKE_PLAYERS];
@@ -117,7 +117,7 @@ DECLARE_HUDELEMENT( CHudCapturePanel );
 ConVar hud_capturepanel( "hud_capturepanel", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Set to 0 to not draw the HUD capture panel" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudCapturePanelProgressBar::CHudCapturePanelProgressBar( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -126,13 +126,13 @@ CHudCapturePanelProgressBar::CHudCapturePanelProgressBar( vgui::Panel *parent, c
 	m_iTexture = vgui::surface()->DrawGetTextureId( "vgui/progress_bar" );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = vgui::surface()->CreateNewTextureID();	
+		m_iTexture = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile( m_iTexture, "vgui/progress_bar", true, false );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanelProgressBar::Paint()
 {
@@ -145,7 +145,7 @@ void CHudCapturePanelProgressBar::Paint()
 	Vector2D uv22( uv2, uv2 );
 	Vector2D uv12( uv1, uv2 );
 
-	vgui::Vertex_t verts[4];	
+	vgui::Vertex_t verts[4];
 	verts[0].Init( Vector2D( 0, 0 ), uv11 );
 	verts[1].Init( Vector2D( wide, 0 ), uv21 );
 	verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -176,10 +176,10 @@ void CHudCapturePanelProgressBar::Paint()
 
 	float flCompleteCircle = ( 2.0f * M_PI );
 	float fl90degrees = flCompleteCircle / 4.0f;
-	
+
 	float flEndAngle = flCompleteCircle * ( 1.0f - m_flPercent ); // count DOWN (counter-clockwise)
 	//	float flEndAngle = flCompleteCircle * m_flPercent; // count UP (clockwise)
-	
+
 	float flHalfWide = (float)wide / 2.0f;
 	float flHalfTall = (float)tall / 2.0f;
 
@@ -190,7 +190,7 @@ void CHudCapturePanelProgressBar::Paint()
 		uv21.Init( 1.0f, 0.0f );
 		uv22.Init( 1.0f, 1.0f );
 		uv12.Init( 0.5, 1.0f );
-		
+
 		verts[0].Init( Vector2D( flHalfWide, 0.0f ), uv11 );
 		verts[1].Init( Vector2D( wide, 0.0f ), uv21 );
 		verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -293,7 +293,7 @@ void CHudCapturePanelProgressBar::Paint()
 		uv21.Init( 1.0f, 0.0f );
 		uv22.Init( 1.0f, 0.5f );
 		uv12.Init( 0.5f, 0.5f );
-	
+
 		verts[0].Init( Vector2D( flHalfWide, 0.0f ), uv11 );
 		verts[1].Init( Vector2D( wide, 0.0f ), uv21 );
 		verts[2].Init( Vector2D( wide, flHalfTall ), uv22 );
@@ -365,7 +365,7 @@ void CHudCapturePanelProgressBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudCapturePanelIcon::CHudCapturePanelIcon( vgui::Panel *parent, const char *name ) : vgui::ImagePanel( parent, name )
 {
@@ -374,13 +374,13 @@ CHudCapturePanelIcon::CHudCapturePanelIcon( vgui::Panel *parent, const char *nam
 	m_iTexture = vgui::surface()->DrawGetTextureId( "vgui/capture_icon" );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = vgui::surface()->CreateNewTextureID();	
+		m_iTexture = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile( m_iTexture, "vgui/capture_icon", true, false );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanelIcon::Paint()
 {
@@ -393,7 +393,7 @@ void CHudCapturePanelIcon::Paint()
 	Vector2D uv21( uv2, uv1 );
 	Vector2D uv22( uv2, uv2 );
 
-	vgui::Vertex_t verts[4];	
+	vgui::Vertex_t verts[4];
 	verts[0].Init( Vector2D( 0, 0 ), uv11 );
 	verts[1].Init( Vector2D( wide, 0 ), uv21 );
 	verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -408,7 +408,7 @@ void CHudCapturePanelIcon::Paint()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHudCapturePanel::CHudCapturePanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudCapturePanel" ) 
+CHudCapturePanel::CHudCapturePanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudCapturePanel" )
 {
 	SetParent( g_pClientMode->GetViewport() );
 
@@ -442,7 +442,7 @@ CHudCapturePanel::CHudCapturePanel( const char *pElementName ) : CHudElement( pE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanel::Init( void )
 {
@@ -455,7 +455,7 @@ void CHudCapturePanel::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanel::LevelInit( void )
 {
@@ -464,7 +464,7 @@ void CHudCapturePanel::LevelInit( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 {
@@ -472,7 +472,7 @@ void CHudCapturePanel::OnScreenSizeChanged( int iOldWide, int iOldTall )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -491,7 +491,7 @@ void CHudCapturePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanel::OnThink()
 {
@@ -566,7 +566,7 @@ void CHudCapturePanel::OnThink()
 		}
 
 		int iCappingTeam = ObjectiveResource()->GetCappingTeam( m_iCurrentCP );
-		
+
 		// If we're faking it, stomp all the data
 		if ( m_bFakingCapture )
 		{
@@ -585,7 +585,7 @@ void CHudCapturePanel::OnThink()
 			bEnemyTeamReadyToCap = false;
 		}
 
-		// If we're in more-players-cap-faster mode, we have no required amount. 
+		// If we're in more-players-cap-faster mode, we have no required amount.
 		// Just show the number of players in the zone.
 		if ( mp_capstyle.GetInt() == 1 )
 		{
@@ -601,14 +601,14 @@ void CHudCapturePanel::OnThink()
 		// if we already own this capture point and there are no enemies in the area
 		// or we're playing minirounds and the current cap zone is not in the current round
 		if ( ( nOwningTeam == nPlayerTeam && !bEnemyTeamReadyToCap ) ||
-			 ( ObjectiveResource()->PlayingMiniRounds() && !ObjectiveResource()->IsInMiniRound( m_iCurrentCP ) ) )
+			( ObjectiveResource()->PlayingMiniRounds() && !ObjectiveResource()->IsInMiniRound( m_iCurrentCP ) ) )
 		{
 			// don't need to do anything
 			if ( IsVisible() )
 			{
 				SetVisible( false );
 			}
-			return;		
+			return;
 		}
 
 		// okay, turn on the capture point panel
@@ -682,15 +682,15 @@ void CHudCapturePanel::OnThink()
 		vgui::ImagePanel *pPanel = m_PlayerIcons[0];
 		if ( pPanel )
 			pPanel->GetSize( iconWide, iconTall );
-		
-        int width = ( nRequiredTeammates * iconWide ) + ( ( nRequiredTeammates - 1 ) * m_nSpaceBetweenIcons );
+
+	int width = ( nRequiredTeammates * iconWide ) + ( ( nRequiredTeammates - 1 ) * m_nSpaceBetweenIcons );
 		int xpos = wide / 2.0 - width / 2.0;
 
 		// rearrange the player icon panels
 		for ( int i = 0 ; i < nRequiredTeammates ; i++ )
 		{
 			CHudCapturePanelIcon *pPanel = m_PlayerIcons[i];
- 
+
 			if ( pPanel )
 			{
 				int x, y, w, t;
@@ -838,7 +838,7 @@ void CHudCapturePanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudCapturePanel::FireGameEvent( IGameEvent *event )
 {
@@ -897,7 +897,7 @@ void CHudCapturePanel::FireGameEvent( IGameEvent *event )
 			UTIL_TraceLine( MainViewOrigin(), vecEnd, MASK_SOLID_BRUSHONLY, pPlayer, COLLISION_GROUP_NONE, &tr );
 			if ( !tr.startsolid && tr.fraction < 1.0 )
 			{
-				Vector vecPositions[INTRO_NUM_FAKE_PLAYERS] = 
+				Vector vecPositions[INTRO_NUM_FAKE_PLAYERS] =
 				{
 					Vector( 100, 100, 0 ),
 					Vector( 0, -100, 0 ),
@@ -943,4 +943,3 @@ void CHudCapturePanel::FireGameEvent( IGameEvent *event )
 		}
 	}
 }
-

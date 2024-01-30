@@ -91,18 +91,18 @@ bool ShouldHealthBarBeVisible( CBaseEntity *pTarget, CTFPlayer *pLocalPlayer )
 	if ( pLocalPlayer->InSameDisguisedTeam( pTarget ) )
 		return true;
 
-	
+
 
 	int iSeeEnemyHealth = 0;
 	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pLocalPlayer, iSeeEnemyHealth, see_enemy_health )
 	if ( iSeeEnemyHealth )
 		return true;
-	
+
 	return false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetID::CTargetID( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, pElementName )
@@ -144,7 +144,7 @@ CTargetID::CTargetID( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::LevelShutdown( void )
 {
@@ -170,7 +170,7 @@ void CTargetID::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::FireGameEvent( IGameEvent * event )
 {
@@ -192,7 +192,7 @@ void CTargetID::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-bool CTargetID::DrawHealthIcon() 
+bool CTargetID::DrawHealthIcon()
 {
 	C_BaseEntity *pEnt = cl_entitylist->GetEnt( GetTargetIndex() );
 	if ( pEnt && pEnt->IsBaseObject() )
@@ -226,7 +226,7 @@ C_TFPlayer *CTargetID::GetTargetForSteamAvatar( C_TFPlayer *pTFPlayer )
 	// Save room when healing or being healed
 	if ( pTFLocalPlayer->IsPlayerClass( TF_CLASS_MEDIC ) && pTFLocalPlayer->MedicGetHealTarget() == pTFPlayer )
 		return NULL;
-	
+
 	C_TFPlayer *pTFHealer = NULL;
 	float flHealerChargeLevel = -1.f;
 	pTFLocalPlayer->GetHealer( &pTFHealer, &flHealerChargeLevel );
@@ -259,7 +259,7 @@ C_TFPlayer *CTargetID::GetTargetForSteamAvatar( C_TFPlayer *pTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -285,7 +285,7 @@ void CTargetID::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::ApplySettings( KeyValues *inResourceData )
 {
@@ -298,7 +298,7 @@ void CTargetID::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTargetID::GetRenderGroupPriority( void )
 {
@@ -306,7 +306,7 @@ int CTargetID::GetRenderGroupPriority( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::UpdateFloatingHealthIconVisibility( bool bVisible )
 {
@@ -370,7 +370,7 @@ bool CTargetID::IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, floa
 			int iHideEnemyHealth = 0;
 			CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pLocalTFPlayer, iHideEnemyHealth, hide_enemy_health );
 
-			bool bInSameTeam = pLocalTFPlayer->InSameDisguisedTeam( pEnt );	
+			bool bInSameTeam = pLocalTFPlayer->InSameDisguisedTeam( pEnt );
 			bool bSpy = pLocalTFPlayer->IsPlayerClass( TF_CLASS_SPY ) && iHideEnemyHealth == 0;
 
 			if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
@@ -470,7 +470,7 @@ bool CTargetID::IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, floa
 					}
 				}
 
-				//Recreate the floating health icon if there isn't one, we're not a spectator, and 
+				//Recreate the floating health icon if there isn't one, we're not a spectator, and
 				// we're not a spy or this was a robot from Robot Destruction-Mode
 				if ( !m_pFloatingHealthIcon && !bSpectator && ( !bSpy || bHealthBarVisible ) && !DrawHealthIcon() )
 				{
@@ -496,7 +496,7 @@ bool CTargetID::IsValidIDTarget( int nEntIndex, float flOldTargetRetainFOV, floa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTargetID::ShouldDraw( void )
 {
@@ -591,7 +591,7 @@ bool CTargetID::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::PerformLayout( void )
 {
@@ -630,7 +630,7 @@ void CTargetID::PerformLayout( void )
 		{
 			m_pTargetKillStreakIcon->GetPos( x3, y3 );
 		}
-		
+
 		int iWideExtra = 0;
 		if ( DrawHealthIcon() )
 		{
@@ -694,11 +694,11 @@ void CTargetID::PerformLayout( void )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-int	CTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer ) 
-{ 
-	int iIndex = pLocalTFPlayer->GetIDTarget(); 
+int	CTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer )
+{
+	int iIndex = pLocalTFPlayer->GetIDTarget();
 
 	// If our target entity is already in our secondary ID, don't show it in primary.
 	CSecondaryTargetID *pSecondaryID = GET_HUDELEMENT( CSecondaryTargetID );
@@ -711,7 +711,7 @@ int	CTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetID::UpdateID( void )
 {
@@ -810,7 +810,7 @@ void CTargetID::UpdateID( void )
 				// We're looking at an enemy who killed us.
 				printFormatString = "#TF_playerid_diffteam";
 				bShowHealth = true;
-			}			
+			}
 
 			if ( bShowHealth )
 			{
@@ -847,7 +847,7 @@ void CTargetID::UpdateID( void )
 
 			// Show target's clip state to attached medics
 			bool bShowClipInfo = bIsAmmoData &&
-								 sDataString[0] && 
+								 sDataString[0] &&
 								 ToTFPlayer( pLocalTFPlayer->MedicGetHealTarget() ) == pPlayer;
 			if ( m_pTargetAmmoIcon && m_pTargetAmmoIcon->IsVisible() != bShowClipInfo )
 			{
@@ -860,7 +860,7 @@ void CTargetID::UpdateID( void )
 				m_pTargetKillStreakIcon->SetVisible( bShowKillStreak );
 			}
 		}
-		else	
+		else
 		{
 			// see if it is an object
 			if ( pEnt->IsBaseObject() )
@@ -873,7 +873,7 @@ void CTargetID::UpdateID( void )
 				flHealth = pObj->GetHealth();
 				flMaxHealth = pObj->GetMaxHealth();
 				m_pTargetHealth->SetBuilding( true );
-				
+
 				if ( m_pTargetKillStreakIcon )
 				{
 					m_pTargetKillStreakIcon->SetVisible( false );
@@ -891,7 +891,7 @@ void CTargetID::UpdateID( void )
 							pszActionCommand = "+attack2";
 						}
 
-						
+
 						switch ( iObj )
 						{
 						default:
@@ -940,7 +940,7 @@ void CTargetID::UpdateID( void )
 							pszActionIcon = "obj_weapon_pickup";
 							pszActionCommand = "+use_action_slot_item";
 						}
-	
+
 						if ( FStrEq( pDroppedEconItem->GetStaticData()->GetItemClass(), "tf_weapon_medigun" ) )
 						{
 							wchar_t wszChargeLevel[10];
@@ -1104,7 +1104,7 @@ void CTargetID::UpdateID( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CSecondaryTargetID::CSecondaryTargetID( const char *pElementName ) : CTargetID( pElementName )
 {
@@ -1116,7 +1116,7 @@ CSecondaryTargetID::CSecondaryTargetID( const char *pElementName ) : CTargetID( 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CSecondaryTargetID::ShouldDraw( void )
 {
@@ -1130,7 +1130,7 @@ bool CSecondaryTargetID::ShouldDraw( void )
 			m_bWasHidingLowerElements = true;
 		}
 	}
-	else 
+	else
 	{
 		if ( m_bWasHidingLowerElements )
 		{
@@ -1143,7 +1143,7 @@ bool CSecondaryTargetID::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CSecondaryTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer )
 {
@@ -1211,7 +1211,7 @@ bool CSpectatorTargetID::ShouldDraw( void )
 	// Hide panel for freeze-cam screenshot?
 	extern bool IsTakingAFreezecamScreenshot();
 	extern ConVar hud_freezecamhide;
-	
+
 	if ( IsTakingAFreezecamScreenshot() && hud_freezecamhide.GetBool() )
 		return false;
 
@@ -1223,8 +1223,8 @@ bool CSpectatorTargetID::ShouldDraw( void )
 	return BaseClass::ShouldDraw();
 }
 
-int	CSpectatorTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer ) 
-{ 
+int	CSpectatorTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer )
+{
 	int iIndex = BaseClass::CalculateTargetIndex( pLocalTFPlayer );
 
 #if defined( REPLAY_ENABLED )
@@ -1241,7 +1241,7 @@ int	CSpectatorTargetID::CalculateTargetIndex( C_TFPlayer *pLocalTFPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSpectatorTargetID::ApplySchemeSettings( vgui::IScheme *scheme )
 {
@@ -1262,7 +1262,7 @@ void CSpectatorTargetID::ApplySchemeSettings( vgui::IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSpectatorTargetID::PerformLayout( void )
 {
@@ -1352,7 +1352,7 @@ void CSpectatorTargetID::PerformLayout( void )
 				{
 					bool bRed = ( pEnt->GetTeamNumber() == TF_TEAM_RED );
 					m_pBGPanel_Spec_Blue->SetVisible( !bRed );
-					m_pBGPanel_Spec_Red->SetVisible( bRed );			
+					m_pBGPanel_Spec_Red->SetVisible( bRed );
 
 					m_pBGPanel_Spec_Blue->SetAlpha( tf_hud_target_id_alpha.GetInt() );
 					m_pBGPanel_Spec_Red->SetAlpha( tf_hud_target_id_alpha.GetInt() );
@@ -1364,7 +1364,7 @@ void CSpectatorTargetID::PerformLayout( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFloatingHealthIcon::CFloatingHealthIcon( vgui::Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -1389,7 +1389,7 @@ void CFloatingHealthIcon::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFloatingHealthIcon::SetEntity( C_BaseEntity *pEntity )
 {
@@ -1412,7 +1412,7 @@ void CFloatingHealthIcon::SetEntity( C_BaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFloatingHealthIcon* CFloatingHealthIcon::AddFloatingHealthIcon( C_BaseEntity *pEntity )
 {
@@ -1424,7 +1424,7 @@ CFloatingHealthIcon* CFloatingHealthIcon::AddFloatingHealthIcon( C_BaseEntity *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFloatingHealthIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -1435,7 +1435,7 @@ void CFloatingHealthIcon::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFloatingHealthIcon::OnTick( void )
 {
@@ -1468,7 +1468,7 @@ void CFloatingHealthIcon::OnTick( void )
 		flMaxHealth = (float)pTargetPlayer->m_Shared.GetDisguiseMaxHealth();
 		iMaxBuffedHealth = pTargetPlayer->m_Shared.GetDisguiseMaxBuffedHealth();
 	}
-		
+
 	if ( flHealth != m_flPrevHealth )
  	{
 		m_pTargetHealth->SetHealth( flHealth, flMaxHealth, iMaxBuffedHealth );
@@ -1495,7 +1495,7 @@ void CFloatingHealthIcon::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ConVar tf_healthicon_height_offset( "tf_healthicon_height_offset", "10", FCVAR_ARCHIVE, "Offset of the health icon away from the top of the target." );
 void CFloatingHealthIcon::Paint( void )

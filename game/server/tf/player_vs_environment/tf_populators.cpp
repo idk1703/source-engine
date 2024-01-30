@@ -341,7 +341,7 @@ CTFNavArea *CSpawnLocation::SelectSpawnArea( void ) const
 			CTFNavArea *area = (CTFNavArea *)nearbyAreaVector[i];
 
 			if ( !area->IsTFMarked() )
-			{		
+			{
 				area->TFMark();
 
 				if ( area->IsPotentiallyVisibleToTeam( TF_TEAM_BLUE ) )
@@ -362,7 +362,7 @@ CTFNavArea *CSpawnLocation::SelectSpawnArea( void ) const
 
 	if ( theaterAreaVector.Count() == 0 )
 	{
-		if ( tf_populator_debug.GetBool() ) 
+		if ( tf_populator_debug.GetBool() )
 		{
 			DevMsg( "%3.2f: SelectSpawnArea: Empty theater!\n", gpGlobals->curtime );
 		}
@@ -401,7 +401,7 @@ CTFNavArea *CSpawnLocation::SelectSpawnArea( void ) const
 
 		// well behaved spawn area
 		return spawnArea;
-		
+
 	}
 
 	return NULL;
@@ -532,7 +532,7 @@ bool CMissionPopulator::UpdateMissionDestroySentries( void )
 	// collect all of the dangerous sentries
 	CUtlVector< CObjectSentrygun * > dangerousSentryVector;
 
-	int nDmgLimit = 0;	
+	int nDmgLimit = 0;
 	int nKillLimit = 0;
 	GetManager()->GetSentryBusterDamageAndKillThreshold( nDmgLimit, nKillLimit );
 
@@ -666,7 +666,7 @@ bool CMissionPopulator::UpdateMissionDestroySentries( void )
 		if ( pWave )
 		{
 			pWave->IncrementSentryBustersSpawned();
-			
+
 			if ( TFGameRules() )
 			{
 				if ( pWave->NumSentryBustersSpawned() > 1 )
@@ -736,7 +736,7 @@ bool CMissionPopulator::UpdateMission( CTFBot::MissionType mission )
 	if ( currentEnemyCount + m_desiredCount > CPopulationManager::MVM_INVADERS_TEAM_SIZE )
 	{
 		// not enough slots yet
-		if ( tf_populator_debug.GetBool() ) 
+		if ( tf_populator_debug.GetBool() )
 		{
 			DevMsg( "MANN VS MACHINE: %3.2f: Waiting for slots to spawn mission.\n", gpGlobals->curtime );
 		}
@@ -744,7 +744,7 @@ bool CMissionPopulator::UpdateMission( CTFBot::MissionType mission )
 		return false;
 	}
 
-	if ( tf_populator_debug.GetBool() ) 
+	if ( tf_populator_debug.GetBool() )
 	{
 		DevMsg( "MANN VS MACHINE: %3.2f: <<<< Spawning Mission >>>>\n", gpGlobals->curtime );
 	}
@@ -820,7 +820,7 @@ bool CMissionPopulator::UpdateMission( CTFBot::MissionType mission )
 		}
 		else
 		{
-			if ( tf_populator_debug.GetBool() ) 
+			if ( tf_populator_debug.GetBool() )
 			{
 				Warning( "MissionPopulator: %3.2f: Skipped a member - can't find a place to spawn\n", gpGlobals->curtime );
 			}
@@ -1421,7 +1421,7 @@ void CWaveSpawnPopulator::OnNonSupportWavesDone( void )
 int CWaveSpawnPopulator::GetCurrencyAmountPerDeath( void )
 {
 	int nCurrency = 0;
-	
+
 	if ( m_bSupportWave )
 	{
 		if ( m_state == WAIT_FOR_ALL_DEAD )
@@ -1448,7 +1448,7 @@ int CWaveSpawnPopulator::GetCurrencyAmountPerDeath( void )
 	return nCurrency;
 }
 
-	
+
 //-----------------------------------------------------------------------
 // Continuously invoked to modify population over time
 void CWaveSpawnPopulator::Update( void )
@@ -1690,7 +1690,7 @@ void CWaveSpawnPopulator::Update( void )
 				{
 					// free up the current spawn area so we select a new one for the next group
 					m_spawnLocationResult = SPAWN_LOCATION_NOT_FOUND;
-					
+
 					if ( m_waitBetweenSpawns > 0.0f )
 					{
 						// start delay
@@ -1837,7 +1837,7 @@ bool CWave::Parse( KeyValues *data )
 					AddClassType( wavePopulator->m_spawner->GetClassIcon(), wavePopulator->m_totalCount, iFlags );
 				}
 			}
-		}				
+		}
 		else if ( !Q_stricmp( kvWave->GetName(), "Sound" ) )
 		{
 			m_soundName.sprintf( "%s", kvWave->GetString() );
@@ -1875,7 +1875,7 @@ bool CWave::Parse( KeyValues *data )
 	return true;
 }
 //-------------------------------------------------------------------------
-// If we are the currently active wave, update all contained WaveSpawns. 
+// If we are the currently active wave, update all contained WaveSpawns.
 void CWave::Update( void )
 {
 	VPROF_BUDGET( "CWave::Update", "NextBot" );
@@ -1897,7 +1897,7 @@ void CWave::Update( void )
 			return;
 		}
 		WaveCompleteUpdate();
-	}	
+	}
 }
 
 
@@ -2110,7 +2110,7 @@ void CWave::ActiveWaveUpdate( void )
 		{
 			// Now let's kill everyone left on the attacking team
 			CTFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
-			if ( pPlayer && pPlayer->IsAlive() && 
+			if ( pPlayer && pPlayer->IsAlive() &&
 				 ( ( pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) || pPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) ) )
 			{
 				pPlayer->CommitSuicide( true, false );
@@ -2236,7 +2236,7 @@ void CWave::WaveCompleteUpdate( void )
 			// clear player's accumulated sentry damage
 			playerVector[i]->ResetAccumulatedSentryGunDamageDealt();
 			playerVector[i]->ResetAccumulatedSentryGunKillCount();
-		}		
+		}
 	}
 
 	GetManager()->WaveEnd( true );

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -126,10 +126,10 @@ bool CDucksLeaderboard::UpdateLeaderboards()
 					//const int nNextLevelXP = ( nCurrentLevel + 1 ) * DUCK_XP_SCALE;
 					pProgressBar->SetTooltip( m_pToolTip, CFmtStr( "%d / %d", leaderboardEntry->m_nScore % DUCK_XP_SCALE, DUCK_XP_SCALE ) );
 				}
-				
+
 				CExLabel *pText = pContainer->FindControl< CExLabel >( "UserName" );
 				if ( pText )
-				{			
+				{
 					pText->SetColorStr( bIsLocalPlayer ? m_LocalPlayerTextColor : colorToUse );
 				}
 
@@ -145,8 +145,8 @@ bool CDucksLeaderboard::UpdateLeaderboards()
 					pAvatar->SetShouldDrawFriendIcon( false );
 					pAvatar->SetPlayer( steamID, k_EAvatarSize32x32 );
 				}
-			}								
-		}			
+			}
+		}
 	}
 
 	return true;
@@ -272,7 +272,7 @@ void CDucksLeaderboardManager::OnCommand( const char *command )
 	{
 		NextPage();
 	}
-	else if ( FStrEq( command, "prevpage" ) ) 
+	else if ( FStrEq( command, "prevpage" ) )
 	{
 		PrevPage();
 	}

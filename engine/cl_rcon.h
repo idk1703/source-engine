@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #ifndef CL_RCON_H
@@ -101,8 +101,8 @@ public:
 	void SetRemoteFileDirectory( const char *pDir );
 
 	// Inherited from ISocketCreatorListener
-	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t & netAdr ); 
-	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData ); 
+	virtual bool ShouldAcceptSocket( SocketHandle_t hSocket, const netadr_t & netAdr );
+	virtual void OnSocketAccepted( SocketHandle_t hSocket, const netadr_t & netAdr, void** ppData );
 	virtual void OnSocketClosed( SocketHandle_t hSocket, const netadr_t & netAdr, void* pData );
 
 private:
@@ -141,4 +141,3 @@ CRConClient & RPTClient();		// used in remote perf testing
 #endif // ENABLE_RPT
 
 #endif // CL_RCON_H
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -27,7 +27,7 @@ class CImagePacker
 {
 public:
 	bool Reset( int nSortId, int maxLightmapWidth, int maxLightmapHeight );
-	bool AddBlock( int width, int height, 
+	bool AddBlock( int width, int height,
 		int *returnX, int *returnY );
 	void GetMinimumDimensions( int *returnWidth, int *returnHeight );
 	float GetEfficiency( void );

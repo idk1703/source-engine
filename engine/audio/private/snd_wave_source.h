@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -93,7 +93,7 @@ protected:
 	bool					GetXboxAudioStartupData();
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	// Output : byte
 	//-----------------------------------------------------------------------------
 	inline byte *GetCachedDataPointer()
@@ -132,7 +132,7 @@ protected:
 	int				m_nCachedDataSize;
 
 	// number of actual samples (regardless of format)
-	// compressed formats alter definition of m_sampleCount 
+	// compressed formats alter definition of m_sampleCount
 	// used to spare expensive calcs by decoders
 	int				m_numDecodedSamples;
 
@@ -149,7 +149,7 @@ protected:
 private:
 	CAudioSourceWave( const CAudioSourceWave & ); // not implemented, not allowed
 	int				m_refCount;
-	
+
 #ifdef _DEBUG
 	// Only set in debug mode so you can see the name.
 	const char		*m_pDebugName;

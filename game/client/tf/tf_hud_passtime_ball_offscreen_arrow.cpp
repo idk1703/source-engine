@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ static const char *GetBallImageForTeam( int iTeam )
 
 
 //-----------------------------------------------------------------------------
-CTFHudPasstimeOffscreenArrow::CTFHudPasstimeOffscreenArrow( Panel *parent, const char *name ) 
+CTFHudPasstimeOffscreenArrow::CTFHudPasstimeOffscreenArrow( Panel *parent, const char *name )
 	: EditablePanel( parent, name )
 	, m_pArrowMaterial( 0 )
 	, m_pImage( 0 )
@@ -91,7 +91,7 @@ void CTFHudPasstimeOffscreenArrow::ApplySchemeSettings( vgui::IScheme *pScheme )
 extern int HudTransform( const Vector& point, Vector& screen );
 void CTFHudPasstimeOffscreenArrow::PaintBackground()
 {
-	//	BaseClass::PaintBackground(); 
+	//	BaseClass::PaintBackground();
 	if ( !g_pPasstimeLogic )
 	{
 		return;
@@ -122,7 +122,7 @@ void CTFHudPasstimeOffscreenArrow::PaintBackground()
 		}
 	}
 
-	// 
+	//
 	// Determine if the arrow should even be visible
 	// HudTransform works ok as long as the point is on-screen, otherwise it's useless.
 	// Calling HudTransform here does a lot of redundant work, but I don't care right now.
@@ -132,7 +132,7 @@ void CTFHudPasstimeOffscreenArrow::PaintBackground()
 		Vector vecActualProjection;
 		const bool bBehind = HudTransform( vecEntPos, vecActualProjection );
 		const bool bCenterOfScreen =
-			(vecActualProjection.x < 1.0f) && (vecActualProjection.x > -1.0f) 
+			(vecActualProjection.x < 1.0f) && (vecActualProjection.x > -1.0f)
 			&& (vecActualProjection.y < 1.0f) && (vecActualProjection.y > -1.0f);
 		if ( !bBehind && bCenterOfScreen )
 		{
@@ -143,7 +143,7 @@ void CTFHudPasstimeOffscreenArrow::PaintBackground()
 
 	// Definitely visible
 
-	// 
+	//
 	// Move the target into view space.
 	// The screen is in the y/z plane.
 	//
@@ -294,10 +294,10 @@ CTFHudPasstimeBallOffscreenArrow::CTFHudPasstimeBallOffscreenArrow( vgui::Panel 
 }
 
 //-----------------------------------------------------------------------------
-C_BaseEntity *CTFHudPasstimeBallOffscreenArrow::PreparePaint( 
-	vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) 
+C_BaseEntity *CTFHudPasstimeBallOffscreenArrow::PreparePaint(
+	vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer )
 {
-	if ( !g_pPasstimeLogic ) 
+	if ( !g_pPasstimeLogic )
 	{
 		return NULL;
 	}
@@ -350,8 +350,8 @@ CTFHudPasstimePlayerOffscreenArrow::CTFHudPasstimePlayerOffscreenArrow( vgui::Pa
 }
 
 //-----------------------------------------------------------------------------
-C_BaseEntity *CTFHudPasstimePlayerOffscreenArrow::PreparePaint( 
-	vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer ) 
+C_BaseEntity *CTFHudPasstimePlayerOffscreenArrow::PreparePaint(
+	vgui::ImagePanel *pImage, C_TFPlayer *pLocalPlayer )
 {
 	if ( !pImage || (!pLocalPlayer->m_Shared.HasPasstimeBall() && !pLocalPlayer->IsObserver()) )
 	{

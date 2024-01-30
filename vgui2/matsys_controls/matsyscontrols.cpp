@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -95,6 +95,3 @@ bool VGui_InitMatSysInterfacesList( const char *moduleName, CreateInterfaceFn *f
 
 
 } // namespace vgui
-
-
-

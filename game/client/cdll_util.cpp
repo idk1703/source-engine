@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -31,9 +31,9 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-																						
+
 ConVar localplayer_visionflags( "localplayer_visionflags", "0", FCVAR_DEVELOPMENTONLY );
-																						
+
 //-----------------------------------------------------------------------------
 // ConVars
 //-----------------------------------------------------------------------------
@@ -47,25 +47,25 @@ extern ConVar cl_leveloverview;
 
 //-----------------------------------------------------------------------------
 // Purpose: Performs a var args printf into a static return buffer
-// Input  : *format - 
-//			... - 
+// Input  : *format -
+//			... -
 // Output : char
 //-----------------------------------------------------------------------------
 char *VarArgs( const char *format, ... )
 {
 	va_list		argptr;
 	static char		string[1024];
-	
+
 	va_start (argptr, format);
 	Q_vsnprintf (string, sizeof( string ), format,argptr);
 	va_end (argptr);
 
-	return string;	
+	return string;
 }
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: Returns true if the entity index corresponds to a player slot 
-// Input  : index - 
+// Purpose: Returns true if the entity index corresponds to a player slot
+// Input  : index -
 // Output : bool
 //-----------------------------------------------------------------------------
 bool IsPlayerIndex( int index )
@@ -164,24 +164,24 @@ int GetSpectatorTarget( void )
 	}
 }
 
-int GetLocalPlayerTeam( void ) 
-{ 
+int GetLocalPlayerTeam( void )
+{
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-	
+
 	if ( pPlayer )
-		return pPlayer->GetTeamNumber(); 
+		return pPlayer->GetTeamNumber();
 	else
 		return TEAM_UNASSIGNED;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Convert angles to -180 t 180 range
-// Input  : angles - 
+// Input  : angles -
 //-----------------------------------------------------------------------------
 void NormalizeAngles( QAngle& angles )
 {
 	int i;
-	
+
 	// Normalize angles to -180 to 180 range
 	for ( i = 0; i < 3; i++ )
 	{
@@ -198,10 +198,10 @@ void NormalizeAngles( QAngle& angles )
 
 //-----------------------------------------------------------------------------
 // Purpose: Interpolate Euler angles using quaternions to avoid singularities
-// Input  : start - 
-//			end - 
-//			output - 
-//			frac - 
+// Input  : start -
+//			end -
+//			output -
+//			frac -
 //-----------------------------------------------------------------------------
 void InterpolateAngles( const QAngle& start, const QAngle& end, QAngle& output, float frac )
 {
@@ -222,10 +222,10 @@ void InterpolateAngles( const QAngle& start, const QAngle& end, QAngle& output, 
 
 //-----------------------------------------------------------------------------
 // Purpose: Simple linear interpolation
-// Input  : frac - 
-//			src - 
-//			dest - 
-//			output - 
+// Input  : frac -
+//			src -
+//			dest -
+//			output -
 //-----------------------------------------------------------------------------
 void InterpolateVector( float frac, const Vector& src, const Vector& dest, Vector& output )
 {
@@ -238,7 +238,7 @@ void InterpolateVector( float frac, const Vector& src, const Vector& dest, Vecto
 }
 
 client_textmessage_t *TextMessageGet( const char *pName )
-{ 
+{
 	return engine->TextMessageGet( pName );
 }
 
@@ -266,8 +266,8 @@ int ScreenWidth( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Return the difference between two angles
-// Input  : destAngle - 
-//			srcAngle - 
+// Input  : destAngle -
+//			srcAngle -
 // Output : float
 //-----------------------------------------------------------------------------
 float UTIL_AngleDiff( float destAngle, float srcAngle )
@@ -406,7 +406,7 @@ void UTIL_ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int UTIL_PrecacheDecal( const char *name, bool preload )
 {
@@ -455,7 +455,7 @@ void CPrecacheOtherList::LevelShutdownPostEntity()
 
 //-----------------------------------------------------------------------------
 // Purpose: mark or add
-// Input  : *pEntity - 
+// Input  : *pEntity -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CPrecacheOtherList::AddOrMarkPrecached( const char *pClassname )
@@ -488,7 +488,7 @@ void UTIL_PrecacheOther( const char *szClassname )
 		Warning( "NULL Ent in UTIL_PrecacheOther\n" );
 		return;
 	}
-	
+
 	if (pEntity)
 	{
 		pEntity->Precache( );
@@ -500,7 +500,7 @@ void UTIL_PrecacheOther( const char *szClassname )
 
 static csurface_t	g_NullSurface = { "**empty**", 0 };
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void UTIL_SetTrace(trace_t& trace, const Ray_t& ray, C_BaseEntity *ent, float fraction, int hitgroup, unsigned int contents, const Vector& normal, float intercept )
 {
@@ -594,14 +594,14 @@ bool GetTargetInHudSpace( C_BaseEntity *pTargetEntity, int& iX, int& iY, Vector 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *player - 
-//			msg_dest - 
-//			*msg_name - 
-//			*param1 - 
-//			*param2 - 
-//			*param3 - 
-//			*param4 - 
+// Purpose:
+// Input  : *player -
+//			msg_dest -
+//			*msg_name -
+//			*param1 -
+//			*param2 -
+//			*param3 -
+//			*param4 -
 //-----------------------------------------------------------------------------
 void ClientPrint( C_BasePlayer *player, int msg_dest, const char *msg_name, const char *param1 /*= NULL*/, const char *param2 /*= NULL*/, const char *param3 /*= NULL*/, const char *param4 /*= NULL*/ )
 {
@@ -618,10 +618,10 @@ public:
 	// This gets called	by the enumeration methods with each element
 	// that passes the test.
 	virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
-	
+
 	int GetCount() { return m_count; }
 	bool AddToList( C_BaseEntity *pEntity );
-	
+
 private:
 	C_BaseEntity		**m_pList;
 	int				m_listMax;
@@ -664,29 +664,29 @@ IterationRetval_t CFlaggedEntitiesEnum::EnumElement( IHandleEntity *pHandleEntit
 
 //-----------------------------------------------------------------------------
 // Purpose: Pass in an array of pointers and an array size, it fills the array and returns the number inserted
-// Input  : **pList - 
-//			listMax - 
-//			&mins - 
-//			&maxs - 
-//			flagMask - 
+// Input  : **pList -
+//			listMax -
+//			&mins -
+//			&maxs -
+//			flagMask -
 // Output : int
 //-----------------------------------------------------------------------------
 int UTIL_EntitiesInBox( C_BaseEntity **pList, int listMax, const Vector &mins, const Vector &maxs, int flagMask, int partitionMask )
 {
 	CFlaggedEntitiesEnum boxEnum( pList, listMax, flagMask );
 	::partition->EnumerateElementsInBox( partitionMask, mins, maxs, false, &boxEnum );
-	
+
 	return boxEnum.GetCount();
 
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Pass in an array of pointers and an array size, it fills the array and returns the number inserted
-// Input  : **pList - 
-//			listMax - 
-//			&center - 
-//			radius - 
-//			flagMask - 
+// Input  : **pList -
+//			listMax -
+//			&center -
+//			radius -
+//			flagMask -
 // Output : int
 //-----------------------------------------------------------------------------
 int UTIL_EntitiesInSphere( C_BaseEntity **pList, int listMax, const Vector &center, float radius, int flagMask, int partitionMask )
@@ -700,10 +700,10 @@ int UTIL_EntitiesInSphere( C_BaseEntity **pList, int listMax, const Vector &cent
 
 //-----------------------------------------------------------------------------
 // Purpose: Pass in an array of pointers and an array size, it fills the array and returns the number inserted
-// Input  : **pList - 
-//			listMax - 
-//			&ray - 
-//			flagMask - 
+// Input  : **pList -
+//			listMax -
+//			&ray -
+//			flagMask -
 // Output : int
 //-----------------------------------------------------------------------------
 int UTIL_EntitiesAlongRay( C_BaseEntity **pList, int listMax, const Ray_t &ray, int flagMask, int partitionMask )
@@ -728,9 +728,9 @@ CBaseEntity *CEntitySphereQuery::GetCurrentEntity()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
-//			*str - 
+// Purpose:
+// Input  : font -
+//			*str -
 // Output : int
 //-----------------------------------------------------------------------------
 int UTIL_ComputeStringWidth( vgui::HFont& font, const char *str )
@@ -751,7 +751,7 @@ int UTIL_ComputeStringWidth( vgui::HFont& font, const char *str )
 		pBefore = p;
 		p++;
 		if ( *p )
-			pAfter = p + 1; 
+			pAfter = p + 1;
 		else
 			pAfter = "\0";
 	}
@@ -760,9 +760,9 @@ int UTIL_ComputeStringWidth( vgui::HFont& font, const char *str )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : font - 
-//			*str - 
+// Purpose:
+// Input  : font -
+//			*str -
 // Output : int
 //-----------------------------------------------------------------------------
 int UTIL_ComputeStringWidth( vgui::HFont& font, const wchar_t *str )
@@ -783,7 +783,7 @@ int UTIL_ComputeStringWidth( vgui::HFont& font, const wchar_t *str )
 		pBefore = p;
 		p++;
 		if ( *p )
-			pAfter = p + 1; 
+			pAfter = p + 1;
 		else
 			pAfter = L"\0";
 	}
@@ -996,9 +996,9 @@ void UTIL_ReplaceKeyBindings( const wchar_t *inbuf, int inbufsizebytes, OUT_Z_BY
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
-//			*pLength - 
+// Purpose:
+// Input  : *filename -
+//			*pLength -
 // Output : byte
 //-----------------------------------------------------------------------------
 byte *UTIL_LoadFileForMe( const char *filename, int *pLength )
@@ -1037,8 +1037,8 @@ byte *UTIL_LoadFileForMe( const char *filename, int *pLength )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *buffer - 
+// Purpose:
+// Input  : *buffer -
 //-----------------------------------------------------------------------------
 void UTIL_FreeFile( byte *buffer )
 {
@@ -1160,7 +1160,7 @@ unsigned char UTIL_ComputeEntityFade( C_BaseEntity *pEntity, float flMinDist, fl
 
 //-----------------------------------------------------------------------------
 // Purpose: Given a vector, clamps the scalar axes to MAX_COORD_FLOAT ranges from worldsize.h
-// Input  : *pVecPos - 
+// Input  : *pVecPos -
 //-----------------------------------------------------------------------------
 void UTIL_BoundToWorldSize( Vector *pVecPos )
 {
@@ -1206,7 +1206,7 @@ bool UTIL_GetMapLoadCountFileName( const char *pszFilePrependName, char *pszBuff
 #define MAP_KEY_FILE "viewed.res"
 #else
 #define MAP_KEY_FILE "mapkeys.res"
-#endif	
+#endif
 
 void UTIL_IncrementMapKey( const char *pszCustomKey )
 {
@@ -1235,7 +1235,7 @@ void UTIL_IncrementMapKey( const char *pszCustomKey )
 			iCount = pMapKey->GetInt( pszCustomKey, 0 ) + 1;
 			pMapKey->SetInt( pszCustomKey, iCount );
 		}
-		else 
+		else
 		{
 			KeyValues *pNewKey = new KeyValues( mapname );
 			if ( pNewKey )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -101,20 +101,20 @@ void CGrenadeMP5::Detonate(void)
 		return;
 	}
 	m_bIsLive		= false;
-	m_takedamage	= DAMAGE_NO;	
+	m_takedamage	= DAMAGE_NO;
 
 	CPASFilter filter( GetAbsOrigin() );
 
 	te->Explosion( filter, 0.0,
-		&GetAbsOrigin(), 
+		&GetAbsOrigin(),
 		GetWaterLevel() == 0 ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-		(m_flDamage - 50) * .60, 
+		(m_flDamage - 50) * .60,
 		15,
 		TE_EXPLFLAG_NONE,
 		m_DmgRadius,
 		m_flDamage );
 
-	trace_t tr;	
+	trace_t tr;
 	tr = CBaseEntity::GetTouchTrace();
 
 	if ( (tr.m_pEnt != GetWorldEntity()) || (tr.hitbox != 0) )
@@ -148,13 +148,13 @@ void CGrenadeMP5::Detonate(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGrenadeMP5::Precache( void )
 {
 	BaseClass::Precache();
 
-	PrecacheModel( "models/grenade.mdl" ); 
+	PrecacheModel( "models/grenade.mdl" );
 
 	PrecacheScriptSound( "GrenadeMP5.Detonate" );
 }

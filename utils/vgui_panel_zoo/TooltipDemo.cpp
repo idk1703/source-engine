@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@ class TooltipsDemo: public DemoPage
 	public:
 		TooltipsDemo(Panel *parent, const char *name);
 		~TooltipsDemo();
-	
+
 	private:
 
 };
@@ -49,5 +49,3 @@ Panel* TooltipsDemo_Create(Panel *parent)
 {
 	return new TooltipsDemo(parent, "TooltipsDemo");
 }
-
-

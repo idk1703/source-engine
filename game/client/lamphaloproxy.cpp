@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLampHaloProxy::CLampHaloProxy( void )
 {
@@ -40,7 +40,7 @@ CLampHaloProxy::CLampHaloProxy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLampHaloProxy::~CLampHaloProxy( void )
 {
@@ -48,7 +48,7 @@ CLampHaloProxy::~CLampHaloProxy( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Get pointer to the color value
-// Input  : *pMaterial - 
+// Input  : *pMaterial -
 //-----------------------------------------------------------------------------
 bool CLampHaloProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 {
@@ -63,8 +63,8 @@ bool CLampHaloProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pC_BaseEntity - 
+// Purpose:
+// Input  : *pC_BaseEntity -
 //-----------------------------------------------------------------------------
 #define FADE_DIST	150
 
@@ -72,7 +72,7 @@ void CLampHaloProxy::OnBind( C_BaseEntity *pEnt )
 {
 	if ( !m_pFadeValue )
 		return;
-	
+
 	Vector vecLocal = pEnt->GetAbsOrigin() - CurrentViewOrigin();
 	VectorNormalize( vecLocal );
 

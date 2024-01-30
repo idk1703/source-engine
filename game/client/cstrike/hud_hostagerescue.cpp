@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,7 +18,7 @@ public:
 
 	CHudHostageRescueZone( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 
 private:
@@ -68,7 +68,7 @@ void CHudHostageRescueZone::Paint()
 	{
 		m_pIcon = gHUD.GetIcon( "hostage_rescue" );
 	}
-	
+
 	if ( m_pIcon )
 	{
 		int x, y, w, h;
@@ -77,4 +77,3 @@ void CHudHostageRescueZone::Paint()
 		m_pIcon->DrawSelf( 0, 0, w, h, m_clrIcon );
 	}
 }
-

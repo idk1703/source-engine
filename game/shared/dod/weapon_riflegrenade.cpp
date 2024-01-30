@@ -1,10 +1,10 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
-#include "cbase.h" 
+#include "cbase.h"
 #include "fx_dod_shared.h"
 #include "weapon_riflegrenade.h"
 
@@ -68,7 +68,7 @@ void CWeaponBaseRifleGrenade::PrimaryAttack( void )
 #else
 	if( pPlayer )
 		pPlayer->DoAnimationEvent( PLAYERANIMEVENT_FIRE_GUN );
-#endif	
+#endif
 
 #ifndef CLIENT_DLL
 	ShootGrenade();
@@ -113,7 +113,7 @@ Activity CWeaponBaseRifleGrenade::GetIdleActivity( void )
 bool CWeaponBaseRifleGrenade::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
 #ifndef CLIENT_DLL
-	// If they attempt to switch weapons before the throw animation is done, 
+	// If they attempt to switch weapons before the throw animation is done,
 	// allow it, but kill the weapon if we have to.
 	CDODPlayer *pPlayer = ToDODPlayer( GetPlayerOwner() );
 
@@ -121,7 +121,7 @@ bool CWeaponBaseRifleGrenade::Holster( CBaseCombatWeapon *pSwitchingTo )
 	{
 		pPlayer->Weapon_Drop( this, NULL, NULL );
 		UTIL_Remove(this);
-		return true;	
+		return true;
 	}
 #endif
 
@@ -164,7 +164,7 @@ extern ConVar dod_grenadegravity;
 		AngleVectors( angThrow, &vForward, &vRight, &vUp );
 
 		Vector eyes = pPlayer->GetAbsOrigin() + pPlayer->GetViewOffset();
-		Vector vecSrc = eyes; 	
+		Vector vecSrc = eyes;
 		Vector vecThrow = vForward * DOD_RIFLEGRENADE_SPEED;
 
 		// raise origin enough so that you can't shoot it straight down through the world
@@ -184,10 +184,10 @@ extern ConVar dod_grenadegravity;
 		angImpulse.Init();
 
 		if ( vecThrow.z > 0 )
-            angImpulse.y = -angles.x / ( sqrt( (-2 * vecThrow.z) / dod_grenadegravity.GetFloat() ));
+	angImpulse.y = -angles.x / ( sqrt( (-2 * vecThrow.z) / dod_grenadegravity.GetFloat() ));
 		else
 			angImpulse.y = -10;
-		
+
 		EmitGrenade( vecSrc, angles, vecThrow, angImpulse, pPlayer, RIFLEGRENADE_FUSE_LENGTH );
 	}
 

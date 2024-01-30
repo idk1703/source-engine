@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -28,7 +28,7 @@ public:
 	virtual			~CTEDecal( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 	DECLARE_SERVERCLASS();
 
 public:
@@ -40,8 +40,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEDecal::CTEDecal( const char *name ) :
 	CBaseTempEntity( name )
@@ -52,16 +52,16 @@ CTEDecal::CTEDecal( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEDecal::~CTEDecal( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEDecal::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -71,7 +71,7 @@ void CTEDecal::Test( const Vector& current_origin, const QAngle& current_angles 
 	m_vecOrigin = current_origin;
 
 	Vector vecEnd;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -107,14 +107,14 @@ END_SEND_TABLE()
 static CTEDecal g_TEDecal( "Entity Decal" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
-//			*pos - 
-//			entity - 
-//			index - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
+//			*pos -
+//			entity -
+//			index -
 //-----------------------------------------------------------------------------
 void TE_Decal( IRecipientFilter& filter, float delay,
 	const Vector* pos, const Vector* start, int entity, int hitbox, int index )
@@ -122,7 +122,7 @@ void TE_Decal( IRecipientFilter& filter, float delay,
 	Assert( pos && start );
 	g_TEDecal.m_vecOrigin	= *pos;
 	g_TEDecal.m_vecStart	= *start;
-	g_TEDecal.m_nEntity		= entity;	
+	g_TEDecal.m_nEntity		= entity;
 	g_TEDecal.m_nHitbox		= hitbox;
 	g_TEDecal.m_nIndex		= index;
 

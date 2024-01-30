@@ -27,7 +27,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-			    
+
 
 //-----------------------------------------------------------------------------
 // For serialization, set the delimiter rules
@@ -554,7 +554,3 @@ bool Unserialize( CUtlBuffer &buf, CUtlString &dest )
 	buf.GetDelimitedString( s_pConv, dest.GetForModify(), nLen );
 	return buf.IsValid();
 }
-
-
-
-

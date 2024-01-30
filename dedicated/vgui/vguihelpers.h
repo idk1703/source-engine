@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -23,4 +23,3 @@ void VGUIFinishedConfig();
 void VGUIPrintf( const char *msg );
 
 #endif // VGUIHELPERS_H
-

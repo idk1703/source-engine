@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -75,13 +75,13 @@ public:
 
 //-----------------------------------------------------------------------------
 // Purpose: Opens a RIFF file using the given I/O mechanism
-// Input  : *pFileName 
+// Input  : *pFileName
 //			&io - I/O interface
 //-----------------------------------------------------------------------------
 InFileRIFF::InFileRIFF( const char *pFileName, IFileReadBinary &io ) : m_io(io)
 {
 	m_file = m_io.open( pFileName );
-	
+
 	int riff = 0;
 	if ( !m_file )
 	{
@@ -283,7 +283,7 @@ IterateRIFF::IterateRIFF( IterateRIFF &parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Parse the chunk at the current file position 
+// Purpose: Parse the chunk at the current file position
 //			This object will iterate over the sub-chunks of this chunk.
 //			This makes for easy hierarchical parsing
 //-----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ bool IterateRIFF::ChunkNext( void )
 		return false;
 
 	int nextPos = m_chunkPosition + 8 + m_chunkSize;
-	
+
 	// chunks are aligned
 	nextPos += m_chunkSize & 1;
 
@@ -427,7 +427,7 @@ void IterateOutputRIFF::ChunkWrite( unsigned int chunkname, void *pOutput, int s
 	m_riff.WriteData( pOutput, size );
 
 	m_chunkPosition = m_riff.PositionGet();
-	
+
 	m_chunkPosition += m_chunkPosition & 1;
 
 	m_riff.PositionSet( m_chunkPosition );
@@ -450,7 +450,7 @@ void IterateOutputRIFF::ChunkFinish( void )
 	Assert( m_chunkStart != -1 );
 
 	m_chunkPosition = m_riff.PositionGet();
-	
+
 	int size = m_chunkPosition - m_chunkStart - 8;
 
 	m_chunkPosition += m_chunkPosition & 1;

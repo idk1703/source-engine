@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -53,7 +53,7 @@ static FILE* OpenRecordingFile()
 		if (!fp)
 		{
 			Warning("Unable to open recording file shaderdx8.rec!\n");
-			g_CantOpenFile = true;			
+			g_CantOpenFile = true;
 		}
 		g_NeverOpened = false;
 	}
@@ -69,11 +69,11 @@ static FILE* OpenRecordingFile()
 static void WriteRecordingFile()
 {
 	// Store the command size
-	*(int*)&g_pRecordingBuffer[g_CommandStartIdx] = 
+	*(int*)&g_pRecordingBuffer[g_CommandStartIdx] =
 		g_pRecordingBuffer.Size() - g_CommandStartIdx;
 
 #ifndef CRASH_RECORDING
-	// When not crash recording, flush when buffer gets too big, 
+	// When not crash recording, flush when buffer gets too big,
 	// or when Present() is called
 	if ((g_pRecordingBuffer.Size() < COMMAND_BUFFER_SIZE) &&
 		(g_pRecordingBuffer[g_CommandStartIdx+4] != DX8_PRESENT))

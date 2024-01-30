@@ -1,12 +1,12 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
 // ---------------------------------------------------------------------------------------- //
-// This is a datatable test case. 
+// This is a datatable test case.
 // It is run in debug mode when the engine starts to catch any bugs in datatable code.
 // This can also serve as a simple example of how datatables work separately from the
 // intricacies of the entity system.
@@ -34,9 +34,9 @@
 // ---------------------------------------------------------------------------------------- //
 // At a high level, the test is setup as such:
 // - Server structure and datatable.
-// - Client structure and datatable. 
+// - Client structure and datatable.
 // - A function table with a function to modify and compare each element.
-// - A function that initializes the server structure and tries random changes to it and 
+// - A function that initializes the server structure and tries random changes to it and
 //   verifies that the client receives the deltas and changes correctly.
 // ---------------------------------------------------------------------------------------- //
 // Eventually it would be nice to stress-test the entities with tests for:
@@ -96,7 +96,7 @@ class DTTestServerSub
 public:
 	float				m_FloatArray[3];
 	char				m_Strings[2][64];
-	
+
 	CUtlVector<CTestStruct> m_UtlVectorStruct;
 	CUtlVector<float> m_UtlVectorFloat;
 	CUtlVector<char> m_UtlVectorChar;
@@ -131,7 +131,7 @@ BEGIN_SEND_TABLE_NOBASE(DTTestServerSub, DT_DTTestSub)
 		MAX_CHARARRAY_ELEMENTS,
 		SendPropInt( NULL, 0, sizeof( char ), 0 ) ),
 
-	SendPropUtlVector( 
+	SendPropUtlVector(
 		SENDINFO_UTLVECTOR( m_UtlVectorFloat ),
 		MAX_FLOATARRAY_ELEMENTS,	// max elements
 		SendPropFloat( NULL, 0, 0, 0, SPROP_NOSCALE ) )
@@ -163,8 +163,8 @@ public:
 
 #if defined( SUPPORT_ARRAYS_OF_DATATABLES )
 	DTTestServerSub	m_SubArray[2];
-#endif	
-	
+#endif
+
 	Vector			m_Vector;
 	char			m_String[64];
 	int				m_Int;
@@ -200,7 +200,7 @@ void* SendProxy_DTTestServerSub( const SendProp *pProp, const void *pStruct, con
 {
 	if( !g_bSendSub )
 		return NULL;
-	
+
 	return SendProxy_DataTableToDataTable( pProp, pStruct, pData, pRecipients, objectID );
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_DTTestServerSub );
@@ -229,9 +229,9 @@ BEGIN_SEND_TABLE_NOBASE(DTTestServer, DT_DTTest)
 	SendPropDataTable(SENDINFO_DT(m_Sub2), &REFERENCE_SEND_TABLE(DT_DTTestSub2)),
 
 	SendPropInt   (SENDINFO_NOCHECK(m_Int),		23, SPROP_UNSIGNED),
-	
+
 	SendPropExclude( "DT_DTTestSub", "m_FloatArray" ),
-	
+
 
 	SendPropString(SENDINFO_NOCHECK(m_String)),
 
@@ -287,8 +287,8 @@ BEGIN_RECV_TABLE_NOBASE(DTTestClientSub, DT_DTTestSub)
 
 	RecvPropUtlVector( RECVINFO_UTLVECTOR( m_UtlVectorFloat ), MAX_FLOATARRAY_ELEMENTS, RecvPropFloat(NULL,0,0) ),
 	RecvPropUtlVectorDataTable( m_UtlVectorStruct, MAX_STRUCTARRAY_ELEMENTS, DT_TestStruct ),
-	
-	RecvPropUtlVector( 
+
+	RecvPropUtlVector(
 		RECVINFO_UTLVECTOR( m_UtlVectorChar ),
 		MAX_CHARARRAY_ELEMENTS,
 		RecvPropInt( NULL, 0, sizeof( char ) ) ),
@@ -318,7 +318,7 @@ class DTTestClient
 public:
 	DTTestClientSub		m_Sub;
 	long				m_Guard1;
-	
+
 	DTTestSub2			m_Sub2;
 	long				m_Guard2;
 
@@ -378,7 +378,7 @@ BEGIN_RECV_TABLE_NOBASE(DTTestClient, DT_DTTest)
 
 	RecvPropVector(RECVINFO(m_Vector), 0),
 	RecvPropString(RECVINFO_STRING(m_String), 0),
-	
+
 	RecvPropInt (RECVINFO(m_Int),	0),
 
 	// -	Arrays with and without the SPROP_ONEBITDELTA flag.
@@ -449,8 +449,8 @@ void RandomlyChangeFloat(DTTestServer *pServer)
 
 bool CompareVector(DTTestClient *pClient, DTTestServer *pServer)
 {
-	return pClient->m_Vector.x == pServer->m_Vector.x && 
-		pClient->m_Vector.y == pServer->m_Vector.y && 
+	return pClient->m_Vector.x == pServer->m_Vector.x &&
+		pClient->m_Vector.y == pServer->m_Vector.y &&
 		pClient->m_Vector.z == pServer->m_Vector.z;
 }
 void RandomlyChangeVector(DTTestServer *pServer)
@@ -494,7 +494,7 @@ void RandomlyChangeIntArray(DTTestServer *pServer)
 	// Change a random subset of the array.
 	int nElements = sizeof(pServer->m_IntArray) / sizeof(pServer->m_IntArray[0]);
 	int nChanges = 4 + rand() % nElements;
-	
+
 	for(int i=0; i < nChanges; i++)
 	{
 		pServer->m_IntArray[rand() % nElements] = (int)rand();
@@ -511,7 +511,7 @@ bool CompareFloatArray(DTTestClient *pClient, DTTestServer *pServer)
 		if(pClient->m_Sub.m_FloatArray[i] != pServer->m_Sub.m_FloatArray[i])
 			return false;
 	}
-*/	
+*/
 	return true;
 }
 void RandomlyChangeFloatArray(DTTestServer *pServer)
@@ -519,7 +519,7 @@ void RandomlyChangeFloatArray(DTTestServer *pServer)
 	// Change a random subset of the array.
 	int nElements = sizeof(pServer->m_Sub.m_FloatArray) / sizeof(pServer->m_Sub.m_FloatArray[0]);
 	int nChanges = 4 + rand() % nElements;
-	
+
 	for(int i=0; i < nChanges; i++)
 	{
 		pServer->m_Sub.m_FloatArray[rand() % nElements] = (float)rand() * 0.943123f;
@@ -547,14 +547,14 @@ bool CompareSubArray(DTTestClient *pClient, DTTestServer *pServer )
 			if( pServer->m_SubArray[i].m_FloatArray[z] != pClient->m_SubArray[i].m_FloatArray[z] )
 				return false;
 		}
-		
+
 		for( int iString=0; iString < sizeof(pServer->m_SubArray[0].m_Strings) / sizeof(pServer->m_SubArray[0].m_Strings[0]); iString++ )
 		{
 			for( z=0; z < sizeof(pServer->m_SubArray[0].m_Strings[0]) / sizeof(pServer->m_SubArray[0].m_Strings[0][0]); z++ )
 			{
 				if( pServer->m_SubArray[i].m_Strings[iString][z] != pClient->m_SubArray[i].m_Strings[iString][z] )
 					return false;
-				
+
 				// Check for null termination.
 				if( pServer->m_SubArray[i].m_Strings[iString][z] == 0 )
 					break;
@@ -575,10 +575,10 @@ void RandomlyChangeSubArray(DTTestServer *pServer)
 	for( int i=0; i < 2; i++ )
 	{
 		int index = rand() & 1;
-		
+
 		for( int z=0; z < sizeof(pServer->m_SubArray[0].m_FloatArray) / sizeof(pServer->m_SubArray[0].m_FloatArray[0]); z++ )
 			pServer->m_SubArray[index].m_FloatArray[z] = rand() * 0.932f;
-		
+
 		for( int iString=0; iString < sizeof(pServer->m_SubArray[0].m_Strings) / sizeof(pServer->m_SubArray[0].m_Strings[0]); iString++ )
 		{
 			int stringLen = sizeof(pServer->m_SubArray[0].m_Strings[0]) / sizeof(pServer->m_SubArray[0].m_Strings[0][0]);
@@ -751,7 +751,7 @@ VarTestInfo g_VarTestInfos[] =
 #define NUMVARTESTINFOS	(sizeof(g_VarTestInfos) / sizeof(g_VarTestInfos[0]))
 
 
-int g_GuardOffsets[] = 
+int g_GuardOffsets[] =
 {
 	offsetof( DTTestClient, m_Guard1 ),
 	offsetof( DTTestClient, m_Guard2 ),
@@ -814,7 +814,7 @@ bool WriteSendTable_R( SendTable *pTable, bf_write &bfWrite, bool bNeedsDecoder 
 	bfWrite.WriteOneBit( 1 );
 
 	bfWrite.WriteOneBit( bNeedsDecoder?1:0 );
-	
+
 	if( !SendTable_WriteInfos( pTable, &bfWrite ) )
 		return false;
 
@@ -854,14 +854,14 @@ void RunDataTableTest()
 	RecvTable_Init( &pRecvTable, 1 );
 
 	pSendTable->SetWriteFlag( false );
-	
+
 	// Send DataTable info to the client.
 	ALIGN4 unsigned char commBuf[8192] ALIGN4_POST;
 	bf_write bfWrite( "RunDataTableTest->commBuf", commBuf, sizeof(commBuf) );
 	if( !WriteSendTable_R( pSendTable, bfWrite, true ) )
 	{
 		Assert( !"RunDataTableTest: SendTable_SendInfo failed." );
-	}	
+	}
 	bfWrite.WriteOneBit(0);
 
 
@@ -908,7 +908,7 @@ void RunDataTableTest()
 		{
 			g_bSendSub = false; // every 8th time, don't send the subtable
 		}
-		
+
 		if( (iIteration & 3) == 0 )
 		{
 			// Every once in a while, change ALL the properties.
@@ -935,7 +935,7 @@ void RunDataTableTest()
 
 		ALIGN4 unsigned char deltaEncoded[4096] ALIGN4_POST;
 		bf_write bfDeltaEncoded( "RunDataTableTest->bfDeltaEncoded", deltaEncoded, sizeof(deltaEncoded) );
-		
+
 		if ( iIteration == 0 )
 		{
 			// On the first iteration, just write the whole state.
@@ -952,24 +952,24 @@ void RunDataTableTest()
 			bf_read fullEncodedRead( "RunDataTableTest->fullEncodedRead", fullEncoded, sizeof( fullEncoded ), bfFullEncoded.GetNumBitsWritten() );
 			bf_read prevEncodedRead( "RunDataTableTest->prevEncodedRead", prevEncoded, sizeof( prevEncoded ) );
 
-			int nDeltaProps = SendTable_CalcDelta( 
-				pSendTable, 
-				prevEncoded, sizeof( prevEncoded ) * 8, 
+			int nDeltaProps = SendTable_CalcDelta(
+				pSendTable,
+				prevEncoded, sizeof( prevEncoded ) * 8,
 				fullEncoded, bfFullEncoded.GetNumBitsWritten(),
 				deltaProps,
 				ARRAYSIZE( deltaProps ),
 				-1 );
-			
+
 			Assert( nDeltaProps != -1 ); // BAD: buffer overflow
 
-			
+
 			// Reencode with just the delta. This is what is actually sent to the client.
-			SendTable_WritePropList( 
+			SendTable_WritePropList(
 				pSendTable,
 				fullEncoded,
 				bfFullEncoded.GetNumBitsWritten(),
 				&bfDeltaEncoded,
-				-1111, 
+				-1111,
 				deltaProps,
 				nDeltaProps );
 		}
@@ -985,7 +985,7 @@ void RunDataTableTest()
 		bf_write bfCopyEncoded( "RunDataTableTest->bfCopyEncoded", copyEncoded, sizeof(copyEncoded) );
 
 		RecvTable_CopyEncoding( pRecvTable, &bfReadDeltaEncoded, &bfCopyEncoded, -1 );
-		
+
 		// Decode..
 		bf_read bfDecode( "RunDataTableTest->copyEncoded", copyEncoded, sizeof( copyEncoded ) );
 		if(!RecvTable_Decode(pRecvTable, &dtClient, &bfDecode, 1111))
@@ -993,7 +993,7 @@ void RunDataTableTest()
 			Assert(false);
 		}
 
-		
+
 		// Make sure it didn't go into memory it shouldn't have.
 		CheckGuardBytes( &dtClient );
 

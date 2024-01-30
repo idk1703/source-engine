@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -19,15 +19,15 @@
 
 #define ACTOR_NAME_HEIGHT 26
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
-//			*parent - 
-//			x - 
-//			y - 
-//			w - 
-//			h - 
-//			0 - 
-//			0 - 
+// Purpose:
+// Input  : *actor -
+//			*parent -
+//			x -
+//			y -
+//			w -
+//			h -
+//			0 -
+//			0 -
 //-----------------------------------------------------------------------------
 CActorBitmapButton::CActorBitmapButton( CChoreoActorWidget *actor, mxWindow *parent, int x, int y, int w, int h, int id /*= 0*/, const char *bitmap /*= 0*/ )
 : mxBitmapButton( parent, x, y, w, h, id, bitmap )
@@ -36,7 +36,7 @@ CActorBitmapButton::CActorBitmapButton( CChoreoActorWidget *actor, mxWindow *par
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoActorWidget	*CActorBitmapButton::GetActor( void )
 {
@@ -44,7 +44,7 @@ CChoreoActorWidget	*CActorBitmapButton::GetActor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CActorActiveCheckBox::CActorActiveCheckBox( CChoreoActorWidget *actor, mxWindow *parent, int x, int y, int w, int h, const char *label /*= 0*/, int id /*= 0*/ )
 	: mxCheckBox( parent, x, y, w, h, label, id )
@@ -58,8 +58,8 @@ CChoreoActorWidget *CActorActiveCheckBox::GetActor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *parent - 
+// Purpose:
+// Input  : *parent -
 //-----------------------------------------------------------------------------
 CChoreoActorWidget::CChoreoActorWidget( CChoreoWidget *parent )
 : CChoreoWidget( parent )
@@ -79,7 +79,7 @@ CChoreoActorWidget::CChoreoActorWidget( CChoreoWidget *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoActorWidget::~CChoreoActorWidget( void )
 {
@@ -95,7 +95,7 @@ CChoreoActorWidget::~CChoreoActorWidget( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoActorWidget::GetShowChannels( void )
@@ -105,7 +105,7 @@ bool CChoreoActorWidget::GetShowChannels( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Switch modes
-// Input  : show - 
+// Input  : show -
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::ShowChannels( bool show )
 {
@@ -119,7 +119,7 @@ void CChoreoActorWidget::ShowChannels( bool show )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::Create( void )
 {
@@ -145,8 +145,8 @@ void CChoreoActorWidget::Create( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rc - 
+// Purpose:
+// Input  : rc -
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::Layout( RECT& rc )
 {
@@ -196,7 +196,7 @@ void CChoreoActorWidget::Layout( RECT& rc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CChoreoActorWidget::GetItemHeight( void )
 {
@@ -213,7 +213,7 @@ int	CChoreoActorWidget::GetItemHeight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 {
@@ -259,9 +259,9 @@ void CChoreoActorWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 	char n[ 512 ];
 	V_strcpy_safe( n, actor->GetName() );
 
-	drawHelper.DrawColoredText( "Arial", 
-		m_pView->GetFontSize() + 5, 
-		1000, 
+	drawHelper.DrawColoredText( "Arial",
+		m_pView->GetFontSize() + 5,
+		1000,
 		actor->GetActive() ? COLOR_CHOREO_ACTORNAME : COLOR_CHOREO_ACTORNAME_INACTIVE,
 		rcName, n );
 
@@ -343,7 +343,7 @@ void CChoreoActorWidget::redraw( CChoreoWidgetDrawHelper& drawHelper )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CChoreoActor
 //-----------------------------------------------------------------------------
 CChoreoActor *CChoreoActorWidget::GetActor( void )
@@ -352,8 +352,8 @@ CChoreoActor *CChoreoActorWidget::GetActor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *actor - 
+// Purpose:
+// Input  : *actor -
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::SetActor( CChoreoActor *actor )
 {
@@ -361,8 +361,8 @@ void CChoreoActorWidget::SetActor( CChoreoActor *actor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::AddChannel( CChoreoChannelWidget *channel )
 {
@@ -370,8 +370,8 @@ void CChoreoActorWidget::AddChannel( CChoreoChannelWidget *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::RemoveChannel( CChoreoChannelWidget *channel )
 {
@@ -379,8 +379,8 @@ void CChoreoActorWidget::RemoveChannel( CChoreoChannelWidget *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : num - 
+// Purpose:
+// Input  : num -
 // Output : CChoreoChannelWidget
 //-----------------------------------------------------------------------------
 CChoreoChannelWidget *CChoreoActorWidget::GetChannel( int num )
@@ -389,7 +389,7 @@ CChoreoChannelWidget *CChoreoActorWidget::GetChannel( int num )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoActorWidget::GetNumChannels( void )
@@ -398,7 +398,7 @@ int CChoreoActorWidget::GetNumChannels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float *CChoreoActorWidget::GetSettings( void )
@@ -407,7 +407,7 @@ float *CChoreoActorWidget::GetSettings( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoActorWidget::ResetSettings( void )
 {

@@ -26,7 +26,7 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTextureBox::CTextureBox(void)
 {
@@ -35,7 +35,7 @@ CTextureBox::CTextureBox(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTextureBox::~CTextureBox(void)
 {
@@ -43,31 +43,31 @@ CTextureBox::~CTextureBox(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lpCompareItemStruct - 
+// Purpose:
+// Input  : lpCompareItemStruct -
 // Output : int
 //-----------------------------------------------------------------------------
-int CTextureBox::CompareItem(LPCOMPAREITEMSTRUCT lpCompareItemStruct) 
+int CTextureBox::CompareItem(LPCOMPAREITEMSTRUCT lpCompareItemStruct)
 {
 	return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lpDeleteItemStruct - 
+// Purpose:
+// Input  : lpDeleteItemStruct -
 //-----------------------------------------------------------------------------
-void CTextureBox::DeleteItem(LPDELETEITEMSTRUCT lpDeleteItemStruct) 
+void CTextureBox::DeleteItem(LPDELETEITEMSTRUCT lpDeleteItemStruct)
 {
 	CComboBox::DeleteItem(lpDeleteItemStruct);
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lpDrawItemStruct - 
+// Purpose:
+// Input  : lpDrawItemStruct -
 //-----------------------------------------------------------------------------
-void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 //	if(!pGD)
 //		return;
@@ -138,7 +138,7 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 				dc.SetTextColor(dwForeColor);
 				dc.SetBkMode(TRANSPARENT);
 				dc.TextOut(r2.right + 4, r2.top + 4, szName, iLen);
-				
+
 				// draw size
 				sprintf(szName, "%dx%d", pTex->GetWidth(), pTex->GetHeight());
 				dc.TextOut(r2.right + 4, r2.top + 4 + iFontHeight, szName, strlen(szName));
@@ -147,7 +147,7 @@ void CTextureBox::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			//	combo box, so just draw the name of the texture
 			else
 			{
-				// just draw name - 
+				// just draw name -
 				dc.SetTextColor(dwForeColor);
 				dc.SetBkMode(TRANSPARENT);
 				dc.TextOut(r.left + 4, r.top + 2, szName, iLen);
@@ -280,15 +280,15 @@ void CTextureBox::NotifyNewMaterial( IEditorTexture *pTex )
 	if ( iItem != CB_ERR )
 	{
 		SetItemDataPtr( iItem, (void *)pTex );
-	}	
+	}
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : lpMeasureItemStruct - 
+// Purpose:
+// Input  : lpMeasureItemStruct -
 //-----------------------------------------------------------------------------
-void CTextureBox::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CTextureBox::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth = 64;
 
@@ -309,7 +309,7 @@ void CTextureBox::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTextureBox::LoadGraphicList(void)
 {
@@ -337,7 +337,7 @@ void CTextureBox::LoadGraphicList(void)
 			AddString(szStr);
 			SetItemDataPtr(nStrCount, (void *)pTex);
 			nStrCount++;
-		}	
+		}
 	}
 
 	//
@@ -396,11 +396,11 @@ void CTextureBox::LoadGraphicList(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwStyle - 
-//			rect - 
-//			pParentWnd - 
-//			nID - 
+// Purpose:
+// Input  : dwStyle -
+//			rect -
+//			pParentWnd -
+//			nID -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CTextureBox::Create(DWORD dwStyle, const RECT &rect, CWnd *pParentWnd, UINT nID)
@@ -426,9 +426,9 @@ BOOL CTextureBox::Create(DWORD dwStyle, const RECT &rect, CWnd *pParentWnd, UINT
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wParam - 
-//			lParam - 
+// Purpose:
+// Input  : wParam -
+//			lParam -
 // Output : LRESULT
 //-----------------------------------------------------------------------------
 LRESULT CTextureBox::OnSelectString(WPARAM wParam, LPARAM lParam)
@@ -457,11 +457,11 @@ LRESULT CTextureBox::OnSelectString(WPARAM wParam, LPARAM lParam)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pDC - 
+// Purpose:
+// Input  : pDC -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
-BOOL CTextureBox::OnEraseBkgnd(CDC *pDC) 
+BOOL CTextureBox::OnEraseBkgnd(CDC *pDC)
 {
 	CRect r;
 	GetUpdateRect(r);
@@ -469,4 +469,3 @@ BOOL CTextureBox::OnEraseBkgnd(CDC *pDC)
 	FillRect(pDC->m_hDC, r, HBRUSH(GetStockObject(BLACK_BRUSH)));
 	return TRUE;
 }
-

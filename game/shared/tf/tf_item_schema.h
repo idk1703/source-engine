@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -81,11 +81,11 @@ public:
 		Assert( iSceneIndex >= 0 && iSceneIndex < GetPartnerTauntReceiverSceneCount( iClass ) );
 		return m_vecPartnerTauntReceiverScenes[iClass][iSceneIndex];
 	}
-	
+
 	const char *GetProp( int iClass ) const { Assert( iClass >= 0 && iClass < LOADOUT_COUNT ); return m_pszProp[iClass]; }
 	const char *GetPropIntroScene( int iClass ) const { Assert( iClass >= 0 && iClass < LOADOUT_COUNT ); return m_pszPropIntroScene[iClass]; }
 	const char *GetPropOutroScene( int iClass ) const { Assert( iClass >= 0 && iClass < LOADOUT_COUNT ); return m_pszPropOutroScene[iClass]; }
-	
+
 	float		GetTauntSeparationForwardDistance() const { return m_flTauntSeparationForwardDistance; }
 	float		GetTauntSeparationRightDistance() const { return m_flTauntSeparationRightDistance; }
 	float		GetMinTauntTime() const { return m_flMinTauntTime; }
@@ -199,7 +199,7 @@ public:
 
 	bool BInitFromKV( KeyValues *pKV, CUtlVector<CUtlString> *pVecErrors = NULL );
 	bool BPostInit( CUtlVector<CUtlString> *pVecErrors = NULL );
-	
+
 	bool OwnsRequiredItems( const CUtlVector< item_definition_index_t >& vecOwnedItemDefs ) const;
 	const item_definition_index_t& GetLoanerItemDef() const { return m_LoanerItemDef; }
 
@@ -273,7 +273,7 @@ public:
 
 	struct CWarSideDefinition_t
 	{
-		CWarSideDefinition_t() 
+		CWarSideDefinition_t()
 			: m_pszLeaderboardName( NULL )
 			, m_pszLocalizedName( NULL )
 			, m_nSideIndex( INVALID_WAR_SIDE )
@@ -468,7 +468,7 @@ private:
 #ifndef GC_DLL
 	KeyValues  *m_pConditionsKey;
 #endif
-	
+
 	CUtlVector< CTFRequiredQuestItemsSet > m_vecRequiredItemSets;
 };
 
@@ -676,7 +676,7 @@ struct MapDef_t
 	}
 
 	CUtlVector< econ_tag_handle_t >	m_vecRollingMatchTags;
-	bool BHasRollingMatchTag( econ_tag_handle_t tag ) const 
+	bool BHasRollingMatchTag( econ_tag_handle_t tag ) const
 	{
 		FOR_EACH_VEC( m_vecRollingMatchTags, i )
 		{
@@ -844,7 +844,7 @@ public:
 	static const char k_rchMvMPowerupBottleItemDefName[];
 	static const char k_rchMvMChallengeCompletedMaskAttribName[];
 	static const char k_rchLadderPassItemDefName[];
-	 
+
 	static const char *GetMvMBadgeContractPointsAttributeName( EMvMChallengeDifficulty difficulty );
 	static const char *GetMvMBadgeContractLevelAttributeName( EMvMChallengeDifficulty difficulty );
 

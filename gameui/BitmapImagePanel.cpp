@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 
 using namespace vgui;
 
-CBitmapImagePanel::CBitmapImagePanel( Panel *parent, char const *panelName, 
+CBitmapImagePanel::CBitmapImagePanel( Panel *parent, char const *panelName,
 	char const *filename /*= NULL*/ ) : Panel( parent, panelName )
 {
 	m_szTexture[ 0 ] = 0;

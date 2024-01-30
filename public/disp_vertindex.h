@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CVertIndex
 public:
 				CVertIndex();
 				CVertIndex( short ix, short iy );
-	
+
 	void		Init( short ix, short iy );
 
 	short&		operator[]( short i );

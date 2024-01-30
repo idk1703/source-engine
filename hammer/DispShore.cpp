@@ -52,8 +52,8 @@ Shoreline_t::~Shoreline_t()
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void Shoreline_t::AddSegment( Vector &vecPoint0, Vector &vecPoint1, 
-						      Vector &vecNormal, float flWaterZ, 
+void Shoreline_t::AddSegment( Vector &vecPoint0, Vector &vecPoint1,
+						      Vector &vecNormal, float flWaterZ,
 							  CMapFace *pWaterFace, EditDispHandle_t hDisp )
 {
 	// Check for duplicates!
@@ -61,13 +61,13 @@ void Shoreline_t::AddSegment( Vector &vecPoint0, Vector &vecPoint1,
 	int iSegment;
 	for ( iSegment = 0; iSegment < nSegmentCount; ++iSegment )
 	{
-		if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[0], vecPoint0, DISPSHORE_VECTOR_EPS ) ) 
-		{ 
-			if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[1], vecPoint1, DISPSHORE_VECTOR_EPS ) ) 
+		if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[0], vecPoint0, DISPSHORE_VECTOR_EPS ) )
+		{
+			if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[1], vecPoint1, DISPSHORE_VECTOR_EPS ) )
 				return;
 		}
 
-		if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[1], vecPoint0, DISPSHORE_VECTOR_EPS ) ) 
+		if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[1], vecPoint0, DISPSHORE_VECTOR_EPS ) )
 		{
 			if ( VectorsAreEqual( m_aSegments[iSegment].m_vecPoints[0], vecPoint1, DISPSHORE_VECTOR_EPS ) )
 				return;
@@ -100,7 +100,7 @@ void Shoreline_t::AddSegment( Vector &vecPoint0, Vector &vecPoint1,
 	m_aSegments[iSegment].m_bCreated = false;
 	m_aSegments[iSegment].m_vecCenter.Init();
 
-	m_aSegments[iSegment].m_WorldFace.m_bAdjWinding = false;	
+	m_aSegments[iSegment].m_WorldFace.m_bAdjWinding = false;
 	m_aSegments[iSegment].m_WaterFace.m_bAdjWinding = false;
 	for ( int i = 0; i < 4; ++i )
 	{
@@ -134,7 +134,7 @@ public:
 	void		AddShoreline( int nShorelineId );
 	void		RemoveShoreline( int nShorelineId );
 	void		BuildShoreline( int nShorelineId, CUtlVector<CMapFace*> &aFaces, CUtlVector<CMapFace*> &aWaterFaces );
-       
+
 	void		Draw( CRender3D *pRender );
 	void		DebugDraw( CRender3D *pRender );
 
@@ -290,7 +290,7 @@ void CDispShoreManager::BuildShorelineSegments( Shoreline_t *pShoreline, CUtlVec
 	{
 		int nFaceCount = aFaces.Count();
 		for ( int iFace = 0; iFace < nFaceCount; ++iFace )
-		{	
+		{
 			CMapFace *pFace = aFaces.Element( iFace );
 			if ( pFace )
 			{
@@ -328,28 +328,28 @@ void CDispShoreManager::AverageShorelineNormals( Shoreline_t *pShoreline )
 			int iPoint1 = -1;
 			int iPoint2 = -1;
 
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[0], 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[0],
 				                  pShoreline->m_aSegments[iSegment2].m_vecPoints[0], DISPSHORE_VECTOR_EPS ) )
 			{
 				iPoint1 = 0;
 				iPoint2 = 0;
 			}
 
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[0], 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[0],
 				                  pShoreline->m_aSegments[iSegment2].m_vecPoints[1], DISPSHORE_VECTOR_EPS ) )
 			{
 				iPoint1 = 0;
 				iPoint2 = 1;
 			}
 
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[1], 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[1],
 				                  pShoreline->m_aSegments[iSegment2].m_vecPoints[0], DISPSHORE_VECTOR_EPS ) )
 			{
 				iPoint1 = 1;
 				iPoint2 = 0;
 			}
 
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[1], 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment1].m_vecPoints[1],
 				                  pShoreline->m_aSegments[iSegment2].m_vecPoints[1], DISPSHORE_VECTOR_EPS ) )
 			{
 				iPoint1 = 1;
@@ -398,13 +398,13 @@ void CDispShoreManager::BuildShorelineOverlayPoint( Shoreline_t *pShoreline, int
 		return;
 
 	// Build a bounding box from the world points.
-	Vector vecPoints[4];	
+	Vector vecPoints[4];
 	vecPoints[0] = pShoreline->m_aSegments[iSegment].m_vecPoints[0];
 	vecPoints[3] = pShoreline->m_aSegments[iSegment].m_vecPoints[1];
 	vecPoints[1] = vecPoints[0] + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0] * pShoreline->m_ShoreData.m_flWidths[0] );
 	vecPoints[2] = vecPoints[3] + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1] * pShoreline->m_ShoreData.m_flWidths[0] );
 
-	Vector vecWorldMin = vecPoints[0]; 
+	Vector vecWorldMin = vecPoints[0];
 	Vector vecWorldMax = vecPoints[0];
 	for ( int iPoint = 1; iPoint < 4; ++iPoint )
 	{
@@ -465,7 +465,7 @@ void CDispShoreManager::BuildShorelineOverlayPoint( Shoreline_t *pShoreline, int
 
 	Vector vecPoint = pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecPoints[0] + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0] * pShoreline->m_ShoreData.m_flWidths[0] );
 	Vector vecStart( vecPoint.x, vecPoint.y, vecPoint.z + 150.0f );
-	Vector vecEnd( vecPoint.x, vecPoint.y, vecPoint.z - 150.0f );		
+	Vector vecEnd( vecPoint.x, vecPoint.y, vecPoint.z - 150.0f );
 	Vector vecHit, vecHitNormal;
 	CMapFace *pHitFace = pFace;
 	if ( !pDisp->TraceLine( vecHit, vecHitNormal, vecStart, vecEnd ) )
@@ -488,7 +488,7 @@ void CDispShoreManager::BuildShorelineOverlayPoint( Shoreline_t *pShoreline, int
 	}
 	pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecPoints[1] = vecHit;
 	pShoreline->m_aSegments[iSegment].m_WorldFace.m_pFaces[1] = pHitFace;
-	
+
 	vecPoint = pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecPoints[3] + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1] * pShoreline->m_ShoreData.m_flWidths[0] );
 	vecStart.Init( vecPoint.x, vecPoint.y, vecPoint.z + 150.0f );
 	vecEnd.Init( vecPoint.x, vecPoint.y, vecPoint.z - 150.0f );
@@ -513,7 +513,7 @@ void CDispShoreManager::BuildShorelineOverlayPoint( Shoreline_t *pShoreline, int
 	}
 	pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecPoints[2] = vecHit;
 	pShoreline->m_aSegments[iSegment].m_WorldFace.m_pFaces[2] = pHitFace;
-	
+
 	// Water points.
 	pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecPoints[0] = pShoreline->m_aSegments[iSegment].m_vecPoints[0] + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0] * -pShoreline->m_ShoreData.m_flWidths[1] );
 	pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecPoints[1] = pShoreline->m_aSegments[iSegment].m_vecPoints[0];
@@ -559,7 +559,7 @@ void CDispShoreManager::BuildShorelineOverlayPoint( Shoreline_t *pShoreline, int
 				break;
 			}
 		}
-	
+
 		for ( int iWaterPoint = 0; iWaterPoint < 4; ++iWaterPoint )
 		{
 			if ( !pShoreline->m_aSegments[iSegment].m_WaterFace.m_pFaces[iWaterPoint] )
@@ -567,7 +567,7 @@ void CDispShoreManager::BuildShorelineOverlayPoint( Shoreline_t *pShoreline, int
 				pShoreline->m_aSegments[iSegment].m_WaterFace.m_pFaces[iWaterPoint] = pWaterFace;
 			}
 		}
-	}	
+	}
 
 	// Center.
 	pShoreline->m_aSegments[iSegment].m_vecCenter = ( pShoreline->m_aSegments[iSegment].m_vecPoints[0] + pShoreline->m_aSegments[iSegment].m_vecPoints[1] ) * 0.5f;
@@ -640,7 +640,7 @@ bool CDispShoreManager::TexcoordShoreline( Shoreline_t *pShoreline )
 		flLengthToSegment += vecEdge.Length();
 
 		GenerateTexCoord( pShoreline, iSortSegment, flLengthToSegment, true );
-	}	
+	}
 
 	return true;
 }
@@ -718,24 +718,24 @@ int CDispShoreManager::FindShorelineStart( Shoreline_t *pShoreline )
 			if ( iSegment == iSegment2 )
 				continue;
 
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[0], pShoreline->m_aSegments[iSegment2].m_vecPoints[0], DISPSHORE_VECTOR_EPS ) ) 
-			{ 
-				++nTouchCount; 
-				iStartPoint = 1;
-			}
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[0], pShoreline->m_aSegments[iSegment2].m_vecPoints[1], DISPSHORE_VECTOR_EPS ) ) 
-			{ 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[0], pShoreline->m_aSegments[iSegment2].m_vecPoints[0], DISPSHORE_VECTOR_EPS ) )
+			{
 				++nTouchCount;
 				iStartPoint = 1;
 			}
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[1], pShoreline->m_aSegments[iSegment2].m_vecPoints[0], DISPSHORE_VECTOR_EPS ) ) 
-			{ 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[0], pShoreline->m_aSegments[iSegment2].m_vecPoints[1], DISPSHORE_VECTOR_EPS ) )
+			{
+				++nTouchCount;
+				iStartPoint = 1;
+			}
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[1], pShoreline->m_aSegments[iSegment2].m_vecPoints[0], DISPSHORE_VECTOR_EPS ) )
+			{
 				++nTouchCount;
 				iStartPoint = 0;
 			}
-			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[1], pShoreline->m_aSegments[iSegment2].m_vecPoints[1], DISPSHORE_VECTOR_EPS ) ) 
-			{ 
-				++nTouchCount; 
+			if ( VectorsAreEqual( pShoreline->m_aSegments[iSegment].m_vecPoints[1], pShoreline->m_aSegments[iSegment2].m_vecPoints[1], DISPSHORE_VECTOR_EPS ) )
+			{
+				++nTouchCount;
 				iStartPoint = 0;
 			}
 		}
@@ -785,7 +785,7 @@ void CDispShoreManager::GenerateTexCoord( Shoreline_t *pShoreline, int iSegment,
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[0].x = flValue * flRatio;
 			pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecTexCoords[0].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[1] * 0.5f;
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[0].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[0];
-			
+
 			if ( pShoreline->m_aSegments[iSegment].m_WorldFace.m_bAdjWinding )
 			{
 				pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecTexCoords[3].x = flValue * flRatio;
@@ -816,7 +816,7 @@ void CDispShoreManager::GenerateTexCoord( Shoreline_t *pShoreline, int iSegment,
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[2].x = flValue * flRatio;
 			pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecTexCoords[2].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[1];
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[2].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[1] * 0.5f;
-			
+
 			if ( pShoreline->m_aSegments[iSegment].m_WorldFace.m_bAdjWinding )
 			{
 				flRatio = flLengthToSegment / pShoreline->m_flLength;
@@ -853,7 +853,7 @@ void CDispShoreManager::GenerateTexCoord( Shoreline_t *pShoreline, int iSegment,
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[2].x = flValue * flRatio;
 			pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecTexCoords[2].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[1];
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[2].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[1] * 0.5f;
-			
+
 			if ( pShoreline->m_aSegments[iSegment].m_WorldFace.m_bAdjWinding )
 			{
 				flRatio = flLengthToSegment / pShoreline->m_flLength;
@@ -887,7 +887,7 @@ void CDispShoreManager::GenerateTexCoord( Shoreline_t *pShoreline, int iSegment,
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[0].x = flValue * flRatio;
 			pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecTexCoords[0].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[1] * 0.5f;
 			pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecTexCoords[0].y = pShoreline->m_ShoreData.m_vecWidthTexcoord[0];
-			
+
 			if ( pShoreline->m_aSegments[iSegment].m_WorldFace.m_bAdjWinding )
 			{
 				pShoreline->m_aSegments[iSegment].m_WorldFace.m_vecTexCoords[3].x = flValue * flRatio;
@@ -917,7 +917,7 @@ void CDispShoreManager::GenerateTexCoord( Shoreline_t *pShoreline, int iSegment,
 // Purpose:
 //-----------------------------------------------------------------------------
 void CDispShoreManager::BuildShorelineOverlays( Shoreline_t *pShoreline )
-{	
+{
 	// Reset the list.
 	if ( pShoreline->m_aOverlays.Count() != 0 )
 	{
@@ -931,7 +931,7 @@ void CDispShoreManager::BuildShorelineOverlays( Shoreline_t *pShoreline )
 	CMapDoc *pDoc = CMapDoc::GetActiveMapDoc();
 	if ( !pDoc )
 		return;
-	
+
 	for ( int iSegment = 0; iSegment < nSegmentCount; ++iSegment )
 	{
 		CMapDisp *pDisp = EditDispMgr()->GetDisp( pShoreline->m_aSegments[iSegment].m_hDisp );
@@ -1112,14 +1112,14 @@ void CDispShoreManager::DrawShorelines( int iShoreline )
 		for ( int iSegment = 0; iSegment < nSegmentCount; ++iSegment )
 		{
 			meshBuilder.Color3f( 1.0f, 0.0f, 0.0f );
-			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[0].x, 
-				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].y, 
+			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[0].x,
+				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].y,
 				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].z + 50.0f );
 			meshBuilder.AdvanceVertex();
-			
+
 			meshBuilder.Color3f( 1.0f, 0.0f, 0.0f );
-			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[1].x, 
-				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].y, 
+			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[1].x,
+				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].y,
 				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].z + 50.0f );
 			meshBuilder.AdvanceVertex();
 		}
@@ -1152,27 +1152,27 @@ void CDispShoreManager::DrawShorelineNormals( int iShoreline )
 		{
 			// Normal for vertex 0.
 			meshBuilder.Color3f( 1.0f, 1.0f, 0.0f );
-			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[0].x, 
-				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].y, 
+			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[0].x,
+				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].y,
 				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].z + 50.0f );
 			meshBuilder.AdvanceVertex();
-			
+
 			meshBuilder.Color3f( 1.0f, 1.0f, 0.0f );
-			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[0].x + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0].x * DISPSHORE_NORMAL_SCALE ), 
-				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].y + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0].y * DISPSHORE_NORMAL_SCALE ), 
+			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[0].x + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0].x * DISPSHORE_NORMAL_SCALE ),
+				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].y + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0].y * DISPSHORE_NORMAL_SCALE ),
 				                    pShoreline->m_aSegments[iSegment].m_vecPoints[0].z + 50.0f + ( pShoreline->m_aSegments[iSegment].m_vecNormals[0].z * DISPSHORE_NORMAL_SCALE ) );
 			meshBuilder.AdvanceVertex();
-			
+
 			// Normal for vertex 1.
 			meshBuilder.Color3f( 1.0f, 1.0f, 0.0f );
-			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[1].x, 
-				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].y, 
+			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[1].x,
+				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].y,
 				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].z + 50.0f );
 			meshBuilder.AdvanceVertex();
-			
+
 			meshBuilder.Color3f( 1.0f, 1.0f, 0.0f );
-			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[1].x + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1].x * DISPSHORE_NORMAL_SCALE ), 
-				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].y + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1].y * DISPSHORE_NORMAL_SCALE ), 
+			meshBuilder.Position3f( pShoreline->m_aSegments[iSegment].m_vecPoints[1].x + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1].x * DISPSHORE_NORMAL_SCALE ),
+				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].y + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1].y * DISPSHORE_NORMAL_SCALE ),
 				                    pShoreline->m_aSegments[iSegment].m_vecPoints[1].z + 50.0f + ( pShoreline->m_aSegments[iSegment].m_vecNormals[1].z * DISPSHORE_NORMAL_SCALE ) );
 			meshBuilder.AdvanceVertex();
 		}
@@ -1197,7 +1197,7 @@ void CDispShoreManager::DrawShorelineOverlayPoints( CRender3D *pRender, int iSho
 		int nSegmentCount = pShoreline->m_aSegments.Count();
 		if ( nSegmentCount == 0 )
 			return;
-		
+
 		Vector vecWorldMin, vecWorldMax;
 		for ( int iSegment = 0; iSegment < nSegmentCount; ++iSegment )
 		{
@@ -1210,10 +1210,10 @@ void CDispShoreManager::DrawShorelineOverlayPoints( CRender3D *pRender, int iSho
 					vecWorldMin[iAxis] -= DISPSHORE_BOX_SIZE;
 					vecWorldMax[iAxis] += DISPSHORE_BOX_SIZE;
 				}
-				
+
 				pRender->RenderBox( vecWorldMin, vecWorldMax, 255, 0, 0, SELECT_NONE );
 			}
-			
+
 			for ( int iWorldPoint = 0; iWorldPoint < 4; ++iWorldPoint )
 			{
 				vecWorldMin = pShoreline->m_aSegments[iSegment].m_WaterFace.m_vecPoints[iWorldPoint];
@@ -1223,7 +1223,7 @@ void CDispShoreManager::DrawShorelineOverlayPoints( CRender3D *pRender, int iSho
 					vecWorldMin[iAxis] -= DISPSHORE_BOX_SIZE;
 					vecWorldMax[iAxis] += DISPSHORE_BOX_SIZE;
 				}
-				
+
 				pRender->RenderBox( vecWorldMin, vecWorldMax, 0, 0, 255, SELECT_NONE );
 			}
 		}
@@ -1231,4 +1231,3 @@ void CDispShoreManager::DrawShorelineOverlayPoints( CRender3D *pRender, int iSho
 
 #undef DISPSHORE_BOX_SIZE
 }
-

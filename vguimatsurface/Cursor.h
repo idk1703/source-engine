@@ -68,8 +68,3 @@ vgui::HCursor Cursor_CreateCursorFromFile( char const *curOrAniFile, char const 
 void Cursor_ClearUserCursors();
 
 #endif // MATSURFACE_CURSOR_H
-
-
-
-
-

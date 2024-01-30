@@ -15,8 +15,8 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Does the linked list work of removing a child object from the hierarchy.
-// Input  : pParent - 
-//			pChild - 
+// Input  : pParent -
+//			pChild -
 //-----------------------------------------------------------------------------
 void UnlinkChild( CBaseEntity *pParent, CBaseEntity *pChild )
 {
@@ -37,9 +37,9 @@ void UnlinkChild( CBaseEntity *pParent, CBaseEntity *pChild )
 			pList->m_hMoveParent.Set( NULL );
 			pList->m_hMovePeer.Set( NULL );
 			pList->NetworkProp()->SetNetworkParent( CBaseHandle() );
-			pList->DispatchUpdateTransmitState();	
+			pList->DispatchUpdateTransmitState();
 			pList->OnEntityEvent( ENTITY_EVENT_PARENT_CHANGED, NULL );
-			
+
 			pParent->RecalcHasPlayerChildBit();
 			return;
 		}

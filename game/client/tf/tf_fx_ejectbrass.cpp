@@ -55,7 +55,7 @@ void TF_EjectBrassCallback( const CEffectData &data )
 
 	QAngle vecShellAngles;
 	VectorAngles( -vUp, vecShellAngles );
-	
+
 	Vector vecVelocity = random->RandomFloat( 130, 180 ) * vForward +
 						 random->RandomFloat( -30, 30 ) * vRight +
 						 random->RandomFloat( -30, 30 ) * vUp;
@@ -65,7 +65,7 @@ void TF_EjectBrassCallback( const CEffectData &data )
 	model_t *pModel = (model_t *)engine->LoadModel( pszBrassModel );
 	if ( !pModel )
 		return;
-	
+
 	int flags = FTENT_FADEOUT | FTENT_GRAVITY | FTENT_COLLIDEALL | FTENT_HITSOUND | FTENT_ROTATE;
 
 	if ( data.m_nHitBox == TF_WEAPON_MINIGUN )
@@ -76,7 +76,7 @@ void TF_EjectBrassCallback( const CEffectData &data )
 			random->RandomFloat( -30, 80 ) * vUp;
 	}
 
-	Assert( pModel );	
+	Assert( pModel );
 
 	C_LocalTempEntity *pTemp = tempents->SpawnTempModel( pModel, data.m_vOrigin, vecShellAngles, vecVelocity, flLifeTime, FTENT_NEVERDIE );
 	if ( pTemp == NULL )

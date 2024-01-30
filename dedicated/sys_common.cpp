@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
 #ifdef _WIN32
-#include <windows.h> 
+#include <windows.h>
 #elif POSIX
 #include <unistd.h>
 #else
@@ -29,7 +29,7 @@ static long		hDLLThirdParty	= 0L;
 //-----------------------------------------------------------------------------
 // Modules...
 //-----------------------------------------------------------------------------
-CSysModule *s_hMatSystemModule = NULL;	
+CSysModule *s_hMatSystemModule = NULL;
 CSysModule *s_hEngineModule = NULL;
 CSysModule *s_hSoundEmitterModule = NULL;
 
@@ -48,7 +48,7 @@ void Load3rdParty( void )
 {
 	// Only do this if the server operator wants the support.
 	// ( In case of malicious code, too )
-	if ( CommandLine()->CheckParm( "-usegh" ) )   
+	if ( CommandLine()->CheckParm( "-usegh" ) )
 	{
 		hDLLThirdParty = sys->LoadLibrary( "ghostinj.dll" );
 	}
@@ -153,8 +153,8 @@ static const char *get_consolelog_filename()
 		//  CTextConsoleUnix::Print() looks for -consoledebug.
 		const char *filename = NULL;
 		if ( !CommandLine()->FindParm( "-consoledebug" ) &&
-			  CommandLine()->CheckParm( "-consolelog", &filename ) &&
-			  filename )
+			CommandLine()->CheckParm( "-consolelog", &filename ) &&
+			filename )
 		{
 			V_strcpy_safe( s_consolelog, filename );
 		}
@@ -170,7 +170,7 @@ SpewRetval_t DedicatedSpewOutputFunc( SpewType_t spewType, char const *pMsg )
 		sys->Printf( "%s", pMsg );
 
 		// If they have specified -consolelog, log this message there. Otherwise these
-		//	wind up being lost because Sys_InitGame hasn't been called yet, and 
+		//	wind up being lost because Sys_InitGame hasn't been called yet, and
 		//  Sys_SpewFunc is the thing that logs stuff to -consolelog, etc.
 		const char *filename = get_consolelog_filename();
 		if ( filename[ 0 ] && pMsg[ 0 ] )
@@ -203,7 +203,7 @@ SpewRetval_t DedicatedSpewOutputFunc( SpewType_t spewType, char const *pMsg )
 #else
 #error "Implement me"
 #endif
-		
+
 		return SPEW_ABORT;
 	}
 	if (spewType == SPEW_ASSERT)
@@ -257,9 +257,9 @@ const char *UTIL_GetExecutableDir( )
 	// Return the bin directory as the executable dir if it's not in there
 	// because that's really where we're running from...
 	int exeLen = strlen(exedir);
-	if ( 	exedir[exeLen-4] != CORRECT_PATH_SEPARATOR || 
-		exedir[exeLen-3] != 'b' || 
-		exedir[exeLen-2] != 'i' || 
+	if ( 	exedir[exeLen-4] != CORRECT_PATH_SEPARATOR ||
+		exedir[exeLen-3] != 'b' ||
+		exedir[exeLen-2] != 'i' ||
 		exedir[exeLen-1] != 'n' )
 	{
 		Q_strncat( exedir, "\\bin", sizeof( exedir ), COPY_ALL_CHARACTERS );
@@ -287,13 +287,13 @@ const char *UTIL_GetBaseDir( void )
 	if ( pExeDir )
 	{
 		strcpy( basedir, pExeDir );
-                int dirlen = strlen( basedir );
-                if ( basedir[ dirlen - 3 ] == 'b' &&
-                     basedir[ dirlen - 2 ] == 'i' &&
-                     basedir[ dirlen - 1 ] == 'n' )
-                {
-                        basedir[ dirlen - 4 ] = 0;
-                }
+			int dirlen = strlen( basedir );
+			if ( basedir[ dirlen - 3 ] == 'b' &&
+				basedir[ dirlen - 2 ] == 'i' &&
+				basedir[ dirlen - 1 ] == 'n' )
+			{
+					basedir[ dirlen - 4 ] = 0;
+			}
 	}
 
 	return basedir;

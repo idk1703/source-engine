@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -33,7 +33,7 @@ class CHudScope : public vgui::Panel, public CHudElement
 
 public:
 			CHudScope( const char *pElementName );
-	
+
 	void	Init( void );
 	void	LevelInit( void );
 
@@ -42,7 +42,7 @@ protected:
 	virtual void Paint( void );
 
 private:
-	CMaterialReference m_ScopeMaterial;	
+	CMaterialReference m_ScopeMaterial;
 	CMaterialReference m_DustOverlayMaterial;
 
 	int m_iScopeArcTexture;
@@ -60,7 +60,7 @@ CHudScope::CHudScope( const char *pElementName ) : CHudElement(pElementName), Ba
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
-	
+
 	SetHiddenBits( HIDEHUD_PLAYERDEAD );
 }
 
@@ -105,12 +105,12 @@ void CHudScope::ApplySchemeSettings( vgui::IScheme *scheme )
 void CHudScope::Paint( void )
 {
 	C_CSPlayer *pPlayer = dynamic_cast<C_CSPlayer *>(C_BasePlayer::GetLocalPlayer());
-	
+
 	if ( pPlayer == NULL )
 		return;
 
 	CWeaponCSBase *pWeapon = pPlayer->GetActiveCSWeapon();
-		
+
 	if( !pWeapon )
 		return;
 
@@ -127,7 +127,7 @@ void CHudScope::Paint( void )
 		// calculate the bounds in which we should draw the scope
 		int inset = screenTall / 16;
 		int y1 = inset;
-		int x1 = (screenWide - screenTall) / 2 + inset; 
+		int x1 = (screenWide - screenTall) / 2 + inset;
 		int y2 = screenTall - inset;
 		int x2 = screenWide - x1;
 
@@ -136,8 +136,8 @@ void CHudScope::Paint( void )
 
 		float uv1 = 0.5f / 256.0f, uv2 = 1.0f - uv1;
 
-		vgui::Vertex_t vert[4];	
-		
+		vgui::Vertex_t vert[4];
+
 		Vector2D uv11( uv1, uv1 );
 		Vector2D uv12( uv1, uv2 );
 		Vector2D uv21( uv2, uv1 );
@@ -157,7 +157,7 @@ void CHudScope::Paint( void )
 		vert[2].Init( Vector2D( iMiddleX - xMod, iMiddleY - yMod ), uv12 );
 		vert[3].Init( Vector2D( iMiddleX + xMod, iMiddleY - yMod ), uv22 );
 		vgui::surface()->DrawTexturedPolygon( 4, vert );
-		
+
 		vgui::surface()->DrawSetColor(0,0,0,255);
 
 		//Draw the reticle with primitives
@@ -194,7 +194,7 @@ void CHudScope::Paint( void )
 		vert[2].Init( Vector2D( x, y ), uv11 );
 		vert[3].Init( Vector2D( x1, y ), uv21 );
 		vgui::surface()->DrawTexturedPolygon(4, vert);
-	
+
 		vgui::surface()->DrawFilledRect(0, 0, screenWide, y1);				// top
 		vgui::surface()->DrawFilledRect(0, y2, screenWide, screenTall);		// bottom
 		vgui::surface()->DrawFilledRect(0, y1, x1, screenTall);				// left

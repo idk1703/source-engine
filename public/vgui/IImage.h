@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -51,7 +51,7 @@ public:
 	// Sets the size of the image
 	virtual void SetSize(int wide, int tall) = 0;
 
-	// Set the draw color 
+	// Set the draw color
 	virtual void SetColor(Color col) = 0;
 
 	// virtual destructor

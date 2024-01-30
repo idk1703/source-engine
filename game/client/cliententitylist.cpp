@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -26,9 +26,9 @@ CBaseEntityList *g_pEntityList = &s_EntityList;
 // Expose list to engine
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CClientEntityList, IClientEntityList, VCLIENTENTITYLIST_INTERFACE_VERSION, s_EntityList );
 
-// Store local pointer to interface for rest of client .dll only 
+// Store local pointer to interface for rest of client .dll only
 //  (CClientEntityList instead of IClientEntityList )
-CClientEntityList *cl_entitylist = &s_EntityList; 
+CClientEntityList *cl_entitylist = &s_EntityList;
 
 
 bool PVSNotifierMap_LessFunc( IClientUnknown* const &a, IClientUnknown* const &b )
@@ -36,11 +36,11 @@ bool PVSNotifierMap_LessFunc( IClientUnknown* const &a, IClientUnknown* const &b
 	return a < b;
 }
 
-								 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CClientEntityList::CClientEntityList( void ) : 
+CClientEntityList::CClientEntityList( void ) :
 	m_PVSNotifierMap( 0, 0, PVSNotifierMap_LessFunc )
 {
 	m_iMaxUsedServerIndex = -1;
@@ -50,7 +50,7 @@ CClientEntityList::CClientEntityList( void ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CClientEntityList::~CClientEntityList( void )
 {
@@ -136,7 +136,7 @@ int CClientEntityList::HandleToEntIndex( ClientEntityHandle_t handle )
 	if ( handle == INVALID_EHANDLE_INDEX )
 		return -1;
 	C_BaseEntity *pEnt = GetBaseEntityFromHandle( handle );
-	return pEnt ? pEnt->entindex() : -1; 
+	return pEnt ? pEnt->entindex() : -1;
 }
 
 
@@ -168,12 +168,12 @@ void CClientEntityList::RecomputeHighestEntityUsed( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Add a raw C_BaseEntity to the entity list.
-// Input  : index - 
+// Input  : index -
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 
 C_BaseEntity* CClientEntityList::GetBaseEntity( int entnum )
@@ -270,10 +270,10 @@ void CClientEntityList::RemovePVSNotifier( IClientUnknown *pUnknown )
 			}
 
 			unsigned short indexIntoPVSNotifyInfos = m_PVSNotifierMap[index];
-			
+
 			Assert( m_PVSNotifyInfos[indexIntoPVSNotifyInfos].m_pNotify == pNotify );
 			Assert( m_PVSNotifyInfos[indexIntoPVSNotifyInfos].m_pRenderable == pRenderable );
-			
+
 			m_PVSNotifyInfos.Remove( indexIntoPVSNotifyInfos );
 			m_PVSNotifierMap.RemoveAt( index );
 			return;
@@ -401,7 +401,7 @@ CON_COMMAND( cl_removeentity_backtrace_dump, "Dump backtraces for client OnRemov
 
 	for ( int i = 0; i < ARRAYSIZE( g_RemoveEntityBacktraces ); i++ )
 	{
-		if ( g_RemoveEntityBacktraces[ i ].time && 
+		if ( g_RemoveEntityBacktraces[ i ].time &&
 			( entnum == -1 || g_RemoveEntityBacktraces[ i ].entnum == entnum ) )
 		{
 			Msg( "%d: time:%.2f pBaseEntity:%p\n", g_RemoveEntityBacktraces[i].entnum,
@@ -512,8 +512,8 @@ C_BaseEntity* CClientEntityList::NextBaseEntity( C_BaseEntity *pEnt ) const
 		}
 		pList = pList->m_pNext;
 	}
-	
-	return NULL; 
+
+	return NULL;
 }
 
 
@@ -532,7 +532,7 @@ void C_AllBaseEntityIterator::Restart()
 	m_CurBaseEntity = ClientEntityList().m_BaseEntities.Head();
 }
 
-	
+
 C_BaseEntity* C_AllBaseEntityIterator::Next()
 {
 	if ( m_CurBaseEntity == ClientEntityList().m_BaseEntities.InvalidIndex() )

@@ -40,7 +40,7 @@ HANDLE g_dwChangeHandle = NULL;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *GetBaseDirectory( void )
@@ -70,7 +70,7 @@ static LRESULT CALLBACK messageProc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 			//g_pMainFrame->PopulateConfigList();
 		}
 	}
- 
+
 	return ::DefWindowProc(hwnd,msg,wparam,lparam);
 }
 
@@ -90,9 +90,9 @@ void CreateMessageWindow( void )
 	// Create an empty window just for message handling
 	staticHwnd = CreateWindowEx(0, "minidumpRipper_Window", "Hidden Window", 0, 0, 0, 1, 1, NULL, NULL, GetModuleHandle(NULL), NULL);
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ShutdownMessageWindow( void )
 {
@@ -174,7 +174,7 @@ DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT( CMDRipperApp );
 //-----------------------------------------------------------------------------
 bool CMDRipperApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
@@ -211,7 +211,7 @@ bool CMDRipperApp::PreInit()
 	}
 
 	// the "base dir" so we can scan mod name
-	g_pFullFileSystem->AddSearchPath(GetBaseDirectory(), MDRIPPER_MAIN_PATH_ID);	
+	g_pFullFileSystem->AddSearchPath(GetBaseDirectory(), MDRIPPER_MAIN_PATH_ID);
 
 	// the main platform dir
 	g_pFullFileSystem->AddSearchPath("platform","PLATFORM", PATH_ADD_TO_HEAD);

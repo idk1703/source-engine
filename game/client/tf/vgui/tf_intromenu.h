@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -72,7 +72,7 @@ public:
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
-	
+
 	MESSAGE_FUNC( OnIntroFinished, "IntroFinished" );
 
 private:
@@ -80,8 +80,8 @@ private:
 	void Shutdown( void );
 	bool LoadCaptions( void );
 	void UpdateCaptions( void );
-	
-	
+
+
 
 	//=============================================================================
 	// HPE_BEGIN

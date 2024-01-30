@@ -16,7 +16,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: Slideshow panel that adds all screenshots associated 
+// Purpose: Slideshow panel that adds all screenshots associated
 // with a given replay.
 //-----------------------------------------------------------------------------
 class CReplayScreenshotSlideshowPanel : public CSlideshowPanel
@@ -57,7 +57,7 @@ public:
 	void UpdateTitleText();
 
 	void SetReplayItem( QueryableReplayItemHandle_t hReplayItem );
-	
+
 	CGenericClassBasedReplay	*GetReplay();
 	IQueryableReplayItem		*GetReplayItem();
 
@@ -184,7 +184,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CReplayThumbnailCollection : public CBaseThumbnailCollection
 {
@@ -209,7 +209,7 @@ public:
 #define OLDER_MOVIES_COLLECTION		-2
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CMovieThumbnailCollection : public CBaseThumbnailCollection
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -228,8 +228,8 @@ inline T *CRangeValidatedArray<T>::Base()
 // A dumpable version of RangeValidatedArray
 //-----------------------------------------------------------------------------
 #include "tier0/memdbgon.h"
-template <class T> 
-class CDiscardableArray 
+template <class T>
+class CDiscardableArray
 {
 public:
 	CDiscardableArray()
@@ -330,7 +330,7 @@ public:
 	CRangeValidatedArray<cbrush_t>		map_brushes;
 	int									numdisplist;
 	CRangeValidatedArray<unsigned short> map_dispList;
-	
+
 	// this points to the whole block of memory for vis data, but it is used to
 	// reference the header at the top of the block.
 	int									numvisibility;
@@ -471,7 +471,7 @@ void DispCollTrees_FreeLeafList( CCollisionBSPData *pBSPData );
 void CM_DispTreeLeafnum( CCollisionBSPData *pBSPData );
 
 // collision
-void CM_TestInDispTree( TraceInfo_t *pTraceInfo, cleaf_t *pLeaf, Vector const &traceStart, 
+void CM_TestInDispTree( TraceInfo_t *pTraceInfo, cleaf_t *pLeaf, Vector const &traceStart,
 				Vector const &boxMin, Vector const &boxMax, int collisionMask, trace_t *pTrace );
 template <bool IS_POINT>
 void FASTCALL CM_TraceToDispTree( TraceInfo_t *pTraceInfo, CDispCollTree *pDispTree, float startFrac, float endFrac );

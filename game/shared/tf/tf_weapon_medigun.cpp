@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:			The Medic's Medikit weapon
-//					
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -63,7 +63,7 @@ struct MedigunResistConditions_t
 	ETFCond uberCond;
 };
 
-MedigunResistConditions_t g_MedigunResistConditions[MEDIGUN_NUM_RESISTS] = 
+MedigunResistConditions_t g_MedigunResistConditions[MEDIGUN_NUM_RESISTS] =
 {
 	{ MEDIGUN_BULLET_RESIST,	TF_COND_MEDIGUN_SMALL_BULLET_RESIST,	TF_COND_MEDIGUN_UBER_BULLET_RESIST },
 	{ MEDIGUN_BLAST_RESIST,		TF_COND_MEDIGUN_SMALL_BLAST_RESIST,		TF_COND_MEDIGUN_UBER_BLAST_RESIST },
@@ -92,7 +92,7 @@ extern ConVar tf_invuln_time;
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RecvProxy_HealingTarget( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -210,7 +210,7 @@ const char *g_pszMedigunHealSounds[MEDIGUN_NUM_CHARGE_TYPES] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponMedigun::CWeaponMedigun( void )
 {
@@ -239,7 +239,7 @@ CWeaponMedigun::~CWeaponMedigun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::WeaponReset( void )
 {
@@ -316,7 +316,7 @@ void CWeaponMedigun::WeaponReset( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::Precache()
 {
@@ -359,7 +359,7 @@ void CWeaponMedigun::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::Deploy( void )
 {
@@ -402,7 +402,7 @@ bool CWeaponMedigun::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -426,7 +426,7 @@ bool CWeaponMedigun::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::UpdateOnRemove( void )
 {
@@ -455,7 +455,7 @@ void CWeaponMedigun::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponMedigun::GetTargetRange( void )
 {
@@ -463,7 +463,7 @@ float CWeaponMedigun::GetTargetRange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponMedigun::GetStickRange( void )
 {
@@ -471,7 +471,7 @@ float CWeaponMedigun::GetStickRange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponMedigun::GetHealRate( void )
 {
@@ -506,7 +506,7 @@ float CWeaponMedigun::GetHealRate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::HealingTarget( CBaseEntity *pTarget )
 {
@@ -517,7 +517,7 @@ bool CWeaponMedigun::HealingTarget( CBaseEntity *pTarget )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 {
@@ -550,8 +550,8 @@ bool CWeaponMedigun::AllowedToHealTarget( CBaseEntity *pTarget )
 		bool bDisguised = pTFPlayer->m_Shared.InCond( TF_COND_DISGUISED );
 
 		// We can heal teammates and enemies that are disguised as teammates
-		if ( !bStealthed && 
-			( pTFPlayer->InSameTeam( pOwner ) || 
+		if ( !bStealthed &&
+			( pTFPlayer->InSameTeam( pOwner ) ||
 			( bDisguised && pTFPlayer->m_Shared.GetDisguiseTeam() == pOwner->GetTeamNumber() ) ) )
 		{
 			return true;
@@ -598,7 +598,7 @@ public:
 		// Ignore collisions with the shooter
 		if ( pEnt == m_pShooter )
 			return false;
-		
+
 		if ( pEnt->GetTeam() == m_pShooter->GetTeam() )
 			return false;
 
@@ -609,7 +609,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::MaintainTargetInSlot()
 {
@@ -672,7 +672,7 @@ void CWeaponMedigun::MaintainTargetInSlot()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::FindNewTargetForSlot()
 {
@@ -715,18 +715,18 @@ void CWeaponMedigun::FindNewTargetForSlot()
 
 			m_hHealingTarget.Set( tr.m_pEnt );
 			m_flNextTargetCheckTime = gpGlobals->curtime + 1.0f;
-		}			
+		}
 	}
 }
 
 bool CWeaponMedigun::IsReleasingCharge( void ) const
-{ 
+{
 	return (m_bChargeRelease && !m_bHolstered);
 }
 
 
-int CWeaponMedigun::GetMedigunType( void ) const 
-{ 
+int CWeaponMedigun::GetMedigunType( void ) const
+{
 	int iMode = 0;
 	CALL_ATTRIB_HOOK_INT( iMode, set_weapon_mode );
 	return iMode;
@@ -746,7 +746,7 @@ float CWeaponMedigun::GetMinChargeAmount( void ) const
 }
 
 medigun_charge_types CWeaponMedigun::GetChargeType( void ) const
-{ 
+{
 	int iTmp = MEDIGUN_CHARGE_INVULN;
 	CALL_ATTRIB_HOOK_INT( iTmp, set_charge_type );
 
@@ -797,7 +797,7 @@ void CWeaponMedigun::CycleResistType()
 			pOwner->m_Shared.RemoveCond( cond );
 		}
 	}
-	
+
 #endif
 
 	m_nChargeResistType += 1;
@@ -874,7 +874,7 @@ bool CWeaponMedigun::IsAttachedToBuilding( void )
 // Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::HealTargetThink( void )
-{	
+{
 	// Verify that we still have a valid heal target.
 	CBaseEntity *pTarget = m_hHealingTarget;
 	if ( !pTarget || !pTarget->IsAlive() )
@@ -1022,13 +1022,13 @@ void CWeaponMedigun::StartHealingTarget( CBaseEntity *pTarget )
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::StopHealingOwner( void )
 {
-	if ( !m_bHealingSelf ) 
+	if ( !m_bHealingSelf )
 		return;
 
 	CTFPlayer *pOwner = ToTFPlayer( GetOwnerEntity() );
 	if ( !pOwner )
 		return;
-		
+
 	pOwner->m_Shared.StopHealing( pOwner );
 	m_bHealingSelf = false;
 }
@@ -1117,7 +1117,7 @@ void CWeaponMedigun::CreateMedigunShield( void )
 	if ( m_hMedigunShield )
 	{
 		pOwner->m_Shared.StartRageDrain();
-		
+
 #ifdef STAGING_ONLY
 		m_hMedigunShield->SetPermanentShield( bHasPermanentShield );
 #endif // STAGING_ONLY
@@ -1183,7 +1183,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 		MaintainTargetInSlot();
 	}
 	else
-	{	
+	{
 		FindNewTargetForSlot();
 	}
 
@@ -1204,7 +1204,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 			RecalcEffectOnTarget( pTFPlayer );
 		}
 #endif
-	
+
 		bFound = true;
 
 		// Charge up our power if we're not releasing it, and our target
@@ -1255,7 +1255,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 				// Apply any bonus our target gives us.
 				if ( pTarget )
 				{
-					bool bInRespawnRoom = 
+					bool bInRespawnRoom =
 						PointInRespawnRoom( pTarget, WorldSpaceCenter() ) ||
 						PointInRespawnRoom( pOwner, WorldSpaceCenter() );
 
@@ -1288,7 +1288,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 					pTFPlayer->SpeakConceptIfAllowed( MP_CONCEPT_HEALTARGET_CHARGEREADY );
 #else
 					// send a message that we've got charge
-					// if you change this from being a client-side only event, you have to 
+					// if you change this from being a client-side only event, you have to
 					// fix ACHIEVEMENT_TF_MEDIC_KILL_WHILE_CHARGED to check the medic userid.
 					IGameEvent *event = gameeventmanager->CreateEvent( "localplayer_chargeready" );
 					if ( event )
@@ -1343,7 +1343,7 @@ bool CWeaponMedigun::FindAndHealTargets( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::ItemHolsterFrame( void )
 {
@@ -1353,7 +1353,7 @@ void CWeaponMedigun::ItemHolsterFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::DrainCharge( void )
 {
@@ -1373,7 +1373,7 @@ void CWeaponMedigun::DrainCharge( void )
 		// Drain faster the more targets we're applying to. Extra targets count for 50% drain to still reward juggling somewhat.
 		for ( int i = m_DetachedTargets.Count()-1; i >= 0; i-- )
 		{
-			if ( m_DetachedTargets[i].hTarget == NULL || m_DetachedTargets[i].hTarget.Get() == m_hHealingTarget.Get() || 
+			if ( m_DetachedTargets[i].hTarget == NULL || m_DetachedTargets[i].hTarget.Get() == m_hHealingTarget.Get() ||
 				!m_DetachedTargets[i].hTarget->IsAlive() || m_DetachedTargets[i].flTime < (gpGlobals->curtime - tf_invuln_time.GetFloat()) )
 			{
 				m_DetachedTargets.Remove(i);
@@ -1557,7 +1557,7 @@ void CWeaponMedigun::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponMedigun::Lower( void )
 {
@@ -1576,7 +1576,7 @@ bool CWeaponMedigun::Lower( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::RemoveHealingTarget( bool bStopHealingSelf )
 {
@@ -1725,7 +1725,7 @@ void CWeaponMedigun::PrimaryAttack( void )
 	{
 		RemoveHealingTarget();
 	}
-	
+
 #if !defined (CLIENT_DLL)
 	if ( tf_medigun_lagcomp.GetBool() )
 		lagcompensation->FinishLagCompensation( pOwner );
@@ -1755,7 +1755,7 @@ void CWeaponMedigun::SecondaryAttack( void )
 	if ( GetMedigunType() == MEDIGUN_RESIST )
 	{
 		ETFCond uberCond = g_MedigunResistConditions[GetResistType()].uberCond;
-		if ( pOwner->m_Shared.InCond( uberCond ) ) 
+		if ( pOwner->m_Shared.InCond( uberCond ) )
 		{
 			if ( !pTFPlayerPatient || pTFPlayerPatient->m_Shared.InCond( uberCond ) )
 			{
@@ -1787,7 +1787,7 @@ void CWeaponMedigun::SecondaryAttack( void )
 
 	if ( !pOwner->m_Shared.CanRecieveMedigunChargeEffect( GetChargeType() ) )
 	{
-		if ( pOwner->m_afButtonPressed & IN_ATTACK2 
+		if ( pOwner->m_afButtonPressed & IN_ATTACK2
 #ifdef CLIENT_DLL
 			&& prediction->IsFirstTimePredicted()
 #endif
@@ -1820,7 +1820,7 @@ void CWeaponMedigun::SecondaryAttack( void )
 
 		CPVSFilter filter( pOwner->WorldSpaceCenter() );
 		pOwner->EmitSound( filter, pOwner->entindex(), CFmtStr( "WeaponMedigun_Vaccinator.Charged_tier_0%d", nCurrentChunk ) );
-		pOwner->EmitSound( filter, pOwner->entindex(), g_MedigunEffects[MEDIGUN_CHARGE_BULLET_RESIST].pszChargeOnSound );	
+		pOwner->EmitSound( filter, pOwner->entindex(), g_MedigunEffects[MEDIGUN_CHARGE_BULLET_RESIST].pszChargeOnSound );
 	}
 	else
 	{
@@ -1829,7 +1829,7 @@ void CWeaponMedigun::SecondaryAttack( void )
 		// Award strange assist score
 		EconEntity_OnOwnerKillEaterEvent( this, pOwner, ToTFPlayer( m_hHealingTarget ), kKillEaterEvent_UberActivated );
 	}
-	
+
 	// STAGING_MEDIC
 	if ( GetMedigunType() != MEDIGUN_RESIST )
 	{
@@ -1930,7 +1930,7 @@ void CWeaponMedigun::SecondaryAttack( void )
 				{
 					pReviveMarker->SetReviver( pOwner );
 					// fill almost to max, give a small time period so patient has time to see notifications from regular revive code
-					pReviveMarker->AddMarkerHealth( pReviveMarker->GetMaxHealth() * 0.9f ); 
+					pReviveMarker->AddMarkerHealth( pReviveMarker->GetMaxHealth() * 0.9f );
 				}
 			}
 		}
@@ -1941,7 +1941,7 @@ void CWeaponMedigun::SecondaryAttack( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Idle tests to see if we're facing a valid target for the medikit
-//			If so, move into the "heal-able" animation. 
+//			If so, move into the "heal-able" animation.
 //			Otherwise, move into the "not-heal-able" animation.
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::WeaponIdle( void )
@@ -1961,7 +1961,7 @@ void CWeaponMedigun::WeaponIdle( void )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::StopHealSound( bool bStopHealingSound, bool bStopNoTargetSound )
 {
@@ -2009,7 +2009,7 @@ void CWeaponMedigun::StopChargeEffect( bool bImmediately )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::ManageChargeEffect( void )
 {
@@ -2084,8 +2084,8 @@ void CWeaponMedigun::ManageChargeEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -2104,7 +2104,7 @@ void CWeaponMedigun::OnDataChanged( DataUpdateType_t updateType )
 		if( GetOwner() == pLocalPlayer && pLocalPlayer )
 		{
 			// Sound effect
-			pLocalPlayer->EmitSound( "WeaponMedigun_Vaccinator.Toggle" );	
+			pLocalPlayer->EmitSound( "WeaponMedigun_Vaccinator.Toggle" );
 		}
 	}
 
@@ -2171,7 +2171,7 @@ void CWeaponMedigun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::ClientThink()
 {
@@ -2192,7 +2192,7 @@ void CWeaponMedigun::ClientThink()
 		return;
 	}
 
-	// If the local player is the guy getting healed, let him know 
+	// If the local player is the guy getting healed, let him know
 	// who's healing him, and their charge level.
 	if( m_hHealingTarget != NULL )
 	{
@@ -2237,7 +2237,7 @@ void CWeaponMedigun::ClientThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::UpdateEffects( void )
 {
@@ -2253,7 +2253,7 @@ void CWeaponMedigun::UpdateEffects( void )
 	}
 
 	// If we're still healing and our owner changed, then we did something
-	// like changed 
+	// like changed
 	bool bImmediate = pEffectOwner != m_hHealingTargetEffect.pOwner && m_bHealing;
 
 	// Remove all the effects
@@ -2451,7 +2451,7 @@ void CWeaponMedigun::UpdateMedicAutoCallers( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponMedigun::CheckAchievementsOnHealTarget( void )
 {
@@ -2679,7 +2679,7 @@ void CTFMedigunShield::UpdateShieldPosition( void )
 
 #ifdef GAME_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFMedigunShield *CTFMedigunShield::Create( CTFPlayer *pOwner )
 {
@@ -2711,7 +2711,7 @@ CTFMedigunShield *CTFMedigunShield::Create( CTFPlayer *pOwner )
 }
 
 //------------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //------------------------------------------------------------------------------
 // bool CTFMedigunShield::TestCollision( const Ray_t &ray, unsigned int mask, trace_t& trace )
 // {
@@ -2721,22 +2721,22 @@ CTFMedigunShield *CTFMedigunShield::Create( CTFPlayer *pOwner )
 // 		if ( ( mask & CONTENTS_REDTEAM ) )
 // 			return false;
 // 		break;
-// 
+//
 // 	case TF_TEAM_BLUE:
 // 		if ( ( mask & CONTENTS_BLUETEAM ) )
 // 			return false;
 // 		break;
 // 	}
-// 
+//
 // 	vcollide_t *pCollide = modelinfo->GetVCollide( GetModelIndex() );
-// 
+//
 // 	UTIL_ClearTrace( trace );
-// 
+//
 // 	physcollision->TraceBox( ray, pCollide->solids[0], GetAbsOrigin(), GetAbsAngles(), &trace );
-// 
+//
 // 	if ( trace.fraction >= 1 )
 // 		return false;
-// 
+//
 // 	// return owner as trace hit
 // 	trace.m_pEnt = this;
 // 	return true;
@@ -2747,8 +2747,8 @@ CTFMedigunShield *CTFMedigunShield::Create( CTFPlayer *pOwner )
 //-----------------------------------------------------------------------------
 bool CTFMedigunShield::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
-	if ( collisionGroup == COLLISION_GROUP_PROJECTILE || 
-		 collisionGroup == TFCOLLISION_GROUP_ROCKETS || 
+	if ( collisionGroup == COLLISION_GROUP_PROJECTILE ||
+		 collisionGroup == TFCOLLISION_GROUP_ROCKETS ||
 		 collisionGroup == TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS )
 	{
 		switch( GetTeamNumber() )
@@ -2787,7 +2787,7 @@ void CTFMedigunShield::StartTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFMedigunShield::ShieldTouch( CBaseEntity *pOther )
 {
@@ -2817,7 +2817,7 @@ void CTFMedigunShield::ShieldTouch( CBaseEntity *pOther )
 		float flDamage = ( nShieldLevel > 1 ) ? 2.f : 1.f;
 		CTakeDamageInfo info;
 		info.SetAttacker( pTFOwner );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( pTFOwner->GetActiveTFWeapon() );
 		info.SetDamage( flDamage );
 		info.SetDamageType( DMG_ENERGYBEAM );
@@ -2878,7 +2878,7 @@ void CTFMedigunShield::ShieldThink( void )
 	}
 
 	UpdateShieldPosition();
-	
+
 	// Regen shield
 	if ( m_flShieldEnergyLevel < PROJECTILE_SHIELD_ENERGY_MAX )
 	{
@@ -2997,5 +2997,3 @@ int	CTFMedigunShield::OnTakeDamage( const CTakeDamageInfo &info )
 	return 0;
 }
 #endif // GAME_DLL
-
-

@@ -80,7 +80,7 @@ BEGIN_DATADESC( CWeaponAnnabelle )
 	DEFINE_FIELD( m_bDelayedFire2, FIELD_BOOLEAN ),
 END_DATADESC()
 
-acttable_t	CWeaponAnnabelle::m_acttable[] = 
+acttable_t	CWeaponAnnabelle::m_acttable[] =
 {
 	{ ACT_IDLE_ANGRY,				ACT_IDLE_ANGRY_SMG1,				true },
 	{ ACT_RANGE_ATTACK1,			ACT_RANGE_ATTACK_SHOTGUN,			true },
@@ -143,7 +143,7 @@ void CWeaponAnnabelle::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseComba
 bool CWeaponAnnabelle::StartReload( void )
 {
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return false;
 
@@ -190,7 +190,7 @@ bool CWeaponAnnabelle::Reload( void )
 	}
 
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return false;
 
@@ -227,7 +227,7 @@ void CWeaponAnnabelle::FinishReload( void )
 	SetBodygroup(1,1);
 
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -248,7 +248,7 @@ void CWeaponAnnabelle::FinishReload( void )
 void CWeaponAnnabelle::FillClip( void )
 {
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
 		return;
 
@@ -274,9 +274,9 @@ void CWeaponAnnabelle::Pump( void )
 
 	if ( pOwner == NULL )
 		return;
-	
+
 	m_bNeedPump = false;
-	
+
 	WeaponSound( SPECIAL1 );
 
 	// Finish reload animation
@@ -287,7 +287,7 @@ void CWeaponAnnabelle::Pump( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //
 //
 //-----------------------------------------------------------------------------
@@ -295,12 +295,12 @@ void CWeaponAnnabelle::DryFire( void )
 {
 	WeaponSound(EMPTY);
 	SendWeaponAnim( ACT_VM_DRYFIRE );
-	
+
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponAnnabelle::ItemHolsterFrame( void )
 {
@@ -317,7 +317,7 @@ void CWeaponAnnabelle::ItemHolsterFrame( void )
 	{
 		// Reset the timer
 		m_flHolsterTime = gpGlobals->curtime;
-	
+
 		if ( GetOwner() == NULL )
 			return;
 
@@ -326,7 +326,7 @@ void CWeaponAnnabelle::ItemHolsterFrame( void )
 
 		// Just load the clip with no animations
 		int ammoFill = MIN( (GetMaxClip1() - m_iClip1), GetOwner()->GetAmmoCount( GetPrimaryAmmoType() ) );
-		
+
 		GetOwner()->RemoveAmmo( ammoFill, GetPrimaryAmmoType() );
 		m_iClip1 += ammoFill;
 	}

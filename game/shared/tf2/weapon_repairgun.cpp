@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:			The Medic's Medikit weapon
-//					
+//
 //
 // $Workfile:     $
 // $Date:         $
@@ -77,7 +77,7 @@ END_PREDICTION_DATA()
 #define NUM_REPAIRGUN_PATH_POINTS		8
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponRepairGun::CWeaponRepairGun( void )
 {
@@ -107,7 +107,7 @@ void CWeaponRepairGun::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponRepairGun::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -118,7 +118,7 @@ bool CWeaponRepairGun::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponRepairGun::GetTargetRange( void )
 {
@@ -126,7 +126,7 @@ float CWeaponRepairGun::GetTargetRange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponRepairGun::GetStickRange( void )
 {
@@ -134,7 +134,7 @@ float CWeaponRepairGun::GetStickRange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponRepairGun::GetHealRate( void )
 {
@@ -158,20 +158,20 @@ public:
 		// Ignore collisions with the shooter
 		if ( pEnt == m_pShooter )
 			return false;
-		
+
 		// You can't heal a vehicle you are sitting in.
 
 		if( ((CBaseTFPlayer*)m_pShooter)->IsInAVehicle() )
 		{
 
-			CBaseEntity* pVehicle = ((CBaseTFPlayer*)m_pShooter)->GetVehicle()->GetVehicleEnt();		
+			CBaseEntity* pVehicle = ((CBaseTFPlayer*)m_pShooter)->GetVehicle()->GetVehicleEnt();
 			if( pVehicle == pEnt )
 			{
 				return false;
 			}
 		}
 
-#ifdef REPAIR_GUN_DISABLES_GRENADES 
+#ifdef REPAIR_GUN_DISABLES_GRENADES
 
 			// Repairgun can also disable enemy grenades
 			CBaseEMPableGrenade *pGrenade = dynamic_cast<CBaseEMPableGrenade*>(pEnt);
@@ -194,7 +194,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: Vehicle checking to see if we should switch targets from a player 
+// Purpose: Vehicle checking to see if we should switch targets from a player
 //			to a vehicle, or vice versa.
 //-----------------------------------------------------------------------------
 CBaseEntity *CWeaponRepairGun::CheckVehicleTargets( CBaseEntity *pCurHealing )
@@ -267,7 +267,7 @@ CBaseEntity *CWeaponRepairGun::GetTargetToHeal( CBaseEntity *pCurHealing )
 		return NULL;
 
 	Vector vecSrc = pOwner->Weapon_ShootPosition( );
-	
+
 
 	// If we're already healing someone, stick onto them as long as possible.
 	// Even if we can't heal them at the moment, lock onto them until they release the buttom.
@@ -278,7 +278,7 @@ CBaseEntity *CWeaponRepairGun::GetTargetToHeal( CBaseEntity *pCurHealing )
 	if( ((CBaseTFPlayer*)pOwner)->IsInAVehicle() )
 	{
 
-		pVehicle = ((CBaseTFPlayer*)pOwner)->GetVehicle()->GetVehicleEnt();		
+		pVehicle = ((CBaseTFPlayer*)pOwner)->GetVehicle()->GetVehicleEnt();
 		if( pVehicle == pTarget )
 		{
 			pTarget = NULL;
@@ -304,7 +304,7 @@ CBaseEntity *CWeaponRepairGun::GetTargetToHeal( CBaseEntity *pCurHealing )
 			trace_t tr;
 			CRepairFilter drainFilter( pOwner );
 			UTIL_TraceLine( vecSrc, vecTargetPoint, MASK_SHOT, &drainFilter, &tr );
-			
+
 			if (( tr.fraction == 1.0f) || (tr.m_pEnt == pTarget))
 				return CheckVehicleTargets( pTarget );
 		}
@@ -313,7 +313,7 @@ CBaseEntity *CWeaponRepairGun::GetTargetToHeal( CBaseEntity *pCurHealing )
 		return NULL;
 	}
 	else
-	{	
+	{
 		// Ok, try to find a new player to heal.
 		// Get the target point and location
 		Vector vecAiming;
@@ -331,14 +331,14 @@ CBaseEntity *CWeaponRepairGun::GetTargetToHeal( CBaseEntity *pCurHealing )
 		//NDebugOverlay::Box( vecEnd, Vector(-2,-2,-2), Vector(2,2,2), 0,255,0, 8, 10 );
 		//NDebugOverlay::Box( tr.endpos, Vector(-2,-2,-2), Vector(2,2,2), 0,0,255, 8, 10 );
 #endif
-		
+
 		if ( tr.fraction != 1.0 )
 		{
 			CBaseEntity *pEntity = tr.m_pEnt;
 			if ( pEntity )
 			{
 				// Repairgun can also disable enemy grenades
-#ifdef REPAIR_GUN_DISABLES_GRENADES 
+#ifdef REPAIR_GUN_DISABLES_GRENADES
 
 				CBaseEMPableGrenade *pGrenade = dynamic_cast<CBaseEMPableGrenade*>(pEntity);
 				if ( pGrenade && !pGrenade->InSameTeam( pOwner ) )
@@ -410,7 +410,7 @@ void CWeaponRepairGun::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponRepairGun::RemoveHealingTarget()
 {
@@ -434,7 +434,7 @@ void CWeaponRepairGun::RemoveHealingTarget()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponRepairGun::ComputeEMPFireState( void )
@@ -482,7 +482,7 @@ void CWeaponRepairGun::PrimaryAttack( void )
 		m_hHealingTarget = pTarget;
 
 		// Repairgun needs to EMP grenades, heal everything else
-#ifdef REPAIR_GUN_DISABLES_GRENADES 
+#ifdef REPAIR_GUN_DISABLES_GRENADES
 
 		CBaseEMPableGrenade *pGrenade = dynamic_cast<CBaseEMPableGrenade*>(pTarget);
 		if ( pGrenade )
@@ -537,7 +537,7 @@ void CWeaponRepairGun::PlayAttackAnimation( int activity )
 
 //-----------------------------------------------------------------------------
 // Purpose: Idle tests to see if we're facing a valid target for the medikit
-//			If so, move into the "heal-able" animation. 
+//			If so, move into the "heal-able" animation.
 //			Otherwise, move into the "not-heal-able" animation.
 //-----------------------------------------------------------------------------
 void CWeaponRepairGun::WeaponIdle( void )
@@ -568,7 +568,7 @@ void CWeaponRepairGun::GainedNewTechnology( CBaseTechnology *pTechnology )
 
 #if defined( CLIENT_DLL )
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponRepairGun::StopRepairSound( bool bStopHealingSound, bool bStopNoTargetSound )
 {
@@ -597,8 +597,8 @@ void C_WeaponRepairGun::NotifyShouldTransmit( ShouldTransmitState_t state )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_WeaponRepairGun::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -607,7 +607,7 @@ void C_WeaponRepairGun::OnDataChanged( DataUpdateType_t updateType )
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
 		m_pEmitter = CSimpleEmitter::Create( "C_WeaponRepairGun" );
-		
+
 		m_hParticleMaterial = m_pEmitter->GetPMaterial( "sprites/chargeball" );
 	}
 
@@ -640,7 +640,7 @@ void C_WeaponRepairGun::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_WeaponRepairGun::ClientThink()
 {
@@ -682,7 +682,7 @@ void C_WeaponRepairGun::ClientThink()
 	AngleVectors( vAngles, &vForward );
 
 	Vector vecTargetOrg = m_hHealingTarget->WorldSpaceCenter();
-	
+
 	Vector vDirTo = vecTargetOrg - vOrigin;
 	float flDistanceTo = vDirTo.Length();
 	vDirTo /= flDistanceTo;
@@ -692,7 +692,7 @@ void C_WeaponRepairGun::ClientThink()
 	const Vector &B = vOrigin;
 	const Vector &C = vecTargetOrg;
 	const Vector  D = vecTargetOrg - vForward * flBendDist;
-	
+
 	for ( int i=0; i < NUM_REPAIRGUN_PATH_POINTS; i++ )
 	{
 		Catmull_Rom_Spline( A, B, C, D, (float)i / (NUM_REPAIRGUN_PATH_POINTS-1), points[i] );
@@ -713,7 +713,7 @@ void C_WeaponRepairGun::ClientThink()
 		Vector vPos;
 		VectorLerp( points[iPrev], points[iPrev+1], (t-tPrev) / (tNext - tPrev), vPos );
 		vPos += RandomVector( -3, 3 );
-		
+
 		SimpleParticle *pParticle = m_pEmitter->AddSimpleParticle( m_hParticleMaterial, vPos );
 		if ( pParticle )
 		{
@@ -726,7 +726,7 @@ void C_WeaponRepairGun::ClientThink()
 			pParticle->m_flRollDelta = 0;
 			pParticle->m_flDieTime = 0.2f;
 			pParticle->m_flLifetime = 0;
-			pParticle->m_uchColor[1] = 200; 
+			pParticle->m_uchColor[1] = 200;
 			pParticle->m_uchColor[0] = pParticle->m_uchColor[2] = RandomInt( 0, 128 );
 			pParticle->m_uchStartAlpha = 255;
 			pParticle->m_uchEndAlpha = 0;

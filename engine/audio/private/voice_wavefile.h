@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,11 +23,11 @@ bool ReadWaveFile(
 
 // Write out a wave file.
 bool WriteWaveFile(
-	const char *pFilename, 
-	const char *pData, 
-	int nBytes, 
-	int wBitsPerSample, 
-	int nChannels, 
+	const char *pFilename,
+	const char *pData,
+	int nBytes,
+	int wBitsPerSample,
+	int nChannels,
 	int nSamplesPerSec);
 
 

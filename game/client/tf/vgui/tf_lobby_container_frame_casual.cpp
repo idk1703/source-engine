@@ -73,7 +73,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-CLobbyContainerFrame_Casual::CLobbyContainerFrame_Casual() 
+CLobbyContainerFrame_Casual::CLobbyContainerFrame_Casual()
 	: CBaseLobbyContainerFrame( "LobbyContainerFrame" )
 {
 	// Our internal lobby panel
@@ -150,7 +150,7 @@ void CLobbyContainerFrame_Casual::OnCommand( const char *command )
 		}
 		return;
 	}
-	else if ( FStrEq( command, "show_maps_details_explanation" ) ) 
+	else if ( FStrEq( command, "show_maps_details_explanation" ) )
 	{
 		CExplanationPopup *pPopup = FindControl<CExplanationPopup>( "MapSelectionDetailsExplanation" );
 		if ( pPopup )
@@ -193,7 +193,7 @@ void CLobbyContainerFrame_Casual::WriteControls()
 
 	const char *pszBackButtonText = "#TF_Matchmaking_Back";
 	const char *pszNextButtonText = NULL;
-	
+
 	if ( GCClientSystem()->BConnectedtoGC() )
 	{
 		if ( BIsPartyLeader()  )
@@ -265,4 +265,3 @@ void CLobbyContainerFrame_Casual::HandleBackPressed()
 
 	BaseClass::HandleBackPressed();
 }
-

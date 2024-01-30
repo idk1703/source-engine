@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -129,7 +129,7 @@ struct TestLayer_t
 		TYPE_CONSTANT,
 	};
 
-	TestLayer_t() : 
+	TestLayer_t() :
 		startTime( 0 ),
 		endTime( 0 ),
 		timeStep( 0 ),
@@ -170,7 +170,7 @@ struct TestLayer_t
 
 struct TestParams_t
 {
-	TestParams_t() : 
+	TestParams_t() :
 		testundo( false ),
 		usecurves( false ),
 		purgevalues( true ),
@@ -428,7 +428,7 @@ static void RunLayerTest( char const *testname, CUtlVector< CDmeChannel * >& cha
 	}
 }
 
-static void RunTimeSelectionTest( char const *testname, CUtlVector< CDmeChannel * >& channels, 
+static void RunTimeSelectionTest( char const *testname, CUtlVector< CDmeChannel * >& channels,
 	 const TestParams_t& params, DmeTime_t tHeadPosition, DmeLog_TimeSelection_t& ts, float value )
 {
 	if ( params.layers.Count() == 0 )
@@ -662,7 +662,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 
 	// Three layers using lerp
 	//   -------------
-	//	     ----- 
+	//	     -----
 	//        --
 	{
 		params.testundo = false;
@@ -677,7 +677,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 
 	// Three layers using lerp
 	//   -------------
-	//	     ----- 
+	//	     -----
 	//           --
 	{
 		params.testundo = false;
@@ -692,7 +692,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 
 	// Three layers using lerp
 	//   -------------
-	//	     ----- 
+	//	     -----
 	//      --
 	{
 		params.testundo = false;
@@ -707,7 +707,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 
 	// Four layers using lerp
 	//   ---------------
-	//	  -----   
+	//	  -----
 	//             ----
 	//       -------
 	{
@@ -757,7 +757,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 		tHeadPosition = DmeTime_t( 2000 );
 		ts.m_nTimes[ TS_LEFT_FALLOFF ] = DmeTime_t( 1487 );
 		ts.m_nTimes[ TS_LEFT_HOLD ] = ts.m_nTimes[ TS_RIGHT_HOLD ] = tHeadPosition;
-		ts.m_nTimes[ TS_RIGHT_FALLOFF ] = tHeadPosition + DmeTime_t( 631 ); 
+		ts.m_nTimes[ TS_RIGHT_FALLOFF ] = tHeadPosition + DmeTime_t( 631 );
 
 		RunTimeSelectionTest( "2nd layer", channels, params, tHeadPosition, ts, 500 );
 		params.Reset();
@@ -794,7 +794,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 		// Shift the head and do it all again
 		//ts.m_nRelativeFalloffTimes[ 0 ] = 1487 - 2000;
 		//ts.m_nRelativeHoldTimes[ 0 ] = ts.m_nRelativeHoldTimes[ 1 ] = 0;
-		//ts.m_nRelativeFalloffTimes[ 1 ] = 631; 
+		//ts.m_nRelativeFalloffTimes[ 1 ] = 631;
 		//ts.SetHeadPosition( 2000 );
 
 		RunTimeSelectionTest( "2nd layer", channels, params, tHeadPosition, ts, 110 );
@@ -806,7 +806,7 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayers )
 	for ( int i = 0; i < 2; ++i )
 		// Four layers using lerp
 		//   ---------------
-		//	  -----   
+		//	  -----
 		//             ----
 		//       -------
 	{
@@ -859,13 +859,13 @@ DEFINE_TESTCASE_NOSUITE( DmxTestDmeLogLayersUndo )
 #endif
 
 	CUtlVector< CDmeChannel * > channels;
-	
+
 	DmFileId_t fileid = g_pDataModel->FindOrCreateFileId( "<DmxTestDmeLogLayersUndo>" );
 
 	CreateChannels( NUM_CHANNELS, channels, fileid );
 
 	TestParams_t params;
-	
+
 //	g_pDataModel->TraceUndo( true );
 
 	// Test abort undo stuff

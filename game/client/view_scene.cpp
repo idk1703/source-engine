@@ -86,8 +86,8 @@ int FrustumTransform( const VMatrix &worldToSurface, const Vector& point, Vector
 
 //-----------------------------------------------------------------------------
 // Purpose: UNDONE: Clean this up some, handle off-screen vertices
-// Input  : *point - 
-//			*screen - 
+// Input  : *point -
+//			*screen -
 // Output : int
 //-----------------------------------------------------------------------------
 int ScreenTransform( const Vector& point, Vector& screen )
@@ -123,7 +123,7 @@ void UpdateFullScreenDepthTexture( void )
 	CMatRenderContextPtr pRenderContext( materials );
 
 	if( IsX360() )
-	{	
+	{
 		pRenderContext->CopyRenderTargetToTextureEx( pDepthTex, -1, NULL, NULL );
 	}
 	else
@@ -144,7 +144,7 @@ void UpdateFullScreenDepthTexture( void )
 			pDepthInAlpha = pMaterial->FindVar( "$ALPHADEPTH", NULL, false );
 			pDepthInAlpha->SetIntValue( 1 );
 		}
-		
+
 		BaseTextureVar->SetTextureValue( pDepthTex );
 
 		pRenderContext->OverrideDepthEnable( true, false ); //don't write to depth, or else we'll never see translucents

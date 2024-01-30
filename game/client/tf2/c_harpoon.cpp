@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,14 +37,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_Harpoon, DT_Harpoon, CHarpoon)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_Harpoon::C_Harpoon( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_Harpoon::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -89,7 +89,7 @@ void C_Harpoon::GetAimEntOrigin( IClientEntity *pAttachedTo, Vector *pOrigin, QA
 	// Convert rotated vector back to orientation
 	VectorAngles( rotatedForward, *pAngles );
 	//*pAngles -= m_angOffset;
-	
+
 	// HACK: Until we have a proper bone solution, hack the origin for all moving objects
 	*pOrigin = pEnt->WorldSpaceCenter( );
 }

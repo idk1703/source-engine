@@ -27,7 +27,7 @@
 
 inline void TelemetryTick() {}
 inline void TelemetrySetLevel( unsigned int Level ) {}
-#define TelemetrySetLockName( _ctx, _location, _description ) 
+#define TelemetrySetLockName( _ctx, _location, _description )
 
 class CTelemetryLock
 {
@@ -45,8 +45,8 @@ public:
 	~CTelemetrySpikeDetector() { }
 };
 
-#define TM_ZONE_DEFAULT( context ) 
-#define TM_ZONE_DEFAULT_PARAM( context, string_param ) 
+#define TM_ZONE_DEFAULT( context )
+#define TM_ZONE_DEFAULT_PARAM( context, string_param )
 
 #else
 

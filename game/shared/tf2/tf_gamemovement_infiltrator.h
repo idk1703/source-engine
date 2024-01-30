@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassInfiltratorData_t	*m_pInfiltratorData; 
+	PlayerClassInfiltratorData_t	*m_pInfiltratorData;
 	Vector							m_vStandMins;
 	Vector							m_vStandMaxs;
 	Vector							m_vStandViewOffset;

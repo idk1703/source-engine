@@ -25,7 +25,7 @@ public:
 
 	// Overloads from base entity
 	virtual void	Spawn( void );
-	
+
 	void			OnActivate ( void );
 
 	// Inputs to flip functionality on and off

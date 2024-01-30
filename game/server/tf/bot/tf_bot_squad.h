@@ -14,7 +14,7 @@ class CTFBotSquad : public INextBotEventResponder
 {
 public:
 	CTFBotSquad( void );
-	virtual ~CTFBotSquad() { }		
+	virtual ~CTFBotSquad() { }
 
 	// EventResponder ------
 	virtual INextBotEventResponder *FirstContainedResponder( void ) const;
@@ -118,4 +118,3 @@ inline void CTFBotSquad::SetFormationSize( float size )
 
 
 #endif // TF_BOT_SQUAD_H
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,7 +16,7 @@
 ConVar budget_show_history( "budget_show_history", "1", FCVAR_ARCHIVE, "turn history graph off and on. . good to turn off on low end" );
 ConVar budget_history_numsamplesvisible( "budget_history_numsamplesvisible", "100", FCVAR_ARCHIVE, "number of samples to draw in the budget history window.  The lower the better as far as rendering overhead of the budget panel" );
 
-CBudgetHistoryPanel::CBudgetHistoryPanel( CBaseBudgetPanel *pParent, const char *pPanelName ) : 
+CBudgetHistoryPanel::CBudgetHistoryPanel( CBaseBudgetPanel *pParent, const char *pPanelName ) :
 	BaseClass( pParent, pPanelName )
 {
 	m_pBudgetPanel = pParent;
@@ -28,7 +28,7 @@ CBudgetHistoryPanel::CBudgetHistoryPanel( CBaseBudgetPanel *pParent, const char 
 	SetVisible( true );
 	SetPaintBackgroundEnabled( false );
 	SetBgColor( Color( 0, 0, 0, 255 ) );
-	
+
 	// For some reason, vgui::Frame likes to set the minimum size to (128,66) and we may want to get smaller.
 	SetMinimumSize( 0, 0 );
 }
@@ -58,7 +58,7 @@ void CBudgetHistoryPanel::Paint()
 		startID += m_nSamplesPerGroup;
 	}
 	int endID = startID + width;
-	int numSamplesVisible = budget_history_numsamplesvisible.GetInt(); 
+	int numSamplesVisible = budget_history_numsamplesvisible.GetInt();
 	int xOffset = 0;
 	if( endID - startID > numSamplesVisible )
 	{
@@ -92,10 +92,10 @@ void CBudgetHistoryPanel::Paint()
 			rect.y0 = top;
 			rect.y1 = bottom;
 		}
-		
+
 		int red, green, blue, alpha;
 		m_pBudgetPanel->GetConfigData().m_BudgetGroupInfo[j].m_Color.GetColor( red, green, blue, alpha );
-		
+
 		vgui::surface()->DrawSetColor( red, green, blue, alpha );
 		vgui::surface()->DrawFilledRectArray( &s_Rects[0], endID - startID );
 	}

@@ -9,7 +9,7 @@
 
 //----------------------------------------------------------------------------------------------
 /**
- * Move backwards for a short duration away from a given position.  
+ * Move backwards for a short duration away from a given position.
  * Useful to dislodge ourselves if we get stuck while following our path.
  */
 template < typename Actor >
@@ -53,16 +53,16 @@ inline ActionResult< Actor > BehaviorBackUp< Actor >::OnStart( Actor *me, Action
 	{
 		return Done();
 	}
-	
+
 	float backupTime = RandomFloat( 0.3f, 0.5f );
-	
+
 	m_backupTimer.Start( backupTime );
 	m_jumpTimer.Start( 1.5f * backupTime );
 	m_giveUpTimer.Start( 2.5f * backupTime );
-	
+
 	m_way = me->GetPosition() - m_avoidPos;
 	m_way.NormalizeInPlace();
-	
+
 	return Continue();
 }
 
@@ -100,7 +100,7 @@ inline ActionResult< Actor > BehaviorBackUp< Actor >::Update( Actor *me, float i
 
 		mover->Approach( goal );
 	}
-	
+
 	return Continue();
 }
 
@@ -115,4 +115,3 @@ inline EventDesiredResult< Actor > BehaviorBackUp< Actor >::OnStuck( Actor *me )
 
 
 #endif // _BEHAVIOR_BACK_UP_H_
-

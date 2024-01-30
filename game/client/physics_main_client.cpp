@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,24 +19,24 @@
 // helper method for trace hull as used by physics...
 //-----------------------------------------------------------------------------
 static void Physics_TraceHull( C_BaseEntity* pBaseEntity, const Vector &vecStart,
-	const Vector &vecEnd, const Vector &hullMin, const Vector &hullMax,	
+	const Vector &vecEnd, const Vector &hullMin, const Vector &hullMax,
 	unsigned int mask, trace_t *ptr )
 {
 	// FIXME: I really am not sure the best way of doing this
 	// The TraceHull code below for shots will make sure the object passes
-	// through shields which do not block that damage type. It will also 
+	// through shields which do not block that damage type. It will also
 	// send messages to the shields that they've been hit.
 #if 0
 	if (pBaseEntity->GetDamageType() != DMG_GENERIC)
 	{
-		GameRules()->WeaponTraceHull( vecStart, vecEnd, hullMin, hullMax, 
-			mask, pBaseEntity, pBaseEntity->GetCollisionGroup(), 
+		GameRules()->WeaponTraceHull( vecStart, vecEnd, hullMin, hullMax,
+			mask, pBaseEntity, pBaseEntity->GetCollisionGroup(),
 			pBaseEntity, ptr );
 	}
 	else
 #endif
 	{
-		UTIL_TraceHull( vecStart, vecEnd, hullMin, hullMax, mask, 
+		UTIL_TraceHull( vecStart, vecEnd, hullMin, hullMax, mask,
 			pBaseEntity, pBaseEntity->GetCollisionGroup(), ptr );
 	}
 }
@@ -44,7 +44,7 @@ static void Physics_TraceHull( C_BaseEntity* pBaseEntity, const Vector &vecStart
 
 //-----------------------------------------------------------------------------
 // Purpose: Does not change the entities velocity at all
-// Input  : push - 
+// Input  : push -
 // Output : trace_t
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsCheckSweep( const Vector& vecAbsStart, const Vector &vecAbsDelta, trace_t *pTrace )
@@ -66,8 +66,8 @@ void C_BaseEntity::PhysicsCheckSweep( const Vector& vecAbsStart, const Vector &v
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : push - 
+// Purpose:
+// Input  : push -
 // Output : trace_t
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsPushEntity( const Vector& push, trace_t *pTrace )
@@ -106,11 +106,11 @@ void C_BaseEntity::PhysicsPushEntity( const Vector& push, trace_t *pTrace )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pNewPosition - 
-//			*pNewVelocity - 
-//			*pNewAngles - 
-//			*pNewAngVelocity - 
+// Purpose:
+// Input  : *pNewPosition -
+//			*pNewVelocity -
+//			*pNewAngles -
+//			*pNewAngVelocity -
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PerformCustomPhysics( Vector *pNewPosition, Vector *pNewVelocity, QAngle *pNewAngles, QAngle *pNewAngVelocity )
 {
@@ -119,7 +119,7 @@ void C_BaseEntity::PerformCustomPhysics( Vector *pNewPosition, Vector *pNewVeloc
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsCustom()
 {
@@ -165,14 +165,14 @@ void C_BaseEntity::PhysicsCustom()
 	PhysicsCheckVelocity();
 
 	if (trace.allsolid)
-	{	
+	{
 		// entity is trapped in another solid
 		// UNDONE: does this entity needs to be removed?
 		VectorCopy (vec3_origin, m_vecVelocity);
 		VectorCopy (vec3_angle, m_vecAngVelocity);
 		return;
 	}
-	
+
 #if !defined( CLIENT_DLL )
 	if (pev->free)
 		return;
@@ -183,7 +183,7 @@ void C_BaseEntity::PhysicsCustom()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsStep()
 {
@@ -192,7 +192,7 @@ void C_BaseEntity::PhysicsStep()
 PhysicsRunThink( THINK_FIRE_BASE_ONLY );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsNoclip( void )
 {
@@ -200,21 +200,21 @@ void C_BaseEntity::PhysicsNoclip( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsNone( void )
 {
 	PhysicsRunThink();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsPusher( void )
 {
 	PhysicsRunThink();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseEntity::PhysicsParent( void )
 {
@@ -223,7 +223,7 @@ void C_BaseEntity::PhysicsParent( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Not yet supported on client .dll
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void C_BaseEntity::StartTouch( C_BaseEntity *pOther )
 {
@@ -234,11 +234,11 @@ void C_BaseEntity::StartTouch( C_BaseEntity *pOther )
 
 //-----------------------------------------------------------------------------
 // Purpose: Call touch function if one is set
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void C_BaseEntity::Touch( C_BaseEntity *pOther )
-{ 
-	if ( m_pfnTouch ) 
+{
+	if ( m_pfnTouch )
 		(this->*m_pfnTouch)( pOther );
 
 	// notify parent of touch
@@ -248,7 +248,7 @@ void C_BaseEntity::Touch( C_BaseEntity *pOther )
 
 //-----------------------------------------------------------------------------
 // Purpose: Call end touch
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void C_BaseEntity::EndTouch( C_BaseEntity *pOther )
 {
@@ -260,8 +260,8 @@ void C_BaseEntity::EndTouch( C_BaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : check - 
+// Purpose:
+// Input  : check -
 //-----------------------------------------------------------------------------
 void C_BaseEntity::SetCheckUntouch( bool check )
 {
@@ -278,7 +278,7 @@ void C_BaseEntity::SetCheckUntouch( bool check )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseEntity::GetCheckUntouch() const
@@ -311,7 +311,7 @@ void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
 	{
 		startTime = engine->Time();
 	}
-	
+
 	if ( thinkFunc )
 	{
 		(this->*thinkFunc)();
@@ -336,7 +336,7 @@ void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
 #ifdef WIN32
 				Msg( "CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).raw_name(), time );
 #else
-				Msg( "CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).name(), time );				
+				Msg( "CLIENT:  %s(%s) thinking for %.02f ms!!!\n", GetClassname(), typeid(this).name(), time );
 #endif
 			}
 		}

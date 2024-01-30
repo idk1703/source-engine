@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,12 +18,12 @@
 class CPrecacheRegister
 {
 public:
-	
+
 	typedef void (*PrecacheFn)(void *pUser);	// Prototype for a custom precache function.
 
 	CPrecacheRegister(PrecacheFn fn, const void *pUser);
 
-	PrecacheFn			m_Fn;	
+	PrecacheFn			m_Fn;
 	void				*m_pUser;
 	CPrecacheRegister	*m_pNext;
 

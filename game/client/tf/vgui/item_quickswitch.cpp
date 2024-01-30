@@ -38,17 +38,17 @@ extern const char *g_szEquipSlotHeader[CLASS_LOADOUT_POSITION_COUNT];
 int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 {
 	//TF_CLASS_UNDEFINED = 0,
-	{ 
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
+	{
 		LOADOUT_POSITION_INVALID,
-		LOADOUT_POSITION_INVALID, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -62,8 +62,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -77,8 +77,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -92,8 +92,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -107,8 +107,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -122,8 +122,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -137,8 +137,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -152,8 +152,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 
@@ -189,7 +189,7 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 	},
 #endif
 
-	// TF_CLASS_ENGINEER,		
+	// TF_CLASS_ENGINEER,
 	{
 		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_PRIMARY,
@@ -199,8 +199,8 @@ int g_SlotsToLoadoutSlotsPerClass[TF_LAST_NORMAL_CLASS][MAX_QUICKSWITCH_SLOTS] =
 		LOADOUT_POSITION_PDA2,
 		LOADOUT_POSITION_HEAD,
 		LOADOUT_POSITION_MISC,
-		LOADOUT_POSITION_ACTION, 
-		LOADOUT_POSITION_INVALID, 
+		LOADOUT_POSITION_ACTION,
+		LOADOUT_POSITION_INVALID,
 		LOADOUT_POSITION_INVALID,
 	},
 };
@@ -241,7 +241,7 @@ static ConCommand openquickswitch( "+quickswitch", IN_QuickSwitchDown );
 static ConCommand closequickswitch( "-quickswitch", IN_QuickSwitchUp );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemQuickSwitchPanel::CItemQuickSwitchPanel( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "ItemQuickSwitchPanel" )
 {
@@ -266,7 +266,7 @@ CItemQuickSwitchPanel::CItemQuickSwitchPanel( const char *pElementName ) : CHudE
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CItemQuickSwitchPanel::~CItemQuickSwitchPanel()
 {
@@ -278,16 +278,16 @@ CItemQuickSwitchPanel::~CItemQuickSwitchPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemQuickSwitchPanel::IsValid( void )
-{ 
-	return ( m_iClass >= TF_FIRST_NORMAL_CLASS && m_iClass < TF_LAST_NORMAL_CLASS ) && 
-		   ( m_iSlot > LOADOUT_POSITION_INVALID && m_iSlot < CLASS_LOADOUT_POSITION_COUNT ); 
+{
+	return ( m_iClass >= TF_FIRST_NORMAL_CLASS && m_iClass < TF_LAST_NORMAL_CLASS ) &&
+		   ( m_iSlot > LOADOUT_POSITION_INVALID && m_iSlot < CLASS_LOADOUT_POSITION_COUNT );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CItemQuickSwitchPanel::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -345,7 +345,7 @@ int	CItemQuickSwitchPanel::HudElementKeyInput( int down, ButtonCode_t keynum, co
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CItemQuickSwitchPanel::CalculateClassAndSlot( void )
 {
@@ -384,7 +384,7 @@ bool CItemQuickSwitchPanel::CalculateClassAndSlot( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::OpenQS( void )
 {
@@ -408,7 +408,7 @@ void CItemQuickSwitchPanel::OpenQS( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::OnTick( void )
 {
@@ -435,7 +435,7 @@ void CItemQuickSwitchPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::CloseQS( void )
 {
@@ -466,7 +466,7 @@ void CItemQuickSwitchPanel::CloseQS( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -494,7 +494,7 @@ void CItemQuickSwitchPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -513,9 +513,9 @@ void CItemQuickSwitchPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CItemQuickSwitchPanel::PerformLayout( void ) 
+void CItemQuickSwitchPanel::PerformLayout( void )
 {
 	BaseClass::PerformLayout();
 
@@ -533,7 +533,7 @@ void CItemQuickSwitchPanel::PerformLayout( void )
 		{
 			m_pItemPanels[i]->ApplySettings( m_pItemKV );
 			m_pItemPanels[i]->InvalidateLayout();
-		} 
+		}
 
 		int iYDelta = m_pItemPanels[0]->GetTall() + m_iItemPanelYDelta;
 
@@ -578,7 +578,7 @@ void CItemQuickSwitchPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::UpdateEquippedItem( void )
 {
@@ -629,7 +629,7 @@ void CItemQuickSwitchPanel::UpdateEquippedItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::UpdateModelPanels( void )
 {
@@ -685,7 +685,7 @@ void CItemQuickSwitchPanel::UpdateModelPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::SetButtonToItem( int iButton, CEconItemView *pItem )
 {
@@ -701,7 +701,7 @@ void CItemQuickSwitchPanel::SetButtonToItem( int iButton, CEconItemView *pItem )
 		if ( m_pItemKV )
 		{
 			pItemPanel->ApplySettings( m_pItemKV );
-		} 
+		}
 		pItemPanel->MakeReadyForUse();
 		pItemPanel->SetActAsButton( true, true );
 		pItemPanel->SendPanelEnterExits( true );
@@ -718,7 +718,7 @@ void CItemQuickSwitchPanel::SetButtonToItem( int iButton, CEconItemView *pItem )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::OnItemPanelEntered( vgui::Panel *panel )
 {
@@ -730,7 +730,7 @@ void CItemQuickSwitchPanel::OnItemPanelEntered( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::OnItemPanelExited( vgui::Panel *panel )
 {
@@ -742,7 +742,7 @@ void CItemQuickSwitchPanel::OnItemPanelExited( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::OnIPMouseReleased( vgui::Panel *panel )
 {
@@ -764,7 +764,7 @@ void CItemQuickSwitchPanel::OnIPMouseReleased( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::FireGameEvent( IGameEvent *event )
 {
@@ -784,7 +784,7 @@ void CItemQuickSwitchPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CItemQuickSwitchPanel::OnItemPresetLoaded()
 {

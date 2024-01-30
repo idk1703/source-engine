@@ -57,4 +57,3 @@ private:
 
 
 #endif // INCLUDED_MXLINEEDIT
-

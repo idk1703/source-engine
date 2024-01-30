@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -30,9 +30,9 @@
 class IDemoBuffer;
 
 //-----------------------------------------------------------------------------
-// Demo file 
+// Demo file
 //-----------------------------------------------------------------------------
-class CDemoFile  
+class CDemoFile
 {
 public:
 	CDemoFile();
@@ -57,13 +57,13 @@ public:
 
 	void	WriteCmdHeader( unsigned char cmd, int tick );
 	void	ReadCmdHeader( unsigned char& cmd, int& tick );
-	
+
 	void	WriteConsoleCommand( const char *cmd, int tick );
 	const char *ReadConsoleCommand( void );
 
 	void	WriteNetworkDataTables( bf_write *buf, int tick );
 	int		ReadNetworkDataTables( bf_read *buf );
-	
+
 	void	WriteStringTables( bf_write *buf, int tick );
 	int		ReadStringTables( bf_read *buf );
 

@@ -22,7 +22,7 @@
 #include "ai_navigator.h"
 #include "ai_moveprobe.h"
 #include "fmtstr.h"
-#include "game.h"			
+#include "game.h"
 #include "ai_networkmanager.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -96,7 +96,7 @@ CAI_Link* CAI_Node::HasLink(int nNodeID)
 
 //------------------------------------------------------------------------------
 // Purpose : Called before GetShuffeledLinks to change the order in which
-//			 links are returned 
+//			 links are returned
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void CAI_Node::ShuffleLinks(void)
 }
 
 //------------------------------------------------------------------------------
-// Purpose : Used to get links in different order each time.  
+// Purpose : Used to get links in different order each time.
 //			 Call ShuffleLinks() first
 // Input   :
 // Output  :
@@ -130,7 +130,7 @@ CAI_Link* CAI_Node::GetShuffeledLink(int nNum)
 // Input  :
 // Output :
 //----------------------------------------------------------------------------------
-float GetFloorZ(const Vector &origin, float fMaxDrop) 
+float GetFloorZ(const Vector &origin, float fMaxDrop)
 {
 	// trace to the ground, then pop up 8 units and place node there to make it
 	// easier for them to connect (think stairs, chairs, and bumps in the floor).
@@ -141,7 +141,7 @@ float GetFloorZ(const Vector &origin, float fMaxDrop)
 					 origin - Vector ( 0, 0, fMaxDrop ),
 					 MASK_NPCSOLID_BRUSHONLY,
 					 NULL,
-					 COLLISION_GROUP_NONE, 
+					 COLLISION_GROUP_NONE,
 					 &tr );
 
 	// This trace is ONLY used if we hit an entity flagged with FL_WORLDBRUSH
@@ -150,10 +150,10 @@ float GetFloorZ(const Vector &origin, float fMaxDrop)
 					 origin - Vector ( 0, 0, fMaxDrop ),
 					 MASK_NPCSOLID,
 					 NULL,
-					 COLLISION_GROUP_NONE, 
+					 COLLISION_GROUP_NONE,
 					 &trEnt );
 
-	
+
 	// Did we hit something closer than the floor?
 	if ( trEnt.fraction < tr.fraction )
 	{
@@ -176,9 +176,9 @@ float GetFloorZ(const Vector &origin, float fMaxDrop)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-float GetFloorZ(const Vector &origin) 
+float GetFloorZ(const Vector &origin)
 {
-	return GetFloorZ(origin, 384); 
+	return GetFloorZ(origin, 384);
 }
 
 //-----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ float GetFloorZ(const Vector &origin)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-float GetFloorDistance(const Vector &origin) 
+float GetFloorDistance(const Vector &origin)
 {
 	return (origin.z - GetFloorZ(origin));
 }
@@ -200,7 +200,7 @@ float GetFloorDistance(const Vector &origin)
 //-----------------------------------------------------------------------------
 Vector CAI_Node::GetPosition(int hull)
 {
-	if (m_eNodeType == NODE_CLIMB) 
+	if (m_eNodeType == NODE_CLIMB)
 	{
 		// Shift by the length of the hull and some small fudge
 		float  shift  = (0.5*NAI_Hull::Length(hull)) + (NODE_CLIMB_OFFSET);
@@ -226,7 +226,7 @@ Vector CAI_Node::GetPosition(int hull)
 			CrossProduct( offsetDir, upDir, leftDir);
 			origin = m_vOrigin + (2 * shift * leftDir) - (shift * offsetDir);
 		}
-		else 
+		else
 		{
 			origin = m_vOrigin - (shift * offsetDir);
 		}
@@ -249,7 +249,7 @@ Vector CAI_Node::GetPosition(int hull)
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-CAI_Node::CAI_Node( int id, const Vector &origin, float yaw  ) 
+CAI_Node::CAI_Node( int id, const Vector &origin, float yaw  )
  :	m_Links( 0, 4 )
 {
 	m_vOrigin		= origin;
@@ -272,4 +272,3 @@ CAI_Node::CAI_Node( int id, const Vector &origin, float yaw  )
 
 	m_zone = AI_NODE_ZONE_UNKNOWN;
 };
-

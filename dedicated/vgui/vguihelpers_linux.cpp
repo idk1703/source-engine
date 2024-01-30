@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "interface.h"
@@ -36,4 +36,3 @@ bool VGUIIsInConfig()
 void VGUIFinishedConfig()
 {
 }
-

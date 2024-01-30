@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -122,14 +122,14 @@ bool IsValidServerForQuests( CSteamID steamIDQuestOwner )
 
 void GetInvalidReasonsNames( const InvalidReasonsContainer_t& invalidReasons, CUtlVector< CUtlString >& vecStrings )
 {
-	static const char* arReasons[] = 
+	static const char* arReasons[] =
 	{
 		"#TF_QuestInvalid_WrongMap",			// INVALID_QUEST_REASON_WRONG_MAP = 0,
 		"#TF_QuestInvalid_WrongClass",			// INVALID_QUEST_REASON_WRONG_CLASS,
 		"#TF_QuestInvalid_GameMode",			// INVALID_QUEST_REASON_WRONG_GAME_MODE,
 		"#TF_QuestInvalid_NotEnoughPlayers",	// INVALID_QUEST_REASON_NOT_ENOUGH_PLAYERS,
 		"#TF_QuestInvalid_ValveServers",		// INVALID_QUEST_REASON_VALVE_SERVERS_ONLY,
-		"#TF_QuestInvalid_MvM",					// INVALID_QUEST_REASON_NO_MVM	
+		"#TF_QuestInvalid_MvM",					// INVALID_QUEST_REASON_NO_MVM
 	};
 
 	for( int i=0; i < invalidReasons.m_bits.GetNumBits(); ++i )
@@ -154,7 +154,7 @@ KeyValues* GetQuestEventsKeyValues()
 			AssertMsg1( false, "Couldn't load quest events file: %s!", g_skQuestEventsFile );
 			return NULL;
 		}
-	
+
 		pQuestEvents = new KeyValues( "quest_events" );
 		pQuestEvents->LoadFromBuffer( NULL, bufRawData );
 	}
@@ -200,8 +200,8 @@ void GetValidParamsKeyFromEvent( const char *pszKeyName, const char *pszRestrict
 									pItemDef = static_cast< const CTFItemDefinition* >( mapItems[it] );
 									Assert( pItemDef->GetDefinitionIndex() != INVALID_ITEM_DEF_INDEX );
 									if ( pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_PRIMARY
-									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_SECONDARY 
-									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_MELEE 
+									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_SECONDARY
+									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_MELEE
 									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_PDA
 									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_PDA2
 									  || pItemDef->GetDefaultLoadoutSlot() == LOADOUT_POSITION_BUILDING )
@@ -350,7 +350,7 @@ bool CTFQuestCondition::IsValidForPlayer( const CTFPlayer *pOwner, InvalidReason
 		}
 	}
 
-	// Cannot do quests in MvM 
+	// Cannot do quests in MvM
 	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 	{
 		invalidReasons.m_bits.Set( INVALID_QUEST_REASON_NO_MVM );
@@ -469,7 +469,7 @@ public:
 			{
 				SCHEMA_INIT_CHECK( nInputCount < GetMaxInputCount(), "%s", CFmtStr( "Too many input for operator '%s'. expected %d input(s)", GetConditionName(), GetMaxInputCount() ).Get() );
 			}
-			
+
 			const char *pszType = pSubKey->GetString( "type" );
 			CTFQuestRestriction *pNewRestriction = CreateRestrictionByName( pszType, this );
 			SCHEMA_INIT_CHECK( pNewRestriction != NULL, "%s", CFmtStr( "Failed to create quest restriction name '%s' for '%s'", pszType, GetConditionName() ).Get() );
@@ -579,7 +579,7 @@ public:
 		bool bIsForLocalPlayer = false;
 		InvalidReason operatorReasons;
 		FOR_EACH_VEC( m_vecRestrictions, i )
-		{			
+		{
 			bIsForLocalPlayer |= m_vecRestrictions[i]->IsValidForPlayer( pOwner, operatorReasons );
 		}
 
@@ -648,7 +648,7 @@ public:
 	{
 		return false;
 	}
-	
+
 	virtual void PrintDebugText() const OVERRIDE
 	{
 		CTFQuestRestriction *pRestriction = m_vecRestrictions[0];
@@ -815,7 +815,7 @@ public:
 			}
 		}
 		SCHEMA_INIT_CHECK( bIsValidMethod, "Invalid 'get_player'" );
-		
+
 
 		return true;
 	}
@@ -1028,7 +1028,7 @@ public:
 			KeyValues * pKVJumpState = pKVJumpingKeys->CreateNewKey();
 			pKVJumpState->SetName( "0" );
 			pKVJumpState->SetString( "english_name", "Must NOT be jumping" );
-		
+
 			pKVJumpState = pKVJumpingKeys->CreateNewKey();
 			pKVJumpState->SetName( "1" );
 			pKVJumpState->SetString( "english_name", "Must be at least jumping" );
@@ -1428,7 +1428,7 @@ private:
 		// Might require the owner is the provider
 		if ( m_bOwnerMustBeProvider && pPlayer->m_Shared.GetConditionProvider( m_eCondition ) != GetQuestOwner() )
 			return false;
-		
+
 		return true;
 	}
 
@@ -1576,7 +1576,7 @@ private:
 
 		CBaseEntity *pEnt = UTIL_EntityByIndex( nEntIndex );
 		IScorer* pScorer = dynamic_cast< IScorer* >( pEnt );
-		
+
 		if ( !pScorer )
 			return false;
 
@@ -1754,7 +1754,7 @@ private:
 };
 REGISTER_QUEST_CONDITION_SUB_CLASS( CTFFlagEventTypeRestriction, flag_event_type, FIELD_FLAG_EVENT );
 
-static const char *s_pszTeamRestrictionNames[] = 
+static const char *s_pszTeamRestrictionNames[] =
 {
 	"TEAM_ANY",
 	"TEAM_IS_OWNERS",
@@ -1876,7 +1876,7 @@ public:
 
 		m_pszMapName = pKVItem->GetString( "value", NULL );
 		SCHEMA_INIT_CHECK( m_pszMapName != NULL, "Missing map name." );
-	
+
 		// TODO: validate map name against some white list here
 
 		return true;
@@ -1900,7 +1900,7 @@ public:
 	virtual void GetRequiredParamKeys( KeyValues *pRequiredKeys ) OVERRIDE
 	{
 		//const CUtlVector<SchemaMap_t>& maps = GetItemSchema()->GetMaps();
-		
+
 		KeyValues *pMapKey = new KeyValues( "value" );
 		pMapKey->SetString( "control_type", "text_entry" );
 		/*for ( int i=0; i<maps.Count(); ++i )
@@ -1927,7 +1927,7 @@ private:
 #else
 		const char *pszMapName = gpGlobals->mapname.ToCStr();
 #endif
-		
+
 		return !V_stricmp( m_pszMapName, pszMapName );
 	}
 
@@ -1975,7 +1975,7 @@ public:
 	{
 		BaseClass::IsValidForPlayer( pOwner, invalidReasons );
 
-		if ( TFGameRules()->GetGameType() != m_eGameType ) 
+		if ( TFGameRules()->GetGameType() != m_eGameType )
 			invalidReasons.m_bits.Set( INVALID_QUEST_REASON_WRONG_GAME_MODE );
 
 		return false;
@@ -2022,13 +2022,13 @@ static const char *s_loadout_position_names[] =
 	// Wearables. If you add new wearable slots, make sure you add them to IsWearableSlot() below this.
 	"LOADOUT_POSITION_HEAD",
 	"LOADOUT_POSITION_MISC",
-	
+
 	// other
 	"LOADOUT_POSITION_ACTION",
-	
+
 	// More wearables, yay!
 	"LOADOUT_POSITION_MISC2",
-	
+
 	// taunts
 	"LOADOUT_POSITION_TAUNT",
 	"LOADOUT_POSITION_TAUNT2",
@@ -2038,12 +2038,12 @@ static const char *s_loadout_position_names[] =
 	"LOADOUT_POSITION_TAUNT6",
 	"LOADOUT_POSITION_TAUNT7",
 	"LOADOUT_POSITION_TAUNT8",
-	
+
 #ifdef STAGING_ONLY
-	// Extra PDA mod slots 
+	// Extra PDA mod slots
 	"LOADOUT_POSITION_PDA_ADDON1",
 	"LOADOUT_POSITION_PDA_ADDON2",
-	
+
 	"LOADOUT_POSITION_PDA3",
 	//LOADOUT_POSITION_MISC3,
 	//LOADOUT_POSITION_MISC4,
@@ -2159,7 +2159,7 @@ private:
 	}
 
 	loadout_positions_t m_eLoadoutPosition;
-	
+
 	const char* m_pszLoadoutKey;
 };
 REGISTER_QUEST_CONDITION_SUB_CLASS( CTFQuestLoadoutPositionRestriction, loadout_position, FIELD_PLAYER | FIELD_LOADOUT_POSITION );
@@ -2257,7 +2257,7 @@ CTFQuestRestriction *CreateRestrictionByName( const char *pszName, CTFQuestCondi
 
 		pNewRestriction->SetEventName( pszEventName );
 	}
-	
+
 	AssertMsg( pNewRestriction, "Invalid quest restriction type '%s'", pszName );
 	return pNewRestriction;
 }
@@ -2350,7 +2350,7 @@ public:
 
 	virtual void FireGameEvent( IGameEvent *pEvent ) OVERRIDE
 	{
-		// This can happen when the player's SteamID isn't setup yet after a 
+		// This can happen when the player's SteamID isn't setup yet after a
 		// disconnect -> reconnect
 		if ( GetQuestOwner() == NULL )
 			return;
@@ -2392,7 +2392,7 @@ public:
 			Assert( m_pRestrictions == NULL );
 			return NULL;
 		}
-		
+
 		m_pRestrictions = CreateRestrictionByName( pszChildName, this );
 		Assert( m_pRestrictions );
 		return m_pRestrictions;
@@ -2469,7 +2469,7 @@ public:
 	}
 
 	virtual const char* GetEventName() const OVERRIDE
-	{ 
+	{
 		return m_pszEventName;
 	}
 
@@ -2578,7 +2578,7 @@ public:
 	virtual void ResetCondition() OVERRIDE
 	{
 		m_nCount = 0;
-		
+
 		FOR_EACH_VEC( m_vecChildren, i )
 		{
 			m_vecChildren[i]->ResetCondition();
@@ -2609,7 +2609,7 @@ public:
 	bool RemoveAndDeleteChild( CTFQuestCondition *pChild ) OVERRIDE
 	{
 		CTFQuestEvaluator *pEvaluatorChild = assert_cast< CTFQuestEvaluator* >( pChild );
-		
+
 		bool bRemoved = m_vecChildren.FindAndFastRemove( pEvaluatorChild );
 		Assert( bRemoved );
 
@@ -2694,7 +2694,7 @@ CTFQuestEvaluator *CreateEvaluatorByName( const char *pszName, CTFQuestCondition
 	{
 		pNewEvaluator->SetParent( pParent );
 	}
-	
+
 	AssertMsg( pNewEvaluator, "Invalid quest evaluator type '%s'", pszName );
 	return pNewEvaluator;
 }

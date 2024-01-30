@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
- //====== Copyright © 1996-2003, Valve Corporation, All rights reserved. =======
+ //====== Copyright ï¿½ 1996-2003, Valve Corporation, All rights reserved. =======
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -27,7 +27,7 @@ public:
 
 	CHudArmor( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void Init();
 	virtual void ApplySchemeSettings( IScheme *scheme );
@@ -70,7 +70,7 @@ void CHudArmor::ApplySchemeSettings( IScheme *scheme )
 	if( !m_pArmor_HelmetIcon )
 	{
 		m_pArmor_HelmetIcon = gHUD.GetIcon( "shield_kevlar_bright" );
-	}	
+	}
 
 	if( m_pArmorIcon )
 	{
@@ -121,4 +121,3 @@ void CHudArmor::Paint()
 		BaseClass::Paint();
 	}
 }
-

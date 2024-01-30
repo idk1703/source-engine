@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Implements a sniper rifle weapon.
-//			
+//
 //			Primary attack: fires a single high-powered shot, then reloads.
 //			Secondary attack: cycles sniper scope through zoom levels.
 //
@@ -96,7 +96,7 @@ END_DATADESC()
 //-----------------------------------------------------------------------------
 // Maps base activities to weapons-specific ones so our characters do the right things.
 //-----------------------------------------------------------------------------
-acttable_t	CWeaponSniperRifle::m_acttable[] = 
+acttable_t	CWeaponSniperRifle::m_acttable[] =
 {
 	{	ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SNIPER_RIFLE, true }
 };
@@ -122,7 +122,7 @@ CWeaponSniperRifle::CWeaponSniperRifle( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CWeaponSniperRifle::CapabilitiesGet( void ) const
@@ -144,7 +144,7 @@ bool CWeaponSniperRifle::Holster( CBaseCombatWeapon *pSwitchingTo )
 		{
 			if ( pPlayer->SetFOV( this, 0 ) )
 			{
-				pPlayer->ShowViewModel(true);		
+				pPlayer->ShowViewModel(true);
 				m_nZoomLevel = 0;
 			}
 		}
@@ -208,7 +208,7 @@ void CWeaponSniperRifle::ItemPostFrame( void )
 	// -----------------------
 	//  Reload pressed / Clip Empty
 	// -----------------------
-	if ( pPlayer->m_nButtons & IN_RELOAD && UsesClipsForAmmo1() && !m_bInReload ) 
+	if ( pPlayer->m_nButtons & IN_RELOAD && UsesClipsForAmmo1() && !m_bInReload )
 	{
 		// reload when reload is pressed, or if no buttons are down and weapon is empty.
 		Reload();
@@ -222,7 +222,7 @@ void CWeaponSniperRifle::ItemPostFrame( void )
 		// no fire buttons down
 		m_bFireOnEmpty = false;
 
-		if ( !HasAnyAmmo() && m_flNextPrimaryAttack < gpGlobals->curtime ) 
+		if ( !HasAnyAmmo() && m_flNextPrimaryAttack < gpGlobals->curtime )
 		{
 			// weapon isn't useable, switch.
 			if ( !(GetWeaponFlags() & ITEM_FLAG_NOAUTOSWITCHEMPTY) && pPlayer->SwitchToNextBestWeapon( this ) )
@@ -248,7 +248,7 @@ void CWeaponSniperRifle::ItemPostFrame( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSniperRifle::Precache( void )
 {
@@ -270,7 +270,7 @@ bool CWeaponSniperRifle::Reload( void )
 	{
 		return false;
 	}
-		
+
 	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType) > 0)
 	{
 		int primary		= MIN(GetMaxClip1() - m_iClip1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));
@@ -296,7 +296,7 @@ bool CWeaponSniperRifle::Reload( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponSniperRifle::PrimaryAttack( void )
 {
@@ -310,7 +310,7 @@ void CWeaponSniperRifle::PrimaryAttack( void )
 	if ( gpGlobals->curtime >= m_flNextPrimaryAttack )
 	{
 		// If my clip is empty (and I use clips) start reload
-		if ( !m_iClip1 ) 
+		if ( !m_iClip1 )
 		{
 			Reload();
 			return;
@@ -331,7 +331,7 @@ void CWeaponSniperRifle::PrimaryAttack( void )
 		m_iClip1 = m_iClip1 - 1;
 
 		Vector vecSrc	 = pPlayer->Weapon_ShootPosition();
-		Vector vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );	
+		Vector vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_5DEGREES );
 
 		// Fire the bullets
 		pPlayer->FireBullets( SNIPER_BULLET_COUNT_PLAYER, vecSrc, vecAiming, GetBulletSpread(), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, SNIPER_TRACER_FREQUENCY_PLAYER );
@@ -344,7 +344,7 @@ void CWeaponSniperRifle::PrimaryAttack( void )
 		// Indicate out of ammo condition if we run out of ammo.
 		if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 		{
-			pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
+			pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0);
 		}
 	}
 
@@ -369,9 +369,9 @@ void CWeaponSniperRifle::Zoom( void )
 		if ( pPlayer->SetFOV( this, 0 ) )
 		{
 			pPlayer->ShowViewModel(true);
-			
+
 			// Zoom out to the default zoom level
-			WeaponSound(SPECIAL2);	
+			WeaponSound(SPECIAL2);
 			m_nZoomLevel = 0;
 		}
 	}
@@ -385,7 +385,7 @@ void CWeaponSniperRifle::Zoom( void )
 			}
 
 			WeaponSound(SPECIAL1);
-			
+
 			m_nZoomLevel++;
 		}
 	}
@@ -395,7 +395,7 @@ void CWeaponSniperRifle::Zoom( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : virtual const Vector&
 //-----------------------------------------------------------------------------
 const Vector &CWeaponSniperRifle::GetBulletSpread( void )
@@ -406,9 +406,9 @@ const Vector &CWeaponSniperRifle::GetBulletSpread( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
-//			*pOperator - 
+// Purpose:
+// Input  : *pEvent -
+//			*pOperator -
 //-----------------------------------------------------------------------------
 void CWeaponSniperRifle::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
@@ -444,4 +444,3 @@ void CWeaponSniperRifle::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCom
 		}
 	}
 }
-

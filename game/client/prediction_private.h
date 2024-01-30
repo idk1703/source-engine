@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -17,7 +17,7 @@
 #endif
 
 // point on plane side epsilon
-#define	ON_EPSILON		0.1			
+#define	ON_EPSILON		0.1
 
 #define	MAX_FORWARD	6
 

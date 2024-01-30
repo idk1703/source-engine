@@ -56,7 +56,7 @@ fltx4 NoiseSIMD( const fltx4 & x, const fltx4 & y, const fltx4 & z )
 	//        The noise table could store vectors if we chunked it into 2x2x2 blocks.
 	fltx4 xfrac = Four_Zeros, yfrac = Four_Zeros, zfrac = Four_Zeros;
 #define DOPASS(i)															\
-    {	unsigned int xi = SubInt( x_idx, i );								\
+	{	unsigned int xi = SubInt( x_idx, i );								\
 		unsigned int yi = SubInt( y_idx, i );								\
 		unsigned int zi = SubInt( z_idx, i );								\
 		SubFloat( xfrac, i ) = (xi & 0xff)*(1.0/256.0);						\
@@ -74,7 +74,7 @@ fltx4 NoiseSIMD( const fltx4 & x, const fltx4 & y, const fltx4 & z )
 		SubFloat( lattice101, i ) = GetLatticePointValue( xi+1,yi,zi+1 );	\
 		SubFloat( lattice110, i ) = GetLatticePointValue( xi+1,yi+1,zi );	\
 		SubFloat( lattice111, i ) = GetLatticePointValue( xi+1,yi+1,zi+1 );	\
-    }
+	}
 
 	DOPASS( 0 );
 	DOPASS( 1 );

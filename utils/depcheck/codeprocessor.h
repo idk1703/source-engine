@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@ private:
 	void		ProcessModules( const char *root, const char *rootmodule );
 	void		PrintResults( void );
 	void		ConstructModuleList_R( int level, const char *gamespecific, const char *root );
-	
+
 	void		AddHeader( int depth, const char *filename, const char *rootmodule );
 
 	void		CreateBackup( const char *filename, bool& wasreadonly );

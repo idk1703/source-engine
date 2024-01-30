@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,7 +50,7 @@ void TestChannels( IChannel *pChannel1, IChannel *pChannel2, int maxPacketSize, 
 	{
 		float t = (float)rand() / VALVE_RAND_MAX;
 		int testSize = (int)( t * (maxPacketSize-1) ) + 1;
-		
+
 		CUtlVector<unsigned char> rnd1, rnd2;
 		rnd1.SetSize( testSize );
 		rnd2.SetSize( testSize );
@@ -63,7 +63,7 @@ void TestChannels( IChannel *pChannel1, IChannel *pChannel2, int maxPacketSize, 
 		pChannel1->Send( rnd1.Base(), testSize );
 		pChannel2->Send( rnd2.Base(), testSize );
 
-	
+
 		// Now wait for up to 5 seconds for the data to come in.
 		CUtlVector<unsigned char> tmp;
 		tmp.SetSize( testSize );
@@ -98,7 +98,7 @@ void TestChannels( T *pSock[2] )
 		}
 	}
 
-	// Bind them to random ports.	
+	// Bind them to random ports.
 	pSock[0]->BeginListen();
 	pSock[1]->BeginConnect( CIPAddr( 127, 0, 0, 1, iPorts[0] ) );
 	while ( !pSock[0]->IsConnected() || !pSock[1]->IsConnected() )
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
 {
 	// First, test two TCP sockets.
 	for ( int iChannelType=0; iChannelType < 2; iChannelType++ )
-	{	
+	{
 		DWORD startTime = GetTickCount();
 
 		srand( 0 );
@@ -163,4 +163,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-

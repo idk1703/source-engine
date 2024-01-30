@@ -15,7 +15,7 @@
 extern void v_strncpy(char *dest, const char *src, int bufsize);
 
 CServerPing::CServerPing(IResponse *target,serveritem_t &server) {
-	
+
 	memcpy(&m_Server, &server,sizeof(serveritem_t));
 	m_pResponseTarget=target;
 
@@ -40,8 +40,8 @@ void CServerPing::Query()
 {
 	CMsgBuffer *buffer = m_pQuery->GetSendBuffer();
 	assert( buffer );
-	
-	if ( !buffer ) 
+
+	if ( !buffer )
 	{
 		return;
 	}
@@ -70,19 +70,19 @@ void CServerPing::Query()
 	m_pQuery->SendMessage( &adr );
 
 	m_fSendTime = CSocket::GetClock();
-	
+
 }
 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CServerPing::RunFrame()
 {
 /*	float curtime = CSocket::GetClock();
 	if(m_fSendTime!=0 && (curtime-m_fSendTime)> 5.0f) // 10 seconds timeout
-	{	
+	{
 		m_fSendTime = 0;
 		m_pResponseTarget->ServerFailedToRespond();
 	}
@@ -120,23 +120,23 @@ void CServerPing::UpdateServer(float recvTime)
 
 }
 
-void CServerPing::Refresh() 
+void CServerPing::Refresh()
 {
 	Query();
 }
 
-bool CServerPing::IsRefreshing() 
+bool CServerPing::IsRefreshing()
 {
 
 	return m_bIsRefreshing;
 }
 
-serveritem_t &CServerPing::GetServer() 
+serveritem_t &CServerPing::GetServer()
 {
 	return m_Server;
 }
 
-bool CServerPing::Refreshed() 
+bool CServerPing::Refreshed()
 {
 	bool val = m_bRefreshed;
 	m_bRefreshed=false;

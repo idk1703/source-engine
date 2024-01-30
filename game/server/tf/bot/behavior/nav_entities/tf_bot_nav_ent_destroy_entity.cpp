@@ -80,8 +80,8 @@ ActionResult< CTFBot >	CTFBotNavEntDestroyEntity::Update( CTFBot *me, float inte
 	}
 
 	float attackRange = me->GetMaxAttackRange();
-		
-	if ( m_prereq->GetTaskValue() > 0.0f ) 
+
+	if ( m_prereq->GetTaskValue() > 0.0f )
 	{
 		attackRange = MIN( attackRange, m_prereq->GetTaskValue() );
 	}

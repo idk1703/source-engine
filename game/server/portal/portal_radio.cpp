@@ -13,7 +13,7 @@ extern CAchievementMgr g_AchievementMgrPortal;
 #define RADIO_MODEL_NAME "models/props/radio_reference.mdl"
 //#define RADIO_DEBUG_SERVER
 
-class CDinosaurSignal : public CBaseEntity 
+class CDinosaurSignal : public CBaseEntity
 {
 public:
 	DECLARE_DATADESC();
@@ -41,7 +41,7 @@ BEGIN_DATADESC( CDinosaurSignal )
 END_DATADESC()
 
 IMPLEMENT_SERVERCLASS_ST( CDinosaurSignal, DT_DinosaurSignal )
-	SendPropString( SENDINFO(m_szSoundName) ), 
+	SendPropString( SENDINFO(m_szSoundName) ),
 	SendPropFloat( SENDINFO(m_flOuterRadius) ),
 	SendPropFloat( SENDINFO(m_flInnerRadius) ),
 	SendPropInt( SENDINFO(m_nSignalID) ),
@@ -64,7 +64,7 @@ int CDinosaurSignal::UpdateTransmitState()
 int CDinosaurSignal::DrawDebugTextOverlays( void )
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		NDebugOverlay::Sphere( GetAbsOrigin(), GetAbsAngles(), m_flInnerRadius, 255, 0, 0, 64, false, 0.1f );
 		NDebugOverlay::Sphere( GetAbsOrigin(), GetAbsAngles(), m_flOuterRadius, 0, 255, 0, 64, false, 0.1f );
@@ -74,7 +74,7 @@ int CDinosaurSignal::DrawDebugTextOverlays( void )
 #endif
 
 
-class CPortal_Dinosaur : public CPhysicsProp 
+class CPortal_Dinosaur : public CPhysicsProp
 {
 public:
 	DECLARE_CLASS( CPortal_Dinosaur, CPhysicsProp );
@@ -172,7 +172,7 @@ void CPortal_Dinosaur::Activate( void )
 	BaseClass::Activate();
 }
 
-struct radiolocs 
+struct radiolocs
 {
 	const char *mapname;
 	const char *soundname;
@@ -249,7 +249,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_03",
 		"UpdateItem.Dinosaur07",
-		5, 
+		5,
 		{ -53.2337, 78.181, 236 },
 		{ 0, 225, 0 },
 		{ 304, 0, -96 },
@@ -260,7 +260,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_03",
 		"UpdateItem.Dinosaur08",
-		6, 
+		6,
 		{ 428.112, 0.22326, 1201 },
 		{ 0, 180, 0 },
 		{ -581.096, 193.694, 1351 },
@@ -281,7 +281,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_05",
 		"UpdateItem.Dinosaur10",
-		8, 
+		8,
 		{ 64, 144, 160 },
 		{ 0, 270, 0 },
 		{ 64, 740, 7 },
@@ -291,7 +291,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_06",
 		"UpdateItem.Dinosaur11",
-		9, 
+		9,
 		{ 529, 315, 320 },
 		{ 0, 270, 0 },
 		{ 608, 128, -184 },
@@ -301,7 +301,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_07",
 		"UpdateItem.Dinosaur12",
-		10, 
+		10,
 		{ 192, -1546, 1425 },
 		{ 0, 113, 0 },
 		{ 272, -496, 1328 },
@@ -312,7 +312,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_07",
 		"UpdateItem.Dinosaur13",
-		11, 
+		11,
 		{ -144, -768, 256 },
 		{ 0, 90, 0 },
 		{ -192, -384, 176 },
@@ -322,7 +322,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_08",
 		"UpdateItem.Dinosaur14",
-		12, 
+		12,
 		{ 267, -378, 256 },
 		{ 0, 90, 0 },
 		{ -560, 96, 320 },
@@ -332,7 +332,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_09",
 		"UpdateItem.Dinosaur15",
-		13, 
+		13,
 		{ 634, 1308, 256 },
 		{ 0, 180, 0 },
 		{ 386.699, 1792.43, 7},
@@ -342,7 +342,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_10",
 		"UpdateItem.Dinosaur16",
-		14, 
+		14,
 		{ -1420, -2752, 76 },
 		{ 0, 0, 0  },
 		{ -1968, -2880, -334 },
@@ -353,7 +353,7 @@ static const radiolocs s_radiolocs[] =
 	{
 		"testchmb_a_10",
 		"UpdateItem.Dinosaur17",
-		15, 
+		15,
 		{ 112, 1392, -63 },
 		{ 0, 260, 0  },
 		{ -189, 1220, 65 },
@@ -474,7 +474,7 @@ void CSpawnDinosaurHack::LevelInitPreEntity()
 }
 
 // Spawn all the Dinosaurs and sstv images
-void CSpawnDinosaurHack::LevelInitPostEntity() 
+void CSpawnDinosaurHack::LevelInitPostEntity()
 {
 	if ( gpGlobals->eLoadType == MapLoad_LoadGame )
 	{
@@ -505,7 +505,7 @@ void CSpawnDinosaurHack::LevelInitPostEntity()
 			Msg( "Dinosaur pos: %f %f %f, ang: %f %f %f\n", loc.radiopos[0], loc.radiopos[1], loc.radiopos[2], loc.radioang[0], loc.radioang[1], loc.radioang[2] );
 			Msg( "Signal pos: %f %f %f, inner rad: %f, outter rad: %f\n", loc.soundpos[0], loc.soundpos[1], loc.soundpos[2], loc.soundinnerrad, loc.soundouterrad );
 #endif
-			
+
 			CPortal_Dinosaur *pDinosaur = SpawnDinosaur( loc );
 			CDinosaurSignal *pSignal = SpawnSignal( loc );
 
@@ -520,7 +520,7 @@ void CSpawnDinosaurHack::LevelInitPostEntity()
 				pDinosaur->Activate();
 			}
 		}
-	}		 
+	}
 }
 
 CPortal_Dinosaur *CSpawnDinosaurHack::SpawnDinosaur( radiolocs& loc )
@@ -529,11 +529,11 @@ CPortal_Dinosaur *CSpawnDinosaurHack::SpawnDinosaur( radiolocs& loc )
 	QAngle vSpawnAng ( loc.radioang[0], loc.radioang[1], loc.radioang[2] );
 
 	// origin and angles of zero means skip this Dinosaur creation and look for an existing radio
-	if ( loc.radiopos[0] == 0 && 
-		loc.radiopos[1] == 0 && 
-		loc.radiopos[2] == 0 && 
-		loc.radioang[0] == 0 && 
-		loc.radioang[1] == 0 && 
+	if ( loc.radiopos[0] == 0 &&
+		loc.radiopos[1] == 0 &&
+		loc.radiopos[2] == 0 &&
+		loc.radioang[0] == 0 &&
+		loc.radioang[1] == 0 &&
 		loc.radioang[2] == 0 )
 	{
 
@@ -615,4 +615,3 @@ void CSpawnDinosaurHack::ApplyMapSpecificHacks()
 		}
 	}
 }
-

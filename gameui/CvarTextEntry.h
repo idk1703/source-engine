@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,8 +24,8 @@ public:
 	MESSAGE_FUNC( OnTextChanged, "TextChanged" );
 	void			ApplyChanges(  bool immediate = false );
 	virtual void	ApplySchemeSettings(vgui::IScheme *pScheme);
-    void            Reset();
-    bool            HasBeenModified();
+	void            Reset();
+	bool            HasBeenModified();
 
 private:
 	char			*m_pszCvarName;

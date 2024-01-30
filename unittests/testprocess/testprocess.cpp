@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -39,7 +39,7 @@ static void GetInitialColors( )
 static WORD SetConsoleTextColor( int red, int green, int blue, int intensity )
 {
 	WORD ret = g_LastColor;
-	
+
 	g_LastColor = 0;
 	if( red )	g_LastColor |= FOREGROUND_RED;
 	if( green ) g_LastColor |= FOREGROUND_GREEN;
@@ -64,7 +64,7 @@ static void RestoreConsoleTextColor( WORD color )
 void CmdLib_Exit( int exitCode )
 {
 	TerminateProcess( GetCurrentProcess(), 1 );
-}	
+}
 
 CRITICAL_SECTION g_SpewCS;
 bool g_bSpewCSInitted = false;
@@ -81,7 +81,7 @@ SpewRetval_t CmdLib_SpewOutputFunc( SpewType_t type, char const *pMsg )
 
 	WORD old;
 	SpewRetval_t retVal;
-	
+
 	EnterCriticalSection( &g_SpewCS );
 	{
 		if (( type == SPEW_MESSAGE ) || (type == SPEW_LOG ))
@@ -100,7 +100,7 @@ SpewRetval_t CmdLib_SpewOutputFunc( SpewType_t type, char const *pMsg )
 			retVal = SPEW_DEBUGGER;
 
 #ifdef MPI
-			// VMPI workers don't want to bring up dialogs and suchlike.			
+			// VMPI workers don't want to bring up dialogs and suchlike.
 			if ( g_bUseMPI && !g_bMPIMaster )
 			{
 				VMPI_HandleCrash( pMsg, true );
@@ -123,7 +123,7 @@ SpewRetval_t CmdLib_SpewOutputFunc( SpewType_t type, char const *pMsg )
 			printf( "%s", pMsg );
 
 		OutputDebugString( pMsg );
-		
+
 		if ( type == SPEW_ERROR )
 		{
 			printf( "\n" );
@@ -185,7 +185,3 @@ int main( int argc, char **argv )
 
 	return 0;
 }
-
-
-
-

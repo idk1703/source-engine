@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -123,7 +123,7 @@ public:
 
 
 	// Safe version of Construct String that has the compiler infer the buffer size
-	template <size_t maxLenInChars, typename T > 
+	template <size_t maxLenInChars, typename T >
 	static void ConstructString_safe( OUT_Z_ARRAY T (&pDest)[maxLenInChars], const T *formatString, int numFormatParameters, ... )
 	{
 		va_list argList;
@@ -134,7 +134,7 @@ public:
 		va_end( argList );
 	}
 
-	template <size_t maxLenInChars, typename T > 
+	template <size_t maxLenInChars, typename T >
 	static void ConstructString_safe( OUT_Z_ARRAY T (&pDest)[maxLenInChars], const T *formatString, KeyValues *localizationVariables )
 	{
 		ConstructStringKeyValuesInternal( pDest, maxLenInChars * sizeof( *pDest ), formatString, localizationVariables );
@@ -476,7 +476,7 @@ public:
 				CLocalizedStringArg<V>( arg2 ).GetLocArg(),
 				CLocalizedStringArg<W>( arg3 ).GetLocArg(),
 				CLocalizedStringArg<X>( arg4 ).GetLocArg(),
-				CLocalizedStringArg<Y>( arg5 ).GetLocArg(), 
+				CLocalizedStringArg<Y>( arg5 ).GetLocArg(),
 				CLocalizedStringArg<Z>( arg6 ).GetLocArg() );
 		}
 	}

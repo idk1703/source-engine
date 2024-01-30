@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ public:
 		COMMAND_TEXT,
 		COMMAND_NUMCOMMANDS
 	};
-	
+
 	class ICachedRenderData
 	{
 	public:
@@ -55,10 +55,10 @@ public:
 						{
 							ReleaseCachedRenderData();
 						}
-		
+
 		virtual void	Read( CFileRead *pFile ) = 0;
 		virtual void	Write( IFileSystem* pFileSystem, FileHandle_t fp ) = 0;
-	
+
 		// Release cached render data. Usually used for releasing things like textures when
 		// the app is resizing..
 		void			ReleaseCachedRenderData()
@@ -71,7 +71,7 @@ public:
 		}
 
 	public:
-		
+
 		unsigned char	m_iCommand; // One of the COMMAND_ defines.
 
 		// The renderer can cache data with the commands to speedup the rendering after
@@ -150,7 +150,7 @@ public:
 
 
 public:
-	
+
 						CScratchPad3D( char const *pFilename, IFileSystem *pFileSystem, bool bAutoClear );
 
 	void				AutoFlush();
@@ -165,8 +165,8 @@ public:
 
 	virtual void		Release();
 
-	virtual void		SetMapping( 
-		Vector const &vInputMin, 
+	virtual void		SetMapping(
+		Vector const &vInputMin,
 		Vector const &vInputMax,
 		Vector const &vOutputMin,
 		Vector const &vOutputMax );
@@ -183,31 +183,31 @@ public:
 	virtual void		SetRenderState( RenderState state, unsigned long val );
 	virtual void		Clear();
 	virtual void		Flush();
-	virtual void		DrawImageBW( 
-		unsigned char const *pData, 
-		int width, 
-		int height, 
-		int pitchInBytes, 
-		bool bOutlinePixels=true, 
+	virtual void		DrawImageBW(
+		unsigned char const *pData,
+		int width,
+		int height,
+		int pitchInBytes,
+		bool bOutlinePixels=true,
 		bool bOutlineImage=false,
 		Vector *vCorners=NULL );
-	
+
 	// Draw an RGBA image.
 	// Corners are in this order: bottom-left, top-left, top-right, bottom-right.
-	virtual void		DrawImageRGBA( 
-		SPRGBA *pData, 
-		int width, 
-		int height, 
-		int pitchInBytes, 
+	virtual void		DrawImageRGBA(
+		SPRGBA *pData,
+		int width,
+		int height,
+		int pitchInBytes,
 		bool bOutlinePixels=true,
 		bool bOutlineImage=false,
 		Vector *vCorners=NULL );
 
 	void DrawPolygonsForPixels(
-			SPRGBA *pData, 
-			int width, 
-			int height, 
-			int pitchInBytes, 
+			SPRGBA *pData,
+			int width,
+			int height,
+			int pitchInBytes,
 			Vector *vCorners );
 
 public:

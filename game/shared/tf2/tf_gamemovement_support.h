@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassSupportData_t	*m_pSupportData; 
+	PlayerClassSupportData_t	*m_pSupportData;
 	Vector						m_vStandMins;
 	Vector						m_vStandMaxs;
 	Vector						m_vStandViewOffset;

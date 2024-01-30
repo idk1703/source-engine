@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ public:
 	bool	UsePerfectAccuracy( void ) { return m_bPerfectAccuracy; }
 
 	bool	TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, trace_t& tr ) { return false; } // force traces to test against hull
-	
+
 	void	BullseyeThink( void );
 	bool	CanBecomeRagdoll( void );
 
@@ -76,4 +76,3 @@ int FindBullseyesInCone( CBaseEntity **pList, int listMax, const Vector &coneOri
 
 
 #endif	// NPC_BULLSEYE_H
-

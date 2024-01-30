@@ -67,8 +67,8 @@ void C_Merasmus::Spawn( void )
 
 //-----------------------------------------------------------------------------
 // Return the origin for player observers tracking this target
-Vector C_Merasmus::GetObserverCamOrigin( void ) 
-{ 
+Vector C_Merasmus::GetObserverCamOrigin( void )
+{
 	return EyePosition();
 }
 

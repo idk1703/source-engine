@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ class CAI_NetworkManager;
 #define MAX_NODES 1500
 
 //-----------------------------------------------------------------------------
-// 
+//
 // Utility classes used by CAI_Network
 //
 //-----------------------------------------------------------------------------
@@ -95,24 +95,24 @@ public:
 
 	bool			IsConnected(int srcID, int destID);	// Use during run time
 	void			TestIsConnected(int startID, int endID);	// Use only for initialization!
-	
+
 	Vector			GetNodePosition( CBaseCombatCharacter *pNPC, int nodeID );
 	Vector			GetNodePosition( Hull_t hull, int nodeID );
 	float			GetNodeYaw( int nodeID );
 
-	static int		FindBSSmallest(CVarBitVec *bitString, float *float_array, int array_size); 
+	static int		FindBSSmallest(CVarBitVec *bitString, float *float_array, int array_size);
 
 	int				NearestNodeToPoint( CAI_BaseNPC* pNPC, const Vector &vecOrigin, bool bCheckVisiblity, INearestNodeFilter *pFilter );
 	int				NearestNodeToPoint( CAI_BaseNPC* pNPC, const Vector &vecOrigin, bool bCheckVisiblity = true ) { return NearestNodeToPoint( pNPC, vecOrigin, bCheckVisiblity, NULL ); }
 	int				NearestNodeToPoint(const Vector &vPosition, bool bCheckVisiblity = true );
-	
+
 	int				NumNodes() const 	{ return m_iNumNodes; }
 	CAI_Node*		GetNode( int id, bool bHandleError = true )
-	{ 
-		if ( id >= 0 && 
-			 id < m_iNumNodes ) 
+	{
+		if ( id >= 0 &&
+			 id < m_iNumNodes )
 		{
-			return m_pAInode[id]; 
+			return m_pAInode[id];
 		}
 
 		if ( bHandleError )
@@ -120,14 +120,14 @@ public:
 			static int warningCount = 0;
 			if ( ++warningCount < 10 )
 			{
-				AssertMsg2( 0, "Node (%i) out of range (%i total)\n", id, m_iNumNodes ); 
+				AssertMsg2( 0, "Node (%i) out of range (%i total)\n", id, m_iNumNodes );
 			}
 		}
-		return NULL; 
+		return NULL;
 	}
-	
+
 	CAI_Node**		AccessNodes() const	{ return m_pAInode; }
-	
+
 private:
 	friend class CAI_NetworkManager;
 
@@ -149,7 +149,7 @@ private:
 
 	struct NearNodeCache_T
 	{
-		Vector	vTestPosition;		
+		Vector	vTestPosition;
 		float	expiration;				// Time tested
 		int		node;					// Nearest Node to position
 		int		hull;					// Hull	type tested (or HULL_NONE is only visibility tested)
@@ -207,14 +207,14 @@ enum DebugNetOverlayBits_e
 // ----------------
 
 //-----------------------------------------------------------------------------
-// Useful utility function defined by AI_network.cpp 
+// Useful utility function defined by AI_network.cpp
 Vector PointOnLineNearestPoint(const Vector& vStartPos, const Vector& vEndPos, const Vector& vPoint);
 
 //-----------------------------------------------------------------------------
 
 // For now just using one big AI network
-extern CAI_NetworkManager *	g_pAINetworkManager;			
-extern CAI_Network * 		g_pBigAINet;			
+extern CAI_NetworkManager *	g_pAINetworkManager;
+extern CAI_Network * 		g_pBigAINet;
 
 //=============================================================================
 

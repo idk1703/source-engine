@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -16,27 +16,27 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHelpText::CHelpText(const char *mod) 
+CHelpText::CHelpText(const char *mod)
 {
 
 	char configName[200];
 	_snprintf(configName,200,"Admin\\HelpFile_%s.vdf",mod);
-	
-	m_pHelpData = new KeyValues ("Help");	
-	
+
+	m_pHelpData = new KeyValues ("Help");
+
 	// always load the basic definiton
 	LoadHelpFile("Admin\\HelpFile.vdf");
-	
+
 	// now load mod specific stuff
 	if( g_pFullFileSystem->FileExists(configName) )
 	{
-		LoadHelpFile(configName);	
-	} 
+		LoadHelpFile(configName);
+	}
 
 	// and load an admin mod page if you can find it
 	if( g_pFullFileSystem->FileExists("Admin\\HelpFile_adminmod.vdf") )
 	{
-		LoadHelpFile("Admin\\HelpFile_adminmod.vdf");	
+		LoadHelpFile("Admin\\HelpFile_adminmod.vdf");
 	}
 
 }
@@ -60,7 +60,7 @@ void CHelpText::LoadHelpFile(const char *filename)
 	}
 	else
 	{
-		
+
 	}
 
 }
@@ -77,8 +77,3 @@ const char *CHelpText::GetHelp(const char *keyname)
 		return NULL;
 	}
 }
-
-
-
-
-

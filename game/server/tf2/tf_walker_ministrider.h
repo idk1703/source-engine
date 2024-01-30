@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -36,10 +36,10 @@ protected:
 // CBaseObject.
 public:
 	virtual bool StartBuilding( CBaseEntity *pBuilder );
-	
+
 
 // CBaseEntity.
-public:	
+public:
 	virtual void Precache();
 	virtual void Spawn();
 	virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
@@ -52,7 +52,7 @@ public:
 
 
 // IServerVehicle.
-public:	
+public:
 	virtual bool IsPassengerVisible( int nRole );
 	virtual void SetPassenger( int nRole, CBasePlayer *pPassenger );
 
@@ -80,7 +80,7 @@ private:
 
 
 private:
-	
+
 	enum
 	{
 		STATE_CROUCHING=0,
@@ -111,7 +111,7 @@ private:
 
 	// Used to get around an anim event bug where it triggers events a bunch of times when an animation loops.
 	float m_flNextFootstepSoundTime;
-};	
+};
 
 
 #endif // TF_WALKER_MINISTRIDER_H

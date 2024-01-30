@@ -1,17 +1,17 @@
 /*
-     File:       AEMach.h
- 
-     Contains:   AppleEvent over mach_msg interfaces
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       AEMach.h
+
+		Contains:   AppleEvent over mach_msg interfaces
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef __AEMACH__
 #define __AEMACH__
@@ -59,11 +59,11 @@ extern "C" {
  * Of note is a new attribute for an AppleEvent, keyReplyPortAttr.
  * This specifies the mach_port_t to which an AppleEvent reply
  * should be directed.  By default, replies are sent to the
- * processes registered port where they are culled from the normal  
+ * processes registered port where they are culled from the normal
  * event stream if there is an outstanding AESend + kAEWaitReply.
  * But it may be desirable for a client to specify their own port to
  * receive quued replies.
- * (In the case of AESendMessage with kAEWaitReply specified, an 
+ * (In the case of AESendMessage with kAEWaitReply specified, an
  * anonymous port will be used to block until the reply is received.)
  *
  * Not supplied is a convenience routine to block a server and
@@ -71,12 +71,12 @@ extern "C" {
  * tech note.
  **/
 enum {
-  keyReplyPortAttr              = FOUR_CHAR_CODE('repp')
+	keyReplyPortAttr              = FOUR_CHAR_CODE('repp')
 };
 
 /* typeReplyPortAttr was misnamed and is deprecated; use keyReplyPortAttr instead. */
 enum {
-  typeReplyPortAttr             = keyReplyPortAttr
+	typeReplyPortAttr             = keyReplyPortAttr
 };
 
 /*-
@@ -86,11 +86,11 @@ enum {
  * are free to use this mach_port_t to add to a port set, if and
  * only if, you are not also using routines from HIToolbox.  In that
  * case, HIToolbox retains control of this port and AppleEvents are
- * dispatched through the main event loop.  
+ * dispatched through the main event loop.
  **/
 /*
  *  AEGetRegisteredMachPort()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -108,11 +108,11 @@ AEGetRegisteredMachPort(void);
  *
  *  AESendMessage(reply, NULL, kAENoReply, kAENormalPriority, kAEDefaultTimeout);
  *
- * The contents of the header are invalid after this call.  
+ * The contents of the header are invalid after this call.
  **/
 /*
  *  AEDecodeMessage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -120,9 +120,9 @@ AEGetRegisteredMachPort(void);
  */
 EXTERN_API_C( OSStatus )
 AEDecodeMessage(
-  mach_msg_header_t *  header,
-  AppleEvent *         event,
-  AppleEvent *         reply);       /* can be NULL */
+	mach_msg_header_t *  header,
+	AppleEvent *         event,
+	AppleEvent *         reply);       /* can be NULL */
 
 
 /*-
@@ -133,7 +133,7 @@ AEDecodeMessage(
  **/
 /*
  *  AEProcessMessage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -151,7 +151,7 @@ AEProcessMessage(mach_msg_header_t * header);
  **/
 /*
  *  AESendMessage()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available in CarbonLib 1.x, is available on Mac OS X version 10.0 and later
@@ -159,10 +159,10 @@ AEProcessMessage(mach_msg_header_t * header);
  */
 EXTERN_API_C( OSStatus )
 AESendMessage(
-  const AppleEvent *  event,
-  AppleEvent *        reply,                /* can be NULL */
-  AESendMode          sendMode,
-  long                timeOutInTicks);
+	const AppleEvent *  event,
+	AppleEvent *        reply,                /* can be NULL */
+	AESendMode          sendMode,
+	long                timeOutInTicks);
 
 
 
@@ -178,4 +178,3 @@ AESendMessage(
 #endif
 
 #endif /* __AEMACH__ */
-

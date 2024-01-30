@@ -23,7 +23,7 @@
 //-----------------------------------------------------------------------------
 // Global function to create the file menu
 //-----------------------------------------------------------------------------
-CToolMenuButton* CreateToolFileMenuButton( vgui::Panel *parent, const char *panelName, 
+CToolMenuButton* CreateToolFileMenuButton( vgui::Panel *parent, const char *panelName,
 	const char *text, vgui::Panel *pActionTarget, IFileMenuCallbacks *pCallbacks )
 {
 	return new CToolFileMenuButton( parent, panelName, text, pActionTarget, pCallbacks );
@@ -44,7 +44,7 @@ CToolFileMenuButton::CToolFileMenuButton( vgui::Panel *pParent, const char *pane
 	AddMenuItem( "saveas", "#ToolFileSaveAs", new KeyValues( "OnSaveAs" ), pActionSignalTarget  );
 	AddMenuItem( "close", "#ToolFileClose", new KeyValues( "OnClose" ), pActionSignalTarget  );
  	AddSeparator();
-	
+
 	// Add the Perforce menu options only if there is a valid P4 interface (SDK users won't have this)
 	if ( p4 )
 	{
@@ -240,10 +240,10 @@ void CToolFileMenuButton::OnPerforceListOpenFiles( )
 			pOpenType = "Integrate";
 			break;
 		}
-		 
+
 		if ( pOpenType )
 		{
-			pOpenedFiles->AddOperation( pOpenType, p4->String( openedFiles[i].m_sLocalFile ) );	
+			pOpenedFiles->AddOperation( pOpenType, p4->String( openedFiles[i].m_sLocalFile ) );
 		}
 	}
 

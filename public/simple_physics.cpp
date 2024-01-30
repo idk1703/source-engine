@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -27,10 +27,10 @@ void CSimplePhysics::Init( float flTimeStep )
 }
 
 
-void CSimplePhysics::Simulate( 
-	CSimplePhysics::CNode *pNodes, 
-	int nNodes, 
-	CSimplePhysics::IHelper *pHelper, 
+void CSimplePhysics::Simulate(
+	CSimplePhysics::CNode *pNodes,
+	int nNodes,
+	CSimplePhysics::IHelper *pHelper,
 	float dt,
 	float flDamp )
 {
@@ -48,7 +48,7 @@ void CSimplePhysics::Simulate(
 			// Apply forces.
 			Vector vAccel;
 			pHelper->GetNodeForces( pNodes, iNode, &vAccel );
- 			Assert( vAccel.IsValid() ); 
+ 			Assert( vAccel.IsValid() );
 
 			Vector vPrevPos = pNode->m_vPos;
 			pNode->m_vPos = pNode->m_vPos + (pNode->m_vPos - pNode->m_vPrevPos) * flDamp + vAccel * m_flTimeStepMul;
@@ -68,5 +68,3 @@ void CSimplePhysics::Simulate(
 		VectorLerp( pNode->m_vPrevPos, pNode->m_vPos, flInterpolant, pNode->m_vPredicted );
 	}
 }
-
-

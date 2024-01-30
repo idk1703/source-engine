@@ -1,11 +1,11 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
 //=============================================================================//
-	   
+
 
 #include "render_pch.h"
 #include "client.h"
@@ -85,7 +85,7 @@ void R_AnimateLight (void)
 		int length;
 		const char * lightstyle = (const char*) table->GetStringUserData( j, &length );
 		length--;
-		
+
 		if (!lightstyle || !lightstyle[0])
 		{
 			d_lightstylevalue[j] = 256;
@@ -101,7 +101,7 @@ void R_AnimateLight (void)
 			d_lightstylevalue[j] = k;
 			d_lightstyleframe[j] = r_framecount;
 		}
-	}	
+	}
 }
 
 /*
@@ -118,7 +118,7 @@ inline bool R_IsDLightAlreadyMarked( msurfacelighting_t *pLighting, int bit )
 	return (pLighting->m_nDLightFrame == r_framecount) && (pLighting->m_fDLightBits & bit);
 }
 
-// Mark the surface as changed by the specified dlight (so its texture gets updated when 
+// Mark the surface as changed by the specified dlight (so its texture gets updated when
 // it comes time to render).
 inline void R_MarkSurfaceDLight( SurfaceHandle_t surfID, msurfacelighting_t *pLighting, int bit)
 {
@@ -150,14 +150,14 @@ int R_TryLightMarkSurface( dlight_t *light, msurfacelighting_t *pLighting, Surfa
 	tex = MSurf_TexInfo( surfID );
 
 	Vector2D mins, maxs;
-	mins.Init( pLighting->m_LightmapMins[0], pLighting->m_LightmapMins[1] ); 
+	mins.Init( pLighting->m_LightmapMins[0], pLighting->m_LightmapMins[1] );
 	maxs.Init( mins.x + pLighting->m_LightmapExtents[0], mins.y + pLighting->m_LightmapExtents[1] );
 
 	// Project light center into texture coordinates
 	Vector2D vecCircleCenter;
-	vecCircleCenter.x = DotProduct (light->origin, tex->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) + 
+	vecCircleCenter.x = DotProduct (light->origin, tex->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) +
 		tex->lightmapVecsLuxelsPerWorldUnits[0][3];
-	vecCircleCenter.y = DotProduct (light->origin, tex->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) + 
+	vecCircleCenter.y = DotProduct (light->origin, tex->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) +
 		tex->lightmapVecsLuxelsPerWorldUnits[1][3];
 
 	// convert from world space to luxel space and convert to int
@@ -168,7 +168,7 @@ int R_TryLightMarkSurface( dlight_t *light, msurfacelighting_t *pLighting, Surfa
 		return 0;
 
 	// Ok, mark the surface as using this light.
-	R_MarkSurfaceDLight( surfID, pLighting, bit); 
+	R_MarkSurfaceDLight( surfID, pLighting, bit);
 	return 1;
 }
 
@@ -203,7 +203,7 @@ int R_MarkLightsLeaf( dlight_t *light, int bit, mleaf_t *pLeaf )
 	{
 		SurfaceHandle_t surfID = pHandle[i];
 		ASSERT_SURF_VALID( surfID );
-		
+
 		// only process leaf surfaces
 		if ( MSurf_Flags( surfID ) & SURFDRAW_NODE )
 			continue;
@@ -214,7 +214,7 @@ int R_MarkLightsLeaf( dlight_t *light, int bit, mleaf_t *pLeaf )
 			continue;
 
 		float dist = DotProduct( light->origin, MSurf_Plane( surfID ).normal) - MSurf_Plane( surfID ).dist;
-		
+
 		if ( dist > light->GetRadius() || dist < -light->GetRadius() )
 			continue;
 
@@ -234,16 +234,16 @@ int R_MarkLights (dlight_t *light, int bit, mnode_t *node)
 	cplane_t	*splitplane;
 	float		dist;
 	int			i;
-	
+
 	if (node->contents >= 0)
 	{
 		// This is a leaf, so check displacement surfaces and leaf faces
 		return R_MarkLightsLeaf( light, bit, (mleaf_t*)node );
 	}
-	
+
 	splitplane = node->plane;
 	dist = DotProduct (light->origin, splitplane->normal) - splitplane->dist;
-	
+
 	if (dist > light->GetRadius())
 	{
 		return R_MarkLights (light, bit, node->children[0]);
@@ -252,7 +252,7 @@ int R_MarkLights (dlight_t *light, int bit, mnode_t *node)
 	{
 		return R_MarkLights (light, bit, node->children[1]);
 	}
-		
+
 	// mark the polygons
 	int countMarked = 0;
 	SurfaceHandle_t surfID = SurfaceHandleFromIndex( node->firstsurface );
@@ -283,7 +283,7 @@ void R_MarkDLightsOnSurface( mnode_t* pNode )
 			continue;
 		if (l->flags & DLIGHT_NO_WORLD_ILLUMINATION)
 			continue;
-		
+
 		R_MarkLights ( l, 1<<i, pNode );
 	}
 }
@@ -313,7 +313,7 @@ static void ComputeTextureCoordsAtIntersection( mtexinfo_t* pTex, Vector const& 
 			pTex->textureVecsTexelsPerWorldUnits[0][3];
 		*textureT = DotProduct( pt, pTex->textureVecsTexelsPerWorldUnits[1].AsVector3D() ) +
 			pTex->textureVecsTexelsPerWorldUnits[1][3];
-		
+
 		*textureS /= pTex->material->GetMappingWidth();
 		*textureT /= pTex->material->GetMappingHeight();
 	}
@@ -323,7 +323,7 @@ static void ComputeTextureCoordsAtIntersection( mtexinfo_t* pTex, Vector const& 
 //-----------------------------------------------------------------------------
 // Computes s and t coords of texture at intersection pt
 //-----------------------------------------------------------------------------
-static void ComputeLightmapCoordsAtIntersection( msurfacelighting_t *pLighting, float ds, 
+static void ComputeLightmapCoordsAtIntersection( msurfacelighting_t *pLighting, float ds,
 								float dt, float *lightmapS, float *lightmapT )
 {
 	if( lightmapS && lightmapT )
@@ -369,7 +369,7 @@ static void ComputeLightmapColor( SurfaceHandle_t surfID, int ds, int dt, bool b
 	}
 
 	pLightmap += dt * smax + ds;
-	int nMaxMaps = bUseLightStyles ? MAXLIGHTMAPS : 1; 
+	int nMaxMaps = bUseLightStyles ? MAXLIGHTMAPS : 1;
 	for (int maps = 0 ; maps < nMaxMaps && pLighting->m_nStyles[maps] != 255 ; ++maps)
 	{
 		float scale = LightStyleValue( pLighting->m_nStyles[maps] );
@@ -389,7 +389,7 @@ static void ComputeLightmapColor( SurfaceHandle_t surfID, int ds, int dt, bool b
 //-----------------------------------------------------------------------------
 static void ComputeLightmapColorFromAverage( msurfacelighting_t *pLighting, bool bUseLightStyles, Vector& c )
 {
-	int nMaxMaps = bUseLightStyles ? MAXLIGHTMAPS : 1; 
+	int nMaxMaps = bUseLightStyles ? MAXLIGHTMAPS : 1;
 	for (int maps = 0 ; maps < nMaxMaps && pLighting->m_nStyles[maps] != 255 ; ++maps)
 	{
 		float scale = LightStyleValue( pLighting->m_nStyles[maps] );
@@ -405,33 +405,33 @@ static void ComputeLightmapColorFromAverage( msurfacelighting_t *pLighting, bool
 //-----------------------------------------------------------------------------
 // Tests a particular surface
 //-----------------------------------------------------------------------------
-static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f, 
+static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f,
 	Vector& c, LightVecState_t& state )
 {
 	// no lightmaps on this surface? punt...
 	// FIXME: should be water surface?
 	if (MSurf_Flags( surfID ) & SURFDRAW_NOLIGHT)
-		return false;	
+		return false;
 
 	// Compute the actual point
 	Vector pt;
 	VectorMA( state.m_Ray.m_Start, f, state.m_Ray.m_Delta, pt );
 
 	mtexinfo_t* pTex = MSurf_TexInfo( surfID );
-	
-	// See where in lightmap space our intersection point is 
+
+	// See where in lightmap space our intersection point is
 	float s, t;
-	s = DotProduct (pt, pTex->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) + 
+	s = DotProduct (pt, pTex->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) +
 		pTex->lightmapVecsLuxelsPerWorldUnits[0][3];
-	t = DotProduct (pt, pTex->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) + 
+	t = DotProduct (pt, pTex->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) +
 		pTex->lightmapVecsLuxelsPerWorldUnits[1][3];
 
 	// Not in the bounds of our lightmap? punt...
 	msurfacelighting_t *pLighting = SurfaceLighting( surfID );
-	if( s < pLighting->m_LightmapMins[0] || 
+	if( s < pLighting->m_LightmapMins[0] ||
 		t < pLighting->m_LightmapMins[1] )
-		return false;	
-	
+		return false;
+
 	// assuming a square lightmap (FIXME: which ain't always the case),
 	// lets see if it lies in that rectangle. If not, punt...
 	float ds = s - pLighting->m_LightmapMins[0];
@@ -440,7 +440,7 @@ static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f,
 	{
 		worldbrushdata_t *pBrushData = host_state.worldbrush;
 
-		// 
+		//
 		float	lightMaxs[2];
 		lightMaxs[ 0 ] = pLighting->m_LightmapMins[0];
 		lightMaxs[ 1 ] = pLighting->m_LightmapMins[1];
@@ -449,14 +449,14 @@ static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f,
 		{
 			int e = pBrushData->vertindices[MSurf_FirstVertIndex( surfID )+i];
 			mvertex_t *v = &pBrushData->vertexes[e];
-			
+
 			int j;
 			for ( j=0 ; j<2 ; j++)
 			{
 				float sextent, textent;
-				sextent = DotProduct (v->position, pTex->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) + 
+				sextent = DotProduct (v->position, pTex->lightmapVecsLuxelsPerWorldUnits[0].AsVector3D()) +
 					pTex->lightmapVecsLuxelsPerWorldUnits[0][3] - pLighting->m_LightmapMins[0];
-				textent = DotProduct (v->position, pTex->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) + 
+				textent = DotProduct (v->position, pTex->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) +
 					pTex->lightmapVecsLuxelsPerWorldUnits[1][3] - pLighting->m_LightmapMins[1];
 
 				if ( sextent > lightMaxs[ 0 ] )
@@ -470,12 +470,12 @@ static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f,
 			}
 		}
 		if( ds > lightMaxs[0] || dt > lightMaxs[1] )
-			return false;	
+			return false;
 	}
 	else
 	{
 		if( ds > pLighting->m_LightmapExtents[0] || dt > pLighting->m_LightmapExtents[1] )
-			return false;	
+			return false;
 	}
 
 	// Store off the hit distance...
@@ -497,7 +497,7 @@ static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f,
 	{
 		// Compute lightmap coords
 		ComputeLightmapCoordsAtIntersection( pLighting, ds, dt, state.m_pLightmapS, state.m_pLightmapT );
-		
+
 		// Check out the value of the lightmap at the intersection point
 		ComputeLightmapColor( surfID, (int)ds, (int)dt, state.m_bUseLightStyles, c );
 	}
@@ -510,13 +510,13 @@ static bool FASTCALL FindIntersectionAtSurface( SurfaceHandle_t surfID, float f,
 //-----------------------------------------------------------------------------
 
 // returns a surfID
-static SurfaceHandle_t FindIntersectionSurfaceAtNode( mnode_t *node, float t, 
+static SurfaceHandle_t FindIntersectionSurfaceAtNode( mnode_t *node, float t,
 	Vector& c, LightVecState_t& state )
 {
 	SurfaceHandle_t surfID = SurfaceHandleFromIndex( node->firstsurface );
 	for (int i=0 ; i<node->numsurfaces ; ++i, ++surfID)
 	{
-		// Don't immediately return when we hit sky; 
+		// Don't immediately return when we hit sky;
 		// we may actually hit another surface
 		if (MSurf_Flags( surfID ) & SURFDRAW_SKY)
 		{
@@ -551,7 +551,7 @@ static SurfaceHandle_t R_LightVecDisplacementChain( LightVecState_t& state, bool
 
 	for ( int i = 0; i < state.m_LightTestDisps.Count(); i++ )
 	{
-	
+
 		float dist;
 		Vector2D luv, tuv;
 		IDispInfo *pDispInfo = state.m_LightTestDisps[i];
@@ -589,7 +589,7 @@ static void AddDisplacementsInLeafToTestList( mleaf_t* pLeaf, LightVecState_t& s
 	// add displacement surfaces
 	for ( int i = 0; i < pLeaf->dispCount; i++ )
 	{
-		// NOTE: We're not using the displacement's touched method here 
+		// NOTE: We're not using the displacement's touched method here
 		// because we're just using the parent surface's visframe in the
 		// surface add methods below
 		IDispInfo *pDispInfo = MLeaf_Disaplcement( pLeaf, i );
@@ -610,7 +610,7 @@ static void AddDisplacementsInLeafToTestList( mleaf_t* pLeaf, LightVecState_t& s
 //-----------------------------------------------------------------------------
 
 // returns surfID
-static SurfaceHandle_t FASTCALL FindIntersectionSurfaceAtLeaf( mleaf_t *pLeaf, 
+static SurfaceHandle_t FASTCALL FindIntersectionSurfaceAtLeaf( mleaf_t *pLeaf,
 					float start, float end, Vector& c, LightVecState_t& state )
 {
 	Vector pt;
@@ -649,7 +649,7 @@ static SurfaceHandle_t FASTCALL FindIntersectionSurfaceAtLeaf( mleaf_t *pLeaf,
 
 		float front = startDotN + start * deltaDotN - pPlane->dist;
 		float back = startDotN + end * deltaDotN - pPlane->dist;
-		
+
 		int side = front < 0.f;
 
 		// Blow it off if it doesn't split the plane...
@@ -689,7 +689,7 @@ SurfaceHandle_t RecursiveLightPoint (mnode_t *node, float start, float end,
 		// Check all the faces at the leaves
 		return FindIntersectionSurfaceAtLeaf( (mleaf_t*)node, start, end, c, state );
 	}
-	
+
 	// Determine which side of the node plane our points are on
 	// FIXME: optimize for axial
 	cplane_t* plane = node->plane;
@@ -700,7 +700,7 @@ SurfaceHandle_t RecursiveLightPoint (mnode_t *node, float start, float end,
 	float front = startDotN + start * deltaDotN - plane->dist;
 	float back = startDotN + end * deltaDotN - plane->dist;
 	int side = front < 0;
-	
+
 	// If they're both on the same side of the plane, don't bother to split
 	// just check the appropriate child
 	SurfaceHandle_t surfID;
@@ -709,16 +709,16 @@ SurfaceHandle_t RecursiveLightPoint (mnode_t *node, float start, float end,
 		surfID = RecursiveLightPoint (node->children[side], start, end, c, state);
 		return surfID;
 	}
-	
+
 	// calculate mid point
 	float frac = front / (front-back);
 	float mid = start * (1.0f - frac) + end * frac;
-	
-	// go down front side	
+
+	// go down front side
 	surfID = RecursiveLightPoint (node->children[side], start, mid, c, state );
 	if ( IS_SURF_VALID( surfID ) )
 		return surfID;		// hit something
-				
+
 	// check for impact on this node
 	surfID = FindIntersectionSurfaceAtNode( node, mid, c, state );
 	if ( IS_SURF_VALID( surfID ) )
@@ -744,14 +744,14 @@ void R_LightVecUseModel( model_t* pModel )
 // lightmapS/T is in [0,1] within the space of the surface.
 // returns surfID
 //-----------------------------------------------------------------------------
-SurfaceHandle_t R_LightVec (const Vector& start, const Vector& end, bool bUseLightStyles, Vector& c, 
+SurfaceHandle_t R_LightVec (const Vector& start, const Vector& end, bool bUseLightStyles, Vector& c,
 		float *textureS, float *textureT, float *lightmapS, float *lightmapT )
 {
 	VPROF_INCREMENT_COUNTER( "R_LightVec", 1 );
 
 	SurfaceHandle_t retSurfID;
 	SurfaceHandle_t dispSurfID;
-	
+
 	// We're using the vis frame here for lightvec tests
 	// to make sure we test each displacement only once
 	++r_surfacevisframe;
@@ -768,7 +768,7 @@ SurfaceHandle_t R_LightVec (const Vector& start, const Vector& end, bool bUseLig
 
 	c[0] = c[1] = c[2] = 0.0f;
 
-	model_t* model = s_pLightVecModel ? s_pLightVecModel : host_state.worldmodel; 
+	model_t* model = s_pLightVecModel ? s_pLightVecModel : host_state.worldmodel;
 	retSurfID = RecursiveLightPoint(&model->brush.pShared->nodes[model->brush.firstnode],
 		0.0f, 1.0f, c, state );
 
@@ -808,7 +808,7 @@ colorVec R_LightPoint (Vector& p)
 	Vector		end;
 	colorVec	c;
 	Vector		color;
-	
+
 	end[0] = p[0];
 	end[1] = p[1];
 	end[2] = p[2] - 2048;

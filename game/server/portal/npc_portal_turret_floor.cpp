@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ extern int ACT_FLOOR_TURRET_FIRE;
 int ACT_FLOOR_TURRET_FIRE2;
 
 
-const char *g_TalkNames[] = 
+const char *g_TalkNames[] =
 {
 	"NPC_FloorTurret.TalkSearch",
 	"NPC_FloorTurret.TalkAutosearch",
@@ -74,7 +74,7 @@ const char *g_TalkNames[] =
 	NULL							// Must have NULL at end of list in case more states are added to base turret!
 };
 
-const char *g_PortalTalkNames[ PORTAL_TURRET_STATE_TOTAL - TURRET_STATE_TOTAL ] = 
+const char *g_PortalTalkNames[ PORTAL_TURRET_STATE_TOTAL - TURRET_STATE_TOTAL ] =
 {
 	"NPC_FloorTurret.TalkDisabled",
 	"NPC_FloorTurret.TalkCollide",
@@ -88,7 +88,7 @@ const char* GetTurretTalkName( int iState )
 {
 	if ( iState < TURRET_STATE_TOTAL )
 		return g_TalkNames[ iState ];
-	
+
 	return g_PortalTalkNames[ iState - TURRET_STATE_TOTAL ];
 }
 
@@ -261,7 +261,7 @@ void CNPC_Portal_FloorTurret::Precache( void )
 // Purpose: Spawn the entity
 //-----------------------------------------------------------------------------
 void CNPC_Portal_FloorTurret::Spawn( void )
-{ 
+{
 	BaseClass::Spawn();
 
 	m_iBarrelAttachments[ 0 ] = LookupAttachment( "LFT_Gun1_Muzzle" );
@@ -277,7 +277,7 @@ void CNPC_Portal_FloorTurret::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Portal_FloorTurret::Activate( void )
 {
@@ -321,8 +321,8 @@ void CNPC_Portal_FloorTurret::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &info - 
+// Purpose:
+// Input  : &info -
 //-----------------------------------------------------------------------------
 int CNPC_Portal_FloorTurret::OnTakeDamage( const CTakeDamageInfo &info )
 {
@@ -355,7 +355,7 @@ Vector CNPC_Portal_FloorTurret::GetAutoAimCenter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNPC_Portal_FloorTurret::OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason )
 {
@@ -394,9 +394,9 @@ bool CNPC_Portal_FloorTurret::PreThink( turretState_e state )
 		iNewState = PORTAL_TURRET_DISSOLVED;
 
 	// Need to play these sounds immediately
-	if ( m_iLastState != iNewState && ( ( iNewState == TURRET_TIPPED && !m_bDelayTippedTalk ) || 
-										iNewState == TURRET_RETIRING || 
-										iNewState == PORTAL_TURRET_DISSOLVED || 
+	if ( m_iLastState != iNewState && ( ( iNewState == TURRET_TIPPED && !m_bDelayTippedTalk ) ||
+										iNewState == TURRET_RETIRING ||
+										iNewState == PORTAL_TURRET_DISSOLVED ||
 										iNewState == PORTAL_TURRET_PICKUP ) )
 	{
 		m_fNextTalk = gpGlobals->curtime -1.0f;
@@ -672,9 +672,9 @@ float CNPC_Portal_FloorTurret::GetAttackDamageScale( CBaseEntity *pVictim )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-Vector CNPC_Portal_FloorTurret::GetAttackSpread( CBaseCombatWeapon *pWeapon, CBaseEntity *pTarget ) 
+Vector CNPC_Portal_FloorTurret::GetAttackSpread( CBaseCombatWeapon *pWeapon, CBaseEntity *pTarget )
 {
 	WeaponProficiency_t weaponProficiency = WEAPON_PROFICIENCY_AVERAGE;
 
@@ -748,7 +748,7 @@ void CNPC_Portal_FloorTurret::ActiveThink( void )
 	bool bEnemyVisible = FVisible( pEnemy ) && pEnemy->IsAlive();
 
 	//Calculate dir and dist to enemy
-	Vector	vecDirToEnemy = vecMidEnemy - vecMid;	
+	Vector	vecDirToEnemy = vecMidEnemy - vecMid;
 	m_flDistToEnemy = VectorNormalize( vecDirToEnemy );
 
 	// If the enemy isn't in the normal fov, check the fov through portals
@@ -764,7 +764,7 @@ void CNPC_Portal_FloorTurret::ActiveThink( void )
 			UTIL_Portal_PointTransform( pPortal->m_hLinkedPortal->MatrixThisToLinked(), vecMidEnemy, vecMidEnemyTransformed );
 
 			//Calculate dir and dist to enemy
-			Vector	vecDirToEnemyTransformed = vecMidEnemyTransformed - vecMid;	
+			Vector	vecDirToEnemyTransformed = vecMidEnemyTransformed - vecMid;
 			float	flDistToEnemyTransformed = VectorNormalize( vecDirToEnemyTransformed );
 
 			// If it's not visible through normal means or the enemy is closer through the portal, use the translated info
@@ -899,7 +899,7 @@ void CNPC_Portal_FloorTurret::ActiveThink( void )
 			}
 			else
 			{
-				if ( dot3d >= minCos3d ) 
+				if ( dot3d >= minCos3d )
 				{
 					SetActivity( (Activity) ACT_FLOOR_TURRET_OPEN_IDLE );
 					SetActivity( (Activity)( ( m_bShootWithBottomBarrels ) ? ( ACT_FLOOR_TURRET_FIRE2 ) : ( ACT_FLOOR_TURRET_FIRE ) ) );
@@ -910,7 +910,7 @@ void CNPC_Portal_FloorTurret::ActiveThink( void )
 #endif
 				}
 			}
-		} 
+		}
 	}
 	else
 	{
@@ -983,7 +983,7 @@ void CNPC_Portal_FloorTurret::SearchThink( void )
 		bool bEnemyVisible = FVisible( pEnemy );
 
 		//Calculate dir and dist to enemy
-		Vector	vecDirToEnemy = vecMidEnemy - vecMid;	
+		Vector	vecDirToEnemy = vecMidEnemy - vecMid;
 		m_flDistToEnemy = VectorNormalize( vecDirToEnemy );
 
 		// If the enemy isn't in the normal fov, check the fov through portals
@@ -997,7 +997,7 @@ void CNPC_Portal_FloorTurret::SearchThink( void )
 			UTIL_Portal_PointTransform( pPortal->m_hLinkedPortal->MatrixThisToLinked(), vecMidEnemy, vecMidEnemyTransformed );
 
 			//Calculate dir and dist to enemy
-			Vector	vecDirToEnemyTransformed = vecMidEnemyTransformed - vecMid;	
+			Vector	vecDirToEnemyTransformed = vecMidEnemyTransformed - vecMid;
 			float	flDistToEnemyTransformed = VectorNormalize( vecDirToEnemyTransformed );
 
 			// If it's not visible through normal means or the enemy is closer through the portal, use the translated info
@@ -1144,7 +1144,7 @@ void CNPC_Portal_FloorTurret::TippedThink( void )
 			}
 		}
 		else if ( IsActivityFinished() )
-		{	
+		{
 			m_bActive		= false;
 			m_flLastSight	= 0;
 

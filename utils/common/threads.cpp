@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -83,7 +83,7 @@ void ThreadWorkerFunction( int iThread, void *pUserData )
 		work = GetThreadWork ();
 		if (work == -1)
 			break;
-		 
+
 		workfunction( iThread, work );
 	}
 }
@@ -92,7 +92,7 @@ void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, ThreadWorkerFn 
 {
 	if (numthreads == -1)
 		ThreadSetDefault ();
-	
+
 	workfunction = func;
 	RunThreadsOn (workcnt, showpacifier, ThreadWorkerFunction);
 }
@@ -218,7 +218,7 @@ void RunThreads_End()
 
 	threaded = false;
 }
-	
+
 
 /*
 =============
@@ -241,7 +241,7 @@ void RunThreadsOn( int workcnt, qboolean showpacifier, RunThreadsFn fn, void *pU
 	return;
 #endif
 
-	
+
 	RunThreads_Start( fn, pUserData );
 	RunThreads_End();
 
@@ -253,5 +253,3 @@ void RunThreadsOn( int workcnt, qboolean showpacifier, RunThreadsFn fn, void *pU
 		printf (" (%i)\n", end-start);
 	}
 }
-
-

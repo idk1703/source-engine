@@ -40,7 +40,7 @@ struct AI_StandoffParams_t
 	int 					oddsCover;
 	bool					fStayAtCover;
 	float					flAbandonTimeLimit;
-	
+
 	DECLARE_SIMPLE_DATADESC();
 };
 
@@ -67,7 +67,7 @@ class CAI_MappedActivityBehavior_Temporary : public CAI_SimpleBehavior
 {
 	DECLARE_CLASS( CAI_MappedActivityBehavior_Temporary, CAI_SimpleBehavior );
 public:
-	CAI_MappedActivityBehavior_Temporary( CAI_BaseNPC *pOuter = NULL ) 
+	CAI_MappedActivityBehavior_Temporary( CAI_BaseNPC *pOuter = NULL )
 	 :	CAI_SimpleBehavior(pOuter)
 	{
 		SetDefLessFunc( m_ActivityMap );
@@ -119,23 +119,23 @@ protected:
 	virtual void OnUpdateShotRegulator();
 
 	Activity 	NPC_TranslateActivity( Activity eNewActivity );
-	
+
 	bool		IsValidCover( const Vector &vecCoverLocation, CAI_Hint const *pHint );
 	bool		IsValidShootPosition( const Vector &vecCoverLocation, CAI_Node *pNode, CAI_Hint const *pHint );
 
 	void		SetPosture( AI_Posture_t posture );
-	
+
 	void		OnChangeHintGroup( string_t oldGroup, string_t newGroup );
 
 	virtual int SelectScheduleUpdateWeapon();
 	virtual int SelectScheduleCheckCover();
 	virtual int SelectScheduleEstablishAim();
 	virtual int SelectScheduleAttack();
-	
+
 	bool 		PlayerIsLeading();
 	CBaseEntity *GetPlayerLeader();
 	bool		GetDirectionOfStandoff( Vector *pDir );
-			
+
 	void UpdateBattleLines();
 
 	Hint_e GetHintType();
@@ -149,9 +149,9 @@ protected:
 
 	// Standoff overrides base AI crouch handling
 	bool		IsCrouching( void ) { return false; }
-	
+
 private:
-	
+
 	//----------------------------
 
 	enum
@@ -165,7 +165,7 @@ private:
 	};
 
 	DEFINE_CUSTOM_SCHEDULE_PROVIDER;
-	
+
 	//---------------------------------
 	// @TODO (toml 07-30-03): replace all these booleans with a singe 32 bit unsigned & bit flags
 
@@ -173,17 +173,17 @@ private:
 	bool			m_fTestNoDamage;
 
 	Vector			m_vecStandoffGoalPosition;
-	
+
 	AI_Posture_t	m_posture;
-	
+
 	AI_StandoffParams_t m_params;
 	EHANDLE			m_hStandoffGoal;
-	
+
 	bool 			m_fTakeCover;
 	float			m_SavedDistTooFar;
 	bool			m_fForceNewEnemy;
 	CAI_MoveMonitor m_PlayerMoveMonitor;
-	
+
 	CSimTimer		m_TimeForceCoverHint;
 	CSimTimer		m_TimePreventForceNewEnemy;
 	CRandSimTimer	m_RandomCoverChangeTimer;
@@ -193,7 +193,7 @@ private:
 	float m_flSavedMinRest, m_flSavedMaxRest;
 
 	//---------------------------------
-	
+
 	struct BattleLine_t
 	{
 		Vector point;
@@ -205,11 +205,11 @@ private:
 	bool					 m_fIgnoreFronts;
 
 	//---------------------------------
-	
+
 	bool						m_bHasLowCoverActivity;
 
 	//---------------------------------
-	
+
 	DECLARE_DATADESC();
 };
 

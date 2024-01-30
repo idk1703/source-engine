@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -120,7 +120,7 @@ void CSGPlaneList( leafvis_t *pVis, CUtlVector<cplane_t> &planeList)
 
 	// compute a point inside the volume defined by these planes
 	Vector insidePoint = CSGInsidePoint( planeList.Base(), planeList.Count() );
-	// move the planes so that the inside point is at the origin 
+	// move the planes so that the inside point is at the origin
 	// NOTE: This is to maximize precision for the CSG operations
 	TranslatePlaneList( planeList.Base(), planeList.Count(), -insidePoint );
 
@@ -129,7 +129,7 @@ void CSGPlaneList( leafvis_t *pVis, CUtlVector<cplane_t> &planeList)
 	{
 		// Build a big-ass poly in this plane
 		int vertCount = PolyFromPlane( vertsIn, planeList[i].normal, planeList[i].dist );	// BaseWindingForPlane()
-		
+
 		// Now chop it by every other plane
 		int j;
 		for ( j = 0; j < planeCount; j++ )
@@ -144,7 +144,7 @@ void CSGPlaneList( leafvis_t *pVis, CUtlVector<cplane_t> &planeList)
 
 			// Chop the polygon against this plane
 			vertCount = ClipPolyToPlane( vertsIn, vertCount, vertsOut, planeList[j].normal, planeList[j].dist );
-			
+
 			// Just copy the verts each time, don't bother swapping pointers (efficiency is not a goal here)
 			for ( int k = 0; k < vertCount; k++ )
 			{
@@ -183,7 +183,7 @@ void AddLeafPortals( leafvis_t *pLeafvis, int leafIndex )
 
 	// Build a list of inward pointing planes of the tree descending to this
 	PlaneList( leafIndex, host_state.worldmodel, planeList );
-	
+
 	VectorCopy( vec3_origin, normal );
 	// Add world bounding box planes in case the world isn't closed
 	// x-axis
@@ -191,13 +191,13 @@ void AddLeafPortals( leafvis_t *pLeafvis, int leafIndex )
 	AddPlaneToList( planeList, normal, MAX_COORD_INTEGER, true );
 	AddPlaneToList( planeList, normal, -MAX_COORD_INTEGER, false );
 	normal[0] = 0;
-	
+
 	// y-axis
 	normal[1] = 1;
 	AddPlaneToList( planeList, normal, MAX_COORD_INTEGER, true );
 	AddPlaneToList( planeList, normal, -MAX_COORD_INTEGER, false );
 	normal[1] = 0;
-	
+
 	// z-axis
 	normal[2] = 1;
 	AddPlaneToList( planeList, normal, MAX_COORD_INTEGER, true );
@@ -313,7 +313,7 @@ void DrawLeafvis_Solid( leafvis_t *pVis )
 	CMatRenderContextPtr pRenderContext( materials );
 
 	int vert = 0;
-	
+
 	Vector lightNormal(1,1,1);
 	VectorNormalize(lightNormal);
 	pRenderContext->Bind( g_pMaterialDebugFlat );
@@ -395,7 +395,7 @@ void RecomputeClipbrushes( bool bEnabled )
 		g_ClipVis[v] = new leafvis_t;
 		g_ClipVis[v]->color.Init( v != 1 ? 1.0f : 0.5, 0.0f, v != 0 ? 1.0f : 0.0f );
 		CCollisionBSPData *pBSP = GetCollisionBSPData();
-		int lastBrush = pBSP->numbrushes; 
+		int lastBrush = pBSP->numbrushes;
 		if ( pBSP->numcmodels > 1 )
 		{
 			lastBrush = FindMinBrush( pBSP, pBSP->map_cmodels[1].headnode, lastBrush );
@@ -449,7 +449,7 @@ static Vector LeafAmbientSamplePos( int leafIndex, const mleafambientlighting_t 
 	out.x += float(sample.x) * pLeaf->m_vecHalfDiagonal.x * (2.0f / 255.0f);
 	out.y += float(sample.y) * pLeaf->m_vecHalfDiagonal.y * (2.0f / 255.0f);
 	out.z += float(sample.z) * pLeaf->m_vecHalfDiagonal.z * (2.0f / 255.0f);
-	
+
 	return out;
 }
 

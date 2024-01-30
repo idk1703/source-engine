@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -50,7 +50,7 @@ public:
 
 protected:
 	KeyValues *m_pKeyValues;
-	
+
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CVkeyeditDoc)

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -32,7 +32,7 @@ enum Visibility_t
 };
 
 
-class CCamera  
+class CCamera
 {
 	public:
 
@@ -43,18 +43,18 @@ class CCamera
 		void Pitch(float fDegrees);
 		void Roll(float fDegrees);
 		void Yaw(float fDegrees);
-		
+
 		void MoveForward(float fUnits);
 		void MoveRight(float fUnits);
 		void MoveUp(float fUnits);
-				
+
 		void GetViewPoint(Vector& fViewPoint) const;
 		void GetViewForward(Vector& ViewForward) const;
 		void GetViewUp(Vector& ViewUp) const;
 		void GetViewRight(Vector& ViewRight) const;
-		
+
 		void GetViewMatrix(VMatrix& Matrix);
-        void GetProjMatrix(VMatrix& Matrix);
+	void GetProjMatrix(VMatrix& Matrix);
 		void GetViewProjMatrix( VMatrix &Matrix );
 
 		float GetYaw(void);
@@ -81,11 +81,11 @@ class CCamera
 		void	SetPerspective(float fFOV, float fNearZ, float fFarZ);
 		void	GetFrustumPlanes( Vector4D Planes[6] );
 		float	GetFOV(void);
-		
+
 		void	SetOrthographic(float fZoom, float fNearZ, float fFarZ);
 		void	SetZoom(float fScale);
-        void	Zoom(float fScale);
-        float	GetZoom(void);
+	void	Zoom(float fScale);
+	float	GetZoom(void);
 
 		void	WorldToView( const Vector& vWorld, Vector2D &vView);
 		void	ViewToWorld( const Vector2D &vView, Vector& vWorld);
@@ -108,7 +108,7 @@ protected:
 		float		m_fHorizontalFOV;	// Horizontal field of view in degrees.
 		float		m_fNearClip;		// Distance to near clipping plane.
 		float		m_fFarClip;			// Distance to far clipping plane.
-        float		m_fZoom;			// Orthographic zoom scale
+	float		m_fZoom;			// Orthographic zoom scale
 
 		float		m_fScaleHorz;
 		float		m_fScaleVert;

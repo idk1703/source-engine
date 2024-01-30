@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -39,7 +39,7 @@
 typedef enum
 {
 //	TURRET_ANIM_NONE = 0,
-	TURRET_ANIM_FIRE = 0,	
+	TURRET_ANIM_FIRE = 0,
 	TURRET_ANIM_SPIN,
 	TURRET_ANIM_DEPLOY,
 	TURRET_ANIM_RETIRE,
@@ -61,7 +61,7 @@ public:
 	void Spawn(void);
 	virtual void Precache(void);
 	void EXPORT TurretUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	
+
 	virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator );
 
 	virtual int OnTakeDamage( const CTakeDamageInfo &info );
@@ -99,7 +99,7 @@ public:
 	void SetTurretAnim(TURRET_ANIM anim);
 	int MoveTurret(void);
 	virtual void Shoot(Vector &vecSrc, Vector &vecDirToEnemy) { };
-  
+
 	float m_flMaxSpin;		// Max time to spin the barrel w/o a target
 	int m_iSpin;
 
@@ -178,7 +178,7 @@ BEGIN_DATADESC( CNPC_BaseTurret )
 	DEFINE_KEYFIELD( m_iOrientation, FIELD_INTEGER, "orientation" ),
 	DEFINE_KEYFIELD( m_iSearchSpeed, FIELD_INTEGER, "searchspeed" ),
 	DEFINE_KEYFIELD( m_iBaseTurnRate, FIELD_INTEGER, "turnrate" ),
-	
+
 	//Use
 	DEFINE_USEFUNC( TurretUse ),
 
@@ -205,7 +205,7 @@ END_DATADESC()
 
 
 void CNPC_BaseTurret::Spawn()
-{ 
+{
 	Precache( );
 	SetNextThink( gpGlobals->curtime + 1 );
 	SetMoveType( MOVETYPE_FLY );
@@ -219,7 +219,7 @@ void CNPC_BaseTurret::Spawn()
 	AddFlag( FL_NPC );
 	SetUse( &CNPC_BaseTurret::TurretUse );
 
-	if (( m_spawnflags & SF_MONSTER_TURRET_AUTOACTIVATE ) 
+	if (( m_spawnflags & SF_MONSTER_TURRET_AUTOACTIVATE )
 		&& !( m_spawnflags & SF_MONSTER_TURRET_STARTINACTIVE ))
 	{
 		m_iAutoStart = true;
@@ -246,7 +246,7 @@ void CNPC_BaseTurret::Spawn()
 
 void CNPC_BaseTurret::Precache()
 {
-	m_iAmmoType = GetAmmoDef()->Index("12mmRound");	
+	m_iAmmoType = GetAmmoDef()->Index("12mmRound");
 
 	PrecacheScriptSound( "Turret.Alert" );
 	PrecacheScriptSound( "Turret.Die" );
@@ -270,7 +270,7 @@ void CNPC_BaseTurret::TraceAttack( const CTakeDamageInfo &info, const Vector &ve
 {
 	CTakeDamageInfo ainfo = info;
 
-	if ( ptr->hitgroup == 10 )	
+	if ( ptr->hitgroup == 10 )
 	{
 		// hit armor
 		if ( m_flDamageTime != gpGlobals->curtime || (random->RandomInt(0,10) < 1) )
@@ -291,7 +291,7 @@ void CNPC_BaseTurret::TraceAttack( const CTakeDamageInfo &info, const Vector &ve
 }
 
 //=========================================================
-// TakeDamage - take damage. 
+// TakeDamage - take damage.
 //=========================================================
 int CNPC_BaseTurret::OnTakeDamage_Alive( const CTakeDamageInfo &inputInfo )
 {
@@ -350,8 +350,8 @@ int CNPC_BaseTurret::OnTakeDamage( const CTakeDamageInfo &info )
 			{
 				pPhysics->EnableCollisions( false );
 			}
-			
-			Event_Killed( info );	
+
+			Event_Killed( info );
 			Event_Dying();
 		}
 		return retVal;
@@ -359,7 +359,7 @@ int CNPC_BaseTurret::OnTakeDamage( const CTakeDamageInfo &info )
 
 	case LIFE_DYING:
 		return OnTakeDamage_Dying( info );
-	
+
 	default:
 	case LIFE_DEAD:
 		return OnTakeDamage_Dead( info );
@@ -480,12 +480,12 @@ void CNPC_BaseTurret::Initialize(void)
 	}
 	else
 	{
-		SetThink( &CBaseEntity::SUB_DoNothing ); 
+		SetThink( &CBaseEntity::SUB_DoNothing );
 	}
 }
 
 //=========================================================
-// ActiveThink - 
+// ActiveThink -
 //=========================================================
 void CNPC_BaseTurret::ActiveThink(void)
 {
@@ -501,7 +501,7 @@ void CNPC_BaseTurret::ActiveThink(void)
 		SetThink(&CNPC_BaseTurret::SearchThink);
 		return;
 	}
-	
+
 	// if it's dead, look for something new
 	if ( !GetEnemy()->IsAlive() )
 	{
@@ -512,7 +512,7 @@ void CNPC_BaseTurret::ActiveThink(void)
 		else
 		{
 			if (gpGlobals->curtime > m_flLastSight)
-			{	
+			{
 				SetEnemy( NULL );
 				m_flLastSight = gpGlobals->curtime + m_flMaxWait;
 				SetThink(&CNPC_BaseTurret::SearchThink);
@@ -525,8 +525,8 @@ void CNPC_BaseTurret::ActiveThink(void)
 	Vector vecMidEnemy = GetEnemy()->BodyTarget(vecMid, false);
 
 	// Look for our current enemy
-	int fEnemyVisible = FInViewCone( GetEnemy() ) && FVisible( GetEnemy() );	
-	
+	int fEnemyVisible = FInViewCone( GetEnemy() ) && FVisible( GetEnemy() );
+
 	//We want to look at the enemy's eyes so we don't jitter
 	Vector	vecDirToEnemyEyes = vecMidEnemy - vecMid;
 //	NDebugOverlay::Line( vecMid, vecMidEnemy, 0, 255, 0, false, 1.0 );
@@ -560,7 +560,7 @@ void CNPC_BaseTurret::ActiveThink(void)
 	{
 		m_vecLastSight = vecMidEnemy;
 	}
-	
+
 	Vector forward;
 	AngleVectors( m_vecCurAngles, &forward );
 
@@ -584,7 +584,7 @@ void CNPC_BaseTurret::ActiveThink(void)
 	{
 		Shoot(vecMid, forward );
 		SetTurretAnim(TURRET_ANIM_FIRE);
-	} 
+	}
 	else
 	{
 		SetTurretAnim(TURRET_ANIM_SPIN);
@@ -607,7 +607,7 @@ void CNPC_BaseTurret::ActiveThink(void)
 			TakeDamage( info ); // don't beserk forever
 			return;
 		}
-	} 
+	}
 	else if (fEnemyVisible)
 	{
 		if (vecAnglesToEnemy.y > 360)
@@ -617,7 +617,7 @@ void CNPC_BaseTurret::ActiveThink(void)
 			vecAnglesToEnemy.y += 360;
 
 		//ALERT(at_console, "[%.2f]", vec.x);
-		
+
 		if (vecAnglesToEnemy.x < -180)
 			vecAnglesToEnemy.x += 360;
 
@@ -654,8 +654,8 @@ void CNPC_BaseTurret::ActiveThink(void)
 }
 
 //=========================================================
-// SearchThink 
-// This search function will sit with the turret deployed and look for a new target. 
+// SearchThink
+// This search function will sit with the turret deployed and look for a new target.
 // After a set amount of time, the barrel will spin down. After m_flMaxWait, the turret will
 // retact.
 //=========================================================
@@ -713,7 +713,7 @@ void CNPC_BaseTurret::SearchThink(void)
 		{
 			SpinDownCall();
 		}
-		
+
 		// generic hunt for new victims
 		m_vecGoalAngles.y = (m_vecGoalAngles.y + 0.1 * m_fTurnRate);
 		if (m_vecGoalAngles.y >= 360)
@@ -725,7 +725,7 @@ void CNPC_BaseTurret::SearchThink(void)
 }
 
 //=========================================================
-// AutoSearchThink - 
+// AutoSearchThink -
 //=========================================================
 void CNPC_BaseTurret::AutoSearchThink(void)
 {
@@ -741,7 +741,7 @@ void CNPC_BaseTurret::AutoSearchThink(void)
 	{
 		if (!pEnemy->IsAlive() )
 		{
-			pEnemy = NULL;	
+			pEnemy = NULL;
 		}
 	}
 
@@ -782,7 +782,7 @@ void CNPC_BaseTurret::TurretDeath(void)
 
 		CPASAttenuationFilter filter( this );
 		EmitSound( filter, entindex(), "Turret.Die" );
-	
+
 		StopSound( entindex(), "Turret.Spinup" );
 
 		if (m_iOrientation == TURRET_ORIENTATION_FLOOR)
@@ -790,9 +790,9 @@ void CNPC_BaseTurret::TurretDeath(void)
 		else
 			m_vecGoalAngles.x = 90;//-90;
 
-		SetTurretAnim(TURRET_ANIM_DIE); 
+		SetTurretAnim(TURRET_ANIM_DIE);
 
-		EyeOn( );	
+		EyeOn( );
 	}
 
 	EyeOff( );
@@ -803,14 +803,14 @@ void CNPC_BaseTurret::TurretDeath(void)
 		Vector pos;
 		CollisionProp()->RandomPointInBounds( vec3_origin, Vector( 1, 1, 1 ), &pos );
 		pos.z = CollisionProp()->GetCollisionOrigin().z;
-		
+
 		CBroadcastRecipientFilter filter;
 		te->Smoke( filter, 0.0, &pos,
 			g_sModelIndexSmoke,
 			2.5,
 			10 );
 	}
-	
+
 	if (m_flDamageTime + random->RandomFloat( 0, 5 ) > gpGlobals->curtime)
 	{
 		Vector vecSrc;
@@ -902,9 +902,9 @@ void CNPC_BaseTurret::Retire(void)
 			EmitSound( filter, entindex(), "Turret.Undeploy" );
 			m_OnDeactivate.FireOutput(this, this);
 		}
-		//else if (IsSequenceFinished()) 
+		//else if (IsSequenceFinished())
 		else if( GetSequence() == TURRET_ANIM_RETIRE && GetCycle() <= 0.0 )
-		{	
+		{
 			m_iOn = 0;
 			m_flLastSight = 0;
 			//SetTurretAnim(TURRET_ANIM_NONE);
@@ -919,7 +919,7 @@ void CNPC_BaseTurret::Retire(void)
 			SetCollisionBounds( curmins, curmaxs );
 			if (m_iAutoStart)
 			{
-				SetThink(&CNPC_BaseTurret::AutoSearchThink);	
+				SetThink(&CNPC_BaseTurret::AutoSearchThink);
 				SetNextThink( gpGlobals->curtime + 0.1 );
 			}
 			else
@@ -938,7 +938,7 @@ void CNPC_BaseTurret::Retire(void)
 // Ping - make the pinging noise every second while searching
 //=========================================================
 void CNPC_BaseTurret::Ping(void)
-{	
+{
 	if (m_flPingTime == 0)
 		m_flPingTime = gpGlobals->curtime + 1;
 	else if (m_flPingTime <= gpGlobals->curtime)
@@ -962,7 +962,7 @@ void CNPC_BaseTurret::Ping(void)
 int CNPC_BaseTurret::MoveTurret(void)
 {
 	int bMoved = 0;
-	
+
 	if (m_vecCurAngles.x != m_vecGoalAngles.x)
 	{
 		float flDir = m_vecGoalAngles.x > m_vecCurAngles.x ? 1 : -1 ;
@@ -974,7 +974,7 @@ int CNPC_BaseTurret::MoveTurret(void)
 		{
 			if (m_vecCurAngles.x > m_vecGoalAngles.x)
 				m_vecCurAngles.x = m_vecGoalAngles.x;
-		} 
+		}
 		else
 		{
 			if (m_vecCurAngles.x < m_vecGoalAngles.x)
@@ -984,7 +984,7 @@ int CNPC_BaseTurret::MoveTurret(void)
 		if (m_iOrientation == TURRET_ORIENTATION_FLOOR)
 			SetBoneController(1, m_vecCurAngles.x);
 		else
-			SetBoneController(1, -m_vecCurAngles.x);		
+			SetBoneController(1, -m_vecCurAngles.x);
 
 		bMoved = 1;
 	}
@@ -993,7 +993,7 @@ int CNPC_BaseTurret::MoveTurret(void)
 	{
 		float flDir = m_vecGoalAngles.y > m_vecCurAngles.y ? 1 : -1 ;
 		float flDist = fabs(m_vecGoalAngles.y - m_vecCurAngles.y);
-		
+
 		if (flDist > 180)
 		{
 			flDist = 360 - flDist;
@@ -1031,7 +1031,7 @@ int CNPC_BaseTurret::MoveTurret(void)
 
 		if (m_iOrientation == TURRET_ORIENTATION_FLOOR)
 			SetBoneController(0, m_vecCurAngles.y - angles.y );
-		else 
+		else
 			SetBoneController(0, angles.y - 180 - m_vecCurAngles.y );
 		bMoved = 1;
 	}
@@ -1039,7 +1039,7 @@ int CNPC_BaseTurret::MoveTurret(void)
 	if (!bMoved)
 		m_fTurnRate = m_iBaseTurnRate;
 
-	//DevMsg(1, "(%.2f, %.2f)->(%.2f, %.2f)\n", m_vecCurAngles.x, 
+	//DevMsg(1, "(%.2f, %.2f)->(%.2f, %.2f)\n", m_vecCurAngles.x,
 	//	m_vecCurAngles.y, m_vecGoalAngles.x, m_vecGoalAngles.y);
 
 	return bMoved;
@@ -1058,7 +1058,7 @@ void CNPC_BaseTurret::TurretUse( CBaseEntity *pActivator, CBaseEntity *pCaller, 
 		//!!!! this should spin down first!!BUGBUG
 		SetThink(&CNPC_BaseTurret::Retire);
 	}
-	else 
+	else
 	{
 		SetNextThink( gpGlobals->curtime + 0.1 ); // turn on delay
 
@@ -1067,7 +1067,7 @@ void CNPC_BaseTurret::TurretUse( CBaseEntity *pActivator, CBaseEntity *pCaller, 
 		{
 			m_iAutoStart = TRUE;
 		}
-		
+
 		SetThink(&CNPC_BaseTurret::Deploy);
 	}
 }
@@ -1095,7 +1095,7 @@ void CNPC_BaseTurret::InputActivate( inputdata_t &inputdata )
 		{
 			m_iAutoStart = TRUE;
 		}
-		
+
 		SetThink(&CNPC_BaseTurret::Deploy);
 	}
 }
@@ -1180,12 +1180,12 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( monster_turret, CNPC_Turret );
 LINK_ENTITY_TO_CLASS( monster_miniturret, CNPC_MiniTurret );
 
-ConVar	sk_turret_health ( "sk_turret_health","50");	
+ConVar	sk_turret_health ( "sk_turret_health","50");
 ConVar	sk_miniturret_health ( "sk_miniturret_health","40");
 ConVar	sk_sentry_health ( "sk_sentry_health","40");
 
 void CNPC_Turret::Spawn()
-{ 
+{
 	Precache( );
 	SetModel( "models/turret.mdl" );
 	m_iHealth 			= sk_turret_health.GetFloat();
@@ -1201,8 +1201,8 @@ void CNPC_Turret::Spawn()
 	m_iDeployHeight = 32;
 	m_iMinPitch	= -90;
 	UTIL_SetSize(this, Vector(-32, -32, -m_iRetractHeight), Vector(32, 32, m_iRetractHeight));
-	
-	SetThink(&CNPC_BaseTurret::Initialize);	
+
+	SetThink(&CNPC_BaseTurret::Initialize);
 
 	m_pEyeGlow = CSprite::SpriteCreate( TURRET_GLOW_SPRITE, GetAbsOrigin(), FALSE );
 	m_pEyeGlow->SetTransparency( kRenderGlow, 255, 0, 0, 0, kRenderFxNoDissipation );
@@ -1210,13 +1210,13 @@ void CNPC_Turret::Spawn()
 
 	m_eyeBrightness = 0;
 
-	SetNextThink( gpGlobals->curtime + 0.3 ); 
+	SetNextThink( gpGlobals->curtime + 0.3 );
 }
 
 void CNPC_Turret::Precache()
 {
 	CNPC_BaseTurret::Precache( );
-	PrecacheModel ("models/turret.mdl");	
+	PrecacheModel ("models/turret.mdl");
 	PrecacheModel (TURRET_GLOW_SPRITE);
 
 	PrecacheModel( "sprites/xspark4.vmt" );
@@ -1267,7 +1267,7 @@ void CNPC_Turret::SpinUpCall(void)
 			SetThink(&CNPC_BaseTurret::ActiveThink);
 			m_iStartSpin = 0;
 			m_iSpin = 1;
-		} 
+		}
 		else
 		{
 			m_flPlaybackRate += 0.075;
@@ -1303,7 +1303,7 @@ void CNPC_Turret::SpinDownCall(void)
 }
 
 void CNPC_MiniTurret::Spawn()
-{ 
+{
 	Precache( );
 
 	SetModel( "models/miniturret.mdl" );
@@ -1320,8 +1320,8 @@ void CNPC_MiniTurret::Spawn()
 	m_iMinPitch	= -90;
 	UTIL_SetSize(this, Vector(-16, -16, -m_iRetractHeight), Vector(16, 16, m_iRetractHeight));
 
-	SetThink(&CNPC_MiniTurret::Initialize);	
-	SetNextThink(gpGlobals->curtime + 0.3); 
+	SetThink(&CNPC_MiniTurret::Initialize);
+	SetNextThink(gpGlobals->curtime + 0.3);
 
 	if (( m_spawnflags & SF_MONSTER_TURRET_AUTOACTIVATE ) && !( m_spawnflags & SF_MONSTER_TURRET_STARTINACTIVE ))
 	{
@@ -1338,7 +1338,7 @@ void CNPC_MiniTurret::Precache()
 
 	PrecacheScriptSound( "Turret.Shoot" );
 
-	PrecacheModel ("models/miniturret.mdl");	
+	PrecacheModel ("models/miniturret.mdl");
 }
 
 void CNPC_MiniTurret::Shoot(Vector &vecSrc, Vector &vecDirToEnemy)
@@ -1348,7 +1348,7 @@ void CNPC_MiniTurret::Shoot(Vector &vecSrc, Vector &vecDirToEnemy)
 	CPASAttenuationFilter filter( this );
 
 	EmitSound( filter, entindex(), "Turret.Shoot" );
-	
+
 	DoMuzzleFlash();
 }
 
@@ -1395,7 +1395,7 @@ void CNPC_Sentry::Precache()
 }
 
 void CNPC_Sentry::Spawn()
-{ 
+{
 	Precache( );
 	SetModel( "models/sentry.mdl" );
 	m_iHealth			= sk_sentry_health.GetFloat();
@@ -1420,9 +1420,9 @@ void CNPC_Sentry::Spawn()
 	UTIL_SetSize(this, Vector(-16, -16, -m_iRetractHeight), Vector(16, 16, m_iRetractHeight));
 
 	SetTouch(&CNPC_Sentry::SentryTouch);
-	SetThink(&CNPC_Sentry::Initialize);	
+	SetThink(&CNPC_Sentry::Initialize);
 
-	SetNextThink(gpGlobals->curtime + 0.3); 
+	SetNextThink(gpGlobals->curtime + 0.3);
 
 	m_bStartedDeploy = false;
 }
@@ -1433,7 +1433,7 @@ void CNPC_Sentry::Shoot(Vector &vecSrc, Vector &vecDirToEnemy)
 
 	CPASAttenuationFilter filter( this );
 	EmitSound( filter, entindex(), "Sentry.Shoot" );
-	
+
 	DoMuzzleFlash();
 }
 
@@ -1481,7 +1481,7 @@ void CNPC_Sentry::Event_Killed( const CTakeDamageInfo &info )
 	Vector vecSrc;
 	QAngle vecAng;
 	GetAttachment( 2, vecSrc, vecAng );
-	
+
 	te->Smoke( filter, 0.0, &vecSrc,
 		g_sModelIndexSmoke,
 		2.5,
@@ -1506,4 +1506,3 @@ void CNPC_Sentry::SentryTouch( CBaseEntity *pOther )
 		TakeDamage(info);
 	}
 }
-

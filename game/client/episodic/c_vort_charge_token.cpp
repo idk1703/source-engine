@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -56,8 +56,8 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_NPC_Vortigaunt::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -71,7 +71,7 @@ void C_NPC_Vortigaunt::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_NPC_Vortigaunt::ClientThink( void )
 {
@@ -97,7 +97,7 @@ void C_NPC_Vortigaunt::ClientThink( void )
 			}
 		}
 	}
-	else 
+	else
 	{
 		// are we done?
 		if ( m_flBlackFade <= 0.0f )
@@ -132,7 +132,7 @@ void C_NPC_Vortigaunt::ReceiveMessage( int classID, bf_read &msg )
 		BaseClass::ReceiveMessage( classID, msg );
 		return;
 	}
-	
+
 	int messageType = msg.ReadByte();
 	switch( messageType )
 	{
@@ -140,7 +140,7 @@ void C_NPC_Vortigaunt::ReceiveMessage( int classID, bf_read &msg )
 		{
 			// Find our attachment point
 			unsigned char nAttachment = msg.ReadByte();
-			
+
 			// Get our attachment position
 			Vector vecStart;
 			QAngle vecAngles;
@@ -170,10 +170,10 @@ void C_NPC_Vortigaunt::ReceiveMessage( int classID, bf_read &msg )
 				unsigned char nAttachment = msg.ReadByte();
 				Vector vecEndPos;
 				msg.ReadBitVec3Coord( vecEndPos );
-				
+
 				Vector vecNormal;
 				msg.ReadBitVec3Normal( vecNormal );
-				
+
 				CNewParticleEffect *pEffect = pEnt->ParticleProp()->Create( "vortigaunt_beam_charge", PATTACH_POINT_FOLLOW, nAttachment );
 				if ( pEffect )
 				{
@@ -242,7 +242,7 @@ void C_VortigauntChargeToken::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Change our transmission state 
+// Purpose: Change our transmission state
 //-----------------------------------------------------------------------------
 void C_VortigauntChargeToken::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -267,7 +267,7 @@ void C_VortigauntChargeToken::NotifyShouldTransmit( ShouldTransmitState_t state 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VortigauntChargeToken::OnDataChanged( DataUpdateType_t type )
 {
@@ -284,12 +284,12 @@ void C_VortigauntChargeToken::OnDataChanged( DataUpdateType_t type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VortigauntChargeToken::ClientThink( void )
 {
 	//
-	// -- DLight 
+	// -- DLight
 	//
 
 	if ( m_pDLight != NULL )
@@ -300,9 +300,9 @@ void C_VortigauntChargeToken::ClientThink( void )
 }
 
 //=============================================================================
-// 
+//
 //  Dispel Effect
-//	
+//
 //=============================================================================
 
 class C_VortigauntEffectDispel : public C_BaseEntity
@@ -356,7 +356,7 @@ void C_VortigauntEffectDispel::UpdateOnRemove( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VortigauntEffectDispel::OnDataChanged( DataUpdateType_t type )
 {
@@ -373,7 +373,7 @@ void C_VortigauntEffectDispel::OnDataChanged( DataUpdateType_t type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VortigauntEffectDispel::NotifyShouldTransmit( ShouldTransmitState_t state )
 {
@@ -419,7 +419,7 @@ bool C_VortigauntEffectDispel::SetupEmitters( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_VortigauntEffectDispel::ClientThink( void )
 {
@@ -431,7 +431,7 @@ void C_VortigauntEffectDispel::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void DispelCallback( const CEffectData &data )
 {
@@ -445,25 +445,25 @@ void DispelCallback( const CEffectData &data )
 	if ( tr.fraction < 1.0f )
 	{
 		//Add a ripple quad to the surface
-		FX_AddQuad( tr.endpos + ( tr.plane.normal * 8.0f ), 
-			Vector( 0, 0, 1 ), 
-			64.0f, 
-			600.0f, 
+		FX_AddQuad( tr.endpos + ( tr.plane.normal * 8.0f ),
+			Vector( 0, 0, 1 ),
+			64.0f,
+			600.0f,
 			0.8f,
 			1.0f,	// start alpha
 			0.0f,	// end alpha
 			0.3f,
 			random->RandomFloat( 0, 360 ),
 			0.0f,
-			Vector( 0.5f, 1.0f, 0.5f ), 
-			0.75f, 
-			"effects/ar2_altfire1b", 
+			Vector( 0.5f, 1.0f, 0.5f ),
+			0.75f,
+			"effects/ar2_altfire1b",
 			(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA|FXQUAD_COLOR_FADE) );
-		
+
 		//Add a ripple quad to the surface
-		FX_AddQuad( tr.endpos + ( tr.plane.normal * 8.0f ), 
-			Vector( 0, 0, 1 ), 
-			16.0f, 
+		FX_AddQuad( tr.endpos + ( tr.plane.normal * 8.0f ),
+			Vector( 0, 0, 1 ),
+			16.0f,
 			300.0f,
 			0.9f,
 			1.0f,	// start alpha
@@ -471,9 +471,9 @@ void DispelCallback( const CEffectData &data )
 			0.9f,
 			random->RandomFloat( 0, 360 ),
 			0.0f,
-			Vector( 0.5f, 1.0f, 0.5f ), 
-			1.25f, 
-			"effects/rollerglow", 
+			Vector( 0.5f, 1.0f, 0.5f ),
+			1.25f,
+			"effects/rollerglow",
 			(FXQUAD_BIAS_SCALE|FXQUAD_BIAS_ALPHA) );
 	}
 }
@@ -554,11 +554,11 @@ void CVortEmissiveProxy::OnBind( C_BaseEntity *pEnt )
 			flBlendValue = pVort->m_bIsBlue ? 1.0f : 0.0f;
 		}
 
-		// ALEX VLACHOS: 
+		// ALEX VLACHOS:
 		// The following variable varies on [0 .. 1]. 0.0 means the vort wants to be his normal
 		// color. 1.0 means he wants to be all black. It is interpolated in the
-		// C_NPC_Vortigaunt::ClientThink() function. 
-		// 
+		// C_NPC_Vortigaunt::ClientThink() function.
+		//
 		// pVort->m_flBlackFade
 	}
 	else

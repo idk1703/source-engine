@@ -18,7 +18,7 @@
 #include "tier0/dbg.h"
 
 
-// 
+//
 // These templates are used for intrusive linked list classes. Intrusive linked list templates
 // force the structs and classes contained within them to have their own m_pNext, (optionally),
 // m_pPrev, and other fields contained within. All memory management is up to the caller and their
@@ -42,9 +42,9 @@
 
 namespace IntrusiveList
 {
-#ifdef SUPERSLOW_DEBUG_VERSION                              
+#ifdef SUPERSLOW_DEBUG_VERSION
 	template<class T> inline void ValidateDList(T *head)
-	{                                                           
+	{
 		if (head)
 		{
 			Assert(head->m_pPrev==0);
@@ -68,7 +68,7 @@ namespace IntrusiveList
 	}
 #endif
 
-	
+
 
 // move a node in a doubly linked list backwards one step.
 	template <class T> inline void MoveDNodeBackwards( T *which, T * &head)
@@ -101,7 +101,7 @@ namespace IntrusiveList
 		ValidateDList(head);
 	}
 
-    
+
 
 	// removes node 'which' from doubly linked list with 'head'
 	template<class T> inline void RemoveFromDList(T * &head, T *which)
@@ -130,7 +130,7 @@ namespace IntrusiveList
 		}
 		which->m_pNext=which->m_pPrev=0;
 		ValidateDList(head);
-  
+
 	}
 
 	//checks to see if node is in doubly linked list
@@ -159,7 +159,7 @@ namespace IntrusiveList
 		}
 	}
 
-    // add a node to end of doubly linked list.
+	// add a node to end of doubly linked list.
 	template<class T> inline void AddToDHead(T * &head, T *which)
 	{
 		which->m_pNext=head;
@@ -207,7 +207,7 @@ namespace IntrusiveList
 		}
 		ValidateDList( head );
 	}
-	
+
 	// Remove a node from a dlist , maintaining the tail ptr. node is not 'delete' d
 	template<class T> inline void RemoveFromDListWithTailPtr(T * &head, T *which, T * & tailptr)
 	{
@@ -239,7 +239,7 @@ namespace IntrusiveList
 		}
 		which->m_pNext=which->m_pPrev=0;
 		ValidateDList(head);
-  
+
 	}
 
 	// this function removes a node, and delete's the node
@@ -421,7 +421,7 @@ namespace IntrusiveList
 	{
 		node->m_pNext=head;
 		head=node;
-	}  
+	}
 
 	//Add a node to the tail of a singly-linked. Not fast
 	// Note that the head var passed to this will be modified.
@@ -437,7 +437,7 @@ namespace IntrusiveList
 				pLastNode = pLastNode->m_pNext;
 			pLastNode->m_pNext = node;
 		}
-	}  
+	}
 
 	//Add a node to the head of a singly-linked list, maintaining a tail pointer
 	template<class T,class V> static inline void AddToHead(T * & head, T * &tail,V * node)
@@ -448,7 +448,7 @@ namespace IntrusiveList
 		}
 		node->m_pNext=head;
 		head=node;
-	}  
+	}
 
 
 
@@ -465,12 +465,12 @@ namespace IntrusiveList
 		return i;
 	}
 
-  
+
 	// add a node to the end of a singly linked list. Not fast.
 	template<class T,class V> void AddToEnd(T * & head, V * node)
 	{
 		node->m_pNext=0;
-		if (! head) 
+		if (! head)
 		{
 			head=node;
 		}
@@ -506,7 +506,7 @@ namespace IntrusiveList
 	template<class T> void AddSortedByName(T * & head, T * node)
 	{
 		if ( (! head) ||                                          // empty list?
-			 (stricmp(node->m_Name,head->m_Name)==-1))                // or we should be first?
+			(stricmp(node->m_Name,head->m_Name)==-1))                // or we should be first?
 		{
 			node->m_pNext=head;                                        // make us head
 			head=node;
@@ -638,7 +638,7 @@ namespace IntrusiveList
 				}
 				prev=i;
 			}
-		}    
+		}
 	}
 
 	// sort a doubly linked list. NOt fast.
@@ -684,7 +684,7 @@ public:
 	{
 		return m_pHead;
 	}
-	
+
 	FORCEINLINE CUtlIntrusiveList(void)
 	{
 		m_pHead = NULL;
@@ -872,8 +872,8 @@ public:
 
 };
 
-template<class T> void PrependDListWithTailToDList( CUtlIntrusiveDListWithTailPtr<T> &src, 
-												   CUtlIntrusiveDList<T> &dest )
+template<class T> void PrependDListWithTailToDList( CUtlIntrusiveDListWithTailPtr<T> &src,
+													CUtlIntrusiveDList<T> &dest )
 {
 	if ( src.m_pHead )
 	{

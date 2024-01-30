@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -57,4 +57,3 @@ bool ConvertImageToRGBA( const byte *pubImageData, int cubImageData, CUtlBuffer 
 	}
 	return bSuccess;
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -20,7 +20,7 @@
 #endif
 
 //-----------------------------------------------------------------------------
-// Forward declarations: 
+// Forward declarations:
 //-----------------------------------------------------------------------------
 
 enum
@@ -135,7 +135,7 @@ typedef enum
 	SK_BUTTON_STEAM,
 	SK_BUTTON_INACTIVE_START,
 	SK_VBUTTON_F1,						// These are "virtual" buttons. Useful if you want to have flow that maps an action to button code to be interpreted by some UI that accepts keystrokes, but you
-	SK_VBUTTON_F2,						// don't want to map to real button (perhaps because it would be interpreted by UI in a way you don't like). 																																										
+	SK_VBUTTON_F2,						// don't want to map to real button (perhaps because it would be interpreted by UI in a way you don't like).
 	SK_VBUTTON_F3,
 	SK_VBUTTON_F4,
 	SK_VBUTTON_F5,

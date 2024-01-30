@@ -97,7 +97,7 @@ CMapClass *CMapLightCone::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapLightCone::CMapLightCone(void)
 {
@@ -351,8 +351,8 @@ void CMapLightCone::BuildCone(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapLightCone::CalcBounds(BOOL bFullUpdate)
 {
@@ -378,8 +378,8 @@ void CMapLightCone::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : Angles - 
+// Purpose:
+// Input  : Angles -
 //-----------------------------------------------------------------------------
 void CMapLightCone::GetAngles(QAngle &Angles)
 {
@@ -393,7 +393,7 @@ void CMapLightCone::GetAngles(QAngle &Angles)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapLightCone::Copy(bool bUpdateDependencies)
@@ -410,8 +410,8 @@ CMapClass *CMapLightCone::Copy(bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
+// Purpose:
+// Input  : pObject -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapLightCone::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
@@ -441,7 +441,7 @@ CMapClass *CMapLightCone::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 	m_fFiftyPercentDistance = pFrom->m_fFiftyPercentDistance;
 	m_fZeroPercentDistance = pFrom->m_fZeroPercentDistance;
 	m_LightColor = pFrom->m_LightColor;
-	
+
 	Q_strncpy( m_szColorKeyName, pFrom->m_szColorKeyName, sizeof( m_szColorKeyName ) );
 	Q_strncpy( m_szInnerConeKeyName, pFrom->m_szInnerConeKeyName, sizeof( m_szInnerConeKeyName ) );
 	Q_strncpy( m_szOuterConeKeyName, pFrom->m_szOuterConeKeyName, sizeof( m_szOuterConeKeyName ) );
@@ -560,8 +560,8 @@ void CMapLightCone::PostloadWorld(CMapWorld *pWorld)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapLightCone::Render3D(CRender3D *pRender)
 {
@@ -588,7 +588,7 @@ void CMapLightCone::Render3D(CRender3D *pRender)
 		{
 			// Render the cone faces flatshaded.
 			pRender->PushRenderMode( RENDER_MODE_TRANSLUCENT_FLAT );
-			
+
 			for (int i = 0; i < m_Faces.Count(); i++)
 			{
 				CMapFace *pFace = m_Faces.Element(i);
@@ -620,9 +620,9 @@ void CMapLightCone::Render3D(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapLightCone::SerializeRMF(std::fstream &File, BOOL bRMF)
@@ -632,9 +632,9 @@ int CMapLightCone::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapLightCone::SerializeMAP(std::fstream &File, BOOL bRMF)

@@ -17,7 +17,7 @@ abstract_class IGameResources
 public:
 	virtual	~IGameResources() {};
 
-	// Team data access 
+	// Team data access
 	virtual const char		*GetTeamName( int index ) = 0;
 	virtual int				GetTeamScore( int index ) = 0;
 	virtual const Color&	GetTeamColor( int index ) = 0;
@@ -41,4 +41,3 @@ public:
 extern IGameResources *GameResources( void ); // singelton accessor
 
 #endif
-

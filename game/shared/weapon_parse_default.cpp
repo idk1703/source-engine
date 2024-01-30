@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,6 +15,3 @@ FileWeaponInfo_t* CreateWeaponInfo()
 {
 	return new FileWeaponInfo_t;
 }
-
-
-

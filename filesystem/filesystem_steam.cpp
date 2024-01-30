@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 #include <sys/file.h>
 #endif
 #include <dlfcn.h>
-#define _S_IWRITE S_IWRITE 
+#define _S_IWRITE S_IWRITE
 #define _S_IWRITE S_IWRITE
 #define _S_IFREG S_IFREG
 #define FILE_ATTRIBUTE_OFFLINE 0x1000
@@ -31,7 +31,7 @@
 #endif
 
 ISteamInterface *steam = NULL;
-static SteamHandle_t	g_pLastErrorFile; 
+static SteamHandle_t	g_pLastErrorFile;
 static TSteamError		g_tLastError;
 static TSteamError g_tLastErrorNoFile;
 
@@ -40,14 +40,14 @@ void CheckError( SteamHandle_t fp, TSteamError & steamError)
 	if (steamError.eSteamError == eSteamErrorContentServerConnect)
 	{
 		// fatal error
-#ifdef WIN32		
+#ifdef WIN32
 		// kill the current window so the user can see the error
 		HWND hwnd = GetForegroundWindow();
 		if (hwnd)
 		{
 			DestroyWindow(hwnd);
 		}
-		
+
 		// show the error
 		MessageBox(NULL, "Could not acquire necessary game files because the connection to Steam servers was lost.", "Source - Fatal Error", MB_OK | MB_ICONEXCLAMATION);
 
@@ -84,7 +84,7 @@ class CSteamFile
 {
 public:
 	explicit CSteamFile( SteamHandle_t file, bool bWriteable, const char *pchName ) : m_File( file ), m_bWriteable( bWriteable ), m_FileName(pchName) {}
-	~CSteamFile() {} 
+	~CSteamFile() {}
 	SteamHandle_t Handle() { return m_File; }
 	bool BWriteable() { return m_bWriteable; }
 	CUtlSymbol GetFileName() { return m_FileName; }
@@ -158,7 +158,7 @@ private:
 	void LoadAndStartSteam();
 #ifdef POSIX
 	static CUtlMap< int, CInterlockedInt > m_LockedFDMap;
-#endif	
+#endif
 };
 
 #ifdef POSIX
@@ -210,7 +210,7 @@ CFileSystem_Steam::CFileSystem_Steam()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFileSystem_Steam::~CFileSystem_Steam()
 {
@@ -227,7 +227,7 @@ bool CFileSystem_Steam::IsFileInSteamCache2( const char *file )
 	// see if the file exists
 	TSteamElemInfo info;
 	TSteamError error;
-	
+
 	SteamHandle_t h = steam->FindFirst( file, eSteamFindRemoteOnly, &info, &error );
 	if ( h == STEAM_INVALID_HANDLE )
 	{
@@ -257,7 +257,7 @@ void MountDependencies( int iAppId, CUtlVector<unsigned int> &depList )
 	steamApp.uMaxCurrentVersionLabelChars = sizeof( buffers[2] );
 	steamApp.szInstallDirName = buffers[3];
 	steamApp.uMaxInstallDirNameChars = sizeof( buffers[3] );
-	
+
 	// Ask how many caches depend on this app ID.
 	steam->EnumerateApp( iAppId, &steamApp, &steamError );
 	if ( steamError.eSteamError != eSteamErrorNone )
@@ -278,7 +278,7 @@ void MountDependencies( int iAppId, CUtlVector<unsigned int> &depList )
 			// Make sure that the user owns the app before attempting to mount it
 			int isSubscribed = false, isPending = false;
 			steam->IsAppSubscribed( appDependencyInfo.uAppId, &isSubscribed, &isPending, &steamError );
-			if ( isSubscribed ) 
+			if ( isSubscribed )
 			{
 				steam->MountFilesystem( appDependencyInfo.uAppId, "", &steamError );
 				if ( steamError.eSteamError != eSteamErrorNone && steamError.eSteamError != eSteamErrorNotSubscribed )
@@ -292,7 +292,7 @@ void MountDependencies( int iAppId, CUtlVector<unsigned int> &depList )
 
 
 //-----------------------------------------------------------------------------
-// QueryInterface: 
+// QueryInterface:
 //-----------------------------------------------------------------------------
 void *CFileSystem_Steam::QueryInterface( const char *pInterfaceName )
 {
@@ -345,7 +345,7 @@ void CFileSystem_Steam::Shutdown()
 	if ( m_hSteamDLL )
 	{
 		Sys_UnloadModule( (CSysModule *)m_hSteamDLL );
-		m_hSteamDLL = NULL; 
+		m_hSteamDLL = NULL;
 	}
 	m_bSteamInitialized = false;
 }
@@ -362,7 +362,7 @@ void CFileSystem_Steam::LoadAndStartSteam()
 #ifdef WIN32
 			V_ComposeFileName( pchSteamInstallPath, "steam" DLL_EXT_STRING, szSteamDLLPath, Q_ARRAYSIZE(szSteamDLLPath) );
 #elif defined(POSIX)
-			V_ComposeFileName( pchSteamInstallPath, "libsteam" DLL_EXT_STRING, szSteamDLLPath, Q_ARRAYSIZE(szSteamDLLPath) );			
+			V_ComposeFileName( pchSteamInstallPath, "libsteam" DLL_EXT_STRING, szSteamDLLPath, Q_ARRAYSIZE(szSteamDLLPath) );
 #else
 #error
 #endif
@@ -371,7 +371,7 @@ void CFileSystem_Steam::LoadAndStartSteam()
 		}
 
 		if ( !m_hSteamDLL )
-#ifdef WIN32			
+#ifdef WIN32
 			m_hSteamDLL = (HMODULE)Sys_LoadModule( "steam" DLL_EXT_STRING );
 #elif defined(POSIX)
 			m_hSteamDLL = (HMODULE)Sys_LoadModule( "libsteam" DLL_EXT_STRING );
@@ -389,7 +389,7 @@ void CFileSystem_Steam::LoadAndStartSteam()
 		PFSteamCreateInterface pfnSteamCreateInterface = (PFSteamCreateInterface)dlsym( (void *)m_hSteamDLL, "_f" );
 #endif
 		if ( pfnSteamCreateInterface )
-			steam = (ISteamInterface *)pfnSteamCreateInterface( STEAM_INTERFACE_VERSION );	
+			steam = (ISteamInterface *)pfnSteamCreateInterface( STEAM_INTERFACE_VERSION );
 	}
 
 	if ( !steam )
@@ -452,7 +452,7 @@ FilesystemMountRetval_t CFileSystem_Steam::MountSteamContent( int nExtraAppId )
 			{
 				const char *pMainAppId = NULL;
 
-				// If they specified extra app IDs they want to mount after the main one, then we mount 
+				// If they specified extra app IDs they want to mount after the main one, then we mount
 				// the caches manually here.
 #ifdef _WIN32
 				// Use GetEnvironmentVariable instead of getenv because getenv doesn't pick up changes
@@ -465,16 +465,16 @@ FilesystemMountRetval_t CFileSystem_Steam::MountSteamContent( int nExtraAppId )
 #else
 				// LINUX BUG: see above
 				pMainAppId = getenv( "SteamAppId" );
-#endif // _WIN32				
+#endif // _WIN32
 
 				if ( !pMainAppId )
 					Error( "Extra App ID set to %d, but no SteamAppId.", nExtraAppId );
 
 				//swapping this mount order ensures the most current engine binaries are used by tools
 				MountDependencies( nExtraAppId, depList );
-				MountDependencies( atoi( pMainAppId ), depList );				
+				MountDependencies( atoi( pMainAppId ), depList );
 				return FILESYSTEM_MOUNT_OK;
-			}	
+			}
 		}
 		else if (!steam->MountAppFilesystem(&steamError))
 		{
@@ -527,7 +527,7 @@ FILE *CFileSystem_Steam::FS_fopen( const char *filenameT, const char *options, u
 		dummyInfo.m_bSteamCacheOnly = false;
 		pInfo = &dummyInfo;
 	}
-	
+
 	SteamHandle_t f = 0;
 
 #ifdef POSIX
@@ -535,13 +535,13 @@ FILE *CFileSystem_Steam::FS_fopen( const char *filenameT, const char *options, u
 	bool bWriteable = false;
 	if ( strchr(options,'w') || strchr(options,'a') )
 		bWriteable = true;
-	
+
 	if (  bWriteable )
 	{
 		pFile = fopen( filename, options );
 		if (pFile && size)
 		{
-			// todo: replace with filelength()? 
+			// todo: replace with filelength()?
 			struct _stat buf;
 			int rt = _stat( filename, &buf );
 			if (rt == 0)
@@ -551,12 +551,12 @@ FILE *CFileSystem_Steam::FS_fopen( const char *filenameT, const char *options, u
 		}
 		if ( pFile )
 		{
-			
+
 			// Win32 has an undocumented feature that is serialized ALL writes to a file across threads (i.e only 1 thread can open a file at a time)
 			// so use flock here to mimic that behavior
-			
+
 			ThreadId_t curThread = ThreadGetCurrentId();
-			
+
 			{
 				CThreadFastMutex Locklock;
 				AUTO_LOCK( Locklock );
@@ -567,19 +567,19 @@ FILE *CFileSystem_Steam::FS_fopen( const char *filenameT, const char *options, u
 				{
 					if ( errno == EWOULDBLOCK  )
 					{
-						if ( iLockID != m_LockedFDMap.InvalidIndex() && 
-							m_LockedFDMap[iLockID] != -1 && 
+						if ( iLockID != m_LockedFDMap.InvalidIndex() &&
+							m_LockedFDMap[iLockID] != -1 &&
 							curThread != m_LockedFDMap[iLockID] )
 						{
 							ret = flock( fd, LOCK_EX );
 							if ( ret < 0 )
 							{
 								fclose( pFile );
-								return NULL;						
+								return NULL;
 							}
 						}
 					}
-					else 
+					else
 					{
 						fclose( pFile );
 						return NULL;
@@ -595,10 +595,10 @@ FILE *CFileSystem_Steam::FS_fopen( const char *filenameT, const char *options, u
 			rewind( pFile );
 		}
 	}
-	else 
+	else
 	{
 #endif
-	
+
 	TSteamError steamError;
 	unsigned int fileSize;
 	int bLocal = 0;
@@ -614,7 +614,7 @@ FILE *CFileSystem_Steam::FS_fopen( const char *filenameT, const char *options, u
 
 #ifdef POSIX
 	}
-	
+
 	if ( f || pFile )
 	{
 		CSteamFile *steamFile = new CSteamFile( pFile ? (SteamHandle_t)pFile : f, bWriteable, filename );
@@ -728,8 +728,8 @@ FILE *GetFileHandle( CSteamFile *steamFile )
 {
 	if ( !steamFile )
 		return NULL;
-	
-	return (FILE *)steamFile->Handle();	
+
+	return (FILE *)steamFile->Handle();
 }
 bool BWriteable( CSteamFile *steamFile )
 {
@@ -834,16 +834,16 @@ int CFileSystem_Steam::FS_feof( FILE *fp )
 	fp = GetFileHandle( steamFile );
 	if ( BWriteable( steamFile ) )
 	{
-		return feof(fp);		
+		return feof(fp);
 	}
 	else
 	{
 #endif
 	long orig_pos;
-	
+
 	// Figure out where in the file we currently are...
 	orig_pos = FS_ftell(fp);
-	
+
 	if ( (SteamHandle_t)fp == g_pLastErrorFile && g_tLastError.eSteamError == eSteamErrorEOF )
 		return 1;
 
@@ -905,22 +905,22 @@ size_t CFileSystem_Steam::FS_fwrite( const void *src, size_t size, FILE *fp )
 			size_t remaining = size;
 			const byte* current = (const byte *) src;
 			size_t total = 0;
-			
+
 			while ( remaining > 0 )
 			{
 				size_t bytesToCopy = min(remaining, WRITE_CHUNK);
-				
+
 				total += fwrite(current, 1, bytesToCopy, fp);
-				
+
 				remaining -= bytesToCopy;
 				current += bytesToCopy;
 			}
-			
+
 			Assert( total == size );
 			return total;
 		}
-		
-		return fwrite(src, 1, size, fp);// return number of bytes written (because we have size = 1, count = bytes, so it return bytes)		
+
+		return fwrite(src, 1, size, fp);// return number of bytes written (because we have size = 1, count = bytes, so it return bytes)
 	}
 	else
 	{
@@ -944,7 +944,7 @@ size_t CFileSystem_Steam::FS_vfprintf( FILE *fp, const char *fmt, va_list list )
 	fp = GetFileHandle( steamFile );
 	if ( BWriteable( steamFile ) )
 	{
-		return vfprintf(fp, fmt, list);		
+		return vfprintf(fp, fmt, list);
 	}
 	else
 	{
@@ -1014,7 +1014,7 @@ int CFileSystem_Steam::FS_ferror( FILE *fp )
 		fp = GetFileHandle( steamFile );
 		if ( BWriteable( steamFile ) )
 		{
-			return ferror(fp);			
+			return ferror(fp);
 		}
 		else
 		{
@@ -1043,7 +1043,7 @@ int CFileSystem_Steam::FS_fflush( FILE *fp )
 	fp = GetFileHandle( steamFile );
 	if ( BWriteable( steamFile ) )
 	{
-		return fflush(fp);		
+		return fflush(fp);
 	}
 	else
 	{
@@ -1074,7 +1074,7 @@ char *CFileSystem_Steam::FS_fgets( char *dest, int destSize, FILE *fp )
 #endif
 	unsigned char c;
 	int numCharRead = 0;
-	
+
 	// Read at most n chars from the file or until a newline
 	*dest = c = '\0';
 	while ( (numCharRead < destSize-1) && (c != '\n') )
@@ -1086,7 +1086,7 @@ char *CFileSystem_Steam::FS_fgets( char *dest, int destSize, FILE *fp )
 			{
 				return NULL;	// If we hit an error, return NULL.
 			}
-			
+
 			numCharRead = destSize;	// Hit EOF, no more to read, all done...
 		}
 
@@ -1119,7 +1119,7 @@ int CFileSystem_Steam::FS_stat( const char *path, struct _stat *buf, bool *pbLoa
 		// The dedicated server gets here once at startup. When setting up the executable path before loading
 		// base modules like engine.dll, the filesystem looks for zipX.zip but we haven't mounted steam content
 		// yet so steam is null.
-#if !defined( DEDICATED )		
+#if !defined( DEDICATED )
 		AssertMsg( 0, "CFileSystem_Steam::FS_stat used with null steam interface!" );
 #endif
 		return -1;
@@ -1195,7 +1195,7 @@ HANDLE CFileSystem_Steam::FS_FindFirstFile(const char *findname, WIN32_FIND_DATA
 	{
 		hResult = (HANDLE)steamResult;
 		strcpy(dat->cFileName, steamFindInfo.cszName);
-		
+
 // NEED TO DEAL WITH THIS STUFF!!!  FORTUNATELY HALF-LIFE DOESN'T USE ANY OF IT
 // AND ARCANUM USES _findfirst() etc.
 //
@@ -1219,7 +1219,7 @@ HANDLE CFileSystem_Steam::FS_FindFirstFile(const char *findname, WIN32_FIND_DATA
 		else
 			dat->dwFileAttributes |= FILE_ATTRIBUTE_OFFLINE;
 	}
-	
+
 	return hResult;
 }
 
@@ -1252,7 +1252,7 @@ bool CFileSystem_Steam::FS_FindNextFile(HANDLE handle, WIN32_FIND_DATA *dat)
 bool CFileSystem_Steam::FS_FindClose(HANDLE handle)
 {
 	TSteamError steamError;
-	int result = (steam->FindClose((SteamHandle_t)handle, &steamError) == 0); 
+	int result = (steam->FindClose((SteamHandle_t)handle, &steamError) == 0);
 	CheckError(NULL, steamError);
 	return result != 0;
 }
@@ -1267,7 +1267,7 @@ bool CFileSystem_Steam::IsFileImmediatelyAvailable(const char *pFileName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 {
@@ -1281,7 +1281,7 @@ void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 	{
 		// Use the environment search path to try and find it
 		char* pPath = getenv("PATH");
-	
+
 		// Use the .EXE name to determine the root directory
 		char srchPath[ MAX_PATH ];
 #ifdef WIN32
@@ -1295,7 +1295,7 @@ void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 		srchPath[0] = '.';
 		srchPath[1] = '\0';
 #endif
-		
+
 		// Get the length of the root directory the .exe is in
 		char* pSeperator = strrchr( srchPath, CORRECT_PATH_SEPARATOR );
 		int nBaseLen = 0;
@@ -1303,7 +1303,7 @@ void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 		{
 			nBaseLen = pSeperator - srchPath;
 		}
-		
+
 		// Extract each section of the path
 		char* pStart = pPath;
 		char* pEnd = 0;
@@ -1314,7 +1314,7 @@ void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 #define PATH_SEP ";"
 #else
 #define PATH_SEP ":"
-#endif			
+#endif
 			pEnd = strstr( pStart, PATH_SEP );
 			int nSize = pEnd - pStart;
 			if ( !pEnd )
@@ -1324,7 +1324,7 @@ void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 				// it sensibly.
 				nSize = strlen( pStart );
 			}
-		
+
 			// Is this path even potentially in the base directory?
 			if ( nSize > nBaseLen )
 			{
@@ -1376,12 +1376,12 @@ void CFileSystem_Steam::GetLocalCopy( const char *pFileName )
 		}
 
 		steam->GetLocalFileCopy(pFileName, &steamError);
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Load a DLL
-// Input  : *path 
+// Input  : *path
 //-----------------------------------------------------------------------------
 CSysModule * CFileSystem_Steam::LoadModule( const char *pFileName, const char *pPathID, bool bValidatedDllOnly )
 {
@@ -1391,7 +1391,7 @@ CSysModule * CFileSystem_Steam::LoadModule( const char *pFileName, const char *p
 	// File must end in .dll
 	char szExtension[] = DLL_EXT_STRING;
 	Assert( Q_strlen(pFileName) < sizeof(szNewPath) );
-	
+
 	Q_strncpy( szNewPath, pFileName, sizeof( szNewPath ) );
 	if ( !Q_stristr(szNewPath, szExtension) )
 	{
@@ -1421,7 +1421,7 @@ CSysModule * CFileSystem_Steam::LoadModule( const char *pFileName, const char *p
 			Q_snprintf( newPathName, sizeof(newPathName), "%s%s", m_SearchPaths[i].GetPathString(), szNewPath ); // append the path to this dir.
 
 			// make sure the file exists, and is in the Steam cache
-			
+
 			if ( bValidatedDllOnly && !IsFileInSteamCache(newPathName) )
 				continue;
 
@@ -1455,7 +1455,7 @@ CSysModule * CFileSystem_Steam::LoadModule( const char *pFileName, const char *p
 	if ( bValidatedDllOnly && IsFileInSteamCache(szNewPath) )
 	{
 		// couldn't load it from any of the search paths, let LoadLibrary try
-		return Sys_LoadModule( szNewPath ); 
+		return Sys_LoadModule( szNewPath );
 	}
 
 	return NULL;
@@ -1474,7 +1474,7 @@ void CFileSystem_Steam::ViewSteamCache(const char* szDir, bool bRecurse)
 
 	if ( h != STEAM_INVALID_HANDLE )
 	{
-		do 
+		do
 		{
 			Msg( "View Steam Cache: '%s%c%s' \n", szDir, CORRECT_PATH_SEPARATOR, info.cszName );
 
@@ -1510,7 +1510,7 @@ bool CFileSystem_Steam::IsFileInSteamCache( const char *file )
 	// see if the file exists
 	TSteamElemInfo info;
 	TSteamError error;
-	
+
 	SteamHandle_t h = steam->FindFirst( file, eSteamFindRemoteOnly, &info, &error );
 	if ( h == STEAM_INVALID_HANDLE )
 	{
@@ -1532,5 +1532,3 @@ int CFileSystem_Steam::HintResourceNeed( const char *hintlist, int forgetEveryth
 	CheckError(NULL, steamError);
 	return result;
 }
-
-

@@ -40,7 +40,7 @@ CSteam3Client  &Steam3Client()
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CSteam3Client::CSteam3Client() 
+CSteam3Client::CSteam3Client()
 #if !defined(NO_STEAM)
 :
 			m_CallbackClientGameServerDeny( this, &CSteam3Client::OnClientGameServerDeny ),
@@ -72,11 +72,11 @@ CSteam3Client::~CSteam3Client()
 // Purpose: Unload the steam3 engine
 //-----------------------------------------------------------------------------
 void CSteam3Client::Shutdown()
-{	
+{
 	if ( !m_bActive )
 		return;
 
-	m_bActive = false;	
+	m_bActive = false;
 #if !defined( NO_STEAM )
 	SteamAPI_Shutdown();
 	Clear(); // clear our interface pointers now they are invalid
@@ -261,7 +261,7 @@ void CSteam3Client::OnClientGameServerDeny( ClientGameServerDeny_t *pClientGameS
 
 		Host_Disconnect( true );
 	}
-	
+
 }
 
 
@@ -277,14 +277,14 @@ void CSteam3Client::OnGameServerChangeRequested( GameServerChangeRequested_t *pG
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Client::OnGameOverlayActivated( GameOverlayActivated_t *pGameOverlayActivated )
 {
 #ifndef SWDS
 	if ( Host_IsSinglePlayerGame() )
 	{
-		if ( !EngineVGui()->IsGameUIVisible() && 
+		if ( !EngineVGui()->IsGameUIVisible() &&
 			!EngineVGui()->IsConsoleVisible() )
 		{
 			if ( pGameOverlayActivated->m_bActive )
@@ -299,7 +299,7 @@ void CSteam3Client::OnGameOverlayActivated( GameOverlayActivated_t *pGameOverlay
 extern void UpdateNameFromSteamID( IConVar *pConVar, CSteamID *pSteamID );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Client::OnPersonaUpdated( PersonaStateChange_t *pPersonaStateChanged )
 {
@@ -316,16 +316,16 @@ void CSteam3Client::OnPersonaUpdated( PersonaStateChange_t *pPersonaStateChanged
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSteam3Client::OnLowBattery( LowBatteryPower_t *pLowBat )
 {
 	// on the 9min, 5 min and 1 min warnings tell the engine to fire off a save
 	switch(  pLowBat->m_nMinutesBatteryLeft )
 	{
-	case 9: 
-	case 5: 
-	case 1: 
+	case 9:
+	case 5:
+	case 1:
 		Cbuf_AddText( "save LowBattery_AutoSave" );
 		break;
 

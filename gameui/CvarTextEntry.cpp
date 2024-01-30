@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -104,7 +104,7 @@ void CCvarTextEntry::OnTextChanged()
 {
 	if ( !m_pszCvarName )
 		return;
-	
+
 	if (HasBeenModified())
 	{
 		PostActionSignal(new KeyValues("ControlModified"));

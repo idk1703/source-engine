@@ -103,11 +103,11 @@ public:
 			m_coverAreaVector.AddToTail( area );
 		}
 
-		return true;				
+		return true;
 	}
 
 	// return true if 'adjArea' should be included in the ongoing search
-	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar ) 
+	virtual bool ShouldSearch( CNavArea *adjArea, CNavArea *currentArea, float travelDistanceSoFar )
 	{
 		if ( travelDistanceSoFar > tf_bot_retreat_to_cover_range.GetFloat() )
 			return false;
@@ -313,5 +313,3 @@ QueryResultType CTFBotRetreatToCover::ShouldHurry( const INextBot *me ) const
 {
 	return ANSWER_YES;
 }
-
-

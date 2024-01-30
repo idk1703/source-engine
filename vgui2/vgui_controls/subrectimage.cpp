@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -166,13 +166,13 @@ void CSubRectImage::Paint()
 	t[ 0 ] = (float)sub[ 1 ] / (float)ch;
 	t[ 1 ] = (float)(sub[ 1 ]+sub[ 3 ]) / (float)ch;
 	surface()->DrawTexturedSubRect(
-		_pos[0], 
-		_pos[1], 
-		_pos[0] + _wide, 
+		_pos[0],
+		_pos[1],
+		_pos[0] + _wide,
 		_pos[1] + _tall,
-		s[ 0 ], 
-		t[ 0 ], 
-		s[ 1 ], 
+		s[ 0 ],
+		t[ 0 ],
+		s[ 1 ],
 		t[ 1 ] );
 }
 
@@ -209,4 +209,3 @@ bool CSubRectImage::IsValid()
 {
 	return _valid;
 }
-

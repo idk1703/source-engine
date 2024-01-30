@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -104,15 +104,15 @@ enum SpellType_t
 
 struct spell_data_t
 {
-	spell_data_t( 
-		const char *pSpellUiName, 
-		int iSpellCharges, 
-		SpellType_t eSpelltype, 
-		const char *pSpellEntityName,  
-		bool (*pCastSpell)(CTFPlayer*), 
-		const char *pszCastSound, 
-		float flSpeedScale, 
-		int iCastContext, 
+	spell_data_t(
+		const char *pSpellUiName,
+		int iSpellCharges,
+		SpellType_t eSpelltype,
+		const char *pSpellEntityName,
+		bool (*pCastSpell)(CTFPlayer*),
+		const char *pszCastSound,
+		float flSpeedScale,
+		int iCastContext,
 		int iSpellContext,
 		const char *pIconName,
 		bool bAutoCast = false
@@ -149,7 +149,7 @@ static const spell_data_t g_NormalSpellList[] =
 	spell_data_t( "#TF_Spell_Fireball",			2,		SPELL_ROCKET,	"tf_projectile_spellfireball",			NULL,	"Halloween.spell_fireball_cast", 1.f,MP_CONCEPT_PLAYER_CAST_BOMB_HEAD_CURSE,	MP_CONCEPT_PLAYER_SPELL_BOMB_HEAD_CURSE,		"spellbook_fireball" ),
 	spell_data_t( "#TF_Spell_Bats",				2,		SPELL_JAR,		"tf_projectile_spellbats",				NULL,	"Halloween.spell_bat_cast", 1.f,	MP_CONCEPT_PLAYER_CAST_MERASMUS_ZAP,		MP_CONCEPT_PLAYER_SPELL_MERASMUS_ZAP,	"spellbook_bats" ),
 	spell_data_t( "#TF_Spell_OverHeal",			1,		SPELL_SELF,		NULL,	CTFSpellBook::CastSelfHeal,				"Halloween.spell_overheal", 1.f,	MP_CONCEPT_PLAYER_CAST_SELF_HEAL,			MP_CONCEPT_PLAYER_SPELL_SELF_HEAL,		"spellbook_overheal" ),
-	spell_data_t( "#TF_Spell_MIRV",				1,		SPELL_JAR,		"tf_projectile_spellmirv",				NULL,	"Halloween.spell_mirv_cast", 1.f,	MP_CONCEPT_PLAYER_CAST_MIRV,				MP_CONCEPT_PLAYER_SPELL_MIRV,			"spellbook_mirv" ),																													
+	spell_data_t( "#TF_Spell_MIRV",				1,		SPELL_JAR,		"tf_projectile_spellmirv",				NULL,	"Halloween.spell_mirv_cast", 1.f,	MP_CONCEPT_PLAYER_CAST_MIRV,				MP_CONCEPT_PLAYER_SPELL_MIRV,			"spellbook_mirv" ),
 	spell_data_t( "#TF_Spell_BlastJump",		2,		SPELL_SELF,		NULL,	CTFSpellBook::CastRocketJump,			"Halloween.spell_blastjump", 1.f,	MP_CONCEPT_PLAYER_CAST_BLAST_JUMP,			MP_CONCEPT_PLAYER_SPELL_BLAST_JUMP,		"spellbook_blastjump"),
 	spell_data_t( "#TF_Spell_Stealth",			1,		SPELL_SELF,		NULL,	CTFSpellBook::CastSelfStealth,			"Halloween.spell_stealth", 1.f,		MP_CONCEPT_PLAYER_CAST_STEALTH,				MP_CONCEPT_PLAYER_SPELL_STEALTH,		"spellbook_stealth"),
 	spell_data_t( "#TF_Spell_Teleport",			2,		SPELL_JAR,		"tf_projectile_spelltransposeteleport",	NULL,	"Halloween.spell_teleport", 1.f,	MP_CONCEPT_PLAYER_CAST_TELEPORT,			MP_CONCEPT_PLAYER_SPELL_TELEPORT,		"spellbook_teleport"),
@@ -199,9 +199,9 @@ static const int g_doomsdayRareSpellIndexList[] =
 // teleport and summons removed
 static const int g_generalSpellIndexList[] =
 {
-	0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 
-	ARRAYSIZE ( g_NormalSpellList ) + 0, 
-	ARRAYSIZE ( g_NormalSpellList ) + 1, 
+	0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5,
+	ARRAYSIZE ( g_NormalSpellList ) + 0,
+	ARRAYSIZE ( g_NormalSpellList ) + 1,
 	ARRAYSIZE ( g_NormalSpellList ) + 2
 };
 
@@ -425,7 +425,7 @@ void CHudSpellMenu::UpdateSpellText( int iSpellIndex, int iChargeCount )
 
 		pLocalPlayer->EmitSound( m_bTickSoundA ? "Halloween.spelltick_a" : "Halloween.spelltick_b" );
 		m_bTickSoundA = !m_bTickSoundA;
-				
+
 		m_iPrevSelectedSpell = SPELL_UNKNOWN;
 		m_pKeyBinding->SetVisible( false );
 	}
@@ -459,7 +459,7 @@ void CHudSpellMenu::UpdateSpellText( int iSpellIndex, int iChargeCount )
 void CEquipSpellbookNotification::Accept()
 {
 	m_bHasTriggered = true;
-		
+
 	CPlayerInventory *pLocalInv = TFInventoryManager()->GetLocalInventory();
 	if ( !pLocalInv )
 	{
@@ -491,9 +491,9 @@ void CEquipSpellbookNotification::Accept()
 		{
 			CEconItemView *pItem = pLocalInv->GetItem( i );
 			Assert( pItem );
-			if ( pItem->GetItemDefinition() == pItemDef_Spellbook 
-				|| pItem->GetItemDefinition() == pItemDef_Diary 
-				|| pItem->GetItemDefinition() == pItemDef_FancySpellbook 
+			if ( pItem->GetItemDefinition() == pItemDef_Spellbook
+				|| pItem->GetItemDefinition() == pItemDef_Diary
+				|| pItem->GetItemDefinition() == pItemDef_FancySpellbook
 			) {
 				pSpellBook = pItem;
 				break;
@@ -509,7 +509,7 @@ void CEquipSpellbookNotification::Accept()
 	}
 
 	TFInventoryManager()->EquipItemInLoadout( pLocalPlayer->GetPlayerClass()->GetClassIndex(), LOADOUT_POSITION_ACTION, iItemId );
-	
+
 	// Tell the GC to tell server that we should respawn if we're in a respawn room
 	GCSDK::CGCMsg< GCSDK::MsgGCEmpty_t > msg( k_EMsgGCRespawnPostLoadoutChange );
 	GCClientSystem()->BSendMessage( msg );
@@ -603,7 +603,7 @@ void CTFSpellBook::Precache()
 	PrecacheParticleSystem( "spell_lightningball_parent_red" );
 	PrecacheParticleSystem( "spell_lightningball_hit_blue" );
 	PrecacheParticleSystem( "spell_lightningball_hit_red" );
-	
+
 	PrecacheParticleSystem( "eyeboss_tp_vortex" );
 	PrecacheParticleSystem( "spell_overheal_red" );
 	PrecacheParticleSystem( "spell_overheal_blue" );
@@ -615,7 +615,7 @@ void CTFSpellBook::Precache()
 	PrecacheParticleSystem( "spell_batball_throw_blue" );
 	PrecacheParticleSystem( "spell_batball_impact_red" );
 	PrecacheParticleSystem( "spell_batball_impact_blue" );
-	
+
 	PrecacheParticleSystem( "spell_pumpkin_mirv_goop_red" );
 	PrecacheParticleSystem( "spell_pumpkin_mirv_goop_blue" );
 	PrecacheParticleSystem( "spell_skeleton_goop_green" );
@@ -650,14 +650,14 @@ void CTFSpellBook::PrimaryAttack()
 		return;
 
 	bool bCastSuccessful = false;
-	
+
 	bCastSuccessful = CanCastSpell( pPlayer );
 
-	if ( bCastSuccessful ) 
+	if ( bCastSuccessful )
 	{
 #ifdef GAME_DLL
 		SpeakSpellConceptIfAllowed();
-		
+
 		// We need to do this before PrimaryAttack so we use the right spell index
 		if ( pPlayer->m_Shared.InCond( TF_COND_HALLOWEEN_KART ) )
 		{
@@ -670,7 +670,7 @@ void CTFSpellBook::PrimaryAttack()
 			BaseClass::PrimaryAttack();
 		}
 #endif
-		
+
 #ifdef GAME_DLL
 		// set a default time cast time if none added
 		if ( m_flTimeNextSpell < gpGlobals->curtime )
@@ -838,7 +838,7 @@ void CTFSpellBook::ItemPostFrame( void )
 		{
 			return "spellbook_minor_burning";
 		}
-	}		
+	}
 	else if ( defIndex == 5605 ) // secret diary
 	{
 		return "spellbook_rainbow";
@@ -857,8 +857,8 @@ void CTFSpellBook::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-bool CTFSpellBook::HasASpellWithCharges() 
-{ 
+bool CTFSpellBook::HasASpellWithCharges()
+{
 	return tf_test_spellindex.GetInt() > -1 || m_iSpellCharges > 0 || m_iSelectedSpellIndex == SPELL_UNKNOWN;
 }
 
@@ -965,7 +965,7 @@ void CTFSpellBook::TossJarThink( void )
 		vecVelocity = vecForward * tf_halloween_kart_rocketspell_speed.GetFloat();
 	}
 
-	trace_t trace;	
+	trace_t trace;
 	Vector vecEye = pPlayer->EyePosition();
 	CTraceFilterSimple traceFilter( this, COLLISION_GROUP_NONE );
 	UTIL_TraceHull( vecEye, vecSrc, -Vector(8,8,8), Vector(8,8,8), MASK_SOLID_BRUSHONLY, &traceFilter, &trace );
@@ -999,7 +999,7 @@ void CTFSpellBook::TossJarThink( void )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CTFSpellBook::CreateSpellRocket( const Vector &position, const QAngle &angles, const Vector &velocity, 
+void CTFSpellBook::CreateSpellRocket( const Vector &position, const QAngle &angles, const Vector &velocity,
 	const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
 {
 	const spell_data_t* pSpellData = GetSpellData( m_iPreviouslyCastSpell );
@@ -1013,7 +1013,7 @@ void CTFSpellBook::CreateSpellRocket( const Vector &position, const QAngle &angl
 	if ( pRocket )
 	{
 		pRocket->SetOwnerEntity( pOwner );
-		pRocket->SetLauncher( this ); 
+		pRocket->SetLauncher( this );
 
 		Vector vForward;
 		AngleVectors( angles, &vForward, NULL, NULL );
@@ -1032,7 +1032,7 @@ void CTFSpellBook::CreateSpellRocket( const Vector &position, const QAngle &angl
 	}
 }
 //-----------------------------------------------------------------------------
-void CTFSpellBook::CreateSpellJar( const Vector &position, const QAngle &angles, const Vector &velocity, 
+void CTFSpellBook::CreateSpellJar( const Vector &position, const QAngle &angles, const Vector &velocity,
 	const AngularImpulse &angVelocity, CBaseCombatCharacter *pOwner, const CTFWeaponInfo &weaponInfo )
 {
 	const spell_data_t* pSpellData = GetSpellData( m_iPreviouslyCastSpell );
@@ -1057,7 +1057,7 @@ void CTFSpellBook::CreateSpellJar( const Vector &position, const QAngle &angles,
 
 		pGrenade->InitGrenade( velocity, vec3_origin, pOwner, weaponInfo );
 		pGrenade->m_flFullDamage = 0;
-		pGrenade->ApplyLocalAngularVelocityImpulse( vec3_origin );		
+		pGrenade->ApplyLocalAngularVelocityImpulse( vec3_origin );
 	}
 }
 
@@ -1098,7 +1098,7 @@ void CTFSpellBook::RollNewSpell( int iTier, bool bForceReroll /*= false*/ )
 		}
 	}
 	else // rare spell should not be the else
-	{	
+	{
 		// Doomsday has special spell list
 		if ( TFGameRules() && TFGameRules()->GetHalloweenScenario( ) == CTFGameRules::HALLOWEEN_SCENARIO_DOOMSDAY )
 		{
@@ -1116,7 +1116,7 @@ void CTFSpellBook::RollNewSpell( int iTier, bool bForceReroll /*= false*/ )
 			iNextSpell = RandomInt( ARRAYSIZE( g_NormalSpellList ), GetTotalSpellCount( pPlayer ) - 1 );
 		}
 	}
-	
+
 	const float flRollTime = 2.f;
 
 	m_iNextSpell = iNextSpell;
@@ -1200,7 +1200,7 @@ void CTFSpellBook::CastKartSpell()
 		if ( tf_test_spellindex.GetInt() < 0 || tf_test_spellindex.GetInt() > GetTotalSpellCount( pPlayer ) )
 			return;
 	}
-	
+
 	// Save off what we cast for jar think
 	PaySpellCost( pPlayer );
 
@@ -1230,7 +1230,7 @@ void CTFSpellBook::CastKartSpell()
 //-----------------------------------------------------------------------------
 bool CTFSpellBook::CastSpell( CTFPlayer *pPlayer, int iSpellIndex )
 {
-	if ( CanCastSpell( pPlayer ) )	
+	if ( CanCastSpell( pPlayer ) )
 	{
 		PaySpellCost( pPlayer );
 		const spell_data_t *pSpellData = GetSpellData( m_iSelectedSpellIndex );
@@ -1279,7 +1279,7 @@ bool CTFSpellBook::CastSelfHeal( CTFPlayer *pPlayer )
 	CPVSFilter filter( origin );
 	const char* pszEffectName = pPlayer->GetTeamNumber() == TF_TEAM_RED ? "spell_overheal_red" : "spell_overheal_blue";
 	TE_TFParticleEffect( filter, 0.0, pszEffectName, origin, vec3_angle, pPlayer, PATTACH_ABSORIGIN_FOLLOW );
-	
+
 	//pPlayer->EmitSound( "BaseExplosionEffect.Sound" );
 
 	// Collect players and cause knockback to enemies
@@ -1318,7 +1318,7 @@ bool CTFSpellBook::CastSelfHeal( CTFPlayer *pPlayer )
 		if ( pBaseTarget->GetTeamNumber() == pPlayer->GetTeamNumber() )
 		{
 			pBaseTarget->TakeHealth( 50, DMG_GENERIC );
-			
+
 			if ( pTarget )
 			{
 				pTarget->m_Shared.AddCond( TF_COND_INVULNERABLE_USER_BUFF, 1, pPlayer );
@@ -1358,7 +1358,7 @@ bool CTFSpellBook::CastRocketJump( CTFPlayer *pPlayer )
 
 	Vector vForward( 0, 0, 800 );
 	pPlayer->ApplyAbsVelocityImpulse( vForward );
-		
+
 	const Vector& origin = pPlayer->GetAbsOrigin();
 	CPVSFilter filter( origin );
 	TE_TFParticleEffect( filter, 0.0, "bombinomicon_burningdebris", origin, vec3_angle );
@@ -1402,7 +1402,7 @@ bool CTFSpellBook::CastRocketJump( CTFPlayer *pPlayer )
 		VectorNormalize( vecDir );
 
 		pBaseTarget->RemoveFlag( FL_ONGROUND );
-		
+
 		if ( pTarget )
 		{
 			pTarget->ApplyAirBlastImpulse( vecDir * 800.0f );
@@ -1415,7 +1415,7 @@ bool CTFSpellBook::CastRocketJump( CTFPlayer *pPlayer )
 
 	CTakeDamageInfo info;
 	info.SetAttacker( pPlayer );
-	info.SetInflictor( pPlayer ); 
+	info.SetInflictor( pPlayer );
 	info.SetDamage( 20.f );
 	info.SetDamageCustom( TF_DMG_CUSTOM_SPELL_BLASTJUMP );
 	info.SetDamagePosition( origin );
@@ -1495,7 +1495,7 @@ bool CTFSpellBook::CastKartRocketJump( CTFPlayer *pPlayer )
 	for ( int i = 0; i < iEntities; ++i )
 	{
 		CTFPlayer *pTarget = ToTFPlayer( pListOfEntities[i] );
-		
+
 		if ( !pTarget || !pTarget->IsAlive() || pTarget->GetTeamNumber() == pPlayer->GetTeamNumber() )
 			continue;
 
@@ -1567,7 +1567,7 @@ public:
 		m_pszExplodeParticleName = "bombinomicon_burningdebris";
 #endif // GAME_DLL
 	}
-	
+
 #ifdef GAME_DLL
 	virtual void Spawn() OVERRIDE
 	{
@@ -1626,7 +1626,7 @@ public:
 			{
 				// Particle
 				if ( GetExplodeEffectParticle() )
-				{	
+				{
 					CPVSFilter filter( vecOrigin );
 					TE_TFParticleEffect( filter, 0.0, GetExplodeEffectParticle(), vecOrigin, vec3_angle );
 				}
@@ -1677,7 +1677,7 @@ public:
 
 				CTakeDamageInfo info;
 				info.SetAttacker( pThrower );
-				info.SetInflictor( this ); 
+				info.SetInflictor( this );
 				info.SetWeapon( GetLauncher() );
 				info.SetDamage( 10.f );
 				info.SetDamageCustom( GetCustomDamageType() );
@@ -1698,14 +1698,14 @@ public:
 
 		// Remove the rocket.
 		UTIL_Remove( this );
-		
+
 		SetTouch( NULL );
 		AddEffects( EF_NODRAW );
 		SetAbsVelocity( vec3_origin );
-	}	
+	}
 
 	virtual const char *GetProjectileModelName( void ) { return ""; } // We dont have a model by default, and that's OK
-	
+
 	virtual bool		InitialExplodeEffects( CTFPlayer *pThrower, const trace_t *pTrace ) { return true; }
 	virtual void		ExplodeEffectOnTarget( CTFPlayer *pThrower, CTFPlayer *pTarget, CBaseCombatCharacter *pBaseTarget )
 	{
@@ -1729,7 +1729,7 @@ public:
 		CBaseEntity *pInflictor = GetLauncher();
 		CTakeDamageInfo info;
 		info.SetAttacker( pThrower );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( pInflictor );
 		info.SetDamage( 100.f );
 		info.SetDamageCustom( GetCustomDamageType() );
@@ -1760,7 +1760,7 @@ public:
 
 #ifdef CLIENT_DLL
 	virtual const char *GetTrailParticleName( void )
-	{ 
+	{
 		return GetTeamNumber() == TF_TEAM_BLUE ? "spell_fireball_small_blue" : "spell_fireball_small_red";
 	}
 #endif
@@ -1829,7 +1829,7 @@ public:
 			{
 				// Particle
 				if ( GetExplodeEffectParticle() )
-				{	
+				{
 					CPVSFilter filter( vecOrigin );
 					TE_TFParticleEffect( filter, 0.0, GetExplodeEffectParticle(), vecOrigin, vec3_angle );
 				}
@@ -1896,7 +1896,7 @@ public:
 	{
 		CTakeDamageInfo info;
 		info.SetAttacker( pThrower );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( GetLauncher() );
 		info.SetDamage( 10.f );
 		info.SetDamageCustom( GetCustomDamageType() );
@@ -1961,7 +1961,7 @@ public:
 		CBaseEntity *pInflictor = GetLauncher();
 		CTakeDamageInfo info;
 		info.SetAttacker( pThrower );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( pInflictor );
 		info.SetDamage( 40 );
 		info.SetDamageCustom( GetCustomDamageType() );
@@ -2021,10 +2021,10 @@ public:
 		if ( !GetThrower() )
 		{
 			InitialExplodeEffects( NULL, pTrace );
-			
+
 			// Particle
 			if ( GetExplodeEffectParticle() )
-			{	
+			{
 				CPVSFilter filter( GetAbsOrigin() );
 				TE_TFParticleEffect( filter, 0.0, GetExplodeEffectParticle(), GetAbsOrigin(), vec3_angle );
 			}
@@ -2191,7 +2191,7 @@ public:
 	virtual int			GetCustomDamageType() const OVERRIDE	{ return TF_DMG_CUSTOM_SPELL_MIRV; }
 #ifdef GAME_DLL
 	// ignore collisions early in its lifetime
-	virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent ) 
+	virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 	{
 		if ( gpGlobals->curtime < m_flImpactTime )
 			return;
@@ -2337,7 +2337,7 @@ public:
 
 #ifdef GAME_DLL
 
-		//virtual void		Explode( trace_t *pTrace, int bitsDamageType );	
+		//virtual void		Explode( trace_t *pTrace, int bitsDamageType );
 		virtual bool InitialExplodeEffects( CTFPlayer *pThrower, const trace_t *pTrace ) OVERRIDE
 		{
 			const Vector &vContactPoint = pTrace->endpos;
@@ -2379,7 +2379,7 @@ public:
 						bFoundValidSpawnPos = true;
 						//NDebugOverlay::SweptBox( vStart, vEnd, vMins - Vector( bloat, bloat, 0 ), vMaxs + Vector( bloat, bloat, bloat ), vec3_angle, 0, 255, 0, 0, 5.f );
 						//NDebugOverlay::Sphere( result.endpos, 10.f, 0, 255, 0, true, 5.f );
-						
+
 						break;
 					}
 					else
@@ -2516,7 +2516,7 @@ public:
 		if ( pRocket )
 		{
 			pRocket->SetOwnerEntity( pOwner );
-			pRocket->SetLauncher( pOwner ); 
+			pRocket->SetLauncher( pOwner );
 			pRocket->SetAbsVelocity( velocity );
 			pRocket->SetDamage( 50.f );
 			pRocket->SetMeteor( true );
@@ -2572,7 +2572,7 @@ public:
 
 		// Particle
 		if ( GetExplodeEffectParticle() )
-		{	
+		{
 			CPVSFilter filter( vecOrigin );
 			TE_TFParticleEffect( filter, 0.0, GetExplodeEffectParticle(), vecOrigin, vec3_angle );
 		}
@@ -2615,7 +2615,7 @@ public:
 
 #ifdef CLIENT_DLL
 	virtual const char *GetTrailParticleName( void )
-	{ 
+	{
 		return GetTeamNumber() == TF_TEAM_BLUE ? "spell_fireball_small_blue" : "spell_fireball_small_red";
 	}
 #endif
@@ -2715,7 +2715,7 @@ public:
 				{
 					TFGameRules()->HaveAllPlayersSpeakConceptIfAllowed( MP_CONCEPT_PLAYER_SPELL_TELEPORT, ( pThrower->GetTeamNumber() == TF_TEAM_RED ) ? TF_TEAM_BLUE : TF_TEAM_RED );
 				}
-				
+
 				// Success!
 				return true;
 			}
@@ -2835,7 +2835,7 @@ public:
 		ExplodeAndRemove();
 		return;
 	}
-	
+
 	virtual bool InitialExplodeEffects( CTFPlayer *pThrower, const trace_t *pTrace ) OVERRIDE
 	{
 		Zap( 16 );
@@ -2851,7 +2851,7 @@ public:
 	{
 		// Particle
 		if ( GetExplodeEffectParticle() )
-		{	
+		{
 			CPVSFilter filter( GetAbsOrigin() );
 			TE_TFParticleEffect( filter, 0.0, GetExplodeEffectParticle(), GetAbsOrigin(), vec3_angle );
 
@@ -2860,7 +2860,7 @@ public:
 
 		// Go out with a bang
 		Zap( 16 );
-			
+
 		SetContextThink( &CBaseGrenade::SUB_Remove, gpGlobals->curtime, "RemoveThink" );
 		return;
 	}
@@ -2877,10 +2877,10 @@ public:
 
 		if ( !pOwner )
 			return;
-		
+
 		CTakeDamageInfo info;
 		info.SetAttacker( pOwner );
-		info.SetInflictor( this ); 
+		info.SetInflictor( this );
 		info.SetWeapon( GetLauncher() );
 		info.SetDamage( GetDamage() );
 		info.SetDamageCustom( GetCustomDamageType() );
@@ -3043,7 +3043,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_lightningorb);
 	#include "tf_fx.h"
 #endif
 
-class CTFHellZap : public CBaseEntity 
+class CTFHellZap : public CBaseEntity
 {
 	DECLARE_CLASS( CTFHellZap, CBaseEntity )
 	DECLARE_NETWORKCLASS();
@@ -3263,7 +3263,7 @@ public:
 			// Start moving down
 			SetAbsVelocity( GetAbsVelocity() - Vector( 0, 0, 128 ) );
 		}
-		
+
 		SetContextThink( &CTFProjectile_SpellKartOrb::MoveChecking, gpGlobals->curtime + 0.05f, "MoveCheckingThink" );
 	}
 
@@ -3398,7 +3398,7 @@ public:
 #ifdef GAME_DLL
 	virtual void ApplyBlastDamage( CTFPlayer *pThrower, Vector vecOrigin )
 	{
-		
+
 	}
 
 	virtual void ExplodeEffectOnTarget( CTFPlayer *pThrower, CTFPlayer *pTarget, CBaseCombatCharacter *pBaseTarget )
@@ -3491,7 +3491,7 @@ PRECACHE_WEAPON_REGISTER( tf_projectile_spellkartbats );
 //	DECLARE_NETWORKCLASS();
 //
 //#ifdef GAME_DLL
-//		
+//
 //	virtual bool InitialExplodeEffects( CTFPlayer *pThrower, const trace_t *pTrace ) OVERRIDE
 //	{
 //		// Spawn a tonne of extra grenades (mirv style)

@@ -17,10 +17,10 @@
 #include "cdll_client_int.h"
 #else
 #include "gameinterface.h"
-#endif	
+#endif
 
 
-	  
+
 BEGIN_PREDICTION_DATA_NO_BASE( CShieldEffect )
 
 	DEFINE_FIELD( m_TestPoint, FIELD_INTEGER ),
@@ -62,13 +62,13 @@ void CShieldEffect::ComputeRestPositions()
 	for	( i = 0; i < SHIELD_NUM_VERTICAL_POINTS; ++i)
 	{
 		// Choose phi centered at pi/2
-		float phi = (M_PI - m_ShieldPhi) * 0.5f + m_ShieldPhi * 
+		float phi = (M_PI - m_ShieldPhi) * 0.5f + m_ShieldPhi *
 			(float)i / (float)(SHIELD_NUM_VERTICAL_POINTS - 1);
 
 		for (int j = 0; j < SHIELD_NUM_HORIZONTAL_POINTS; ++j)
 		{
 			// Choose theta centered at pi/2 also (y, or forward axis)
-			float theta = (M_PI - m_ShieldTheta) * 0.5f + m_ShieldTheta * 
+			float theta = (M_PI - m_ShieldTheta) * 0.5f + m_ShieldTheta *
 				(float)j / (float)(SHIELD_NUM_HORIZONTAL_POINTS - 1);
 
 			int idx = i * SHIELD_NUM_HORIZONTAL_POINTS + j;
@@ -87,7 +87,7 @@ void CShieldEffect::ComputeRestPositions()
 	// Compute box for fake volume testing
 	Vector dist = m_pFixedDirection[0] - m_pFixedDirection[1];
 	float l = dist.Length(); // * m_RestLength;
-	SetShieldPanelSize( Vector( -l * 0.25f, -l * 0.25f, -l * 0.25f), 
+	SetShieldPanelSize( Vector( -l * 0.25f, -l * 0.25f, -l * 0.25f),
 		Vector( l * 0.25f, l * 0.25f, l * 0.25f) );
 }
 
@@ -197,7 +197,7 @@ void CShieldEffect::ComputePanelActivity()
 			int idx = i + j * (SHIELD_NUM_HORIZONTAL_POINTS - 1);
 
 			// Test the neighbors
-			m_pActivePanels[idx] = 
+			m_pActivePanels[idx] =
 				IsVertexActive( i, j ) ||
 				IsVertexActive( i+1, j ) ||
 				IsVertexActive( i, j+1 ) ||
@@ -230,7 +230,7 @@ void CShieldEffect::ComputeVertexActivity()
 		// This will let us check for resting contact
 		trace_t tr;
 		CTraceFilterWorldOnly traceFilter;
-		UTIL_TraceHull( m_Position, m_pControlPoint[pt], 
+		UTIL_TraceHull( m_Position, m_pControlPoint[pt],
 			m_PanelBoxMin, m_PanelBoxMax, MASK_SOLID_BRUSHONLY, &traceFilter, &tr );
 		bool isActive = (!tr.allsolid) && ( (tr.fraction - 1.0f) >= 0.0f );
 
@@ -283,7 +283,7 @@ void CShieldEffect::Precache( void )
 	m_RestLength = 200.0;
 
 	m_SpringConstant = 30.0f;
-	m_DampConstant = 4.0f; 
+	m_DampConstant = 4.0f;
 	m_ViscousDrag = 4.0f;
 	m_Mass = 1.0f;
 
@@ -295,7 +295,7 @@ void CShieldEffect::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Compute orientation matrix: 
+// Compute orientation matrix:
 //-----------------------------------------------------------------------------
 void CShieldEffect::ComputeOrientationMatrix()
 {
@@ -318,12 +318,12 @@ void CShieldEffect::ComputeOrientationMatrix()
 	m_Orientation.SetBasisVectors( forward, left, up );
 
 	// Turn the current matrix into angles...
-	MatrixToAngles( m_Orientation, m_CurrentAngles ); 
+	MatrixToAngles( m_Orientation, m_CurrentAngles );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CShieldEffect::Spawn( const Vector& currentPosition, const QAngle& currentAngles )
 {
@@ -331,7 +331,7 @@ void CShieldEffect::Spawn( const Vector& currentPosition, const QAngle& currentA
 
 	VectorCopy( currentPosition, m_Position );
 	m_Velocity.Init();
-	
+
 	Vector forward;
 	AngleVectors( currentAngles, &forward, 0, 0 );
 	m_Phi = acos( forward.z );
@@ -357,7 +357,7 @@ void CShieldEffect::Spawn( const Vector& currentPosition, const QAngle& currentA
 	for ( i = 0; i < SHIELD_NUM_CONTROL_POINTS; ++i )
 	{
 		int j = rand() % SHIELD_NUM_CONTROL_POINTS;
-		swap( m_PointList[i], m_PointList[j] ); 
+		swap( m_PointList[i], m_PointList[j] );
 	}
 }
 
@@ -442,7 +442,7 @@ void CShieldEffect::SetCurrentAngles( const QAngle& angles )
 
 
 //-----------------------------------------------------------------------------
-// Simulate the center of mass 
+// Simulate the center of mass
 //-----------------------------------------------------------------------------
 void CShieldEffect::SimulateTranslation( float dt )
 {
@@ -457,7 +457,7 @@ void CShieldEffect::SimulateTranslation( float dt )
 
 	// rest condition
 	float length = dx.Length();
-	float speedSq = m_Velocity.LengthSqr(); 
+	float speedSq = m_Velocity.LengthSqr();
 	if ((length < 1e-3) && (speedSq < 1e-6))
 		return;
 
@@ -476,7 +476,7 @@ void CShieldEffect::SimulateTranslation( float dt )
 	force -= drag;
 
 	// Update position and velocity
-	m_Position += m_Velocity * dt; 
+	m_Position += m_Velocity * dt;
 	m_Velocity += force * dt / m_Mass;
 
 	assert( m_Velocity.IsValid( ) );
@@ -506,7 +506,7 @@ void CShieldEffect::SimulateRotation( float dt, const Vector& forward )
 		dTheta += 2 * M_PI;
 
 	// rest condition...
-	if ((fabs(dTheta) < 1e-3) && (fabs(m_ThetaVelocity) < 1e-6) && 
+	if ((fabs(dTheta) < 1e-3) && (fabs(m_ThetaVelocity) < 1e-6) &&
 		(fabs(dPhi) < 1e-3) && (fabs(m_PhiVelocity) < 1e-6))
 	{
 		return;
@@ -521,9 +521,9 @@ void CShieldEffect::SimulateRotation( float dt, const Vector& forward )
 	torqueTPhi -= m_PhiVelocity * m_AngularViscousDrag;
 
 	// Update position and velocity
-	m_Theta += m_ThetaVelocity * dt; 
+	m_Theta += m_ThetaVelocity * dt;
 	m_ThetaVelocity += torqueTheta * dt;
-	m_Phi += m_PhiVelocity * dt; 
+	m_Phi += m_PhiVelocity * dt;
 	m_PhiVelocity += torqueTPhi * dt;
 
 	// clamp for stability
@@ -541,7 +541,7 @@ void CShieldEffect::SimulateRotation( float dt, const Vector& forward )
 
 
 //-----------------------------------------------------------------------------
-// Update the shield position: 
+// Update the shield position:
 //-----------------------------------------------------------------------------
 void CShieldEffect::Simulate( float dt )
 {
@@ -565,7 +565,7 @@ void CShieldEffect::Simulate( float dt )
 
 
 //-----------------------------------------------------------------------------
-// Determines shield obstructions 
+// Determines shield obstructions
 //-----------------------------------------------------------------------------
 static inline bool IsPointValid( bool* pActivePoints, int i, int j )
 {
@@ -574,6 +574,3 @@ static inline bool IsPointValid( bool* pActivePoints, int i, int j )
 
 	return pActivePoints[idx];
 }
-
-
-

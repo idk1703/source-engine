@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,9 +25,9 @@ class CWeaponP228 : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CWeaponP228, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponP228();
 
 	virtual void Spawn();
@@ -43,7 +43,7 @@ public:
 	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_P228; }
 
 private:
-	
+
 	CWeaponP228( const CWeaponP228 & );
 
 	float m_flLastFire;
@@ -69,7 +69,7 @@ CWeaponP228::CWeaponP228()
 void CWeaponP228::Spawn( )
 {
 	m_flAccuracy = 0.9;
-	
+
 	BaseClass::Spawn();
 }
 
@@ -124,7 +124,7 @@ void CWeaponP228::PrimaryAttack( void )
 		m_flAccuracy = 0.6;
 
 	m_flLastFire = gpGlobals->curtime;
-	
+
 	if (m_iClip1 <= 0)
 	{
 		if ( m_bFireOnEmpty )
@@ -140,7 +140,7 @@ void CWeaponP228::PrimaryAttack( void )
 	pPlayer->m_iShotsFired++;
 
 	m_iClip1--;
-	
+
 	 pPlayer->DoMuzzleFlash();
 	//SetPlayerShieldAnim();
 
@@ -148,7 +148,7 @@ void CWeaponP228::PrimaryAttack( void )
 
 	// player "shoot" animation
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
-		
+
 	// Aiming
 	FX_FireBullets(
 		pPlayer->entindex(),
@@ -159,7 +159,7 @@ void CWeaponP228::PrimaryAttack( void )
 		CBaseEntity::GetPredictionRandomSeed() & 255,
 		GetInaccuracy(),
 		GetSpread());
-	
+
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + GetCSWpnData().m_flCycleTime;
 
 	if (!m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0)
@@ -197,7 +197,7 @@ void CWeaponP228::WeaponIdle()
 
 	// only idle if the slid isn't back
 	if (m_iClip1 != 0)
-	{	
+	{
 		SetWeaponIdleTime( gpGlobals->curtime + 3.0 ) ;
 		SendWeaponAnim( ACT_VM_IDLE );
 	}

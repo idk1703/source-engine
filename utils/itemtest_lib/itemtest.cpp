@@ -536,8 +536,8 @@ bool CItemTestManifest::GetIconDimensions( int nIcon, int &nWidth, int &nHeight 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-const char *CItemTestManifest::GetVMTVarForTextureType( const char *pszTexture ) 
-{ 
+const char *CItemTestManifest::GetVMTVarForTextureType( const char *pszTexture )
+{
 	int nIndex = m_vecVMTTextureRemaps.Find(pszTexture);
 	if ( nIndex == m_vecVMTTextureRemaps.InvalidIndex() )
 		return NULL;
@@ -775,7 +775,7 @@ bool CItemUpload::GetVMod( CUtlString &sVMod )
 
 //-----------------------------------------------------------------------------
 // Guess where the SourceSDK root is based on executable directory...
-// If there's a /bin/orangebox/bin/ in the executable path we know 
+// If there's a /bin/orangebox/bin/ in the executable path we know
 // the SourceSDK is above it, otherwise we don't know anything and false is
 // returned
 //
@@ -815,7 +815,7 @@ bool CItemUpload::GetSourceSDKFromExe( CUtlString &sSourceSDK, CUtlString &sSour
 
 	GetEnvironmentVariable( "SOURCESDK", szSDKPath, sizeof( szSDKPath ) );
 
-	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Software\\Valve\\Source SDK", &hKey ) ) 
+	if ( ERROR_SUCCESS == RegOpenKey( HKEY_CURRENT_USER, "Software\\Valve\\Source SDK", &hKey ) )
 	{
 		DWORD dwSize = sizeof( szEngineVersion );
 		RegQueryValueEx( hKey, "EngineVer", NULL, NULL, (LPBYTE)szEngineVersion, &dwSize );
@@ -1109,7 +1109,7 @@ static bool DoFileCopy( const char *pszSourceFile, const char *pszDestFile )
 
 	if ( in == FILESYSTEM_INVALID_HANDLE )
 		return false;
-		
+
 	// create directories up to the cache file
 	char szDestPath[MAX_PATH];
 	V_ExtractFilePath( pszDestFile, szDestPath, sizeof( szDestPath ) );
@@ -1118,13 +1118,13 @@ static bool DoFileCopy( const char *pszSourceFile, const char *pszDestFile )
 	out = g_pFullFileSystem->Open( pszDestFile, "wb" );
 
 	AssertMsg( out, "DoFileCopy: Output file failed to open" );
-	
+
 	if ( out == FILESYSTEM_INVALID_HANDLE )
 	{
 		g_pFullFileSystem->Close( in );
 		return false;
 	}
-		
+
 	remaining = g_pFullFileSystem->Size( in );
 	while ( remaining > 0 )
 	{
@@ -1142,8 +1142,8 @@ static bool DoFileCopy( const char *pszSourceFile, const char *pszDestFile )
 	}
 
 	g_pFullFileSystem->Close( in );
-	g_pFullFileSystem->Close( out );   
-	
+	g_pFullFileSystem->Close( out );
+
 	return true;
 }
 
@@ -1708,7 +1708,7 @@ bool CTargetBase::GetDirName(
 				sDirName += "/";
 			}
 		}
-		
+
 		sDirName += pAsset->GetAssetName();
 	}
 
@@ -2196,7 +2196,7 @@ bool CTargetTGA::SetInputFile( const char *pszFilename )
 			SetNameSuffix( pszSuffix );
 		}
 	}
-	
+
 	V_ExtractFileExtension( pszFilename, szBuf, ARRAYSIZE( szBuf ) );
 	m_sExtension = szBuf;
 
@@ -2716,7 +2716,7 @@ bool CTargetVMT::IsOk( CUtlString &sMsg ) const
 			}
 		}
 	}
-	
+
 
 	return true;
 }
@@ -2931,7 +2931,7 @@ void CTargetVMT::SetVMTKV( const KeyValues *pKV, int nSkinIndex /*= 0*/ )
 {
 	if ( !m_pVMTKV )
 	{
-		m_pVMTKV = new KeyValues( "data" );	
+		m_pVMTKV = new KeyValues( "data" );
 	}
 
 	const char* pszKeyName = CFmtStr( kVMT, nSkinIndex );
@@ -2952,7 +2952,7 @@ KeyValues *CTargetVMT::GetVMTKV( int nSkinIndex )
 {
 	if ( !m_pVMTKV )
 	{
-		m_pVMTKV = new KeyValues( "data" );	
+		m_pVMTKV = new KeyValues( "data" );
 	}
 
 	const char* pszKeyName = CFmtStr( kVMT, nSkinIndex );
@@ -3020,7 +3020,7 @@ void CTargetVMT::CreateLegacyTemplate( KeyValues *pVMTKV )
 	pVMTKV->SetString( "$phongfresnelranges", "[.25 .5 1]" );
 
 	pVMTKV->SetString( "$rimlight", "1" );			// To enable rim lighting (requires phong)
-	pVMTKV->SetString( "$rimlightexponent", "4" );	// Exponent for phong component of rim 
+	pVMTKV->SetString( "$rimlightexponent", "4" );	// Exponent for phong component of rim
 	pVMTKV->SetString( "$rimlightboost", "2" );		// Boost for ambient cube component of rim lighting
 
 	switch ( m_nColorAlphaType )
@@ -3500,7 +3500,7 @@ bool CTargetDMX::GetAnimationFrameInfo( float& flFrameRate, int& nFrameCount ) c
 
 	CDmeAnimationList *pDmeAnimationList = m_pDmRoot->GetValueElement< CDmeAnimationList >( "animationList" );
 	CDmeChannelsClip *pDmeChannelsClip = NULL;
- 
+
 	if ( pDmeAnimationList )
 	{
 		if ( pDmeAnimationList->GetAnimationCount() < 0 )
@@ -3508,14 +3508,14 @@ bool CTargetDMX::GetAnimationFrameInfo( float& flFrameRate, int& nFrameCount ) c
 			Warning( "No DmeChannelsClips found in root.animationList of DMX file: \"%s\"\n", m_sInputFile.String() );
 			return false;
 		}
- 
+
 		pDmeChannelsClip = pDmeAnimationList->GetAnimation( 0 );
 		if ( !pDmeChannelsClip )
 		{
 			Warning( "No DmeChannelsClip found in root.animationList[0] of DMX file: \"%s\"\n", m_sInputFile.String() );
 			return false;
 		}
- 
+
 		flFrameRate = pDmeChannelsClip->GetValue< int >( "frameRate", 30 );
 		nFrameCount = (int)( ( pDmeChannelsClip->GetDuration().GetSeconds() * flFrameRate ) + 0.5f ) + 1;
 
@@ -4157,7 +4157,7 @@ bool CTargetDMX::OutputQCIFile()
 		CUtlString sDMXName;
 		if ( !GetOutputPath( sDMXName, 0, PATH_FLAG_FILE | PATH_FLAG_EXTENSION ) )
 			return false;
-			
+
 		CUtlString sName;
 		if ( !GetOutputPath( sName, 1, PATH_FLAG_FILE ) )
 			return false;
@@ -4187,7 +4187,7 @@ bool CTargetDMX::OutputQCIFile()
 		strBuf = strBuf.Replace( "<BLEND_LAYER_RANGE>", CFmtStr( "0 %d %d <LAST_FRAME_INDEX>", nBlendFrameOffset, nLastFrameIndex - nBlendFrameOffset ) );
 		strBuf = strBuf.Replace( "<FRAME_COUNT>", CFmtStr( "%d", nFrameCount ) );
 		strBuf = strBuf.Replace( "<LAST_FRAME_INDEX>", CFmtStr( "%d", nLastFrameIndex ) );
-		
+
 
 		CUtlBuffer bufQCFile( 0, 0, CUtlBuffer::TEXT_BUFFER );
 		bufQCFile.PutString( strBuf.String() );
@@ -4324,7 +4324,7 @@ void CTargetDMX::OutputSounds( CUtlBuffer &buf, int nIndentLevel, CDmElement *pE
 			BufPrintf( buf, nIndentLevel, "event speak \"%s\"\n", pszSoundScriptName );
 			BufBeginBlock( buf, nIndentLevel );
 			{
-				BufPrintf( buf, nIndentLevel, "time %f <MAX_SEQUENCE_LENGTH>\n", flStartTime ); 
+				BufPrintf( buf, nIndentLevel, "time %f <MAX_SEQUENCE_LENGTH>\n", flStartTime );
 				BufPrintf( buf, nIndentLevel, "param \"%s\"", pszSoundScriptName );
 				BufPrintf( buf, nIndentLevel, "fixedlength\n" );
 				BufPrintf( buf, nIndentLevel, "cctpe \"cc_master\"\n" );
@@ -4347,7 +4347,7 @@ void CTargetDMX::OutputSounds( CUtlBuffer &buf, int nIndentLevel, CDmElement *pE
 
 	CUtlString sWorkingDir;
 	CItemUpload::GetVProjectDir( sWorkingDir );
-	
+
 	char szSoundScriptFullPath[MAX_PATH];
 	V_MakeAbsolutePath( szSoundScriptFullPath, sizeof( szSoundScriptFullPath ), m_strSoundScriptFile.String(), sWorkingDir.String() );
 	if ( !g_pFullFileSystem->WriteFile( szSoundScriptFullPath, NULL, soundScriptBuffer ) )
@@ -4373,7 +4373,7 @@ bool CTargetDMX::WriteVCD( CUtlBuffer &vcdBuf )
 {
 	CDmeAnimationList *pDmeAnimationList = m_pDmRoot->GetValueElement< CDmeAnimationList >( "animationList" );
 	CDmeChannelsClip *pDmeChannelsClip = NULL;
- 
+
 	if ( pDmeAnimationList )
 	{
 		if ( pDmeAnimationList->GetAnimationCount() < 0 )
@@ -4381,7 +4381,7 @@ bool CTargetDMX::WriteVCD( CUtlBuffer &vcdBuf )
 			Warning( "No DmeChannelsClips found in root.animationList of DMX file: \"%s\"\n", m_sInputFile.String() );
 			return false;
 		}
- 
+
 		pDmeChannelsClip = pDmeAnimationList->GetAnimation( 0 );
 		if ( !pDmeChannelsClip )
 		{
@@ -4391,7 +4391,7 @@ bool CTargetDMX::WriteVCD( CUtlBuffer &vcdBuf )
 	}
 
 	DmeFramerate_t framerate( pDmeChannelsClip->GetValue< int >( "frameRate", 30 ) );
-	
+
 	int nLevel = 0;
 	BufPrintf( vcdBuf, nLevel, "// Choreo version 1\n" );
 
@@ -5276,7 +5276,7 @@ const ExtensionList *CTargetMDL::GetExtensionsAndCount( void ) const
 	}
 
 	return CItemUpload::Manifest()->GetMDLExtensions();
-	
+
 /*
 	static const char *s_szExtensionsDX8[] = {
 		".mdl",

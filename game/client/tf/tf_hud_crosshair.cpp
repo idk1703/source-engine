@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ using namespace vgui;
 DECLARE_NAMED_HUDELEMENT( CHudTFCrosshair, CHudCrosshair );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTFCrosshair::CHudTFCrosshair( const char *pName ) :
 	CHudCrosshair ( pName )
@@ -47,7 +47,7 @@ CHudTFCrosshair::CHudTFCrosshair( const char *pName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudTFCrosshair::~CHudTFCrosshair( void )
 {
@@ -59,7 +59,7 @@ CHudTFCrosshair::~CHudTFCrosshair( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudTFCrosshair::ShouldDraw( void )
 {
@@ -88,7 +88,7 @@ bool CHudTFCrosshair::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTFCrosshair::LevelShutdown( void )
 {
@@ -99,12 +99,12 @@ void CHudTFCrosshair::LevelShutdown( void )
 		delete m_pCrosshairMaterial;
 		m_pCrosshairMaterial = NULL;
 	}
-	
+
 	m_flTimeToHideUntil = -1.f;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTFCrosshair::Init()
 {
@@ -117,7 +117,7 @@ void CHudTFCrosshair::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTFCrosshair::FireGameEvent( IGameEvent * event )
 {
@@ -138,7 +138,7 @@ void CHudTFCrosshair::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudTFCrosshair::Paint()
 {
@@ -215,5 +215,3 @@ void CHudTFCrosshair::Paint()
 	pSurf->DrawTexturedRect( iX-iWidth, iY-iHeight, iX+iWidth, iY+iHeight );
 	pSurf->DrawSetTexture(0);
 }
-
-

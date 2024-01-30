@@ -26,7 +26,7 @@
 // globals
 //-----------------------------------------------------------------------------
 
-CUtlSymbolTableMT* CUtlSymbol::s_pSymbolTable = 0; 
+CUtlSymbolTableMT* CUtlSymbol::s_pSymbolTable = 0;
 bool CUtlSymbol::s_bAllowStaticSymbolTable = true;
 
 
@@ -79,7 +79,7 @@ static CCleanupUtlSymbolTable g_CleanupSymbolTable;
 CUtlSymbolTableMT* CUtlSymbol::CurrTable()
 {
 	Initialize();
-	return s_pSymbolTable; 
+	return s_pSymbolTable;
 }
 
 
@@ -113,7 +113,7 @@ void CUtlSymbol::DisableStaticSymbolTable()
 
 bool CUtlSymbol::operator==( const char* pStr ) const
 {
-	if (m_Id == UTL_INVAL_SYMBOL) 
+	if (m_Id == UTL_INVAL_SYMBOL)
 		return false;
 	return strcmp( String(), pStr ) == 0;
 }
@@ -193,7 +193,7 @@ bool CUtlSymbolTable::CLess::operator()( const CStringPoolIndex &i1, const CStri
 			return true;
 		if ( !str1 && !str2 )
 			return false;
-		
+
 		// if the hashes match compare the strings
 		if ( !pTable->m_bInsensitive )
 			return strcmp( str1, str2 ) < 0;
@@ -228,7 +228,7 @@ bool CUtlSymbolTable::CLess::operator()( const CStringPoolIndex &i1, const CStri
 //-----------------------------------------------------------------------------
 // constructor, destructor
 //-----------------------------------------------------------------------------
-CUtlSymbolTable::CUtlSymbolTable( int growSize, int initSize, bool caseInsensitive ) : 
+CUtlSymbolTable::CUtlSymbolTable( int growSize, int initSize, bool caseInsensitive ) :
 	m_Lookup( growSize, initSize ), m_bInsensitive( caseInsensitive ), m_StringPools( 8 )
 {
 }
@@ -241,15 +241,15 @@ CUtlSymbolTable::~CUtlSymbolTable()
 
 
 CUtlSymbol CUtlSymbolTable::Find( const char* pString ) const
-{	
+{
 	VPROF( "CUtlSymbol::Find" );
 	if (!pString)
 		return CUtlSymbol();
-	
+
 	// Store a special context used to help with insertion
 	m_pUserSearchString = pString;
 	m_nUserSearchStringHash = m_bInsensitive ? HashStringCaseless(pString) : HashString(pString) ;
-	
+
 	// Passing this special invalid symbol makes the comparison function
 	// use the string passed in the context
 	UtlSymId_t idx = m_Lookup.Find( INVALID_STRING_INDEX );
@@ -286,11 +286,11 @@ int CUtlSymbolTable::FindPoolWithSpace( int len )	const
 CUtlSymbol CUtlSymbolTable::AddString( const char* pString )
 {
 	VPROF("CUtlSymbol::AddString");
-	if (!pString) 
+	if (!pString)
 		return CUtlSymbol( UTL_INVAL_SYMBOL );
 
 	CUtlSymbol id = Find( pString );
-	
+
 	if (id.IsValid())
 		return id;
 
@@ -319,7 +319,7 @@ CUtlSymbol CUtlSymbolTable::AddString( const char* pString )
 	StringPool_t *pPool = m_StringPools[iPool];
 	Assert( pPool->m_SpaceUsed < 0xFFFF );	// This should never happen, because if we had a string > 64k, it
 											// would have been given its entire own pool.
-	
+
 	unsigned short iStringOffset = pPool->m_SpaceUsed;
 	const char *startingAddr = &pPool->m_Data[pPool->m_SpaceUsed];
 
@@ -346,9 +346,9 @@ CUtlSymbol CUtlSymbolTable::AddString( const char* pString )
 
 const char* CUtlSymbolTable::String( CUtlSymbol id ) const
 {
-	if (!id.IsValid()) 
+	if (!id.IsValid())
 		return "";
-	
+
 	Assert( m_Lookup.IsValidIndex((UtlSymId_t)id) );
 	return StringFromIndex( m_Lookup[id] );
 }
@@ -361,7 +361,7 @@ const char* CUtlSymbolTable::String( CUtlSymbol id ) const
 void CUtlSymbolTable::RemoveAll()
 {
 	m_Lookup.Purge();
-	
+
 	for ( int i=0; i < m_StringPools.Count(); i++ )
 		free( m_StringPools[i] );
 
@@ -370,8 +370,8 @@ void CUtlSymbolTable::RemoveAll()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pFileName - 
+// Purpose:
+// Input  : *pFileName -
 // Output : FileNameHandle_t
 //-----------------------------------------------------------------------------
 FileNameHandle_t CUtlFilenameSymbolTable::FindOrAddFileName( const char *pFileName )
@@ -452,8 +452,8 @@ FileNameHandle_t CUtlFilenameSymbolTable::FindFileName( const char *pFileName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : handle - 
+// Purpose:
+// Input  : handle -
 // Output : const char
 //-----------------------------------------------------------------------------
 bool CUtlFilenameSymbolTable::String( const FileNameHandle_t& handle, char *buf, int buflen )

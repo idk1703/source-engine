@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,7 +36,7 @@ int main( int argc, char* argv[] )
 
 	CUtlBuffer output ( 0, 255, CUtlBuffer::TEXT_BUFFER );
 
-	int binwidth=100; 
+	int binwidth=100;
 	// video card stats over time
 	//TimeSeriesVCard ( buf, output, pszCardtype, nFileSize, binwidth );
 	// cpu type stats over time
@@ -53,13 +53,13 @@ int main( int argc, char* argv[] )
 	//HistogramRam ( buf, output, pszCardtype, nFileSize, binwidth );
 	//HistogramCPU ( buf, output, pszCardtype, nFileSize, binwidth );
 	WriteOutputToFile ( output, pszFilename, pszCardtype );
-	
+
 	return 0;
 }
 
 void HistogramCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, int size, int binwidth)
 {
-   ParseFile ( inbuf, outbuf, "", size, binwidth, 1 );
+	ParseFile ( inbuf, outbuf, "", size, binwidth, 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ int LoadFileIntoBuffer(CUtlBuffer &buf, char *pszFilename)
 
 void WriteOutputToFile( CUtlBuffer &buf, char *pszFilename, char *pszCardtype )
 {
-	char pszOutFilename[500]; 
+	char pszOutFilename[500];
 	strncpy( pszOutFilename, pszFilename, strlen( pszFilename )-3 );
 	pszOutFilename[strlen(pszFilename)-3]='\0';
 	strcat ( pszOutFilename, pszCardtype );
@@ -112,7 +112,7 @@ void WriteOutputToFile( CUtlBuffer &buf, char *pszFilename, char *pszCardtype )
 		exit(0);
 	}
 
-	fwrite ( buf.Base(), sizeof( char ), buf.TellPut(), fh ); 
+	fwrite ( buf.Base(), sizeof( char ), buf.TellPut(), fh );
 	fclose( fh );
 }
 
@@ -129,7 +129,7 @@ void ParseHeader( CUtlBuffer &buf )
 	buf.Scanf( "%s ", pszTrash);
 	buf.Scanf( "%s ", pszTrash);
 	buf.Scanf( "%s ", pszTrash);
-	buf.Scanf( "%s \n", pszTrash);	
+	buf.Scanf( "%s \n", pszTrash);
 }
 
 //-----------------------------------------------------------------------------
@@ -142,11 +142,11 @@ void ParseHeader( CUtlBuffer &buf )
 void ParseFile( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, int size, int binwidth, int nofilter)
 {
 
-	// Each bin is how many computers with the given card had cpus > cpubin 
+	// Each bin is how many computers with the given card had cpus > cpubin
 	// and less than the next bin so cpu 200 covers cpu's from 200 to 299
 	CUtlVector<int> nCpuList;
 	CUtlVector<int> nQuantity;
-	for ( int i=0; i <= 2400 ; i+=binwidth)	 // a reasonable cpu range 
+	for ( int i=0; i <= 2400 ; i+=binwidth)	 // a reasonable cpu range
 	{
 		nCpuList.AddToTail(i);
 		nQuantity.AddToTail(0);
@@ -154,14 +154,14 @@ void ParseFile( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, in
 
 	int totalUsers=0;
 	while ( inbuf.TellGet() < size )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[300];
 		int nNetSpeed, nRam, nCpu;
 		int nRead=inbuf.Scanf( "%s %d %d %d ", pszVersion, &nNetSpeed, &nRam, &nCpu );
-		
-		char pszCard[300]; 
+
+		char pszCard[300];
 		char chSentinel = ' ';
 		int i=0;
 		while (( chSentinel != '\n' ))
@@ -171,13 +171,13 @@ void ParseFile( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, in
 			++i;
 		}
 		pszCard[i] = '\0';
-		
+
 		if (nRead != 4)
 			continue;
 
 		// if card is our type
 		if ( nofilter || Q_stristr ( pszCard, pszSearchString ) != NULL )
-		{	  
+		{
 			InsertResult(nCpu, nCpuList, nQuantity);
 		}
 		totalUsers++;
@@ -188,7 +188,7 @@ void ParseFile( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, in
 		printf ("Too many points, increase bin width\n");
 	}
 	printf("TotalUsers %d\n", totalUsers);
-	
+
 	// write results to an output buffer
 	int total=0;
 	outbuf.Printf ( "Cpu\tQuantity\n" ); // headers
@@ -204,7 +204,7 @@ void ParseFile( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, in
 
 
 //-----------------------------------------------------------------------------
-// given cpu bin, plots number of users in a given memory bin 
+// given cpu bin, plots number of users in a given memory bin
 //
 // Parses buffer into fields and puts results into outbuf
 // size is size of the file read in
@@ -218,7 +218,7 @@ void ParseFile2( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 {
 	binwidth=100;
 
-	// Each bin is how many computers with the given card had cpus > cpubin 
+	// Each bin is how many computers with the given card had cpus > cpubin
 	// and less than the next bin so cpu 200 covers cpu's from 200 to 299
 	CUtlVector<int> nCpuList;
 	CUtlVector<int> nMemList;
@@ -229,7 +229,7 @@ void ParseFile2( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 			nQuantity[i][j]=0;
 	}
 
-	for ( int i=0; i <= 2400 ; i+=binwidth)	 // a reasonable cpu range 
+	for ( int i=0; i <= 2400 ; i+=binwidth)	 // a reasonable cpu range
 	{
 		nCpuList.AddToTail(i);
 	}
@@ -245,7 +245,7 @@ void ParseFile2( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 	int totalUsers=0;
 	int maxram=0;
 	while ( inbuf.TellGet() < size )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
@@ -286,7 +286,7 @@ void ParseFile2( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 		}
 		int memIndex = i-1;
 		assert(i<nMemList.Size());
-		// insert data 
+		// insert data
 		assert(memIndex<NMEMBINS);
 		assert(cpuIndex<NCPUBINS);
 		(nQuantity[memIndex][cpuIndex])++;
@@ -303,7 +303,7 @@ void ParseFile2( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 	}
 	printf("TotalUsers %d\n", totalUsers);
 	printf("Max ram %d\n", maxram);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "Cpu" ); // headers
 	for (int j=1; j < nMemList.Size(); ++j)
@@ -322,7 +322,7 @@ void ParseFile2( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 
 
 //-----------------------------------------------------------------------------
-// given cpu bin, plots number of users in a given network speed bin 
+// given cpu bin, plots number of users in a given network speed bin
 //
 // Parses buffer into fields and puts results into outbuf
 // size is size of the file read in
@@ -334,7 +334,7 @@ void ParseFile3( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 {
 	binwidth=100;
 
-	// Each bin is how many computers with the given card had cpus > cpubin 
+	// Each bin is how many computers with the given card had cpus > cpubin
 	// and less than the next bin so cpu 200 covers cpu's from 200 to 299
 	CUtlVector<int> nCpuList;
 	CUtlVector<int> nNetList;
@@ -345,7 +345,7 @@ void ParseFile3( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 			nQuantity[i][j]=0;
 	}
 
-	for (int i=0; i <= 2400 ; i+=binwidth)	 // a reasonable cpu range 
+	for (int i=0; i <= 2400 ; i+=binwidth)	 // a reasonable cpu range
 	{
 		nCpuList.AddToTail(i);
 	}
@@ -363,7 +363,7 @@ void ParseFile3( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 	int totalUsers=0;
 	int maxspeed=0;
 	while ( inbuf.TellGet() < size )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
@@ -404,7 +404,7 @@ void ParseFile3( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 		}
 		int netIndex = i;
 		assert(i<nNetList.Size());
-		// insert data 
+		// insert data
 		assert(netIndex<NNETBINS);
 		assert(cpuIndex<NCPUBINS);
 		(nQuantity[netIndex][cpuIndex])++;
@@ -421,7 +421,7 @@ void ParseFile3( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, i
 	}
 	printf("TotalUsers %d\n", totalUsers);
 	printf("Max ram %d\n", maxspeed);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "Cpu" ); // headers
 	for (int j=0; j < nNetList.Size()-1; ++j)
@@ -456,7 +456,7 @@ void TimeSeriesCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString
 
 	// unequally sized bins
 
-	// Each bin is how many computers with the given card had cpus > cpubin 
+	// Each bin is how many computers with the given card had cpus > cpubin
 	// and less than the next bin so cpu 200 covers cpu's from 200 to 299
 	CUtlVector<int> nTimeList;
 	int nQuantity[30][CPUBINS];
@@ -465,7 +465,7 @@ void TimeSeriesCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString
 		for (int j=0; j< CPUBINS; ++j)
 			nQuantity[i][j]=0;
 	}
-					
+
 	nTimeList.AddToTail(0);
 	int bin=10000;
 	int i=bin;
@@ -481,14 +481,14 @@ void TimeSeriesCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString
 
 	int totalUsers=0;
 	while ( (inbuf.TellGet() < size) )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
 		int nNetSpeed, nRam, nCpu;
 		inbuf.Scanf( "%s %d %d %d", pszVersion, &nNetSpeed, &nRam, &nCpu );
 
-		char pszCard[300]; 
+		char pszCard[300];
 		char chSentinel = ' ';
 		int i=0;
 		while (( chSentinel != '\n' ))
@@ -515,7 +515,7 @@ void TimeSeriesCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString
 		int cpuIndex=2; // default is unknown
 		if ( Q_stristr ( pszCard, "SSE" ) != NULL )
 		{
-		   cpuIndex=1; // intel
+			cpuIndex=1; // intel
 		}
 		else if ( Q_stristr ( pszCard, "KNI" ) != NULL )
 		{
@@ -539,7 +539,7 @@ void TimeSeriesCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString
 	}
 
 	printf("TotalUsers %d\n", totalUsers);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "CPU" ); // headers
 	for (int j=1; j < nTimeList.Size(); ++j)
@@ -573,7 +573,7 @@ void TimeSeriesCPU( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString
 // 5=Intel 810
 // 6=GeForce3
 
-#define CARDBINS 8	  
+#define CARDBINS 8
 
 void TimeSeriesVCard( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString, int size, int binwidth)
 {
@@ -585,7 +585,7 @@ void TimeSeriesVCard( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchStri
 		for (int j=0; j< CARDBINS; ++j)
 			nQuantity[i][j]=0;
 	}
-					
+
 	nTimeList.AddToTail(0);
 	int bin=10000;
 	int i=bin;
@@ -604,14 +604,14 @@ void TimeSeriesVCard( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchStri
 
 	int totalUsers=0;
 	while ( (inbuf.TellGet() < size) )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
 		int nNetSpeed, nRam, nCpu;
 		inbuf.Scanf( "%s %d %d %d", pszVersion, &nNetSpeed, &nRam, &nCpu );
 
-		char pszCard[300]; 
+		char pszCard[300];
 		char chSentinel = ' ';
 		int i=0;
 		while (( chSentinel != '\n' ))
@@ -634,7 +634,7 @@ void TimeSeriesVCard( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchStri
 		}
 
 		pszCard[i] = '\0';
-		
+
 		// 0=RIVA TNT
 		// 1=GeForce2 MX
 		// 2=Microsoft Corporation GDI Generic
@@ -647,11 +647,11 @@ void TimeSeriesVCard( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchStri
 		if ( Q_stristr ( pszCard, "RIVA TNT2" ) != NULL )
 		{
 			//printf ("%s", pszCard);
-			cardIndex=0; 
+			cardIndex=0;
 		}
 		else if ( Q_stristr ( pszCard, "GeForce2 MX" ) != NULL )
 		{
-			cardIndex=1; 
+			cardIndex=1;
 		}
 		else if ( Q_stristr ( pszCard, "Microsoft Corporation GDI Generic" ) != NULL )
 		{
@@ -689,7 +689,7 @@ void TimeSeriesVCard( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchStri
 	}
 
 	printf("TotalUsers %d\n", totalUsers);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "Video Card" ); // headers
 	for (int j=1; j < nTimeList.Size(); ++j)
@@ -722,13 +722,13 @@ void InsertResult( int nCpu, CUtlVector<int> &nCpuList, CUtlVector<int> &nQuanti
 		//nQuantity.AddToTail( 1 );
 		return;
 	}
-	
+
 	int i=0;
 	while ( nCpu > nCpuList[i] )
 	{
 		++i;
 	}
-	nQuantity[i-1]++;		
+	nQuantity[i-1]++;
 }
 
 
@@ -744,14 +744,14 @@ void HistogramVidCards( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 
 	int totalUsers=0;
 	while ( (inbuf.TellGet() < size) )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
 		int nNetSpeed, nRam, nCpu;
 		inbuf.Scanf( "%s %d %d %d", pszVersion, &nNetSpeed, &nRam, &nCpu );
 
-		char pszCard[300]; 
+		char pszCard[300];
 		char chSentinel = ' ';
 		int i=0;
 		while (( chSentinel != '\n' ))
@@ -774,7 +774,7 @@ void HistogramVidCards( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 		}
 
 		pszCard[i] = '\0';
-		
+
 		// 0=RIVA TNT2
 		// 1=GeForce2 MX
 		// 2=Microsoft Corporation GDI Generic
@@ -790,16 +790,16 @@ void HistogramVidCards( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 		// 12=Radeon DDR
 		// 13=Rage 128 Pro
 		// 14=All others
-		
+
 		int cardIndex=14; // default is other
 		if ( Q_stristr ( pszCard, "RIVA TNT2" ) != NULL )
 		{
 			//printf ("%s", pszCard);
-			cardIndex=0; 
+			cardIndex=0;
 		}
 		else if ( Q_stristr ( pszCard, "GeForce2 MX" ) != NULL )
 		{
-			cardIndex=1; 
+			cardIndex=1;
 		}
 		else if ( Q_stristr ( pszCard, "Microsoft Corporation GDI Generic" ) != NULL )
 		{
@@ -858,7 +858,7 @@ void HistogramVidCards( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 	}
 
 	printf("TotalUsers %d\n", totalUsers);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "Video Card" ); // headers
 	outbuf.Printf ("\tNumber of Users\n");
@@ -894,14 +894,14 @@ void HistogramNetSpeed( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 
 	int totalUsers=0;
 	while ( (inbuf.TellGet() < size) )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
 		int nNetSpeed, nRam, nCpu;
 		inbuf.Scanf( "%s %d %d %d", pszVersion, &nNetSpeed, &nRam, &nCpu );
 
-		char pszCard[300]; 
+		char pszCard[300];
 		char chSentinel = ' ';
 		int i=0;
 		while (( chSentinel != '\n' ))
@@ -924,7 +924,7 @@ void HistogramNetSpeed( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 		}
 
 		pszCard[i] = '\0';
-		
+
 		if (nNetSpeed < 0) // handle corrupt data
 			continue;
 		// handle outliers--bin is off the scale
@@ -942,7 +942,7 @@ void HistogramNetSpeed( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchSt
 	}
 
 	printf("TotalUsers %d\n", totalUsers);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "Network Speed" ); // headers
 	for (int j=0; j < nNetList.Size()-1; ++j)
@@ -979,14 +979,14 @@ void HistogramRam( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString,
 
 	int totalUsers=0;
 	while ( (inbuf.TellGet() < size) )
-	{	
+	{
 		// Now parse the utlbuffer
 		// file has fields of version, netspeed, ram, cpu and card type
 		char pszVersion[256];
 		int nNetSpeed, nRam, nCpu;
 		inbuf.Scanf( "%s %d %d %d", pszVersion, &nNetSpeed, &nRam, &nCpu );
 
-		char pszCard[300]; 
+		char pszCard[300];
 		char chSentinel = ' ';
 		int i=0;
 		while (( chSentinel != '\n' ))
@@ -1009,7 +1009,7 @@ void HistogramRam( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString,
 		}
 
 		pszCard[i] = '\0';
-		
+
 		if (nRam < 0) // handle corrupt data
 			continue;
 		// handle outliers--bin is off the scale
@@ -1027,7 +1027,7 @@ void HistogramRam( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString,
 	}
 
 	printf("TotalUsers %d\n", totalUsers);
-	
+
 	// write results to an output buffer
 	outbuf.Printf ( "RAM" ); // headers
 	for (int j=0; j < nRamList.Size()-1; ++j)
@@ -1041,6 +1041,3 @@ void HistogramRam( CUtlBuffer &inbuf, CUtlBuffer &outbuf, char *pszSearchString,
 		outbuf.Printf ("\n");
 	}
 }
-
-
-

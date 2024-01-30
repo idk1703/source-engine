@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ void UpdatePacifier( float flPercent )
 {
 	int iCur = (int)(flPercent * 40.0f);
 	iCur = clamp( iCur, g_LastPacifierDrawn, 40 );
-	
+
 	if( iCur != g_LastPacifierDrawn && !g_bPacifierSuppressed )
 	{
 		for( int i=g_LastPacifierDrawn+1; i <= iCur; i++ )
@@ -44,7 +44,7 @@ void UpdatePacifier( float flPercent )
 				}
 			}
 		}
-		
+
 		g_LastPacifierDrawn = iCur;
 	}
 }
@@ -52,7 +52,7 @@ void UpdatePacifier( float flPercent )
 void EndPacifier( bool bCarriageReturn )
 {
 	UpdatePacifier(1);
-	
+
 	if( bCarriageReturn && !g_bPacifierSuppressed )
 		Msg("\n");
 }

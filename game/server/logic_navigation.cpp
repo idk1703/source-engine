@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -18,7 +18,7 @@ enum navproperties_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CLogicNavigation : public CLogicalEntity,
 						 public IEntityListener
@@ -36,8 +36,8 @@ private:
 	// Inputs
 	void InputTurnOn( inputdata_t &inputdata ) { TurnOn(); }
 	void InputTurnOff( inputdata_t &inputdata ) { TurnOff(); }
-	void InputToggle( inputdata_t &inputdata ) 
-	{ 
+	void InputToggle( inputdata_t &inputdata )
+	{
 		if ( m_isOn )
 			TurnOff();
 		else
@@ -72,9 +72,9 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *szKeyName - 
-//			*szValue - 
+// Purpose:
+// Input  : *szKeyName -
+//			*szValue -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CLogicNavigation::KeyValue( const char *szKeyName, const char *szValue )
@@ -96,7 +96,7 @@ bool CLogicNavigation::KeyValue( const char *szKeyName, const char *szValue )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLogicNavigation::Activate()
 {
@@ -114,7 +114,7 @@ void CLogicNavigation::Activate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLogicNavigation::UpdateOnRemove()
 {
@@ -127,7 +127,7 @@ void CLogicNavigation::UpdateOnRemove()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLogicNavigation::OnEntitySpawned( CBaseEntity *pEntity )
 {
@@ -138,7 +138,7 @@ void CLogicNavigation::OnEntitySpawned( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLogicNavigation::TurnOn()
 {
@@ -169,7 +169,7 @@ void CLogicNavigation::UpdateProperty()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLogicNavigation::TurnOff()
 {
@@ -180,4 +180,3 @@ void CLogicNavigation::TurnOff()
 	gEntList.RemoveListenerEntity( this );
 	UpdateProperty();
 }
-

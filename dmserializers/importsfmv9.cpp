@@ -48,8 +48,8 @@ void InstallSFMV9Importer( IDataModel *pFactory )
 //-----------------------------------------------------------------------------
 // Constructor
 //-----------------------------------------------------------------------------
-CImportSFMV9::CImportSFMV9( const char *formatName, const char *nextFormatName ) : 
-BaseClass( formatName, nextFormatName )	
+CImportSFMV9::CImportSFMV9( const char *formatName, const char *nextFormatName ) :
+BaseClass( formatName, nextFormatName )
 {
 }
 

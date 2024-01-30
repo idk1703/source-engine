@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -68,7 +68,7 @@ private:
 
 class CVoteSetupDialog : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CVoteSetupDialog, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CVoteSetupDialog, vgui::Frame );
 
 public:
 	CVoteSetupDialog( vgui::Panel *parent );
@@ -174,7 +174,7 @@ private:
 
 	int					m_nVoteActiveIssueLabelX;
 	int					m_nVoteActiveIssueLabelY;
-	
+
 #ifdef TF_CLIENT_DLL
 	CUtlStringList		m_VoteSetupPopFiles;
 #endif

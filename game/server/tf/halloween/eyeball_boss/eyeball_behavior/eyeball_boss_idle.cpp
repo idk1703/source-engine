@@ -239,4 +239,3 @@ EventDesiredResult< CEyeballBoss > CEyeballBossIdle::OnOtherKilled( CEyeballBoss
 	m_isLaughReady = true;
 	return TryContinue();
 }
-

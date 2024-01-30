@@ -65,7 +65,7 @@
 #define ERROR_XMA_CANTSUBMIT		-8	// hw not acting as expected
 #define ERROR_XMA_CANTRESUME		-9	// hw not acting as expected
 #define ERROR_XMA_NO_PCM_DATA		-10	// no xma decoded pcm data ready
-#define ERROR_NULL_BUFFER			-11	// logic flaw, expected buffer is null 
+#define ERROR_NULL_BUFFER			-11	// logic flaw, expected buffer is null
 
 const char *g_XMAErrorStrings[] =
 {
@@ -90,30 +90,30 @@ public:
 	{
 		MEM_ALLOC_CREDIT();
 
-		return XMemAlloc( bytes, 
-			MAKE_XALLOC_ATTRIBUTES( 
-				0, 
-				false, 
-				TRUE, 
-				FALSE, 
+		return XMemAlloc( bytes,
+			MAKE_XALLOC_ATTRIBUTES(
+				0,
+				false,
+				TRUE,
+				FALSE,
 				eXALLOCAllocatorId_XAUDIO,
-				XALLOC_PHYSICAL_ALIGNMENT_4K, 
-				XALLOC_MEMPROTECT_WRITECOMBINE_LARGE_PAGES, 
+				XALLOC_PHYSICAL_ALIGNMENT_4K,
+				XALLOC_MEMPROTECT_WRITECOMBINE_LARGE_PAGES,
 				FALSE,
 				XALLOC_MEMTYPE_PHYSICAL ) );
 	}
 
 	static void Free( void *p )
 	{
-		XMemFree( p, 
-			MAKE_XALLOC_ATTRIBUTES( 
-				0, 
-				false, 
-				TRUE, 
-				FALSE, 
+		XMemFree( p,
+			MAKE_XALLOC_ATTRIBUTES(
+				0,
+				false,
+				TRUE,
+				FALSE,
 				eXALLOCAllocatorId_XAUDIO,
-				XALLOC_PHYSICAL_ALIGNMENT_4K, 
-				XALLOC_MEMPROTECT_WRITECOMBINE_LARGE_PAGES, 
+				XALLOC_PHYSICAL_ALIGNMENT_4K,
+				XALLOC_MEMPROTECT_WRITECOMBINE_LARGE_PAGES,
 				FALSE,
 				XALLOC_MEMTYPE_PHYSICAL ) );
 	}
@@ -142,7 +142,7 @@ public:
 
 	CAudioMixerWaveXMA( IWaveData *data, int initialStreamPosition );
 	~CAudioMixerWaveXMA( void );
-	
+
 	virtual void			Mix( IAudioDevice *pDevice, channel_t *pChannel, void *pData, int outputOffset, int inputOffset, fixedint fracRate, int outCount, int timecompress );
 
 	virtual int				GetOutputData( void **pData, int sampleCount, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] );
@@ -219,7 +219,7 @@ CON_COMMAND( snd_xma_info, "Spew XMA Info" )
 	}
 }
 
-CAudioMixerWaveXMA::CAudioMixerWaveXMA( IWaveData *data, int initialStreamPosition ) : CAudioMixerWave( data ) 
+CAudioMixerWaveXMA::CAudioMixerWaveXMA( IWaveData *data, int initialStreamPosition ) : CAudioMixerWave( data )
 {
 	Assert( dynamic_cast<CAudioSourceWave *>(&m_pData->Source()) != NULL );
 
@@ -366,7 +366,7 @@ int CAudioMixerWaveXMA::UpdatePositionForLooping( int *pNumRequestedSamples )
 // Get and submit XMA block(s). The decoder must stay blocks ahead of mixer
 // so the decoded samples are available for peeling.
 // An XMA file is thus treated as a series of fixed size large buffers (multiple xma blocks),
-// which are streamed in sequentially. The XMA buffers may be delayed from the 
+// which are streamed in sequentially. The XMA buffers may be delayed from the
 // audio data cache due to async i/o latency.
 // Returns < 0 if error, 0 if no decode started, 1 if decode submitted.
 //-----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ int CAudioMixerWaveXMA::GetXMABlocksAndSubmitToDecoder( bool bDecoderIsLocked )
 
 		// start from beginning of loop
 		CAudioSourceWave &source = reinterpret_cast<CAudioSourceWave &>(m_pData->Source());
-		source.GetLoopingInfo( &m_DataOffset, NULL, NULL ); 
+		source.GetLoopingInfo( &m_DataOffset, NULL, NULL );
 		m_DataOffset *= XMA_BLOCK_SIZE;
 	}
 
@@ -430,7 +430,7 @@ int CAudioMixerWaveXMA::GetXMABlocksAndSubmitToDecoder( bool bDecoderIsLocked )
 
 	if ( !XMAPlaybackQueryReadyForMoreData( m_pXMAPlayback, 0 ) || XMAPlaybackQueryInputDataPending( m_pXMAPlayback, 0, pXMABuffer ) )
 	{
-		// decoder too saturated for more data or 
+		// decoder too saturated for more data or
 		// decoder still decoding from input hw buffer
 		goto cleanUp;
 	}
@@ -450,7 +450,7 @@ int CAudioMixerWaveXMA::GetXMABlocksAndSubmitToDecoder( bool bDecoderIsLocked )
 
 		m_DataOffset += available;
 		total += available;
-	}	
+	}
 	if ( total != bufferSize )
 	{
 		if ( !total )
@@ -500,7 +500,7 @@ cleanUp:
 			status = ERROR_XMA_CANTRESUME;
 		}
 	}
-	
+
 	return status;
 }
 
@@ -566,7 +566,7 @@ int CAudioMixerWaveXMA::ServiceXMADecoder( bool bForceUpdate )
 
 		// put into staging buffer, ready for mixer to drain
 		m_pPCMSamples->Write( pPCMData, numSamplesDecoded*m_NumChannels*sizeof( short ) );
-		
+
 		numSamples -= numSamplesDecoded;
 		numNewSamples -= numSamplesDecoded;
 	}
@@ -626,7 +626,7 @@ int CAudioMixerWaveXMA::GetPCMSamples( int numSamplesToCopy, char *pData )
 	if ( snd_xma_spew_drain.GetBool() )
 	{
 		char *pOperation = ( numSamplesToCopy && !pData ) ? "Flushed" : "Copied";
-		Msg( "XMA: 0x%8.8x, SamplePosition: %d, Ready: %d, Requested: %d, %s: %d, Elapsed: %d ms '%s'\n", 
+		Msg( "XMA: 0x%8.8x, SamplePosition: %d, Ready: %d, Requested: %d, %s: %d, Elapsed: %d ms '%s'\n",
 			(unsigned int)this, m_SamplePosition, numReadySamples, numSamplesToCopy, pOperation, numCopiedSamples, Plat_MSTime() - m_LastDrainTime, m_pData->Source().GetFileName() );
 	}
 	m_LastDrainTime = Plat_MSTime();
@@ -636,7 +636,7 @@ int CAudioMixerWaveXMA::GetPCMSamples( int numSamplesToCopy, char *pData )
 		// could be actual flushed or actual copied
 		return numCopiedSamples;
 	}
-	
+
 	if ( !pData )
 	{
 		// satify query for available
@@ -791,7 +791,7 @@ bool CAudioMixerWaveXMA::ShouldContinueMixing()
 		{
 			pErrorString = g_XMAErrorStrings[0];
 		}
-		Warning( "XMA: 0x%8.8x, Mixer Aborted: %s, SamplePosition: %d/%d, DataOffset: %d/%d, '%s'\n", 
+		Warning( "XMA: 0x%8.8x, Mixer Aborted: %s, SamplePosition: %d/%d, DataOffset: %d/%d, '%s'\n",
 			(unsigned int)this, pErrorString, m_SamplePosition, m_SampleCount, m_DataOffset, m_TotalBytes, m_pData->Source().GetFileName() );
 	}
 
@@ -842,7 +842,7 @@ int CAudioMixerWaveXMA::GetOutputData( void **pData, int numSamplesToCopy, char 
 
 #if defined( ALLOW_SKIP_SAMPLES )
 	if ( m_SkipSamples > 0 )
-	{		
+	{
 		// flush whatever is available
 		// ignore
 		m_SkipSamples -= GetPCMSamples( m_SkipSamples, NULL );
@@ -872,7 +872,7 @@ int CAudioMixerWaveXMA::GetOutputData( void **pData, int numSamplesToCopy, char 
 		}
 	}
 
-	// can only drain as much as can be copied to caller		
+	// can only drain as much as can be copied to caller
 	int numMaxSamples =  AUDIOSOURCE_COPYBUF_SIZE/( m_NumChannels * sizeof( short ) );
 	numRequestedSamples = min( numRequestedSamples, numMaxSamples );
 
@@ -932,7 +932,7 @@ int CAudioMixerWaveXMA::GetPositionForSave()
 	{
 		// A looped sample cannot be saved/restored because the decoded sample position,
 		// which is needed for loop calc, cannot ever be correctly restored without
-		// the XMA seek table. 
+		// the XMA seek table.
 		return 0;
 	}
 

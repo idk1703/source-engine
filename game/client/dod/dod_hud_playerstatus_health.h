@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -22,7 +22,7 @@ class CDoDHudHealthBar : public vgui::ImagePanel
 
 public:
 	CDoDHudHealthBar( vgui::Panel *parent, const char *name );
-	
+
 	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
 	virtual void OnThink();
@@ -42,7 +42,7 @@ private:
 	Color				m_clrBorder;
 
 	EHANDLE	m_hHealthDelegatePlayer;
-	
+
 	CPanelAnimationVar( float, m_flFirstWarningLevel, "FirstWarning", "0.50" );
 	CPanelAnimationVar( float, m_flSecondWarningLevel, "SecondWarning", "0.25" );
 };
@@ -50,7 +50,7 @@ private:
 //-----------------------------------------------------------------------------
 // Purpose: Health panel
 //-----------------------------------------------------------------------------
-class CDoDHudHealth : public vgui::EditablePanel 
+class CDoDHudHealth : public vgui::EditablePanel
 {
 	DECLARE_CLASS_SIMPLE( CDoDHudHealth, vgui::EditablePanel );
 
@@ -73,6 +73,6 @@ private:
 	vgui::ImagePanel	*m_pClassImageBG;	// draws the class image outline
 
 	EHANDLE	m_hHealthDelegatePlayer;
-};	
+};
 
 #endif // DOD_HUD_PLAYERSTATUS_HEALTH_H

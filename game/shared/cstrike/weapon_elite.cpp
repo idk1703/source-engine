@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -26,9 +26,9 @@ class CWeaponElite : public CWeaponCSBase
 {
 public:
 	DECLARE_CLASS( CWeaponElite, CWeaponCSBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponElite();
 
 	virtual void Spawn();
@@ -41,8 +41,8 @@ public:
 
 	virtual void WeaponIdle();
 
- 	virtual float GetInaccuracy() const;
-	
+	virtual float GetInaccuracy() const;
+
 	virtual CSWeaponID GetWeaponID( void ) const		{ return WEAPON_ELITE; }
 
 #ifdef CLIENT_DLL
@@ -57,7 +57,7 @@ protected:
 	bool FiringLeft() const;
 
 private:
-	
+
 	CWeaponElite( const CWeaponElite & );
 	float		m_flLastFire;
 
@@ -203,7 +203,7 @@ void CWeaponElite::PrimaryAttack()
 	pPlayer->DoMuzzleFlash();
 
 	//SetPlayerShieldAnim();
-	
+
 	// player "shoot" animation
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
@@ -216,9 +216,9 @@ void CWeaponElite::PrimaryAttack()
 		CBaseEntity::GetPredictionRandomSeed() & 255,
 		GetInaccuracy(),
 		GetSpread());
-		
+
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + GetCSWpnData().m_flCycleTime;
-	
+
 	if (!m_iClip1 && pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) <= 0)
 	{
 		// HEV suit - indicate out of ammo condition
@@ -269,7 +269,7 @@ void CWeaponElite::WeaponIdle()
 
 /*
 	// switching to the idle with the slide back on the right pistol causes animation pops transitioning
-	// from/to the depot/holster animations. The pop transition to the reload is less noticeable, so 
+	// from/to the depot/holster animations. The pop transition to the reload is less noticeable, so
 	// we'll live with that one
 
 	if ( m_iClip1 == 1 )
@@ -287,20 +287,20 @@ void CWeaponElite::WeaponIdle()
 
 #ifdef CLIENT_DLL
 
-    bool CWeaponElite::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options )
+	bool CWeaponElite::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options )
 	{
 		if( event == 5001 )
 		{
 			C_CSPlayer *pPlayer = ToCSPlayer( GetOwner() );
 			if( pPlayer && pPlayer->GetFOV() < pPlayer->GetDefaultFOV() && HideViewModelWhenZoomed() )
 				return true;
-			
+
 			CEffectData data;
 			data.m_fFlags = 0;
 			data.m_hEntity = pViewModel->GetRefEHandle();
 			data.m_nAttachmentIndex = FiringLeft() ? 1 : 2; // toggle muzzle flash
 			data.m_flScale = GetCSWpnData().m_flMuzzleScale;
-		
+
 			DispatchEffect( "CS_MuzzleFlash", data );
 
 			return true;
@@ -311,7 +311,7 @@ void CWeaponElite::WeaponIdle()
 
 	int CWeaponElite::GetMuzzleAttachment( void )
 	{
-		return LookupAttachment( FiringLeft() ? "muzzle_flash_l" : "muzzle_flash_r" );	
+		return LookupAttachment( FiringLeft() ? "muzzle_flash_l" : "muzzle_flash_r" );
 	}
 
 #endif

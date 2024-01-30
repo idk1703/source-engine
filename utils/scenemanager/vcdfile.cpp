@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -29,7 +29,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const
 //-----------------------------------------------------------------------------
 const char	*CSceneTokenProcessor::CurrentToken( void )
@@ -38,8 +38,8 @@ const char	*CSceneTokenProcessor::CurrentToken( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : crossline - 
+// Purpose:
+// Input  : crossline -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::GetToken( bool crossline )
@@ -48,7 +48,7 @@ bool CSceneTokenProcessor::GetToken( bool crossline )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CSceneTokenProcessor::TokenAvailable( void )
@@ -57,9 +57,9 @@ bool CSceneTokenProcessor::TokenAvailable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *fmt - 
-//			... - 
+// Purpose:
+// Input  : *fmt -
+//			... -
 //-----------------------------------------------------------------------------
 void CSceneTokenProcessor::Error( const char *fmt, ... )
 {
@@ -103,8 +103,8 @@ CScene *CVCDFile::GetOwnerScene()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *filename - 
+// Purpose:
+// Input  : *filename -
 // Output : CChoreoScene
 //-----------------------------------------------------------------------------
 CChoreoScene *CVCDFile::LoadScene( char const *filename )
@@ -262,7 +262,7 @@ void CVCDFile::MoveChildUp( ITreeItem *child )
 
 void CVCDFile::MoveChildDown( ITreeItem *child )
 {
-}	
+}
 
 void CVCDFile::SetDirty( bool dirty )
 {

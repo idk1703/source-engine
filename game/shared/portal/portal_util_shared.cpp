@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -46,7 +46,7 @@ public:
 		QAngle m_qCollisionAngles;
 		matrix3x4_t m_matCollisionToWorldTransform;
 		matrix3x4_t m_matRootParentToWorldTransform;
-	}; 
+	};
 
 	mutable CTC_ReferenceVars_t m_ReferencedVars; //when returning a const reference, it needs to point to something, so here we go
 
@@ -78,7 +78,7 @@ public:
 void CTransformedCollideable::WorldSpaceTriggerBounds( Vector *pVecWorldMins, Vector *pVecWorldMaxs ) const
 {
 	m_pWrappedCollideable->WorldSpaceTriggerBounds( pVecWorldMins, pVecWorldMaxs );
-	
+
 	if( pVecWorldMins )
 		*pVecWorldMins = m_matTransform * (*pVecWorldMins);
 
@@ -89,7 +89,7 @@ void CTransformedCollideable::WorldSpaceTriggerBounds( Vector *pVecWorldMins, Ve
 bool CTransformedCollideable::TestCollision( const Ray_t &ray, unsigned int fContentsMask, trace_t& tr )
 {
 	//TODO: Transform the ray by inverse matTransform and transform the trace results by matTransform? AABB Errors arise by transforming the ray.
-    return m_pWrappedCollideable->TestCollision( ray, fContentsMask, tr );
+	return m_pWrappedCollideable->TestCollision( ray, fContentsMask, tr );
 }
 
 bool CTransformedCollideable::TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, trace_t& tr )
@@ -363,7 +363,7 @@ void UTIL_Portal_TraceRay_With( const CProp_Portal *pPortal, const Ray_t &ray, u
 		enginetrace->TraceRay( ray, fMask, pTraceFilter, pTrace );
 	}
 	else
-	{		
+	{
 
 		trace_t RealTrace;
 		enginetrace->TraceRay( ray, fMask, pTraceFilter, &RealTrace );
@@ -389,12 +389,12 @@ void UTIL_Portal_TraceRay_With( const CProp_Portal *pPortal, const Ray_t &ray, u
 		VectorNormalize( vDirection );
 		Vector vPortalForward;
 		pPortal->GetVectors( &vPortalForward, 0, 0 );
-		
+
 		float flDot = -1.0f;
 		if ( ray.m_IsSwept )
 		{
 			flDot = vDirection.Dot( vPortalForward );
-		} 
+		}
 
 		// TODO: Translate extents of rays properly, tracing extruded box rays across portals causes collision bugs
 		//		 Until this is fixed, we'll only test true rays across portals
@@ -427,7 +427,7 @@ void UTIL_Portal_TraceRay_With( const CProp_Portal *pPortal, const Ray_t &ray, u
 //-----------------------------------------------------------------------------
 // Purpose: Tests if a ray touches the surface of any portals
 // Input  : ray - the ray to be tested against portal surfaces
-//			trace - a filled-in trace corresponding to the parameter ray 
+//			trace - a filled-in trace corresponding to the parameter ray
 // Output : bool - false if the 'ray' parameter failed to hit any portal surface
 //		    pOutLocal - the portal touched (if any)
 //			pOutRemote - the portal linked to the portal touched
@@ -455,7 +455,7 @@ bool UTIL_DidTraceTouchPortals( const Ray_t& ray, const trace_t& trace, CProp_Po
 
 		pIntersectedPortal = UTIL_Portal_FirstAlongRay( ray, fMustBeCloserThan );
 	}
-	
+
 	if( (pIntersectedPortal == NULL) && !ray.m_IsRay )
 	{
 		//haven't hit anything yet, try again with box tests
@@ -467,7 +467,7 @@ bool UTIL_DidTraceTouchPortals( const Ray_t& ray, const trace_t& trace, CProp_Po
 		for( int i = 0; i != iPortalCount; ++i )
 		{
 			CProp_Portal *pTempPortal = pPortals[i];
-			if( (pTempPortal->m_bActivated) && 
+			if( (pTempPortal->m_bActivated) &&
 				(pTempPortal->m_hLinkedPortal.Get() != NULL) )
 			{
 				if( UTIL_IsBoxIntersectingPortal( ptRayEndPoint, ray.m_Extents, pTempPortal, 0.00f ) )
@@ -481,7 +481,7 @@ bool UTIL_DidTraceTouchPortals( const Ray_t& ray, const trace_t& trace, CProp_Po
 		if( iBoxIntersectsPortalsCount > 0 )
 		{
 			pIntersectedPortal = pBoxIntersectsPortals[0];
-			
+
 			if( iBoxIntersectsPortalsCount > 1 )
 			{
 				//hit more than one, use the closest
@@ -524,7 +524,7 @@ bool UTIL_DidTraceTouchPortals( const Ray_t& ray, const trace_t& trace, CProp_Po
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Redirects the trace to either a trace that uses portal environments, or if a 
+// Purpose: Redirects the trace to either a trace that uses portal environments, or if a
 //			global boolean is set, trace with a special bullets trace.
 //			NOTE: UTIL_Portal_TraceRay_With will use the default world trace if it gets a NULL portal pointer
 // Input  : &ray - the ray to use to trace
@@ -597,11 +597,11 @@ void UTIL_Portal_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, unsign
 	if( sv_portal_trace_vs_holywall.GetBool() == false )
 		bTraceHolyWall = false;
 
-	bool bTraceTransformedGeometry = ( (pLinkedPortalSimulator != NULL) && bTraceHolyWall && portalSimulator.RayIsInPortalHole( ray ) );	
+	bool bTraceTransformedGeometry = ( (pLinkedPortalSimulator != NULL) && bTraceHolyWall && portalSimulator.RayIsInPortalHole( ray ) );
 
 	bool bCopyBackBrushTraceData = false;
 
-	
+
 
 	// Traces vs world
 	if( pTraceFilter->GetTraceType() != TRACE_ENTITIES_ONLY )
@@ -647,7 +647,7 @@ void UTIL_Portal_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, unsign
 					bCopyBackBrushTraceData = true;
 				}
 			}
-		}	
+		}
 
 		if( bCopyBackBrushTraceData )
 		{
@@ -658,7 +658,7 @@ void UTIL_Portal_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, unsign
 			bCopyBackBrushTraceData = false;
 		}
 	}
-	
+
 	// Traces vs entities
 	if( pTraceFilter->GetTraceType() != TRACE_WORLD_ONLY )
 	{
@@ -674,7 +674,7 @@ void UTIL_Portal_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, unsign
 				//if( bFilterStaticProps && !pTraceFilter->ShouldHitEntity( enumerator.m_pHandles[counter], fMask ) )
 				continue; //static props are handled separately, with clipped versions
 			}
-            else if ( !pTraceFilter->ShouldHitEntity( enumerator.m_pHandles[counter], fMask ) )
+			else if ( !pTraceFilter->ShouldHitEntity( enumerator.m_pHandles[counter], fMask ) )
 			{
 				continue;
 			}
@@ -686,7 +686,7 @@ void UTIL_Portal_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, unsign
 
 
 
-		
+
 		if( bTraceStaticProps )
 		{
 			//local clipped static props
@@ -818,7 +818,7 @@ void UTIL_PortalLinked_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, 
 	}
 	UTIL_Portal_TraceRay( pLinkedPortal, rayTransformed, fMask, pTraceFilter, pTrace, bTraceHolyWall );
 
-	// Transform the ray's start, end and plane back into this portal's space, 
+	// Transform the ray's start, end and plane back into this portal's space,
 	// because we react to the collision as it is displayed, and the image is displayed with this local portal's orientation.
 	VMatrix matLinkedToThis = pLinkedPortal->MatrixThisToLinked();
 	UTIL_Portal_PointTransform( matLinkedToThis, pTrace->startpos, pTrace->startpos );
@@ -835,8 +835,8 @@ void UTIL_PortalLinked_TraceRay( const CProp_Portal *pPortal, const Ray_t &ray, 
 //-----------------------------------------------------------------------------
 // Purpose: A version of trace entity which detects portals and translates the trace through portals
 //-----------------------------------------------------------------------------
-void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd, 
-							 unsigned int mask, ITraceFilter *pFilter, trace_t *pTrace )
+void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, const Vector &vecAbsEnd,
+							unsigned int mask, ITraceFilter *pFilter, trace_t *pTrace )
 {
 #ifdef CLIENT_DLL
 	Assert( (GameRules() == NULL) || GameRules()->IsMultiplayer() );
@@ -871,7 +871,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 	Vector vColCenter = realTrace.endpos + ( pEntity->WorldAlignMaxs() + pEntity->WorldAlignMins() ) * 0.5f;
 
 	// If this entity is not simulated in a portal environment, trace as normal
-    if( pPortalSimulator == NULL )
+	if( pPortalSimulator == NULL )
 	{
 		// If main is simulating this object, trace as UTIL_TraceEntity would
 		*pTrace = realTrace;
@@ -914,13 +914,13 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 
 		// Hit the world
 		if ( pFilter->GetTraceType() != TRACE_ENTITIES_ONLY )
-		{	
-			if( pPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable && 
+		{
+			if( pPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable &&
 				sv_portal_trace_vs_world.GetBool() )
 			{
-				//physcollision->TraceCollide( vecAbsStart, vecAbsEnd, pCollision, qCollisionAngles, 
+				//physcollision->TraceCollide( vecAbsStart, vecAbsEnd, pCollision, qCollisionAngles,
 				//							pPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable, vec3_origin, vec3_angle, &tempTrace );
-				
+
 				physcollision->TraceBox( entRay, MASK_ALL, NULL, pPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable, vec3_origin, vec3_angle, &tempTrace );
 
 				if ( tempTrace.startsolid || (tempTrace.fraction < pTrace->fraction) )
@@ -932,7 +932,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 			//if( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.RemoteTransformedToLocal.Brushes.pCollideable &&
 			if( pLinkedPortalSimulator &&
 				pLinkedPortalSimulator->m_DataAccess.Simulation.Static.World.Brushes.pCollideable &&
-				sv_portal_trace_vs_world.GetBool() && 
+				sv_portal_trace_vs_world.GetBool() &&
 				sv_portal_trace_vs_holywall.GetBool() )
 			{
 				//physcollision->TraceCollide( vecAbsStart, vecAbsEnd, pCollision, qCollisionAngles,
@@ -946,7 +946,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 				}
 			}
 
-			if ( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.Local.Brushes.pCollideable && 
+			if ( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.Local.Brushes.pCollideable &&
 				sv_portal_trace_vs_holywall.GetBool() )
 			{
 				//physcollision->TraceCollide( vecAbsStart, vecAbsEnd, pCollision, qCollisionAngles,
@@ -966,7 +966,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 				}
 			}
 
-			if ( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.Local.Tube.pCollideable && 
+			if ( pPortalSimulator->m_DataAccess.Simulation.Static.Wall.Local.Tube.pCollideable &&
 				sv_portal_trace_vs_holywall.GetBool() )
 			{
 				//physcollision->TraceCollide( vecAbsStart, vecAbsEnd, pCollision, qCollisionAngles,
@@ -997,7 +997,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 			if( sv_portal_trace_vs_staticprops.GetBool() && (pFilter->GetTraceType() != TRACE_ENTITIES_ONLY) )
 			{
 				bool bFilterStaticProps = (pFilter->GetTraceType() == TRACE_EVERYTHING_FILTER_PROPS);
-				
+
 				//local clipped static props
 				{
 					int iLocalStaticCount = pPortalSimulator->m_DataAccess.Simulation.Static.World.StaticProps.ClippedRepresentations.Count();
@@ -1055,7 +1055,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 
 							transformedCollideable.m_pWrappedCollideable = pRemoteEntity->GetCollideable();
 							Assert( transformedCollideable.m_pWrappedCollideable != NULL );
-	                        						
+
 							//enginetrace->ClipRayToCollideable( entRay, mask, &transformedCollideable, pTrace );
 
 							enginetrace->ClipRayToCollideable( entRay, mask, &transformedCollideable, &tempTrace );
@@ -1070,7 +1070,7 @@ void UTIL_Portal_TraceEntity( CBaseEntity *pEntity, const Vector &vecAbsStart, c
 			}
 		}
 
-		if( pTrace->fraction == 1.0f ) 
+		if( pTrace->fraction == 1.0f )
 		{
 			memset( pTrace, 0, sizeof( trace_t ) );
 			pTrace->fraction = 1.0f;
@@ -1106,7 +1106,7 @@ void UTIL_Portal_RayTransform( const VMatrix matThisToLinked, const Ray_t &raySo
 
 	//BUGBUG: Extents are axis aligned, so rotating it won't necessarily give us what we're expecting
 	UTIL_Portal_VectorTransform( matThisToLinked, raySource.m_Extents, rayTransformed.m_Extents );
-	
+
 	//HACKHACK: Negative extents hang in traces, make each positive because we rotated it above
 	if ( rayTransformed.m_Extents.x < 0.0f )
 	{
@@ -1201,8 +1201,8 @@ float UTIL_Portal_ShortestDistance( const Vector &vPoint1, const Vector &vPoint2
 
 float UTIL_Portal_ShortestDistanceSqr( const Vector &vPoint1, const Vector &vPoint2, CProp_Portal **pShortestDistPortal_Out /*= NULL*/, bool bRequireStraightLine /*= false*/ )
 {
-	float fMinDist = vPoint1.DistToSqr( vPoint2 );	
-	
+	float fMinDist = vPoint1.DistToSqr( vPoint2 );
+
 	int iPortalCount = CProp_Portal_Shared::AllPortals.Count();
 	if( iPortalCount == 0 )
 	{
@@ -1253,7 +1253,7 @@ float UTIL_Portal_ShortestDistanceSqr( const Vector &vPoint1, const Vector &vPoi
 
 						Vector vRight, vUp;
 						pLinkedPortal->GetVectors( NULL, &vRight, &vUp );
-						
+
 						Vector ptLinkedCenter = pLinkedPortal->GetAbsOrigin();
 						Vector vCenterToIntersection = ptPlaneIntersection - ptLinkedCenter;
 						float fRight = vRight.Dot( vCenterToIntersection );
@@ -1463,7 +1463,7 @@ CProp_Portal *UTIL_IntersectEntityExtentsWithPortal( const CBaseEntity *pEntity 
 	for( int i = 0; i != iPortalCount; ++i )
 	{
 		CProp_Portal *pTempPortal = pPortals[i];
-		if( pTempPortal->m_bActivated && 
+		if( pTempPortal->m_bActivated &&
 			(pTempPortal->m_hLinkedPortal.Get() != NULL) &&
 			UTIL_IsBoxIntersectingPortal( ptCenter, vExtents, pTempPortal )	)
 		{
@@ -1524,7 +1524,7 @@ bool FindClosestPassableSpace( CBaseEntity *pEntity, const Vector &vIndecisivePu
 	vEntityMaxs -= ptEntityCenter;
 
 	Vector ptEntityOriginalCenter = ptEntityCenter;
-	
+
 	ptEntityCenter.z += 0.001f; //to satisfy m_IsSwept on first pass
 
 	int iEntityCollisionGroup = pEntity->GetCollisionGroup();
@@ -1537,13 +1537,13 @@ bool FindClosestPassableSpace( CBaseEntity *pEntity, const Vector &vIndecisivePu
 	entRay.m_IsSwept = true;
 	entRay.m_StartOffset = vec3_origin;
 
-	Vector vOriginalExtents = vEntityMaxs;	
+	Vector vOriginalExtents = vEntityMaxs;
 
 	Vector vGrowSize = vEntityMaxs / 101.0f;
 	vEntityMaxs -= vGrowSize;
 	vEntityMins += vGrowSize;
-	
-	
+
+
 	Ray_t testRay;
 	testRay.m_Extents = vGrowSize;
 	testRay.m_IsRay = false;
@@ -1589,7 +1589,7 @@ bool FindClosestPassableSpace( CBaseEntity *pEntity, const Vector &vIndecisivePu
 			{
 
 				testRay.m_Delta = ptExtents[counter2] - ptExtents[counter];
-				
+
 				if( bExtentInvalid[counter] )
 					traces[0].startsolid = true;
 				else
@@ -1654,7 +1654,7 @@ bool FindClosestPassableSpace( CBaseEntity *pEntity, const Vector &vIndecisivePu
 			testRay.m_Extents = vGrowSize;
 			vEntityMaxs = vOriginalExtents;
 			vEntityMins = -vEntityMaxs;
-		}		
+		}
 	}
 
 	// X360TBD: Hits in portal devtest
@@ -1682,8 +1682,8 @@ bool UTIL_Portal_EntityIsInPortalHole( const CProp_Portal *pPortal, CBaseEntity 
 	pPortal->GetVectors( &vPortalForward, &vPortalRight, &vPortalUp );
 	Vector ptPortalCenter = pPortal->GetAbsOrigin();
 
-	return OBBHasFullyContainedIntersectionWithQuad( vForward, vRight, vUp, ptOBBCenter, 
-		vPortalForward, vPortalForward.Dot( ptPortalCenter ), ptPortalCenter, 
+	return OBBHasFullyContainedIntersectionWithQuad( vForward, vRight, vUp, ptOBBCenter,
+		vPortalForward, vPortalForward.Dot( ptPortalCenter ), ptPortalCenter,
 		vPortalRight, PORTAL_HALF_WIDTH + 1.0f, vPortalUp, PORTAL_HALF_HEIGHT + 1.0f );
 }
 

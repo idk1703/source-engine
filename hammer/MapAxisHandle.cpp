@@ -58,9 +58,9 @@ CMapClass *CMapAxisHandle::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pfMins - 
-//			pfMaxs - 
+// Purpose:
+// Input  : pfMins -
+//			pfMaxs -
 //-----------------------------------------------------------------------------
 CMapAxisHandle::CMapAxisHandle(void)
 {
@@ -69,9 +69,9 @@ CMapAxisHandle::CMapAxisHandle(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pfMins - 
-//			pfMaxs - 
+// Purpose:
+// Input  : pfMins -
+//			pfMaxs -
 //-----------------------------------------------------------------------------
 CMapAxisHandle::CMapAxisHandle(const char *pszKey)
 {
@@ -81,7 +81,7 @@ CMapAxisHandle::CMapAxisHandle(const char *pszKey)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::Initialize(void)
 {
@@ -94,7 +94,7 @@ void CMapAxisHandle::Initialize(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapAxisHandle::~CMapAxisHandle(void)
 {
@@ -102,8 +102,8 @@ CMapAxisHandle::~CMapAxisHandle(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::CalcBounds(BOOL bFullUpdate)
 {
@@ -132,7 +132,7 @@ void CMapAxisHandle::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapAxisHandle::Copy(bool bUpdateDependencies)
@@ -149,8 +149,8 @@ CMapClass *CMapAxisHandle::Copy(bool bUpdateDependencies)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
+// Purpose:
+// Input  : pObject -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapAxisHandle::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
@@ -195,10 +195,10 @@ CBaseTool *CMapAxisHandle::GetToolObject(int nHitData, bool bAttachObject)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
-//			point - 
-//			nData - 
+// Purpose:
+// Input  : pView -
+//			point -
+//			nData -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CMapAxisHandle::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData)
@@ -223,15 +223,15 @@ bool CMapAxisHandle::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::Render2D(CRender2D *pRender)
 {
 	SelectionState_t eState = GetSelectionState();
 	if (eState == SELECT_NONE)
 		return;
-	
+
 	m_Point[0].Render2D(pRender);
 	m_Point[1].Render2D(pRender);
 
@@ -252,29 +252,29 @@ void CMapAxisHandle::Render2D(CRender2D *pRender)
 	m_Point[1].GetOrigin(vecOrigin2);
 
 	pRender->DrawLine(vecOrigin1, vecOrigin2);
-	
+
 	pRender->PopRenderMode();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::Render3D(CRender3D *pRender)
 {
 	if (GetSelectionState() != SELECT_NONE)
 	{
 		for (int i = 0; i < 2; i++)
-		{	
+		{
 			m_Point[i].Render3D(pRender);
-		}	
+		}
 
 		Vector vec1;
 		Vector vec2;
 		m_Point[0].GetOrigin(vec1);
 		m_Point[1].GetOrigin(vec2);
-		
+
 		pRender->SetDrawColor( 255, 255, 255 );
 		pRender->DrawLine(vec1, vec2);
 	}
@@ -282,7 +282,7 @@ void CMapAxisHandle::Render3D(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMapAxisHandle::SerializeRMF(std::fstream &File, BOOL bRMF)
 {
@@ -291,7 +291,7 @@ int CMapAxisHandle::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CMapAxisHandle::SerializeMAP(std::fstream &File, BOOL bRMF)
 {
@@ -340,7 +340,7 @@ SelectionState_t CMapAxisHandle::SetSelectionState(SelectionState_t eSelectionSt
 //-----------------------------------------------------------------------------
 // Purpose: Overridden because origin helpers don't take the color of their
 //			parent entity.
-// Input  : red, green, blue - 
+// Input  : red, green, blue -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::SetRenderColor(unsigned char red, unsigned char green, unsigned char blue)
 {
@@ -350,7 +350,7 @@ void CMapAxisHandle::SetRenderColor(unsigned char red, unsigned char green, unsi
 //-----------------------------------------------------------------------------
 // Purpose: Overridden because origin helpers don't take the color of their
 //			parent entity.
-// Input  : red, green, blue - 
+// Input  : red, green, blue -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::SetRenderColor(color32 rgbColor)
 {
@@ -358,9 +358,9 @@ void CMapAxisHandle::SetRenderColor(color32 rgbColor)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : szKey - 
-//			szValue - 
+// Purpose:
+// Input  : szKey -
+//			szValue -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::OnParentKeyChanged(const char *szKey, const char *szValue)
 {
@@ -404,7 +404,7 @@ void CMapAxisHandle::DoTransform(const VMatrix &matrix)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::UpdateParentKey(void)
 {
@@ -430,7 +430,7 @@ void CMapAxisHandle::UpdateParentKey(void)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the keyvalue in our parent when we are	added to the world.
-// Input  : pWorld - 
+// Input  : pWorld -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::OnAddToWorld(CMapWorld *pWorld)
 {
@@ -441,11 +441,10 @@ void CMapAxisHandle::OnAddToWorld(CMapWorld *pWorld)
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the keyvalue in our parent after the map is loaded.
-// Input  : pWorld - 
+// Input  : pWorld -
 //-----------------------------------------------------------------------------
 void CMapAxisHandle::PostloadWorld(CMapWorld *pWorld)
 {
 	BaseClass::PostloadWorld(pWorld);
 	UpdateParentKey();
 }
-

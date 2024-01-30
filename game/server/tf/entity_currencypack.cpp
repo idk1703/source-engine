@@ -120,7 +120,7 @@ void CCurrencyPack::Spawn( void )
 	m_blinkCount = 0;
 	m_blinkTimer.Invalidate();
 	SetContextThink( &CCurrencyPack::BlinkThink, gpGlobals->curtime + GetLifeTime() - TF_CURRENCYPACK_BLINK_PERIOD - RandomFloat( 0.0, TF_CURRENCYPACK_BLINK_DURATION ), "CurrencyPackWaitingToBlinkThink" );
-	
+
 	// Force collision size to see if this fixes a bunch of stuck-in-geo issues goes away
 	SetCollisionBounds( Vector( -10, -10, -10 ), Vector( 10, 10, 10 ) );
 
@@ -306,7 +306,7 @@ bool CCurrencyPack::MyTouch( CBasePlayer *pPlayer )
 
 		CReliableBroadcastRecipientFilter filter;
 		EmitSound( filter, entindex(), TF_CURRENCYPACK_PICKUP_SOUND );
-		
+
 		if ( !m_bDistributed )
 		{
 			TFGameRules()->DistributeCurrencyAmount( m_nAmount, pTFTouchPlayer );
@@ -320,7 +320,7 @@ bool CCurrencyPack::MyTouch( CBasePlayer *pPlayer )
 		}
 
 		pTFTouchPlayer->SetLastObjectiveTime( gpGlobals->curtime );
-		
+
 		m_bTouched = true;
 	}
 
@@ -332,15 +332,14 @@ bool CCurrencyPack::MyTouch( CBasePlayer *pPlayer )
 // Purpose:
 //-----------------------------------------------------------------------------
 const char *CCurrencyPackCustom::GetDefaultPowerupModel( void )
-{ 
+{
 	// Custom packs should always be set to a value by hand
 	Assert( m_nAmount > 0 );
 
 	// Try to pick a model that's appropriate to our drop amount (which is in our multiplier)
 	if ( m_nAmount >= 25 )
-		return "models/items/currencypack_large.mdl"; 
+		return "models/items/currencypack_large.mdl";
 	if ( m_nAmount >= 10 )
-		return "models/items/currencypack_medium.mdl"; 
+		return "models/items/currencypack_medium.mdl";
 	return "models/items/currencypack_small.mdl";
 }
-

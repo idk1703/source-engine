@@ -11,7 +11,3 @@ int main( int argc, char **argv )
 {
 	return VPC_CommandLineCRCChecks( argc, argv );
 }
-
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -90,12 +90,12 @@ VControlsListPanel::~VControlsListPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VControlsListPanel::ApplySchemeSettings(IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-	m_hFont	= pScheme->GetFont("Default", IsProportional() ); 
+	m_hFont	= pScheme->GetFont("Default", IsProportional() );
 }
 
 //-----------------------------------------------------------------------------
@@ -138,10 +138,10 @@ void VControlsListPanel::EndCaptureMode( HCursor hCursor )
 	if (hCursor)
 	{
 		m_pInlineEditPanel->SetCursor(hCursor);
-		surface()->SetCursor(hCursor);	
+		surface()->SetCursor(hCursor);
 		if ( hCursor != dc_none )
 		{
-			vgui::input()->SetCursorPos ( m_iMouseX, m_iMouseY );	
+			vgui::input()->SetCursorPos ( m_iMouseX, m_iMouseY );
 		}
 	}
 }

@@ -54,7 +54,7 @@ typedef struct
 
 	QAngle			forwardAngle;
 	QAngle			lastAngles;
-	
+
 	float			m_flJoinTeamTime;
 	int				m_WantedTeam;
 	int				m_WantedClass;
@@ -130,7 +130,7 @@ bool RunMimicCommand( CUserCmd& cmd )
 	if ( bot_mimic.GetInt() > gpGlobals->maxClients )
 		return false;
 
-	
+
 	CBasePlayer *pPlayer = UTIL_PlayerByIndex( bot_mimic.GetInt()  );
 	if ( !pPlayer )
 		return false;
@@ -146,14 +146,14 @@ bool RunMimicCommand( CUserCmd& cmd )
 
 //-----------------------------------------------------------------------------
 // Purpose: Simulates a single frame of movement for a player
-// Input  : *fakeclient - 
-//			*viewangles - 
-//			forwardmove - 
-//			sidemove - 
-//			upmove - 
-//			buttons - 
-//			impulse - 
-//			msec - 
+// Input  : *fakeclient -
+//			*viewangles -
+//			forwardmove -
+//			sidemove -
+//			upmove -
+//			buttons -
+//			impulse -
+//			msec -
 // Output : 	virtual void
 //-----------------------------------------------------------------------------
 static void RunPlayerMove( CHL1MP_Player *fakeclient, const QAngle& viewangles, float forwardmove, float sidemove, float upmove, unsigned short buttons, byte impulse, float frametime )
@@ -273,7 +273,7 @@ void Bot_Think( CHL1MP_Player *pBot )
 
 				vecEnd = vecSrc + forward * 10;
 
-				UTIL_TraceHull( vecSrc, vecEnd, VEC_HULL_MIN_SCALED( pBot ), VEC_HULL_MAX_SCALED( pBot ), 
+				UTIL_TraceHull( vecSrc, vecEnd, VEC_HULL_MIN_SCALED( pBot ), VEC_HULL_MAX_SCALED( pBot ),
 					MASK_PLAYERSOLID, pBot, COLLISION_GROUP_NONE, &trace );
 
 				if ( trace.fraction == 1.0 )
@@ -366,7 +366,7 @@ void Bot_Think( CHL1MP_Player *pBot )
 				buttons |= bot_forceattack2.GetBool() ? IN_ATTACK2 : IN_ATTACK;
 			}
 		}
-		
+
 		if ( strlen( bot_sendcmd.GetString() ) > 0 )
 		{
 			//send the cmd from this bot
@@ -429,4 +429,3 @@ void Bot_Think( CHL1MP_Player *pBot )
 }
 
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ public:
 class CDispSubEdgeIterator
 {
 public:
-						
+
 						CDispSubEdgeIterator();
 
 	// Normally, this will iterate all shared verts along the edge except the corners.
@@ -69,7 +69,7 @@ private:
 
 	CVertIndex			m_Index;
 	CVertIndex			m_Inc;
-	
+
 	CVertIndex			m_NBIndex;
 	CVertIndex			m_NBInc;
 
@@ -130,7 +130,7 @@ private:
 
 
 // These store info about how to scale and shift coordinates between neighbors
-// of different relations (in g_ShiftInfos).	
+// of different relations (in g_ShiftInfos).
 class CShiftInfo
 {
 public:
@@ -173,7 +173,7 @@ int		GetEdgeIndexFromPoint( CVertIndex const &index, int iPower );
 
 // This returns the neighbor's power, possibly +1 or -1.
 //
-// It will add one if the neighbor takes up half of your edge (ie: if it took up your 
+// It will add one if the neighbor takes up half of your edge (ie: if it took up your
 // whole edge, its resolution would be twice what it really is).
 //
 // It will subtract one if you take up half of its edge (ie: you only touch half of its verts).
@@ -198,7 +198,7 @@ CDispUtilsHelper*	SetupEdgeIncrements(
 
 // Figure out which sub neighbor nodeIndex touches.
 // Returns -1 if there is no valid sub neighbor at the specified index.
-int GetSubNeighborIndex( 
+int GetSubNeighborIndex(
 	CDispUtilsHelper *pDisp,
 	int iEdge,
 	CVertIndex const &nodeIndex
@@ -214,14 +214,14 @@ int GetSubNeighborIndex(
 // Note: This only returns a point if the point at nodeIndex actually touches a neighbor point.
 //       An example where this might be unexpected is if pDisp is power 4 and its neighbor on iEdge
 //       is power 3, and nodeIndex points at a vert in between two of its neighbor's verts.
-//       In that case, even though there is a neighbor displacement, nodeIndex doesn't touch 
+//       In that case, even though there is a neighbor displacement, nodeIndex doesn't touch
 //       any points on it, so NULL is returned.
-CDispUtilsHelper*	TransformIntoSubNeighbor( 
+CDispUtilsHelper*	TransformIntoSubNeighbor(
 	CDispUtilsHelper *pDisp,
-	int iEdge, 
+	int iEdge,
 	int iSub,
-	CVertIndex const &nodeIndex, 
-	CVertIndex &out 
+	CVertIndex const &nodeIndex,
+	CVertIndex &out
 	);
 
 // Transform pDisp's node at nodeIndex into its neighboring connection.
@@ -234,16 +234,16 @@ CDispUtilsHelper*	TransformIntoSubNeighbor(
 // Note: This only returns a point if the point at nodeIndex actually touches a neighbor point.
 //       An example where this might surprise you is if pDisp is power 4 and its neighbor on iEdge
 //       is power 3, and nodeIndex points at a vert in between two of its neighbor's verts.
-//       In that case, even though there is a neighbor displacement, nodeIndex doesn't touch 
+//       In that case, even though there is a neighbor displacement, nodeIndex doesn't touch
 //       any points on it, so NULL is returned.
-CDispUtilsHelper* TransformIntoNeighbor( 
+CDispUtilsHelper* TransformIntoNeighbor(
 	CDispUtilsHelper *pDisp,
 	int iEdge,
-	CVertIndex const &nodeIndex, 
+	CVertIndex const &nodeIndex,
 	CVertIndex &out );
 
 // Returns true if the specified point has one or more neighbors.
-bool DoesPointHaveAnyNeighbors( 
+bool DoesPointHaveAnyNeighbors(
 	CDispUtilsHelper *pDisp,
 	const CVertIndex &index );
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,7 +24,7 @@ class CBaseAchievement : public CGameEventListener, public IAchievement
 {
 	DECLARE_CLASS_NOBASE( CBaseAchievement );
 public:
-	CBaseAchievement();	
+	CBaseAchievement();
 	virtual ~CBaseAchievement();
 	virtual void Init() {}
 	virtual void ListenForEvents() {};
@@ -40,7 +40,7 @@ public:
 	void SetGoal( int iGoal ) { m_iGoal = iGoal; }
 	int GetGoal() { return m_iGoal; }
 	void SetGameDirFilter( const char *pGameDir );
-	bool HasComponents() { return ( m_iFlags & ACH_HAS_COMPONENTS ) > 0; }	
+	bool HasComponents() { return ( m_iFlags & ACH_HAS_COMPONENTS ) > 0; }
 	void SetPointValue( int iPointValue ) { m_iPointValue = iPointValue; }
 	int	GetPointValue() { return m_iPointValue; }
 	bool ShouldHideUntilAchieved() { return m_bHideUntilAchieved; }
@@ -70,11 +70,11 @@ public:
 	// HPE_BEGIN:
 	// [pfreese] Notification method for derived classes
 	//=============================================================================
-	
+
 	virtual void OnAchieved() {}
 	uint32 GetUnlockTime() const { return m_uUnlockTime; }
 	void SetUnlockTime( uint32 unlockTime ) { m_uUnlockTime = unlockTime; }
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -95,10 +95,10 @@ public:
 	// HPE_BEGIN:
 	// [pfreese] Serialization methods
 	//=============================================================================
-	
+
 	virtual void GetSettings( KeyValues* pNodeOut );				// serialize
 	virtual void ApplySettings( /* const */ KeyValues* pNodeIn );	// unserialize
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -144,7 +144,7 @@ protected:
 	const char *m_pMapNameFilter;						// if non-NULL, map name to filter with
 	const char *m_pGameDirFilter;						// if non-NULL, game dir name to filter with
 
-	const char **m_pszComponentNames;			
+	const char **m_pszComponentNames;
 	int			m_iNumComponents;
 	const char *m_pszComponentPrefix;
 	int			m_iComponentPrefixLen;
@@ -166,7 +166,7 @@ class CFailableAchievement : public CBaseAchievement
 	DECLARE_CLASS( CFailableAchievement, CBaseAchievement );
 public:
 	CFailableAchievement();
-	void SetFailed();	
+	void SetFailed();
 
 	virtual bool ShouldSaveWithGame();
 	virtual void PreRestoreSavedGame();
@@ -186,7 +186,7 @@ protected:
 
 	bool	m_bActivated;		// are we activated? (If there is a map event that turns us on, has that happened)
 	bool	m_bFailed;			// has this achievement failed
-	
+
 public:
 	DECLARE_DATADESC();
 };
@@ -225,7 +225,7 @@ private:
 //
 // Helper class for achievement creation
 //
- 
+
 typedef CBaseAchievement* (*achievementCreateFunc) (void);
 class CBaseAchievementHelper
 {

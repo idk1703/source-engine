@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -61,16 +61,16 @@ public:
 
 
 // --------------------------------------------------------------------------- //
-// 
+//
 // --------------------------------------------------------------------------- //
 
 CBSPLightingThread::CBSPLightingThread()
 {
 	InitializeCriticalSection( &m_CS );
-	
+
 	m_hThread = 0;
 	m_ThreadID = 0;
-	
+
 	m_ThreadCmd = THREADCMD_NONE;
 	m_ThreadState = STATE_IDLE;
 }
@@ -130,8 +130,8 @@ void CBSPLightingThread::Interrupt()
 	if( GetThreadState() == STATE_LIGHTING )
 	{
 		m_pVRadDLL->Interrupt();
-		
-		while( GetThreadState() == STATE_LIGHTING )		
+
+		while( GetThreadState() == STATE_LIGHTING )
 			Sleep( 10 );
 	}
 }
@@ -219,5 +219,3 @@ void CBSPLightingThread::SetThreadState( int state )
 	CCSLock lock( &m_CS );
 	m_ThreadState = state;
 }
-
-

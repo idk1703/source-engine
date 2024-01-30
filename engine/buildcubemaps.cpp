@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -59,7 +59,7 @@ static ConVar mat_force_tonemap_scale( "mat_force_tonemap_scale", "0.0", FCVAR_C
 static const char *facingName[6] = { "rt", "lf", "bk", "ft", "up", "dn" };
 
 //-----------------------------------------------------------------------------
-// Load, unload vtex 
+// Load, unload vtex
 //-----------------------------------------------------------------------------
 IVTex* VTex_Load( CSysModule** pModule )
 {
@@ -102,7 +102,7 @@ static void TakeCubemapSnapshot( const Vector &origin, const char *pFileNameBase
 		return;
 
 	ITexture *pSaveRenderTarget = NULL;
-	
+
 	CMatRenderContextPtr pRenderContext( materials );
 
 	// HDRFIXME: push/pop
@@ -112,10 +112,10 @@ static void TakeCubemapSnapshot( const Vector &origin, const char *pFileNameBase
 		pRenderContext->SetRenderTarget( NULL );
 	}
 
-	// HACK HACK HACK!!!!  
+	// HACK HACK HACK!!!!
 	// If this is lower than the size of the render target (I think) we don't get water.
 	screenBufSize = 512;
-	
+
 	char	name[1024];
 	CViewSetup	view;
 	memset( &view, 0, sizeof(view) );
@@ -152,11 +152,11 @@ static void TakeCubemapSnapshot( const Vector &origin, const char *pFileNameBase
 	}
 
 	int nFlags = VIEW_CLEAR_COLOR | VIEW_CLEAR_DEPTH;
-	
-	// NOTE: This is for a workaround on ATI with building cubemaps.  
+
+	// NOTE: This is for a workaround on ATI with building cubemaps.
 	// Clearing just the viewport doesn't seem to work properly.
 	nFlags |= VIEW_CLEAR_FULL_TARGET;
-	
+
 	static float angle0[6]={0,0,0,0,-90,90};
 	static float angle1[6]={0,180,90,270,0,0};
 	static CubeMapFaceIndex_t face_idx[6]={CUBEMAP_FACE_RIGHT,CUBEMAP_FACE_LEFT,
@@ -189,7 +189,7 @@ static void TakeCubemapSnapshot( const Vector &origin, const char *pFileNameBase
 					g_ClientDLL->RenderView( view, nFlags, 0 );
 					uint8 *pImage = new uint8[ screenBufSize * screenBufSize * 4 ];
 					uint8 *pImage1 = new uint8[ tgaSize * tgaSize * 4 ];
-					
+
 					// Get Bits from the material system
 					pRenderContext->ReadPixels( 0, 0, screenBufSize, screenBufSize,
 												 pImage, IMAGE_FORMAT_RGBA8888 );
@@ -265,20 +265,20 @@ static void TakeCubemapSnapshot( const Vector &origin, const char *pFileNameBase
 			view.fov = 90;
 			view.fovViewmodel = 90;
 			view.origin = origin;
-			
-			
+
+
 			g_ClientDLL->RenderView( view, nFlags, 0 );
 			Q_snprintf( name, sizeof( name ), "%s%s%s", pFileNameBase, facingName[side],pExtension );
 			Assert( strlen( name ) < 1023 );
 			videomode->TakeSnapshotTGARect( name, 0, 0, screenBufSize, screenBufSize, tgaSize, tgaSize, bPFM, face_idx[side]);
 		}
 	}
-		
+
 	if( bPFM )
 	{
 		materials->SwapBuffers();
 	}
-	
+
 	// HDRFIXME: push/pop
 	if( bPFM )
 	{
@@ -381,7 +381,7 @@ CON_COMMAND( envmap, "" )
 	Q_snprintf( str, strLen, "cubemap_screenshots/%s", base );
 	g_pFileSystem->CreateDirHierarchy( "cubemap_screenshots", "DEFAULT_WRITE_PATH" );
 
-	TakeCubemapSnapshot( MainViewOrigin(), str, mat_envmapsize.GetInt(), mat_envmaptgasize.GetInt(), 
+	TakeCubemapSnapshot( MainViewOrigin(), str, mat_envmapsize.GetInt(), mat_envmaptgasize.GetInt(),
 		g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_NONE );
 }
 
@@ -481,7 +481,7 @@ static void WriteLightProbe( const char *pBasePath, const LightingState_t& state
 //-----------------------------------------------------------------------------
 // Grab an envmap @ the view position + write lighting information
 //-----------------------------------------------------------------------------
-CON_COMMAND( lightprobe, 
+CON_COMMAND( lightprobe,
 	"Samples the lighting environment.\n"
 	"Creates a cubemap and a file indicating the local lighting in a subdirectory called 'materials/lightprobes'\n."
 	"The lightprobe command requires you specify a base file name.\n" )
@@ -489,7 +489,7 @@ CON_COMMAND( lightprobe,
 	if ( IsX360() )
 		return;
 
-	if ( args.ArgC() < 2 ) 
+	if ( args.ArgC() < 2 )
 	{
 		ConMsg( "sample_lighting usage: lightprobe <base file name> [cubemap dimension]\n" );
 		return;
@@ -609,7 +609,7 @@ void Cubemap_CreateDefaultCubemap( const char *pMapName, IBSPPack *iBSPPack )
 		return;
 	}
 	Msg( "Creating default cubemaps for env_cubemap using skybox %s...\n", pSkyboxBaseName );
-			
+
 	// Figure out the mip differences between the two textures
 	int iMipLevelOffset = 0;
 	int tmp = pSrcVTFTextures[0]->Width();
@@ -622,7 +622,7 @@ void Cubemap_CreateDefaultCubemap( const char *pMapName, IBSPPack *iBSPPack )
 	// Create the destination cubemap
 	IVTFTexture *pDstCubemap = CreateVTFTexture();
 	pDstCubemap->Init( DEFAULT_CUBEMAP_SIZE, DEFAULT_CUBEMAP_SIZE, 1,
-		pSrcVTFTextures[0]->Format(), pSrcVTFTextures[0]->Flags() | TEXTUREFLAGS_ENVMAP, 
+		pSrcVTFTextures[0]->Format(), pSrcVTFTextures[0]->Flags() | TEXTUREFLAGS_ENVMAP,
 		pSrcVTFTextures[0]->FrameCount() );
 
 	// First iterate over all frames
@@ -651,10 +651,10 @@ void Cubemap_CreateDefaultCubemap( const char *pMapName, IBSPPack *iBSPPack )
 					iSrcMipSize = pSrcVTFTextures[iFace]->ComputeMipSize( 2 );
 
 					// Replicate 1x1 mip level across entire face
-					//memset( pDstBits, 0, iSize ); 
+					//memset( pDstBits, 0, iSize );
 					for ( int i = 0; i < ( iSize / iSrcMipSize ); i++ )
 					{
-						memcpy( pDstBits + ( i * iSrcMipSize ), pSrcBits, iSrcMipSize ); 
+						memcpy( pDstBits + ( i * iSrcMipSize ), pSrcBits, iSrcMipSize );
 					}
 				}
 				else if ( pSrcVTFTextures[iFace]->Width() == pSrcVTFTextures[iFace]->Height() ) // If texture is square
@@ -667,7 +667,7 @@ void Cubemap_CreateDefaultCubemap( const char *pMapName, IBSPPack *iBSPPack )
 					else
 					{
 						// Just copy the mip level
-						memcpy( pDstBits, pSrcBits, iSize ); 
+						memcpy( pDstBits, pSrcBits, iSize );
 					}
 				}
 				else if ( pSrcVTFTextures[iFace]->Width() == pSrcVTFTextures[iFace]->Height()*2 ) // If texture is rectangle 2x wide
@@ -682,7 +682,7 @@ void Cubemap_CreateDefaultCubemap( const char *pMapName, IBSPPack *iBSPPack )
 					else
 					{
 						// Copy row at a time and repeat last row
-						memcpy( pDstBits, pSrcBits, iSize/2 ); 
+						memcpy( pDstBits, pSrcBits, iSize/2 );
 						//memcpy( pDstBits + iSize/2, pSrcBits, iSize/2 );
 						int nSrcRowSize = pSrcVTFTextures[iFace]->RowSizeInBytes( iMip + iMipLevelOffset );
 						int nDstRowSize = pDstCubemap->RowSizeInBytes( iMip );
@@ -717,9 +717,9 @@ void Cubemap_CreateDefaultCubemap( const char *pMapName, IBSPPack *iBSPPack )
 	{
 		flagUnion |= pSrcVTFTextures[i]->Flags();
 	}
-	bool bHasAlpha = 
+	bool bHasAlpha =
 		( ( flagUnion & ( TEXTUREFLAGS_ONEBITALPHA | TEXTUREFLAGS_EIGHTBITALPHA ) ) != 0 );
-	
+
 	// Convert the cube to format that we can apply tools to it...
 //	ImageFormat originalFormat = pDstCubemap->Format();
 	pDstCubemap->ConvertImageFormat( IMAGE_FORMAT_DEFAULT, false );
@@ -811,7 +811,7 @@ static int bSaveDrawBeams = true;
 static bool bSaveMatSpecular = true;
 static int nOldOcclusionVal = 1;
 static int nOldBloomDisable = 0;
-static int originaldrawMRMModelsVal = 1; 
+static int originaldrawMRMModelsVal = 1;
 void R_BuildCubemapSamples_PreBuild()
 {
 	// disable the mouse so that it won't be recentered all the bloody time.
@@ -820,7 +820,7 @@ void R_BuildCubemapSamples_PreBuild()
 	{
 		cl_mouseenable.SetValue( 0 );
 	}
-	
+
 	ConVarRef r_shadows( "r_shadows" );
 	saveShadows = true;
 	if ( r_shadows.IsValid() )
@@ -835,7 +835,7 @@ void R_BuildCubemapSamples_PreBuild()
 	{
 		bDrawWater = mat_drawwater.GetBool();
 		mat_drawwater.SetValue( 0 );
-	} 
+	}
 	nSaveLightStyle = -1;
 	ConVarRef r_lightstyleRef( "r_lightstyle" );
 	if ( r_lightstyleRef.IsValid() )
@@ -869,7 +869,7 @@ void R_BuildCubemapSamples_PreBuild()
 //	}
 
 	building_cubemaps.SetValue( 1 );
-	
+
 	ConVarRef r_portalsopenall( "r_portalsopenall" );
 	if( r_portalsopenall.IsValid() )
 	{
@@ -883,7 +883,7 @@ void R_BuildCubemapSamples_PreBuild()
 		nOldOcclusionVal = r_occlusion.GetInt();
 		r_occlusion.SetValue( 0 );
 	}
-	
+
 	ConVarRef mat_disable_bloom( "mat_disable_bloom" );
 	nOldBloomDisable = 0;
 	if ( mat_disable_bloom.IsValid() )
@@ -948,10 +948,10 @@ void R_BuildCubemapSamples_PostBuild()
 	}
 
 	r_DrawBeams.SetValue( bSaveDrawBeams );
-	
+
 	ConVarRef drawMRMModelsCVar( "r_drawothermodels" );
 	if( drawMRMModelsCVar.IsValid() )
-	{ 
+	{
 		drawMRMModelsCVar.SetValue( originaldrawMRMModelsVal );
 	}
 	building_cubemaps.SetValue( 0 );
@@ -990,7 +990,7 @@ void R_BuildCubemapSamples( int numIterations )
 		if( !world || !world->GetModel() )
 		{
 			ConDMsg( "R_BuildCubemapSamples: No map loaded!\n" );
-			R_BuildCubemapSamples_PostBuild(); 
+			R_BuildCubemapSamples_PostBuild();
 			return;
 		}
 
@@ -1050,8 +1050,8 @@ void R_BuildCubemapSamples( int numIterations )
 			mcubemapsample_t  *pCubemapSample = &pWorldModel->brush.pShared->m_pCubemapSamples[i];
 
 			char pVTFName[ MAX_PATH ];
-			Q_snprintf( pVTFName, sizeof( pVTFName ), "%s/c%d_%d_%d", pMaterialSrcDir, 
-				( int )pCubemapSample->origin[0], ( int )pCubemapSample->origin[1],	
+			Q_snprintf( pVTFName, sizeof( pVTFName ), "%s/c%d_%d_%d", pMaterialSrcDir,
+				( int )pCubemapSample->origin[0], ( int )pCubemapSample->origin[1],
 				( int )pCubemapSample->origin[2] );
 
 			int nTgaSize = ( pCubemapSample->size == 0 ) ? mat_envmaptgasize.GetInt() : 1 << ( pCubemapSample->size-1 );

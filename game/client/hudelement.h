@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -24,7 +24,7 @@ class CHudElement : public CGameEventListener
 {
 public:
 	DECLARE_CLASS_NOBASE( CHudElement );
-	
+
 	// constructor - registers object in global list
 								CHudElement( const char *pElementName );
 	// destructor - removes object from the global list
@@ -46,7 +46,7 @@ public:
 
 	// Called once per frame for visible elements before general key processing
 	virtual void				ProcessInput( void ) { return; }
-	// 
+	//
 	virtual const char			*GetName( void ) const { return m_pElementName; };
 
 	// Return true if this hud element should be visible in the current hud state
@@ -57,7 +57,7 @@ public:
 
 	virtual GameActionSet_t GetPreferredActionSet() { return GAME_ACTION_SET_NONE; }
 
-	// Hidden bits. 
+	// Hidden bits.
 	// HIDEHUD_ flags that note when this element should be hidden in the HUD
 	virtual void				SetHiddenBits( int iBits );
 
@@ -65,32 +65,32 @@ public:
 	void						SetParentedToClientDLLRootPanel( bool parented );
 
 	// memory handling, uses calloc so members are zero'd out on instantiation
-    void *operator new( size_t stAllocateBlock )	
-	{												
-		Assert( stAllocateBlock != 0 );				
+	void *operator new( size_t stAllocateBlock )
+	{
+		Assert( stAllocateBlock != 0 );
 		void *pMem = malloc( stAllocateBlock );
 		memset( pMem, 0, stAllocateBlock );
-		return pMem;												
+		return pMem;
 	}
-	
-	void* operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine )  
-	{ 
+
+	void* operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine )
+	{
 		Assert( stAllocateBlock != 0 );
 		void *pMem = MemAlloc_Alloc( stAllocateBlock, pFileName, nLine );
 		memset( pMem, 0, stAllocateBlock );
-		return pMem;												
+		return pMem;
 	}
 
-	void operator delete( void *pMem )				
-	{												
+	void operator delete( void *pMem )
+	{
 #if defined( _DEBUG )
-		int size = _msize( pMem );					
-		memset( pMem, 0xcd, size );					
+		int size = _msize( pMem );
+		memset( pMem, 0xcd, size );
 #endif
-		free( pMem );								
+		free( pMem );
 	}
 
-	void operator delete( void *pMem, int nBlockUse, const char *pFileName, int nLine )				
+	void operator delete( void *pMem, int nBlockUse, const char *pFileName, int nLine )
 	{
 		operator delete( pMem );
 	}
@@ -102,12 +102,12 @@ public:
 	void HideLowerPriorityHudElementsInGroup( const char *pszGroupName );
 	void UnhideLowerPriorityHudElementsInGroup( const char *pszGroupName );
 
-	// For now, CHUdElements declare a single priority value. They will only be hidden 
+	// For now, CHUdElements declare a single priority value. They will only be hidden
 	// by panels with a lower priority and will only lock out panels with a lower priority
 	virtual int	GetRenderGroupPriority();
 
 public: // IGameEventListener Interface
-	
+
 	virtual void FireGameEvent( IGameEvent * event ) {}
 
 public:

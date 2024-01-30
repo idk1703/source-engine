@@ -52,7 +52,7 @@ $Project
 {
 	$Folder	"Source Files"
 	{
-		$File	"$SRCDIR\common\debug_lib_check.cpp"								
+		$File	"$SRCDIR\common\debug_lib_check.cpp"
 		{
 			$Configuration
 			{

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -11,7 +11,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CHistoryGames::CHistoryGames(vgui::Panel *parent) : 
+CHistoryGames::CHistoryGames(vgui::Panel *parent) :
 	CBaseGamesPage(parent, "HistoryGames", eHistoryServer )
 {
 	m_bRefreshOnListReload = false;
@@ -35,7 +35,7 @@ CHistoryGames::CHistoryGames(vgui::Panel *parent) :
 //-----------------------------------------------------------------------------
 CHistoryGames::~CHistoryGames()
 {
-}		
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: loads favorites list from disk
@@ -65,7 +65,7 @@ bool CHistoryGames::SupportsItem(InterfaceItem_e item)
 	{
 	case FILTERS:
 		return true;
-	
+
 	case ADDSERVER:
 	case GETNEWLIST:
 	default:
@@ -123,14 +123,13 @@ void CHistoryGames::OnRemoveFromHistory()
 	{
 		int itemID = m_pGameList->GetSelectedItem( i );
 		int serverID = m_pGameList->GetItemData(itemID)->userData;
-		
+
 		gameserveritem_t *pServer = steamapicontext->SteamMatchmakingServers()->GetServerDetails( m_hRequest, serverID );
 		if ( pServer )
 			steamapicontext->SteamMatchmaking()->RemoveFavoriteGame( pServer->m_nAppID, pServer->m_NetAdr.GetIP(), pServer->m_NetAdr.GetConnectionPort(), pServer->m_NetAdr.GetQueryPort(), k_unFavoriteFlagHistory );
 	}
 
-	UpdateStatus();	
+	UpdateStatus();
 	InvalidateLayout();
 	Repaint();
 }
-

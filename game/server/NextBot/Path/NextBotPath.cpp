@@ -27,7 +27,7 @@ ConVar NextBotPathSegmentInfluenceRadius( "nb_path_segment_influence_radius", "1
 Path::Path( void )
 {
 	m_segmentCount = 0;
-	
+
 	m_cursorPos = 0.0f;
 	m_isCursorDataDirty = true;
 	m_cursorData.segmentPrior = NULL;
@@ -46,10 +46,10 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 
 	if (m_segmentCount == 0)
 		return false;
-		
+
 	IBody *body = bot->GetBodyInterface();
 	ILocomotion *mover = bot->GetLocomotionInterface();
-	
+
 	const float stepHeight = ( mover ) ? mover->GetStepHeight() : 18.0f;
 
 	// inflate hull width slightly as a safety margin
@@ -64,7 +64,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 	{
 		// start in first area's center
 		m_path[0].pos = m_path[0].area->GetCenter();
-	}	
+	}
 	m_path[0].ladder = NULL;
 	m_path[0].how = NUM_TRAVERSE_TYPES;
 	m_path[0].type = ON_GROUND;
@@ -74,7 +74,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 	{
 		Segment *from = &m_path[ i-1 ];
 		Segment *to = &m_path[ i ];
-		
+
 		if ( to->how <= GO_WEST )		// walk along the floor to the next area
 		{
 			to->ladder = NULL;
@@ -118,26 +118,26 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 				const float maxPushDist = 2.0f * hullWidth; // 75.0f;
 				float halfWidth = hullWidth/2.0f;
 				float hullHeight = ( body ) ? body->GetCrouchHullHeight() : 1.0f;
-				
+
 				float pushDist;
 				for( pushDist = 0.0f; pushDist <= maxPushDist; pushDist += inc )
 				{
 					Vector pos = to->pos + Vector( pushDist * dir.x, pushDist * dir.y, 0.0f );
 					Vector lowerPos = Vector( pos.x, pos.y, toPos.z );
-					
+
 					trace_t result;
 					NextBotTraceFilterIgnoreActors filter( bot->GetEntity(), COLLISION_GROUP_NONE );
 					UTIL_TraceHull( pos, lowerPos,
-									Vector( -halfWidth, -halfWidth, stepHeight ), Vector( halfWidth, halfWidth, hullHeight ), 
+									Vector( -halfWidth, -halfWidth, stepHeight ), Vector( halfWidth, halfWidth, hullHeight ),
 									bot->GetBodyInterface()->GetSolidMask(), &filter, &result );
-					
+
 					if ( result.fraction >= 1.0f )
 					{
 						// found clearance to drop
 						break;
 					}
 				}
-				
+
 				Vector startDrop( to->pos.x + pushDist * dir.x, to->pos.y + pushDist * dir.y, to->pos.z );
 				Vector endDrop( startDrop.x, startDrop.y, to->area->GetZ( to->pos ) );
 
@@ -147,7 +147,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 					NDebugOverlay::Cross3D( endDrop, 5.0f, 255, 255, 0, true, 5.0f );
 					NDebugOverlay::VertArrow( startDrop, endDrop, 5.0f, 255, 100, 0, 255, true, 5.0f );
 				}
-				
+
 				// verify that there is actually ground down there in case this is a far jump dropdown
 				float ground;
 				if ( TheNavMesh->GetGroundHeight( endDrop, &ground ) )
@@ -180,9 +180,9 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 								m_path[i].pos.x = endDrop.x;
 								m_path[i].pos.y = endDrop.y;
 								m_path[i].pos.z = ground;
-								
+
 								m_path[i].type = ON_GROUND;
-							}						
+							}
 						}
 					}
 				}
@@ -196,7 +196,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 			for( it=0; it<ladders->Count(); ++it )
 			{
 				CNavLadder *ladder = (*ladders)[ it ].ladder;
-				
+
 				// can't use "behind" area when ascending...
 				if (ladder->m_topForwardArea == to->area ||
 					ladder->m_topLeftArea == to->area ||
@@ -208,7 +208,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 					break;
 				}
 			}
-			
+
 			if (it == ladders->Count())
 			{
 				//PrintIfWatched( "ERROR: Can't find ladder in path\n" );
@@ -257,11 +257,11 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 	{
 		Segment *from = &m_path[ i ];
 		Segment *to = &m_path[ i+1 ];
-		
+
 		// first segment doesnt have a direction
 		if ( from->how != NUM_TRAVERSE_TYPES && from->how > GO_WEST )
 			continue;
-		
+
 		if ( to->how > GO_WEST || !to->type == ON_GROUND )
 			continue;
 
@@ -270,7 +270,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 		Vector closeFrom, closeTo;
 		to->area->GetClosestPointOnArea( from->pos, &closeTo );
 		from->area->GetClosestPointOnArea( closeTo, &closeFrom );
-		
+
 		if ( bot->IsDebugging( NEXTBOT_PATH ) )
 		{
 			NDebugOverlay::Line( closeFrom, closeTo, 255, 0, 255, true, 5.0f );
@@ -282,23 +282,23 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 		{
 			// areas are disjoint and mostly level - add gap jump target
 
-			// compute landing spot in 'to' area			
+			// compute landing spot in 'to' area
 			Vector landingPos;
 			to->area->GetClosestPointOnArea( to->pos, &landingPos );
 
-			// compute launch spot in 'from' area			
+			// compute launch spot in 'from' area
 			Vector launchPos;
 			from->area->GetClosestPointOnArea( landingPos, &launchPos );
 
 			Vector forward = landingPos - launchPos;
 			forward.NormalizeInPlace();
-			
+
 			const float halfWidth = hullWidth/2.0f;
 
 			// adjust path position to landing spot
 			to->pos = landingPos + forward * halfWidth;
-			
-			// insert launch position just before that segment to ensure bot is 
+
+			// insert launch position just before that segment to ensure bot is
 			// positioned for minimal jump distance
 			Segment newSegment = *from;
 
@@ -306,24 +306,24 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 			newSegment.type = JUMP_OVER_GAP;
 
 			InsertSegment( newSegment, i+1 );
-			
+
 			++i;
 		}
 		else if ( (closeTo.z - closeFrom.z) > stepHeight )
 		{
 			// areas are adjacent, but need a jump-up - add a jump-to target
-			
+
 			// adjust goal to be at top of ledge
 			//to->pos.z = to->area->GetZ( to->pos.x, to->pos.y );
 			// use center of climb-up destination area to make sure bot moves onto actual ground once they finish their climb
 			to->pos = to->area->GetCenter();
-			
-			// add launch position at base of jump	
+
+			// add launch position at base of jump
 			Segment newSegment = *from;
-			
+
 			Vector launchPos;
 			from->area->GetClosestPointOnArea( to->pos, &launchPos );
-			
+
 			newSegment.pos = launchPos;
 			newSegment.type = CLIMB_UP;
 
@@ -334,7 +334,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 
 			InsertSegment( newSegment, i+1 );
 
-			++i;			
+			++i;
 		}
 
 		/** RETHINK THIS.  It doesn't work in general cases, and messes up on doorways
@@ -345,21 +345,21 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 			if ( mover && !mover->IsPotentiallyTraversable( from->pos, to->pos ) )
 			{
 				Segment newSegment = *from;
-				
+
 				if ( bot->IsDebugging( INextBot::PATH ) )
 				{
 					NDebugOverlay::HorzArrow( from->pos, to->pos, 3.0f, 255, 0, 0, 255, true, 3.0f );
 				}
 
 				//newSegment.pos = from->area->GetCenter();
-				
+
 				Vector2D shift;
 				DirectionToVector2D( OppositeDirection( (NavDirType)to->how ), &shift );
-												
+
 				newSegment.pos = to->pos;
 				newSegment.pos.x += hullWidth * shift.x;
 				newSegment.pos.y += hullWidth * shift.y;
-				
+
 				newSegment.type = ON_GROUND;
 
 				if ( bot->IsDebugging( INextBot::PATH ) )
@@ -368,7 +368,7 @@ bool Path::ComputePathDetails( INextBot *bot, const Vector &start )
 				}
 
 				InsertSegment( newSegment, i+1 );
-				
+
 				i += 2;
 			}
 		}
@@ -395,7 +395,7 @@ void Path::InsertSegment( Segment newSegment, int i )
 		++m_segmentCount;
 
 		m_path[i] = newSegment;
-	}										
+	}
 }
 
 
@@ -406,7 +406,7 @@ void Path::InsertSegment( Segment newSegment, int i )
 bool Path::BuildTrivialPath( INextBot *bot, const Vector &goal )
 {
 	const Vector &start = bot->GetPosition();
-	
+
 	m_segmentCount = 0;
 
 	/// @todo Dangerous to use "nearset" nav area - could be far away
@@ -440,7 +440,7 @@ bool Path::BuildTrivialPath( INextBot *bot, const Vector &goal )
 	m_path[0].length = m_path[0].forward.NormalizeInPlace();
 	m_path[0].distanceFromStart = 0.0f;
 	m_path[0].curvature = 0.0f;
-	
+
 	m_path[1].forward = m_path[0].forward;
 	m_path[1].length = 0.0f;
 	m_path[1].distanceFromStart = m_path[0].length;
@@ -498,7 +498,7 @@ void Path::Draw( const Path::Segment *start ) const
 		}
 		else
 		{
-			NDebugOverlay::Line( s->pos, next->pos, r, g, b, true, 0.1f );		
+			NDebugOverlay::Line( s->pos, next->pos, r, g, b, true, 0.1f );
 		}
 
 		const float nodeLength = 25.0f;
@@ -531,12 +531,12 @@ void Path::DrawInterpolated( float from, float to )
 	{
 		return;
 	}
-	
+
 	float t = from;
 
 	MoveCursor( t );
 	const Data &data = GetCursorData();
-	Vector lastPos = data.pos;	
+	Vector lastPos = data.pos;
 
 	do
 	{
@@ -544,22 +544,22 @@ void Path::DrawInterpolated( float from, float to )
 
 		MoveCursor( t );
 		const Data &data = GetCursorData();
-		
+
 		float curvePower = 3.0f * data.curvature;
 
 		int r = 255 * ( 1.0f - curvePower );
 		r = clamp( r, 0, 255 );
-		
+
 		int g = 255 * ( 1.0f + curvePower );
 		g = clamp( g, 0, 255 );
-				
+
 		NDebugOverlay::Line( lastPos, data.pos, r, g, 0, true, 0.1f );
 
 		/*
 		int i = 0xFF & (int)( data.pos.x + data.pos.y + data.pos.z );
 		i >>= 1;
 		i += 128;
-		
+
 		NDebugOverlay::Line( data.pos, data.pos + 10.0f * data.forward, 0, i, i, true, 0.1f );
 		*/
 
@@ -581,13 +581,13 @@ int Path::FindNextOccludedNode( INextBot *bot, int anchorIndex )
 	{
 		return m_segmentCount;
 	}
-	
+
 	Segment *anchor = &m_path[ anchorIndex ];
-	
+
 	for( int i=anchorIndex+1; i<m_segmentCount; ++i )
 	{
 		Segment *to = &m_path[i];
-		
+
 		// if this segment is not on the ground, or is precise, don't skip past it
 		if ( !to->type == ON_GROUND || (to->area->GetAttributes() & NAV_MESH_PRECISE) )
 		{
@@ -663,7 +663,7 @@ void Path::PostProcess( void )
 
 	if (m_segmentCount == 0)
 		return;
-		
+
 	if (m_segmentCount == 1)
 	{
 		m_path[0].forward = vec3_origin;
@@ -672,23 +672,23 @@ void Path::PostProcess( void )
 		m_path[0].curvature = 0.0f;
 		return;
 	}
-	
+
 	float distanceSoFar = 0.0f;
 	int i;
 	for( i=0; i < m_segmentCount-1; ++i )
 	{
 		Segment *from = &m_path[ i ];
 		Segment *to = &m_path[ i+1 ];
-		
+
 		from->forward = to->pos - from->pos;
 		from->length = from->forward.NormalizeInPlace();
-		
+
 		from->distanceFromStart = distanceSoFar;
 
 		distanceSoFar += from->length;
 	}
-	
-		
+
+
 	// compute curvature in XY plane
 	Vector2D from, to;
 	for( i=1; i < m_segmentCount-1; ++i )
@@ -701,12 +701,12 @@ void Path::PostProcess( void )
 		{
 			from = m_path[ i-1 ].forward.AsVector2D();
 			from.NormalizeInPlace();
-			
+
 			to = m_path[ i ].forward.AsVector2D();
-			to.NormalizeInPlace();	
-		
+			to.NormalizeInPlace();
+
 			m_path[ i ].curvature = 0.5f * ( 1.0f - from.Dot( to ) );
-			
+
 			Vector2D right( -from.y, from.x );
 			if ( to.Dot( right ) < 0.0f )
 			{
@@ -717,7 +717,7 @@ void Path::PostProcess( void )
 
 	// first segment has no curvature
 	m_path[ 0 ].curvature = 0.0f;
-	
+
 	// last segment maintains direction
 	m_path[ i ].forward = m_path[ i-1 ].forward;
 	m_path[ i ].length = 0.0f;
@@ -739,7 +739,7 @@ const Vector &Path::GetPosition( float distanceFromStart, const Segment *start )
 
 	float lengthSoFar;
 	const Segment *segment;
-	
+
 	if (start)
 	{
 		segment = start;
@@ -757,7 +757,7 @@ const Vector &Path::GetPosition( float distanceFromStart, const Segment *start )
 		return segment->pos;
 	}
 
-	
+
 	const Segment *next = NextSegment( segment );
 
 	Vector delta;
@@ -775,12 +775,12 @@ const Vector &Path::GetPosition( float distanceFromStart, const Segment *start )
 			float t = overlap / length;
 
 			m_pathPos = segment->pos + t * delta;
-			
+
 			return m_pathPos;
 		}
 
 		lengthSoFar += length;
-		
+
 		segment = next;
 		next = NextSegment( next );
 	}
@@ -797,27 +797,27 @@ const Vector &Path::GetPosition( float distanceFromStart, const Segment *start )
 const Vector &Path::GetClosestPosition( const Vector &pos, const Segment *start, float alongLimit ) const
 {
 	const Segment *segment = (start) ? start : &m_path[0];
-	
+
 	if (segment == NULL)
 	{
 		return pos;
 	}
-	
+
 	m_closePos = pos;
 	float closeRangeSq = 99999999999.9f;
 
-	float distanceSoFar = 0.0f;	
+	float distanceSoFar = 0.0f;
 	while( alongLimit == 0.0f || distanceSoFar <= alongLimit )
 	{
 		const Segment *nextSegment = NextSegment( segment );
-		
+
 		if (nextSegment)
 		{
 			Vector close;
 			CalcClosestPointOnLineSegment( pos, segment->pos, nextSegment->pos, close );
 			float rangeSq = (close - pos).LengthSqr();
 			if (rangeSq < closeRangeSq)
-			{	
+			{
 				m_closePos = close;
 				closeRangeSq = rangeSq;
 			}
@@ -827,11 +827,11 @@ const Vector &Path::GetClosestPosition( const Vector &pos, const Segment *start,
 			// end of the path
 			break;
 		}
-		
+
 		distanceSoFar += segment->length;
 		segment = nextSegment;
 	}
-	
+
 	return m_closePos;
 }
 
@@ -846,7 +846,7 @@ void Path::Copy( INextBot *bot, const Path &path )
 	VPROF_BUDGET( "Path::Copy", "NextBot" );
 
 	Invalidate();
-	
+
 	for( int i = 0; i < path.m_segmentCount; ++i )
 	{
 		m_path[i] = path.m_path[i];
@@ -867,11 +867,11 @@ void Path::MoveCursorToClosestPosition( const Vector &pos, SeekType type, float 
 	{
 		return;
 	}
-	
+
 	if ( type == SEEK_ENTIRE_PATH || type == SEEK_AHEAD )
 	{
 		const Segment *segment;
-		
+
 		if ( type == SEEK_AHEAD )
 		{
 			// continue search from cursor position onward
@@ -895,7 +895,7 @@ void Path::MoveCursorToClosestPosition( const Vector &pos, SeekType type, float 
 		m_cursorData.segmentPrior = segment;
 		float closeRangeSq = 99999999999.9f;
 
-		float distanceSoFar = 0.0f;	
+		float distanceSoFar = 0.0f;
 		while( alongLimit == 0.0f || distanceSoFar <= alongLimit )
 		{
 			const Segment *nextSegment = NextSegment( segment );
@@ -904,13 +904,13 @@ void Path::MoveCursorToClosestPosition( const Vector &pos, SeekType type, float 
 			{
 				Vector close;
 				CalcClosestPointOnLineSegment( pos, segment->pos, nextSegment->pos, close );
-				
+
 				float rangeSq = ( close - pos ).LengthSqr();
 				if ( rangeSq < closeRangeSq )
-				{	
+				{
 					m_cursorData.pos = close;
 					m_cursorData.segmentPrior = segment;
-					
+
 					closeRangeSq = rangeSq;
 				}
 			}
@@ -928,10 +928,10 @@ void Path::MoveCursorToClosestPosition( const Vector &pos, SeekType type, float 
 		// Move cursor to closest point on path
 		//
 		segment = m_cursorData.segmentPrior;
-				
+
 		float t = ( m_cursorData.pos - segment->pos ).Length() / segment->length;
 
-		m_cursorPos = segment->distanceFromStart + t * segment->length;	
+		m_cursorPos = segment->distanceFromStart + t * segment->length;
 		m_isCursorDataDirty = true;
 	}
 	else
@@ -989,7 +989,7 @@ const Path::Data &Path::GetCursorData( void ) const
 						{
 							t = overlap / length;
 						}
-						
+
 						// interpolate data at this point along the path
 						m_cursorData.pos = segment->pos + t * ( next->pos - segment->pos );
 						m_cursorData.forward = segment->forward + t * ( next->forward - segment->forward );
@@ -1019,7 +1019,7 @@ const Path::Data &Path::GetCursorData( void ) const
 							m_cursorData.curvature = next->curvature * ( 1.0f - ( ( length - overlap ) / NextBotPathSegmentInfluenceRadius.GetFloat() ) );
 						}
 
-						
+
 						break;
 					}
 
@@ -1029,7 +1029,7 @@ const Path::Data &Path::GetCursorData( void ) const
 					next = NextSegment( next );
 				}
 			}
-			
+
 			// data is up to date
 			m_isCursorDataDirty = false;
 		}
@@ -1042,7 +1042,7 @@ const Path::Data &Path::GetCursorData( void ) const
 		m_cursorData.curvature = 0.0f;
 		m_cursorData.segmentPrior = NULL;
 	}
-	
+
 	return m_cursorData;
 }
 
@@ -1060,35 +1060,3 @@ void Path::ComputeAreaCrossing( INextBot *bot, const CNavArea *from, const Vecto
 	// don't do this unless area is against a wall - and what if our hull is wider than the area?
 	// AddDirectionVector( crossPos, dir, bot->GetBodyInterface()->GetHullWidth()/2.0f );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

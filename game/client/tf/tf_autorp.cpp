@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAutoRP *AutoRP( void )
 {
@@ -28,7 +28,7 @@ CTFAutoRP *AutoRP( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutoRP::ParseDataFile( void )
 {
@@ -117,7 +117,7 @@ void CTFAutoRP::ParseDataFile( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutoRP::ApplyRPTo( char *pBuf, int iBufSize )
 {
@@ -136,19 +136,19 @@ void CTFAutoRP::ApplyRPTo( char *pBuf, int iBufSize )
 	if ( pBuf[0] == '-' )
 	{
 		bDoPends = false;
-		Q_strncpy( pszIn, pBuf+1, iBufSize-1 );	
+		Q_strncpy( pszIn, pBuf+1, iBufSize-1 );
 	}
 	else
 	{
 		Q_strncpy( pszIn, pBuf, iBufSize );
 	}
 	pBuf[0] = '\0';
-	
+
 	ModifySpeech( pszIn, pBuf, iBufSize, bDoPends, false );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFAutoRP::GetRandomPre( void )
 {
@@ -169,7 +169,7 @@ const char *CTFAutoRP::GetRandomPre( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFAutoRP::GetRandomPost( void )
 {
@@ -190,7 +190,7 @@ const char *CTFAutoRP::GetRandomPost( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 matchresult_t CTFAutoRP::WordMatches( wordreplacement_t *pRep, replacementcheck_t *pCheck )
 {
@@ -218,7 +218,7 @@ matchresult_t CTFAutoRP::WordMatches( wordreplacement_t *pRep, replacementcheck_
 				bMatchPrev = true;
 				break;
 			}
-		}	
+		}
 
 		if ( !bMatchPrev )
 			return MATCHES_NOT;
@@ -231,21 +231,21 @@ matchresult_t CTFAutoRP::WordMatches( wordreplacement_t *pRep, replacementcheck_
 	{
 		if ( pRep->m_Words[i] == sym )
 			return MATCHES_SINGULAR;
-	}	
+	}
 
 	CUtlSymbol pluralsym = m_pWordTable->Find( pCheck->szWord );
 	FOR_EACH_VEC( pRep->m_Plurals, i )
 	{
 		if ( pRep->m_Plurals[i] == pluralsym )
 			return MATCHES_PLURAL;
-	}	
+	}
 
 	pCheck->bUsedPrevWord = false;
-	return MATCHES_NOT;	
+	return MATCHES_NOT;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAutoRP::ReplaceWord( replacementcheck_t *pCheck, char *szRep, int iRepSize, bool bSymbols, bool bWordListOnly )
 {
@@ -255,7 +255,7 @@ bool CTFAutoRP::ReplaceWord( replacementcheck_t *pCheck, char *szRep, int iRepSi
 	FOR_EACH_VEC( m_a_Replacements, i )
 	{
 		wordreplacement_t *pRep = &m_a_Replacements[i];
-		matchresult_t iRes = WordMatches( pRep, pCheck ); 
+		matchresult_t iRes = WordMatches( pRep, pCheck );
 		if ( iRes == MATCHES_NOT )
 			continue;
 
@@ -397,7 +397,7 @@ bool CTFAutoRP::ReplaceWord( replacementcheck_t *pCheck, char *szRep, int iRepSi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAutoRP::PerformReplacement( const char *pszReplacement, replacementcheck_t *pRepCheck, char *szStoredWord, int iStoredWordSize, char *pszOutText, int iOutLen )
 {
@@ -436,10 +436,10 @@ bool CTFAutoRP::PerformReplacement( const char *pszReplacement, replacementcheck
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAutoRP::ModifySpeech( const char *pszInText, char *pszOutText, int iOutLen, bool bGeneratePreAndPost, bool bInPrePost )
-{	
+{
 	if ( bGeneratePreAndPost )
 	{
 		// See if we generate a pre. If we do, modify it as well so we can perform replacements on it.
@@ -493,7 +493,7 @@ void CTFAutoRP::ModifySpeech( const char *pszInText, char *pszOutText, int iOutL
 			Q_strncpy( repCheck.szWord, pszCurWord, iCurLen+1 );
 			repCheck.iWordLen = iCurLen;
 		}
-		
+
 		Q_strncpy( repCheck.szPrevWord, pszPrevWord, iPrevLen+1 );
 		repCheck.iPrevLen = iPrevLen;
 		repCheck.bUsedPrevWord = false;

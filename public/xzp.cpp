@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -80,7 +80,7 @@ END_BYTESWAP_DATADESC()
 CXZip::CXZip()
 {
 	// Ensure that the header doesn't contain a valid magic yet.
-	m_Header.Magic = 0;	
+	m_Header.Magic = 0;
 	m_pPreloadedData = NULL;
 	m_nPreloadStart = 0;
 	m_pDirectory = NULL;
@@ -91,7 +91,7 @@ CXZip::CXZip()
 
 	m_pFilenames = NULL;
 	m_hZip = NULL;
-	
+
 	m_pRead = NULL;
 	m_hUser = 0;
 	m_nMonitorLevel = 0;
@@ -100,7 +100,7 @@ CXZip::CXZip()
 CXZip::CXZip( const char* filename )
 {
 	// Ensure that the header doesn't contain a valid magic yet.
-	m_Header.Magic = 0;	
+	m_Header.Magic = 0;
 	m_nPreloadStart = 0;
 	m_pPreloadedData = NULL;
 	m_pDirectory = NULL;
@@ -199,10 +199,10 @@ bool CXZip::Load( FILE* handle, int nOffset, int nSize, bool bPreload )	// Load 
 			m_Swap.SwapFieldsToTargetEndian<xZipHeader_t>( &m_Header );
 			break;
 
-		default: 
+		default:
 			assert( 0 );
 			// Fail gently in release:
-		
+
 		// The magic doesn't match in any respect:
 		case -1:
 			{
@@ -322,11 +322,11 @@ void CXZip::PreloadData()
 	int nBytesToRead = AlignValue( ( m_nPreloadStart - nAlignedStart ) + m_Header.PreloadBytes, XBOX_HDD_SECTORSIZE );
 	int nBytesBuffer = AlignValue( nBytesToRead, XBOX_HDD_SECTORSIZE );
 	byte *pReadData = (byte *)malloc( nBytesBuffer );
-	
+
 	// Just drop out if allocation fails;
 	if ( !pReadData )
-		return; 
-	
+		return;
+
 	MEM_ALLOC_CREDIT_( "xZip" );
 	m_pRead( pReadData, nAlignedStart, nBytesBuffer,nBytesToRead, m_hUser );
 	m_pPreloadedData = pReadData + ( m_nPreloadStart - nAlignedStart );
@@ -421,10 +421,10 @@ char* CXZip::GetEntryFileName( unsigned CRC, char* pDefault )
 
 		xZipFilenameEntry_t* found = (xZipFilenameEntry_t*)bsearch( &entry, m_pFilenames, m_Header.FilenameEntries, sizeof(xZipFilenameEntry_t), xZipFilenameEntry_t::xZipFilenameEntryCompare );
 
-		if( !found ) 
+		if( !found )
 			return pDefault;
 
-		return (((char*)m_pFilenames) + found->FilenameOffset) - m_Header.FilenameStringsOffset; 	
+		return (((char*)m_pFilenames) + found->FilenameOffset) - m_Header.FilenameStringsOffset;
 	}
 }
 
@@ -446,7 +446,7 @@ bool CXZip::IsValid()
 void CXZip::WarningDir()
 {
 	Assert( IsValid());
-	
+
 	for( unsigned i = 0; i< m_Header.DirectoryEntries; i++ )
 	{
 		Msg( GetEntryFileName( m_pDirectory[i].FilenameCRC ) );
@@ -458,7 +458,7 @@ int CXZip::ReadIndex( int nEntryIndex, int nFileOffset, int nDestBytes, int nLen
 {
 	Assert( IsValid() );
 
-	if( nLength <=0 || nEntryIndex < 0 ) 
+	if( nLength <=0 || nEntryIndex < 0 )
 		return 0;
 
 	// HACK HACK HACK - convert the pack file index to a local file index (ie, assuming the full file index is being passed in)
@@ -507,7 +507,7 @@ int CXZip::ReadIndex( int nEntryIndex, int nFileOffset, int nDestBytes, int nLen
 
 		Msg("PACK %s: length:%i offset:%i (preload bytes:%i)",filename,nLength, nFileOffset, preload);
 	}
-	
+
 	return nBytesRead;
 }
 
@@ -537,13 +537,13 @@ bool CXZip::ExtractFile( const char* FileName )
 
 // Compares to xZipDirectoryEntries.
 //
-// Sorts in the following order:  
+// Sorts in the following order:
 //		FilenameCRC
 //		FileOffset
 //		Length
 //		StoredOffset
 //
-// The sort function may look overly complex, but it is actually useful for locating different pieces of 
+// The sort function may look overly complex, but it is actually useful for locating different pieces of
 // the same file in a meaningful order.
 //
 int __cdecl xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare( const void* left, const void* right )
@@ -634,7 +634,7 @@ unsigned xZipCRCFilename( const char* filename )
 	for( ; *filename ; filename++ )
 	{
 		char c = *filename;
-	
+
 		// Fix slashes
 		if( c == '/' )
 			c = '\\';
@@ -702,7 +702,7 @@ void PadFileBytes(FILE* hFile, int nPreloadPadding )
 		puts("Invalid padding");
 		return;
 	}
-	
+
 	char padding[512];
 	memset(padding,0,nPreloadPadding);
 	fwrite(padding,1,nPreloadPadding,hFile);
@@ -722,10 +722,10 @@ void AddFilename( const char* filename )
 	}
 
 	Header.FilenameEntries++;
-	
+
 	// Add the file to the file string table:
 	pFilenameEntries = (xZipFilenameEntry_t*)realloc( pFilenameEntries, sizeof(xZipFilenameEntry_t) * Header.FilenameEntries );
-	
+
 	int filenameLength = (int)strlen(filename) + 1;
 	pFilenameEntries[Header.FilenameEntries-1].FilenameCRC = CRCfilename;
 	pFilenameEntries[Header.FilenameEntries-1].FilenameOffset = nFilenameDataLength;
@@ -758,11 +758,11 @@ bool xZipAddFile( const char* filename, CUtlBuffer &fileBuff, bool bPrecacheEnti
 	InputFileBytes += fileSize;
 
 	unsigned customPreloadSize = 0;
-	
+
 	if( bPrecacheEntireFile  )
 	{
 		customPreloadSize = fileSize;
-	} 
+	}
 	else if( bProcessPrecacheHeader )
 	{
 		customPreloadSize = xZipComputeCustomPreloads( filename );
@@ -776,12 +776,12 @@ bool xZipAddFile( const char* filename, CUtlBuffer &fileBuff, bool bPrecacheEnti
 	unsigned CRC = xZipCRCFilename( filename );
 
 	// Does this file have a split header?
-	if( customPreloadSize > 0  ) 
+	if( customPreloadSize > 0  )
 	{
 		// Initialize the entry header:
 		xZipDirectoryEntry_t entry;
 		memset( &entry, 0, sizeof( entry ) );
-		
+
 		entry.FilenameCRC = CRC;
 		entry.Length = customPreloadSize;
 		entry.StoredOffset = ftell(hTempFilePreload);
@@ -796,7 +796,7 @@ bool xZipAddFile( const char* filename, CUtlBuffer &fileBuff, bool bPrecacheEnti
 		WriteFileBytes( hTempFilePreload, fileBuff, entry.Length );
 		fileBuff.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
 
-		
+
 		// Add the filename entry:
 		AddFilename( filename );
 
@@ -809,7 +809,7 @@ bool xZipAddFile( const char* filename, CUtlBuffer &fileBuff, bool bPrecacheEnti
 	memset(&entry,0,sizeof(entry));
 	entry.FilenameCRC = CRC;
 	entry.Length = fileSize;
-	entry.StoredOffset = ftell(hTempFileData);		
+	entry.StoredOffset = ftell(hTempFileData);
 
 	// Add the directory entry to the table:
 	Header.DirectoryEntries++;
@@ -864,7 +864,7 @@ bool xZipAddFile( const char* zipname, bool bPrecacheEntireFile, bool bProcessPr
 			printf("!!!! BAD FILENAME: \"%s\"\n", filename );
 			return false;
 		}
-		
+
 		if( isspace( filename[len-1] ) )
 			filename[len-1]='\0';
 		else
@@ -921,7 +921,7 @@ int xZipBegin( const char* fileNameXzip )
 		printf("Failed to open \"%s\" for writing.\n", fileNameXzip);
 		exit( EXIT_FAILURE);
 	}
-	
+
 	// Create a temporary file for storing the preloaded data:
 	hTempFilePreload = tmpfile();
 	if( !hTempFilePreload )
@@ -937,7 +937,7 @@ int xZipBegin( const char* fileNameXzip )
 		printf( "Error: failed to create temporary file\n");
 		return EXIT_FAILURE;
 	}
-	
+
 	return EXIT_SUCCESS;
 }
 
@@ -982,7 +982,7 @@ bool xZipEnd()
 
 	// Sort and write the directory:
 	printf("Sorting and writing %i directory entries...\n",Header.DirectoryEntries);
-	qsort(pDirectoryEntries,Header.DirectoryEntries,sizeof(xZipDirectoryEntry_t),&xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare); 
+	qsort(pDirectoryEntries,Header.DirectoryEntries,sizeof(xZipDirectoryEntry_t),&xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare);
 
 	// Swap the directory entries:
 	for( unsigned i=0; i < Header.DirectoryEntries; i++ )
@@ -1014,7 +1014,7 @@ bool xZipEnd()
 		}
 
 		printf("Sorting %u preload directory entries...\n",Header.PreloadDirectoryEntries);
-		qsort(pPreloadDirectoryEntries,Header.PreloadDirectoryEntries,sizeof(xZipDirectoryEntry_t),&xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare); 
+		qsort(pPreloadDirectoryEntries,Header.PreloadDirectoryEntries,sizeof(xZipDirectoryEntry_t),&xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare);
 
 		printf("Building regular to preload mapping table for %u entries...\n", Header.DirectoryEntries );
 		unsigned short* Regular2Preload = (unsigned short*)malloc( nRegular2PreloadSize );
@@ -1051,7 +1051,7 @@ bool xZipEnd()
 		}
 
 		printf("Writing regular to preload mapping (%u bytes)...\n", sizeof(unsigned short)*Header.DirectoryEntries );
-		
+
 		// Swap regular to preload mapping:
 		g_xzpSwap.SwapBufferToTargetEndian<short>((short*)Regular2Preload, (short*)Regular2Preload, nRegular2PreloadSize / sizeof(short) );
 
@@ -1085,7 +1085,7 @@ bool xZipEnd()
 	{
 		Header.FilenameStringsOffset = ftell(hOutputFile);
 		Header.FilenameStringsLength = (Header.FilenameEntries*sizeof(xZipFilenameEntry_t)) + nFilenameDataLength;
-		
+
 		// Adjust the offset in each of the filename offsets to absolute position in the file.
 		for( unsigned i=0;i<Header.FilenameEntries;i++ )
 		{
@@ -1095,7 +1095,7 @@ bool xZipEnd()
 		printf("Sorting and writing %u filename directory entries...\n",Header.FilenameEntries);
 
 		// Sort the data:
-		qsort(pFilenameEntries,Header.FilenameEntries,sizeof(xZipFilenameEntry_t),&xZipFilenameEntry_t::xZipFilenameEntryCompare); 
+		qsort(pFilenameEntries,Header.FilenameEntries,sizeof(xZipFilenameEntry_t),&xZipFilenameEntry_t::xZipFilenameEntryCompare);
 
 		// Write the data out:
 		for( unsigned int i = 0; i < Header.FilenameEntries; i++ )
@@ -1152,7 +1152,7 @@ bool xZipEnd()
 //-----------------------------------------------------------------------------
 // xZipComputeWAVPreload
 //
-// Returns the number of bytes from a xbox compliant WAV file that should go into 
+// Returns the number of bytes from a xbox compliant WAV file that should go into
 // the preload section:
 //-----------------------------------------------------------------------------
 unsigned xZipComputeWAVPreload( char *pFileName )
@@ -1201,7 +1201,7 @@ unsigned xZipComputeXWVPreload( const char* filename )
 	memset( &header, 0, sizeof(header) );
 	fread( &header, 1, sizeof(header), hFile );
 	fclose( hFile );
-	
+
 	if ( header.id != XWV_ID || header.headerSize != sizeof(header) )
 		return 0;
 
@@ -1286,7 +1286,7 @@ unsigned xZipComputeXCSPreload( const char* filename )
 	fread(&header,1,sizeof(XShaderHeader_t), hFile);
 	fseek(hFile,0,SEEK_END);
 	fclose(hFile);
-	
+
 	if (!header.IsValid())
 		return 0;
 

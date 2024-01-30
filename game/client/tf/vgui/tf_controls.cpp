@@ -37,7 +37,7 @@ wchar_t* LocalizeNumberWithToken( const char* pszLocToken, int nValue )
 	_snwprintf( wszCount, ARRAYSIZE( wszCount ), L"%d", nValue );
 	const wchar_t *wpszFormat = g_pVGuiLocalize->Find( pszLocToken );
 	g_pVGuiLocalize->ConstructString_safe( wszOutString, wpszFormat, 1, wszCount );
-	
+
 	return wszOutString;
 }
 
@@ -47,7 +47,7 @@ DECLARE_BUILD_FACTORY( CTFFooter );
 //-----------------------------------------------------------------------------
 // Purpose: Xbox-specific panel that displays button icons text labels
 //-----------------------------------------------------------------------------
-CTFFooter::CTFFooter( Panel *parent, const char *panelName ) : BaseClass( parent, panelName ) 
+CTFFooter::CTFFooter( Panel *parent, const char *panelName ) : BaseClass( parent, panelName )
 {
 	SetVisible( true );
 	SetAlpha( 0 );
@@ -70,7 +70,7 @@ CTFFooter::CTFFooter( Panel *parent, const char *panelName ) : BaseClass( parent
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFooter::~CTFFooter()
 {
@@ -78,7 +78,7 @@ CTFFooter::~CTFFooter()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -96,7 +96,7 @@ void CTFFooter::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::ApplySettings( KeyValues *inResourceData )
 {
@@ -142,7 +142,7 @@ void CTFFooter::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::AddNewButtonLabel( const char *name, const char *text, const char *icon )
 {
@@ -178,7 +178,7 @@ void CTFFooter::AddNewButtonLabel( const char *name, const char *text, const cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::ShowButtonLabel( const char *name, bool show )
 {
@@ -193,7 +193,7 @@ void CTFFooter::ShowButtonLabel( const char *name, bool show )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::PaintBackground( void )
 {
@@ -204,7 +204,7 @@ void CTFFooter::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::Paint( void )
 {
@@ -328,10 +328,10 @@ void CTFFooter::Paint( void )
 			x += iTextWidth + m_nButtonGap;
 		}
 	}
-}	
+}
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFooter::ClearButtons( void )
 {
@@ -382,7 +382,7 @@ CTFAdvancedOptionsDialog::~CTFAdvancedOptionsDialog()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -396,7 +396,7 @@ void CTFAdvancedOptionsDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::ApplySettings( KeyValues *inResourceData )
 {
@@ -404,7 +404,7 @@ void CTFAdvancedOptionsDialog::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::OnClose()
 {
@@ -415,8 +415,8 @@ void CTFAdvancedOptionsDialog::OnClose()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *command - 
+// Purpose:
+// Input  : *command -
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::OnCommand( const char *command )
 {
@@ -450,7 +450,7 @@ void CTFAdvancedOptionsDialog::OnKeyCodeTyped(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::OnKeyCodePressed(KeyCode code)
 {
@@ -466,7 +466,7 @@ void CTFAdvancedOptionsDialog::OnKeyCodePressed(KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::GatherCurrentValues()
 {
@@ -567,7 +567,7 @@ void CTFAdvancedOptionsDialog::GatherCurrentValues()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::CreateControls()
 {
@@ -774,7 +774,7 @@ void CTFAdvancedOptionsDialog::CreateControls()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::DestroyControls()
 {
@@ -803,9 +803,9 @@ void CTFAdvancedOptionsDialog::DestroyControls()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CTFAdvancedOptionsDialog::SaveValues() 
+void CTFAdvancedOptionsDialog::SaveValues()
 {
 	// Get the values from the controls:
 	GatherCurrentValues();
@@ -829,7 +829,7 @@ void CTFAdvancedOptionsDialog::SaveValues()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAdvancedOptionsDialog::Deploy( void )
 {
@@ -848,7 +848,7 @@ void CTFAdvancedOptionsDialog::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextToolTip::PerformLayout()
 {
@@ -902,7 +902,7 @@ void CTFTextToolTip::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFTextToolTip::PositionWindow( Panel *pTipPanel )
 {
@@ -951,7 +951,7 @@ void CTFTextToolTip::PositionWindow( Panel *pTipPanel )
 			// menu hanging up
 			pTipPanel->SetPos( Max( 0, cursorX - iTipW ), cursorY - iTipH - 20 );
 		}
-	}	
+	}
 }
 
 static vgui::DHANDLE<CTFAdvancedOptionsDialog> g_pTFAdvancedOptionsDialog;
@@ -983,7 +983,7 @@ public:
 	CExScrollBar( Panel *parent, const char *name, bool bVertical )
 		: ScrollBar( parent, name, bVertical )
 	{}
-	
+
 	virtual void ApplySchemeSettings( IScheme *pScheme ) OVERRIDE
 	{
 		// Deliberately skip ScrollBar
@@ -1072,7 +1072,7 @@ void CExScrollingEditablePanel::PerformLayout()
 	for ( int i=0; i < nNumChildren; ++i )
 	{
 		Panel* pChild = GetChild( i );
-	
+
 		if ( pChild == m_pScrollBar )
 			continue;
 
@@ -1117,7 +1117,7 @@ void CExScrollingEditablePanel::OnScrollBarSliderMoved()
 
 void CExScrollingEditablePanel::ShiftChildren( int nDistance )
 {
-	// Go through all our children and move them 
+	// Go through all our children and move them
 	int nNumChildren = GetChildCount();
 	for ( int i=0; i < nNumChildren; ++i )
 	{
@@ -1208,9 +1208,9 @@ void CScrollableList::ClearAutoLayoutPanels()
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
-CExpandablePanel::CExpandablePanel( Panel* pParent, const char* pszName ) 
+CExpandablePanel::CExpandablePanel( Panel* pParent, const char* pszName )
 	: vgui::EditablePanel( pParent, pszName )
 	, m_bExpanded( false )
 	, m_flAnimEndTime( 0.f )
@@ -1266,7 +1266,7 @@ void CExpandablePanel::OnThink()
 	BaseClass::OnThink();
 
 	float flTimeProgress = Gain( GetPercentAnimated(), 0.8f );
-		
+
 	const int& nStartHeight = m_bExpanded ? m_nCollapsedHeight : m_nExpandedHeight;
 	const int& nEndHeight = m_bExpanded ? m_nExpandedHeight : m_nCollapsedHeight;
 	int nCurrentHeight = RemapValClamped( flTimeProgress, 0.f, 1.f, nStartHeight, nEndHeight );
@@ -1289,4 +1289,3 @@ float CExpandablePanel::GetPercentAnimated() const
 {
 	return RemapValClamped( Plat_FloatTime() - ( m_flAnimEndTime - m_flResizeTime ), 0.f, m_flResizeTime, 0.f, 1.f );
 }
-

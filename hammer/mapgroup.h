@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -18,7 +18,7 @@ class CMapGroup : public CMapClass
 {
 	public:
 		DECLARE_MAPCLASS(CMapGroup,CMapClass)
-		
+
 		CMapGroup() : m_vecLogicalPosition(COORD_NOTINIT, COORD_NOTINIT) {}
 
 		const char* GetDescription(void);

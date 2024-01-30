@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -91,7 +91,7 @@ int main( int argc, char **argv )
 
 	if( width1 != width2 || height1 != height2 )
 	{
-		printf( "image dimensions different (%dx%d!=%dx%d): can't do diff for %s\n", 
+		printf( "image dimensions different (%dx%d!=%dx%d): can't do diff for %s\n",
 			width1, height1, width2, height2, pFileName[2] );
 		exit( -1 );
 	}
@@ -99,7 +99,7 @@ int main( int argc, char **argv )
 	// have to allow for different formats for now due to *.txt file screwup.
 	if( imageFormat1 != imageFormat2 )
 	{
-		printf( "image format different (%s!=%s). . can't do diff for %s\n", 
+		printf( "image format different (%s!=%s). . can't do diff for %s\n",
 			ImageLoader::GetName( imageFormat1 ), ImageLoader::GetName( imageFormat2 ), pFileName[2] );
 		exit( -1 );
 	}
@@ -119,7 +119,7 @@ int main( int argc, char **argv )
 		printf( "error loading %s\n", pFileName[0] );
 		exit( -1 );
 	}
-	
+
 	buf2.SeekGet( CUtlBuffer::SEEK_HEAD, 0 );
 	if( !TGALoader::Load( pImage2Tmp, buf2, width2, height2, imageFormat2, 2.2f, false ) )
 	{
@@ -166,19 +166,19 @@ int main( int argc, char **argv )
 	{
 		dstImageFormat = IMAGE_FORMAT_RGBA8888;
 	}
-	
+
 	CUtlBuffer outBuffer;
 	if ( !TGAWriter::WriteToBuffer( pDiff, outBuffer, width1, height1, dstImageFormat, dstImageFormat ) )
 	{
 		printf( "error writing %s to buffer\n", pFileName[2] );
 		exit( -1 );
 	}
-	
+
 	if ( !g_pFullFileSystem->WriteFile( pFileName[2], NULL, outBuffer ) )
 	{
 		fprintf( stderr, "unable to write %s\n", pFileName[2] );
 		return -1;
 	}
 
-	return 0;	
+	return 0;
 }

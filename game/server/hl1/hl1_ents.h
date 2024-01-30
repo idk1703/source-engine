@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,7 +32,7 @@ public:
 	void	InputActivate( inputdata_t &inputdata );
 
 	DECLARE_DATADESC();
-	
+
 	float	m_flAccel;			// Acceleration
 	float	m_flTime;
 	float	m_flDamp;
@@ -70,4 +70,4 @@ public:
 };
 
 
-#endif // HL1_ENTS_H 
+#endif // HL1_ENTS_H

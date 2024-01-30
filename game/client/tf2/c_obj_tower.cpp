@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectTower : public C_BaseObject
 {
@@ -31,7 +31,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_ObjectTower, DT_ObjectTower, CObjectTower)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ObjectTower::C_ObjectTower()
 {
@@ -42,7 +42,7 @@ C_ObjectTower::C_ObjectTower()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ObjectTowerLadder : public C_BaseAnimating
 {
@@ -66,4 +66,3 @@ END_RECV_TABLE()
 C_ObjectTowerLadder::C_ObjectTowerLadder()
 {
 }
-

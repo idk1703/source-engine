@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -145,7 +145,3 @@ void CDialogCvarChange::OnClose()
 	BaseClass::OnClose();
 	MarkForDeletion();
 }
-
-
-
-

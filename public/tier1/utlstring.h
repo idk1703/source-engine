@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -48,7 +48,7 @@ inline size_t strnlen(const char *s, size_t n)
 #endif
 
 //-----------------------------------------------------------------------------
-// Simple string class. 
+// Simple string class.
 // NOTE: This is *not* optimal! Use in tools, but not runtime code
 //-----------------------------------------------------------------------------
 class CUtlString
@@ -113,7 +113,7 @@ public:
 	bool		IsEmpty() const;
 
 	// Sets the length (used to serialize into the buffer )
-	// Note: If nLen != 0, then this adds an extra byte for a null-terminator.	
+	// Note: If nLen != 0, then this adds an extra byte for a null-terminator.
 	void		SetLength( int nLen );
 	char		*GetForModify();
 	void		Clear();
@@ -191,11 +191,11 @@ public:
 	CUtlString Replace( const char *pszFrom, const char *pszTo ) const;
 
 	// Get this string as an absolute path (calls right through to V_MakeAbsolutePath).
-	CUtlString AbsPath( const char *pStartingDir=NULL ) const;	
+	CUtlString AbsPath( const char *pStartingDir=NULL ) const;
 
 	// Gets the filename (everything except the path.. c:\a\b\c\somefile.txt -> somefile.txt).
 	CUtlString UnqualifiedFilename() const;
-	
+
 	// Gets a string with one directory removed. Uses V_StripLastDir but strips the last slash also!
 	CUtlString DirName() const;
 
@@ -246,7 +246,7 @@ inline bool operator==( const char *pString, const CUtlString &utlString )
 }
 
 inline bool operator!=( const char *pString, const CUtlString &utlString )
-{	
+{
 	return !utlString.IsEqual_CaseSensitive( pString );
 }
 
@@ -461,8 +461,8 @@ template < typename T > struct UTLConstStringCaselessStringLessFunctor { bool op
 template < typename T > struct UTLConstStringCaselessStringEqualFunctor { bool operator()( const CUtlConstStringBase<T>& a, const char *b ) const { return StringFuncs<T>::CaselessCompare( a.Get(), b ) == 0; } };
 
 // Helper function for CUtlMaps with a CUtlString key
-inline bool UtlStringLessFunc( const CUtlString &lhs, const CUtlString &rhs ) { return V_strcmp( lhs.Get(), rhs.Get() ) < 0; } 
-inline bool UtlStringCaseInsensitiveLessFunc( const CUtlString &lhs, const CUtlString &rhs ) { return V_stricmp( lhs.Get(), rhs.Get() ) < 0; } 
+inline bool UtlStringLessFunc( const CUtlString &lhs, const CUtlString &rhs ) { return V_strcmp( lhs.Get(), rhs.Get() ) < 0; }
+inline bool UtlStringCaseInsensitiveLessFunc( const CUtlString &lhs, const CUtlString &rhs ) { return V_stricmp( lhs.Get(), rhs.Get() ) < 0; }
 
 #include "memdbgoff.h"
 

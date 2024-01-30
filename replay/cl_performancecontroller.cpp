@@ -252,7 +252,7 @@ bool CPerformanceController::SaveAsync()
 		AssertMsg( 0, "Scratch performance should always be valid at this point." );
 		return false;
 	}
-	
+
 	// NOTE: m_pSavedPerformance should always be valid here, as 'save' is disabled until it
 	// has an actual performance to save to.
 
@@ -415,9 +415,9 @@ void CPerformanceController::OnSignonStateFull()
 		// Setup controller for playback from existing data.
 		SetupPlaybackExistingStream();
 
-		// Clear rewinding 
+		// Clear rewinding
 		ClearRewinding();
-		
+
 		// Let the editor know the rewind has completed.
 		m_pEditor->OnRewindComplete();
 	}
@@ -703,7 +703,7 @@ bool CPerformanceController::SetupPlaybackHandler()
 
 	// Cache
 	m_pPlaybackHandler = pHandler;
-	
+
 	return true;
 }
 

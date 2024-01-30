@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -75,19 +75,19 @@ void CBaseHL2MPBludgeonWeapon::Precache( void )
 void CBaseHL2MPBludgeonWeapon::ItemPostFrame( void )
 {
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 
 	if ( (pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime) )
 	{
 		PrimaryAttack();
-	} 
+	}
 	else if ( (pOwner->m_nButtons & IN_ATTACK2) && (m_flNextSecondaryAttack <= gpGlobals->curtime) )
 	{
 		SecondaryAttack();
 	}
-	else 
+	else
 	{
 		WeaponIdle();
 		return;
@@ -101,7 +101,7 @@ void CBaseHL2MPBludgeonWeapon::ItemPostFrame( void )
 //------------------------------------------------------------------------------
 void CBaseHL2MPBludgeonWeapon::PrimaryAttack()
 {
-	
+
 #ifndef CLIENT_DLL
 	CHL2MP_Player *pPlayer = ToHL2MPPlayer( GetPlayerOwner() );
 	// Move other players back to history positions based on local player's lag
@@ -132,7 +132,7 @@ void CBaseHL2MPBludgeonWeapon::SecondaryAttack()
 void CBaseHL2MPBludgeonWeapon::Hit( trace_t &traceHit, Activity nHitActivity )
 {
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	
+
 	//Do view kick
 //	AddViewKick();
 
@@ -156,10 +156,10 @@ void CBaseHL2MPBludgeonWeapon::Hit( trace_t &traceHit, Activity nHitActivity )
 
 		CalculateMeleeDamageForce( &info, hitDirection, traceHit.endpos );
 
-		pHitEntity->DispatchTraceAttack( info, hitDirection, &traceHit ); 
+		pHitEntity->DispatchTraceAttack( info, hitDirection, &traceHit );
 		ApplyMultiDamage();
 
-		// Now hit all triggers along the ray that... 
+		// Now hit all triggers along the ray that...
 		TraceAttackToTriggers( info, traceHit.startpos, traceHit.endpos, hitDirection );
 #endif
 		WeaponSound( MELEE_HIT );
@@ -219,14 +219,14 @@ Activity CBaseHL2MPBludgeonWeapon::ChooseIntersectionPointAndActivity( trace_t &
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &traceHit - 
+// Purpose:
+// Input  : &traceHit -
 //-----------------------------------------------------------------------------
 bool CBaseHL2MPBludgeonWeapon::ImpactWater( const Vector &start, const Vector &end )
 {
 	//FIXME: This doesn't handle the case of trying to splash while being underwater, but that's not going to look good
 	//		 right now anyway...
-	
+
 	// We must start outside the water
 	if ( UTIL_PointContents( start ) & (CONTENTS_WATER|CONTENTS_SLIME))
 		return false;
@@ -255,7 +255,7 @@ bool CBaseHL2MPBludgeonWeapon::ImpactWater( const Vector &start, const Vector &e
 			data.m_fFlags |= FX_WATER_IN_SLIME;
 		}
 
-		DispatchEffect( "watersplash", data );			
+		DispatchEffect( "watersplash", data );
 #endif
 	}
 
@@ -263,7 +263,7 @@ bool CBaseHL2MPBludgeonWeapon::ImpactWater( const Vector &start, const Vector &e
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseHL2MPBludgeonWeapon::ImpactEffect( trace_t &traceHit )
 {
@@ -343,7 +343,7 @@ void CBaseHL2MPBludgeonWeapon::Swing( int bIsSecondary )
 
 		// We want to test the first swing again
 		Vector testEnd = swingStart + forward * GetRange();
-		
+
 		// See if we happened to hit water
 		ImpactWater( swingStart, testEnd );
 	}

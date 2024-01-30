@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ void CEventPropertiesLookAtDialog::SetupLookAtControls( CEventParams *params )
 	SetPitchYawText( params );
 
 	if ( params->pitch != 0 ||
-		 params->yaw != 0 )
+		params->yaw != 0 )
 	{
 		params->usepitchyaw = true;
 	}
@@ -49,7 +49,7 @@ void CEventPropertiesLookAtDialog::SetupLookAtControls( CEventParams *params )
 	{
 		params->usepitchyaw = false;
 	}
-	
+
 	HWND control = GetControl( IDC_CHECK_LOOKAT );
 	SendMessage( control, BM_SETCHECK, (WPARAM) params->usepitchyaw ? BST_CHECKED : BST_UNCHECKED, 0 );
 
@@ -67,18 +67,18 @@ void CEventPropertiesLookAtDialog::InitControlData( CEventParams *params )
 {
 	SetDlgItemText( m_hDialog, IDC_STARTTIME, va( "%f", g_Params.m_flStartTime ) );
 	SetDlgItemText( m_hDialog, IDC_ENDTIME, va( "%f", g_Params.m_flEndTime ) );
-	SendMessage( GetControl( IDC_CHECK_ENDTIME ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_ENDTIME ), BM_SETCHECK,
 		( WPARAM ) g_Params.m_bHasEndTime ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
-	SendMessage( GetControl( IDC_CHECK_RESUMECONDITION ), BM_SETCHECK, 
+	SendMessage( GetControl( IDC_CHECK_RESUMECONDITION ), BM_SETCHECK,
 		( WPARAM ) g_Params.m_bResumeCondition ? BST_CHECKED : BST_UNCHECKED,
 		( LPARAM )0 );
 
 	PopulateTagList( params );
 
 	HWND choices1 = GetControl( IDC_EVENTCHOICES );
-	SendMessage( choices1, CB_RESETCONTENT, 0, 0 ); 
+	SendMessage( choices1, CB_RESETCONTENT, 0, 0 );
 	SendMessage( choices1, WM_SETTEXT , 0, (LPARAM)params->m_szParameters );
 
 	SetupLookAtControls( params );
@@ -90,7 +90,7 @@ void CEventPropertiesLookAtDialog::InitDialog( HWND hwndDlg )
 	m_hDialog = hwndDlg;
 
 	g_Params.PositionSelf( m_hDialog );
-	
+
 	// Set working title for dialog, etc.
 	SetTitle();
 
@@ -117,9 +117,9 @@ void CEventPropertiesLookAtDialog::SetPitchYawText( CEventParams *params )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : wnd - 
-//			*params - 
+// Purpose:
+// Input  : wnd -
+//			*params -
 // Output : static
 //-----------------------------------------------------------------------------
 
@@ -129,11 +129,11 @@ void CEventPropertiesLookAtDialog::ShowControlsForEventType( CEventParams *param
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hwndDlg - 
-//			uMsg - 
-//			wParam - 
-//			lParam - 
+// Purpose:
+// Input  : hwndDlg -
+//			uMsg -
+//			wParam -
+//			lParam -
 // Output : static BOOL CALLBACK
 //-----------------------------------------------------------------------------
 static BOOL CALLBACK EventPropertiesLookAtDialogProc( HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -154,14 +154,14 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 	{
 	case WM_PAINT:
 		{
-			PAINTSTRUCT ps; 
+			PAINTSTRUCT ps;
 			HDC hdc;
-			
-            hdc = BeginPaint(hwndDlg, &ps); 
-			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
-            EndPaint(hwndDlg, &ps); 
 
-            return FALSE; 
+	hdc = BeginPaint(hwndDlg, &ps);
+			DrawSpline( hdc, GetControl( IDC_STATIC_SPLINE ), g_Params.m_pEvent );
+	EndPaint(hwndDlg, &ps);
+
+	return FALSE;
 		}
 		break;
 	case WM_VSCROLL:
@@ -174,13 +174,13 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 			return FALSE;
 		}
 		break;
-    case WM_INITDIALOG:
+	case WM_INITDIALOG:
 		{
 			InitDialog( hwndDlg );
 		}
-		return FALSE;  
-		
-    case WM_COMMAND:
+		return FALSE;
+
+	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -210,7 +210,7 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 				EndDialog( hwndDlg, 1 );
 			}
 			break;
-        case IDCANCEL:
+	case IDCANCEL:
 			EndDialog( hwndDlg, 0 );
 			break;
 		case IDC_CHECK_ENDTIME:
@@ -265,7 +265,7 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 
 					control = GetControl( IDC_SLIDER_PITCH );
 					SendMessage( control, TBM_SETPOS, 1, (LPARAM)(LONG)g_Params.pitch );
-	
+
 					control = GetControl( IDC_SLIDER_YAW );
 					SendMessage( control, TBM_SETPOS, 1, (LPARAM)(LONG)g_Params.yaw );
 				}
@@ -278,7 +278,7 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 		{
 			HWND control = (HWND)lParam;
 			if ( control == GetControl( IDC_SLIDER_YAW ) ||
-				 control == GetControl( IDC_SLIDER_PITCH ) )
+				control == GetControl( IDC_SLIDER_PITCH ) )
 			{
 				g_Params.yaw = (float)SendMessage( GetControl( IDC_SLIDER_YAW ), TBM_GETPOS, 0, 0 );
 				g_Params.pitch = (float)SendMessage( GetControl( IDC_SLIDER_PITCH ), TBM_GETPOS, 0, 0 );
@@ -287,7 +287,7 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 
 				control = GetControl( IDC_CHECK_LOOKAT );
 				if ( g_Params.pitch != 0 ||
-					 g_Params.yaw != 0 )
+					g_Params.yaw != 0 )
 				{
 					g_Params.usepitchyaw = true;
 				}
@@ -295,7 +295,7 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 				{
 					g_Params.usepitchyaw = false;
 				}
-				
+
 				SendMessage( control, BM_SETCHECK, (WPARAM) g_Params.usepitchyaw ? BST_CHECKED : BST_UNCHECKED, 0 );
 
 				return TRUE;
@@ -307,16 +307,16 @@ BOOL CEventPropertiesLookAtDialog::HandleMessage( HWND hwndDlg, UINT uMsg, WPARA
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *view - 
-//			*actor - 
+// Purpose:
+// Input  : *view -
+//			*actor -
 // Output : int
 //-----------------------------------------------------------------------------
 int EventProperties_LookAt( CEventParams *params )
 {
 	g_Params = *params;
 
-	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ), 
+	int retval = DialogBox( (HINSTANCE)GetModuleHandle( 0 ),
 		MAKEINTRESOURCE( IDD_EVENTPROPERTIES_LOOKAT ),
 		(HWND)g_MDLViewer->getHandle(),
 		(DLGPROC)EventPropertiesLookAtDialogProc );

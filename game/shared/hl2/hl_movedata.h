@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ struct LadderMove_t
 	bool		m_bForceLadderMove;
 	// Is the forced move getting on or off the ladder
 	bool		m_bForceMount;
-	
+
 	// Simulation info for forcing the player move
 	float		m_flStartTime;
 	float		m_flArrivalTime;

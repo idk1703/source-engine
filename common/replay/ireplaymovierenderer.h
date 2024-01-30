@@ -22,7 +22,7 @@ public:
 	virtual void			ShutdownRenderer() = 0;
 	virtual void			RenderVideo() = 0;
 	virtual void			RenderAudio( unsigned char *pBuffer, int nSize, int nNumSamples ) = 0;
-	
+
 	virtual void			SetAudioSyncFrame( bool isSync = false ) = 0;
 	virtual bool			IsAudioSyncFrame() = 0;
 	virtual float			GetRecordingFrameDuration() = 0;

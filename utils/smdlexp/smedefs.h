@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -168,11 +168,10 @@ public:
 	SmdExportClass			*m_phec;
 	IPhyContextExport		*m_mcExport;
 	IPhysiqueExport			*m_phyExport;
-    Modifier				*m_phyMod;
+	Modifier				*m_phyMod;
 	Modifier				*m_bonesProMod;
 	BonesPro_WeightArray	*m_wa;
 private:
 	Point3					Pt3GetRVertexNormal(RVertex *prvertex, DWORD smGroupFace);
 	void					DumpWeights( int iVertex );
 };
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: used by all .exe's that run under steam and out, 
+// Purpose: used by all .exe's that run under steam and out,
 //			so they can be launched indirectly by steam and launch steam themselves
 //
 //=============================================================================//

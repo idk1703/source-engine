@@ -16,7 +16,7 @@
 #ifdef ENABLE_RPT
 //-----------------------------------------------------------------------------
 // Remote perf testing
-// 
+//
 // Description: Here's how rpt works. The 'customer' machine is the one
 // we want to do testing on. The 'valve' machine is the programmer machine
 // that has rcon access to the customer machine. The 'server' machine is the
@@ -27,7 +27,7 @@
 // clears out the console.log, and potentially other things.
 //
 // Step 1) Customer machine types rpt_password <password>. We store the password
-// on the customer machine only and never forward it to the server to avoid 
+// on the customer machine only and never forward it to the server to avoid
 // having to worry about malicious servers. The password is stored in the RPTServer
 // password The customer machine then forwards
 // a command "rpt_client_enable 1" to the server indicating that it is a client
@@ -37,9 +37,9 @@
 // some state indicating the client it received that message from can be rpt controlled.
 //
 // Step 3) Valve machine types rpt_start <password> [<port #>]. The port specification
-// is optional. The valve machine's rpt rcon client puts itself into a listening 
-// mode, waiting for connection requests from the customer machine. Once 
-// connected, the RPTClient rcon client will be the mechanism by which the valve 
+// is optional. The valve machine's rpt rcon client puts itself into a listening
+// mode, waiting for connection requests from the customer machine. Once
+// connected, the RPTClient rcon client will be the mechanism by which the valve
 // machine sends rcon commands to the customer machine.	After this is done,
 // the Valve machine sends a command "rpt_server_enable 1" to the server, indicating
 // it wishes to connect to an rpt_client.
@@ -79,7 +79,7 @@ static int g_nRptServerSlot = -1;
 // NOTE: This is expected to be executed by the customer, using rpt_password <password>
 // This data will be stored in the client only. Server doesn't get access to the password
 // to prevent malicious servers from running nasty commands on clients
-#ifndef SWDS 
+#ifndef SWDS
 
 CON_COMMAND_F( rpt_password, "", FCVAR_DONTRECORD | FCVAR_HIDDEN )
 {
@@ -170,7 +170,7 @@ void SV_NotifyRPTOfDisconnect( int nClientSlot )
 #endif
 }
 
-#ifndef SWDS 
+#ifndef SWDS
 
 void CL_NotifyRPTOfDisconnect( )
 {
@@ -181,8 +181,8 @@ void CL_NotifyRPTOfDisconnect( )
 
 #endif
 
-#ifndef SWDS 
-				
+#ifndef SWDS
+
 // This runs on the valve client machine
 CON_COMMAND_F( rpt_start, "", FCVAR_DONTRECORD | FCVAR_HIDDEN )
 {
@@ -256,10 +256,10 @@ static uint64 s_pValveIDs[] =
 {
 	76561197995463203ll ^ s_ValveMask,
 };
-	
+
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static bool IsValveIPAddress( const netadr_t &adr )
 {
@@ -283,7 +283,7 @@ static bool PlayerIsValveEmployee( int nClientSlot )
 	// If Steam is running and connected to beta, player is valve
 	if ( k_EUniverseBeta == GetSteamUniverse() )
 		return true;
-	
+
 	if ( !pClient->IsFullyAuthenticated() )
 		return false;
 
@@ -293,7 +293,7 @@ static bool PlayerIsValveEmployee( int nClientSlot )
 
 	if ( !pi.friendsID )
 		return false;
-	
+
 	CSteamID steamIDForPlayer( pi.friendsID, 1, k_EUniversePublic, k_EAccountTypeIndividual );
 	for ( int i = 0; i < ARRAYSIZE(s_pValveIDs); i++ )
 	{
@@ -349,7 +349,7 @@ CON_COMMAND_F( rpt_server_enable, "", FCVAR_DONTRECORD | FCVAR_HIDDEN | FCVAR_CL
 	// the server in a method protected by IP checks.
 	if ( g_nRptServerSlot < 0 )
 	{
-		g_nRptServerSlot = cmd_clientslot; 
+		g_nRptServerSlot = cmd_clientslot;
 	}
 
 	char pBuf[256];

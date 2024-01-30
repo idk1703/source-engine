@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -22,7 +22,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFAnnotationsPanelCallout : public EditablePanel
 {
@@ -43,7 +43,7 @@ public:
 	inline void	SetVisibilityBitfield( int iVisibilityBitfield ) { m_iVisibilityBitfield = iVisibilityBitfield; }
 	void	SetShowDistance( bool bShowDistance );
 	void    SetLifetime( float flLifetime );
-	void	SetText( const char *text );	
+	void	SetText( const char *text );
 	void	FadeAndRemove();
 
 private:
@@ -65,7 +65,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFAnnotationsPanel : public EditablePanel, public CHudElement
 {
@@ -91,7 +91,7 @@ public:
 
 protected:
 	CTFAnnotationsPanelCallout *TestAndAddCallout( int id, Vector &origin, const char *text );
-		
+
 private:
 	bool					m_bShouldBeVisible;
 	CUtlVector<CTFAnnotationsPanelCallout*>	m_pCalloutPanels;

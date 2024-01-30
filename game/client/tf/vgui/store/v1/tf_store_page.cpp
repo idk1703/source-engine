@@ -15,24 +15,24 @@
 #include <tier0/memdbgon.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFStorePage1::CTFStorePage1(Panel *parent, const CEconStoreCategoryManager::StoreCategory_t *pPageData, const char *pPreviewItemResFile ) : BaseClass(parent, pPageData, pPreviewItemResFile)
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-const char *CTFStorePage1::GetPageResFile( void ) 
-{ 
+const char *CTFStorePage1::GetPageResFile( void )
+{
 	Assert( !"No code should currently reference the old store!" );
 
 	return m_pPageData->m_pchPageRes;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage1::OnPageShow( void )
 {
@@ -40,7 +40,7 @@ void CTFStorePage1::OnPageShow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage1::OnCommand( const char *command )
 {
@@ -48,7 +48,7 @@ void CTFStorePage1::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage1::OnItemDetails( vgui::Panel *panel )
 {
@@ -56,7 +56,7 @@ void CTFStorePage1::OnItemDetails( vgui::Panel *panel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage1::ShowPreview( int iClass, const econ_store_entry_t* pEntry )
 {
@@ -64,7 +64,7 @@ void CTFStorePage1::ShowPreview( int iClass, const econ_store_entry_t* pEntry )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFStorePage1::UpdateFilterComboBox( void )
 {
@@ -88,7 +88,7 @@ void CTFStorePage1::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePreviewItemPanel *CTFStorePage1::CreatePreviewPanel( void )
 {

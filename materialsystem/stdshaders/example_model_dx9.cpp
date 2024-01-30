@@ -17,7 +17,7 @@ BEGIN_VS_SHADER( Example_Model_DX9, "Help for Example Model Shader" )
 #endif
 
 	BEGIN_SHADER_PARAMS
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )	
+		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 	END_SHADER_PARAMS
 
 	void SetupVars( ExampleModel_DX9_Vars_t& info )
@@ -57,4 +57,3 @@ BEGIN_VS_SHADER( Example_Model_DX9, "Help for Example Model Shader" )
 	}
 
 END_SHADER
-

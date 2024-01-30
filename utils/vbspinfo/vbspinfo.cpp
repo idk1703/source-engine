@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -49,7 +49,7 @@ void CalculateTreeInfo_R( int iNode, int depth )
 }
 
 
-void DrawTreeToScratchPad_R( 
+void DrawTreeToScratchPad_R(
 	IScratchPad3D *pPad,
 	int iNode,					// Which node we're drawing.
 	int iLevel,					// (used to get Y coordinate)
@@ -80,16 +80,16 @@ void DrawTreeToScratchPad_R(
 	else
 	{
 		pPad->DrawPoint( CSPVert( vMyPos, Vector(1,1,1) ), 2 );
-		
-		DrawTreeToScratchPad_R( 
+
+		DrawTreeToScratchPad_R(
 			pPad,
 			pNode->children[0],
 			iLevel+1,
 			flXMin,
 			flMyX,
 			&vMyPos );
-		
-		DrawTreeToScratchPad_R( 
+
+		DrawTreeToScratchPad_R(
 			pPad,
 			pNode->children[1],
 			iLevel+1,
@@ -128,7 +128,7 @@ void DrawTreeToScratchPad()
 		-flXSpace/2,
 		flXSpace/2,
 		NULL );
-	
+
 	pPad->Release();
 }
 
@@ -355,7 +355,7 @@ void main (int argc, char **argv)
 		printf("   -size				Show .bsp worldmodel bounds\n");
 		Error("Incorrect syntax.");
 	}
-		
+
 	bool bWorldTextureStats = false;
 	bool bModelStats = false;
 	bool bListStaticProps = false;
@@ -415,7 +415,7 @@ void main (int argc, char **argv)
 		}
 		strcpy (source, argv[i]);
 		Q_DefaultExtension (source, ".bsp", sizeof( source ) );
-		
+
 		strcpy( source, ExpandPath( source ) );
 		f = fopen (source, "rb");
 		if (f)
@@ -430,8 +430,8 @@ void main (int argc, char **argv)
 		if( !bWorldTextureStats && !bModelStats && !bListStaticProps )
 		{
 			Msg ("reading %s (%d)\n", source, size);
-		}		
-		
+		}
+
 
 		// If we're extracting, do that and quit.
 		if ( bHaveAnyToExtract )
@@ -459,7 +459,7 @@ void main (int argc, char **argv)
 
 
 
-		LoadBSPFile (source);		
+		LoadBSPFile (source);
 
 		if( bWorldTextureStats )
 		{
@@ -519,7 +519,7 @@ void main (int argc, char **argv)
 			PrintBSPFileSizes ();
 		}
 
-		
+
 
 		if ( g_bTreeInfo )
 		{
@@ -547,12 +547,12 @@ void main (int argc, char **argv)
 					(float)g_TotalTreeDepth / numnodes,
 					(float)g_TotalVariance / numnodes );
 		}
-		
+
 		if ( g_bDrawTree )
 		{
 			DrawTreeToScratchPad();
 		}
-		
+
 		if( !bWorldTextureStats && !bModelStats && !bListStaticProps )
 		{
 			printf ("---------------------\n");

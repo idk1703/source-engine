@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,14 +30,14 @@ public:
 
 	// Allocates all the global objects.
 	static bool		InitializeAllObjects();
-	
+
 	// Free all the global objects.
 	static void		FreeAllObjects();
 
 
 private:
 	static Initializer			*s_pInitializers;
-	
+
 	void						**m_pVar;
 	CreateInitializerObjectFn	m_CreateFn;
 	DeleteInitializerObjectFn	m_DeleteFn;
@@ -55,4 +55,3 @@ private:
 	static Initializer g_Initializer_##functionName##(0, __Initializer__Create##functionName##Fn, 0);
 
 #endif
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -78,13 +78,13 @@ CDialogAddServer::CDialogAddServer(vgui::Panel *parent, IGameList *gameList) : F
 
 	m_pTextEntry = new vgui::TextEntry( this, "ServerNameText" );
 	m_pTextEntry->AddActionSignalTarget( this );
-	
+
 	m_pTestServersButton = new vgui::Button( this, "TestServersButton", "" );
 	m_pAddServerButton = new vgui::Button( this, "OKButton", "" );
 	m_pAddSelectedServerButton = new vgui::Button( this, "SelectedOKButton", "", this, "addselected" );
 
 	m_pTabPanel->AddPage( m_pDiscoveredGames, "#ServerBrowser_Servers" );
-		  
+
 	LoadControlSettings("Servers/DialogAddServer.res");
 
 	// Setup the buttons. We leave them disabled until there is text in the textbox.
@@ -139,7 +139,7 @@ void CDialogAddServer::OnCommand(const char *command)
 		SetTall( m_OriginalHeight );
 		m_pTabPanel->SetVisible( true );
 		m_pAddSelectedServerButton->SetVisible( true );
-	
+
 		TestServers();
 	}
 	else if ( !Q_stricmp( command, "addselected" ) )
@@ -215,7 +215,7 @@ void CDialogAddServer::TestServers()
 	const char *address = GetControlString("ServerNameText", "");
 	netadr_t netaddr;
 	netaddr.SetFromString( address, true );
-	
+
 	m_Servers.RemoveAll();
 	CUtlVector<netadr_t> vecAdress;
 
@@ -224,13 +224,13 @@ void CDialogAddServer::TestServers()
 		// No port specified. Go to town on the ports.
 		CUtlVector<uint16> portsToTry;
 		GetMostCommonQueryPorts( portsToTry );
-		
+
 		for ( int i=0; i < portsToTry.Count(); i++ )
 		{
 			netadr_t newAddr = netaddr;
 			newAddr.SetPort( portsToTry[i] );
 			vecAdress.AddToTail( newAddr );
-		} 
+		}
 	}
 	else
 	{
@@ -239,7 +239,7 @@ void CDialogAddServer::TestServers()
 
 	// Change the text on the tab panel..
 	m_pTabPanel->RemoveAllPages();
-		
+
 	wchar_t wstr[512];
 	if ( address[0] == 0 )
 	{
@@ -251,12 +251,12 @@ void CDialogAddServer::TestServers()
 		Q_UTF8ToUnicode( address, waddress, sizeof( waddress ) );
 		g_pVGuiLocalize->ConstructString( wstr, sizeof( wstr ), g_pVGuiLocalize->Find( "#ServerBrowser_ServersResponding"), 1, waddress );
 	}
-		
+
 	char str[512];
 	Q_UnicodeToUTF8( wstr, str, sizeof( str ) );
 	m_pTabPanel->AddPage( m_pDiscoveredGames, str );
 	m_pTabPanel->InvalidateLayout();
-	
+
 	FOR_EACH_VEC( vecAdress, iAddress )
 	{
 		m_Queries.AddToTail( steamapicontext->SteamMatchmakingServers()->PingServer( vecAdress[ iAddress ].GetIPHostByteOrder(), vecAdress[ iAddress ].GetPort(), this ) );
@@ -353,7 +353,7 @@ void CDialogAddServer::ApplySchemeSettings( IScheme *pScheme )
 void CDialogAddServer::OnItemSelected()
 {
 	int nSelectedItem = m_pDiscoveredGames->GetSelectedItem(0);
-	if( nSelectedItem != -1 ) 
+	if( nSelectedItem != -1 )
 	{
 		m_pAddSelectedServerButton->SetEnabled( true );
 	}
@@ -364,7 +364,7 @@ void CDialogAddServer::OnItemSelected()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddServer::FinishAddServer( gameserveritem_t &pServer )
 {
@@ -372,7 +372,7 @@ void CDialogAddServer::FinishAddServer( gameserveritem_t &pServer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddBlacklistedServer::FinishAddServer( gameserveritem_t &pServer )
 {
@@ -381,7 +381,7 @@ void CDialogAddBlacklistedServer::FinishAddServer( gameserveritem_t &pServer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDialogAddBlacklistedServer::ApplySchemeSettings( vgui::IScheme *pScheme )
 {

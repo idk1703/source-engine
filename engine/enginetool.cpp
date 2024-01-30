@@ -101,7 +101,7 @@ public:
 	virtual bool		IsConnected();
 
 	virtual int			GetMaxClients(); // Tools might want to ensure single player, e.g.
-	
+
 	virtual bool		IsGamePaused();
 	virtual void		SetGamePaused( bool paused );
 
@@ -131,7 +131,7 @@ public:
 
 	virtual void		SetClientFrameTime( float frametime ); // gpGlobals->frametime on client
 
-	// Currently the engine doesn't like to do networking when it's paused, but if a tool changes entity state, it can be useful to force 
+	// Currently the engine doesn't like to do networking when it's paused, but if a tool changes entity state, it can be useful to force
 	//  a network update to get that state over to the client
 	virtual void		ForceUpdateDuringPause();
 
@@ -154,20 +154,20 @@ public:
 // Do we need separate rects for the 3d "viewport" vs. the tools surface??? and can we control viewports from
 	virtual void		GetScreenSize( int& width, int &height );
 
-	virtual int			StartSound( 
+	virtual int			StartSound(
 		int iUserData,
 		bool staticsound,
-		int iEntIndex, 
-		int iChannel, 
-		const char *pSample, 
-		float flVolume, 
-		soundlevel_t iSoundlevel, 
+		int iEntIndex,
+		int iChannel,
+		const char *pSample,
+		float flVolume,
+		soundlevel_t iSoundlevel,
 		const Vector& origin,
 		const Vector& direction,
-		int iFlags = 0, 
-		int iPitch = PITCH_NORM, 
-		bool bUpdatePositions = true, 
-		float delay = 0.0f, 
+		int iFlags = 0,
+		int iPitch = PITCH_NORM,
+		bool bUpdatePositions = true,
+		float delay = 0.0f,
 		int speakerentity = -1 );
 
 	virtual void	StopSoundByGuid( int guid );
@@ -263,7 +263,7 @@ void EngineTool_InstallQuitHandler( void *pvUserData, FnQuitHandler func )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool EngineTool_CheckQuitHandlers()
@@ -580,7 +580,7 @@ void CEngineTool::GetScreenSize( int& width, int &height )
 
 //-----------------------------------------------------------------------------
 // Purpose: Helpers for implementing a tool switching UI
-// Input  :  - 
+// Input  :  -
 // Output : int
 //-----------------------------------------------------------------------------
 int CEngineTool::GetToolCount() const
@@ -589,8 +589,8 @@ int CEngineTool::GetToolCount() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : char
 //-----------------------------------------------------------------------------
 const char	*CEngineTool::GetToolName( int index ) const
@@ -599,8 +599,8 @@ const char	*CEngineTool::GetToolName( int index ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CEngineTool::SwitchToTool( int index )
 {
@@ -622,20 +622,20 @@ const IToolSystem *CEngineTool::GetToolSystem( int index ) const
 	return toolframework->GetToolSystem( index );
 }
 
-int CEngineTool::StartSound( 
+int CEngineTool::StartSound(
 	int iUserData,
 	bool staticsound,
-	int iEntIndex, 
-	int iChannel, 
-	const char *pSample, 
-	float flVolume, 
-	soundlevel_t iSoundlevel, 
+	int iEntIndex,
+	int iChannel,
+	const char *pSample,
+	float flVolume,
+	soundlevel_t iSoundlevel,
 	const Vector& origin,
 	const Vector& direction,
-	int iFlags /*= 0*/, 
-	int iPitch /*= PITCH_NORM*/, 
-	bool bUpdatePositions /*= true*/, 
-	float delay /*= 0.0f*/, 
+	int iFlags /*= 0*/,
+	int iPitch /*= PITCH_NORM*/,
+	bool bUpdatePositions /*= true*/,
+	float delay /*= 0.0f*/,
 	int speakerentity /*= -1*/ )
 {
 	StartSoundParams_t params;
@@ -644,13 +644,13 @@ int CEngineTool::StartSound(
 	params.soundsource = iEntIndex;
 	params.entchannel = iChannel;
 	params.pSfx = S_PrecacheSound( pSample );
-	params.origin = origin; 
-	params.direction = direction; 
+	params.origin = origin;
+	params.direction = direction;
 	params.bUpdatePositions = bUpdatePositions;
 	params.fvol = flVolume;
 	params.soundlevel = iSoundlevel;
 	params.flags = iFlags;
-	params.pitch = iPitch; 
+	params.pitch = iPitch;
 	params.fromserver = false;
 	params.delay = delay;
 	params.speakerentity = speakerentity;
@@ -784,7 +784,7 @@ void CEngineTool::CreatePickingRay( const CViewSetup &viewSetup, int x, int y, V
 	Vector v1, v2;
 	v1.Init( xf, yf, 0.0f );
 	v2.Init( xf, yf, 1.0f );
-    
+
 	Vector o2;
 	// Transform the two points by the screen to world matrix
 	screenToWorld.V3Mul( v1, org ); // ray start origin
@@ -858,7 +858,7 @@ void CEngineTool::TakeTGAScreenShot( const char *filename, int width, int height
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEngineTool::UpdateScreenshot()
 {
@@ -967,7 +967,7 @@ IVideoRecorder *CEngineTool::GetActiveVideoRecorder()
  	{
  		return NULL;
  	}
- 	
+
  	return g_pVideoRecorder;
 }
 
@@ -979,7 +979,7 @@ bool CEngineTool::ShouldSuppressDeInit() const
 }
 
 void CEngineTool::StartRecordingVoiceToFile( const char *filename, const char *pPathID /*= 0*/ )
-{	
+{
 	FileHandle_t fh = g_pFileSystem->Open( filename, "wb", pPathID );
 	if ( fh != FILESYSTEM_INVALID_HANDLE )
 	{

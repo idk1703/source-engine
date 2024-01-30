@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -25,7 +25,7 @@ public:
 	CRemoteServer();
 	~CRemoteServer();
 
-	// setup this object 
+	// setup this object
 	void Initialize();
 
 	// remote connection

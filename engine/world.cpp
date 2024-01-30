@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -122,14 +122,14 @@ public:
 
 	IterationRetval_t EnumElement( IHandleEntity *pHandleEntity )
 	{
-		// Static props should never be in the trigger list 
+		// Static props should never be in the trigger list
 		Assert( !StaticPropMgr()->IsStaticProp( pHandleEntity ) );
 
 		IServerUnknown *pUnk = static_cast<IServerUnknown*>( pHandleEntity );
 		Assert( pUnk );
 
 		// Convert the IHandleEntity to an edict_t*...
-		// Context is the thing we're testing everything against		
+		// Context is the thing we're testing everything against
 		edict_t* pTouch = pUnk->GetNetworkable()->GetEdict();
 
 		// Can't bump against itself
@@ -150,7 +150,7 @@ public:
 		if ( pTriggerCollideable->GetSolidFlags() & FSOLID_USE_TRIGGER_BOUNDS )
 		{
 			Vector vecTriggerMins, vecTriggerMaxs;
-			pTriggerCollideable->WorldSpaceTriggerBounds( &vecTriggerMins, &vecTriggerMaxs ); 
+			pTriggerCollideable->WorldSpaceTriggerBounds( &vecTriggerMins, &vecTriggerMaxs );
 			if ( !IsBoxIntersectingRay( vecTriggerMins, vecTriggerMaxs, m_Ray ) )
 			{
 				return ITERATION_CONTINUE;
@@ -186,7 +186,7 @@ private:
 };
 
 
-// enumerator class that's used to update touch links for a trigger when 
+// enumerator class that's used to update touch links for a trigger when
 // it moves or changes solid type
 class CTriggerMoved : public IPartitionEnumerator
 {
@@ -238,12 +238,12 @@ public:
 
 		const Vector &vecStart = pTouchCollide->GetCollisionOrigin();
 		Ray_t ray;
-		ray.Init( vecStart, vecStart, vecMins, vecMaxs ); 
+		ray.Init( vecStart, vecStart, vecMins, vecMaxs );
 
 		if ( m_pTrigger->GetSolidFlags() & FSOLID_USE_TRIGGER_BOUNDS )
 		{
 			Vector vecTriggerMins, vecTriggerMaxs;
-			m_pTrigger->WorldSpaceTriggerBounds( &vecTriggerMins, &vecTriggerMaxs ); 
+			m_pTrigger->WorldSpaceTriggerBounds( &vecTriggerMins, &vecTriggerMaxs );
 			if ( !IsBoxIntersectingRay( vecTriggerMins, vecTriggerMaxs, ray ) )
 			{
 				return ITERATION_CONTINUE;
@@ -287,7 +287,7 @@ private:
 void SV_TriggerMoved( edict_t *pTriggerEnt, bool accurateBboxTriggerChecks )
 {
 	CTriggerMoved triggerEnum( accurateBboxTriggerChecks );
-	triggerEnum.TriggerMoved( pTriggerEnt ); 
+	triggerEnum.TriggerMoved( pTriggerEnt );
 	triggerEnum.HandleTouchedEntities( );
 }
 
@@ -317,4 +317,3 @@ void SV_SolidMoved( edict_t *pSolidEnt, ICollideable *pSolidCollide, const Vecto
 		touchEnumerator.HandleTouchedEntities( );
 	}
 }
-

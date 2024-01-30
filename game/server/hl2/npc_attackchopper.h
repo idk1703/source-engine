@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,5 +26,3 @@ void Chopper_CreateChunk( CBaseEntity *pChopper, const Vector &vecChunkPos, cons
 void Chopper_PrecacheChunks( CBaseEntity *pChopper );
 
 #endif // NPC_ATTACKCHOPPER_H
-
-

@@ -246,5 +246,3 @@ bool CTFBotSpySap::AreAllDangerousSentriesSapped( CTFBot *me ) const
 
 	return true;
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -37,7 +37,7 @@ END_DATADESC()
 PRECACHE_REGISTER( func_mass_teleport );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFuncMassTeleport::CFuncMassTeleport()
 {
@@ -56,14 +56,14 @@ void CFuncMassTeleport::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMassTeleport::Precache( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMassTeleport::Activate( void )
 {
@@ -73,19 +73,19 @@ void CFuncMassTeleport::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CFuncMassTeleport::MassTeleport( 
-	CTFTeam *pTeam, 
-	Vector vSourceMins, 
-	Vector vSourceMaxs, 
-	Vector vDest, 
-	bool bSwap, 
+void CFuncMassTeleport::MassTeleport(
+	CTFTeam *pTeam,
+	Vector vSourceMins,
+	Vector vSourceMaxs,
+	Vector vDest,
+	bool bSwap,
 	bool bPlayersOnly,
 	EHANDLE hMCV,
 	bool bTelefragDestination )
 {
-	bSwap = false;   
+	bSwap = false;
 
 	Vector vSource = vSourceMins + ( ( vSourceMaxs - vSourceMins ) / 2.f );
 	vSource.z = vSourceMins.z;
@@ -108,7 +108,7 @@ void CFuncMassTeleport::MassTeleport(
 
 		if ( !pEnt )
 			continue;
-		
+
 		if ( bPlayersOnly )
 		{
 			CBaseTFPlayer *pTestPlayer = dynamic_cast< CBaseTFPlayer* >( pEnt );
@@ -153,7 +153,7 @@ void CFuncMassTeleport::MassTeleport(
 
 		// NJS: dont teleport map placed objects.
 		if( pObj )
-		{ 
+		{
 			if ( pObj->WasMapPlaced() )
 			{
 				pList[i] = NULL;
@@ -182,7 +182,7 @@ void CFuncMassTeleport::MassTeleport(
 			UTIL_TraceEntity( pEnt, vecTop, vEntTarget, MASK_SOLID, NULL, COLLISION_GROUP_PLAYER_MOVEMENT, &tr );
 			vEntTarget = tr.endpos + Vector(0,0,3);
 		}
-		
+
 		/*
 		if( ! bSwap )
 		{
@@ -220,7 +220,7 @@ void CFuncMassTeleport::MassTeleport(
 void CFuncMassTeleport::MassTelefrag( Vector vMins, Vector vMaxs )
 {
 	CBaseEntity *pList[4096];
-	
+
 	int count = UTIL_EntitiesInBox( pList, 4096, vMins, vMaxs, FL_CLIENT|FL_NPC|FL_OBJECT );
 
 	for( int i = 0; i < count; i++ )
@@ -229,7 +229,7 @@ void CFuncMassTeleport::MassTelefrag( Vector vMins, Vector vMaxs )
 
 		if ( !pEnt )
 			continue;
-		
+
 
 		if( pEnt->GetSolidFlags() & FSOLID_NOT_SOLID )
 		{
@@ -255,7 +255,7 @@ void CFuncMassTeleport::MassTelefrag( Vector vMins, Vector vMaxs )
 			pList[i] = NULL;
 			continue;
 		}
-		
+
 		// Do a massive amount of damage (DMG_GENERIC so there's no physics force)
 		CTakeDamageInfo info( this, this, 99999, DMG_GENERIC );
 
@@ -265,17 +265,17 @@ void CFuncMassTeleport::MassTelefrag( Vector vMins, Vector vMaxs )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CFuncMassTeleport::DoTeleport( 
-	CTFTeam *pTeam, 
-	Vector vSourceMins, 
-	Vector vSourceMaxs, 
-	Vector vDest, 
-	bool bSwap, 
+void CFuncMassTeleport::DoTeleport(
+	CTFTeam *pTeam,
+	Vector vSourceMins,
+	Vector vSourceMaxs,
+	Vector vDest,
+	bool bSwap,
 	bool bPlayersOnly,
 	EHANDLE hMCV )
-{ 
+{
 	bool bTelefragDestination = hMCV ? false : true;
 	MassTeleport( pTeam, vSourceMins, vSourceMaxs, vDest, bSwap, bPlayersOnly, hMCV, bTelefragDestination );
 
@@ -284,10 +284,10 @@ void CFuncMassTeleport::DoTeleport(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMassTeleport::InputDoTeleport( inputdata_t &inputdata )
-{ 
+{
 	// If I have MCVs attached, tell them to teleport.
 	for ( int i = 0; i < m_MCVs.Count(); i++ )
 	{
@@ -320,9 +320,9 @@ int CFuncMassTeleport::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 {
 	// Team rules may tell us that we should
 	CBaseEntity* pRecipientEntity = CBaseEntity::Instance( pInfo->m_pClientEnt );
-	
+
 	Assert( pRecipientEntity->IsPlayer() );
-	
+
 	CBasePlayer *pPlayer = (CBasePlayer*)pRecipientEntity;
 	if ( pPlayer->GetTeam() )
 	{
@@ -334,7 +334,7 @@ int CFuncMassTeleport::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMassTeleport::AddMCV( CBaseEntity *pMCV )
 {
@@ -351,7 +351,7 @@ void CFuncMassTeleport::AddMCV( CBaseEntity *pMCV )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncMassTeleport::RemoveMCV( CBaseEntity *pMCV )
 {

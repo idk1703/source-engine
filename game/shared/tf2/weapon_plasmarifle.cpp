@@ -19,14 +19,14 @@
 ConVar	weapon_plasmarifle_damage( "weapon_plasmarifle_damage","0", FCVAR_NONE, "Plasma Rifle maximum damage" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponPlasmaRifle : public CTFMachineGun
 {
 	DECLARE_CLASS( CWeaponPlasmaRifle, CTFMachineGun );
 public:
 	virtual void	FireBullets( CBaseTFCombatWeapon *pWeapon, int cShots, const Vector &vecSrc, const Vector &vecDirShooting, const Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq);
-	virtual const Vector& GetBulletSpread( void ); 
+	virtual const Vector& GetBulletSpread( void );
 	virtual float	GetFireRate( void );
 };
 
@@ -34,7 +34,7 @@ LINK_ENTITY_TO_CLASS( weapon_plasmarifle, CWeaponPlasmaRifle );
 PRECACHE_WEAPON_REGISTER(weapon_plasmarifle);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponPlasmaRifle::FireBullets( CBaseTFCombatWeapon *pWeapon, int cShots, const Vector &vecSrc, const Vector &vecDirShooting, const Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq )
 {
@@ -65,10 +65,9 @@ const Vector& CWeaponPlasmaRifle::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponPlasmaRifle::GetFireRate( void )
-{	
-	return 0.2; 
+{
+	return 0.2;
 }
-

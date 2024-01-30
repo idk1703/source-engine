@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -31,11 +31,11 @@ public:
 		HWND hWnd,
 		UINT Msg,
 		WPARAM wParam,
-		LPARAM lParam 
+		LPARAM lParam
 	) = 0;
 
 	virtual HWND CreateWindowExW
-	(          
+	(
 		DWORD dwExStyle,
 	    LPCWSTR lpClassName,
 	    LPCWSTR lpWindowName,
@@ -51,12 +51,12 @@ public:
 	) = 0;
 
 	virtual ATOM RegisterClassW
-	( 
+	(
 		CONST WNDCLASSW *lpWndClass
 	) = 0;
 
 	virtual BOOL UnregisterClassW
-	( 
+	(
 		LPCWSTR lpClassName,
 		HINSTANCE hInstance
 	) = 0;

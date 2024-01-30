@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_JarateDominated : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -62,7 +62,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JarateDominated, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_CaptureTheFlag : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -95,13 +95,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_CaptureTheFlag, ACHIEVEMENT_TF_SNIPER_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_InvisibleSpyKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -114,7 +114,7 @@ class CAchievementTFSniper_InvisibleSpyKill : public CBaseTFAchievement
 			{
 				if ( pTFVictim->GetPercentInvisible() == 1.0f )
 				{
-					IncrementCount(); 
+					IncrementCount();
 				}
 			}
 		}
@@ -127,14 +127,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_InvisibleSpyKill, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_HeadShotSnipers: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 10 );		
+		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 
@@ -152,13 +152,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_HeadShotSnipers, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_HeadShotDemoman: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 
@@ -176,14 +176,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_HeadShotDemoman, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_SpyKukriKills: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 10 );		
+		SetGoal( 10 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
 		if ( pAttacker == pLocalPlayer )
@@ -206,13 +206,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_SpyKukriKills, ACHIEVEMENT_TF_SNIPER_K
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_ScoutMidairKill: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -237,7 +237,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_ScoutMidairKill, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillChargedMedic : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -252,14 +252,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillChargedMedic, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_Consolation_Backstabs: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_KILL_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 50 );	
+		SetGoal( 50 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pVictim == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -280,13 +280,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_Consolation_Backstabs, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_DominateEnemySniper : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 		bool bDomination = event->GetInt( "death_flags" ) & TF_DEATH_DOMINATION;
@@ -305,7 +305,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_DominateEnemySniper, ACHIEVEMENT_TF_SN
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillRocketJumper : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -320,7 +320,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillRocketJumper, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillNoScope : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 5 );
@@ -336,13 +336,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillNoScope, ACHIEVEMENT_TF_SNIPER_KIL
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillWhileDead: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 
@@ -360,7 +360,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillWhileDead, ACHIEVEMENT_TF_SNIPER_B
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_JarateExtinguish : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -397,7 +397,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JarateExtinguish, ACHIEVEMENT_TF_SNIPE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_TopScoreboard : public CAchievementTopScoreboard
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_FILTER_FULL_ROUND_ONLY );
 		SetGoal( 10 );
@@ -411,10 +411,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_TopScoreboard, ACHIEVEMENT_TF_SNIPER_T
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillRoundStart: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 		m_flRoundStartTime = -1;
 	}
 
@@ -422,7 +422,7 @@ class CAchievementTFSniper_KillRoundStart: public CBaseTFAchievement
 	{
 		ListenForGameEvent( "teamplay_setup_finished" );
 		ListenForGameEvent( "arena_round_start" );
-		
+
 	}
 
 	void FireGameEvent_Internal( IGameEvent *event )
@@ -433,7 +433,7 @@ class CAchievementTFSniper_KillRoundStart: public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_TFPlayer::GetLocalTFPlayer() )
 		{
@@ -452,7 +452,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillRoundStart, ACHIEVEMENT_TF_SNIPER_
 
 class CAchievementTFSniper_FreezecamHat : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -465,7 +465,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_FreezecamHat, ACHIEVEMENT_TF_SNIPER_FR
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_FreezecamWave : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -480,10 +480,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_FreezecamWave, ACHIEVEMENT_TF_SNIPER_F
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_DifferentWeaponsKill: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 		m_Weapons.Purge();
 	}
 
@@ -500,12 +500,12 @@ class CAchievementTFSniper_DifferentWeaponsKill: public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_TFPlayer::GetLocalTFPlayer() )
 		{
 			int iWeaponID = event->GetInt( "weaponid" );
-			
+
 			if ( m_Weapons.Find( iWeaponID ) == -1 )
 			{
 				m_Weapons.AddToTail( iWeaponID );
@@ -529,14 +529,14 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_DifferentWeaponsKill, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillEnemyGrind: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1000 );		
+		SetGoal( 1000 );
 		SetStoreProgressInSteam( true );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_TFPlayer::GetLocalTFPlayer() && pVictim && pVictim->IsPlayer() )
 		{
@@ -552,7 +552,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillEnemyGrind, ACHIEVEMENT_TF_SNIPER_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_DestroySentry : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 3 );
@@ -569,7 +569,7 @@ class CAchievementTFSniper_DestroySentry : public CBaseTFAchievement
 		if ( Q_strcmp( event->GetName(), "object_destroyed" ) == 0 )
 		{
 			int iIndex = engine->GetPlayerForUserID( event->GetInt( "attacker" ) );
-		
+
 			if ( UTIL_PlayerByIndex( iIndex ) == C_TFPlayer::GetLocalTFPlayer() )
 			{
 				if ( event->GetInt( "objecttype" ) == OBJ_SENTRYGUN )
@@ -587,7 +587,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_DestroySentry, ACHIEVEMENT_TF_SNIPER_D
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillEnemiesImportant : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -646,13 +646,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillEnemiesImportant, ACHIEVEMENT_TF_S
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_HeadShotPostInvuln: public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
 
@@ -678,7 +678,7 @@ public:
 
 	DECLARE_CLASS( CAchievementTFSniper_BaseJarateGroup, CBaseTFAchievement );
 
-	void Init() 
+	void Init()
 	{
 		m_flJarateTime = 0.0f;
 		m_JaratedPlayers.Purge();
@@ -746,7 +746,7 @@ public:
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_JaratePack : public CAchievementTFSniper_BaseJarateGroup
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -771,7 +771,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JaratePack, ACHIEVEMENT_TF_SNIPER_JARA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_JarateMedicPair : public CAchievementTFSniper_BaseJarateGroup
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -807,10 +807,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JarateMedicPair, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_JarateReveal : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
-		SetGoal( 1 );		
+		SetGoal( 1 );
 	}
 };
 
@@ -821,10 +821,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JarateReveal, ACHIEVEMENT_TF_SNIPER_JA
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_PinHeavy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 	}
 
 	virtual void ListenForEvents( void )
@@ -836,7 +836,7 @@ class CAchievementTFSniper_PinHeavy : public CBaseTFAchievement
 	{
 		if ( FStrEq( event->GetName(), "player_pinned" ) )
 		{
-			IncrementCount();	
+			IncrementCount();
 		}
 	}
 };
@@ -848,10 +848,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_PinHeavy, ACHIEVEMENT_TF_SNIPER_BOW_PI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_JarateKillMelee : public CAchievementTFSniper_BaseJarateGroup
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 		m_JaratedPlayers.Purge();
 		m_iKilled = 0;
 	}
@@ -864,7 +864,7 @@ class CAchievementTFSniper_JarateKillMelee : public CAchievementTFSniper_BaseJar
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pVictim && pAttacker == C_TFPlayer::GetLocalTFPlayer() && event->GetInt( "weaponid" ) == TF_WEAPON_CLUB )
 		{
@@ -892,10 +892,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JarateKillMelee, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_ShieldFailedSpy : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 
 		m_iAttackerIndex = 0;
 		m_flAttackTime = 0.0f;
@@ -921,7 +921,7 @@ class CAchievementTFSniper_ShieldFailedSpy : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( m_flAttackTime <= gpGlobals->curtime )
 		{
@@ -949,7 +949,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_ShieldFailedSpy, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillMedicPair : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL  | ACH_LISTEN_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
@@ -1000,7 +1000,7 @@ class CAchievementTFSniper_KillMedicPair : public CBaseTFAchievement
 		m_hTargets[iTargetIndex].flTimeToBeat = gpGlobals->curtime + 15.0f; // 15 seconds to kill the target
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( !pVictim || !pVictim->IsPlayer() )
 			return;
@@ -1039,7 +1039,7 @@ class CAchievementTFSniper_KillMedicPair : public CBaseTFAchievement
 				{
 					pNewTarget = ToTFPlayer( pTFVictim->MedicGetHealTarget() );
 					if ( pNewTarget && pNewTarget->IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
-					{	
+					{
 						AddNewTarget( pNewTarget );
 					}
 				}
@@ -1074,10 +1074,10 @@ class CAchievementTFSniper_JarateAssists : public CAchievementTFSniper_BaseJarat
 {
 	DECLARE_CLASS( CAchievementTFSniper_JarateAssists, CAchievementTFSniper_BaseJarateGroup );
 
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 		m_JaratedPlayers.Purge();
 		m_iAssists = 0;
 	}
@@ -1100,7 +1100,7 @@ class CAchievementTFSniper_JarateAssists : public CAchievementTFSniper_BaseJarat
 		BaseClass::FireGameEvent_Internal( event );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		int iAssisterIndex = engine->GetPlayerForUserID( event->GetInt( "assister" ) );
 
@@ -1134,7 +1134,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_JarateAssists, ACHIEVEMENT_TF_SNIPER_J
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_KillFlagCarrierBow : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1150,10 +1150,10 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_KillFlagCarrierBow, ACHIEVEMENT_TF_SNI
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_Pincushion : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_KILL_EVENTS );
-		SetGoal( 1 );	
+		SetGoal( 1 );
 		m_hTargets.Purge();
 	}
 
@@ -1197,7 +1197,7 @@ class CAchievementTFSniper_Pincushion : public CBaseTFAchievement
 		}
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_TFPlayer::GetLocalTFPlayer() )
 		{
@@ -1255,13 +1255,13 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_Pincushion, ACHIEVEMENT_TF_SNIPER_BOW_
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_SniperTauntKill : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL | ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS );
 		SetGoal( 1 );
 	}
 
-	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event ) 
+	virtual void Event_EntityKilled( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event )
 	{
 		if ( pAttacker == C_BasePlayer::GetLocalPlayer() )
 		{
@@ -1280,7 +1280,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFSniper_SniperTauntKill, ACHIEVEMENT_TF_SNIPER
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFSniper_SniperRifleNoMissing : public CBaseTFAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -1295,7 +1295,7 @@ class CAchievementTFSniper_AchieveProgress1 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFSniper_AchieveProgress1, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 5, ACHIEVEMENT_TF_SNIPER_START_RANGE, ACHIEVEMENT_TF_SNIPER_END_RANGE );
@@ -1308,7 +1308,7 @@ class CAchievementTFSniper_AchieveProgress2 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFSniper_AchieveProgress2, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 11, ACHIEVEMENT_TF_SNIPER_START_RANGE, ACHIEVEMENT_TF_SNIPER_END_RANGE );
@@ -1321,7 +1321,7 @@ class CAchievementTFSniper_AchieveProgress3 : public CAchievement_AchievedCount
 {
 public:
 	DECLARE_CLASS( CAchievementTFSniper_AchieveProgress3, CAchievement_AchievedCount );
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetAchievementsRequired( 17, ACHIEVEMENT_TF_SNIPER_START_RANGE, ACHIEVEMENT_TF_SNIPER_END_RANGE );
@@ -1432,10 +1432,10 @@ public:
 		if ( pVictim && ( pAttacker == CBasePlayer::GetLocalPlayer() ) )
 		{
 			CTFPlayer *pTFVictim = ToTFPlayer( pVictim );
-			if ( pTFVictim && 
-				( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) && 
-				( IsHeadshot( event->GetInt( "customkill" ) ) ) && 
-				( event->GetInt( "damagebits" ) & DMG_CRITICAL ) && 
+			if ( pTFVictim &&
+				( pAttacker == C_TFPlayer::GetLocalTFPlayer() ) &&
+				( IsHeadshot( event->GetInt( "customkill" ) ) ) &&
+				( event->GetInt( "damagebits" ) & DMG_CRITICAL ) &&
 				( pTFVictim->m_Shared.InCond( TF_COND_PARACHUTE_DEPLOYED ) ) )
 			{
 				IncrementCount();

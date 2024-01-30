@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -10,10 +10,10 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_SHADER_FLAGS( Decal, "Help for Decal", SHADER_NOT_EDITABLE )
-			  
+
 	BEGIN_SHADER_PARAMS
 	END_SHADER_PARAMS
-	
+
 	SHADER_INIT_PARAMS()
 	{
 		SET_FLAGS( MATERIAL_VAR_NO_DEBUG_OVERRIDE );
@@ -37,25 +37,25 @@ BEGIN_SHADER_FLAGS( Decal, "Help for Decal", SHADER_NOT_EDITABLE )
 			pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );
 			pShaderShadow->EnableBlending( true );
 		}
-		// MOD2X pass		
+		// MOD2X pass
 		SHADOW_STATE
 		{
 			pShaderShadow->EnableCustomPixelPipe( true );
 			pShaderShadow->CustomTextureStages( 2 );
 
 			// color = texture
-			// alpha = vertexalpha			
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1, 
+			// alpha = vertexalpha
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1,
 					SHADER_TEXARG_TEXTURE, SHADER_TEXARG_NONE );
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-					SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+					SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1,
 					SHADER_TEXARG_SPECULARCOLOR, SHADER_TEXARG_NONE );
 
 			// color = texture
 			// alpha = blend
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_BLEND_PREVIOUSSTAGEALPHA, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_BLEND_PREVIOUSSTAGEALPHA,
 				SHADER_TEXARG_CONSTANTCOLOR, SHADER_TEXARG_PREVIOUSSTAGE );
 
 			pShaderShadow->BlendFunc( SHADER_BLEND_DST_COLOR, SHADER_BLEND_SRC_COLOR );
@@ -72,7 +72,7 @@ BEGIN_SHADER_FLAGS( Decal, "Help for Decal", SHADER_NOT_EDITABLE )
 		}
 		Draw();
 
-		// srcalpha,1-srcalpha pass		
+		// srcalpha,1-srcalpha pass
 		SHADOW_STATE
 		{
 			pShaderShadow->EnableCustomPixelPipe( true );
@@ -82,37 +82,37 @@ BEGIN_SHADER_FLAGS( Decal, "Help for Decal", SHADER_NOT_EDITABLE )
 			// alpha = texture
 			if (IS_FLAG_SET( MATERIAL_VAR_VERTEXCOLOR ))
 			{
-				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-						SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE, 
+				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+						SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE,
 						SHADER_TEXARG_TEXTURE, SHADER_TEXARG_VERTEXCOLOR );
 			}
 			else
 			{
-				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-						SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1, 
+				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+						SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_SELECTARG1,
 						SHADER_TEXARG_TEXTURE, SHADER_TEXARG_NONE );
 			}
 
 			if( IS_FLAG_SET( MATERIAL_VAR_VERTEXALPHA ) )
 			{
-				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-						SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_MODULATE, 
+				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+						SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_MODULATE,
 						SHADER_TEXARG_TEXTURE, SHADER_TEXARG_VERTEXCOLOR );
 			}
 			else
 			{
-				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0, 
-						SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1, 
+				pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
+						SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_SELECTARG1,
 						SHADER_TEXARG_TEXTURE, SHADER_TEXARG_NONE );
 			}
 
 			// color = texture [* vertex color] * lightmap color
 			// alpha = texture alpha [* vertex alpha] * specular alpha
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE2X, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+					SHADER_TEXCHANNEL_COLOR, SHADER_TEXOP_MODULATE2X,
 					SHADER_TEXARG_PREVIOUSSTAGE, SHADER_TEXARG_TEXTURE );
-			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1, 
-				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_MODULATE, 
+			pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
+				SHADER_TEXCHANNEL_ALPHA, SHADER_TEXOP_MODULATE,
 				SHADER_TEXARG_PREVIOUSSTAGE, SHADER_TEXARG_SPECULARCOLOR );
 
 			pShaderShadow->BlendFunc( SHADER_BLEND_SRC_ALPHA, SHADER_BLEND_ONE_MINUS_SRC_ALPHA );

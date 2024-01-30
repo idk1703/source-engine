@@ -15,7 +15,7 @@
 
 #include "tier0/memdbgon.h" // for _aligned_malloc usage below
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 template <int NUM_ARRAYS>
 class CBoneToWorldArrays

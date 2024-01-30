@@ -15,9 +15,9 @@ $Configuration
 {
 	$PreBuildEvent [$WIN32]
 	{
-		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\game\shared\portal\portal_gcschema.h $SRCDIR" "\n" \ 
+		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\game\shared\portal\portal_gcschema.h $SRCDIR" "\n" \
 							"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $SRCDIR\game\shared\portal\portal_gcschema.cpp $SRCDIR" "\n" \
-							"$BASE" 
+							"$BASE"
 	}
 }
 
@@ -37,4 +37,3 @@ $Project "schema (PORTAL)"
 		}
 	}
 }
-

@@ -101,7 +101,7 @@ void CLogicMeasureMovement::Activate()
 	SetMeasureReference( STRING(m_strMeasureReference) );
 	SetTarget( STRING(m_target) );
 	SetTargetReference( STRING(m_strTargetReference) );
-	
+
 	SetThink( &CLogicMeasureMovement::MeasureThink );
 	SetNextThink( gpGlobals->curtime + TICK_INTERVAL );
 }
@@ -180,7 +180,7 @@ void CLogicMeasureMovement::MeasureThink( )
 		}
 
 		ConcatTransforms( matWorldToMeasure, m_hMeasureReference->EntityToWorldTransform(), matRefToMeasure );
-		
+
 		// Apply the scale factor
 		if ( ( m_flScale != 0.0f ) && ( m_flScale != 1.0f ) )
 		{

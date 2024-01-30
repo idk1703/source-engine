@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -98,17 +98,17 @@ static inline long STEAM_LoadLibrary( char * pszFileName )
 	void *	hDll;
 	char	szCwd[ MAX_OSPATH ];
 	char	szAbsoluteLib[ MAX_OSPATH ];
-    
+
 	if ( !getcwd( szCwd, sizeof( szCwd ) ) )
 		return 0;
-        
+
 	if ( szCwd[ strlen( szCwd ) -1 ] == '/' )
 	{
 		szCwd[ strlen( szCwd ) -1 ] = 0;
 	}
-        
+
 	snprintf( szAbsoluteLib, sizeof( szAbsoluteLib ), "%s/%s", szCwd, pszFileName );
-    
+
 	hDll = dlopen( szAbsoluteLib, RTLD_NOW );
 
 	return (long)hDll;

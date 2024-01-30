@@ -233,7 +233,7 @@ void DrawFleshInteriorBlendedPass( CBaseVSShader *pShader, IMaterialVar** params
 		SET_DYNAMIC_VERTEX_SHADER_COMBO( NUM_LIGHTS, bUseStaticControlFlow ? 0 : lightState.m_nNumLights );
 		SET_DYNAMIC_VERTEX_SHADER( flesh_interior_blended_pass_vs20 );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		pShader->SetAmbientCubeDynamicStateVertexShader();
 
 		// Time % 1000
@@ -317,7 +317,7 @@ void DrawFleshInteriorBlendedPass( CBaseVSShader *pShader, IMaterialVar** params
 		pShader->BindTexture( SHADER_SAMPLER4, info.m_nFleshSubsurfaceTexture );
 		pShader->BindTexture( SHADER_SAMPLER5, info.m_nFleshCubeTexture );
 
-		// Set Pixel Shader Constants 
+		// Set Pixel Shader Constants
 
 		// Subsurface tint
 		pShaderAPI->SetPixelShaderConstant( 0, IS_PARAM_DEFINED( info.m_ncSubsurfaceTint ) ? params[info.m_ncSubsurfaceTint]->GetVecValue() : kDefaultSubsurfaceTint, 1 );

@@ -31,7 +31,7 @@ BEGIN_BYTESWAP_DATADESC( CaptionLookup_t )
 END_BYTESWAP_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Swap a compiled closecaption file 
+// Swap a compiled closecaption file
 //-----------------------------------------------------------------------------
 bool SwapClosecaptionFile( void *pData )
 {

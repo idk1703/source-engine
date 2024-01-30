@@ -271,7 +271,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 	vResult *= vCanvas;
 
-#endif	
+#endif
 
 	return FinalOutput( vResult, flFogFactor, 0, TONEMAP_SCALE_LINEAR, true, i.worldPos_projPosZ.w );
 }
@@ -379,7 +379,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 	flGray = pow( flGray, g_flGrayPower );
 	flGray = smoothstep( g_flGrayStep.x, g_flGrayStep.y, flGray );
-	
+
 	flGray = ceil( flGray * g_flLightMapGradients ) / g_flLightMapGradients;
 
 #if COLOR_BAR == 1
@@ -408,7 +408,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 	float flAmount;
 	flAmount = flDepth;
-	
+
 	flAmount = saturate( flDepth - g_flDoFStartDistance );
 	flAmount = pow( flAmount, g_flDoFPower );
 	flAmount *= g_flDoFMax;
@@ -437,7 +437,7 @@ float4 main( PS_INPUT i ) : COLOR
 
 //	return float4( vOffset.yyy, 1 );
 //	return float4( flDynamicOffset.xxx, 1.0 );
-	
+
 //	vOffset = ( vOffset - 0.5 );
 	vOffset = smoothstep( 0.1, 1.0, vOffset );
 	vOffset *= flDynamicOffset * g_flHeatHazeScale;

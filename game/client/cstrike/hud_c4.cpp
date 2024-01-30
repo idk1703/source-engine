@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@ public:
 
 	CHudC4( const char *name );
 
-	virtual bool ShouldDraw();	
+	virtual bool ShouldDraw();
 	virtual void Paint();
 	virtual void Init();
 
@@ -73,7 +73,7 @@ bool CHudC4::ShouldDraw()
 	{
 		pPlayer = ToCSPlayer( pPlayer->GetObserverTarget() );
 	}
-	
+
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Added base class call
@@ -125,4 +125,3 @@ void CHudC4::Paint()
 		}
 	}
 }
-

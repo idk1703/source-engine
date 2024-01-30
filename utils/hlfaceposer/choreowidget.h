@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -26,7 +26,7 @@ class CChoreoWidget
 {
 public:
 	// memory handling, uses calloc so members are zero'd out on instantiation
-    void					*operator new( size_t stAllocateBlock );
+	void					*operator new( size_t stAllocateBlock );
 	void					operator delete( void *pMem );
 
 							CChoreoWidget( CChoreoWidget *parent );

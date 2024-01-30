@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 class C_PlayerClassDefender : public C_PlayerClass
 {
-	
+
 	DECLARE_CLASS( C_PlayerClassDefender, C_PlayerClass );
 
 public:
@@ -26,7 +26,7 @@ public:
 	C_PlayerClassDefender( C_BaseTFPlayer *pPlayer );
 	virtual ~C_PlayerClassDefender();
 
-	PlayerClassDefenderData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassDefenderData_t *GetClassData( void ) { return &m_ClassData; }
 
 protected:
 

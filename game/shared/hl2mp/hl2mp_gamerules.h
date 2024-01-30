@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -48,7 +48,7 @@ public:
 class HL2MPViewVectors : public CViewVectors
 {
 public:
-	HL2MPViewVectors( 
+	HL2MPViewVectors(
 		Vector vView,
 		Vector vHullMin,
 		Vector vHullMax,
@@ -60,7 +60,7 @@ public:
 		Vector vDeadViewHeight,
 		Vector vCrouchTraceMin,
 		Vector vCrouchTraceMax ) :
-			CViewVectors( 
+			CViewVectors(
 				vView,
 				vHullMin,
 				vHullMax,
@@ -76,7 +76,7 @@ public:
 	}
 
 	Vector m_vCrouchTraceMin;
-	Vector m_vCrouchTraceMax;	
+	Vector m_vCrouchTraceMax;
 };
 
 class CHL2MPRules : public CTeamplayRules
@@ -92,7 +92,7 @@ public:
 
 	DECLARE_SERVERCLASS_NOBASE(); // This makes datatables able to access our private vars.
 #endif
-	
+
 	CHL2MPRules();
 	virtual ~CHL2MPRules();
 
@@ -120,7 +120,7 @@ public:
 	void CleanUpMap();
 	void CheckRestartGame();
 	void RestartGame();
-	
+
 #ifndef CLIENT_DLL
 	virtual Vector VecItemRespawnSpot( CItem *pItem );
 	virtual QAngle VecItemRespawnAngles( CItem *pItem );
@@ -142,14 +142,14 @@ public:
 
 	void PlayerKilled( CBasePlayer *pVictim, const CTakeDamageInfo &info );
 
-	
+
 	bool	IsTeamplay( void ) { return m_bTeamPlayEnabled;	}
 	void	CheckAllPlayersReady( void );
 
 	virtual bool IsConnectedUserInfoChangeAllowed( CBasePlayer *pPlayer );
-	
+
 private:
-	
+
 	CNetworkVar( bool, m_bTeamPlayEnabled );
 	CNetworkVar( float, m_flGameStartTime );
 	CUtlVector<EHANDLE> m_hRespawnableItemsAndWeapons;

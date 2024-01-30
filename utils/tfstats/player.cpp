@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,9 +23,9 @@ CPlayer::CPlayer()
 
 void CPlayer::nameFound(time_t t, string alias)
 {
-	if (aliases.atTime(t)!=alias) 
+	if (aliases.atTime(t)!=alias)
 	{
-		aliases.add(t,alias); 
+		aliases.add(t,alias);
 	}
 	name=aliases.favourite();
 }
@@ -36,7 +36,7 @@ time_t CPlayer::plr_per_team_data::timeOn()
 	{
 		logofftime=g_pMatchInfo->logCloseTime();
 	}
-	
+
 	return logofftime-logontime;
 	*/
 	return timeon;
@@ -47,7 +47,7 @@ time_t CPlayer::totalTimeOn()
 	{
 		logofftime=g_pMatchInfo->logCloseTime();
 	}
-	
+
 	return logofftime-logontime;
 }
 
@@ -69,28 +69,28 @@ string CPlayer::plr_per_team_data::faveWeapon()
 	if (faveweapon=="" && weaponKills.begin()!=weaponKills.end())
 	{
 		faveweapkills=0;
-		//noKills=false; 
-		
+		//noKills=false;
+
 		map<string,int>::iterator weapIt=weaponKills.begin();
 		string& fave=(string&) (*weapIt).first;
 		int faveKills=(*weapIt).second;
-		
+
 		for (weapIt;weapIt!=weaponKills.end();++weapIt)
 		{
 			const string& weapName=(*weapIt).first;
 			int kills=(*weapIt).second;
-			
+
 			if (kills < faveKills)
 				continue;
-			
+
 			fave=weapName;
 			faveKills=kills;
 		}
-		
+
 		faveweapkills=faveKills;
 		faveweapon=fave;
 	}
-	
+
 	return faveweapon;
 }
 
@@ -112,11 +112,11 @@ void CPlayer::merge()
 	perteam[ALL_TEAMS].teamkills=perteam[0].teamkills+perteam[1].teamkills+perteam[2].teamkills+perteam[3].teamkills;
 	perteam[ALL_TEAMS].teamkilled=perteam[0].teamkilled+perteam[1].teamkilled+perteam[2].teamkilled+perteam[3].teamkilled;
 	perteam[ALL_TEAMS].timeon=perteam[0].timeon+perteam[1].timeon+perteam[2].timeon+perteam[3].timeon;
-	
-	
+
+
 	for (int i=0;i<MAX_TEAMS;i++)
 	{
-		map<std::string,int>::iterator it; 
+		map<std::string,int>::iterator it;
 		for (it=perteam[i].weaponKills.begin();it!=perteam[i].weaponKills.end();++it)
 		{
 			string weapname=(*it).first;

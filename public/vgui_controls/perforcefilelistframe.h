@@ -42,7 +42,7 @@ class COperationFileListFrame : public vgui::Frame
 	DECLARE_CLASS_SIMPLE( COperationFileListFrame, vgui::Frame );
 
 public:
-	// NOTE: The dialog ID is used to allow dialogs to have different configurations saved 
+	// NOTE: The dialog ID is used to allow dialogs to have different configurations saved
 	COperationFileListFrame( vgui::Panel *pParent, const char *pTitle, const char *pColumnHeader, bool bShowDescription, bool bShowOkOnly = false, int nDialogID = 1 );
 	virtual ~COperationFileListFrame();
 
@@ -101,7 +101,7 @@ enum PerforceAction_t
 	PERFORCE_ACTION_FILE_SUBMIT,
 };
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Modal dialog for picker
 //-----------------------------------------------------------------------------
@@ -148,4 +148,3 @@ void ShowPerforceQuery( vgui::Panel *pParent, const char *pFileName, vgui::Panel
 
 
 #endif // PERFORCEFILELISTFRAME_H
-

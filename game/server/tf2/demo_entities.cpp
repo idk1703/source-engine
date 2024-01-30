@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -10,7 +10,7 @@
 #include "h_cycler.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CCycler_TF2Commando : public CCycler
 {
@@ -50,17 +50,17 @@ BEGIN_DATADESC( CCycler_TF2Commando )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCycler_TF2Commando::Spawn( void )
 {
 	if (GetTeamNumber() == 1)
 	{
-		GenericCyclerSpawn( "models/player/human_commando.mdl", Vector(-16, -16, 0), Vector(16, 16, 72) ); 
+		GenericCyclerSpawn( "models/player/human_commando.mdl", Vector(-16, -16, 0), Vector(16, 16, 72) );
 	}
 	else
 	{
-		GenericCyclerSpawn( "models/player/alien_commando.mdl", Vector(-16, -16, 0), Vector(16, 16, 72) ); 
+		GenericCyclerSpawn( "models/player/alien_commando.mdl", Vector(-16, -16, 0), Vector(16, 16, 72) );
 	}
 
 	m_bShieldActive = false;
@@ -69,7 +69,7 @@ void CCycler_TF2Commando::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCycler_TF2Commando::Think( void )
 {
@@ -120,4 +120,3 @@ void CCycler_TF2Commando::InputLowerShield( inputdata_t &inputdata )
 		m_flShieldLowerTime = gpGlobals->curtime;
 	}
 }
-

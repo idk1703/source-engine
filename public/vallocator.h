@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -41,7 +41,7 @@ extern VStdAllocator g_StdAllocator;
 
 // Use these to allocate classes through VAllocator.
 // Allocating arrays of classes is not supported.
-#define VNew(pAlloc)				new 
+#define VNew(pAlloc)				new
 #define VDelete(pAlloc, ptr)		delete ptr
 
 // Used internally.. just makes sure we call the right operator new.
@@ -81,4 +81,3 @@ inline void VAllocator_CallDestructors(T *pObjects, int count)
 }
 
 #endif
-

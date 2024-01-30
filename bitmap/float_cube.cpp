@@ -115,5 +115,3 @@ void FloatCubeMap_t::Resample( FloatCubeMap_t &out, float flPhongExponent )
 			}
 	}
 }
-
-						

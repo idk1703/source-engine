@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -390,7 +390,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CQuickListPanel::CQuickListPanel( vgui::Panel* pParent, const char *pElementName ) : BaseClass( pParent, pElementName )
 {
@@ -421,17 +421,17 @@ CQuickListPanel::CQuickListPanel( vgui::Panel* pParent, const char *pElementName
 	{
 		pPathID = "MOD";
 	}
-	
+
 	LoadControlSettings( "Servers/QuickListPanel.res", pPathID );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::ApplySchemeSettings(IScheme *pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	
+
 	if ( pScheme && m_pBGroundPanel )
 	{
 		m_pBGroundPanel->SetBgColor( pScheme->GetColor("QuickListBGDeselected", Color(255, 255, 255, 0 ) ) );
@@ -439,7 +439,7 @@ void CQuickListPanel::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetRefreshing( void )
 {
@@ -474,7 +474,7 @@ void CQuickListPanel::SetRefreshing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetMapName( const char *pMapName )
 {
@@ -488,7 +488,7 @@ void CQuickListPanel::SetMapName( const char *pMapName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetGameType( const char *pGameType )
 {
@@ -505,7 +505,7 @@ void CQuickListPanel::SetGameType( const char *pGameType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetServerInfo ( KeyValues *pKV, int iListID, int iTotalServers )
 {
@@ -551,7 +551,7 @@ void CQuickListPanel::SetServerInfo ( KeyValues *pKV, int iListID, int iTotalSer
 	g_pVGuiLocalize->ConvertANSIToUnicode( pKV->GetString( "players", " " ), playercount,  sizeof( playercount ) );
 
 	_snwprintf( players, ARRAYSIZE( players ), L"%ls %ls",  playercount, pwszPlayers );
-	
+
 	m_pPlayerCountLabel->SetText( players );
 	m_pPlayerCountLabel->SetVisible( true );
 
@@ -577,7 +577,7 @@ void CQuickListPanel::SetServerInfo ( KeyValues *pKV, int iListID, int iTotalSer
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CQuickListPanel::SetImage( const char *pMapName )
 {
@@ -606,7 +606,7 @@ void CQuickListPanel::SetImage( const char *pMapName )
 
 		m_pMapImage->SetImage ( imagename );
 		m_pMapImage->SetMouseInputEnabled( false );
-	}							
+	}
 }
 
 void CQuickListPanel::OnMousePressed( vgui::MouseCode code )
@@ -659,7 +659,7 @@ static CQuickplayWaitDialog *s_pQuickPlayWaitingDialog;
 class CQuickplayWaitDialog : public CGenericWaitingDialog, public ISteamMatchmakingServerListResponse, public ISteamMatchmakingPingResponse
 {
 	DECLARE_CLASS_SIMPLE( CQuickplayWaitDialog, CGenericWaitingDialog );
-public:	
+public:
 	CQuickplayWaitDialog( bool bFeelingLucky, const QuickplaySearchOptions &opt )
 		: CGenericWaitingDialog( NULL )
 		, m_options( opt )
@@ -687,7 +687,7 @@ public:
 
 		// Check the panel name since we are changing the resource
 		SetName("QuickPlayBusyDialog");
-		
+
 		Assert( s_pQuickPlayWaitingDialog == NULL );
 		s_pQuickPlayWaitingDialog = this;
 
@@ -1606,7 +1606,7 @@ protected:
 	{
 		// @note Tom Bui: this is to get around the linker error where we don't like strncpy in MatchMakingKeyValuePair_t's constructor!
 		int idx = vecServerFilters.AddToTail();
-		MatchMakingKeyValuePair_t &keyvalue = vecServerFilters[idx];	
+		MatchMakingKeyValuePair_t &keyvalue = vecServerFilters[idx];
 		Q_strncpy( keyvalue.m_szKey, pchKey, sizeof( keyvalue.m_szKey ) );
 		Q_strncpy( keyvalue.m_szValue, pchValue, sizeof( keyvalue.m_szValue ) );
 	}
@@ -1647,10 +1647,10 @@ protected:
 			AssertMsg( server.m_nAppID == 0, "Got back server with wrong APP ID?" );
 			return false;
 		}
-		
+
 		if ( server.m_bPassword )
 			return false;
-		
+
 		if ( GetUniverse() == k_EUniversePublic )
 		{
 			if ( server.m_bSecure == false )
@@ -1680,7 +1680,7 @@ protected:
 		}
 
 		if ( server.m_steamID.BGameServerAccount() == false )
-			return false;		
+			return false;
 
 		return true;
 	}
@@ -2111,7 +2111,7 @@ protected:
 class CStandaloneQuickplayMenu : public CQuickplayWaitDialog
 {
 	DECLARE_CLASS_SIMPLE( CStandaloneQuickplayMenu, CQuickplayWaitDialog );
-public:	
+public:
 	CStandaloneQuickplayMenu( bool bFeelingLucky, const QuickplaySearchOptions &opt )
 		: BaseClass( bFeelingLucky, opt )
 	{}
@@ -2175,7 +2175,7 @@ void CQuickplayPanelBase::ShowItemByIndex( int iItem )
 	m_iCurrentItem = iItem;
 
 	QuickplayItem &item = m_vecItems[ m_iCurrentItem ];
-	
+
 	if ( m_pGameModeInfoContainer )
 	{
 		m_pGameModeInfoContainer->SetDialogVariable( "gametype", g_pVGuiLocalize->Find( item.pTitle ) );
@@ -2199,7 +2199,7 @@ void CQuickplayPanelBase::ShowItemByIndex( int iItem )
 
 	if ( m_pGameModeCombo )
 		m_pGameModeCombo->SilentActivateItemByRow( iItem );
-		
+
 	WriteOptionCombosAndSummary();
 }
 
@@ -2462,7 +2462,7 @@ static void AppendOptionInfo( wchar_t *wszText, const char *pszLocToken )
 void CQuickplayPanelBase::WriteOptionCombosAndSummary()
 {
 	wchar_t wszSmmary[ kQuickplayOptionsSummaryLen ] = {};
-	
+
 	GetOptionsAndSummaryText( wszSmmary );
 
 	if ( m_pOptionsSummaryLabel )
@@ -2500,7 +2500,7 @@ void CQuickplayPanelBase::GetOptionsAndSummaryText( wchar_t *pwszSummary )
 				pOpt->m_vecRadioButtons[idxRadButton]->SilentSetSelected( pOpt->m_nChoice == idxRadButton );
 			}
 		}
-		
+
 		int nChoice = ( tf_quickplay_pref_beta_content.GetBool() ? 0 : pOpt->m_nChoice );
 		AppendOptionInfo( pwszSummary, pOpt->m_vecOptionSummaryNames[nChoice] );
 	}
@@ -2590,7 +2590,7 @@ void CQuickplayPanelBase::OnCommand( const char *pCommand )
 		tf_quickplay_pref_advanced_view.SetValue( !tf_quickplay_pref_advanced_view.GetBool() );
 		ShowSimplifiedOrAdvancedOptions();
 	}
-	else 
+	else
 	{
 		BaseClass::OnCommand( pCommand );
 	}
@@ -2607,7 +2607,7 @@ class CQuickplayDialog : public CQuickplayPanelBase
 {
 	DECLARE_CLASS_SIMPLE( CQuickplayDialog, CQuickplayPanelBase );
 public:
-	CQuickplayDialog( vgui::Panel *parent ) 
+	CQuickplayDialog( vgui::Panel *parent )
 		: CQuickplayPanelBase( parent, "QuickPlayDialog" )
 	{
 		m_pContainer = new vgui::EditablePanel( this, "Container" );
@@ -2651,10 +2651,10 @@ public:
 		vgui::surface()->GetWorkspaceBounds( x, y, ww, wt );
 		GetSize(wide, tall);
 		SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
-		
+
 		m_pMoreOptionsButton->SetVisible( !m_pBetaCheckButton->IsSelected() );
 		tf_quickplay_pref_beta_content.SetValue( m_pBetaCheckButton->IsSelected() ? 1 : 0 );
-		// @todo setup 
+		// @todo setup
 	}
 
 	virtual void Show()
@@ -2715,7 +2715,7 @@ public:
 
 			QuickplaySearchOptions opt;
 			opt.m_eSelectedGameType = m_vecItems[m_iCurrentItem].gameType;
-			opt.m_eServers = (QuickplaySearchOptions::EServers)( bBetaContent ? 
+			opt.m_eServers = (QuickplaySearchOptions::EServers)( bBetaContent ?
 #ifdef STAGING_ONLY
 				2 :
 #else
@@ -2754,7 +2754,7 @@ public:
 		{
 			m_pTauntsExplanationPopup->Popup();
 		}
-		else 
+		else
 		{
 			BaseClass::OnCommand( pCommand );
 		}
@@ -2775,7 +2775,7 @@ public:
 		{
 			OnCommand( "more_info" );
 		}
-		else if ( nButtonCode == KEY_XBUTTON_LEFT || 
+		else if ( nButtonCode == KEY_XBUTTON_LEFT ||
 				  nButtonCode == KEY_XSTICK1_LEFT ||
 				  nButtonCode == KEY_XSTICK2_LEFT ||
 				  nButtonCode == STEAMCONTROLLER_DPAD_LEFT ||
@@ -2783,7 +2783,7 @@ public:
 		{
 			OnCommand( "prevpage" );
 		}
-		else if ( nButtonCode == KEY_XBUTTON_RIGHT || 
+		else if ( nButtonCode == KEY_XBUTTON_RIGHT ||
 				  nButtonCode == KEY_XSTICK1_RIGHT ||
 				  nButtonCode == KEY_XSTICK2_RIGHT ||
 				  nButtonCode == STEAMCONTROLLER_DPAD_RIGHT ||
@@ -2821,7 +2821,7 @@ protected:
 		{
 			return item.pBetaImage;
 		}
-		
+
 		return item.pImage;
 	}
 
@@ -2998,7 +2998,7 @@ static void CL_OpenQuickplayDialogForMap( const CCommand &args )
 	opt.m_eBetaContent = QuickplaySearchOptions::EBetaContent::eBetaNo;
 	opt.m_strMapName = args.Arg(1); // Use the map name passed in
 	opt.m_eSelectedGameType =  kGameCategory_Quickplay;
-			
+
 	ShowWaitingDialog( new CStandaloneQuickplayMenu( false, opt ), NULL, true, true, 0.0f );
 }
 

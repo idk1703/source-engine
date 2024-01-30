@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -33,7 +33,7 @@ unsigned CFileTracker2::ThreadedProcessMD5Requests()
 
 		while ( m_PendingJobs.PopItem( &stuff ) )
 		{
-			tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ ); 
+			tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s", __FUNCTION__ );
 
 			MD5Context_t ctx;
 			memset( &ctx, 0, sizeof(MD5Context_t) );
@@ -61,7 +61,7 @@ unsigned CFileTracker2::ThreadedProcessMD5Requests()
 		}
 
 		{
-			tmZone( TELEMETRY_LEVEL0, TMZF_IDLE, "m_threadEventWorkToDo" ); 
+			tmZone( TELEMETRY_LEVEL0, TMZF_IDLE, "m_threadEventWorkToDo" );
 
 			m_threadEventWorkToDo.Wait( 1000 );
 		}
@@ -189,7 +189,7 @@ CFileTracker2::CFileTracker2( CBaseFileSystem *pFileSystem ):
 	m_treeTrackedVPKFiles( TrackedVPKFile_t::Less )
 {
 #if defined( DEDICATED )
-    Assert( 0 );
+	Assert( 0 );
 #endif
 
 	m_pFileSystem = pFileSystem;
@@ -424,15 +424,15 @@ void CFileTracker2::AddFileHashForVPKFile( int nPackFileNumber, int nFileFractio
 	m_treeTrackedVPKFiles.Insert( trackedVPKFile );
 
 	TrackedFile_t &trackedfile = m_treeAllOpenedFiles[ trackedVPKFile.m_idxAllOpenedFiles ];
-    // These set in IdxFileFromName:
-    //   trackedfile.m_crcIdentifier
-    //   trackedfile.m_filename
-    //   trackedfile.m_path
-    //   trackedfile.m_bPackOrVPKFile
-    //   trackedfile.m_nFileFraction
-    // Not set:
-    //   trackedfile.m_iLoadedSearchPathStoreId
-    //   trackedfile.m_bIgnoredForPureServer
+	// These set in IdxFileFromName:
+	//   trackedfile.m_crcIdentifier
+	//   trackedfile.m_filename
+	//   trackedfile.m_path
+	//   trackedfile.m_bPackOrVPKFile
+	//   trackedfile.m_nFileFraction
+	// Not set:
+	//   trackedfile.m_iLoadedSearchPathStoreId
+	//   trackedfile.m_bIgnoredForPureServer
 	trackedfile.m_bFileInVPK = false;
 	trackedfile.m_bPackOrVPKFile = true;
 	trackedfile.m_filehashFinal.m_cbFileLen = cbFileLen;
@@ -562,7 +562,7 @@ int CFileTracker2::ListOpenedFiles( bool bAllOpened, const char *pchFilenameFind
 			Q_strstr( file.m_filename, pchFilenameFind ) ||
 			Q_strstr( file.m_path, pchFilenameFind ) )
 		{
-			Msg( "%d %s %s ( %d, %d ) %d %d%s%s\n", 
+			Msg( "%d %s %s ( %d, %d ) %d %d%s%s\n",
 				count, file.m_path, file.m_filename, file.m_PackFileID, file.m_nPackFileNumber,
 				file.m_filehashFinal.m_cbFileLen, file.m_nFileFraction /*, file.m_crcIdentifier*/,
 				file.m_bFileInVPK ? " (invpk)" : "",

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -46,7 +46,7 @@ public:
 	virtual void WalkerThink();
 
 	// Returns the new local origin to set based on the walker's movement.
-	// This usually just asks for the movement from the animation, but some walkers may 
+	// This usually just asks for the movement from the animation, but some walkers may
 	// want to generate the motion in code.
 	virtual Vector GetWalkerLocalMovement();
 
@@ -84,7 +84,7 @@ public:
 public:
 
 	// This is a hack to prevent the strider from playing a lot of footstep sounds, until we figure out 9-way anim events
-	float m_flDontMakeSoundsUntil; 
+	float m_flDontMakeSoundsUntil;
 
 	// Last usercmd buttons.
 	int m_LastButtons;

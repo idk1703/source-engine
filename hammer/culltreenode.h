@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -32,7 +32,7 @@ class CCullTreeNode : public BoundBox
 		inline CCullTreeNode *GetCullTreeChild(int nChild) { return(m_Children[nChild]); }
 
 		void AddCullTreeChild(CCullTreeNode *pChild);
-		
+
 		//
 		// Objects.
 		//
@@ -61,4 +61,3 @@ class CCullTreeNode : public BoundBox
 		CUtlVector<CCullTreeNode*> m_Children;	// The child nodes. This is an octree.
 		CMapObjectList m_Objects;		// The objects contained in this node.
 };
-

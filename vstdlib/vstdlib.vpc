@@ -20,7 +20,7 @@ $Configuration
 		// or else it won't know what depends on this project.
 		$AdditionalOutputFiles		"$SRCDIR\lib\public\$(TargetName).lib"	[$X360]
 	}
-	
+
 	$Compiler
 	{
 		$PreprocessorDefinitions	"$BASE;VSTDLIB_DLL_EXPORT"
@@ -35,7 +35,7 @@ $Configuration
 		$ImportLibrary				"$LIBPUBLIC\$(TargetName).lib"	[$WINDOWS]
 
 		// 360 publishes the import library via a post build step
-		$ImportLibrary				"$(TargetDir)\$(TargetName).lib"		[$X360]	
+		$ImportLibrary				"$(TargetDir)\$(TargetName).lib"		[$X360]
 
 
 		// 360 will auto generate a def file for this import library
@@ -47,19 +47,19 @@ $Configuration
 		$AdditionalOptions			"$BASE /ignore:4217" [$WINDOWS]
 
 		$SystemLibraries            "iconv" [$OSXALL]
-		$SystemFrameworks			"CoreServices" [$OSXALL]																			
+		$SystemFrameworks			"CoreServices" [$OSXALL]
 		$GCC_ExtraLinkerFlags		"-all_load" [$OSXALL]
 
-        $ImportLibrary				"$LIBPUBLIC\$_IMPLIB_PREFIX$OUTBINNAME$_IMPLIB_EXT"	[$POSIX]
+		$ImportLibrary				"$LIBPUBLIC\$_IMPLIB_PREFIX$OUTBINNAME$_IMPLIB_EXT"	[$POSIX]
 		$OutputFile					"$(OBJ_DIR)/$_IMPLIB_PREFIX$OUTBINNAME$_IMPLIB_EXT" [$POSIX]
 	}
 
 	$PreLinkEvent [$WINDOWS]
-	{	
+	{
 		$CommandLine	"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $LIBPUBLIC\$(TargetName).lib $SRCDIR" "\n" \
 						"$BASE"
 	}
-	
+
 	$PreLinkEvent [$X360]
 	{
 		// Run a pre-link event to clean the .def file from the last link
@@ -74,7 +74,7 @@ $Configuration
 									"if exist $(TargetDir)$(TargetName).lib copy $(TargetDir)$(TargetName).lib $SRCDIR\lib\public\$(TargetName).lib" "\n" \
 									"$BASE"
 	}
-	
+
 	$General [$POSIX]
 	{
 		$GameOutputFile                                 "$OUTBINDIR/$_IMPLIB_DLL_PREFIX$OUTBINNAME$_DLL_EXT"
@@ -88,19 +88,19 @@ $Project "vstdlib"
 	$Folder	"Source Files"
 	{
 		$File	"xbox\___FirstModule.cpp"	[$X360]
-        $File "GetStackPtr64.masm" [$WIN64]
-        {
-            $Configuration
-            {   
-                $CustomBuildStep
-                {
-                    // General
-                    $CommandLine                "$QUOTE$(VCInstallDir)bin\x86_amd64\ml64.exe$QUOTE /nologo /c /Fo$QUOTE$(IntDir)\$(InputName).obj$QUOTE $QUOTE$(InputPath)$QUOTE"
-                    $Description                "Compiling GetStackPtr64.masm"
-                    $Outputs                    "$(IntDir)\$(InputName).obj"
-                }       
-            }           
-        }
+		$File "GetStackPtr64.masm" [$WIN64]
+		{
+			$Configuration
+			{
+				$CustomBuildStep
+				{
+					// General
+					$CommandLine                "$QUOTE$(VCInstallDir)bin\x86_amd64\ml64.exe$QUOTE /nologo /c /Fo$QUOTE$(IntDir)\$(InputName).obj$QUOTE $QUOTE$(InputPath)$QUOTE"
+					$Description                "Compiling GetStackPtr64.masm"
+					$Outputs                    "$(IntDir)\$(InputName).obj"
+				}
+			}
+		}
 		$File "coroutine_win64.masm" [$WIN64]
 		{
 			$Configuration
@@ -147,11 +147,10 @@ $Project "vstdlib"
 		$File	"$SRCDIR\public\vstdlib\vcover.h"
 		$File	"$SRCDIR\public\vstdlib\vstdlib.h"
 	}
-	
+
 	$Folder "Link Libraries"
 	{
 		-$ImpLib vstdlib
 		$Lib   "coroutine_osx"  [$OSXALL]
 	}
 }
-

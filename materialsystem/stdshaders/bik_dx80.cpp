@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -24,7 +24,7 @@ BEGIN_VS_SHADER( Bik_dx80, "Help for Bik_dx80" )
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 80 )
-		{	
+		{
 			return "wireframe";
 		}
 		return 0;

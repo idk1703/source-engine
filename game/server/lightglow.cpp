@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -27,7 +27,7 @@ public:
 	DECLARE_DATADESC();
 
 					CLightGlow();
-					
+
 	virtual void	Spawn( void );
 	virtual void	Activate( void );
 	virtual int		UpdateTransmitState( void );
@@ -78,7 +78,7 @@ BEGIN_DATADESC( CLightGlow )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Constructor 
+// Constructor
 //-----------------------------------------------------------------------------
 CLightGlow::CLightGlow( void )
 {
@@ -91,7 +91,7 @@ CLightGlow::CLightGlow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLightGlow::Spawn( void )
 {
@@ -111,7 +111,7 @@ int CLightGlow::UpdateTransmitState( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLightGlow::Activate()
 {

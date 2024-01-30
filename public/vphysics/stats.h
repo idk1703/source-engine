@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -15,7 +15,7 @@ struct physics_stats_t
 {
 	float	maxRescueSpeed;
 	float	maxSpeedGain;
-	
+
 	int		impactSysNum;
 	int		impactCounter;
 	int		impactSumSys;

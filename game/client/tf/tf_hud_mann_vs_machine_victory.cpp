@@ -109,10 +109,10 @@ CVictoryPanel::CVictoryPanel( Panel *parent, const char *pName )
 	, m_pHeaderContainer( NULL )
 	, m_pCreditContainerPanel( NULL )
 	, m_pTotalGameCreditSpendPanel( NULL )
-	, m_pTeamStatsContainerPanel( NULL) 
-	, m_pYourStatsContainerPanel( NULL) 
-	, m_pRatingContainerPanel( NULL) 
-	, m_pDoneButton( NULL) 
+	, m_pTeamStatsContainerPanel( NULL)
+	, m_pYourStatsContainerPanel( NULL)
+	, m_pRatingContainerPanel( NULL)
+	, m_pDoneButton( NULL)
 {
 	SetMouseInputEnabled( true );
 
@@ -149,7 +149,7 @@ void CVictoryPanel::ApplySchemeSettings( IScheme *pScheme )
 		m_pCreditContainerPanel->SetDialogVariable( "rating", "" );
 		m_pCreditContainerPanel->SetDialogVariable( "ratingshadow", "" );
 	}
-	
+
 	if ( m_pTotalGameCreditSpendPanel )
 	{
 		m_pTotalGameCreditSpendPanel->SetDialogVariable( "header", "" );
@@ -251,17 +251,17 @@ void CVictoryPanel::SetMapAndPopFile ( )
 
 	if ( GetItemSchema()->GetMvmMissions().IsValidIndex( iMissionIndex ) )
 	{
-		const MvMMission_t &mission = GetItemSchema()->GetMvmMissions()[ iMissionIndex ];	
-		g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, L"%s1 : %s2", 2, 
+		const MvMMission_t &mission = GetItemSchema()->GetMvmMissions()[ iMissionIndex ];
+		g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, L"%s1 : %s2", 2,
 			wszMapName, g_pVGuiLocalize->Find( mission.m_sDisplayName.Get() ) );
 	}
-	else 
+	else
 	{
 		//Popfile
 		wchar_t wszPopFileName[MAX_PATH];
 		g_pVGuiLocalize->ConvertANSIToUnicode( GetMapDisplayName(szTempName), wszPopFileName, sizeof(wszPopFileName) );
 
-		g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, L"%s1 : %s2", 2, 
+		g_pVGuiLocalize->ConstructString_safe( wszLocalizedSummary, L"%s1 : %s2", 2,
 			wszMapName, wszPopFileName );
 	}
 
@@ -372,7 +372,7 @@ bool CVictoryPanel::CheckState( float targetTime, float currentTime, int nextSta
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVictoryPanel::RatingLabelUpdate( void )
 {
@@ -380,13 +380,13 @@ void CVictoryPanel::RatingLabelUpdate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVictoryPanel::RatingScoreUpdate( )
 {
 	//calc a score
 	const char* pletterScore = "F";
-	
+
 	float fPercent = (float)m_nCreditsCollected / (float)(m_nCreditsCollected + m_nCreditsMissed);
 
 	if ( fPercent >= 1.0 )
@@ -439,7 +439,7 @@ void CMvMVictoryMannUpLoot::SetEconItem ( CEconItem *econItem )
 		m_pItemModelPanel->SetEconItem( econItem );
 		m_pItemModelPanel->SetVisible( true );
 	}
-	else 
+	else
 	{
 		HideEconItem();
 	}
@@ -708,7 +708,7 @@ void CMvMVictoryMannUpEntry::UpdatePlayerData()
 			pLootItem->SetEconItem( pEconItem );
 			pLootItem->m_eReason = item.grant_reason();
 		}
-		else 
+		else
 		{
 			delete pEconItem;
 		}
@@ -801,7 +801,7 @@ void CMvMVictoryMannUpEntry::UpdatePlayerData()
 
 #ifdef USE_MVM_TOUR
 //-----------------------------------------------------------------------------
-void CMvMVictoryMannUpEntry::SetPlayerData( const CMsgMvMVictoryInfo_Player& player, int nMissionCount ) 
+void CMvMVictoryMannUpEntry::SetPlayerData( const CMsgMvMVictoryInfo_Player& player, int nMissionCount )
 {
 	m_nChallengeCount = nMissionCount;
 	m_playerData = player;
@@ -811,7 +811,7 @@ void CMvMVictoryMannUpEntry::SetPlayerData( const CMsgMvMVictoryInfo_Player& pla
 }
 #else // new mm
 //-----------------------------------------------------------------------------
-void CMvMVictoryMannUpEntry::SetPlayerData( const CMsgMvMVictoryInfo_Player& player, int nMissionIndex ) 
+void CMvMVictoryMannUpEntry::SetPlayerData( const CMsgMvMVictoryInfo_Player& player, int nMissionIndex )
 {
 	m_nMissionIndex = nMissionIndex;
 	m_playerData = player;
@@ -863,7 +863,7 @@ bool CMvMVictoryMannUpEntry::AnimateProgressBar( void )
 	{
 		m_flPBarPreviousTime = gpGlobals->curtime;
 	}
-	
+
 	m_flPBarCurrTime += gpGlobals->curtime - m_flPBarPreviousTime;
 	m_flPBarPreviousTime = gpGlobals->curtime;
 
@@ -876,7 +876,7 @@ bool CMvMVictoryMannUpEntry::AnimateProgressBar( void )
 
 void CMvMVictoryMannUpEntry::SetBadgeProgressBarProgress( float flPercent )
 {
-	int nWidth = m_iProgressWidthStart;	
+	int nWidth = m_iProgressWidthStart;
 	nWidth += ((float)m_iProgressWidthEnd - (float)m_iProgressWidthStart) * flPercent;
 	m_pProgressBarFGAnim->SetWide(nWidth);
 }
@@ -956,10 +956,10 @@ void CMvMVictoryMannUpEntry::PerformLayout()
 					pItemPanel->GetPos( x, y );
 					pItemPanel->m_pUnopenedPanel->SetPos( x - nXoffset, y - nYoffset );
 
-		
+
 					// Update unopened panel's image
 					pItemPanel->m_pUnopenedPanel->SetImage( CFmtStr( "../backpack/player/items/crafting/prize_crate_%d", RandomInt(1,5) ) );
-					
+
 				}
 			}
 		}
@@ -1143,7 +1143,7 @@ bool CMvMVictoryMannUpEntry::AnimateLoot_Internal( CTFParticlePanel *pParticlePa
 					engine->ServerCmd( "loot_response rare" );
 				}
 			}
-			
+
 			break;
 		}
 	case 2:
@@ -1266,7 +1266,7 @@ void CMvMVictoryMannUpEntry::CheckBadgeLevel( const CMsgMvMVictoryInfo_Player& p
 	{
 		m_iProgressWidthEnd = m_pProgressBarBG->GetWide() * (float)( (float)count / (float)m_nChallengeCount );
 		m_pProgressBarFGStatic->SetWide( m_iProgressWidthEnd );
-		
+
 		m_pProgressCheckOn->SetVisible( false );
 		m_pProgressBarFGAnim->SetVisible( false );
 	}
@@ -1297,7 +1297,7 @@ void CMvMVictoryMannUpEntry::CheckBadgeLevel( const CMsgMvMVictoryInfo_Player& p
 	{
 		m_iProgressWidthEnd = m_pProgressBarBG->GetWide() * ( (float)player.badge_points() / (float)k_unMvMMaxPointsPerBadgeLevel );
 		m_pProgressBarFGStatic->SetWide( m_iProgressWidthEnd );
-		
+
 		m_pProgressCheckOn->SetVisible( false );
 		m_pProgressBarFGAnim->SetVisible( false );
 	}
@@ -1309,7 +1309,7 @@ void CMvMVictoryMannUpEntry::CheckBadgeLevel( const CMsgMvMVictoryInfo_Player& p
 }
 
 //-----------------------------------------------------------------------------
-void CMvMVictoryMannUpEntry::ClearEconItems() 
+void CMvMVictoryMannUpEntry::ClearEconItems()
 {
 	FOR_EACH_VEC ( m_vecLootPanels, i )
 	{
@@ -1538,7 +1538,7 @@ void CMvMVictoryMannUpPanel::ApplySchemeSettings( IScheme *pScheme )
 	m_pDoneButton->AddActionSignalTarget( GetParent() );
 
 	vgui::EditablePanel *pContainer = dynamic_cast<vgui::EditablePanel*>( FindChildByName("MainPanelContainer") );
-	
+
 	m_pMouseOverItemPanel->SetBorder( pScheme->GetBorder("LoadoutItemPopupBorder") );
 
 	m_vecTabs.Purge();
@@ -1582,7 +1582,7 @@ void CMvMVictoryMannUpPanel::OnTick( void )
 	}
 
 	UpdateHighlight();
-	
+
 	// Still animating
 	if ( !m_bAnimationComplete )
 	{
@@ -1612,7 +1612,7 @@ void CMvMVictoryMannUpPanel::OnTick( void )
 		{
 			bBarComplete = m_PlayerEntryPanels[i]->AnimateProgressBar();
 		}
-	
+
 		// Animate loot
 		if ( m_iMannUpLootIndex < MVM_PLAYER_COUNT )
 		{
@@ -1637,7 +1637,7 @@ void CMvMVictoryMannUpPanel::OnTick( void )
 		{
 			bLootComplete = true;
 		}
-		
+
 		// The bar and the loot must be complete to be considered totally complete
 		m_bAnimationComplete = bBarComplete && bLootComplete;
 	}
@@ -1650,7 +1650,7 @@ void CMvMVictoryMannUpPanel::SetVisible( bool bState )
 	//int iRenderGroup = gHUD.LookupRenderGroupIndexByName( "global" );
 
 	if ( bState )
-	{		
+	{
 		// Hide all other UI
 		//gHUD.LockRenderGroup( iRenderGroup );
 	}
@@ -1819,7 +1819,7 @@ void CMvMVictoryMannUpPanel::SetTabActive( int nIndex )
 	FOR_EACH_VEC( m_PlayerEntryPanels, i )
 	{
 		m_PlayerEntryPanels[i]->SetActive( i == nIndex );
-		
+
 		if ( i < m_vecTabs.Count() )
 		{
 			m_vecTabs[i]->SetSelected( i == nIndex );
@@ -1838,7 +1838,7 @@ void CMvMVictoryMannUpPanel::OnCommand( const char *command )
 		{
 			SetTabActive( nIndex );
 		}
-		
+
 	}
 
 	BaseClass::OnCommand( command );
@@ -1853,7 +1853,7 @@ CMvMVictoryPanelContainer::CMvMVictoryPanelContainer( Panel *parent, const char 
 	: vgui::EditablePanel( parent, pName )
 {
 	SetMouseInputEnabled( true );
-	
+
 	m_pVictoryPanelNormal = new CVictoryPanel( this, "VictoryPanelNormal" );
 	m_pVictoryPanelMannUp = new CMvMVictoryMannUpPanel( this, "VictoryPanelMannUp" );
 	m_pVictoryPanelMannUp->ClearData();
@@ -1878,7 +1878,7 @@ void CMvMVictoryPanelContainer::FireGameEvent( IGameEvent * event )
 
 //-----------------------------------------------------------------------------
 void CMvMVictoryPanelContainer::OnTick( void )
-{	
+{
 	if ( !IsVisible() )
 		return;
 
@@ -2010,7 +2010,7 @@ static void fake_mvm_victory_f()
 	for ( int i = 1 ; i <= gpGlobals->maxClients ; i++ )
 	{
 		CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
-		
+
 		if ( pPlayer && pPlayer->GetTeamNumber() == TF_TEAM_RED && pPlayer->GetSteamID( &steamID ) )
 		{
 			CMsgMvMVictoryInfo_Player *pVictoryMsgPlayer = msgVictoryInfo.add_players();

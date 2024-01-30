@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -181,7 +181,7 @@ void CClientState::PacketEnd()
 
 	// Play any sounds we received this packet
 	CL_DispatchSounds();
-	
+
 	// Did we get any messages this tick (i.e., did we call PreEntityPacketReceived)?
 	if ( GetServerTickCount() != m_nDeltaTick )
 		return;
@@ -191,15 +191,15 @@ void CClientState::PacketEnd()
 
 //	COM_Log( "cl.log", "Server ack'd %i commands this frame\n", commands_acknowledged );
 
-	//Msg( "%i/%i CL_PostReadMessages:  last ack %i most recent %i acked %i commands\n", 
+	//Msg( "%i/%i CL_PostReadMessages:  last ack %i most recent %i acked %i commands\n",
 	//	host_framecount, cl.tickcount,
-	//	cl.last_command_ack, 
+	//	cl.last_command_ack,
 	//	cl.netchan->outgoing_sequence - 1,
 	//	commands_acknowledged );
 
 	// Highest command parsed from messages
 	last_command_ack = command_ack;
-	
+
 	// Let prediction copy off pristine data and report any errors, etc.
 	g_pClientSidePrediction->PostNetworkDataReceived( commands_acknowledged );
 
@@ -238,7 +238,7 @@ void CClientState::Disconnect( const char *pszReason, bool bShowMainMenu )
 #endif
 
 	S_StopAllSounds( true );
-	
+
 	R_DecalTermAll();
 
 	if ( m_nMaxClients > 1 )
@@ -257,7 +257,7 @@ void CClientState::Disconnect( const char *pszReason, bool bShowMainMenu )
 	CL_HTTPStop_f();
 #endif
 
-	// stop loading progress bar 
+	// stop loading progress bar
 	if (bShowMainMenu)
 	{
 		SCR_EndLoadingPlaque();
@@ -297,7 +297,7 @@ bool CClientState::ProcessTick( NET_Tick *msg )
 	m_flLastServerTickTime = tick * host_state.interval_per_tick;
 
 	// Use the server tick while reading network data (used for interpolation samples, etc).
-	g_ClientGlobalVariables.tickcount = tick;	
+	g_ClientGlobalVariables.tickcount = tick;
 	g_ClientGlobalVariables.curtime = tick * host_state.interval_per_tick;
 	g_ClientGlobalVariables.frametime = (tick - oldtickcount) * host_state.interval_per_tick;	// We used to call GetFrameTime() here, but 'insimulation' is always
 																								// true so we have this code right in here to keep it simple.
@@ -327,7 +327,7 @@ bool CClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 	{
 		// Because a server doesn't run during
 		// demoplayback, but the decal system relies on this...
-		m_nServerCount = gHostSpawnCount;    
+		m_nServerCount = gHostSpawnCount;
 	}
 	else
 	{
@@ -337,7 +337,7 @@ bool CClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 	}
 #endif
 	// is server a HLTV proxy ?
-	ishltv = msg->m_bIsHLTV;		
+	ishltv = msg->m_bIsHLTV;
 
 #if defined( REPLAY_ENABLED )
 	// is server a replay proxy ?
@@ -349,7 +349,7 @@ bool CClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 	V_memcpy( serverMD5.bits, msg->m_nMapMD5.bits, MD5_DIGEST_LENGTH );
 
 	// Multiplayer game?
-	if ( m_nMaxClients > 1 )	
+	if ( m_nMaxClients > 1 )
 	{
 		if ( mp_decals.GetInt() < r_decals.GetInt() )
 		{
@@ -370,12 +370,12 @@ bool CClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 #endif
 
 	CL_ReallocateDynamicData( m_nMaxClients );
-	
+
 	if ( sv.IsPaused() )
 	{
 		if ( msg->m_fTickInterval != host_state.interval_per_tick )
 		{
-			Host_Error( "Expecting interval_per_tick %f, got %f\n", 
+			Host_Error( "Expecting interval_per_tick %f, got %f\n",
 				host_state.interval_per_tick, msg->m_fTickInterval );
 			return false;
 		}
@@ -393,7 +393,7 @@ bool CClientState::ProcessServerInfo( SVC_ServerInfo *msg )
 
 
 	gHostSpawnCount = m_nServerCount;
-	
+
 	videomode->MarkClientViewRectDirty();	// leave intermission full screen
 	return true;
 }
@@ -413,7 +413,7 @@ bool CClientState::ProcessClassInfo( SVC_ClassInfo *msg )
 			DataTable_CreateClientClassInfosFromServerClasses( this );
 
 			// store the current data tables in demo file to make sure
-			// they are the same during playback 
+			// they are the same during playback
 #ifndef _XBOX
 			demorecorder->RecordServerClasses( serverGameDLL->GetAllServerClasses() );
 #endif
@@ -425,7 +425,7 @@ bool CClientState::ProcessClassInfo( SVC_ClassInfo *msg )
 	{
 		CBaseClientState::ProcessClassInfo( msg );
 	}
-	
+
 #ifdef DEDICATED
 	bool bAllowMismatches = false;
 #else
@@ -500,7 +500,7 @@ bool CClientState::ProcessVoiceData( SVC_VoiceData *msg )
 #if !defined( NO_VOICE )//#ifndef _XBOX
 	int iEntity = msg->m_nFromClient + 1;
 	if ( iEntity == (m_nPlayerSlot + 1) )
-	{ 
+	{
 		Voice_LocalPlayerTalkingAck();
 	}
 
@@ -545,7 +545,7 @@ bool CClientState::ProcessVoiceData( SVC_VoiceData *msg )
 			// If they used -nosound, then it's not a problem.
 			if ( S_IsInitted() )
 				ConDMsg("ProcessVoiceData: Voice_AssignChannel failed for client %d!\n", iEntity-1);
-			
+
 			return true;
 		}
 	}
@@ -574,7 +574,7 @@ void CClientState::ProcessSoundsWithProtoVersion( SVC_Sounds *msg, CUtlVector< S
 	// Max is 32 in multiplayer and 255 in singleplayer
 	// Reserve this memory up front so it doesn't realloc under pDeltaSound pointing at it
 	sounds.EnsureCapacity( 256 );
-	
+
 	for ( int i = 0; i < msg->m_nNumSounds; i++ )
 	{
 		int nSound = sounds.AddToTail();
@@ -594,7 +594,7 @@ void CClientState::ProcessSoundsWithProtoVersion( SVC_Sounds *msg, CUtlVector< S
 	}
 }
 
-bool CClientState::ProcessSounds( SVC_Sounds *msg )	
+bool CClientState::ProcessSounds( SVC_Sounds *msg )
 {
 	if ( msg->m_DataIn.IsOverflowed() )
 	{
@@ -615,7 +615,7 @@ bool CClientState::ProcessSounds( SVC_Sounds *msg )
 	{
 		// The number of bits read is not what we expect!
 		sounds.RemoveAll();
-		
+
 		int nFallbackProtocol = 0;
 
 		// If the demo file thinks it's version 18 or 19, it might actually be the other.
@@ -648,7 +648,7 @@ bool CClientState::ProcessSounds( SVC_Sounds *msg )
 		// Now that we know the bits were read correctly, add all the sounds
 		for ( int i = 0; i < sounds.Count(); ++i )
 		{
-			// Add all received sounds to sorted queue (sounds may arrive in multiple messages), 
+			// Add all received sounds to sorted queue (sounds may arrive in multiple messages),
 			//  will be processed after all packets have been completely parsed
 			CL_AddSound( sounds[ i ] );
 		}
@@ -732,23 +732,23 @@ bool CClientState::ProcessBSPDecal( SVC_BSPDecal *msg )
 			matname = mat->GetName();
 		}
 
-		Warning( "Warning! Static BSP decal (%s), on NULL model index %i for entity index %i.\n", 
+		Warning( "Warning! Static BSP decal (%s), on NULL model index %i for entity index %i.\n",
 			matname,
-			msg->m_nModelIndex, 
+			msg->m_nModelIndex,
 			msg->m_nEntityIndex );
 		return true;
 	}
 
 	if (r_decals.GetInt())
 	{
-		g_pEfx->DecalShoot( 
-			msg->m_nDecalTextureIndex, 
-			msg->m_nEntityIndex, 
-			model, 
-			vec3_origin, 
+		g_pEfx->DecalShoot(
+			msg->m_nDecalTextureIndex,
+			msg->m_nEntityIndex,
+			model,
+			vec3_origin,
 			vec3_angle,
-			msg->m_Pos, 
-			NULL, 
+			msg->m_Pos,
+			NULL,
 			msg->m_bLowPriority ? 0 : FDECAL_PERMANENT );
 	}
 
@@ -814,7 +814,7 @@ bool CClientState::ProcessEntityMessage(SVC_EntityMessage *msg)
 		return true;
 	}
 
-	// route to entity 
+	// route to entity
 	MDLCACHE_CRITICAL_SECTION_( g_pMDLCache );
 
 	// buffer for incoming user message
@@ -834,7 +834,7 @@ bool CClientState::ProcessPacketEntities( SVC_PacketEntities *msg )
 	if ( !msg->m_bIsDelta )
 	{
 		// Delta too old or is initial message
-#ifndef _XBOX			
+#ifndef _XBOX
 		// we can start recording now that we've received an uncompressed packet
 		demorecorder->SetSignonState( SIGNONSTATE_FULL );
 #endif
@@ -856,14 +856,14 @@ bool CClientState::ProcessPacketEntities( SVC_PacketEntities *msg )
 		// otherwise, we're about to be told exactly what the state of everything is--so skip it.
 		CL_PreprocessEntities(); // setup client prediction
 	}
-	
+
 	TRACE_PACKET(( "CL Receive (%d <-%d)\n", m_nCurrentSequence, msg->m_nDeltaFrom ));
 	TRACE_PACKET(( "CL Num Ents (%d)\n", msg->m_nUpdatedEntries ));
 
 	if ( g_pLocalNetworkBackdoor )
 	{
 		if ( m_nSignonState == SIGNONSTATE_SPAWN  )
-		{	
+		{
 			// We are done with signon sequence.
 			SetSignonState( SIGNONSTATE_FULL, m_nServerCount );
 		}
@@ -872,7 +872,7 @@ bool CClientState::ProcessPacketEntities( SVC_PacketEntities *msg )
 		m_nDeltaTick = GetServerTickCount();
 		return true;
 	}
-	
+
 	if ( !CL_ProcessPacketEntities ( msg ) )
 		return false;
 
@@ -919,7 +919,7 @@ bool CClientState::ProcessTempEntities( SVC_TempEntities *msg )
 	ALIGN4 unsigned char data[CEventInfo::MAX_EVENT_DATA] ALIGN4_POST;
 	bf_write toBuf( data, sizeof(data) );
 	CEventInfo *ei = NULL;
-	
+
 	for (int i = 0; i < msg->m_nNumEntries; i++ )
 	{
 		float delay = 0.0f;
@@ -935,10 +935,10 @@ bool CClientState::ProcessTempEntities( SVC_TempEntities *msg )
 		{
 			from = NULL; // full update
 
-			classID = buffer.ReadUBitLong( m_nServerClassBits ); // classID 
-		
+			classID = buffer.ReadUBitLong( m_nServerClassBits ); // classID
+
 			// Look up the client class, etc.
-	
+
 			// Match the server classes to the client classes.
 			pServerClass = m_pServerClasses ? &m_pServerClasses[ classID - 1 ] : NULL;
 
@@ -950,7 +950,7 @@ bool CClientState::ProcessTempEntities( SVC_TempEntities *msg )
 
 			// See if the client .dll has a handler for this class
 			pClientClass = FindClientClass( pServerClass->m_ClassName );
-		
+
 			if ( !pClientClass || !pClientClass->m_pRecvTable )
 			{
 				DevMsg("CL_QueueEvent: missing client receive table for %s.\n", pServerClass->m_ClassName );
@@ -965,7 +965,7 @@ bool CClientState::ProcessTempEntities( SVC_TempEntities *msg )
 
 			unsigned int buffer_size = PAD_NUMBER( Bits2Bytes( ei->bits ), 4 );
 			bf_read fromBuf( ei->pData, buffer_size );
-		
+
 			RecvTable_MergeDeltas( pClientClass->m_pRecvTable, &fromBuf, &buffer, &toBuf );
 		}
 
@@ -975,7 +975,7 @@ bool CClientState::ProcessTempEntities( SVC_TempEntities *msg )
 		Assert( ei );
 
 		int size = Bits2Bytes(toBuf.GetNumBitsWritten() );
-		
+
 		ei->classID			= classID;
 		ei->fire_delay		= fire_time + delay;
 		ei->flags			= flags;

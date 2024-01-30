@@ -17,7 +17,7 @@
 #include "SplinePatch.h"
 
 //-----------------------------------------------------------------------------
-// Shield: 
+// Shield:
 //-----------------------------------------------------------------------------
 class C_Shield : public C_BaseEntity
 {
@@ -71,14 +71,14 @@ public:
 	float	GetPowerLevel( void ) { return m_flPowerLevel; }
 
 	bool	IsEMPed() const;
-	void	SetEMPed( bool bIsEmped ); 
+	void	SetEMPed( bool bIsEmped );
 
 protected:
 	//
 	// Inheriting classes must implement these methods!!!
 	//
 
-	// Return true if the panel is active 
+	// Return true if the panel is active
 	virtual bool IsPanelActive( int x, int y )		{ assert(0); return false; }
 
 	// Gets at the control point data; who knows how it was made?
@@ -99,7 +99,7 @@ private:
 protected:
 	// Used to fade out the shield
 	float m_FadeValue;
-	
+
 	// Used to make the shield more or less curvy
 	float m_CurveValue;
 
@@ -133,7 +133,7 @@ private:
 	int		m_SubdivisionCount;
 	float	m_InvSubdivisionCount;
 
-	// Shield powerlevel 
+	// Shield powerlevel
 	float	m_flPowerLevel;
 
 	// Texture animation
@@ -170,24 +170,24 @@ private:
 //-----------------------------------------------------------------------------
 // Inline methods
 //-----------------------------------------------------------------------------
-inline int C_Shield::Width() const	
-{ 
-	return m_SplinePatch.Width(); 
+inline int C_Shield::Width() const
+{
+	return m_SplinePatch.Width();
 }
 
-inline int C_Shield::Height() const	
-{ 
-	return m_SplinePatch.Height(); 
+inline int C_Shield::Height() const
+{
+	return m_SplinePatch.Height();
 }
 
-inline bool C_Shield::IsEMPed() const 
-{ 
-	return m_bIsEMPed; 
+inline bool C_Shield::IsEMPed() const
+{
+	return m_bIsEMPed;
 }
 
-inline void C_Shield::SetEMPed( bool bIsEmped ) 
-{ 
-	m_bIsEMPed = bIsEmped; 
+inline void C_Shield::SetEMPed( bool bIsEmped )
+{
+	m_bIsEMPed = bIsEmped;
 }
 
 

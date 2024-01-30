@@ -29,9 +29,9 @@ bool ShouldUseMatchHUD();
 DECLARE_BUILD_FACTORY( CTFProgressBar );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFProgressBar::CTFProgressBar( Panel *parent, const char *name ) 
+CTFProgressBar::CTFProgressBar( Panel *parent, const char *name )
 	: ImagePanel( parent, name )
 {
 	m_flPercent = 0.0f;
@@ -39,13 +39,13 @@ CTFProgressBar::CTFProgressBar( Panel *parent, const char *name )
 	m_iTexture = surface()->DrawGetTextureId( "hud/objectives_timepanel_progressbar" );
 	if ( m_iTexture == -1 ) // we didn't find it, so create a new one
 	{
-		m_iTexture = surface()->CreateNewTextureID();	
+		m_iTexture = surface()->CreateNewTextureID();
 		surface()->DrawSetTextureFile( m_iTexture, "hud/objectives_timepanel_progressbar", true, false );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFProgressBar::Paint()
 {
@@ -58,7 +58,7 @@ void CTFProgressBar::Paint()
 	Vector2D uv22( uv2, uv2 );
 	Vector2D uv12( uv1, uv2 );
 
-	Vertex_t verts[4];	
+	Vertex_t verts[4];
 	verts[0].Init( Vector2D( 0, 0 ), uv11 );
 	verts[1].Init( Vector2D( wide, 0 ), uv21 );
 	verts[2].Init( Vector2D( wide, tall ), uv22 );
@@ -285,7 +285,7 @@ void CTFProgressBar::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudTimeStatus::CTFHudTimeStatus( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -322,7 +322,7 @@ CTFHudTimeStatus::CTFHudTimeStatus( Panel *parent, const char *name ) : Editable
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::SetTeamBackground( void )
 {
@@ -356,7 +356,7 @@ void CTFHudTimeStatus::SetTeamBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::FireGameEvent( IGameEvent *event )
 {
@@ -385,7 +385,7 @@ void CTFHudTimeStatus::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::SetTimeAdded( int iIndex, int nSeconds )
 {
@@ -407,7 +407,7 @@ void CTFHudTimeStatus::SetTimeAdded( int iIndex, int nSeconds )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::CheckClockLabelLength( CExLabel *pLabel, Panel *pBG )
 {
@@ -422,7 +422,7 @@ void CTFHudTimeStatus::CheckClockLabelLength( CExLabel *pLabel, Panel *pBG )
 	{
 		int xStart, yStart, wideStart, tallStart;
 		pLabel->GetBounds( xStart, yStart, wideStart, tallStart );
-		
+
 		int newXPos = xStart + ( wideStart / 2.0f ) - ( textWide / 2.0f );
 		pLabel->SetBounds(  newXPos, yStart, textWide, tallStart );
 	}
@@ -435,7 +435,7 @@ void CTFHudTimeStatus::CheckClockLabelLength( CExLabel *pLabel, Panel *pBG )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::SetExtraTimePanels()
 {
@@ -446,29 +446,29 @@ void CTFHudTimeStatus::SetExtraTimePanels()
 
 	if ( pTimer && pTimer->IsStopWatchTimer() == true )
 	{
-		if( m_pTimerBG ) 
+		if( m_pTimerBG )
 			m_pTimerBG->SetVisible( false );
-		if( m_pProgressBar ) 
+		if( m_pProgressBar )
 			m_pProgressBar->SetVisible( false );
-		if( m_pWaitingForPlayersLabel ) 
+		if( m_pWaitingForPlayersLabel )
 			m_pWaitingForPlayersLabel->SetVisible( false );
-		if( m_pWaitingForPlayersBG ) 
+		if( m_pWaitingForPlayersBG )
 			m_pWaitingForPlayersBG->SetVisible( false );
-		if( m_pOvertimeLabel ) 
+		if( m_pOvertimeLabel )
 			m_pOvertimeLabel->SetVisible( false );
-		if( m_pOvertimeBG ) 
+		if( m_pOvertimeBG )
 			m_pOvertimeBG->SetVisible( false );
-		if( m_pSetupLabel ) 
+		if( m_pSetupLabel )
 			m_pSetupLabel->SetVisible( false );
-		if( m_pSetupBG ) 
+		if( m_pSetupBG )
 			m_pSetupBG->SetVisible( false );
 		if( m_pSuddenDeathLabel )
 			m_pSuddenDeathLabel->SetVisible( false );
-		if( m_pSuddenDeathBG ) 
+		if( m_pSuddenDeathBG )
 			m_pSuddenDeathBG->SetVisible( false );
-		if( m_pServerTimeLabel ) 
+		if( m_pServerTimeLabel )
 			m_pServerTimeLabel->SetVisible( false );
-		if ( m_pServerTimeLabelBG ) 
+		if ( m_pServerTimeLabelBG )
 			m_pServerTimeLabelBG->SetVisible( false );
 		return;
 	}
@@ -602,7 +602,7 @@ void CTFHudTimeStatus::SetExtraTimePanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::Reset()
 {
@@ -617,7 +617,7 @@ void CTFHudTimeStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -670,7 +670,7 @@ void CTFHudTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudTimeStatus::OnThink()
 {
@@ -686,7 +686,7 @@ void CTFHudTimeStatus::OnThink()
 				InvalidateLayout( false, true );
 			}
 		}
-		
+
 		// get the time remaining (in seconds)
 		if ( pTimer )
 		{
@@ -720,12 +720,12 @@ void CTFHudTimeStatus::OnThink()
 				{
 					nMinutes = nTimeToDisplay / 60;
 					nSeconds = nTimeToDisplay % 60;
-				}				
+				}
 
 				Q_snprintf( temp, sizeof( temp ), "%d:%02d", nMinutes, nSeconds );
 				m_pTimeValue->SetText( temp );
 			}
-	
+
 			// let the progress bar know the percentage of time that's passed ( 0.0 -> 1.0 )
 			if ( m_pProgressBar && m_pProgressBar->IsVisible() )
 			{
@@ -733,7 +733,7 @@ void CTFHudTimeStatus::OnThink()
 				{
 					m_pProgressBar->SetPercentage( 0 );
 				}
-				else 
+				else
 				{
 					m_pProgressBar->SetPercentage( ( (float)nTotalTime - nTimeRemaining ) / (float)nTotalTime );
 				}
@@ -744,13 +744,13 @@ void CTFHudTimeStatus::OnThink()
 			{
 				int nServerTimeLimit = mp_timelimit.GetInt() * 60;
 
-				bool bDisplayServerTimerEnabled = tf_hud_show_servertimelimit.GetInt() && 
-												  TFGameRules() && 
+				bool bDisplayServerTimerEnabled = tf_hud_show_servertimelimit.GetInt() &&
+												  TFGameRules() &&
 												  !TFGameRules()->InSetup() &&
 												  !TFGameRules()->IsInWaitingForPlayers() &&
 												  pTimer->IsRoundMaxTimerSet() &&
 												  nServerTimeLimit;
-				
+
 				if ( m_pServerTimeLabel->IsVisible() != bDisplayServerTimerEnabled )
 				{
 					m_pServerTimeLabel->SetVisible( bDisplayServerTimerEnabled );
@@ -824,7 +824,7 @@ void CTFHudTimeStatus::OnThink()
 		{
 			int iX, iY, iTall, iWide;
 			pPlayerCount->GetBounds( iX, iY, iWide, iTall );
-			
+
 			SetPos( iSelfX, iY + iTall - YRES( 12 ) );
 		}
 		else
@@ -889,7 +889,7 @@ void CTFHudTimeStatus::Paint( void )
 DECLARE_HUDELEMENT( CTFHudKothTimeStatus );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudKothTimeStatus::CTFHudKothTimeStatus( const char *pElementName )
 	: CHudElement( pElementName )
@@ -917,14 +917,14 @@ CTFHudKothTimeStatus::CTFHudKothTimeStatus( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudKothTimeStatus::~CTFHudKothTimeStatus()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHudKothTimeStatus::ShouldDraw()
 {
@@ -950,7 +950,7 @@ bool CTFHudKothTimeStatus::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudKothTimeStatus::SetVisible( bool bVisible )
 {
@@ -963,7 +963,7 @@ void CTFHudKothTimeStatus::SetVisible( bool bVisible )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudKothTimeStatus::Reset()
 {
@@ -979,7 +979,7 @@ void CTFHudKothTimeStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudKothTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1005,7 +1005,7 @@ void CTFHudKothTimeStatus::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudKothTimeStatus::UpdateActiveTeam( void )
 {
@@ -1048,13 +1048,13 @@ void CTFHudKothTimeStatus::UpdateActiveTeam( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudKothTimeStatus::Think( void )
 {
 	if ( !TFGameRules() || !IsVisible() )
 		return;
-	
+
 	int nActiveTeam = TEAM_UNASSIGNED;
 
 	CTeamRoundTimer *pTimer = TFGameRules()->GetBlueKothRoundTimer();

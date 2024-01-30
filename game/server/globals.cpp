@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,10 +9,10 @@
 
 ===== globals.cpp ========================================================
 
-  DLL-wide global variable definitions.
-  They're all defined here, for convenient centralization.
-  Source files that need them should "extern ..." declare each
-  variable, to better document what globals they care about.
+	DLL-wide global variable definitions.
+	They're all defined here, for convenient centralization.
+	Source files that need them should "extern ..." declare each
+	variable, to better document what globals they care about.
 
 */
 

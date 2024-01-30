@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -15,7 +15,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CObjectBuildAlphaProxy : public CEntityMaterialProxy
 {
@@ -73,7 +73,7 @@ void CObjectBuildAlphaProxy::OnBind( C_BaseEntity *pEntity )
 {
 	if( !m_pAlphaVar )
 		return;
-	
+
 	// It needs to be a TF2 C_BaseObject to have this proxy applied
 	C_BaseObject *pObject = dynamic_cast< C_BaseObject * >( pEntity );
 	if ( !pObject )
@@ -113,5 +113,3 @@ void CObjectBuildAlphaProxy::OnBind( C_BaseEntity *pEntity )
 }
 
 EXPOSE_INTERFACE( CObjectBuildAlphaProxy, IMaterialProxy, "TFObjectBuildAlpha" IMATERIAL_PROXY_INTERFACE_VERSION );
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $NoKeywords: $
@@ -60,7 +60,7 @@ public: // IServer implementation
 	void	Shutdown( void );
 	void	SetMaxClients(int number);
 
-public: 
+public:
 	void	InitMaxClients( void );
 	bool	SpawnServer( const char *szMapName, const char *szMapFile, const char *startspot );
 	void	SetQueryPortFromSteamServer();
@@ -74,7 +74,7 @@ public:
 	// This is true when we start a level and sv_pure is set to 1.
 	bool	IsInPureServerMode() const;
 	CPureServerWhitelist * GetPureServerWhitelist() const;
-	
+
 	inline  CGameClient *Client( int i ) { return static_cast<CGameClient*>(m_Clients[i]); };
 
 protected :
@@ -94,9 +94,9 @@ protected :
 public:
 
 	bool		m_bLoadgame;			// handle connections specially
-	
+
 	char		m_szStartspot[64];
-	
+
 	int			num_edicts;
 	int			max_edicts;
 	int			free_edicts; // how many edicts in num_edicts are free, in use is num_edicts - free_edicts
@@ -104,7 +104,7 @@ public:
 	IChangeInfoAccessor *edictchangeinfo; // HACK to allow backward compat since we can't change edict_t layout
 
 	int			m_nMaxClientsLimit;    // Max allowed on server.
-	
+
 	bool		allowsignonwrites;
 	bool	    dll_initialized;    // Have we loaded the game dll.
 
@@ -126,7 +126,7 @@ public:
 	INetworkStringTable *GetGenericPrecacheTable( void ) const;
 	INetworkStringTable *GetSoundPrecacheTable( void ) const;
 	INetworkStringTable *GetDecalPrecacheTable( void ) const;
-	
+
 	INetworkStringTable *GetDynamicModelsTable( void ) const { return m_pDynamicModelsTable; }
 
 
@@ -160,7 +160,7 @@ private:
 	CPrecacheItem	sound_precache[ MAX_SOUNDS ];
 	CPrecacheItem	decal_precache[ MAX_BASE_DECALS ];
 
-	INetworkStringTable *m_pModelPrecacheTable;	
+	INetworkStringTable *m_pModelPrecacheTable;
 	INetworkStringTable *m_pSoundPrecacheTable;
 	INetworkStringTable *m_pGenericPrecacheTable;
 	INetworkStringTable *m_pDecalPrecacheTable;

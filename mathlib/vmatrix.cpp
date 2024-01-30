@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -62,7 +62,7 @@ VMatrix SetupMatrixReflection(const VPlane &thePlane)
 
 	N = thePlane.m_Normal;
 
-	mReflect.Init( 
+	mReflect.Init(
 		-2.0f*N.x*N.x + 1.0f,	-2.0f*N.x*N.y,			-2.0f*N.x*N.z,			0.0f,
 		-2.0f*N.y*N.x,			-2.0f*N.y*N.y + 1.0f,	-2.0f*N.y*N.z,			0.0f,
 		-2.0f*N.z*N.x,			-2.0f*N.z*N.y,			-2.0f*N.z*N.z + 1.0f,	0.0f,
@@ -114,7 +114,7 @@ VMatrix SetupMatrixProjection(const Vector &vOrigin, const VPlane &thePlane)
 		mRet.m[3][3] = dot + PD;
 
 	#undef PN
-	#undef PD	
+	#undef PD
 
 	return mRet;
 }
@@ -128,7 +128,7 @@ VMatrix SetupMatrixAxisRot(const Vector &vAxis, vec_t fDegrees)
 
 
 	fRadians = fDegrees * (M_PI / 180.0f);
-	
+
 	s = (vec_t)sin(fRadians);
 	c = (vec_t)cos(fRadians);
 	t = 1.0f - c;
@@ -170,7 +170,7 @@ bool PlaneIntersection( const VPlane &vp1, const VPlane &vp2, const VPlane &vp3,
 		vp3.m_Normal.x, vp3.m_Normal.y, vp3.m_Normal.z, -vp3.m_Dist,
 		0.0f, 0.0f, 0.0f, 1.0f
 		);
-	
+
 	if(mMat.InverseGeneral(mInverse))
 	{
 		//vOut = mInverse * Vector(0.0f, 0.0f, 0.0f);
@@ -335,7 +335,7 @@ bool MatrixInverseGeneral(const VMatrix& src, VMatrix& dst)
 			pRow[j] *= mul;
 
 		pRow[iRow] = 1.0f; // Preserve accuracy...
-		
+
 		// Eliminate this element from the other rows using operation 2.
 		for(i=0; i < 4; i++)
 		{
@@ -343,7 +343,7 @@ bool MatrixInverseGeneral(const VMatrix& src, VMatrix& dst)
 				continue;
 
 			pScaleRow = mat[rowMap[i]];
-		
+
 			// Multiply this row by -(iRow*the element).
 			mul = -pScaleRow[iRow];
 			for(j=0; j < 8; j++)
@@ -456,13 +456,13 @@ VMatrix VMatrix::NormalizeBasisVectors() const
 
 
 	GetBasisVectors(vecs[0], vecs[1], vecs[2]);
-	
+
 	VectorNormalize( vecs[0] );
 	VectorNormalize( vecs[1] );
 	VectorNormalize( vecs[2] );
 
 	mRet.SetBasisVectors(vecs[0], vecs[1], vecs[2]);
-	
+
 	// Set everything but basis vectors to identity.
 	mRet.m[3][0] = mRet.m[3][1] = mRet.m[3][2] = 0.0f;
 	mRet.m[3][3] = 1.0f;
@@ -498,10 +498,10 @@ bool VMatrix::IsRotationMatrix() const
 	Vector &v2 = (Vector&)m[1][0];
 	Vector &v3 = (Vector&)m[2][0];
 
-	return 
-		FloatMakePositive( 1 - v1.Length() ) < 0.01f && 
-		FloatMakePositive( 1 - v2.Length() ) < 0.01f && 
-		FloatMakePositive( 1 - v3.Length() ) < 0.01f && 
+	return
+		FloatMakePositive( 1 - v1.Length() ) < 0.01f &&
+		FloatMakePositive( 1 - v2.Length() ) < 0.01f &&
+		FloatMakePositive( 1 - v3.Length() ) < 0.01f &&
 		FloatMakePositive( v1.Dot(v2) ) < 0.01f &&
 		FloatMakePositive( v1.Dot(v3) ) < 0.01f &&
 		FloatMakePositive( v2.Dot(v3) ) < 0.01f;
@@ -533,7 +533,7 @@ static void SetupMatrixAnglesInternal( vec_t m[4][4], const QAngle & vAngles )
 void VMatrix::SetupMatrixOrgAngles( const Vector &origin, const QAngle &vAngles )
 {
 	SetupMatrixAnglesInternal( m, vAngles );
-	
+
 	// Add translation
 	m[0][3] = origin.x;
 	m[1][3] = origin.y;
@@ -573,7 +573,7 @@ void MatrixSetIdentity( VMatrix &dst )
 
 
 //-----------------------------------------------------------------------------
-// Setup a matrix from euler angles. 
+// Setup a matrix from euler angles.
 //-----------------------------------------------------------------------------
 void MatrixFromAngles( const QAngle& vAngles, VMatrix& dst )
 {
@@ -582,7 +582,7 @@ void MatrixFromAngles( const QAngle& vAngles, VMatrix& dst )
 
 
 //-----------------------------------------------------------------------------
-// Creates euler angles from a matrix 
+// Creates euler angles from a matrix
 //-----------------------------------------------------------------------------
 void MatrixToAngles( const VMatrix& src, QAngle& vAngles )
 {
@@ -601,7 +601,7 @@ void MatrixToAngles( const VMatrix& src, QAngle& vAngles )
 	up[2] = src[2][2];
 
 	float xyDist = sqrtf( forward[0] * forward[0] + forward[1] * forward[1] );
-	
+
 	// enough here to get angles?
 	if ( xyDist > 0.001f )
 	{
@@ -783,7 +783,7 @@ void Vector3DMultiply( const VMatrix &src1, const Vector &src2, Vector &dst )
 
 
 //-----------------------------------------------------------------------------
-// Vector3DMultiplyPositionProjective treats src2 as if it's a point 
+// Vector3DMultiplyPositionProjective treats src2 as if it's a point
 // and does the perspective divide at the end
 //-----------------------------------------------------------------------------
 void Vector3DMultiplyPositionProjective( const VMatrix& src1, const Vector &src2, Vector& dst )
@@ -797,7 +797,7 @@ void Vector3DMultiplyPositionProjective( const VMatrix& src1, const Vector &src2
 	}
 
 	float w = src1[3][0] * v[0] + src1[3][1] * v[1] + src1[3][2] * v[2] + src1[3][3];
-	if ( w != 0.0f ) 
+	if ( w != 0.0f )
 	{
 		w = 1.0f / w;
 	}
@@ -810,7 +810,7 @@ void Vector3DMultiplyPositionProjective( const VMatrix& src1, const Vector &src2
 
 
 //-----------------------------------------------------------------------------
-// Vector3DMultiplyProjective treats src2 as if it's a direction 
+// Vector3DMultiplyProjective treats src2 as if it's a direction
 // and does the perspective divide at the end
 //-----------------------------------------------------------------------------
 void Vector3DMultiplyProjective( const VMatrix& src1, const Vector &src2, Vector& dst )
@@ -948,10 +948,10 @@ void MatrixBuildTranslation( VMatrix& dst, const Vector &translation )
 //		   | ax2 + (1 - ax2)cosQ		axay(1 - cosQ) - azsinQ		azax(1 - cosQ) + aysinQ |
 // Ra(Q) = | axay(1 - cosQ) + azsinQ	ay2 + (1 - ay2)cosQ			ayaz(1 - cosQ) - axsinQ |
 //		   | azax(1 - cosQ) - aysinQ	ayaz(1 - cosQ) + axsinQ		az2 + (1 - az2)cosQ     |
-//          
-// Input  : mat - 
-//			vAxisOrRot - 
-//			angle - 
+//
+// Input  : mat -
+//			vAxisOrRot -
+//			angle -
 //-----------------------------------------------------------------------------
 void MatrixBuildRotationAboutAxis( VMatrix &dst, const Vector &vAxisOfRot, float angleDegrees )
 {
@@ -970,7 +970,7 @@ void MatrixBuildRotation( VMatrix &dst, const Vector& initialDirection, const Ve
 {
 	float angle = DotProduct( initialDirection, finalDirection );
 	Assert( IsFinite(angle) );
-	
+
 	Vector axis;
 
 	// No rotation required
@@ -985,7 +985,7 @@ void MatrixBuildRotation( VMatrix &dst, const Vector& initialDirection, const Ve
 		// antiparallel case, pick any axis in the plane
 		// perpendicular to the final direction. Choose the direction (x,y,z)
 		// which has the minimum component of the final direction, use that
-		// as an initial guess, then subtract out the component which is 
+		// as an initial guess, then subtract out the component which is
 		// parallel to the final direction
 		int idx = 0;
 		if (FloatMakePositive(finalDirection[1]) < FloatMakePositive(finalDirection[idx]))
@@ -1064,14 +1064,14 @@ void MatrixBuildPerspective( VMatrix &dst, float fovX, float fovY, float zNear, 
 	negateXY[0][0] = -1.0f;
 	negateXY[1][1] = -1.0f;
 	MatrixMultiply( negateXY, dst, dst );
-	
+
 	VMatrix addW;
 	addW.Identity();
 	addW[0][3] = 1.0f;
 	addW[1][3] = 1.0f;
 	addW[2][3] = 0.0f;
 	MatrixMultiply( addW, dst, dst );
-	
+
 	VMatrix scaleHalf;
 	scaleHalf.Identity();
 	scaleHalf[0][0] = 0.5f;
@@ -1142,7 +1142,7 @@ void CalculateSphereFromProjectionMatrixInverse( const VMatrix &volumeToWorld, V
 	// Let the distance between the near center point + near edge point = h1
 	// Let the distance between the far center point + far edge point = h2
 	// Let the distance along the center line from the near point to the sphere center point = x
-	// Then let the distance between the sphere center point + near edge point == 
+	// Then let the distance between the sphere center point + near edge point ==
 	//	the distance between the sphere center point + far edge point == r == radius of sphere
 	// Then h1^2 + x^2 == r^2 == (l-x)^2 + h2^2
 	// h1^x + x^2 = l^2 - 2 * l * x + x^2 + h2^2
@@ -1171,7 +1171,7 @@ void CalculateSphereFromProjectionMatrix( const VMatrix &worldToVolume, Vector *
 }
 
 
-static inline void FrustumPlanesFromMatrixHelper( const VMatrix &shadowToWorld, const Vector &p1, const Vector &p2, const Vector &p3, 
+static inline void FrustumPlanesFromMatrixHelper( const VMatrix &shadowToWorld, const Vector &p1, const Vector &p2, const Vector &p3,
 												 Vector &normal, float &dist )
 {
 	Vector world1, world2, world3;
@@ -1185,7 +1185,7 @@ static inline void FrustumPlanesFromMatrixHelper( const VMatrix &shadowToWorld, 
 
 	CrossProduct( v1, v2, normal );
 	VectorNormalize( normal );
-	dist = DotProduct( normal, world1 );	
+	dist = DotProduct( normal, world1 );
 }
 
 void FrustumPlanesFromMatrix( const VMatrix &clipToWorld, Frustum_t &frustum )
@@ -1193,27 +1193,27 @@ void FrustumPlanesFromMatrix( const VMatrix &clipToWorld, Frustum_t &frustum )
 	Vector normal;
 	float dist;
 
-	FrustumPlanesFromMatrixHelper( clipToWorld, 
+	FrustumPlanesFromMatrixHelper( clipToWorld,
 		Vector( 0.0f, 0.0f, 0.0f ), Vector( 1.0f, 0.0f, 0.0f ), Vector( 0.0f, 1.0f, 0.0f ), normal, dist );
 	frustum.SetPlane( FRUSTUM_NEARZ, PLANE_ANYZ, normal, dist );
 
-	FrustumPlanesFromMatrixHelper( clipToWorld, 
+	FrustumPlanesFromMatrixHelper( clipToWorld,
 		Vector( 0.0f, 0.0f, 1.0f ), Vector( 0.0f, 1.0f, 1.0f ), Vector( 1.0f, 0.0f, 1.0f ), normal, dist );
 	frustum.SetPlane( FRUSTUM_FARZ, PLANE_ANYZ, normal, dist );
 
-	FrustumPlanesFromMatrixHelper( clipToWorld, 
+	FrustumPlanesFromMatrixHelper( clipToWorld,
 		Vector( 1.0f, 0.0f, 0.0f ), Vector( 1.0f, 1.0f, 1.0f ), Vector( 1.0f, 1.0f, 0.0f ), normal, dist );
 	frustum.SetPlane( FRUSTUM_RIGHT, PLANE_ANYZ, normal, dist );
 
-	FrustumPlanesFromMatrixHelper( clipToWorld, 
+	FrustumPlanesFromMatrixHelper( clipToWorld,
 		Vector( 0.0f, 0.0f, 0.0f ), Vector( 0.0f, 1.0f, 1.0f ), Vector( 0.0f, 0.0f, 1.0f ), normal, dist );
 	frustum.SetPlane( FRUSTUM_LEFT, PLANE_ANYZ, normal, dist );
 
-	FrustumPlanesFromMatrixHelper( clipToWorld, 
+	FrustumPlanesFromMatrixHelper( clipToWorld,
 		Vector( 1.0f, 1.0f, 0.0f ), Vector( 1.0f, 1.0f, 1.0f ), Vector( 0.0f, 1.0f, 1.0f ), normal, dist );
 	frustum.SetPlane( FRUSTUM_TOP, PLANE_ANYZ, normal, dist );
 
-	FrustumPlanesFromMatrixHelper( clipToWorld, 
+	FrustumPlanesFromMatrixHelper( clipToWorld,
 		Vector( 1.0f, 0.0f, 0.0f ), Vector( 0.0f, 0.0f, 1.0f ), Vector( 1.0f, 0.0f, 1.0f ), normal, dist );
 	frustum.SetPlane( FRUSTUM_BOTTOM, PLANE_ANYZ, normal, dist );
 }
@@ -1235,7 +1235,7 @@ void MatrixBuildOrtho( VMatrix& dst, double left, double top, double right, doub
 	// (0,0,z) represents the upper-left corner of the screen.
 	// Our projection transform needs to transform from this space to a LH coordinate
 	// system that looks thusly:
-	// 
+	//
 	//	y|  /z
 	//	 | /
 	//	 |/____ x	Z is going into the screen
@@ -1290,4 +1290,3 @@ void MatrixBuildPerspectiveOffCenterX( VMatrix& dst, double flFovX, double flAsp
 	MatrixBuildPerspectiveZRange ( dst, flZNear, flZFar );
 }
 #endif // !_STATIC_LINKED || _SHARED_LIB
-

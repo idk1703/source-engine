@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ CLIENTEFFECT_MATERIAL( "Hud/emp/emp_damage" )
 CLIENTEFFECT_REGISTER_END()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool GetEMPDamage()
 {
@@ -76,7 +76,7 @@ protected:
 //DECLARE_HUDELEMENT( CHudEMP, CHudEMP );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudEMP::CHudEMP( const char *pElementName ) :
 	CHudElement( pElementName ), vgui::Panel( NULL, pElementName )
@@ -88,12 +88,12 @@ CHudEMP::CHudEMP( const char *pElementName ) :
 	//SetPaintBackgroundEnabled( false );
 	SetAutoDelete( false );
 	SetName( "emp" );
-	
+
 	SetHiddenBits( HIDEHUD_HEALTH );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudEMP::~CHudEMP( void )
 {
@@ -128,7 +128,7 @@ void CHudEMP::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudEMP::ShouldDraw( void )
 {
@@ -192,4 +192,3 @@ void CHudEMP::Paint()
 	meshBuilder.End();
 	pMesh->Draw();
 }
-

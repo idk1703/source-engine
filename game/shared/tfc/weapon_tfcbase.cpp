@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -48,7 +48,7 @@ IMPLEMENT_NETWORKCLASS_ALIASED( WeaponTFCBase, DT_WeaponTFCBase )
 BEGIN_NETWORK_TABLE( CWeaponTFCBase, DT_WeaponTFCBase )
 END_NETWORK_TABLE()
 
-BEGIN_PREDICTION_DATA( CWeaponTFCBase ) 
+BEGIN_PREDICTION_DATA( CWeaponTFCBase )
 END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( weapon_tfc_base, CWeaponTFCBase );
@@ -75,7 +75,7 @@ LINK_ENTITY_TO_CLASS( weapon_tfc_base, CWeaponTFCBase );
 #endif
 
 // ----------------------------------------------------------------------------- //
-// CWeaponTFCBase implementation. 
+// CWeaponTFCBase implementation.
 // ----------------------------------------------------------------------------- //
 CWeaponTFCBase::CWeaponTFCBase()
 {
@@ -85,7 +85,7 @@ CWeaponTFCBase::CWeaponTFCBase()
 
 
 bool CWeaponTFCBase::IsPredicted() const
-{ 
+{
 	return true;
 }
 
@@ -112,19 +112,19 @@ const CTFCWeaponInfo &CWeaponTFCBase::GetTFCWpnData() const
 
 TFCWeaponID CWeaponTFCBase::GetWeaponID( void ) const
 {
-	Assert( false ); return WEAPON_NONE; 
+	Assert( false ); return WEAPON_NONE;
 }
 
 
 bool CWeaponTFCBase::IsA( TFCWeaponID id ) const
-{ 
-	return GetWeaponID() == id; 
+{
+	return GetWeaponID() == id;
 }
 
 
 bool CWeaponTFCBase::IsSilenced( void ) const
 {
-	return false; 
+	return false;
 }
 
 
@@ -144,12 +144,12 @@ void CWeaponTFCBase::Precache( void )
 
 		// Set this here to allow players to shoot dropped weapons
 		SetCollisionGroup( COLLISION_GROUP_WEAPON );
-		
-		// Move it up a little bit, otherwise it'll be at the guy's feet, and its sound origin 
+
+		// Move it up a little bit, otherwise it'll be at the guy's feet, and its sound origin
 		// will be in the ground so its EmitSound calls won't do anything.
 		SetLocalOrigin( Vector( 0, 0, 5 ) );
 	}
-	
+
 	bool CWeaponTFCBase::DefaultReload( int iClipSize1, int iClipSize2, int iActivity )
 	{
 		if ( BaseClass::DefaultReload( iClipSize1, iClipSize2, iActivity ) )

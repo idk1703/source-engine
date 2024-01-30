@@ -66,7 +66,7 @@ public:
 
 	void			SetTimer( CSimTimer timer ) { m_Timer = timer;	}
 	CSimTimer		*GetTimer( void ) { return &m_Timer;	}
-	
+
 	void			SetTimeOut( CSimTimer timeout) { m_Timeout = timeout;	}
 	CSimTimer		*GetTimeOut( void ) { return &m_Timeout;	}
 
@@ -129,8 +129,8 @@ private:
 	// Evaluators
 	struct EvalArgs_t
 	{
-		CBaseEntity *pActor; 
-		CBasePlayer *pPlayer; 
+		CBaseEntity *pActor;
+		CBasePlayer *pPlayer;
 		CBaseEntity *pTarget;
 	};
 

@@ -84,7 +84,7 @@ CReplayBrowserPanel::CReplayBrowserPanel( Panel *parent )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CReplayBrowserPanel::~CReplayBrowserPanel()
 {
@@ -95,7 +95,7 @@ CReplayBrowserPanel::~CReplayBrowserPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -108,9 +108,9 @@ void CReplayBrowserPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CReplayBrowserPanel::PerformLayout( void ) 
+void CReplayBrowserPanel::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -123,7 +123,7 @@ void CReplayBrowserPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::ShowPanel(bool bShow, ReplayHandle_t hReplayDetails/*=REPLAY_HANDLE_INVALID*/,
 									int iPerformance/*=-1*/ )
@@ -153,7 +153,7 @@ void CReplayBrowserPanel::ShowPanel(bool bShow, ReplayHandle_t hReplayDetails/*=
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::FireGameEvent( IGameEvent *event )
 {
@@ -166,7 +166,7 @@ void CReplayBrowserPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::OnCommand( const char *command )
 {
@@ -208,7 +208,7 @@ void CReplayBrowserPanel::OnKeyCodeTyped(vgui::KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::OnKeyCodePressed(vgui::KeyCode code)
 {
@@ -227,7 +227,7 @@ void CReplayBrowserPanel::OnKeyCodePressed(vgui::KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::ShowDeleteReplayDenialDlg()
 {
@@ -235,7 +235,7 @@ void CReplayBrowserPanel::ShowDeleteReplayDenialDlg()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::AttemptToDeleteReplayItem( Panel *pHandler, ReplayItemHandle_t hReplayItem,
 													 IReplayItemManager *pItemManager, int iPerformance )
@@ -257,7 +257,7 @@ void CReplayBrowserPanel::AttemptToDeleteReplayItem( Panel *pHandler, ReplayItem
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHandle_t hReplayItem,
 												   IReplayItemManager *pItemManager, int iPerformance )
@@ -280,7 +280,7 @@ void CReplayBrowserPanel::ConfirmReplayItemDelete( Panel *pHandler, ReplayItemHa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::OnConfirmDelete( KeyValues *data )
 {
@@ -318,7 +318,7 @@ void CReplayBrowserPanel::OnConfirmDelete( KeyValues *data )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::OnSaveReplay( ReplayHandle_t hNewReplay )
 {
@@ -330,7 +330,7 @@ void CReplayBrowserPanel::OnSaveReplay( ReplayHandle_t hNewReplay )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::OnDeleteReplay( ReplayHandle_t hDeletedReplay )
 {
@@ -341,7 +341,7 @@ void CReplayBrowserPanel::OnDeleteReplay( ReplayHandle_t hDeletedReplay )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::DeleteReplay( ReplayHandle_t hReplay )
 {
@@ -349,7 +349,7 @@ void CReplayBrowserPanel::DeleteReplay( ReplayHandle_t hReplay )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayBrowserPanel::CleanupUIForReplayItem( ReplayItemHandle_t hReplayItem )
 {
@@ -362,7 +362,7 @@ void CReplayBrowserPanel::CleanupUIForReplayItem( ReplayItemHandle_t hReplayItem
 static vgui::DHANDLE<CReplayBrowserPanel> g_ReplayBrowserPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CReplayBrowserPanel *ReplayUI_OpenReplayBrowserPanel( ReplayHandle_t hReplayDetails,
 													  int iPerformance )
@@ -391,7 +391,7 @@ CReplayBrowserPanel *ReplayUI_OpenReplayBrowserPanel( ReplayHandle_t hReplayDeta
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CReplayBrowserPanel *ReplayUI_GetBrowserPanel( void )
 {
@@ -399,7 +399,7 @@ CReplayBrowserPanel *ReplayUI_GetBrowserPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ReplayUI_CloseReplayBrowser()
 {
@@ -411,7 +411,7 @@ void ReplayUI_CloseReplayBrowser()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ReplayUI_ReloadBrowser( ReplayHandle_t hReplay/*=REPLAY_HANDLE_INVALID*/,
 							 int iPerformance/*=-1*/ )
@@ -422,7 +422,7 @@ void ReplayUI_ReloadBrowser( ReplayHandle_t hReplay/*=REPLAY_HANDLE_INVALID*/,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( open_replaybrowser, "Open the replay browser.", FCVAR_CLIENTDLL )
 {
@@ -431,7 +431,7 @@ CON_COMMAND_F( open_replaybrowser, "Open the replay browser.", FCVAR_CLIENTDLL )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( replay_reloadbrowser, "Reloads replay data and display replay browser", FCVAR_CLIENTDLL | FCVAR_CLIENTCMD_CAN_EXECUTE )
 {
@@ -439,7 +439,7 @@ CON_COMMAND_F( replay_reloadbrowser, "Reloads replay data and display replay bro
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CON_COMMAND_F( replay_hidebrowser, "Hides replay browser", FCVAR_CLIENTDLL )
 {

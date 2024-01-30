@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -210,7 +210,7 @@ void CUndoManager::AbortUndoableOperation()
 		return;
 
 	bool hasItems = m_nItemsAddedSinceStartOfStream > 0 ? true : false;
-	
+
 	Trace( "[%d] Aborting undo '%s'\n", m_nNesting, s_UndoSymbolTable.String( m_UndoDesc )  );
 
 	// Close off context
@@ -253,7 +253,7 @@ void CUndoManager::WipeRedo()
 	{
 		IUndoElement *elem;
 		elem = m_RedoStack[ i ];
-		
+
 		Trace( "WipeRedo '%s'\n", elem->GetDesc() );
 
 		elem->Release();
@@ -282,7 +282,7 @@ void CUndoManager::AddUndoElement( IUndoElement *pElement )
 		m_bDiscarded = true;
 	}
 	*/
-	
+
 	Trace( "AddUndoElement '%s'\n", pElement->GetDesc() );
 
 	m_UndoList.AddToTail( pElement );

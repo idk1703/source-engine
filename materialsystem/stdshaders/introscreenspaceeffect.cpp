@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,7 +30,7 @@ BEGIN_VS_SHADER_FLAGS( IntroScreenSpaceEffect, "Help for IntroScreenSpaceEffect"
 	SHADER_INIT
 	{
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -61,7 +61,7 @@ BEGIN_VS_SHADER_FLAGS( IntroScreenSpaceEffect, "Help for IntroScreenSpaceEffect"
 
 			DECLARE_STATIC_VERTEX_SHADER( screenspaceeffect_vs20 );
 			SET_STATIC_VERTEX_SHADER( screenspaceeffect_vs20 );
-			
+
 			if ( g_pHardwareConfig->SupportsPixelShaders_2_b() || g_pHardwareConfig->ShouldAlwaysUseShaderModel2bShaders() ) // GL always goes the ps2b way for this shader, even on "ps20" parts
 			{
 				DECLARE_STATIC_PIXEL_SHADER( introscreenspaceeffect_ps20b );

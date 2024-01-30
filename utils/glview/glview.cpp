@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -35,17 +35,17 @@ HANDLE	main_instance;
 	file type, you type:  glview -portal filename.gl0 (or whatever).  glview will then
 	try to read in the .prt file filename.prt.
 
-	The portals are shown as white lines superimposed over your image.  You can toggle the 
-	view between showing portals or not by hitting the '2' key.  The '1' key toggles 
+	The portals are shown as white lines superimposed over your image.  You can toggle the
+	view between showing portals or not by hitting the '2' key.  The '1' key toggles
 	world polygons.
 
 	The 'b' key toggles blending modes.
 
 	If you don't want to depth buffer the portals, hit 'p'.
 
-    The command line parsing is inelegant but functional.
+	The command line parsing is inelegant but functional.
 
-    I sped up the KB movement and turn speed, too.
+	I sped up the KB movement and turn speed, too.
  */
 
 // Vars added by YWB
@@ -90,7 +90,7 @@ void Error (char *error, ...)
 	vsprintf (text, error,argptr);
 	va_end (argptr);
 
-    MessageBox(NULL, text, "Error", 0 /* MB_OK */ );
+	MessageBox(NULL, text, "Error", 0 /* MB_OK */ );
 
 	exit (1);
 }
@@ -160,7 +160,7 @@ void Cam_MouseMoved( void )
 		POINT cursorPoint;
 
 		GetWindowRect( camerawindow, &rect );
-		
+
 		if ( rect.top < 0)
 			rect.top = 0;
 		if ( rect.left < 0)
@@ -266,10 +266,10 @@ void Cam_BuildMatrix (void)
 
 	// the movement matrix is kept 2d ?? do we want this?
 
-    forward[0] = cos(ya);
-    forward[1] = sin(ya);
-    right[0] = forward[1];
-    right[1] = -forward[0];
+	forward[0] = cos(ya);
+	forward[1] = sin(ya);
+	right[0] = forward[1];
+	right[1] = -forward[0];
 
 	glGetFloatv (GL_PROJECTION_MATRIX, &matrix[0][0]);
 
@@ -298,17 +298,17 @@ void Draw (void)
 	// set up viewpoint
 	//
 	glMatrixMode(GL_PROJECTION);
-    glLoadIdentity ();
+	glLoadIdentity ();
 
-    screenaspect = (float)width/height;
+	screenaspect = (float)width/height;
 	yfov = 2*atan((float)height/width)*180/M_PI;
-    gluPerspective (yfov,  screenaspect,  6,  20000);
+	gluPerspective (yfov,  screenaspect,  6,  20000);
 
-    glRotatef (-90,  1, 0, 0);	    // put Z going up
-    glRotatef (90,  0, 0, 1);	    // put Z going up
-    glRotatef (angles[0],  0, 1, 0);
-    glRotatef (-angles[1],  0, 0, 1);
-    glTranslatef (-origin[0],  -origin[1],  -origin[2]);
+	glRotatef (-90,  1, 0, 0);	    // put Z going up
+	glRotatef (90,  0, 0, 1);	    // put Z going up
+	glRotatef (angles[0],  0, 1, 0);
+	glRotatef (-angles[1],  0, 0, 1);
+	glTranslatef (-origin[0],  -origin[1],  -origin[2]);
 
 	Cam_BuildMatrix ();
 
@@ -350,7 +350,7 @@ void Draw (void)
 		//
 		if (g_bShowList1)
 			glCallList (1);
-		
+
 		if (g_bReadPortals)
 		{
 			if (g_bNoDepthPortals)
@@ -359,7 +359,7 @@ void Draw (void)
 			if (g_bShowList2)
 				glCallList(2);
 		};
-		
+
 		if (g_bShowLines)
 			glCallList(3);
 	}
@@ -380,12 +380,12 @@ void ReadPolyFileType(const char *name, int nList, BOOL drawLines)
 
 	if (g_bReadPortals)
 		divisor = 2.0f;
-	else 
+	else
 		divisor = 1.0f;
 
 	c = 0;
 	glNewList (nList, GL_COMPILE);
-	
+
 	for (i = 0; i < 3; i++)  // Find the center point so we can put the viewer there by default
 		g_Center[i] = 0.0f;
 
@@ -429,16 +429,16 @@ void ReadPolyFileType(const char *name, int nList, BOOL drawLines)
 				{
 					if (fabs(fabs(v[5]) - 1.0f) < 0.01)   // Is this a detail brush (color 0,0,1 blue)
 					{
-						glColor4f (v[3],v[4],v[5],0.5);   
-					}	
+						glColor4f (v[3],v[4],v[5],0.5);
+					}
 					else                                  // Normal brush, gray scale it...
 					{
 						v[3] += v[4] + v[5];
 						v[3]/= 3.0f;
-						glColor4f (v[3]/divisor, v[3]/divisor, v[3]/divisor, 0.6);   
+						glColor4f (v[3]/divisor, v[3]/divisor, v[3]/divisor, 0.6);
 					}
 				}
-				else 
+				else
 				{
 					v[3] = pow( v[3], (float)(1.0 / 2.2) );
 					v[4] = pow( v[4], (float)(1.0 / 2.2) );
@@ -453,7 +453,7 @@ void ReadPolyFileType(const char *name, int nList, BOOL drawLines)
 			{
 				g_Center[j] += v[j];
 			}
-	
+
 			g_nTotalPoints++;
 		}
 		glEnd ();
@@ -539,7 +539,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide )
 	size[1].Init(16,16,16);
 	unsigned int dots = 0;
 
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.Reset();
 	g_VProfCurrentProfile.ResetPeaks();
 	g_VProfCurrentProfile.Start();
@@ -575,7 +575,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide )
 	OutputDebugStr( str.Access() );
 	}
 
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.MarkFrame();
 	g_VProfCurrentProfile.Stop();
 	g_VProfCurrentProfile.Reset();
@@ -598,7 +598,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide )
 		{
 			g_Traces[i].hit = false;
 		}
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 		g_VProfCurrentProfile.MarkFrame();
 #endif
 	}
@@ -606,7 +606,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide )
 	for ( i = 0; i < NUM_COLLISION_TESTS; i++ )
 	{
 		physcollision->TraceBox( g_Traces[i].start, start, -size[1], size[1], pCollide, vec3_origin, vec3_angle, &tr );
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 		g_VProfCurrentProfile.MarkFrame();
 #endif
 	}
@@ -630,7 +630,7 @@ void Benchmark_PHY( const CPhysCollide *pCollide )
 	CFmtStr str("%d ms total %d ms gjk %d mesh solve\n", msSupp, msGJK, msMesh );
 	OutputDebugStr( str.Access() );
 	}
-#if VPROF_LEVEL > 0 
+#if VPROF_LEVEL > 0
 	g_VProfCurrentProfile.Stop();
 	g_VProfCurrentProfile.OutputReport( VPRT_FULL & ~VPRT_HIERARCHY, NULL );
 #endif
@@ -651,13 +651,13 @@ void Benchmark_PHY( const CPhysCollide *pCollide )
 #endif
 
 struct phyviewparams_t
-{ 
+{
 	Vector mins;
 	Vector maxs;
 	Vector offset;
 	QAngle angles;
 	int outputType;
-	
+
 	void Defaults()
 	{
 		ClearBounds(mins, maxs);
@@ -765,7 +765,7 @@ void ReadPHYFile(const char *name, phyviewparams_t &params )
 		Error ("Couldn't open %s", name);
 
 	phyheader_t header;
-	
+
 	fread( &header, sizeof(header), 1, fp );
 	if ( header.size != sizeof(header) || header.solidCount <= 0 )
 		return;
@@ -799,7 +799,7 @@ void ReadPHYFile(const char *name, phyviewparams_t &params )
 			ray2.Init( tr.endpos, tr.endpos, Vector(-16,-16,0), Vector(16,16,72));
 			trace_t tr2;
 			physcollision->TraceBox( ray2, collide.solids[0], modelPosition, modelAngles, &tr2 );
- 			Assert(!tr2.startsolid);
+			Assert(!tr2.startsolid);
 		}
 	}
 #endif
@@ -859,7 +859,7 @@ void ReadPortalFile (char *name)
 		Error ("Couldn't open %s", name);
 
 	c = 0;
-	
+
 	glNewList (2, GL_COMPILE);
 
 	// Read in header
@@ -885,7 +885,7 @@ void ReadPortalFile (char *name)
 
 			if ( c == g_nPortalHighlight || nLeafIndex[0] == g_nLeafHighlight || nLeafIndex[1] == g_nLeafHighlight )
 			{
-				glColor4f (1.0, 0.0, 0.0, 1.0);   
+				glColor4f (1.0, 0.0, 0.0, 1.0);
 			}
 			else
 			{
@@ -933,7 +933,7 @@ BOOL ReadDisplacementFile( const char *filename )
 			break;
 
 		fileCount = fscanf( pFile, "%f %f %f %f %f %f",
-			                &dispPoints[dispPointCount][0], &dispPoints[dispPointCount][1], &dispPoints[dispPointCount][2],
+							&dispPoints[dispPointCount][0], &dispPoints[dispPointCount][1], &dispPoints[dispPointCount][2],
 							&dispNormals[dispPointCount][0], &dispNormals[dispPointCount][1], &dispNormals[dispPointCount][2] );
 		dispPointCount++;
 
@@ -1017,20 +1017,20 @@ void DrawDisplacementData( void )
 		for( j = 0; j < width - 1; j++ )
 		{
 			glBegin( GL_POLYGON );
-			glVertex3f( dispPoints[i*width+j][0] + ( dispNormals[i*width+j][0] * 150.0f ), 
-				        dispPoints[i*width+j][1] + ( dispNormals[i*width+j][1] * 150.0f ), 
+			glVertex3f( dispPoints[i*width+j][0] + ( dispNormals[i*width+j][0] * 150.0f ),
+						dispPoints[i*width+j][1] + ( dispNormals[i*width+j][1] * 150.0f ),
 						dispPoints[i*width+j][2] + ( dispNormals[i*width+j][2] * 150.0f ) );
 
-			glVertex3f( dispPoints[(i+1)*width+j][0] + ( dispNormals[(i+1)*width+j][0] * 150.0f ), 
-				        dispPoints[(i+1)*width+j][1] + ( dispNormals[(i+1)*width+j][1] * 150.0f ), 
+			glVertex3f( dispPoints[(i+1)*width+j][0] + ( dispNormals[(i+1)*width+j][0] * 150.0f ),
+						dispPoints[(i+1)*width+j][1] + ( dispNormals[(i+1)*width+j][1] * 150.0f ),
 						dispPoints[(i+1)*width+j][2] + ( dispNormals[(i+1)*width+j][2] * 150.0f ) );
 
-			glVertex3f( dispPoints[(i+1)*width+(j+1)][0] + ( dispNormals[(i+1)*width+(j+1)][0] * 150.0f ), 
-				        dispPoints[(i+1)*width+(j+1)][1] + ( dispNormals[(i+1)*width+(j+1)][1] * 150.0f ), 
+			glVertex3f( dispPoints[(i+1)*width+(j+1)][0] + ( dispNormals[(i+1)*width+(j+1)][0] * 150.0f ),
+						dispPoints[(i+1)*width+(j+1)][1] + ( dispNormals[(i+1)*width+(j+1)][1] * 150.0f ),
 						dispPoints[(i+1)*width+(j+1)][2] + ( dispNormals[(i+1)*width+(j+1)][2] * 150.0f ) );
 
-			glVertex3f( dispPoints[i*width+(j+1)][0] + ( dispNormals[i*width+(j+1)][0] * 150.0f ), 
-				        dispPoints[i*width+(j+1)][1] + ( dispNormals[i*width+(j+1)][1] * 150.0f ), 
+			glVertex3f( dispPoints[i*width+(j+1)][0] + ( dispNormals[i*width+(j+1)][0] * 150.0f ),
+						dispPoints[i*width+(j+1)][1] + ( dispNormals[i*width+(j+1)][1] * 150.0f ),
 						dispPoints[i*width+(j+1)][2] + ( dispNormals[i*width+(j+1)][2] * 150.0f ) );
 			glEnd();
 		}
@@ -1044,20 +1044,20 @@ void DrawDisplacementData( void )
 		for( j = 0; j < width - 1; j++ )
 		{
 			glBegin( GL_LINE_LOOP );
-			glVertex3f( dispPoints[i*width+j][0] + ( dispNormals[i*width+j][0] * 150.0f ), 
-				        dispPoints[i*width+j][1] + ( dispNormals[i*width+j][1] * 150.0f ), 
+			glVertex3f( dispPoints[i*width+j][0] + ( dispNormals[i*width+j][0] * 150.0f ),
+						dispPoints[i*width+j][1] + ( dispNormals[i*width+j][1] * 150.0f ),
 						dispPoints[i*width+j][2] + ( dispNormals[i*width+j][2] * 150.0f ) );
 
-			glVertex3f( dispPoints[(i+1)*width+j][0] + ( dispNormals[(i+1)*width+j][0] * 150.0f ), 
-				        dispPoints[(i+1)*width+j][1] + ( dispNormals[(i+1)*width+j][1] * 150.0f ), 
+			glVertex3f( dispPoints[(i+1)*width+j][0] + ( dispNormals[(i+1)*width+j][0] * 150.0f ),
+						dispPoints[(i+1)*width+j][1] + ( dispNormals[(i+1)*width+j][1] * 150.0f ),
 						dispPoints[(i+1)*width+j][2] + ( dispNormals[(i+1)*width+j][2] * 150.0f ) );
 
-			glVertex3f( dispPoints[(i+1)*width+(j+1)][0] + ( dispNormals[(i+1)*width+(j+1)][0] * 150.0f ), 
-				        dispPoints[(i+1)*width+(j+1)][1] + ( dispNormals[(i+1)*width+(j+1)][1] * 150.0f ), 
+			glVertex3f( dispPoints[(i+1)*width+(j+1)][0] + ( dispNormals[(i+1)*width+(j+1)][0] * 150.0f ),
+						dispPoints[(i+1)*width+(j+1)][1] + ( dispNormals[(i+1)*width+(j+1)][1] * 150.0f ),
 						dispPoints[(i+1)*width+(j+1)][2] + ( dispNormals[(i+1)*width+(j+1)][2] * 150.0f ) );
 
-			glVertex3f( dispPoints[i*width+(j+1)][0] + ( dispNormals[i*width+(j+1)][0] * 150.0f ), 
-				        dispPoints[i*width+(j+1)][1] + ( dispNormals[i*width+(j+1)][1] * 150.0f ), 
+			glVertex3f( dispPoints[i*width+(j+1)][0] + ( dispNormals[i*width+(j+1)][0] * 150.0f ),
+						dispPoints[i*width+(j+1)][1] + ( dispNormals[i*width+(j+1)][1] * 150.0f ),
 						dispPoints[i*width+(j+1)][2] + ( dispNormals[i*width+(j+1)][2] * 150.0f ) );
 			glEnd();
 		}
@@ -1072,12 +1072,12 @@ void DrawDisplacementData( void )
 
 BOOL bSetupPixelFormat(HDC hDC)
 {
-    static PIXELFORMATDESCRIPTOR pfd = {
+	static PIXELFORMATDESCRIPTOR pfd = {
 	sizeof(PIXELFORMATDESCRIPTOR),	// size of this pfd
 	1,				// version number
 	PFD_DRAW_TO_WINDOW |		// support window
-	  PFD_SUPPORT_OPENGL |		// support OpenGL
-	  PFD_DOUBLEBUFFER,		// double buffered
+	PFD_SUPPORT_OPENGL |		// support OpenGL
+	PFD_DOUBLEBUFFER,		// double buffered
 	PFD_TYPE_RGBA,			// RGBA type
 	24,				// 24-bit color depth
 	0, 0, 0, 0, 0, 0,		// color bits ignored
@@ -1085,23 +1085,23 @@ BOOL bSetupPixelFormat(HDC hDC)
 	0,				// shift bit ignored
 	0,				// no accumulation buffer
 	0, 0, 0, 0, 			// accum bits ignored
-	32,				// 32-bit z-buffer	
+	32,				// 32-bit z-buffer
 	0,				// no stencil buffer
 	0,				// no auxiliary buffer
 	PFD_MAIN_PLANE,			// main layer
 	0,				// reserved
 	0, 0, 0				// layer masks ignored
-    };
+	};
 
-    int pixelformat = 0;
+	int pixelformat = 0;
 
-    if ( (pixelformat = ChoosePixelFormat(hDC, &pfd)) == 0 )
-        Error ("ChoosePixelFormat failed");
+	if ( (pixelformat = ChoosePixelFormat(hDC, &pfd)) == 0 )
+		Error ("ChoosePixelFormat failed");
 
-    if (!SetPixelFormat(hDC, pixelformat, &pfd))
-        Error ("SetPixelFormat failed");
+	if (!SetPixelFormat(hDC, pixelformat, &pfd))
+		Error ("SetPixelFormat failed");
 
-    return TRUE;
+	return TRUE;
 }
 
 /*
@@ -1110,50 +1110,50 @@ CameraWndProc
 ============
 */
 LONG WINAPI WCam_WndProc (
-    HWND    hWnd,
-    UINT    uMsg,
-    WPARAM  wParam,
-    LPARAM  lParam)
+	HWND    hWnd,
+	UINT    uMsg,
+	WPARAM  wParam,
+	LPARAM  lParam)
 {
-    LONG    lRet = 1;
-    RECT	rect;
+	LONG    lRet = 1;
+	RECT	rect;
 
-    GetClientRect(hWnd, &rect);
+	GetClientRect(hWnd, &rect);
 
-    switch (uMsg)
-    {
+	switch (uMsg)
+	{
 	case WM_CREATE:
 		{
-            camdc = GetDC(hWnd);
-	    	bSetupPixelFormat(camdc);
+			camdc = GetDC(hWnd);
+			bSetupPixelFormat(camdc);
 
-            baseRC = wglCreateContext( camdc );
+			baseRC = wglCreateContext( camdc );
 			if (!baseRC)
 				Error ("wglCreateContext failed");
-            if (!wglMakeCurrent( camdc, baseRC ))
+			if (!wglMakeCurrent( camdc, baseRC ))
 				Error ("wglMakeCurrent failed");
 			glCullFace(GL_FRONT);
 			glEnable(GL_CULL_FACE);
 		}
 		break;
 	case WM_PAINT:
-        { 
-		    PAINTSTRUCT	ps;
+		{
+			PAINTSTRUCT	ps;
 
-		    BeginPaint(hWnd, &ps);
-            if (!wglMakeCurrent( camdc, baseRC ))
+			BeginPaint(hWnd, &ps);
+			if (!wglMakeCurrent( camdc, baseRC ))
 				Error ("wglMakeCurrent failed");
 			Draw ();
 			SwapBuffers(camdc);
-		    EndPaint(hWnd, &ps);
-        }
+			EndPaint(hWnd, &ps);
+		}
 		break;
-	
+
 		case WM_KEYDOWN:
 			KeyDown (wParam);
 			AppKeyDown( wParam );
 			break;
-			
+
 		case WM_KEYUP:
 			AppKeyUp( wParam );
 			break;
@@ -1177,45 +1177,45 @@ LONG WINAPI WCam_WndProc (
 			}
 			break;
 
-    	case WM_SIZE:
+		case WM_SIZE:
 			InvalidateRect(camerawindow, NULL, false);
-            break;
+			break;
 		case WM_NCCALCSIZE:// don't let windows copy pixels
 			lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
 			return WVR_REDRAW;
-   	    case WM_CLOSE:
-            /* call destroy window to cleanup and go away */
-            DestroyWindow (hWnd);
-        break;
+			case WM_CLOSE:
+			/* call destroy window to cleanup and go away */
+			DestroyWindow (hWnd);
+		break;
 
-   	    case WM_DESTROY:
-        {
-    	    HGLRC hRC;
-    	    HDC	  hDC;
+			case WM_DESTROY:
+		{
+			HGLRC hRC;
+			HDC	  hDC;
 
-                /* release and free the device context and rendering context */
-    	    hRC = wglGetCurrentContext();
-    	    hDC = wglGetCurrentDC();
+				/* release and free the device context and rendering context */
+			hRC = wglGetCurrentContext();
+			hDC = wglGetCurrentDC();
 
-    	    wglMakeCurrent(NULL, NULL);
+			wglMakeCurrent(NULL, NULL);
 
-    	    if (hRC)
-    	    	wglDeleteContext(hRC);
-    	    if (hDC)
-    	        ReleaseDC(hWnd, hDC);
+			if (hRC)
+				wglDeleteContext(hRC);
+			if (hDC)
+				ReleaseDC(hWnd, hDC);
 
-                PostQuitMessage (0);
-        }
-        break;
+				PostQuitMessage (0);
+		}
+		break;
 
-    	default:
-            /* pass all unhandled messages to DefWindowProc */
-            lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
-        break;
-    }
+		default:
+			/* pass all unhandled messages to DefWindowProc */
+			lRet = DefWindowProc (hWnd, uMsg, wParam, lParam);
+		break;
+	}
 
-    /* return 1 if handled message, 0 if not */
-    return lRet;
+	/* return 1 if handled message, 0 if not */
+	return lRet;
 }
 
 
@@ -1226,24 +1226,24 @@ WCam_Register
 */
 void WCam_Register (HINSTANCE hInstance)
 {
-    WNDCLASS   wc;
+	WNDCLASS   wc;
 
-    /* Register the camera class */
+	/* Register the camera class */
 	memset (&wc, 0, sizeof(wc));
 
-    wc.style         = 0;
-    wc.lpfnWndProc   = (WNDPROC)WCam_WndProc;
-    wc.cbClsExtra    = 0;
-    wc.cbWndExtra    = 0;
-    wc.hInstance     = hInstance;
-    wc.hIcon         = 0;
-    wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
-    wc.hbrBackground = NULL;
-    wc.lpszMenuName  = 0;
-    wc.lpszClassName = "camera";
+	wc.style         = 0;
+	wc.lpfnWndProc   = (WNDPROC)WCam_WndProc;
+	wc.cbClsExtra    = 0;
+	wc.cbWndExtra    = 0;
+	wc.hInstance     = hInstance;
+	wc.hIcon         = 0;
+	wc.hCursor       = LoadCursor (NULL,IDC_ARROW);
+	wc.hbrBackground = NULL;
+	wc.lpszMenuName  = 0;
+	wc.lpszClassName = "camera";
 
-    if (!RegisterClass (&wc) )
-        Error ("WCam_Register: failed");
+	if (!RegisterClass (&wc) )
+		Error ("WCam_Register: failed");
 }
 
 
@@ -1288,7 +1288,7 @@ void WCam_Create (HINSTANCE hInstance)
 	if (!camerawindow)
 		Error ("Couldn't create camerawindow");
 
-    ShowWindow (camerawindow, SW_SHOWDEFAULT);
+	ShowWindow (camerawindow, SW_SHOWDEFAULT);
 }
 
 
@@ -1317,7 +1317,7 @@ void AppRender( void )
 		frametime = 0.2;
 	lastTime = time;
 
-    if (!wglMakeCurrent( camdc, baseRC ))
+	if (!wglMakeCurrent( camdc, baseRC ))
 		Error ("wglMakeCurrent failed");
 
 	Cam_Update( frametime );
@@ -1358,7 +1358,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance
 	CommandLine()->CreateCmdLine( Plat_GetCommandLine() );
 
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
-    MSG        msg;
+	MSG        msg;
 
 	if (!lpCmdLine || !lpCmdLine[0])
 		Error ("No file specified");
@@ -1410,18 +1410,17 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance
 		ReadPortalFile(szTempCmd);
 	};
 
-    /* main window message loop */
+	/* main window message loop */
 	while (g_Active)
 	{
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-            TranslateMessage (&msg);
-            DispatchMessage (&msg);
+			TranslateMessage (&msg);
+			DispatchMessage (&msg);
 		}
 		AppRender();
 	}
 
-    /* return success of application */
-    return TRUE;
+	/* return success of application */
+	return TRUE;
 }
-

@@ -88,7 +88,7 @@ public:
 	void GibMonster( void );
 
 	Class_T Classify ( void ) { return CLASS_COMBINE; }
-			 
+
 	void CallDyingThink( void ) { DyingThink(); }
 
 	bool HasEnemy( void ) { return GetEnemy() != NULL; }
@@ -229,7 +229,7 @@ protected:
 	void			InputMoveSpecifiedSpeed( inputdata_t &inputdata );
 	void			InputSetAngles( inputdata_t &inputdata );	// Sets the angles of the helicopter
 
-protected:	
+protected:
 	// Custom conservative collision volumes
 	Vector			m_cullBoxMins;
 	Vector			m_cullBoxMaxs;
@@ -244,7 +244,7 @@ private:
 
 //-----------------------------------------------------------------------------
 // This entity is used to create little force spheres that the helicopter
-// should avoid. 
+// should avoid.
 //-----------------------------------------------------------------------------
 class CAvoidSphere : public CBaseEntity
 {
@@ -263,14 +263,14 @@ private:
 	typedef CHandle<CAvoidSphere> AvoidSphereHandle_t;
 
 	float m_flRadius;
-	
-	static CUtlVector< AvoidSphereHandle_t > s_AvoidSpheres; 
+
+	static CUtlVector< AvoidSphereHandle_t > s_AvoidSpheres;
 };
 
 
 //-----------------------------------------------------------------------------
 // This entity is used to create little force boxes that the helicopter
-// should avoid. 
+// should avoid.
 //-----------------------------------------------------------------------------
 class CAvoidBox : public CBaseEntity
 {
@@ -286,8 +286,8 @@ public:
 	static void ComputeAvoidanceForces( CBaseEntity *pEntity, float flEntityRadius, float flAvoidTime, Vector *pVecAvoidForce );
 
 private:
-	typedef CHandle<CAvoidBox> AvoidBoxHandle_t;	
-	static CUtlVector< AvoidBoxHandle_t > s_AvoidBoxes; 
+	typedef CHandle<CAvoidBox> AvoidBoxHandle_t;
+	static CUtlVector< AvoidBoxHandle_t > s_AvoidBoxes;
 };
 
 

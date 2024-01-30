@@ -53,7 +53,7 @@ END_DEFINE_LOGGING_CHANNEL();
 // Globals
 //////////////////////////////////////////////////////////////////////////
 
-// The index of the logging state used by the current thread.  This defaults to 0 across all threads, 
+// The index of the logging state used by the current thread.  This defaults to 0 across all threads,
 // which indicates that the global listener set should be used (CLoggingSystem::m_nGlobalStateIndex).
 //
 // NOTE:
@@ -92,12 +92,12 @@ CLoggingSystem *GetGlobalLoggingSystem()
 	return ( g_pGlobalLoggingSystem == NULL ) ? GetGlobalLoggingSystem_Internal() : g_pGlobalLoggingSystem;
 }
 
-CLoggingSystem::CLoggingSystem() : 
-m_nChannelCount( 0 ), 
+CLoggingSystem::CLoggingSystem() :
+m_nChannelCount( 0 ),
 m_nChannelTagCount( 0 ),
 m_nTagNamePoolIndex( 0 ),
 m_nGlobalStateIndex( 0 )
-{ 
+{
 	Assert( !g_bEnforceLoggingSystemSingleton );
 	g_bEnforceLoggingSystemSingleton = true;
 #if !defined( _PS3 ) && !defined(POSIX) && !defined(PLATFORM_WINDOWS)
@@ -179,8 +179,8 @@ LoggingChannelID_t CLoggingSystem::RegisterLoggingChannel( const char *pChannelN
 		m_RegisteredChannels[m_nChannelCount].m_MinimumSeverity = severity;
 		m_RegisteredChannels[m_nChannelCount].m_SpewColor = spewColor;
 		strncpy( m_RegisteredChannels[m_nChannelCount].m_Name, pChannelName, MAX_LOGGING_IDENTIFIER_LENGTH );
-		
-		if ( registerTagsFunc != NULL ) 
+
+		if ( registerTagsFunc != NULL )
 		{
 			registerTagsFunc();
 		}
@@ -211,9 +211,9 @@ void CLoggingSystem::AddTagToCurrentChannel( const char *pTagName )
 	{
 		return;
 	}
-	
+
 	LoggingTag_t *pTag = AllocTag( pTagName );
-	
+
 	pTag->m_pNextTag = pChannel->m_pFirstTag;
 	pChannel->m_pFirstTag = pTag;
 }
@@ -251,7 +251,7 @@ void CLoggingSystem::PushLoggingState( bool bThreadLocal, bool bClearState )
 		m_pStateMutex = new CThreadFastMutex();
 
 	m_pStateMutex->Lock();
-	
+
 	int nNewState = FindUnusedStateIndex();
 	// Ensure we're not out of state blocks.
 	Assert( nNewState != -1 );
@@ -261,7 +261,7 @@ void CLoggingSystem::PushLoggingState( bool bThreadLocal, bool bClearState )
 	if ( bClearState )
 	{
 		m_LoggingStates[nNewState].m_nListenerCount = 0;
-		m_LoggingStates[nNewState].m_pLoggingResponse = &m_DefaultLoggingResponse;	
+		m_LoggingStates[nNewState].m_pLoggingResponse = &m_DefaultLoggingResponse;
 	}
 	else
 	{
@@ -290,7 +290,7 @@ void CLoggingSystem::PopLoggingState( bool bThreadLocal )
 	m_pStateMutex->Lock();
 
 	int nCurrentState = bThreadLocal ? (int)g_nThreadLocalStateIndex : m_nGlobalStateIndex;
-	
+
 	// Shouldn't be less than 0 (implies error during Push()) or 0 (implies that Push() was never called)
 	Assert( nCurrentState > 0 );
 
@@ -413,7 +413,7 @@ LoggingResponse_t CLoggingSystem::LogDirect( LoggingChannelID_t channelID, Loggi
 	context.m_Flags = m_RegisteredChannels[channelID].m_Flags;
 	context.m_Severity = severity;
 	context.m_Color = ( color == UNSPECIFIED_LOGGING_COLOR ) ? m_RegisteredChannels[channelID].m_SpewColor : color;
-	
+
 	// It is assumed that the mutex is reentrant safe on all platforms.
 	if ( !m_pStateMutex )
 		m_pStateMutex = new CThreadFastMutex();
@@ -421,7 +421,7 @@ LoggingResponse_t CLoggingSystem::LogDirect( LoggingChannelID_t channelID, Loggi
 	m_pStateMutex->Lock();
 
 	LoggingState_t *pState = GetCurrentState();
-	
+
 	for ( int i = 0; i < pState->m_nListenerCount; ++ i )
 	{
 		pState->m_RegisteredListeners[i]->Log( &context, pMessage );
@@ -434,7 +434,7 @@ LoggingResponse_t CLoggingSystem::LogDirect( LoggingChannelID_t channelID, Loggi
 		sys_tty_write( SYS_TTYP15, pMessage, strlen( pMessage ), &unBytesWritten );
 	}
 #endif
-	
+
 	LoggingResponse_t response = pState->m_pLoggingResponse->OnLog( &context );
 
 	m_pStateMutex->Unlock();
@@ -518,10 +518,10 @@ CLoggingSystem::LoggingTag_t *CLoggingSystem::AllocTag( const char *pTagName )
 {
 	Assert( m_nChannelTagCount < MAX_LOGGING_TAG_COUNT );
 	LoggingTag_t *pTag = &m_ChannelTags[m_nChannelTagCount ++];
-	
+
 	pTag->m_pNextTag = NULL;
 	pTag->m_pTagName = m_TagNamePool + m_nTagNamePoolIndex;
-	
+
 	// Copy string into pool.
 	size_t nTagLength = strlen( pTagName );
 	Assert( m_nTagNamePoolIndex + nTagLength + 1 <= MAX_LOGGING_TAG_CHARACTER_COUNT );
@@ -660,7 +660,7 @@ LoggingResponse_t LoggingSystem_Log( LoggingChannelID_t channelID, LoggingSeveri
 	return GetGlobalLoggingSystem()->LogDirect( channelID, severity, UNSPECIFIED_LOGGING_COLOR, formattedMessage );
 }
 
-LoggingResponse_t LoggingSystem_Log( LoggingChannelID_t channelID, LoggingSeverity_t severity, Color spewColor, const char *pMessageFormat, ... ) 
+LoggingResponse_t LoggingSystem_Log( LoggingChannelID_t channelID, LoggingSeverity_t severity, Color spewColor, const char *pMessageFormat, ... )
 {
 	if ( !GetGlobalLoggingSystem()->IsChannelEnabled( channelID, severity ) )
 		return LR_CONTINUE;
@@ -682,7 +682,7 @@ LoggingResponse_t LoggingSystem_LogDirect( LoggingChannelID_t channelID, Logging
 	return GetGlobalLoggingSystem()->LogDirect( channelID, severity, spewColor, pMessage );
 }
 
-LoggingResponse_t LoggingSystem_LogAssert( const char *pMessageFormat, ... ) 
+LoggingResponse_t LoggingSystem_LogAssert( const char *pMessageFormat, ... )
 {
 	if ( !GetGlobalLoggingSystem()->IsChannelEnabled( LOG_ASSERT, LS_ASSERT ) )
 		return LR_CONTINUE;

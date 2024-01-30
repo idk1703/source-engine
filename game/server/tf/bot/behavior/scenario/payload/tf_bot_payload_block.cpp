@@ -48,7 +48,7 @@ ActionResult< CTFBot >	CTFBotPayloadBlock::Update( CTFBot *me, float interval )
 	if ( m_repathTimer.IsElapsed() )
 	{
 		VPROF_BUDGET( "CTFBotPayloadBlock::Update( repath )", "NextBot" );
-		
+
 		CTeamTrainWatcher *trainWatcher = TFGameRules()->GetPayloadToBlock( me->GetTeamNumber() );
 		if ( !trainWatcher )
 		{
@@ -148,4 +148,3 @@ QueryResultType CTFBotPayloadBlock::ShouldHurry( const INextBot *bot ) const
 	// hurry and block the cart - don't retreat, etc
 	return ANSWER_YES;
 }
-

@@ -102,7 +102,7 @@ class GDclass
 
 		inline const Vector &GetMins(void) { return(m_bmins); }
 		inline const Vector &GetMaxs(void) { return(m_bmaxs); }
-		
+
 		BOOL GetBoundBox(Vector& pfMins, Vector& pfMaxs);
 		bool HasBoundBox() const { return m_bGotSize; }
 
@@ -227,8 +227,8 @@ const char *GDclass::GetDescription(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszClass - 
+// Purpose:
+// Input  : pszClass -
 //-----------------------------------------------------------------------------
 bool GDclass::IsClass(const char *pszClass)
 {

@@ -56,7 +56,7 @@ void OnRenderCancelDialogButtonPressed( bool bConfirm, void *pContext )
 
 //-----------------------------------------------------------------------------
 
-CReplayRenderOverlay::CReplayRenderOverlay( Panel *pParent ) 
+CReplayRenderOverlay::CReplayRenderOverlay( Panel *pParent )
 :	BaseClass( pParent, "ReplayRenderOverlay" ),
 	m_pBottom( NULL ),
 	m_pCancelButton( NULL ),
@@ -262,7 +262,7 @@ void CReplayRenderOverlay::OnTick()
 				// @note Tom Bui: this is a horribly ugly hack, but the first couple of frames take a really freaking long time, so that
 				// really blows out the estimate
 				float flTimePassed = 0.0f;
-				++m_unNumFrames;				
+				++m_unNumFrames;
 				const uint32 kNumFramesToWait = 10;
 				if ( m_unNumFrames < kNumFramesToWait )
 				{
@@ -285,7 +285,7 @@ void CReplayRenderOverlay::OnTick()
 						m_flPreviousTimeLeft = kSmoothingFactor * flEstimatedTimeLeft + ( 1 - kSmoothingFactor ) * m_flPreviousTimeLeft;
 					}
 				}
-				
+
 				wchar_t wszTimeLeft[256];
 				wchar_t wszTime[256];
 				{

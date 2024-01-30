@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -26,7 +26,7 @@ class CTFBottle : public CTFWeaponBaseMelee
 public:
 
 	DECLARE_CLASS( CTFBottle, CTFWeaponBaseMelee );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFBottle();
@@ -56,7 +56,7 @@ class CTFStickBomb : public CTFBottle
 public:
 
 	DECLARE_CLASS( CTFStickBomb, CTFBottle );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFStickBomb();

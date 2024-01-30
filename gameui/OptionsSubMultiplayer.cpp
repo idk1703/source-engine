@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -95,7 +95,7 @@ static ColorItem_t itemlist[]=
 	{ "#Valve_Dkgray", 36, 36, 36 },
 };
 
-static ColorItem_t s_crosshairColors[] = 
+static ColorItem_t s_crosshairColors[] =
 {
 	{ "#Valve_Green",	50,		250,	50 },
 	{ "#Valve_Red",		250,	50,		50 },
@@ -168,7 +168,7 @@ void CrosshairImagePanelSimple::InitCrosshairSizeList()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CrosshairImagePanelSimple::InitCrosshairColorEntries()
 {
@@ -692,7 +692,7 @@ void CrosshairImagePanelCS::ApplyChanges()
 	m_pDotCheckbox->ApplyChanges();
 	m_pColorRSlider->ApplyChanges();
 	m_pColorGSlider->ApplyChanges();
- 	m_pColorBSlider->ApplyChanges();
+	m_pColorBSlider->ApplyChanges();
 	m_pColorAlphaSlider->ApplyChanges();
 	m_pSizeSlider->ApplyChanges();
 	m_pThicknessSlider->ApplyChanges();
@@ -734,7 +734,7 @@ private:
 	COptionsSubMultiplayer* m_pOptionsPanel;
 
 	// --- advanced crosshair controls
-	CCvarSlider *m_pAdvCrosshairRedSlider;		
+	CCvarSlider *m_pAdvCrosshairRedSlider;
 	CCvarSlider *m_pAdvCrosshairBlueSlider;
 	CCvarSlider *m_pAdvCrosshairGreenSlider;
 	CCvarSlider *m_pAdvCrosshairScaleSlider;
@@ -849,7 +849,7 @@ void CrosshairImagePanelAdvanced::Paint()
 
 	// scroll through all frames
 	if ( m_pFrameVar )
-	{	
+	{
 		float curtime = system()->GetFrameTime();
 
 		if ( curtime >= m_flNextFrameChange )
@@ -884,7 +884,7 @@ void CrosshairImagePanelAdvanced::Paint()
 	float x, y;
 
 	// assume square
-	float flDrawWidth = ( m_flScale/48.0 ) * (float)wide;	
+	float flDrawWidth = ( m_flScale/48.0 ) * (float)wide;
 	int flHalfWidth = (int)( flDrawWidth / 2 );
 
 	x = wide/2 - flHalfWidth;
@@ -948,7 +948,7 @@ void CrosshairImagePanelAdvanced::InitAdvCrosshairStyleList()
 
 	Q_snprintf( directory, sizeof( directory ), "materials/vgui/crosshairs/*.vtf" );
 	const char *fn = g_pFullFileSystem->FindFirst( directory, &fh );
-	int i = 0, initialItem = 0; 
+	int i = 0, initialItem = 0;
 	while (fn)
 	{
 		char filename[ 512 ];
@@ -1070,7 +1070,7 @@ void CrosshairImagePanelAdvanced::UpdateVisibility()
 //-----------------------------------------------------------------------------
 // Purpose: Basic help dialog
 //-----------------------------------------------------------------------------
-COptionsSubMultiplayer::COptionsSubMultiplayer(vgui::Panel *parent) : vgui::PropertyPage(parent, "OptionsSubMultiplayer") 
+COptionsSubMultiplayer::COptionsSubMultiplayer(vgui::Panel *parent) : vgui::PropertyPage(parent, "OptionsSubMultiplayer")
 {
 	Button *cancel = new Button( this, "Cancel", "#GameUI_Cancel" );
 	cancel->SetCommand( "Close" );
@@ -1102,7 +1102,7 @@ COptionsSubMultiplayer::COptionsSubMultiplayer(vgui::Panel *parent) : vgui::Prop
 	InitModelList( m_pModelList );
 
 	m_pLogoList = new CLabeledCommandComboBox( this, "SpraypaintList" );
-    m_LogoName[0] = 0;
+		m_LogoName[0] = 0;
 	InitLogoList( m_pLogoList );
 
 	m_pModelImage = new CBitmapImagePanel( this, "ModelImage", NULL );
@@ -1203,14 +1203,14 @@ COptionsSubMultiplayer::COptionsSubMultiplayer(vgui::Panel *parent) : vgui::Prop
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptionsSubMultiplayer::~COptionsSubMultiplayer()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::OnCommand( const char *command )
 {
@@ -1349,7 +1349,7 @@ void COptionsSubMultiplayer::OnFileSelected(const char *fullpath)
 #endif
 }
 
-struct ValveJpegErrorHandler_t 
+struct ValveJpegErrorHandler_t
 {
 	// The default manager
 	struct jpeg_error_mgr	m_Base;
@@ -1393,7 +1393,7 @@ void COptionsSubMultiplayer::InitLogoList( CLabeledCommandComboBox *cb )
 	const char *logofile = cl_logofile.GetString();
 	Q_snprintf( directory, sizeof( directory ), "materials/vgui/logos/*.vtf" );
 	const char *fn = g_pFullFileSystem->FindFirst( directory, &fh );
-	int i = 0, initialItem = 0; 
+	int i = 0, initialItem = 0;
 	while (fn)
 	{
 		char filename[ 512 ];
@@ -1530,19 +1530,19 @@ void FindVMTFilesInFolder( const char *pFolder, const char *pFolderName, CLabele
 				// strip off the extension
 				Q_strncpy( displayname, fn, sizeof( displayname ) );
 				StripStringOutOfString( MODEL_MATERIAL_BASE_FOLDER, filename, texturepath );
-				
+
 				displayname[ strlen( displayname ) - 4 ] = 0;
-				
+
 				if ( CORRECT_PATH_SEPARATOR == texturepath[0] )
-				    cb->AddItem( displayname, texturepath + 1 ); // ignore the initial "/" in texture path
+						cb->AddItem( displayname, texturepath + 1 ); // ignore the initial "/" in texture path
 				else
-				    cb->AddItem( displayname, texturepath );
+						cb->AddItem( displayname, texturepath );
 
 
 				char realname[ 512 ];
 				Q_FileBase( modelfile, realname, sizeof( realname ) );
 				Q_FileBase( filename, filename, sizeof( filename ) );
-				
+
 				if (!stricmp(filename, realname))
 				{
 					iInitialItem = iCount;
@@ -1570,7 +1570,7 @@ void COptionsSubMultiplayer::InitModelList( CLabeledCommandComboBox *cb )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::RemapLogo()
 {
@@ -1613,12 +1613,12 @@ void COptionsSubMultiplayer::RemapLogo()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::RemapModel()
 {
 	const char *pModelName = m_pModelList->GetActiveItemCommand();
-	
+
 	if( pModelName == NULL )
 		return;
 
@@ -1640,7 +1640,7 @@ void COptionsSubMultiplayer::OnTextChanged(vgui::Panel *panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::OnControlModified()
 {
@@ -1654,17 +1654,17 @@ void COptionsSubMultiplayer::OnControlModified()
 #define PLATE_HUE_START 160
 #define PLATE_HUE_END 191
 
-#ifdef POSIX 
-typedef struct tagRGBQUAD { 
-  uint8 rgbBlue;
-  uint8 rgbGreen;
-  uint8 rgbRed;
-  uint8 rgbReserved;
+#ifdef POSIX
+typedef struct tagRGBQUAD {
+	uint8 rgbBlue;
+	uint8 rgbGreen;
+	uint8 rgbRed;
+	uint8 rgbReserved;
 } RGBQUAD;
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void PaletteHueReplace( RGBQUAD *palSrc, int newHue, int Start, int end )
 {
@@ -1680,10 +1680,10 @@ static void PaletteHueReplace( RGBQUAD *palSrc, int newHue, int Start, int end )
 		b = palSrc[ i ].rgbBlue;
 		g = palSrc[ i ].rgbGreen;
 		r = palSrc[ i ].rgbRed;
-		
+
 		maxcol = max( max( r, g ), b ) / 255.0f;
 		mincol = min( min( r, g ), b ) / 255.0f;
-		
+
 		val = maxcol;
 		sat = (maxcol - mincol) / maxcol;
 
@@ -1739,12 +1739,12 @@ static void PaletteHueReplace( RGBQUAD *palSrc, int newHue, int Start, int end )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::ColorForName( char const *pszColorName, int&r, int&g, int&b )
 {
 	r = g = b = 0;
-	
+
 	int count = sizeof( itemlist ) / sizeof( itemlist[0] );
 
 	for ( int i = 0; i < count; i++ )
@@ -1760,7 +1760,7 @@ void COptionsSubMultiplayer::ColorForName( char const *pszColorName, int&r, int&
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::OnResetData()
 {
@@ -1793,7 +1793,7 @@ void COptionsSubMultiplayer::OnResetData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMultiplayer::OnApplyChanges()
 {
@@ -1801,7 +1801,7 @@ void COptionsSubMultiplayer::OnApplyChanges()
 	m_pSecondaryColorSlider->ApplyChanges();
 //	m_pModelList->ApplyChanges();
 	m_pLogoList->ApplyChanges();
-    m_pLogoList->GetText(m_LogoName, sizeof(m_LogoName));
+		m_pLogoList->GetText(m_LogoName, sizeof(m_LogoName));
 	m_pHighQualityModelCheckBox->ApplyChanges();
 
 	for ( int i=0; i<m_cvarToggleCheckButtons.GetCount(); ++i )
@@ -1837,7 +1837,7 @@ void COptionsSubMultiplayer::OnApplyChanges()
 	{
 		Q_strncpy( m_ModelName, m_pModelList->GetActiveItemCommand(), sizeof( m_ModelName ) );
 		Q_StripExtension( m_ModelName, m_ModelName, sizeof ( m_ModelName ) );
-		
+
 		// save the player model name
 		Q_snprintf(cmd, sizeof(cmd), "cl_playermodel models/%s.mdl\n", m_ModelName );
 		engine->ClientCmd_Unrestricted(cmd);
@@ -1851,7 +1851,7 @@ void COptionsSubMultiplayer::OnApplyChanges()
 	if ( m_pDownloadFilterCombo )
 	{
 		ConVarRef  cl_downloadfilter( "cl_downloadfilter" );
-		
+
 		switch ( m_pDownloadFilterCombo->GetActiveItem() )
 		{
 		default:
@@ -1887,4 +1887,3 @@ Panel *COptionsSubMultiplayer::CreateControlByName( const char *controlName )
 		return BaseClass::CreateControlByName( controlName );
 	}
 }
-

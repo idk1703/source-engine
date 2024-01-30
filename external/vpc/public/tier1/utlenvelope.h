@@ -200,7 +200,7 @@ template <typename T>
 inline CUtlEnvelope<T>::CUtlEnvelope( const CUtlEnvelope<T> &from )
 	: CUtlDataEnvelope( from )
 {
-	
+
 }
 
 template <typename T>

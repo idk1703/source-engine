@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -33,7 +33,7 @@ public:
 	virtual bool			Init( const char *platformName );
 	virtual bool			DirectInit( const char *subDirectoryUnderValve );
 	virtual void			Shutdown( void );
-	
+
 	virtual int				ReadInt( const char *key, int defaultValue = 0);
 	virtual void			WriteInt( const char *key, int value );
 
@@ -120,7 +120,7 @@ void CRegistry::WriteString( const char *pKeyBase, const char *pKey, const char 
 #ifndef POSIX
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRegistry::CRegistry( void )
 {
@@ -130,7 +130,7 @@ CRegistry::CRegistry( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRegistry::~CRegistry( void )
 {
@@ -138,8 +138,8 @@ CRegistry::~CRegistry( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Read integer from registry
-// Input  : *key - 
-//			defaultValue - 
+// Input  : *key -
+//			defaultValue -
 // Output : int
 //-----------------------------------------------------------------------------
 int CRegistry::ReadInt( const char *key, int defaultValue /*= 0*/ )
@@ -176,13 +176,13 @@ int CRegistry::ReadInt( const char *key, int defaultValue /*= 0*/ )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save integer to registry
-// Input  : *key - 
-//			value - 
+// Input  : *key -
+//			value -
 //-----------------------------------------------------------------------------
 void CRegistry::WriteInt( const char *key, int value )
 {
 	// Size of element data
-	DWORD dwSize;           
+	DWORD dwSize;
 
 	if ( !m_bValid )
 	{
@@ -202,17 +202,17 @@ void CRegistry::WriteInt( const char *key, int value )
 
 //-----------------------------------------------------------------------------
 // Purpose: Read string value from registry
-// Input  : *key - 
-//			*defaultValue - 
+// Input  : *key -
+//			*defaultValue -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CRegistry::ReadString( const char *key, const char *defaultValue /* = NULL */ )
 {
-	LONG lResult;        
+	LONG lResult;
 	// Type of key
-	DWORD dwType;        
+	DWORD dwType;
 	// Size of element data
-	DWORD dwSize = 512;           
+	DWORD dwSize = 512;
 
 	static char value[ 512 ];
 
@@ -231,7 +231,7 @@ const char *CRegistry::ReadString( const char *key, const char *defaultValue /* 
 		(unsigned char *)value,    // data buffer
 		&dwSize );  // size of data buffer
 
-	if ( lResult != ERROR_SUCCESS ) 
+	if ( lResult != ERROR_SUCCESS )
 	{
 		return defaultValue;
 	}
@@ -246,8 +246,8 @@ const char *CRegistry::ReadString( const char *key, const char *defaultValue /* 
 
 //-----------------------------------------------------------------------------
 // Purpose: Save string to registry
-// Input  : *key - 
-//			*value - 
+// Input  : *key -
+//			*value -
 //-----------------------------------------------------------------------------
 void CRegistry::WriteString( const char *key, const char *value )
 {
@@ -281,12 +281,12 @@ bool CRegistry::DirectInit( const char *subDirectoryUnderValve )
 	wsprintf( szModelKey, "Software\\Valve\\%s", subDirectoryUnderValve );
 
 	lResult = VCRHook_RegCreateKeyEx(
-		HKEY_CURRENT_USER,	// handle of open key 
-		szModelKey,			// address of name of subkey to open 
-		0ul,					// DWORD ulOptions,	  // reserved 
+		HKEY_CURRENT_USER,	// handle of open key
+		szModelKey,			// address of name of subkey to open
+		0ul,					// DWORD ulOptions,	  // reserved
 		NULL,			// Type of value
 		REG_OPTION_NON_VOLATILE, // Store permanently in reg.
-		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask 
+		KEY_ALL_ACCESS,		// REGSAM samDesired, // security access mask
 		NULL,
 		&m_hKey,				// Key we are creating
 		&dwDisposition );    // Type of creation
@@ -296,7 +296,7 @@ bool CRegistry::DirectInit( const char *subDirectoryUnderValve )
 		m_bValid = false;
 		return false;
 	}
-	
+
 	// Success
 	m_bValid = true;
 	return true;
@@ -313,7 +313,7 @@ bool CRegistry::Init( const char *platformName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRegistry::Shutdown( void )
 {
@@ -333,7 +333,7 @@ void CRegistry::Shutdown( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRegistry::CRegistry( void )
 {
@@ -342,7 +342,7 @@ CRegistry::CRegistry( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRegistry::~CRegistry( void )
 {
@@ -350,8 +350,8 @@ CRegistry::~CRegistry( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Read integer from registry
-// Input  : *key - 
-//			defaultValue - 
+// Input  : *key -
+//			defaultValue -
 // Output : int
 //-----------------------------------------------------------------------------
 int CRegistry::ReadInt( const char *key, int defaultValue /*= 0*/ )
@@ -361,8 +361,8 @@ int CRegistry::ReadInt( const char *key, int defaultValue /*= 0*/ )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save integer to registry
-// Input  : *key - 
-//			value - 
+// Input  : *key -
+//			value -
 //-----------------------------------------------------------------------------
 void CRegistry::WriteInt( const char *key, int value )
 {
@@ -370,8 +370,8 @@ void CRegistry::WriteInt( const char *key, int value )
 
 //-----------------------------------------------------------------------------
 // Purpose: Read string value from registry
-// Input  : *key - 
-//			*defaultValue - 
+// Input  : *key -
+//			*defaultValue -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CRegistry::ReadString( const char *key, const char *defaultValue /* = NULL */ )
@@ -381,8 +381,8 @@ const char *CRegistry::ReadString( const char *key, const char *defaultValue /* 
 
 //-----------------------------------------------------------------------------
 // Purpose: Save string to registry
-// Input  : *key - 
-//			*value - 
+// Input  : *key -
+//			*value -
 //-----------------------------------------------------------------------------
 void CRegistry::WriteString( const char *key, const char *value )
 {
@@ -407,7 +407,7 @@ bool CRegistry::Init( const char *platformName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRegistry::Shutdown( void )
 {
@@ -418,4 +418,3 @@ void CRegistry::Shutdown( void )
 	m_bValid = false;
 }
 #endif // POSIX
-

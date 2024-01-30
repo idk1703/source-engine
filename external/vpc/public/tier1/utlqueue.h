@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "utlvector.h"
 
 // T is the type stored in the queue
-template< class T, class M = CUtlMemory< T > > 
+template< class T, class M = CUtlMemory< T > >
 class CUtlQueue
 {
 public:
@@ -48,7 +48,7 @@ public:
 
 	// Returns the count of elements in the queue
 	int			Count() const { return m_heap.Count(); }
-	
+
 	// Is element index valid?
 	bool IsIdxValid( int i ) const;
 
@@ -85,7 +85,7 @@ inline CUtlQueue<T, M>::CUtlQueue( int growSize, int initSize ) :
 }
 
 template< class T, class M >
-inline CUtlQueue<T, M>::CUtlQueue( T *pMemory, int numElements )	: 
+inline CUtlQueue<T, M>::CUtlQueue( T *pMemory, int numElements )	:
 	m_heap(pMemory, numElements)
 {
 }
@@ -133,7 +133,7 @@ inline T const& CUtlQueue<T, M>::RemoveAtHead()
 {
 	m_current = m_heap[0];
 	m_heap.Remove((int)0);
-	return m_current; 
+	return m_current;
 }
 
 template <class T, class M>
@@ -141,21 +141,21 @@ inline T const& CUtlQueue<T, M>::RemoveAtTail()
 {
 	m_current = m_heap[ m_heap.Count() - 1 ];
 	m_heap.Remove((int)(m_heap.Count() - 1));
-	return m_current; 
+	return m_current;
 }
 
 template <class T, class M>
 inline T const& CUtlQueue<T, M>::Head()
 {
 	m_current = m_heap[0];
-	return m_current; 
+	return m_current;
 }
 
 template <class T, class M>
 inline T const& CUtlQueue<T, M>::Tail()
 {
 	m_current = m_heap[ m_heap.Count() - 1 ];
-	return m_current; 
+	return m_current;
 }
 
 template <class T, class M>

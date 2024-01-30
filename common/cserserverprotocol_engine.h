@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -63,7 +63,7 @@
 		//  string gamedir
 		//  float( enginetimestamp )
 		//  u8 messagetype:
-		//    1:  engine startup 
+		//    1:  engine startup
 		//    2:  engine shutdown
 		//    3:  map started + mapname
 		//    4:  map finished + mapname
@@ -97,7 +97,7 @@
 		//		u32	DXVendorID
 		//		u32 DXDeviceID
 		//		string(OSVer)
-		
+
 		// Version 2+:
 		//	{
 		//			reporttype(char 32)

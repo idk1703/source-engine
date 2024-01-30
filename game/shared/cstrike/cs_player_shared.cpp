@@ -567,7 +567,7 @@ void CCSPlayer::FireBullet(
 		// [pfreese] Check if enemy players were killed by this bullet, and if so,
 		// add them to the iPenetrationKills count
 		//=============================================================================
-		
+
 		CBaseEntity *pEntity = tr.m_pEnt;
 
 		CTakeDamageInfo info( pevAttacker, pevAttacker, fCurrentDamage, iDamageType );
@@ -584,7 +584,7 @@ void CCSPlayer::FireBullet(
 		{
 			++iPenetrationKills;
 		}
-		
+
 		//=============================================================================
 		// HPE_END
 		//=============================================================================
@@ -669,12 +669,12 @@ void CCSPlayer::FireBullet(
 	// [pfreese] If we killed at least two enemies with a single bullet, award the
 	// TWO_WITH_ONE_SHOT achievement
 	//=============================================================================
-	
+
 	if (iPenetrationKills >= 2)
 	{
 		AwardAchievement(CSKillTwoWithOneShot);
 	}
-	
+
 	//=============================================================================
 	// HPE_END
 	//=============================================================================
@@ -687,7 +687,7 @@ void CCSPlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOrigi
 	float speedSqr = vecVelocity.AsVector2D().LengthSqr();
 
 	// the fastest walk is 135 ( scout ), see CCSGameMovement::CheckParameters()
-	if ( speedSqr < 150.0 * 150.0 ) 
+	if ( speedSqr < 150.0 * 150.0 )
 		return; // player is not running, no footsteps
 
 	BaseClass::UpdateStepSound( psurface, vecOrigin, vecVelocity  );
@@ -939,5 +939,3 @@ surfacedata_t * CCSPlayer::GetFootstepSurface( const Vector &origin, const char 
 }
 
 #endif
-
-

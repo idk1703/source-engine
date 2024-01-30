@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -30,7 +30,7 @@ void SaveVertexNormals( void )
 			{
 				Error( "g_numvertnormalindices == MAX_MAP_VERTNORMALINDICES (%d)", MAX_MAP_VERTNORMALINDICES );
 			}
-			
+
 			g_vertnormalindices[g_numvertnormalindices] = g_numvertnormals;
 			g_numvertnormalindices++;
 		}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -61,24 +61,24 @@ struct BasicGameStatsRecord_t
 {
 public:
 	BasicGameStatsRecord_t() :
-	  m_nCount( 0 ),
-		  m_nSeconds( 0 ),
-		  m_nCommentary( 0 ),
-		  m_nHDR( 0 ),
-		  m_nCaptions( 0 ),
-		  m_bSteam( true ),
-		  m_bCyberCafe( false ),
-		  m_nDeaths( 0 )
-	  {
-		  Q_memset( m_nSkill, 0, sizeof( m_nSkill ) );
-	  }
+	m_nCount( 0 ),
+		m_nSeconds( 0 ),
+		m_nCommentary( 0 ),
+		m_nHDR( 0 ),
+		m_nCaptions( 0 ),
+		m_bSteam( true ),
+		m_bCyberCafe( false ),
+		m_nDeaths( 0 )
+	{
+		Q_memset( m_nSkill, 0, sizeof( m_nSkill ) );
+	}
 
-	  void		Clear();
+	void		Clear();
 
-	  void		SaveToBuffer( CUtlBuffer& buf );
-	  bool		ParseFromBuffer( CUtlBuffer& buf, int iBufferStatsVersion );
+	void		SaveToBuffer( CUtlBuffer& buf );
+	bool		ParseFromBuffer( CUtlBuffer& buf, int iBufferStatsVersion );
 
-	  // Data
+	// Data
 public:
 	int			m_nCount;
 	int			m_nSeconds;
@@ -96,22 +96,22 @@ struct BasicGameStats_t
 {
 public:
 	BasicGameStats_t() :
-		  m_nSecondsToCompleteGame( 0 ),
-		  m_nHL2ChaptureUnlocked( 0 ),
-		  m_bSteam( true ),
-		  m_bCyberCafe( false ),
-		  m_nDXLevel( 0 )
-	  {
-	  }
+		m_nSecondsToCompleteGame( 0 ),
+		m_nHL2ChaptureUnlocked( 0 ),
+		m_bSteam( true ),
+		m_bCyberCafe( false ),
+		m_nDXLevel( 0 )
+	{
+	}
 
-	  void						Clear();
+	void						Clear();
 
-	  void						SaveToBuffer( CUtlBuffer& buf );
-	  bool						ParseFromBuffer( CUtlBuffer& buf, int iBufferStatsVersion );
+	void						SaveToBuffer( CUtlBuffer& buf );
+	bool						ParseFromBuffer( CUtlBuffer& buf, int iBufferStatsVersion );
 
-	  BasicGameStatsRecord_t	*FindOrAddRecordForMap( char const *mapname );
+	BasicGameStatsRecord_t	*FindOrAddRecordForMap( char const *mapname );
 
-	  // Data
+	// Data
 public:
 	int							m_nSecondsToCompleteGame; // 0 means they haven't finished playing yet
 
@@ -124,14 +124,14 @@ public:
 };
 #endif // GAME_DLL
 
-class CBaseGameStats 
+class CBaseGameStats
 {
 public:
 	CBaseGameStats();
 
 	// override this to declare what format you want to send.  New products should use new format.
-	virtual bool UseOldFormat() 
-	{ 
+	virtual bool UseOldFormat()
+	{
 #ifdef GAME_DLL
 		return true;		// servers by default send old format for backward compat
 #else
@@ -175,7 +175,7 @@ public:
 	void		SendData();
 
 	void StatsLog( PRINTF_FORMAT_STRING char const *fmt, ... );
-	
+
 	// This is the first call made, so that we can "subclass" the CBaseGameStats based on gamedir as needed (e.g., ep2 vs. episodic)
 	virtual CBaseGameStats *OnInit( CBaseGameStats *pCurrentGameStats, char const *gamedir ) { return pCurrentGameStats; }
 
@@ -187,7 +187,7 @@ public:
 	virtual bool HaveValidData( void ) { return true; } // whether we currently have an interesting enough data set to upload.  Called at upload time; if false, data is not uploaded.
 
 	virtual bool ShouldTrackStandardStats( void ) { return true; } //exactly what was tracked for EP1 release
-	
+
 	//Get mod specific strings used for tracking, defaults should work fine for most cases
 	virtual const char *GetStatSaveFileName( void );
 	virtual const char *GetStatUploadRegistryKeyName( void );
@@ -200,7 +200,7 @@ public:
 #endif
 
 #ifdef GAME_DLL
-	virtual void Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDamageInfo &info );	
+	virtual void Event_PlayerKilled( CBasePlayer *pPlayer, const CTakeDamageInfo &info );
 	virtual void Event_PlayerConnected( CBasePlayer *pBasePlayer );
 	virtual void Event_PlayerDisconnected( CBasePlayer *pBasePlayer );
 	virtual void Event_PlayerDamage( CBasePlayer *pBasePlayer, const CTakeDamageInfo &info );
@@ -220,20 +220,20 @@ public:
 	virtual void Event_DecrementPlayerEnteredNoClip( CBasePlayer *pBasePlayer );
 	virtual void Event_IncrementCountedStatistic( const Vector& vecAbsOrigin, char const *pchStatisticName, float flIncrementAmount );
 
-    //=============================================================================
-    // HPE_BEGIN
-    // [dwenger] Functions necessary for cs-specific stats
-    //=============================================================================
-    virtual void Event_WindowShattered( CBasePlayer *pPlayer );
-    //=============================================================================
-    // HPE_END
-    //=============================================================================
+	//=============================================================================
+	// HPE_BEGIN
+	// [dwenger] Functions necessary for cs-specific stats
+	//=============================================================================
+	virtual void Event_WindowShattered( CBasePlayer *pPlayer );
+	//=============================================================================
+	// HPE_END
+	//=============================================================================
 
 	//custom data to tack onto existing stats if you're not doing a complete overhaul
 	virtual void AppendCustomDataToSaveBuffer( CUtlBuffer &SaveBuffer ) { } //custom data you want thrown into the default save and upload path
 	virtual void LoadCustomDataFromBuffer( CUtlBuffer &LoadBuffer ) { }; //when loading the saved stats file, this will point to where you started saving data to the save buffer
 
-	virtual void LoadingEvent_PlayerIDDifferentThanLoadedStats( void ); //Only called if you use the base SaveToFileNOW() and LoadFromFile() functions. Used in case you want to keep/invalidate data that was just loaded. 
+	virtual void LoadingEvent_PlayerIDDifferentThanLoadedStats( void ); //Only called if you use the base SaveToFileNOW() and LoadFromFile() functions. Used in case you want to keep/invalidate data that was just loaded.
 
 	virtual bool LoadFromFile( void ); //called just before Event_Init()
 	virtual bool SaveToFileNOW( bool bForceSyncWrite = false ); //saves buffers to their respective files now, returns success or failure
@@ -277,10 +277,10 @@ public:
 #ifdef GAME_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &SaveBuffer - 
-//			iLump - 
-//			iLumpCount - 
+// Purpose:
+// Input  : &SaveBuffer -
+//			iLump -
+//			iLumpCount -
 //-----------------------------------------------------------------------------
 inline bool CBaseGameStats::AppendLump( int nMaxLumpCount, CUtlBuffer &SaveBuffer, unsigned short iLump, unsigned short iLumpCount, size_t nSize, void *pData )
 {
@@ -305,10 +305,10 @@ inline bool CBaseGameStats::AppendLump( int nMaxLumpCount, CUtlBuffer &SaveBuffe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &LoadBuffer - 
-//			&iLump - 
-//			&iLumpCount - 
+// Purpose:
+// Input  : &LoadBuffer -
+//			&iLump -
+//			&iLumpCount -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 inline bool CBaseGameStats::GetLumpHeader( int nMaxLumpCount, CUtlBuffer &LoadBuffer, unsigned short &iLump, unsigned short &iLumpCount, bool bPermissive /*= false*/ )

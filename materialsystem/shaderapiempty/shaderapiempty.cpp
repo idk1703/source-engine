@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -57,18 +57,18 @@ public:
 
 	// Sets the primitive type
 	void SetPrimitiveType( MaterialPrimitiveType_t type );
-	 
+
 	// Draws the entire mesh
 	void Draw(int firstIndex, int numIndices);
 
 	void Draw(CPrimList *pPrims, int nPrims);
 
 	// Copy verts and/or indices to a mesh builder. This only works for temp meshes!
-	virtual void CopyToMeshBuilder( 
+	virtual void CopyToMeshBuilder(
 		int iStartVert,		// Which vertices to copy.
-		int nVerts, 
+		int nVerts,
 		int iStartIndex,	// Which indices to copy.
-		int nIndices, 
+		int nIndices,
 		int indexOffset,	// This is added to each index.
 		CMeshBuilder &builder );
 
@@ -134,7 +134,7 @@ public:
 	void EnableDepthTest( bool bEnable );
 	void EnablePolyOffset( PolygonOffsetMode_t nOffsetMode );
 
-	// Suppresses/activates color writing 
+	// Suppresses/activates color writing
 	void EnableColorWrites( bool bEnable );
 	void EnableAlphaWrites( bool bEnable );
 
@@ -151,7 +151,7 @@ public:
 
 	// Back face culling
 	void EnableCulling( bool bEnable );
-	
+
 	// constant color + transparency
 	void EnableConstantColor( bool bEnable );
 
@@ -159,9 +159,9 @@ public:
 	// The flags to pass in here come from the VertexFormatFlags_t enum
 	// If pTexCoordDimensions is *not* specified, we assume all coordinates
 	// are 2-dimensional
-	void VertexShaderVertexFormat( unsigned int nFlags, 
+	void VertexShaderVertexFormat( unsigned int nFlags,
 		int nTexCoordCount, int* pTexCoordDimensions, int nUserDataSize );
-	
+
 	// Indicates we're going to light the model
 	void EnableLighting( bool bEnable );
 	void EnableSpecular( bool bEnable );
@@ -179,7 +179,7 @@ public:
 	// Can be used to specify different operation per channel (alpha/color)...
 	void EnableCustomPixelPipe( bool bEnable );
 	void CustomTextureStages( int stageCount );
-	void CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel, 
+	void CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel,
 		ShaderTexOp_t op, ShaderTexArg_t arg1, ShaderTexArg_t arg2 );
 
 	// indicates what per-vertex data we're providing
@@ -249,12 +249,12 @@ public:
 	{
 	}
 
-	virtual void ExecuteCommandBuffer( uint8 *pBuf ) 
+	virtual void ExecuteCommandBuffer( uint8 *pBuf )
 	{
 	}
 	// Alpha to coverage
 	void EnableAlphaToCoverage( bool bEnable );
-	
+
 	virtual void SetShadowDepthFiltering( Sampler_t stage )
 	{
 	}
@@ -326,7 +326,7 @@ private:
 static CShaderDeviceEmpty s_ShaderDeviceEmpty;
 
 // FIXME: Remove; it's for backward compat with the materialsystem only for now
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderDeviceEmpty, IShaderDevice, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderDeviceEmpty, IShaderDevice,
 								  SHADER_DEVICE_INTERFACE_VERSION, s_ShaderDeviceEmpty )
 
 
@@ -359,7 +359,7 @@ public:
 
 static CShaderDeviceMgrEmpty s_ShaderDeviceMgrEmpty;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderDeviceMgrEmpty, IShaderDeviceMgr, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderDeviceMgrEmpty, IShaderDeviceMgr,
 								  SHADER_DEVICE_MGR_INTERFACE_VERSION, s_ShaderDeviceMgrEmpty )
 
 
@@ -577,15 +577,15 @@ public:
 	virtual MaterialFogMode_t GetSceneFogMode( );
 	virtual int GetPixelFogCombo( );
 
-	void SetHeightClipZ( float z ); 
-	void SetHeightClipMode( enum MaterialHeightClipMode_t heightClipMode ); 
+	void SetHeightClipZ( float z );
+	void SetHeightClipMode( enum MaterialHeightClipMode_t heightClipMode );
 
 	void SetClipPlane( int index, const float *pPlane );
 	void EnableClipPlane( int index, bool bEnable );
 
 	void SetFastClipPlane( const float *pPlane );
 	void EnableFastClip( bool bEnable );
-	
+
 	// We use smaller dynamic VBs during level transitions, to free up memory
 	virtual int  GetCurrentDynamicVBSize( void );
 	virtual void DestroyVertexBuffers( bool bExitingLevel = false );
@@ -650,44 +650,44 @@ public:
 	void ModifyTexture( ShaderAPITextureHandle_t textureHandle );
 
 	// Texture management methods
-	void TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height, 
+	void TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height,
 							 ImageFormat srcFormat, bool bSrcIsTiled, void *imageData );
 	void TexSubImage2D( int level, int cubeFace, int xOffset, int yOffset, int zOffset, int width, int height,
 							 ImageFormat srcFormat, int srcStride, bool bSrcIsTiled, void *imageData );
 
 	void TexImageFromVTF( IVTFTexture *pVTF, int iVTFFrame );
 
-	bool TexLock( int level, int cubeFaceID, int xOffset, int yOffset, 
+	bool TexLock( int level, int cubeFaceID, int xOffset, int yOffset,
 									int width, int height, CPixelWriter& writer );
 	void TexUnlock( );
-	
+
 	// These are bound to the texture, not the texture environment
 	void TexMinFilter( ShaderTexFilterMode_t texFilterMode );
 	void TexMagFilter( ShaderTexFilterMode_t texFilterMode );
 	void TexWrap( ShaderTexCoordComponent_t coord, ShaderTexWrapMode_t wrapMode );
-	void TexSetPriority( int priority );	
+	void TexSetPriority( int priority );
 
-	ShaderAPITextureHandle_t CreateTexture( 
-		int width, 
+	ShaderAPITextureHandle_t CreateTexture(
+		int width,
 		int height,
 		int depth,
-		ImageFormat dstImageFormat, 
-		int numMipLevels, 
-		int numCopies, 
-		int flags, 
+		ImageFormat dstImageFormat,
+		int numMipLevels,
+		int numCopies,
+		int flags,
 		const char *pDebugName,
 		const char *pTextureGroupName );
 	// Create a multi-frame texture (equivalent to calling "CreateTexture" multiple times, but more efficient)
-	void CreateTextures( 
+	void CreateTextures(
 		ShaderAPITextureHandle_t *pHandles,
 		int count,
-		int width, 
+		int width,
 		int height,
 		int depth,
-		ImageFormat dstImageFormat, 
-		int numMipLevels, 
-		int numCopies, 
-		int flags, 
+		ImageFormat dstImageFormat,
+		int numMipLevels,
+		int numCopies,
+		int flags,
 		const char *pDebugName,
 		const char *pTextureGroupName );
 	ShaderAPITextureHandle_t CreateDepthTexture( ImageFormat renderFormat, int width, int height, const char *pDebugName, bool bTexture );
@@ -802,7 +802,7 @@ public:
 	virtual bool PreferReducedFillrate() const;
 	bool HasProjectedBumpEnv() const;
 	void ForceHardwareSync( void );
-	
+
 	int GetCurrentNumBones( void ) const;
 	bool IsHWMorphingEnabled( void ) const;
 	int GetCurrentLightCombo( void ) const;
@@ -829,7 +829,7 @@ public:
 	virtual void SetStandardVertexShaderConstants( float fOverbright )
 	{
 	}
-	
+
 	// Level of anisotropic filtering
 	virtual void SetAnisotropicLevel( int nAnisotropyLevel );
 
@@ -951,13 +951,13 @@ public:
 	{
 	}
 
-	virtual const FlashlightState_t &GetFlashlightState( VMatrix &worldToTexture ) const 
+	virtual const FlashlightState_t &GetFlashlightState( VMatrix &worldToTexture ) const
 	{
 		static FlashlightState_t  blah;
 		return blah;
 	}
 
-	virtual const FlashlightState_t &GetFlashlightStateEx( VMatrix &worldToTexture, ITexture **pFlashlightDepthTexture ) const 
+	virtual const FlashlightState_t &GetFlashlightStateEx( VMatrix &worldToTexture, ITexture **pFlashlightDepthTexture ) const
 	{
 		static FlashlightState_t  blah;
 		return blah;
@@ -1032,7 +1032,7 @@ public:
 	{
 	}
 
-	// Lets the shader know about the full-screen texture so it can 
+	// Lets the shader know about the full-screen texture so it can
 	virtual void SetFullScreenTextureHandle( ShaderAPITextureHandle_t h )
 	{
 	}
@@ -1204,12 +1204,12 @@ public:
 	virtual bool GetHDREnabled( void ) const { return true; }
 	virtual void SetHDREnabled( bool bEnable ) {}
 
-	virtual void CopyRenderTargetToScratchTexture( ShaderAPITextureHandle_t srcRt, ShaderAPITextureHandle_t dstTex, Rect_t *pSrcRect = NULL, Rect_t *pDstRect = NULL ) 
+	virtual void CopyRenderTargetToScratchTexture( ShaderAPITextureHandle_t srcRt, ShaderAPITextureHandle_t dstTex, Rect_t *pSrcRect = NULL, Rect_t *pDstRect = NULL )
 	{
 	}
 
 	// Allows locking and unlocking of very specific surface types.
-	virtual void LockRect( void** pOutBits, int* pOutPitch, ShaderAPITextureHandle_t texHandle, int mipmap, int x, int y, int w, int h, bool bWrite, bool bRead ) 
+	virtual void LockRect( void** pOutBits, int* pOutPitch, ShaderAPITextureHandle_t texHandle, int mipmap, int x, int y, int w, int h, bool bWrite, bool bRead )
 	{
 	}
 
@@ -1222,7 +1222,7 @@ public:
 	virtual void TexLodBias( float bias ) {}
 
 	virtual void CopyTextureToTexture( ShaderAPITextureHandle_t srcTex, ShaderAPITextureHandle_t dstTex ) {}
-	
+
 	void PrintfVA( char *fmt, va_list vargs ) {}
 	void Printf( const char *fmt, ... ) {}
 	float Knob( char *knobname, float *setvalue = NULL ) { return 0.0f; };
@@ -1254,16 +1254,16 @@ static CShaderAPIEmpty g_ShaderAPIEmpty;
 static CShaderShadowEmpty g_ShaderShadow;
 
 // FIXME: Remove; it's for backward compat with the materialsystem only for now
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIEmpty, IShaderAPI, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIEmpty, IShaderAPI,
 									SHADERAPI_INTERFACE_VERSION, g_ShaderAPIEmpty )
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderShadowEmpty, IShaderShadow, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderShadowEmpty, IShaderShadow,
 								SHADERSHADOW_INTERFACE_VERSION, g_ShaderShadow )
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIEmpty, IMaterialSystemHardwareConfig, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIEmpty, IMaterialSystemHardwareConfig,
 				MATERIALSYSTEM_HARDWARECONFIG_INTERFACE_VERSION, g_ShaderAPIEmpty )
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIEmpty, IDebugTextureInfo, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderAPIEmpty, IDebugTextureInfo,
 				DEBUG_TEXTURE_INFO_VERSION, g_ShaderAPIEmpty )
 
 
@@ -1341,7 +1341,7 @@ bool CShaderDeviceMgrEmpty::SetAdapter( int nAdapter, int nFlags )
 }
 
 // FIXME: Is this a public interface? Might only need to be private to shaderapi
-CreateInterfaceFn CShaderDeviceMgrEmpty::SetMode( void *hWnd, int nAdapter, const ShaderDeviceInfo_t& mode ) 
+CreateInterfaceFn CShaderDeviceMgrEmpty::SetMode( void *hWnd, int nAdapter, const ShaderDeviceInfo_t& mode )
 {
 	return ShaderInterfaceFactory;
 }
@@ -1352,7 +1352,7 @@ int	 CShaderDeviceMgrEmpty::GetAdapterCount() const
 	return 0;
 }
 
-bool CShaderDeviceMgrEmpty::GetRecommendedConfigurationInfo( int nAdapter, int nDXLevel, KeyValues *pKeyValues ) 
+bool CShaderDeviceMgrEmpty::GetRecommendedConfigurationInfo( int nAdapter, int nDXLevel, KeyValues *pKeyValues )
 {
 	return true;
 }
@@ -1397,7 +1397,7 @@ void CShaderDeviceEmpty::GetBackBufferDimensions( int& width, int& height ) cons
 	height = 768;
 }
 
-// Use this to spew information about the 3D layer 
+// Use this to spew information about the 3D layer
 void CShaderDeviceEmpty::SpewDriverInfo() const
 {
 	Warning("Empty shader\n");
@@ -1568,7 +1568,7 @@ void CEmptyMesh::Unlock( int nVertexCount, VertexDesc_t &desc )
 {
 }
 
-void CEmptyMesh::Spew( int nVertexCount, const VertexDesc_t &desc ) 
+void CEmptyMesh::Spew( int nVertexCount, const VertexDesc_t &desc )
 {
 }
 
@@ -1622,11 +1622,11 @@ void CEmptyMesh::Draw(CPrimList *pPrims, int nPrims)
 }
 
 // Copy verts and/or indices to a mesh builder. This only works for temp meshes!
-void CEmptyMesh::CopyToMeshBuilder( 
+void CEmptyMesh::CopyToMeshBuilder(
 	int iStartVert,		// Which vertices to copy.
-	int nVerts, 
+	int nVerts,
 	int iStartIndex,	// Which indices to copy.
-	int nIndices, 
+	int nIndices,
 	int indexOffset,	// This is added to each index.
 	CMeshBuilder &builder )
 {
@@ -1691,12 +1691,12 @@ void CShaderShadowEmpty::EnablePolyOffset( PolygonOffsetMode_t nOffsetMode )
 {
 }
 
-// Suppresses/activates color writing 
+// Suppresses/activates color writing
 void CShaderShadowEmpty::EnableColorWrites( bool bEnable )
 {
 }
 
-// Suppresses/activates alpha writing 
+// Suppresses/activates alpha writing
 void CShaderShadowEmpty::EnableAlphaWrites( bool bEnable )
 {
 }
@@ -1767,7 +1767,7 @@ void CShaderShadowEmpty::EnableConstantColor( bool bEnable )
 // The flags to pass in here come from the VertexFormatFlags_t enum
 // If pTexCoordDimensions is *not* specified, we assume all coordinates
 // are 2-dimensional
-void CShaderShadowEmpty::VertexShaderVertexFormat( unsigned int nFlags, 
+void CShaderShadowEmpty::VertexShaderVertexFormat( unsigned int nFlags,
 												   int nTexCoordCount,
 												   int* pTexCoordDimensions,
 												   int nUserDataSize )
@@ -1805,7 +1805,7 @@ void CShaderShadowEmpty::CustomTextureStages( int stageCount )
 {
 }
 
-void CShaderShadowEmpty::CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel, 
+void CShaderShadowEmpty::CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel,
 	ShaderTexOp_t op, ShaderTexArg_t arg1, ShaderTexArg_t arg2 )
 {
 }
@@ -2034,9 +2034,9 @@ int	 CShaderAPIEmpty::TextureMemorySize() const
 	return 64 * 1024 * 1024;
 }
 
-int  CShaderAPIEmpty::GetDXSupportLevel() const 
-{ 
-	return 90; 
+int  CShaderAPIEmpty::GetDXSupportLevel() const
+{
+	return 90;
 }
 
 bool CShaderAPIEmpty::SupportsOverbright() const
@@ -2204,22 +2204,22 @@ StateSnapshot_t	 CShaderAPIEmpty::TakeSnapshot( )
 // Returns true if the state snapshot is transparent
 bool CShaderAPIEmpty::IsTranslucent( StateSnapshot_t id ) const
 {
-	return (id & TRANSLUCENT) != 0; 
+	return (id & TRANSLUCENT) != 0;
 }
 
 bool CShaderAPIEmpty::IsAlphaTested( StateSnapshot_t id ) const
 {
-	return (id & ALPHATESTED) != 0; 
+	return (id & ALPHATESTED) != 0;
 }
 
 bool CShaderAPIEmpty::IsDepthWriteEnabled( StateSnapshot_t id ) const
 {
-	return (id & DEPTHWRITE) != 0; 
+	return (id & DEPTHWRITE) != 0;
 }
 
 bool CShaderAPIEmpty::UsesVertexAndPixelShaders( StateSnapshot_t id ) const
 {
-	return (id & VERTEX_AND_PIXEL_SHADERS) != 0; 
+	return (id & VERTEX_AND_PIXEL_SHADERS) != 0;
 }
 
 // Gets the vertex format for a set of snapshot ids
@@ -2519,7 +2519,7 @@ void CShaderAPIEmpty::FogEnd( float fEnd )
 void CShaderAPIEmpty::SetFogZ( float fogZ )
 {
 }
-	
+
 void CShaderAPIEmpty::FogMaxDensity( float flMaxDensity )
 {
 }
@@ -2662,7 +2662,7 @@ void CShaderAPIEmpty::ModifyTexture( ShaderAPITextureHandle_t textureHandle )
 }
 
 // Texture management methods
-void CShaderAPIEmpty::TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height, 
+void CShaderAPIEmpty::TexImage2D( int level, int cubeFace, ImageFormat dstFormat, int zOffset, int width, int height,
 						 ImageFormat srcFormat, bool bSrcIsTiled, void *imageData )
 {
 }
@@ -2676,7 +2676,7 @@ void CShaderAPIEmpty::TexImageFromVTF( IVTFTexture *pVTF, int iVTFFrame )
 {
 }
 
-bool CShaderAPIEmpty::TexLock( int level, int cubeFaceID, int xOffset, int yOffset, 
+bool CShaderAPIEmpty::TexLock( int level, int cubeFaceID, int xOffset, int yOffset,
 								int width, int height, CPixelWriter& writer )
 {
 	return false;
@@ -2704,14 +2704,14 @@ void CShaderAPIEmpty::TexSetPriority( int priority )
 {
 }
 
-ShaderAPITextureHandle_t CShaderAPIEmpty::CreateTexture( 
-	int width, 
+ShaderAPITextureHandle_t CShaderAPIEmpty::CreateTexture(
+	int width,
 	int height,
 	int depth,
-	ImageFormat dstImageFormat, 
-	int numMipLevels, 
-	int numCopies, 
-	int flags, 
+	ImageFormat dstImageFormat,
+	int numMipLevels,
+	int numCopies,
+	int flags,
 	const char *pDebugName,
 	const char *pTextureGroupName )
 {
@@ -2719,16 +2719,16 @@ ShaderAPITextureHandle_t CShaderAPIEmpty::CreateTexture(
 }
 
 // Create a multi-frame texture (equivalent to calling "CreateTexture" multiple times, but more efficient)
-void CShaderAPIEmpty::CreateTextures( 
+void CShaderAPIEmpty::CreateTextures(
 							ShaderAPITextureHandle_t *pHandles,
 							int count,
-							int width, 
+							int width,
 							int height,
 							int depth,
-							ImageFormat dstImageFormat, 
-							int numMipLevels, 
-							int numCopies, 
-							int flags, 
+							ImageFormat dstImageFormat,
+							int numMipLevels,
+							int numCopies,
+							int flags,
 							const char *pDebugName,
 							const char *pTextureGroupName )
 {
@@ -2921,8 +2921,8 @@ bool CShaderAPIEmpty::PreferDynamicTextures() const
 }
 
 bool CShaderAPIEmpty::PreferReducedFillrate() const
-{ 
-	return false; 
+{
+	return false;
 }
 
 bool CShaderAPIEmpty::HasProjectedBumpEnv() const

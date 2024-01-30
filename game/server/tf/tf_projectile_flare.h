@@ -37,7 +37,7 @@ public:
 	~CTFProjectile_Flare();
 
 	// Creation.
-	static CTFProjectile_Flare *Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );	
+	static CTFProjectile_Flare *Create( CBaseEntity *pLauncher, const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner = NULL, CBaseEntity *pScorer = NULL );
 	virtual void	Spawn();
 	virtual void	Precache();
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_FLAREGUN; }

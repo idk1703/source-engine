@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -72,7 +72,7 @@ bool DataTable_SetupReceiveTableFromSendTable( SendTable *sendTable, bool bNeeds
 		// Make a decoder for it.
 		CRecvDecoder *pDecoder = new CRecvDecoder;
 		g_RecvDecoders.AddToTail( pDecoder );
-		
+
 		RecvTable *pRecvTable = FindRecvTable( pTable->m_pNetTableName );
 		if ( !pRecvTable )
 		{
@@ -126,8 +126,8 @@ bool DataTable_SetupReceiveTableFromSendTable( SendTable *sendTable, bool bNeeds
 			Assert( pDTName && Q_strlen(pDTName) > 0 );
 
 			pClientProp->SetTableName( COM_StringCopy( pDTName ) );
-			
-			// Normally we wouldn't care about this but we need to compare it against 
+
+			// Normally we wouldn't care about this but we need to compare it against
 			// proxies in the server DLL in SendTable_BuildHierarchy.
 			pProp->SetDataTableProxyFn( pSendTableProp->GetDataTableProxyFn() );
 			pProp->SetOffset( pSendTableProp->GetOffset() );
@@ -339,7 +339,7 @@ void DataTable_WriteClassInfosBuffer(ServerClass *pClasses, bf_write *pBuf )
 	int count = 0;
 
 	ServerClass *pClass = pClasses;
-	
+
 	// first count total number of classes in list
 	while ( pClass != NULL )
 	{
@@ -348,7 +348,7 @@ void DataTable_WriteClassInfosBuffer(ServerClass *pClasses, bf_write *pBuf )
 	}
 
 	// write number of classes
-	pBuf->WriteShort( count );	
+	pBuf->WriteShort( count );
 
 	pClass = pClasses; // go back to first class
 
@@ -379,7 +379,7 @@ bool DataTable_ParseClassInfosFromBuffer( CClientState *pState, bf_read *pBuf )
 		Host_EndGame(true, "CL_ParseClassInfo: can't allocate %d C_ServerClassInfos.\n", pState->m_nServerClasses);
 		return false;
 	}
-	
+
 	for ( int i = 0; i < pState->m_nServerClasses; i++ )
 	{
 		int classID = pBuf->ReadShort();

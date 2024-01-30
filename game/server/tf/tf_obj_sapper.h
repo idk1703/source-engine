@@ -67,7 +67,7 @@ private:
 	float m_flSapperDamageAccumulator;
 	float m_flLastThinkTime;
 	float m_flLastHealthLeachTime;
-	
+
 	float m_flSelfDestructTime;
 	float m_flSapperStartTime;
 

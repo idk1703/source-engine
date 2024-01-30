@@ -27,7 +27,7 @@ void EngineTool_InstallQuitHandler( void *pvUserData, FnQuitHandler func );
 class CToolFrameworkInternal : public IToolFrameworkInternal
 {
 public:
-	// Here's where the app systems get to learn about each other 
+	// Here's where the app systems get to learn about each other
 	virtual bool	Connect( CreateInterfaceFn factory );
 	virtual void	Disconnect();
 
@@ -78,8 +78,8 @@ public:
 
 	virtual bool	PostInit();
 
-	virtual bool	ServerInit( CreateInterfaceFn serverFactory ); 
-	virtual bool	ClientInit( CreateInterfaceFn clientFactory ); 
+	virtual bool	ServerInit( CreateInterfaceFn serverFactory );
+	virtual bool	ClientInit( CreateInterfaceFn clientFactory );
 
 	virtual void	ServerShutdown();
 	virtual void	ClientShutdown();
@@ -180,8 +180,8 @@ void CToolFrameworkInternal::InvokeMethodInt( ToolSystemFunc_Int_t f, int arg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Here's where the app systems get to learn about each other 
-// Input  : factory - 
+// Purpose: Here's where the app systems get to learn about each other
+// Input  : factory -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CToolFrameworkInternal::Connect( CreateInterfaceFn factory )
@@ -190,8 +190,8 @@ bool CToolFrameworkInternal::Connect( CreateInterfaceFn factory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::Disconnect()
 {
@@ -201,7 +201,7 @@ void CToolFrameworkInternal::Disconnect()
 //-----------------------------------------------------------------------------
 // Purpose:  Here's where systems can access other interfaces implemented by this object
 //  Returns NULL if it doesn't implement the requested interface
-// Input  : *pInterfaceName - 
+// Input  : *pInterfaceName -
 //-----------------------------------------------------------------------------
 void *CToolFrameworkInternal::QueryInterface( const char *pInterfaceName )
 {
@@ -209,8 +209,8 @@ void *CToolFrameworkInternal::QueryInterface( const char *pInterfaceName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pvUserData - 
+// Purpose:
+// Input  : *pvUserData -
 // Output : static bool
 //-----------------------------------------------------------------------------
 static bool CToolFrameworkInternal_QuitHandler( void *pvUserData )
@@ -226,7 +226,7 @@ static bool CToolFrameworkInternal_QuitHandler( void *pvUserData )
 
 //-----------------------------------------------------------------------------
 // Purpose: Init, shutdown
-// Input  :  - 
+// Input  :  -
 // Output : InitReturnVal_t
 //-----------------------------------------------------------------------------
 InitReturnVal_t CToolFrameworkInternal::Init()
@@ -281,8 +281,8 @@ bool CToolFrameworkInternal::PostInit()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::Shutdown()
 {
@@ -292,8 +292,8 @@ void CToolFrameworkInternal::Shutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : finalTick - 
+// Purpose:
+// Input  : finalTick -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::Think( bool finalTick )
 {
@@ -306,8 +306,8 @@ void CToolFrameworkInternal::Think( bool finalTick )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : serverFactory - 
+// Purpose:
+// Input  : serverFactory -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CToolFrameworkInternal::ServerInit( CreateInterfaceFn serverFactory )
@@ -327,10 +327,10 @@ bool CToolFrameworkInternal::ServerInit( CreateInterfaceFn serverFactory )
 	}
 	return retval;
 }
- 
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : clientFactory - 
+// Purpose:
+// Input  : clientFactory -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CToolFrameworkInternal::ClientInit( CreateInterfaceFn clientFactory )
@@ -352,8 +352,8 @@ bool CToolFrameworkInternal::ClientInit( CreateInterfaceFn clientFactory )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerShutdown()
 {
@@ -368,8 +368,8 @@ void CToolFrameworkInternal::ServerShutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ClientShutdown()
 {
@@ -384,8 +384,8 @@ void CToolFrameworkInternal::ClientShutdown()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CToolFrameworkInternal::CanQuit()
@@ -443,7 +443,7 @@ void CToolFrameworkInternal::ShutdownToolDictionaries()
 
 //-----------------------------------------------------------------------------
 // Purpose: Shuts down all tools
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ShutdownTools()
 {
@@ -468,7 +468,7 @@ void CToolFrameworkInternal::ShutdownTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Adds tool from specified library
-// Input  : *dllname - 
+// Input  : *dllname -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::LoadToolsFromLibrary( const char *dllname )
 {
@@ -567,10 +567,10 @@ IMaterialProxy *CToolFrameworkInternal::LookupProxy( const char *proxyName )
 	return NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: FIXME:  Should scan a KeyValues file
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::LoadTools()
 {
@@ -603,7 +603,7 @@ void CToolFrameworkInternal::LoadTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Level init, shutdown
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ClientLevelInitPreEntityAllTools()
 {
@@ -611,8 +611,8 @@ void CToolFrameworkInternal::ClientLevelInitPreEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ClientLevelInitPostEntityAllTools()
 {
@@ -620,8 +620,8 @@ void CToolFrameworkInternal::ClientLevelInitPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ClientLevelShutdownPreEntityAllTools()
 {
@@ -637,7 +637,7 @@ void CToolFrameworkInternal::ClientLevelShutdownPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ClientPreRenderAllTools()
 {
@@ -645,7 +645,7 @@ void CToolFrameworkInternal::ClientPreRenderAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CToolFrameworkInternal::IsThirdPersonCamera()
 {
@@ -671,7 +671,7 @@ bool CToolFrameworkInternal::IsToolRecording()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ClientPostRenderAllTools()
 {
@@ -688,7 +688,7 @@ void CToolFrameworkInternal::ServerLevelInitPreEntityAllTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: entities are created / spawned / precached here
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerLevelInitPostEntityAllTools()
 {
@@ -696,8 +696,8 @@ void CToolFrameworkInternal::ServerLevelInitPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerLevelShutdownPreEntityAllTools()
 {
@@ -706,7 +706,7 @@ void CToolFrameworkInternal::ServerLevelShutdownPreEntityAllTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Entities are deleted / released here...
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerLevelShutdownPostEntityAllTools()
 {
@@ -715,7 +715,7 @@ void CToolFrameworkInternal::ServerLevelShutdownPostEntityAllTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called each frame before entities think
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerFrameUpdatePreEntityThinkAllTools()
 {
@@ -724,7 +724,7 @@ void CToolFrameworkInternal::ServerFrameUpdatePreEntityThinkAllTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called after entities think
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerFrameUpdatePostEntityThinkAllTools()
 {
@@ -733,7 +733,7 @@ void CToolFrameworkInternal::ServerFrameUpdatePostEntityThinkAllTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Called before client networking occurs on the server
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::ServerPreClientUpdateAllTools()
 {
@@ -764,8 +764,8 @@ void CToolFrameworkInternal::ServerPreSetupVisibilityAllTools()
 
 //-----------------------------------------------------------------------------
 // Purpose: Post a message to tools
-// Input  : hEntity - 
-//			*msg - 
+// Input  : hEntity -
+//			*msg -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg )
 {
@@ -782,10 +782,10 @@ void CToolFrameworkInternal::PostToolMessage( HTOOLHANDLE hEntity, KeyValues *ms
 
 //-----------------------------------------------------------------------------
 // Purpose: Only active tool gets to adjust viewport
-// Input  : x - 
-//			y - 
-//			width - 
-//			height - 
+// Input  : x -
+//			y -
+//			width -
+//			height -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::AdjustEngineViewport( int& x, int& y, int& width, int& height )
 {
@@ -824,8 +824,8 @@ bool CToolFrameworkInternal::SetupAudioState( AudioState_t &audioState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::VGui_PreRenderAllTools( int paintMode )
 {
@@ -833,8 +833,8 @@ void CToolFrameworkInternal::VGui_PreRenderAllTools( int paintMode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::VGui_PostRenderAllTools( int paintMode )
 {
@@ -852,8 +852,8 @@ void CToolFrameworkInternal::VGui_PostSimulateAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 // Output : int
 //-----------------------------------------------------------------------------
 int CToolFrameworkInternal::GetToolCount()
@@ -862,8 +862,8 @@ int CToolFrameworkInternal::GetToolCount()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CToolFrameworkInternal::GetToolName( int index )
@@ -881,8 +881,8 @@ const char *CToolFrameworkInternal::GetToolName( int index )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : index - 
+// Purpose:
+// Input  : index -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::SwitchToTool( int index )
 {
@@ -925,10 +925,10 @@ IToolSystem *CToolFrameworkInternal::SwitchToTool( const char* pToolName )
 	return NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *sys - 
+// Purpose:
+// Input  : *sys -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CToolFrameworkInternal::IsTopmostTool( const IToolSystem *sys )
@@ -989,8 +989,8 @@ void CToolFrameworkInternal::HostRunFrameEnd()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::RenderFrameBegin()
 {
@@ -998,8 +998,8 @@ void CToolFrameworkInternal::RenderFrameBegin()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CToolFrameworkInternal::RenderFrameEnd()
 {
@@ -1034,8 +1034,8 @@ public:
 EXPOSE_SINGLE_INTERFACE( CClientEngineTools, IClientEngineTools, VCLIENTENGINETOOLS_INTERFACE_VERSION );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::LevelInitPreEntityAllTools()
 {
@@ -1043,8 +1043,8 @@ void CClientEngineTools::LevelInitPreEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::LevelInitPostEntityAllTools()
 {
@@ -1052,8 +1052,8 @@ void CClientEngineTools::LevelInitPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::LevelShutdownPreEntityAllTools()
 {
@@ -1061,8 +1061,8 @@ void CClientEngineTools::LevelShutdownPreEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::LevelShutdownPostEntityAllTools()
 {
@@ -1070,8 +1070,8 @@ void CClientEngineTools::LevelShutdownPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::PreRenderAllTools()
 {
@@ -1079,8 +1079,8 @@ void CClientEngineTools::PreRenderAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::PostRenderAllTools()
 {
@@ -1088,9 +1088,9 @@ void CClientEngineTools::PostRenderAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : hEntity - 
-//			*msg - 
+// Purpose:
+// Input  : hEntity -
+//			*msg -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg )
 {
@@ -1098,11 +1098,11 @@ void CClientEngineTools::PostToolMessage( HTOOLHANDLE hEntity, KeyValues *msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
-//			width - 
-//			height - 
+// Purpose:
+// Input  : x -
+//			y -
+//			width -
+//			height -
 //-----------------------------------------------------------------------------
 void CClientEngineTools::AdjustEngineViewport( int& x, int& y, int& width, int& height )
 {
@@ -1120,7 +1120,7 @@ bool CClientEngineTools::SetupAudioState( AudioState_t &audioState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientEngineTools::VGui_PreRenderAllTools( int paintMode )
 {
@@ -1128,7 +1128,7 @@ void CClientEngineTools::VGui_PreRenderAllTools( int paintMode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CClientEngineTools::VGui_PostRenderAllTools( int paintMode )
 {
@@ -1136,7 +1136,7 @@ void CClientEngineTools::VGui_PostRenderAllTools( int paintMode )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CClientEngineTools::IsThirdPersonCamera( )
 {
@@ -1170,8 +1170,8 @@ public:
 EXPOSE_SINGLE_INTERFACE( CServerEngineTools, IServerEngineTools, VSERVERENGINETOOLS_INTERFACE_VERSION );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::LevelInitPreEntityAllTools()
 {
@@ -1179,8 +1179,8 @@ void CServerEngineTools::LevelInitPreEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::LevelInitPostEntityAllTools()
 {
@@ -1188,8 +1188,8 @@ void CServerEngineTools::LevelInitPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::LevelShutdownPreEntityAllTools()
 {
@@ -1197,8 +1197,8 @@ void CServerEngineTools::LevelShutdownPreEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::LevelShutdownPostEntityAllTools()
 {
@@ -1206,8 +1206,8 @@ void CServerEngineTools::LevelShutdownPostEntityAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::FrameUpdatePreEntityThinkAllTools()
 {
@@ -1215,8 +1215,8 @@ void CServerEngineTools::FrameUpdatePreEntityThinkAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::FrameUpdatePostEntityThinkAllTools()
 {
@@ -1224,8 +1224,8 @@ void CServerEngineTools::FrameUpdatePostEntityThinkAllTools()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CServerEngineTools::PreClientUpdateAllTools()
 {

@@ -40,7 +40,7 @@ public:
 		// Don't register a game port, use hltv system's port as query port
 		eServerTypeTVRelay
 	};
-  	void Activate( EServerType serverType );
+	void Activate( EServerType serverType );
 	void NotifyOfLevelChange();
 	void NotifyOfServerNameChange();
 	void SendUpdatedServerDetails();
@@ -59,12 +59,12 @@ public:
 	bool BLoggedOn() { return SteamGameServer() && SteamGameServer()->BLoggedOn(); }
 	bool CompareUserID( const USERID_t & id1, const USERID_t & id2 );
 	const CSteamID& GetGSSteamID();
-	
+
 	uint16 GetQueryPort() const	{ return m_QueryPort; }
 
 	// Fetch public IP.  Might return 0 if we don't know
 	uint32 GetPublicIP() { return SteamGameServer() ? SteamGameServer()->GetPublicIP() : 0; }
-	
+
 	bool IsMasterServerUpdaterSharingGameSocket();
 
 	/// Select Steam account name / password to use
@@ -78,7 +78,7 @@ public:
 	const char *GetAccountToken() const { return m_sAccountToken.String(); }
 
 private:
-	
+
 	bool CheckForDuplicateSteamID( const CBaseClient *client );
 	CBaseClient *ClientFindFromSteamID( CSteamID & steamIDFind );
 	void OnValidateAuthTicketResponseHelper( CBaseClient *cl, EAuthSessionResponse eAuthSessionResponse );
@@ -95,14 +95,14 @@ private:
 	CSteamID m_SteamIDGS;
 	CSteamID m_steamIDLanOnly;
 	bool m_bActive;
-    bool m_bWantsSecure;
-    bool m_bInitialized;
+	bool m_bWantsSecure;
+	bool m_bInitialized;
 	bool m_bWantsPersistentAccountLogon;
-    
-    // The port that we are listening for queries on.
+
+	// The port that we are listening for queries on.
 	uint32		m_unIP;
 	uint16		m_usPort;
-    uint16		m_QueryPort;
+	uint16		m_QueryPort;
 
 	CUtlString m_sAccountToken;
 

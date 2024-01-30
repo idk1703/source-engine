@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -44,7 +44,7 @@ public:
 
 
 //-----------------------------------------------------------------------------
-// Networking 
+// Networking
 //-----------------------------------------------------------------------------
 IMPLEMENT_CLIENTCLASS_EVENT_DT(C_TEDynamicLight, DT_TEDynamicLight, CTEDynamicLight)
 	RecvPropVector( RECVINFO(m_vecOrigin)),
@@ -59,7 +59,7 @@ END_RECV_TABLE()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEDynamicLight::C_TEDynamicLight( void )
 {
@@ -74,7 +74,7 @@ C_TEDynamicLight::C_TEDynamicLight( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TEDynamicLight::~C_TEDynamicLight( void )
 {
@@ -122,8 +122,8 @@ void TE_DynamicLight( IRecipientFilter& filter, float delay,
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bool - 
+// Purpose:
+// Input  : bool -
 //-----------------------------------------------------------------------------
 void C_TEDynamicLight::PostDataUpdate( DataUpdateType_t updateType )
 {
@@ -146,7 +146,6 @@ void TE_DynamicLight( IRecipientFilter& filter, float delay, KeyValues *pKeyValu
 	float flDecay = pKeyValues->GetFloat( "decay" );
  	int nLightIndex = pKeyValues->GetInt( "lightindex", LIGHT_INDEX_TE_DYNAMIC );
 
-	TE_DynamicLight( filter, 0.0f, &vecOrigin, c.r(), c.g(), c.b(), nExponent, 
+	TE_DynamicLight( filter, 0.0f, &vecOrigin, c.r(), c.g(), c.b(), nExponent,
 		flRadius, flDuration, flDecay, nLightIndex );
 }
-

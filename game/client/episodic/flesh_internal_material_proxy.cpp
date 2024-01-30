@@ -1,5 +1,5 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=====================================================================================//
@@ -17,9 +17,9 @@ void AddFleshProxyTarget( C_FleshEffectTarget *pTarget );
 void RemoveFleshProxy( C_FleshEffectTarget *pTarget );
 
 //=============================================================================
-// 
+//
 //  Flesh effect target (used for orchestrating the "Invisible Alyx" moment
-//	
+//
 //=============================================================================
 
 class C_FleshEffectTarget : public C_BaseEntity
@@ -27,7 +27,7 @@ class C_FleshEffectTarget : public C_BaseEntity
 	DECLARE_CLASS( C_FleshEffectTarget, C_BaseEntity );
 
 public:
-	float GetRadius( void ) 
+	float GetRadius( void )
 	{
 		if ( m_flScaleTime <= 0.0f )
 			return m_flRadius;
@@ -75,7 +75,7 @@ void RecvProxy_FleshEffect_Radius( const CRecvProxyData *pData, void *pStruct, v
 		pTarget->m_flStartRadius	= pTarget->m_flRadius;
 		pTarget->m_flScaleStartTime = gpGlobals->curtime;
 	}
-	
+
 	pTarget->m_flRadius = flRadius;
 }
 

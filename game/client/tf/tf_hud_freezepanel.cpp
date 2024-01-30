@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -118,7 +118,7 @@ CTFFreezePanel::CTFFreezePanel( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::Reset()
 {
@@ -131,7 +131,7 @@ void CTFFreezePanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::Init()
 {
@@ -142,14 +142,14 @@ void CTFFreezePanel::Init()
 	ListenForGameEvent( "player_death" );
 	ListenForGameEvent( "teamplay_win_panel" );
 	ListenForGameEvent( "training_complete" );
-	
+
 	Hide();
 
 	CHudElement::Init();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::SendTauntAcknowledgement( const char *pszCommand, int iGibs )
 {
@@ -198,7 +198,7 @@ void CTFFreezePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 			m_pAvatar->SetShouldDrawFriendIcon( false );
 		}
 	}
-		
+
 	m_pScreenshotPanel = dynamic_cast<EditablePanel *>( FindChildByName( "ScreenshotPanel" ) );
 	Assert( m_pScreenshotPanel );
 
@@ -218,7 +218,7 @@ void CTFFreezePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 {
@@ -244,7 +244,7 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 			{
 				m_iShowNemesisPanel = SHOW_NO_NEMESIS;
 			}
-		}		
+		}
 	}
 	else if ( Q_strcmp( "hide_freezepanel", pEventName ) == 0 )
 	{
@@ -420,13 +420,13 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 																	 , CSchemaItemDefHandle( "Powerup Precision" )
 																	 , CSchemaItemDefHandle( "Powerup Agility" )
 																	 , CSchemaItemDefHandle( "Powerup Knockout" )
-																	 , CSchemaItemDefHandle( "Powerup King" ) 
-																	 , CSchemaItemDefHandle( "Powerup Plague" ) 
+																	 , CSchemaItemDefHandle( "Powerup King" )
+																	 , CSchemaItemDefHandle( "Powerup Plague" )
 																	 , CSchemaItemDefHandle( "Powerup Supernova" ) };
 
 					COMPILE_TIME_ASSERT( ARRAYSIZE( rgPowerupItems ) == RUNE_TYPES_MAX );
 
-					// Get the item 
+					// Get the item
 					const CSchemaItemDefHandle& itemDef = rgPowerupItems[pTFPlayerKiller->m_Shared.GetCarryingRuneType()];
 
 					// Create a fake, temp item to show the powerup
@@ -572,7 +572,7 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 					m_pFreezeLabel->SetText( "#FreezePanel_Killer" );
 				}
 			}
-			
+
 			if ( m_pFreezePanelBG )
 			{
 				// use the killer's team for the background color
@@ -593,7 +593,7 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 				}
 			}
 		}
-		
+
 		// see if we should show nemesis panel
 		bool bAdvice = false;
 		const wchar_t *pchNemesisText = NULL;
@@ -603,10 +603,10 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 			{
 				C_TFPlayer *pVictim = C_TFPlayer::GetLocalTFPlayer();
 				CTFPlayer *pTFKiller = ToTFPlayer( pKiller );
-			
+
 				//If this was just a regular kill but this guy is our nemesis then just show it.
 				if ( pTFKiller && pTFKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
-				{					
+				{
 					pchNemesisText = g_pVGuiLocalize->Find( "#TF_FreezeNemesis" );
 				}
 				// UNDONE: We're not shipping this for now
@@ -628,9 +628,9 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 				// check to see if killer is still the nemesis of victim; victim may have managed to kill him after victim's
 				// death by grenade or some such, extracting revenge and clearing nemesis condition
 				if ( pTFKiller && pTFKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
-				{					
+				{
 					pchNemesisText = g_pVGuiLocalize->Find( "#TF_NewNemesis" );
-				}			
+				}
 			}
 			break;
 		case SHOW_REVENGE:
@@ -662,7 +662,7 @@ void CTFFreezePanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *CTFFreezePanel::GetResFilename( C_TFPlayer *pTFPlayer /*= NULL*/ ) const
 {
@@ -670,7 +670,7 @@ const char *CTFFreezePanel::GetResFilename( C_TFPlayer *pTFPlayer /*= NULL*/ ) c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::ShowCalloutsIn( float flTime )
 {
@@ -678,9 +678,9 @@ void CTFFreezePanel::ShowCalloutsIn( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL, 
+CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL,
 			CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY )
 {
 	// This is the offset from the topleft of the callout to the arrow tip
@@ -741,7 +741,7 @@ CTFFreezePanelCallout *CTFFreezePanel::TestAndAddCallout( Vector &origin, Vector
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::UpdateCallout( void )
 {
@@ -800,7 +800,7 @@ void CTFFreezePanel::UpdateCallout( void )
 				pGib->GetRenderBounds( vMins, vMaxs );
 
 				// Try and add the callout
-				CTFFreezePanelCallout *pCallout = TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR, 
+				CTFFreezePanelCallout *pCallout = TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR,
 					vecFreezeTL, vecFreezeBR, vecStatTL, vecStatBR, &iX, &iY );
 				if ( pCallout )
 				{
@@ -838,7 +838,7 @@ void CTFFreezePanel::UpdateCallout( void )
 		pRagdoll->GetRagdollBounds( vMins, vMaxs );
 
 		// Try and add the callout
-		CTFFreezePanelCallout *pCallout = TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR, 
+		CTFFreezePanelCallout *pCallout = TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR,
 															 vecFreezeTL, vecFreezeBR, vecStatTL, vecStatBR, &iX, &iY );
 		if ( pCallout )
 		{
@@ -854,7 +854,7 @@ void CTFFreezePanel::UpdateCallout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::Show()
 {
@@ -872,7 +872,7 @@ void CTFFreezePanel::DeleteCalloutPanels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::Hide()
 {
@@ -893,7 +893,7 @@ void CTFFreezePanel::Hide()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFFreezePanel::ShouldDraw( void )
 {
@@ -901,7 +901,7 @@ bool CTFFreezePanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::OnThink( void )
 {
@@ -954,7 +954,7 @@ void CTFFreezePanel::OnThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::ShowSnapshotPanelIn( float flTime )
 {
@@ -966,7 +966,7 @@ void CTFFreezePanel::ShowSnapshotPanelIn( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::ShowSaveReplayPanelIn( float flTime )
 {
@@ -977,7 +977,7 @@ void CTFFreezePanel::ShowSaveReplayPanelIn( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::ShowSnapshotPanel( bool bShow )
 {
@@ -1011,7 +1011,7 @@ void CTFFreezePanel::ShowSnapshotPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanel::ShowSaveReplayPanel( bool bShow )
 {
@@ -1027,7 +1027,7 @@ void CTFFreezePanel::ShowSaveReplayPanel( bool bShow )
 	// Make sure we're recording
 	if ( !g_pReplay->IsRecording() )
 		return;
-	
+
 	// Start animation if necessary
 	if ( bShow )
 	{
@@ -1047,7 +1047,7 @@ const char *CTFFreezePanel::GetFilesafePlayerName( const char *pszOldName )
 	static char szSafeName[ MAX_PLAYER_NAME_LENGTH ];
 	int nSafeNameBufSize = sizeof( szSafeName );
 	int nNewPos = 0;
-	
+
 	for( const char *p = pszOldName; *p != 0 && nNewPos < nSafeNameBufSize-1; p++ )
 	{
 		if( *p == '.' )
@@ -1242,7 +1242,7 @@ void CTFFreezePanel::ShowNemesisPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFFreezePanelCallout::CTFFreezePanelCallout( Panel *parent, const char *name ) : EditablePanel(parent,name)
 {
@@ -1279,7 +1279,7 @@ const char *pszCalloutRandomGibNames[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanelCallout::UpdateForGib( int iGib, int iCount )
 {
@@ -1312,7 +1312,7 @@ void CTFFreezePanelCallout::UpdateForGib( int iGib, int iCount )
 			m_pGibLabel->SetText( "#FreezePanel_Callout" );
 		}
 	}
-	
+
 #ifndef _X360
 	int wide, tall;
 	m_pGibLabel->GetContentSize( wide, tall );
@@ -1359,12 +1359,12 @@ void CTFFreezePanelCallout::UpdateForGib( int iGib, int iCount )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFFreezePanelCallout::UpdateForRagdoll( void )
 {
 	if ( !m_pGibLabel )
 		return;
 
-	m_pGibLabel->SetText( "#Callout_Ragdoll" );	
+	m_pGibLabel->SetText( "#Callout_Ragdoll" );
 }

@@ -25,10 +25,10 @@ public:
 	{
 	}
 
-	virtual		~ParticleSphereProxy() 
+	virtual		~ParticleSphereProxy()
 	{
 	}
-	
+
 	virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues )
 	{
 		m_pLightPosition = pMaterial->FindVar( "$light_position", NULL, false );
@@ -74,4 +74,3 @@ private:
 };
 
 EXPOSE_INTERFACE( ParticleSphereProxy, IMaterialProxy, "ParticleSphereProxy" IMATERIAL_PROXY_INTERFACE_VERSION );
-

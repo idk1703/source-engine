@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -67,7 +67,7 @@ protected:
 
 #ifndef _DEBUG  // debug version in vkeyeditView.cpp
 inline CVkeyeditDoc* CVkeyeditView::GetDocument()
-   { return (CVkeyeditDoc*)m_pDocument; }
+	{ return (CVkeyeditDoc*)m_pDocument; }
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

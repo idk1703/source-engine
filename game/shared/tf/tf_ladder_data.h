@@ -25,7 +25,7 @@
 
 
 //---------------------------------------------------------------------------------
-// Purpose: The shared object that contains a ladder player's stats		
+// Purpose: The shared object that contains a ladder player's stats
 //---------------------------------------------------------------------------------
 class CSOTFLadderData : public GCSDK::CProtoBufSharedObject< CSOTFLadderPlayerStats, k_EEConTypeLadderData >
 {

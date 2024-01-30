@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 typedef bool (CDmElement::*pfnCommandMethod)( const char *command, const char *args );
 
@@ -125,7 +125,7 @@ struct DmElementReference_t
 
 
 //-----------------------------------------------------------------------------
-// Base DmElement we inherit from in higher-level classes 
+// Base DmElement we inherit from in higher-level classes
 //-----------------------------------------------------------------------------
 class CDmElement
 {
@@ -215,9 +215,9 @@ public:
 	void				MarkAccessible( bool bAccessible );
 	void				MarkAccessible( TraversalDepth_t depth = TD_ALL );
 
-	// returns the first path to the element found traversing all element/element 
+	// returns the first path to the element found traversing all element/element
 	// array attributes - not necessarily the shortest.
-	// cycle-safe (skips any references to elements in the current path) 
+	// cycle-safe (skips any references to elements in the current path)
 	// but may re-traverse elements via different paths
 	bool				FindElement( const CDmElement *pElement, CUtlVector< ElementPathItem_t > &elementPath, TraversalDepth_t depth ) const;
 	bool				FindReferer( DmElementHandle_t hElement, CUtlVector< ElementPathItem_t > &elementPath, TraversalDepth_t depth ) const;
@@ -234,7 +234,7 @@ protected:
 
 	// Used by derived classes to do construction and setting up CDmaVars
 	void				OnConstruction() { }
-	void				OnDestruction() { }																
+	void				OnDestruction() { }
 	virtual void		PerformConstruction();
 	virtual void		PerformDestruction();
 
@@ -356,8 +356,8 @@ void InvokeOnAttributeChangedOnReferrers( DmElementHandle_t hElement, CDmAttribu
 //-----------------------------------------------------------------------------
 // Returns the type, name, id, fileId
 //-----------------------------------------------------------------------------
-inline UtlSymId_t CDmElement::GetType() const 
-{ 
+inline UtlSymId_t CDmElement::GetType() const
+{
 	return m_Type;
 }
 
@@ -366,9 +366,9 @@ inline const char *CDmElement::GetTypeString() const
 	return g_pDataModel->GetString( m_Type );
 }
 
-inline const char *CDmElement::GetName() const 
-{ 
-	return m_Name.Get(); 
+inline const char *CDmElement::GetName() const
+{
+	return m_Name.Get();
 }
 
 inline void CDmElement::SetName( const char* pName )
@@ -376,8 +376,8 @@ inline void CDmElement::SetName( const char* pName )
 	m_Name.Set( pName );
 }
 
-inline const DmObjectId_t& CDmElement::GetId() const 
-{ 
+inline const DmObjectId_t& CDmElement::GetId() const
+{
 	return m_Id;
 }
 
@@ -436,14 +436,14 @@ inline CUtlSymbol CDmElement::GetStaticTypeSymbol()
 }
 
 inline bool CDmElement::IsA( const char *pTypeName ) const
-{												
-	CUtlSymbol typeSymbol = g_pDataModel->GetSymbol( pTypeName ); 
-	return IsA( typeSymbol );				
+{
+	CUtlSymbol typeSymbol = g_pDataModel->GetSymbol( pTypeName );
+	return IsA( typeSymbol );
 }
 
-template< class E > inline bool CDmElement::IsA() const		
-{											
-	return IsA( E::GetStaticTypeSymbol() ); 
+template< class E > inline bool CDmElement::IsA() const
+{
+	return IsA( E::GetStaticTypeSymbol() );
 }
 
 
@@ -501,7 +501,7 @@ int DmeEstimateMemorySize( T* pElement )
 
 
 //-----------------------------------------------------------------------------
-// Helper macro to create an element; this is used for elements that are helper base classes 
+// Helper macro to create an element; this is used for elements that are helper base classes
 //-----------------------------------------------------------------------------
 #define DEFINE_UNINSTANCEABLE_ELEMENT( className, baseClassName )	\
 	protected:														\
@@ -531,7 +531,7 @@ int DmeEstimateMemorySize( T* pElement )
 
 
 //-----------------------------------------------------------------------------
-// Helper macro to create the class factory 
+// Helper macro to create the class factory
 //-----------------------------------------------------------------------------
 #define DEFINE_ELEMENT( className, baseClassName )	\
 	public:											\

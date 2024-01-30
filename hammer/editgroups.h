@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@ class CColorBox : public CStatic
 	public:
 		void SetColor(COLORREF, BOOL);
 		COLORREF GetColor() { return m_c; }
-		
+
 		afx_msg void OnPaint();
 
 	private:

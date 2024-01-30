@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,7 +38,7 @@ public:
 	COutputEvent m_OnSpawn;
 
 	bool IsDisabled( void ){ return m_bDisabled; }
-	
+
 private:
 
 	bool m_bDisabled;

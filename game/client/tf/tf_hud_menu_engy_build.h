@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ struct EngyConstructBuilding_t
 
 	EngyConstructBuilding_t( bool bEnabled,
 							 ObjectType_t type,
-							 int iMode, 
+							 int iMode,
 							 const char *pszConstructAvailableObjectRes,
 							 const char *pszConstructAlreadyBuiltObjectRes,
 							 const char *pszConstructCantAffordObjectRes,
@@ -70,7 +70,7 @@ struct EngyConstructBuilding_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct EngyBuildingReplacement_t
 {
@@ -111,7 +111,7 @@ extern const EngyConstructBuilding_t g_kEngyBuildings[];
 #ifdef STAGING_ONLY
 extern const EngyBuildingReplacement_t s_alternateEngineerBuildings[];
 #endif
-	 
+
 class CHudMenuEngyBuild : public CHudBaseBuildMenu
 {
 	DECLARE_CLASS_SIMPLE( CHudMenuEngyBuild, EditablePanel );

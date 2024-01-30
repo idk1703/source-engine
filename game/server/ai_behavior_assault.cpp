@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #include "cbase.h"
@@ -37,7 +37,7 @@ int CRallyPoint::DrawDebugTextOverlays()
 
 	offset = BaseClass::DrawDebugTextOverlays();
 	if ( (m_debugOverlays & OVERLAY_TEXT_BIT) )
-	{	
+	{
 		switch( m_sExclusivity )
 		{
 		case RALLY_EXCLUSIVE_NOT_EVALUATED:
@@ -73,7 +73,7 @@ int CRallyPoint::DrawDebugTextOverlays()
 // 'exclusive' and no other NPCs will be allowed to use it
 // until the current NPC clears the entire assault chain
 // or dies.
-// 
+//
 // If exclusivity has not been determined the first time
 // this function is called, it will be computed and cached
 //---------------------------------------------------------
@@ -81,7 +81,7 @@ bool CRallyPoint::IsExclusive()
 {
 #ifndef HL2_EPISODIC // IF NOT EPISODIC
 	// This 'exclusivity' concept is new to EP2. We're only willing to
-	// risk causing problems in EP1, so emulate the old behavior if 
+	// risk causing problems in EP1, so emulate the old behavior if
 	// we are not EPISODIC. We must do this by setting m_sExclusivity
 	// so that ent_text will properly report the state.
 	m_sExclusivity = RALLY_EXCLUSIVE_NO;
@@ -90,7 +90,7 @@ bool CRallyPoint::IsExclusive()
 	{
 		// We need to evaluate! Walk the chain of assault points
 		// and if *ANY* assault points  on this assault chain
-		// are set to Never Time Out then set this rally point to 
+		// are set to Never Time Out then set this rally point to
 		// be exclusive to stop other NPC's walking down the chain
 		// and ending up clumped up at the infinite rally point.
 		CAssaultPoint *pAssaultEnt = (CAssaultPoint *)gEntList.FindEntityByName( NULL, m_AssaultPointName );
@@ -120,12 +120,12 @@ bool CRallyPoint::IsExclusive()
 				}
 
 				pAssaultEnt = (CAssaultPoint *)gEntList.FindEntityByName( NULL, pAssaultEnt->m_NextAssaultPointName );
-				
+
 			} while( (pAssaultEnt != NULL) && (pAssaultEnt != pFirstAssaultEnt) );
 
 		}
 	}
-#endif// HL2_EPISODIC 
+#endif// HL2_EPISODIC
 
 	return (m_sExclusivity == RALLY_EXCLUSIVE_YES);
 }
@@ -173,7 +173,7 @@ BEGIN_DATADESC( CAI_AssaultBehavior )
 END_DATADESC();
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::CanRunAScriptedNPCInteraction( bool bForced )
 {
@@ -187,7 +187,7 @@ bool CAI_AssaultBehavior::CanRunAScriptedNPCInteraction( bool bForced )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CAI_AssaultBehavior::CAI_AssaultBehavior()
 {
@@ -206,7 +206,7 @@ int CAI_AssaultBehavior::DrawDebugTextOverlays( int text_offset )
 
 	offset = BaseClass::DrawDebugTextOverlays( text_offset );
 	if ( GetOuter()->m_debugOverlays & OVERLAY_TEXT_BIT )
-	{	
+	{
 		Q_snprintf( tempstr, sizeof(tempstr), "Assault Point: %s %s", STRING( m_AssaultPointName ), VecToString( m_hAssaultPoint->GetAbsOrigin() ) );
 		GetOuter()->EntityText( offset, tempstr, 0 );
 		offset++;
@@ -216,8 +216,8 @@ int CAI_AssaultBehavior::DrawDebugTextOverlays( int text_offset )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cue - 
+// Purpose:
+// Input  : cue -
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::ReceiveAssaultCue( AssaultCue_t cue )
 {
@@ -242,7 +242,7 @@ bool CAI_AssaultBehavior::AssaultHasBegun()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Find an assaultpoint matching the iszAssaultPointName. 
+// Purpose: Find an assaultpoint matching the iszAssaultPointName.
 //			If more than one assault point of this type is found, randomly
 //			use any of them EXCEPT the one most recently used.
 //-----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ CAssaultPoint *CAI_AssaultBehavior::FindAssaultPoint( string_t iszAssaultPointNa
 
 	Assert( iMostRecentIndex > -1 );
 
-	// Remove the most recently used 
+	// Remove the most recently used
 	pClearAssaultPoints.Remove( iMostRecentIndex );
 	return pClearAssaultPoints[ random->RandomInt(0, (pClearAssaultPoints.Count() - 1)) ];
 }
@@ -320,12 +320,12 @@ void CAI_AssaultBehavior::SetAssaultPoint( CAssaultPoint *pAssaultPoint )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::ClearAssaultPoint( void )
 {
 	// To announce clear means that this NPC hasn't seen any live targets in
-	// the assault area for the length of time the level designer has 
+	// the assault area for the length of time the level designer has
 	// specified that they should be vigilant. This effectively deactivates
 	// the assault behavior.
 	// This can also be happen if an assault point has ClearOnContact set, and
@@ -338,11 +338,11 @@ void CAI_AssaultBehavior::ClearAssaultPoint( void )
 	if( m_hAssaultPoint->m_NextAssaultPointName != NULL_STRING )
 	{
 		CAssaultPoint *pNextPoint = FindAssaultPoint( m_hAssaultPoint->m_NextAssaultPointName );
-		
+
 		if( pNextPoint )
 		{
 			SetAssaultPoint( pNextPoint );
-			
+
 			// Send our NPC to the next assault point!
 			m_bHitAssaultPoint = false;
 
@@ -368,7 +368,7 @@ void CAI_AssaultBehavior::ClearAssaultPoint( void )
 
 	// If this assault behavior has changed the NPC's hint group,
 	// slam that NPC's hint group back to null.
-	// !!!TODO: if the NPC had a different hint group before the 
+	// !!!TODO: if the NPC had a different hint group before the
 	// assault began, we're slamming that, too! We might want
 	// to cache it off if this becomes a problem (sjb)
 	if( m_hAssaultPoint->m_AssaultHintGroup != NULL_STRING )
@@ -401,7 +401,7 @@ void CAI_AssaultBehavior::GatherConditions( void )
 	BaseClass::GatherConditions();
 
 	// If this NPC is moving towards an assault point which
-	//		a) Has a Next Assault Point, and 
+	//		a) Has a Next Assault Point, and
 	//		b) Is flagged to Clear On Arrival,
 	// then hit and clear the assault point (fire all entity I/O) and move on to the next one without
 	// interrupting the NPC's schedule. This provides a more fluid movement from point to point.
@@ -418,7 +418,7 @@ void CAI_AssaultBehavior::GatherConditions( void )
 
 				AI_NavGoal_t goal( m_hAssaultPoint->GetAbsOrigin() );
 				goal.pTarget = m_hAssaultPoint;
-				
+
 				if ( GetNavigator()->SetGoal( goal ) == false )
 				{
 					TaskFail( "Can't refresh assault path" );
@@ -440,8 +440,8 @@ void CAI_AssaultBehavior::GatherConditions( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::StartTask( const Task_t *pTask )
 {
@@ -462,9 +462,9 @@ void CAI_AssaultBehavior::StartTask( const Task_t *pTask )
 	case TASK_ANNOUNCE_CLEAR:
 		{
 			// If we're at an assault point that can never be cleared, keep waiting forever (if it's the last point in the assault)
-			if ( m_hAssaultPoint && 
+			if ( m_hAssaultPoint &&
 				 !m_hAssaultPoint->HasSpawnFlags( SF_ASSAULTPOINT_CLEARONARRIVAL ) &&
-				 m_hAssaultPoint->m_bNeverTimeout && 
+				 m_hAssaultPoint->m_bNeverTimeout &&
 				 m_hAssaultPoint->m_NextAssaultPointName == NULL_STRING )
 			{
 				TaskComplete();
@@ -519,9 +519,9 @@ void CAI_AssaultBehavior::StartTask( const Task_t *pTask )
 	case TASK_FACE_RALLY_POINT:
 		{
 			UpdateForceCrouch();
-			
+
 			GetMotor()->SetIdealYaw( m_hRallyPoint->GetAbsAngles().y );
-			GetOuter()->SetTurnActivity(); 
+			GetOuter()->SetTurnActivity();
 		}
 		break;
 
@@ -560,7 +560,7 @@ void CAI_AssaultBehavior::StartTask( const Task_t *pTask )
 			else
 			{
 				GetMotor()->SetIdealYaw( m_hAssaultPoint->GetAbsAngles().y );
-				GetOuter()->SetTurnActivity(); 
+				GetOuter()->SetTurnActivity();
 			}
 		}
 		break;
@@ -621,8 +621,8 @@ void CAI_AssaultBehavior::StartTask( const Task_t *pTask )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pTask - 
+// Purpose:
+// Input  : *pTask -
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::RunTask( const Task_t *pTask )
 {
@@ -808,16 +808,16 @@ void CAI_AssaultBehavior::UpdateOnRemove()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::OnStrictAssault( void )
-{ 
-	return (m_hAssaultPoint && m_hAssaultPoint->m_iStrictness); 
+{
+	return (m_hAssaultPoint && m_hAssaultPoint->m_iStrictness);
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::UpdateForceCrouch( void )
@@ -841,7 +841,7 @@ bool CAI_AssaultBehavior::UpdateForceCrouch( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::IsForcingCrouch( void )
@@ -853,7 +853,7 @@ bool CAI_AssaultBehavior::IsForcingCrouch( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::IsUrgent( void )
@@ -880,9 +880,9 @@ void CAI_AssaultBehavior::UnlockRallyPoint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pRallyPoint - 
-//			assaultcue - 
+// Purpose:
+// Input  : *pRallyPoint -
+//			assaultcue -
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::SetParameters( CBaseEntity *pRallyEnt, AssaultCue_t assaultcue )
 {
@@ -891,7 +891,7 @@ void CAI_AssaultBehavior::SetParameters( CBaseEntity *pRallyEnt, AssaultCue_t as
 	// Clean up any soon to be dangling rally points
 	UnlockRallyPoint();
 
-	// Firstly, find a rally point. 
+	// Firstly, find a rally point.
 	CRallyPoint *pRallyPoint = dynamic_cast<CRallyPoint *>(pRallyEnt);
 
 	if( pRallyPoint )
@@ -901,7 +901,7 @@ void CAI_AssaultBehavior::SetParameters( CBaseEntity *pRallyEnt, AssaultCue_t as
 			// Claim it.
 			m_hRallyPoint = pRallyPoint;
 			m_hRallyPoint->Lock( GetOuter() );
-			
+
 			m_AssaultCue = assaultcue;
 			InitializeBehavior();
 			return;
@@ -923,9 +923,9 @@ void CAI_AssaultBehavior::SetParameters( CBaseEntity *pRallyEnt, AssaultCue_t as
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : rallypointname - 
-//			assaultcue - 
+// Purpose:
+// Input  : rallypointname -
+//			assaultcue -
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::SetParameters( string_t rallypointname, AssaultCue_t assaultcue, int rallySelectMethod )
 {
@@ -934,7 +934,7 @@ void CAI_AssaultBehavior::SetParameters( string_t rallypointname, AssaultCue_t a
 	// Clean up any soon to be dangling rally points
 	UnlockRallyPoint();
 
-	// Firstly, find a rally point. 
+	// Firstly, find a rally point.
 	CRallyPoint *pRallyEnt = dynamic_cast<CRallyPoint *>(gEntList.FindEntityByName( NULL, rallypointname ) );
 
 	CRallyPoint *pBest = NULL;
@@ -957,7 +957,7 @@ void CAI_AssaultBehavior::SetParameters( string_t rallypointname, AssaultCue_t a
 					}
 					else if ( pRallyEnt->m_iPriority == iBestPriority )
 					{
-						// This point is the same priority as my current best. 
+						// This point is the same priority as my current best.
 						// I must take it if it is closer.
 						Vector vecStart = GetOuter()->GetAbsOrigin();
 
@@ -982,7 +982,7 @@ void CAI_AssaultBehavior::SetParameters( string_t rallypointname, AssaultCue_t a
 	case RALLY_POINT_SELECT_RANDOM:
 		{
 			// Gather all available points into a utilvector, then pick one at random.
-			
+
 			CUtlVector<CRallyPoint *> rallyPoints; // List of rally points that are available to choose from.
 
 			while( pRallyEnt )
@@ -1031,7 +1031,7 @@ void CAI_AssaultBehavior::SetParameters( string_t rallypointname, AssaultCue_t a
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::InitializeBehavior()
 {
@@ -1132,7 +1132,7 @@ void CAI_AssaultBehavior::OnRestore()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::CanSelectSchedule()
@@ -1187,14 +1187,14 @@ bool CAI_AssaultBehavior::CanSelectSchedule()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::BeginScheduleSelection()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::EndScheduleSelection()
 {
@@ -1208,7 +1208,7 @@ void CAI_AssaultBehavior::EndScheduleSelection()
 		if( !hl2_episodic.GetBool() || !m_hRallyPoint->IsExclusive() || !GetOuter()->IsAlive() )
 		{
 			// Here we unlock the rally point if it is NOT EXCLUSIVE
-			// -OR- the Outer is DEAD. (This gives us a head-start on 
+			// -OR- the Outer is DEAD. (This gives us a head-start on
 			// preparing the point to take new NPCs right away. Otherwise
 			// we have to wait two seconds until the behavior is destroyed.)
 			// NOTICE that the legacy (non-episodic) support calls UnlockRallyPoint
@@ -1221,8 +1221,8 @@ void CAI_AssaultBehavior::EndScheduleSelection()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : scheduleType - 
+// Purpose:
+// Input  : scheduleType -
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_AssaultBehavior::TranslateSchedule( int scheduleType )
@@ -1236,7 +1236,7 @@ int CAI_AssaultBehavior::TranslateSchedule( int scheduleType )
 		break;
 
 	case SCHED_RANGE_ATTACK1:
-		if ( GetOuter()->GetShotRegulator()->IsInRestInterval() )				
+		if ( GetOuter()->GetShotRegulator()->IsInRestInterval() )
 		{
 			if ( GetOuter()->HasStrategySlotRange( SQUAD_SLOT_ATTACK1, SQUAD_SLOT_ATTACK2 ) )
 				GetOuter()->VacateStrategySlot();
@@ -1276,7 +1276,7 @@ int CAI_AssaultBehavior::TranslateSchedule( int scheduleType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::OnStartSchedule( int scheduleType )
 {
@@ -1289,7 +1289,7 @@ void CAI_AssaultBehavior::OnStartSchedule( int scheduleType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::ClearSchedule( const char *szReason )
 {
@@ -1307,13 +1307,13 @@ void CAI_AssaultBehavior::ClearSchedule( const char *szReason )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CAI_AssaultBehavior::IsAllowedToDivert( void )
 {
 	if ( m_hAssaultPoint && m_hAssaultPoint->m_bAllowDiversion )
 	{
-		if ( m_hAssaultPoint->m_flAllowDiversionRadius == 0.0f || (m_bHitAssaultPoint && GetEnemy() != NULL && GetEnemy()->GetAbsOrigin().DistToSqr(m_hAssaultPoint->GetAbsOrigin()) <= Square(m_hAssaultPoint->m_flAllowDiversionRadius)) ) 
+		if ( m_hAssaultPoint->m_flAllowDiversionRadius == 0.0f || (m_bHitAssaultPoint && GetEnemy() != NULL && GetEnemy()->GetAbsOrigin().DistToSqr(m_hAssaultPoint->GetAbsOrigin()) <= Square(m_hAssaultPoint->m_flAllowDiversionRadius)) )
 		{
 			if ( m_flLastSawAnEnemyAt && ((gpGlobals->curtime - m_flLastSawAnEnemyAt) < ASSAULT_DIVERSION_TIME) )
 				return true;
@@ -1324,7 +1324,7 @@ bool CAI_AssaultBehavior::IsAllowedToDivert( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultBehavior::BuildScheduleTestBits()
 {
@@ -1334,7 +1334,7 @@ void CAI_AssaultBehavior::BuildScheduleTestBits()
 	if ( IsAllowedToDivert() )
 	{
 		if ( IsCurSchedule( SCHED_MOVE_TO_ASSAULT_POINT ) ||
-			IsCurSchedule( SCHED_MOVE_TO_RALLY_POINT ) || 
+			IsCurSchedule( SCHED_MOVE_TO_RALLY_POINT ) ||
 			IsCurSchedule( SCHED_HOLD_RALLY_POINT ) )
 		{
 			GetOuter()->SetCustomInterruptCondition( COND_NEW_ENEMY );
@@ -1362,7 +1362,7 @@ void CAI_AssaultBehavior::OnScheduleChange()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CAI_AssaultBehavior::SelectSchedule()
@@ -1370,7 +1370,7 @@ int CAI_AssaultBehavior::SelectSchedule()
 	if ( !OnStrictAssault() )
 	{
 		if( HasCondition( COND_PLAYER_PUSHING ) )
-			return SCHED_ASSAULT_MOVE_AWAY; 
+			return SCHED_ASSAULT_MOVE_AWAY;
 
 		if( HasCondition( COND_HEAR_DANGER ) )
 			return SCHED_TAKE_COVER_FROM_BEST_SOUND;
@@ -1385,7 +1385,7 @@ int CAI_AssaultBehavior::SelectSchedule()
 
 	if( m_bHitRallyPoint && !m_bHitAssaultPoint && !AssaultHasBegun() )
 	{
-		// If I have hit my rally point, but I haven't hit my assault point yet, 
+		// If I have hit my rally point, but I haven't hit my assault point yet,
 		// Make sure I'm still on my rally point, cause another behavior may have moved me.
 		// 2D check to be within 32 units of my rallypoint.
 		Vector vecDiff = GetAbsOrigin() - m_hRallyPoint->GetAbsOrigin();
@@ -1401,7 +1401,7 @@ int CAI_AssaultBehavior::SelectSchedule()
 	else if( m_bHitAssaultPoint )
 	{
 		// Likewise. If I have hit my assault point, make sure I'm still there. Another
-		// behavior (hide and reload) may have moved me away. 
+		// behavior (hide and reload) may have moved me away.
 		Vector vecDiff = GetAbsOrigin() - m_hAssaultPoint->GetAbsOrigin();
 		vecDiff.z = 0.0;
 
@@ -1499,7 +1499,7 @@ int CAI_AssaultBehavior::SelectSchedule()
 	// This ugly patch fixes a bug where Combine Soldiers on an assault would not shoot through glass, because of the way
 	// that shooting through glass is implemented in their AI. (sjb)
 	if( HasCondition(COND_SEE_ENEMY) && HasCondition(COND_WEAPON_SIGHT_OCCLUDED) && !HasCondition(COND_LOW_PRIMARY_AMMO) )
-	{	
+	{
 		// If they are hiding behind something that we can destroy, start shooting at it.
 		CBaseEntity *pBlocker = GetOuter()->GetEnemyOccluder();
 		if ( pBlocker && pBlocker->GetHealth() > 0 )
@@ -1511,7 +1511,7 @@ int CAI_AssaultBehavior::SelectSchedule()
 		}
 	}
 #endif//HL2_EPISODIC
-	
+
 	return BaseClass::SelectSchedule();
 }
 
@@ -1519,8 +1519,8 @@ int CAI_AssaultBehavior::SelectSchedule()
 //
 // CAI_AssaultGoal
 //
-// Purpose: 
-//			
+// Purpose:
+//
 //
 //-----------------------------------------------------------------------------
 class CAI_AssaultGoal : public CAI_GoalEntity
@@ -1553,7 +1553,7 @@ LINK_ENTITY_TO_CLASS( ai_goal_assault, CAI_AssaultGoal );
 //-------------------------------------
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultGoal::EnableGoal( CAI_BaseNPC *pAI )
 {
@@ -1568,16 +1568,16 @@ void CAI_AssaultGoal::EnableGoal( CAI_BaseNPC *pAI )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAI_AssaultGoal::DisableGoal( CAI_BaseNPC *pAI )
-{ 
+{
 	CAI_AssaultBehavior *pBehavior;
 
 	if ( pAI->GetBehavior( &pBehavior ) )
 	{
 		pBehavior->Disable();
-	
+
 		// Don't leave any hanging rally points locked.
 		pBehavior->UnlockRallyPoint();
 
@@ -1587,7 +1587,7 @@ void CAI_AssaultGoal::DisableGoal( CAI_BaseNPC *pAI )
 
 //-----------------------------------------------------------------------------
 // Purpose: ENTITY I/O method for telling the assault behavior to cue assault
-// Input  : &inputdata - 
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CAI_AssaultGoal::InputBeginAssault( inputdata_t &inputdata )
 {
@@ -1625,10 +1625,10 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 	DECLARE_TASK(TASK_HIT_ASSAULT_POINT)
 	DECLARE_TASK(TASK_HIT_RALLY_POINT)
 	DECLARE_TASK(TASK_ASSAULT_DEFER_SCHEDULE_SELECTION)
-	
+
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_MOVE_TO_RALLY_POINT,
 
@@ -1680,7 +1680,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 #ifdef HL2_EPISODIC
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HOLD_RALLY_POINT,
 
@@ -1703,7 +1703,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 #else
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 	SCHED_HOLD_RALLY_POINT,
 
@@ -1728,7 +1728,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_HOLD_ASSAULT_POINT,
 
@@ -1752,7 +1752,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_MOVE_TO_ASSAULT_POINT,
 
@@ -1772,7 +1772,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 	SCHED_AT_ASSAULT_POINT,
 
@@ -1787,7 +1787,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_WAIT_AND_CLEAR,
 
@@ -1814,7 +1814,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_CLEAR_ASSAULT_POINT,
 
@@ -1826,7 +1826,7 @@ AI_BEGIN_CUSTOM_SCHEDULE_PROVIDER(CAI_AssaultBehavior)
 
 	//=========================================================
 	//=========================================================
-	DEFINE_SCHEDULE 
+	DEFINE_SCHEDULE
 	(
 		SCHED_ASSAULT_MOVE_AWAY,
 

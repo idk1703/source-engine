@@ -109,7 +109,7 @@ public:
 
 	//
 	// Returns false is no frame exists for the given entity at the given tick.
-	// Otherwise, returns a 
+	// Otherwise, returns a
 	//
 	bool GetFrame( C_BaseAnimating* pEntity, int nTick, bool* pBoneSimulated, CBoneAccessor* pBoneAccessor ) const;
 

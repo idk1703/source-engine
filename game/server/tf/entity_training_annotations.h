@@ -9,7 +9,7 @@
 //=============================================================================
 // CTrainingAnnotation Entity.
 //=============================================================================
-class CTrainingAnnotation : public CPointEntity 
+class CTrainingAnnotation : public CPointEntity
 {
 	DECLARE_CLASS( CTrainingAnnotation, CPointEntity );
 

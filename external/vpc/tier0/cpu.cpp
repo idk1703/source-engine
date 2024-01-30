@@ -1,6 +1,6 @@
 //===== Copyright (c) 1996-2005, Valve Corporation, All rights reserved. ======//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,10 +37,10 @@ static bool cpuid(uint32 function, uint32& out_eax, uint32& out_ebx, uint32& out
 		"cpuid\n\t"
 		"xchg %%esi, %%ebx"
 		: "=a" (out_eax),
-		  "=S" (out_ebx),
-		  "=c" (out_ecx),
-		  "=d" (out_edx)
-		: "a" (function) 
+		"=S" (out_ebx),
+		"=c" (out_ecx),
+		"=d" (out_edx)
+		: "a" (function)
 	);
 	return true;
 #elif defined(_WIN64)
@@ -58,23 +58,23 @@ static bool cpuid(uint32 function, uint32& out_eax, uint32& out_ebx, uint32& out
 
 	__try
 	{
-        _asm
+		_asm
 		{
-			xor edx, edx		// Clue the compiler that EDX & others is about to be used. 
+			xor edx, edx		// Clue the compiler that EDX & others is about to be used.
 			xor ecx, ecx
 			xor ebx, ebx        // <Sergiy> Note: if I don't zero these out, cpuid sometimes won't work, I didn't find out why yet
-            mov eax, function   // set up CPUID to return processor version and features
+			mov eax, function   // set up CPUID to return processor version and features
 								//      0 = vendor string, 1 = version info, 2 = cache info
-            cpuid				// code bytes = 0fh,  0a2h
-            mov local_eax, eax	// features returned in eax
-            mov local_ebx, ebx	// features returned in ebx
-            mov local_ecx, ecx	// features returned in ecx
-            mov local_edx, edx	// features returned in edx
+			cpuid				// code bytes = 0fh,  0a2h
+			mov local_eax, eax	// features returned in eax
+			mov local_ebx, ebx	// features returned in ebx
+			mov local_ecx, ecx	// features returned in ecx
+			mov local_edx, edx	// features returned in edx
 		}
-    } 
-	__except(EXCEPTION_EXECUTE_HANDLER) 
-	{ 
-		retval = false; 
+	}
+	__except(EXCEPTION_EXECUTE_HANDLER)
+	{
+		retval = false;
 	}
 
 	out_eax = local_eax;
@@ -90,19 +90,19 @@ static bool cpuid(uint32 function, uint32& out_eax, uint32& out_ebx, uint32& out
 
 static bool CheckMMXTechnology(void)
 {
-#if defined( _X360 ) || defined( _PS3 ) 
+#if defined( _X360 ) || defined( _PS3 )
 	return true;
 #else
-    uint32 eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	uint32 eax,ebx,edx,unused;
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & 0x800000 ) != 0;
+	return ( edx & 0x800000 ) != 0;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: This is a bit of a hack because it appears 
+// Purpose: This is a bit of a hack because it appears
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 static bool IsWin98OrOlder()
@@ -115,12 +115,12 @@ static bool IsWin98OrOlder()
 	OSVERSIONINFOEX osvi;
 	ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	
+
 	BOOL bOsVersionInfoEx = GetVersionEx ((OSVERSIONINFO *) &osvi);
 	if( !bOsVersionInfoEx )
 	{
 		// If OSVERSIONINFOEX doesn't work, try OSVERSIONINFO.
-		
+
 		osvi.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 		if ( !GetVersionEx ( (OSVERSIONINFO *) &osvi) )
 		{
@@ -160,13 +160,13 @@ static bool CheckSSETechnology(void)
 		return false;
 	}
 
-    uint32 eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	uint32 eax,ebx,edx,unused;
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 	{
 		return false;
 	}
 
-    return ( edx & 0x2000000L ) != 0;
+	return ( edx & 0x2000000L ) != 0;
 #endif
 }
 
@@ -176,10 +176,10 @@ static bool CheckSSE2Technology(void)
 	return false;
 #else
 	uint32 eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & 0x04000000 ) != 0;
+	return ( edx & 0x04000000 ) != 0;
 #endif
 }
 
@@ -273,17 +273,17 @@ static bool Check3DNowTechnology(void)
 	return false;
 #else
 	uint32 eax, unused;
-    if ( !cpuid(0x80000000,eax,unused,unused,unused) )
+	if ( !cpuid(0x80000000,eax,unused,unused,unused) )
 		return false;
 
-    if ( eax > 0x80000000L )
-    {
-     	if ( !cpuid(0x80000001,unused,unused,unused,eax) )
+	if ( eax > 0x80000000L )
+	{
+		if ( !cpuid(0x80000001,unused,unused,unused,eax) )
 			return false;
 
 		return ( eax & 1<<31 ) != 0;
-    }
-    return false;
+	}
+	return false;
 #endif
 }
 
@@ -293,10 +293,10 @@ static bool CheckCMOVTechnology()
 	return false;
 #else
 	uint32 eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & (1<<15) ) != 0;
+	return ( edx & (1<<15) ) != 0;
 #endif
 }
 
@@ -305,11 +305,11 @@ static bool CheckFCMOVTechnology(void)
 #if defined( _X360 ) || defined( _PS3 )
 	return false;
 #else
-    uint32 eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	uint32 eax,ebx,edx,unused;
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & (1<<16) ) != 0;
+	return ( edx & (1<<16) ) != 0;
 #endif
 }
 
@@ -319,10 +319,10 @@ static bool CheckRDTSCTechnology(void)
 	return false;
 #else
 	uint32 eax,ebx,edx,unused;
-    if ( !cpuid(1,eax,ebx,unused,edx) )
+	if ( !cpuid(1,eax,ebx,unused,edx) )
 		return false;
 
-    return ( edx & 0x10 ) != 0;
+	return ( edx & 0x10 ) != 0;
 #endif
 }
 
@@ -335,17 +335,17 @@ const tchar* GetProcessorVendorId()
 	uint32 unused, VendorIDRegisters[3];
 
 	static tchar VendorID[13];
-	
+
 	memset( VendorID, 0, sizeof(VendorID) );
 	if ( !cpuid(0,unused, VendorIDRegisters[0], VendorIDRegisters[2], VendorIDRegisters[1] ) )
 	{
 		if ( IsPC() )
 		{
-			_tcscpy( VendorID, _T( "Generic_x86" ) ); 
+			_tcscpy( VendorID, _T( "Generic_x86" ) );
 		}
 		else if ( IsX360() )
 		{
-			_tcscpy( VendorID, _T( "PowerPC" ) ); 
+			_tcscpy( VendorID, _T( "PowerPC" ) );
 		}
 	}
 	else
@@ -378,29 +378,29 @@ static bool HTSupported(void)
 		FAMILY_ID_486 = 0x0400,     // EAX[8:12]  -  486, 487 and overdrive
 		FAMILY_ID_PENTIUM = 0x0500, //               Pentium, Pentium OverDrive  60 - 200
 		FAMILY_ID_PENTIUM_PRO = 0x0600,//            P Pro, P II, P III, P M, Celeron M, Core Duo, Core Solo, Core2 Duo, Core2 Extreme, P D, Xeon model F,
-		                               //            also 45-nm : Intel Atom, Core i7, Xeon MP ; see Intel Processor Identification and the CPUID instruction pg 20,21
-		                               
-		FAMILY_ID_EXTENDED = 0x0F00 //               P IV, Xeon, Celeron D, P D, 
+										//            also 45-nm : Intel Atom, Core i7, Xeon MP ; see Intel Processor Identification and the CPUID instruction pg 20,21
+
+		FAMILY_ID_EXTENDED = 0x0F00 //               P IV, Xeon, Celeron D, P D,
 	};
 
 	uint32 unused,
-				  reg_eax = 0, 
-				  reg_ebx = 0,
-				  reg_edx = 0,
-				  vendor_id[3] = {0, 0, 0};
+				reg_eax = 0,
+				reg_ebx = 0,
+				reg_edx = 0,
+				vendor_id[3] = {0, 0, 0};
 
 	// verify cpuid instruction is supported
-	if( !cpuid(0,unused, vendor_id[0],vendor_id[2],vendor_id[1]) 
-	 || !cpuid(1,reg_eax,reg_ebx,unused,reg_edx) )
-	 return false;
+	if( !cpuid(0,unused, vendor_id[0],vendor_id[2],vendor_id[1])
+	|| !cpuid(1,reg_eax,reg_ebx,unused,reg_edx) )
+	return false;
 
 	// <Sergiy> Previously, we detected P4 specifically; now, we detect GenuineIntel with HT enabled in general
 	// if (((reg_eax & FAMILY_ID) ==  FAMILY_ID_EXTENDED) || (reg_eax & EXT_FAMILY_ID))
-	
+
 	//  Check to see if this is an Intel Processor with HT or CMT capability , and if HT/CMT is enabled
 	if (vendor_id[0] == 'uneG' && vendor_id[1] == 'Ieni' && vendor_id[2] == 'letn')
 		return (reg_edx & HT_BIT) != 0 && // Genuine Intel Processor with Hyper-Threading Technology implemented
-			   ((reg_ebx >> 16) & 0xFF) > 1 ; // Hyper-Threading OR Core Multi-Processing has been enabled
+				((reg_ebx >> 16) & 0xFF) > 1 ; // Hyper-Threading OR Core Multi-Processing has been enabled
 
 	return false;  // This is not a genuine Intel processor.
 #endif
@@ -411,20 +411,20 @@ static bool HTSupported(void)
 int LogicalProcessorsPerCore()
 {
 #if defined( _X360 ) || defined( _PS3 ) || defined( LINUX )
-	return 2; // 
-#elif defined(_WIN32) 
+	return 2; //
+#elif defined(_WIN32)
 	uint32 nMaxStandardFnSupported, nVendorId[3];
 	if( !cpuid( 0, nMaxStandardFnSupported,nVendorId[0],nVendorId[2],nVendorId[1] ) )
 	{
 		return 1;
 	}
-	
+
 	uint32 nFn1_Eax, nFn1_Ebx, nFn1_Ecx, nFn1_Edx;
 	if( !cpuid( 1, nFn1_Eax, nFn1_Ebx, nFn1_Ecx, nFn1_Edx) )
 	{
 		return 1;
 	}
-	
+
 	enum CpuidFnMasks
 	{
 		HTT                     = 0x10000000,   // Fn0000_0001  EDX[28]
@@ -442,16 +442,16 @@ int LogicalProcessorsPerCore()
 		// Determine the total number of logical processors per package.
 		int nLogProcsPerPkg = ( nFn1_Ebx & LogicalProcessorCount ) >> 16;
 		int nCoresPerPkg = 1;
-		
+
 		if( ( ( nFn1_Ebx >> 16 ) & 0xFF ) <= 1 ) // Has Hyper-Threading OR Core Multi-Processing not been enabled ?
 		{
-			 // NOTE:  This is only tested on Intel CPUs; I don't know if it's true on AMD, as I have no HT AMD to test on
+			// NOTE:  This is only tested on Intel CPUs; I don't know if it's true on AMD, as I have no HT AMD to test on
 			return 1; // HT was turned off, for all intents and purposes in our engine it means one logical CPU per core
 		}
 
 		// Determine the total number of cores per package.  This info
 		// is extracted differently dependending on the cpu vendor.
-		if( nVendorId[0] == 'uneG' && nVendorId[1] == 'Ieni' && nVendorId[2] == 'letn' ) // GenuineIntel 
+		if( nVendorId[0] == 'uneG' && nVendorId[1] == 'Ieni' && nVendorId[2] == 'letn' ) // GenuineIntel
 		{
 			if( nMaxStandardFnSupported >= 4 )
 			{
@@ -459,15 +459,15 @@ int LogicalProcessorsPerCore()
 				if( cpuid( 4, nFn4_Eax, nFn4_Ebx, nFn4_Ecx, nFn4_Edx ) )
 				{
 					nCoresPerPkg = ( ( nFn4_Eax & NC_Intel ) >> 26 ) + 1;
-					
+
 				}
 			}
 			// <Sergiy> as the DirectX CoreDetection sample goes, the logic is that on old processors where
 			// the functions aren't supported, we assume one core per package, multiple logical processors per package
-			// I suspect this may be wrong, especially for AMD processors. 
-			return nLogProcsPerPkg / nCoresPerPkg; 
+			// I suspect this may be wrong, especially for AMD processors.
+			return nLogProcsPerPkg / nCoresPerPkg;
 		}
-#if 0	 // <Sergiy> To make as concervative change as possible now, I'll skip AMD hyperthread detection	
+#if 0	 // <Sergiy> To make as concervative change as possible now, I'll skip AMD hyperthread detection
 		else
 		{
 			if( nVendorId[0] == 'htuA' && nVendorId[1] == 'itne' && nVendorId[2] == 'DMAc' ) // AuthenticAMD
@@ -501,8 +501,8 @@ int LogicalProcessorsPerCore()
 			}
 			// <Sergiy> as the DirectX CoreDetection sample goes, the logic is that on old processors where
 			// the functions aren't supported, we assume one core per package, multiple logical processors per package
-			// I suspect this may be wrong, especially for AMD processors. 
-			return nLogProcsPerPkg / nCoresPerPkg; 
+			// I suspect this may be wrong, especially for AMD processors.
+			return nLogProcsPerPkg / nCoresPerPkg;
 		}
 #endif
 	}
@@ -519,7 +519,7 @@ static int64 CalculateClockSpeed()
 #if defined( _X360 ) || defined(_PS3)
 	// Xbox360 and PS3 have the same clock speed and share a lot of characteristics on PPU
 	return 3200000000LL;
-#else	
+#else
 #if defined( _WIN32 )
 	LARGE_INTEGER waitTime, startCount, curCount;
 	CCycleCount start, end;
@@ -565,12 +565,12 @@ const CPUInformation& GetCPUInformation()
 	// Redundant, but just in case the user somehow messes with the size.
 	memset(&pi, 0x0, sizeof(pi));
 
-	// Fill out the structure, and return it: 
+	// Fill out the structure, and return it:
 	pi.m_Size = sizeof(pi);
 
 	// Grab the processor frequency:
 	pi.m_Speed = CalculateClockSpeed();
-	
+
 	// Get the logical and physical processor counts:
 
 #if defined( _X360 )
@@ -587,7 +587,7 @@ const CPUInformation& GetCPUInformation()
 
 	// Sergiy: fixing: si.dwNumberOfProcessors is the number of logical processors according to experiments on i7, P4 and a DirectX sample (Aug'09)
 	//         this is contrary to MSDN documentation on GetSystemInfo()
-	// 
+	//
 	pi.m_nLogicalProcessors = si.dwNumberOfProcessors;
 	if ( 0 == V_tier0_stricmp( GetProcessorVendorId(), "AuthenticAMD" ) )
 	{
@@ -601,7 +601,7 @@ const CPUInformation& GetCPUInformation()
 		pi.m_nPhysicalProcessors = topo.NumberOfSystemCores();
 	}
 
-	// Make sure I always report at least one, when running WinXP with the /ONECPU switch, 
+	// Make sure I always report at least one, when running WinXP with the /ONECPU switch,
 	// it likes to report 0 processors for some reason.
 	if ( pi.m_nPhysicalProcessors == 0 && pi.m_nLogicalProcessors == 0 )
 	{
@@ -643,7 +643,7 @@ const CPUInformation& GetCPUInformation()
 					rgbProcessors[cPhysicalId] = true;
 			}
 			/* this code will tell us how many physical chips are in the machine, but we want
-			   core count, so for the moment, each processor counts as both logical and physical.
+				core count, so for the moment, each processor counts as both logical and physical.
 			if ( !strncasecmp( rgchLine, "physical id ", strlen( "physical id " ) ) )
 			{
 				char *pchValue = strchr( rgchLine, ':' );
@@ -694,4 +694,3 @@ const CPUInformation& GetCPUInformation()
 
 	return pi;
 }
-

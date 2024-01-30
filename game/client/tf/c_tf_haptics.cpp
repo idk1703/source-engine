@@ -80,7 +80,7 @@ void C_TFHaptics::HapticsThink(C_TFPlayer *player)
 	}
 	{// healing check
 		C_BaseEntity *pHealTarget = player->MedicGetHealTarget();
-		if(pHealTarget) 
+		if(pHealTarget)
 		{
 			if(!wasHealing&&haptics)
 				haptics->ProcessHapticEvent(2,"Game","healing_start");
@@ -161,7 +161,7 @@ void C_TFHaptics::HapticsThink(C_TFPlayer *player)
 			}
 		}
 	}else{
-		if(skippedFirstCloak) 
+		if(skippedFirstCloak)
 		{
 			if(cloakLevel==0.0f)
 				readyForCloak = true;

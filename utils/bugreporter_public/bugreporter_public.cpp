@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 #define PROTECTED_THINGS_DISABLE
@@ -36,9 +36,9 @@ bool UploadBugReport(
 	int ram,
 	int cpu,
 	char const *processor,
-	unsigned int high, 
-	unsigned int low, 
-	unsigned int vendor, 
+	unsigned int high,
+	unsigned int low,
+	unsigned int vendor,
 	unsigned int device,
 	char const *osversion,
 	char const *attachedfile,
@@ -258,7 +258,7 @@ CBugReporter::CBugReporter()
 	m_Severity.AddToTail( m_BugStrings.AddString( "High" ) );
 	m_Severity.AddToTail( m_BugStrings.AddString( "Showstopper" ) );
 
-	
+
 	m_ReportType.AddToTail( m_BugStrings.AddString( "<<Choose Item>>" ) );
 	m_ReportType.AddToTail( m_BugStrings.AddString( "Video / Display Problems" ) );
 	m_ReportType.AddToTail( m_BugStrings.AddString( "Network / Connectivity Problems" ) );
@@ -332,7 +332,7 @@ char const *CBugReporter::GetDisplayName( int index )
 	if ( index < 0 || index >= 1 )
 		return "<<Invalid>>";
 
-	return GetUserName(); 
+	return GetUserName();
 }
 
 char const *CBugReporter::GetDisplayNameForUserName( char const *username )
@@ -530,7 +530,7 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 
 	int attachedfilesize = ( m_pBug->zip[ 0 ] == 0 ) ? 0 : g_pFileSystem->Size( m_pBug->zip );
 
-	if ( !UploadBugReport( 
+	if ( !UploadBugReport(
 			m_cserIP,
 			m_SteamID,
 			atoi( m_pBug->build ),
@@ -545,9 +545,9 @@ bool CBugReporter::CommitBugReport( int& bugSubmissionId )
 			m_pBug->ram,
 			m_pBug->cpu,
 			m_pBug->processor,
-			m_pBug->dxversionhigh, 
-			m_pBug->dxversionlow, 
-			m_pBug->dxvendor, 
+			m_pBug->dxversionhigh,
+			m_pBug->dxversionlow,
+			m_pBug->dxvendor,
 			m_pBug->dxdevice,
 			m_pBug->osversion,
 			m_pBug->zip,

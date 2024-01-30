@@ -191,7 +191,7 @@ private:
 	bool m_bConvarChanged;
 
 	bool m_bPlayerValid;
-	
+
 	float m_fRemainingFrameTime;
 
 	bool m_bScopeSwitchedMode;

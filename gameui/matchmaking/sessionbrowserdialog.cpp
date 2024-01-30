@@ -140,7 +140,7 @@ void CSessionBrowserDialog::SessionSearchResult( int searchIdx, void *pHostData,
 			break;
 		}
 	}
- 
+
 	hostData_s *pData = (hostData_s*)pHostData;
 
 	int filledSlots = pResult->dwFilledPublicSlots + pResult->dwFilledPrivateSlots;
@@ -308,7 +308,7 @@ void CSessionBrowserDialog::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSessionBrowserDialog::OnThink()
 {

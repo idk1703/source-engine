@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -19,7 +19,7 @@
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudWeapon : public CHudElement, public vgui::Panel
 {
@@ -38,7 +38,7 @@ private:
 DECLARE_HUDELEMENT( CHudWeapon );
 
 CHudWeapon::CHudWeapon( const char *pElementName ) :
-  CHudElement( pElementName ), BaseClass( NULL, "HudWeapon" )
+	CHudElement( pElementName ), BaseClass( NULL, "HudWeapon" )
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
@@ -49,8 +49,8 @@ CHudWeapon::CHudWeapon( const char *pElementName ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *scheme - 
+// Purpose:
+// Input  : *scheme -
 //-----------------------------------------------------------------------------
 void CHudWeapon::ApplySchemeSettings( IScheme *scheme )
 {
@@ -80,7 +80,7 @@ void CHudWeapon::PerformLayout()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeapon::Paint( void )
 {
@@ -92,7 +92,7 @@ void CHudWeapon::Paint( void )
 	MDLCACHE_CRITICAL_SECTION();
 
 	C_BaseCombatWeapon *pWeapon = player->GetActiveWeapon();
-	
+
 	if ( pWeapon )
 	{
 		pWeapon->Redraw();

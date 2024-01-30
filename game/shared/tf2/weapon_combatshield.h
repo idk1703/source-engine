@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -83,10 +83,10 @@ public:
 	virtual bool	VisibleInWeaponSelection( void );
 	virtual int		GetOtherWeaponsActivity( int iActivity );
 	virtual int		ReplaceOtherWeaponsActivity( int iActivity );
-	
+
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -103,7 +103,7 @@ public:
 	virtual void	GetViewmodelBoneControllers( CBaseViewModel *pViewModel, float controllers[MAXSTUDIOBONECTRLS]);
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -117,7 +117,7 @@ public:
 
 	void			InitShieldBeam( void );
 	void			InitTeslaBeam( void );
-	
+
 	void			DrawBeams( C_BaseViewModel *pViewModel );
 
 #endif

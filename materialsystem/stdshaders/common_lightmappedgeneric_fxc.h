@@ -175,7 +175,7 @@ float3 LightMapSample( sampler LightmapSampler, float2 vTexCoord )
 			float4 samples_1;
 			float4 samples_2;
 			float4 samples_3;
-			
+
 			asm {
 				tfetch2D samples_0, vTexCoord.xy, LightmapSampler, OffsetX = -0.5, OffsetY = -0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
 				tfetch2D samples_1, vTexCoord.xy, LightmapSampler, OffsetX =  0.5, OffsetY = -0.5, MinFilter=point, MagFilter=point, MipFilter=keep, UseComputedLOD=false
@@ -192,11 +192,10 @@ float3 LightMapSample( sampler LightmapSampler, float2 vTexCoord )
 			result.rgb += samples_1.rgb * (samples_1.a * Weights.y);
 			result.rgb += samples_2.rgb * (samples_2.a * Weights.z);
 			result.rgb += samples_3.rgb * (samples_3.a * Weights.w);
-		
+
 			return result;
 		}
 #		endif
 	}
 #	endif
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -26,46 +26,46 @@ using namespace vgui;
 
 COptionsSubMouse::COptionsSubMouse(vgui::Panel *parent) : PropertyPage(parent, NULL)
 {
-	m_pReverseMouseCheckBox = new CCvarNegateCheckButton( 
-		this, 
-		"ReverseMouse", 
-		"#GameUI_ReverseMouse", 
+	m_pReverseMouseCheckBox = new CCvarNegateCheckButton(
+		this,
+		"ReverseMouse",
+		"#GameUI_ReverseMouse",
 		"m_pitch" );
-	
-	m_pMouseFilterCheckBox = new CCvarToggleCheckButton( 
-		this, 
-		"MouseFilter", 
-		"#GameUI_MouseFilter", 
+
+	m_pMouseFilterCheckBox = new CCvarToggleCheckButton(
+		this,
+		"MouseFilter",
+		"#GameUI_MouseFilter",
 		"m_filter" );
 
-	m_pMouseRawCheckBox = new CCvarToggleCheckButton( 
-		this, 
-		"MouseRaw", 
-		"#GameUI_MouseRaw", 
+	m_pMouseRawCheckBox = new CCvarToggleCheckButton(
+		this,
+		"MouseRaw",
+		"#GameUI_MouseRaw",
 		"m_rawinput" );
 
-	m_pMouseAccelerationCheckBox = new CheckButton( 
-		this, 
-		"MouseAccelerationCheckbox", 
+	m_pMouseAccelerationCheckBox = new CheckButton(
+		this,
+		"MouseAccelerationCheckbox",
 		"#GameUI_MouseCustomAccel" );
 
 
-	m_pJoystickCheckBox = new CCvarToggleCheckButton( 
-		this, 
-		"Joystick", 
-		"#GameUI_Joystick", 
+	m_pJoystickCheckBox = new CCvarToggleCheckButton(
+		this,
+		"Joystick",
+		"#GameUI_Joystick",
 		"joystick" );
 
-	m_pJoystickSouthpawCheckBox = new CCvarToggleCheckButton( 
-		this, 
-		"JoystickSouthpaw", 
-		"#GameUI_JoystickSouthpaw", 
+	m_pJoystickSouthpawCheckBox = new CCvarToggleCheckButton(
+		this,
+		"JoystickSouthpaw",
+		"#GameUI_JoystickSouthpaw",
 		"joy_movement_stick" );
 
-	m_pReverseJoystickCheckBox = new CCvarToggleCheckButton( 
-		this, 
-		"ReverseJoystick", 
-		"#GameUI_ReverseJoystick", 
+	m_pReverseJoystickCheckBox = new CCvarToggleCheckButton(
+		this,
+		"ReverseJoystick",
+		"#GameUI_ReverseJoystick",
 		"joy_inverty" );
 
 	m_pQuickInfoCheckBox = new CCvarToggleCheckButton(
@@ -77,8 +77,8 @@ COptionsSubMouse::COptionsSubMouse(vgui::Panel *parent) : PropertyPage(parent, N
 	m_pMouseSensitivitySlider = new CCvarSlider( this, "Slider", "#GameUI_MouseSensitivity",
 		0.1f, 6.0f, "sensitivity", true );
 
-    m_pMouseSensitivityLabel = new TextEntry(this, "SensitivityLabel");
-    m_pMouseSensitivityLabel->AddActionSignalTarget(this);
+	m_pMouseSensitivityLabel = new TextEntry(this, "SensitivityLabel");
+	m_pMouseSensitivityLabel->AddActionSignalTarget(this);
 
 	m_pMouseAccelExponentSlider = new CCvarSlider( this, "MouseAccelerationSlider", "#GameUI_MouseAcceleration",
 		1.0f, 1.4f, "m_customaccel_exponent", true );
@@ -103,14 +103,14 @@ COptionsSubMouse::COptionsSubMouse(vgui::Panel *parent) : PropertyPage(parent, N
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 COptionsSubMouse::~COptionsSubMouse()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMouse::OnResetData()
 {
@@ -132,7 +132,7 @@ void COptionsSubMouse::OnResetData()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMouse::OnApplyChanges()
 {
@@ -164,19 +164,19 @@ void COptionsSubMouse::ApplySchemeSettings(IScheme *pScheme)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMouse::OnControlModified(Panel *panel)
 {
 	PostActionSignal(new KeyValues("ApplyButtonEnable"));
 
-    // the HasBeenModified() check is so that if the value is outside of the range of the
-    // slider, it won't use the slider to determine the display value but leave the
-    // real value that we determined in the constructor
-    if (panel == m_pMouseSensitivitySlider && m_pMouseSensitivitySlider->HasBeenModified())
-    {
-        UpdateSensitivityLabel();
-    }
+	// the HasBeenModified() check is so that if the value is outside of the range of the
+	// slider, it won't use the slider to determine the display value but leave the
+	// real value that we determined in the constructor
+	if (panel == m_pMouseSensitivitySlider && m_pMouseSensitivitySlider->HasBeenModified())
+	{
+		UpdateSensitivityLabel();
+	}
 	else if (panel == m_pMouseAccelExponentSlider && m_pMouseAccelExponentSlider->HasBeenModified())
 	{
 		UpdateAccelerationLabel();
@@ -193,24 +193,24 @@ void COptionsSubMouse::OnControlModified(Panel *panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMouse::OnTextChanged(Panel *panel)
 {
-    if ( panel == m_pMouseSensitivityLabel )
-    {
-        char buf[64];
-        m_pMouseSensitivityLabel->GetText(buf, 64);
+	if ( panel == m_pMouseSensitivityLabel )
+	{
+		char buf[64];
+		m_pMouseSensitivityLabel->GetText(buf, 64);
 
-        float fValue;
+		float fValue;
 		int numParsed = sscanf(buf, "%f", &fValue);
 		if ( ( numParsed == 1 ) && ( fValue >= 0.0f ) )
-        {
-            m_pMouseSensitivitySlider->SetSliderValue(fValue);
-            PostActionSignal(new KeyValues("ApplyButtonEnable"));
-        }
+		{
+			m_pMouseSensitivitySlider->SetSliderValue(fValue);
+			PostActionSignal(new KeyValues("ApplyButtonEnable"));
+		}
 		return;
-    }
+	}
 
 	if ( panel == m_pMouseAccelExponentLabel )
 	{
@@ -227,13 +227,13 @@ void COptionsSubMouse::OnTextChanged(Panel *panel)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMouse::UpdateSensitivityLabel()
 {
-    char buf[64];
-    Q_snprintf(buf, sizeof( buf ), " %.2f", m_pMouseSensitivitySlider->GetSliderValue());
-    m_pMouseSensitivityLabel->SetText(buf);
+	char buf[64];
+	Q_snprintf(buf, sizeof( buf ), " %.2f", m_pMouseSensitivitySlider->GetSliderValue());
+	m_pMouseSensitivityLabel->SetText(buf);
 }
 
 
@@ -246,7 +246,7 @@ void COptionsSubMouse::UpdateAccelerationLabel()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void COptionsSubMouse::UpdateJoystickPanels()
 {

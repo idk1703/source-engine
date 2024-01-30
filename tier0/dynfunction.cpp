@@ -145,4 +145,3 @@ void *VoidFnPtrLookup_Tier0(const char *libname, const char *fn, void *fallback)
 		retval = fallback;
 	return retval;
 }
-

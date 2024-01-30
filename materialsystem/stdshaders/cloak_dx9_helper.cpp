@@ -1,13 +1,13 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
 
 #include "BaseVSShader.h"
 #include "cloak_dx9_helper.h"
-#include "../shaderapidx9/locald3dtypes.h"												   
+#include "../shaderapidx9/locald3dtypes.h"
 #include "convar.h"
 #include "cpp_shader_constant_register_map.h"
 #include "cloak_vs20.inc"
@@ -322,7 +322,7 @@ void DrawCloak_DX9( CBaseVSShader *pShader, IMaterialVar** params, IShaderDynami
 		pShaderAPI->SetPixelShaderFogParams( PSREG_FOG_PARAMS );
 
 		// Lighting constants
-		
+
 		pShaderAPI->SetPixelShaderStateAmbientLightCube( PSREG_AMBIENT_CUBE, !lightState.m_bAmbientLight );
 		pShaderAPI->CommitPixelShaderLighting( PSREG_LIGHT_INFO_ARRAY );
 

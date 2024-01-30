@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -231,7 +231,7 @@ void Bitmap_t::SetColor( int x, int y, Color c )
 //	}
 //
 //	// write the rgba image to the vtf texture using the pixel writer
-//	CPixelWriter pixelWriter;		
+//	CPixelWriter pixelWriter;
 //	pixelWriter.SetPixelMemory( pVTFTexture->Format(), pVTFTexture->ImageData(), pVTFTexture->RowSizeInBytes( 0 ) );
 //
 //	for (int y = 0; y < m_nHeight; ++y)
@@ -458,4 +458,3 @@ void Bitmap_t::SetPixelData( const Bitmap_t &src, int nDestX1, int nDestY1 )
 {
 	SetPixelData( src, 0, 0, src.Width(), src.Height(), nDestX1, nDestY1 );
 }
-

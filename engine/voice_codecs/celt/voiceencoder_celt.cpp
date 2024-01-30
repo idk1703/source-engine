@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 /* This product contains Speex software.  The license terms of the Speex
 software, distributed with this product, are as follows:
 
-© 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
+ï¿½ 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -65,10 +65,10 @@ struct celt_versions
 
 #define CELT_VERSION 4
 
-celt_versions g_CeltVersion[CELT_VERSION] = 
+celt_versions g_CeltVersion[CELT_VERSION] =
 {
 	{
-		44100, 256, 120 
+		44100, 256, 120
 	},
 
 	{
@@ -102,7 +102,7 @@ private:
 
 	bool	InitStates();
 	void	TermStates();
-		
+
 	CELTEncoder *m_EncoderState;	// Celt internal encoder state
 	CELTDecoder *m_DecoderState; // Celt internal decoder state
 	CELTMode	*m_Mode;
@@ -215,7 +215,7 @@ bool VoiceEncoder_Celt::InitStates()
 
 	celt_encoder_ctl( m_EncoderState, CELT_RESET_STATE_REQUEST , NULL );
 	celt_decoder_ctl( m_DecoderState, CELT_RESET_STATE_REQUEST , NULL );
-	
+
 	return true;
 }
 

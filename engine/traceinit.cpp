@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CInitTracker
 {
@@ -27,7 +27,7 @@ public:
 	};
 
 	//-----------------------------------------------------------------------------
-	// Purpose: 
+	// Purpose:
 	//-----------------------------------------------------------------------------
 	class InitFunc
 	{
@@ -56,7 +56,7 @@ private:
 static CInitTracker g_InitTracker;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CInitTracker::CInitTracker( void )
 {
@@ -67,7 +67,7 @@ CInitTracker::CInitTracker( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CInitTracker::~CInitTracker( void )
 {
@@ -89,9 +89,9 @@ CInitTracker::~CInitTracker( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *init - 
-//			*shutdown - 
+// Purpose:
+// Input  : *init -
+//			*shutdown -
 //-----------------------------------------------------------------------------
 void CInitTracker::Init( const char *init, const char *shutdown, int listnum )
 {
@@ -110,8 +110,8 @@ void CInitTracker::Init( const char *init, const char *shutdown, int listnum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *shutdown - 
+// Purpose:
+// Input  : *shutdown -
 //-----------------------------------------------------------------------------
 void CInitTracker::Shutdown( const char *shutdown, int listnum )
 {
@@ -120,7 +120,7 @@ void CInitTracker::Shutdown( const char *shutdown, int listnum )
 		Msg( "Mismatched shutdown function %s\n", shutdown );
 		return;
 	}
-	
+
 	int i = 0;
 	InitFunc *f = NULL;
 	for ( i = 0; i < m_nNumFuncs[ listnum ]; i++ )
@@ -129,7 +129,7 @@ void CInitTracker::Shutdown( const char *shutdown, int listnum )
 		if ( f->referencecount )
 			break;
 	}
-	
+
 	if ( f && f->referencecount && stricmp( f->shutdownname, shutdown ) )
 	{
 		if ( !f->warningprinted )
@@ -156,9 +156,9 @@ void CInitTracker::Shutdown( const char *shutdown, int listnum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *i - 
-//			*s - 
+// Purpose:
+// Input  : *i -
+//			*s -
 //-----------------------------------------------------------------------------
 void TraceInit( const char *i, const char *s, int listnum )
 {
@@ -168,8 +168,8 @@ void TraceInit( const char *i, const char *s, int listnum )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *s - 
+// Purpose:
+// Input  : *s -
 //-----------------------------------------------------------------------------
 void TraceShutdown( const char *s, int listnum )
 {

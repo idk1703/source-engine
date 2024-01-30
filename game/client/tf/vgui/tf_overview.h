@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -38,7 +38,7 @@ class CTFMapOverview : public CMapOverview
 	virtual void VidInit( void );
 	virtual void SetMap( const char * map );
 
-protected:	
+protected:
 	virtual void SetMode(int mode);
 	virtual void InitTeamColorsAndIcons();
 	virtual void FireGameEvent( IGameEvent *event );

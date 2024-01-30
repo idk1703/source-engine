@@ -21,11 +21,11 @@
 #include <vgui/ISurface.h>
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetReticle::CTargetReticle( void )
 : BaseClass( NULL, "CTargetReticle" ),
-  m_CursorNone(vgui::dc_none)
+	m_CursorNone(vgui::dc_none)
 {
 	SetCursor( m_CursorNone );
 
@@ -40,7 +40,7 @@ CTargetReticle::CTargetReticle( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetReticle::~CTargetReticle()
 {
@@ -54,7 +54,7 @@ CTargetReticle::~CTargetReticle()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetReticle::Init( C_BaseEntity *pEntity, const char *sName )
 {
@@ -82,7 +82,7 @@ void CTargetReticle::Init( C_BaseEntity *pEntity, const char *sName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseEntity *CTargetReticle::GetTarget( void )
 {
@@ -91,7 +91,7 @@ C_BaseEntity *CTargetReticle::GetTarget( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetReticle::Update( void )
 {
@@ -108,13 +108,13 @@ void CTargetReticle::Update( void )
 		m_iReticleId = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile( m_iReticleId, "Hud/target_reticle" , true, false);
 	}
-	
+
 	if ( !m_iReticleLeftId )
 	{
 		m_iReticleLeftId = vgui::surface()->CreateNewTextureID();
 		vgui::surface()->DrawSetTextureFile( m_iReticleLeftId, "Hud/target_reticle_left", true, false );
 	}
-	
+
 	if ( !m_iReticleRightId )
 	{
 		m_iReticleRightId = vgui::surface()->CreateNewTextureID();
@@ -123,7 +123,7 @@ void CTargetReticle::Update( void )
 
 	int iX, iY;
 	GetTargetInScreenSpace( m_hTargetEntity, iX, iY );
-	
+
 	int halfWidth = GetWide() / 2;
 	halfWidth = MAX( halfWidth, m_pTargetLabel->GetWide() / 2 );
 
@@ -132,7 +132,7 @@ void CTargetReticle::Update( void )
 	{
 		// It's off the screen. See what side it's on.
 		Vector vCenter = m_hTargetEntity->WorldSpaceCenter( );
-		
+
 		if( CurrentViewRight().Dot( vCenter - CurrentViewOrigin() ) > 0 )
 		{
 			m_iRenderTextureId = m_iReticleRightId;
@@ -156,7 +156,7 @@ void CTargetReticle::Update( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTargetReticle::Paint()
 {
@@ -180,4 +180,3 @@ void CTargetReticle::Paint()
 	vgui::surface()->DrawSetColor( 255, 255, 255, 255 );
 	vgui::surface()->DrawTexturedRect( 0, 0, GetWide(), GetTall() );
 }
-

@@ -133,7 +133,7 @@ public:
 	void UpdateAxeSwing( void );
 	bool IsSwingingAxe( void ) const;
 
-	
+
 	//----------------------------------
 	enum Ability
 	{

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -21,6 +21,6 @@ extern int		g_flexages[];
 extern DrawModelInfo_t g_DrawModelInfo;
 extern DrawModelResults_t g_DrawModelResults;
 extern bool g_bDrawModelInfoValid;
-	
+
 
 #endif // STUDIO_RENDER_H

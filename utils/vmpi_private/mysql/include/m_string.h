@@ -1,22 +1,22 @@
 /* Copyright (C) 2000 MySQL AB & MySQL Finland AB & TCX DataKonsult AB
-   
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-   
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-   
-   You should have received a copy of the GNU Library General Public
-   License along with this library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-   MA 02111-1307, USA */
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Library General Public
+	License as published by the Free Software Foundation; either
+	version 2 of the License, or (at your option) any later version.
+
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Library General Public License for more details.
+
+	You should have received a copy of the GNU Library General Public
+	License along with this library; if not, write to the Free
+	Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+	MA 02111-1307, USA */
 
 /* There may be prolems include all of theese. Try to test in
-   configure with ones are needed? */
+	configure with ones are needed? */
 
 /*  This is needed for the definitions of strchr... on solaris */
 
@@ -148,12 +148,12 @@ extern	void bmove(char *dst, const char *src,uint len);
 
 extern	void bmove_upp(char *dst,const char *src,uint len);
 extern	void bchange(char *dst,uint old_len,const char *src,
-		     uint new_len,uint tot_len);
+				uint new_len,uint tot_len);
 extern	void strappend(char *s,uint len,pchar fill);
 extern	char *strend(const char *s);
 extern  char *strcend(const char *, pchar);
 extern	char *strfield(char *src,int fields,int chars,int blanks,
-			   int tabch);
+				int tabch);
 extern	char *strfill(my_string s,uint len,pchar fill);
 extern	uint strinstr(const char *str,const char *search);
 extern  uint r_strinstr(reg1 my_string str,int from, reg4 my_string search);
@@ -188,7 +188,7 @@ extern int strcmp(const char *, const char *);
 extern size_t strlen(const char *);
 #endif
 #endif
-#ifndef HAVE_STRNLEN 
+#ifndef HAVE_STRNLEN
 extern uint strnlen(const char *s, uint n);
 #endif
 
@@ -218,7 +218,7 @@ extern ulong strtoul(const char *str, char **ptr, int base);
 extern char *int2str(long val,char *dst,int radix);
 extern char *int10_to_str(long val,char *dst,int radix);
 extern char *str2int(const char *src,int radix,long lower,long upper,
-			 long *val);
+			long *val);
 #if SIZEOF_LONG == SIZEOF_LONG_LONG
 #define longlong2str(A,B,C) int2str((A),(B),(C))
 #define longlong10_to_str(A,B,C) int10_to_str((A),(B),(C))

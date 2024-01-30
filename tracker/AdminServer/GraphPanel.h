@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -93,7 +93,7 @@ private:
 		void GetPingLimits(float &max, float &min) { min=minPing; max=maxPing; }
 		void GetPlayerLimits(float &max, float &min) { min=minPlayers; max=maxPlayers; }
 
-		virtual void Paint();	
+		virtual void Paint();
 
 	private:
 
@@ -101,7 +101,7 @@ private:
 		void CheckBounds(Points_t p);
 
 		CUtlVector<Points_t> points;
-		
+
 		int x,y; // the size
 		float maxIn,minIn,maxOut,minOut; // max and min bandwidths
 		float maxFPS,minFPS;
@@ -118,7 +118,7 @@ private:
 		static Color CPUColor;
 		static Color FPSColor;
 		static Color NetInColor;
-		static Color NetOutColor; 
+		static Color NetOutColor;
 		static Color PlayersColor;
 		static Color PingColor;
 	};
@@ -127,9 +127,9 @@ private:
 	vgui::Label *GetLabel(const char *name);
 	void SetAxisLabels(Color c,char *max,char *mid,char *min);
 
-	// msg handlers 
+	// msg handlers
 	MESSAGE_FUNC( OnCheckButton, "CheckButtonChecked" );
-	MESSAGE_FUNC_PTR_CHARPTR( OnTextChanged, "TextChanged", panel, text );	
+	MESSAGE_FUNC_PTR_CHARPTR( OnTextChanged, "TextChanged", panel, text );
 	MESSAGE_FUNC( OnClearButton, "clear" );
 
 	// GUI elements
@@ -144,7 +144,7 @@ private:
 	vgui::CheckButton *m_pCPUButton;
 	vgui::CheckButton *m_pPINGButton;
 	vgui::CheckButton *m_pPlayerButton;
-	
+
 	vgui::ComboBox *m_pTimeCombo;
 	vgui::ComboBox *m_pVertCombo;
 

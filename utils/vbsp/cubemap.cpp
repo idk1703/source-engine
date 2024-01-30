@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@
 			bHasEnvMapInMaterial is set if the side's material has $envmap.
 			bManuallyPickedByAnEnvCubemap is true if the side was in s_EnvCubemapToBrushSides.
 
-		Then, for each bHasEnvMapInMaterial and !bManuallyPickedByAnEnvCubemap (ie: every specular surface that wasn't 
+		Then, for each bHasEnvMapInMaterial and !bManuallyPickedByAnEnvCubemap (ie: every specular surface that wasn't
 		referenced by some env_cubemap), it does Cubemap_CreateTexInfo.
 */
 
@@ -57,8 +57,8 @@ struct CubemapInfo_t
 };
 
 static bool CubemapLessFunc( const CubemapInfo_t &lhs, const CubemapInfo_t &rhs )
-{ 
-	return ( lhs.m_nTableId < rhs.m_nTableId );	
+{
+	return ( lhs.m_nTableId < rhs.m_nTableId );
 }
 
 
@@ -88,9 +88,9 @@ inline bool SideHasCubemapAndWasntManuallyReferenced( int iSide )
 void Cubemap_InsertSample( const Vector& origin, int size )
 {
 	dcubemapsample_t *pSample = &g_CubemapSamples[g_nCubemapSamples];
-	pSample->origin[0] = ( int )origin[0];	
-	pSample->origin[1] = ( int )origin[1];	
-	pSample->origin[2] = ( int )origin[2];	
+	pSample->origin[0] = ( int )origin[0];
+	pSample->origin[1] = ( int )origin[1];
+	pSample->origin[2] = ( int )origin[2];
 	pSample->size = size;
 	g_nCubemapSamples++;
 }
@@ -133,7 +133,7 @@ static void ForwardSlashToBackSlash( char *pname )
 #define MAX_MATERIAL_NAME 512
 
 // This is the list of materialvars which are used in our codebase to look up dependent materials
-static const char *s_pDependentMaterialVar[] = 
+static const char *s_pDependentMaterialVar[] =
 {
 	"$bottommaterial",	// Used by water materials
 	"$crackmaterial",	// Used by shattered glass materials
@@ -241,7 +241,7 @@ static bool LoadSrcVTFFiles( IVTFTexture *pSrcVTFTextures[6], const char *pSkybo
 		*pUnionTextureFlags |= pSrcVTFTextures[i]->Flags();
 		int flagsNoAlpha = pSrcVTFTextures[i]->Flags() & ~( TEXTUREFLAGS_EIGHTBITALPHA | TEXTUREFLAGS_ONEBITALPHA );
 		int flagsFirstNoAlpha = pSrcVTFTextures[0]->Flags() & ~( TEXTUREFLAGS_EIGHTBITALPHA | TEXTUREFLAGS_ONEBITALPHA );
-		
+
 		// NOTE: texture[0] is a side texture that could be 1/2 height, so allow this and also allow 4x4 faces
 		if ( ( ( pSrcVTFTextures[i]->Width() != pSrcVTFTextures[0]->Width() ) && ( pSrcVTFTextures[i]->Width() != 4 ) ) ||
 			 ( ( pSrcVTFTextures[i]->Height() != pSrcVTFTextures[0]->Height() ) && ( pSrcVTFTextures[i]->Height() != pSrcVTFTextures[0]->Height()*2 )  && ( pSrcVTFTextures[i]->Height() != 4 ) ) ||
@@ -308,7 +308,7 @@ void CreateDefaultCubemaps( bool bHDR )
 	}
 	Msg( "Creating default %scubemaps for env_cubemap using skybox materials:\n   %s*.vmt\n"
 		" ! Run buildcubemaps in the engine to get the correct cube maps.\n", bHDR ? "HDR " : "LDR ", skyboxMaterialName );
-			
+
 	// Figure out the mip differences between the two textures
 	int iMipLevelOffset = 0;
 	int tmp = pSrcVTFTextures[0]->Width();
@@ -321,7 +321,7 @@ void CreateDefaultCubemaps( bool bHDR )
 	// Create the destination cubemap
 	IVTFTexture *pDstCubemap = CreateVTFTexture();
 	pDstCubemap->Init( DEFAULT_CUBEMAP_SIZE, DEFAULT_CUBEMAP_SIZE, 1,
-		pSrcVTFTextures[0]->Format(), unionTextureFlags | TEXTUREFLAGS_ENVMAP, 
+		pSrcVTFTextures[0]->Format(), unionTextureFlags | TEXTUREFLAGS_ENVMAP,
 		pSrcVTFTextures[0]->FrameCount() );
 
 	// First iterate over all frames
@@ -350,10 +350,10 @@ void CreateDefaultCubemaps( bool bHDR )
 					int iSrcMipSize = pSrcVTFTextures[iFace]->ComputeMipSize( 2 );
 
 					// Replicate 1x1 mip level across entire face
-					//memset( pDstBits, 0, iSize ); 
+					//memset( pDstBits, 0, iSize );
 					for ( int i = 0; i < ( iSize / iSrcMipSize ); i++ )
 					{
-						memcpy( pDstBits + ( i * iSrcMipSize ), pSrcBits, iSrcMipSize ); 
+						memcpy( pDstBits + ( i * iSrcMipSize ), pSrcBits, iSrcMipSize );
 					}
 				}
 				else if ( pSrcVTFTextures[iFace]->Width() == pSrcVTFTextures[iFace]->Height() ) // If texture is square
@@ -366,7 +366,7 @@ void CreateDefaultCubemaps( bool bHDR )
 					else
 					{
 						// Just copy the mip level
-						memcpy( pDstBits, pSrcBits, iSize ); 
+						memcpy( pDstBits, pSrcBits, iSize );
 					}
 				}
 				else if ( pSrcVTFTextures[iFace]->Width() == pSrcVTFTextures[iFace]->Height()*2 ) // If texture is rectangle 2x wide
@@ -381,7 +381,7 @@ void CreateDefaultCubemaps( bool bHDR )
 					else
 					{
 						// Copy row at a time and repeat last row
-						memcpy( pDstBits, pSrcBits, iSize/2 ); 
+						memcpy( pDstBits, pSrcBits, iSize/2 );
 						//memcpy( pDstBits + iSize/2, pSrcBits, iSize/2 );
 						int nSrcRowSize = pSrcVTFTextures[iFace]->RowSizeInBytes( iMip + iMipLevelOffset );
 						int nDstRowSize = pDstCubemap->RowSizeInBytes( iMip );
@@ -471,7 +471,7 @@ void CreateDefaultCubemaps( bool bHDR )
 		DestroyVTFTexture( pSrcVTFTextures[i] );
 	}
 	DestroyVTFTexture( pDstCubemap );
-}	
+}
 
 void Cubemap_CreateDefaultCubemaps( void )
 {
@@ -508,8 +508,8 @@ void Cubemap_SaveBrushSides( const char *pSideListStr )
 static void GeneratePatchedName( const char *pMaterialName, const PatchInfo_t &info, bool bMaterialName, char *pBuffer, int nMaxLen )
 {
 	const char *pSeparator = bMaterialName ? "_" : "";
-	int nLen = Q_snprintf( pBuffer, nMaxLen, "maps/%s/%s%s%d_%d_%d", info.m_pMapName, 
-		pMaterialName, pSeparator, info.m_pOrigin[0], info.m_pOrigin[1], info.m_pOrigin[2] ); 
+	int nLen = Q_snprintf( pBuffer, nMaxLen, "maps/%s/%s%s%d_%d_%d", info.m_pMapName,
+		pMaterialName, pSeparator, info.m_pOrigin[0], info.m_pOrigin[1], info.m_pOrigin[2] );
 
 	if ( bMaterialName )
 	{
@@ -533,7 +533,7 @@ static bool PatchEnvmapForMaterialAndDependents( const char *pMaterialName, cons
 	// Do *NOT* patch the material if there is an $envmap specified and it's not 'env_cubemap'
 
 	// FIXME: It's theoretically ok to patch the material if $envmap is not specified,
-	// because we're using the 'replace' block, which will only add the env_cubemap if 
+	// because we're using the 'replace' block, which will only add the env_cubemap if
 	// $envmap is specified in the source material. But it will fail if someone adds
 	// a specific non-env_cubemap $envmap to the source material at a later point. Bleah
 
@@ -585,7 +585,7 @@ static bool PatchEnvmapForMaterialAndDependents( const char *pMaterialName, cons
 
 
 //-----------------------------------------------------------------------------
-// Finds a texinfo that has a particular 
+// Finds a texinfo that has a particular
 //-----------------------------------------------------------------------------
 
 
@@ -642,7 +642,7 @@ static int Cubemap_CreateTexInfo( int originalTexInfo, int origin[3] )
 		// but if no hooking was necessary, exit out
 		if ( !PatchEnvmapForMaterialAndDependents( pMaterialName, info, pTextureName ) )
 			return originalTexInfo;
-		
+
 		// Store off the name of the cubemap that we need to create since we successfully patched
 		char pFileName[1024];
 		int nLen = Q_snprintf( pFileName, 1024, "materials/%s.vtf", pTextureName );
@@ -656,11 +656,11 @@ static int Cubemap_CreateTexInfo( int originalTexInfo, int origin[3] )
 	}
 
 	Assert( nTexDataID != -1 );
-	
+
 	texinfo_t newTexInfo;
 	newTexInfo = *pTexInfo;
 	newTexInfo.texdata = nTexDataID;
-	
+
 	int nTexInfoID = -1;
 
 	// See if we need to make a new texinfo
@@ -670,7 +670,7 @@ static int Cubemap_CreateTexInfo( int originalTexInfo, int origin[3] )
 		nTexInfoID = FindTexInfo( newTexInfo );
 		bHasTexInfo = (nTexInfoID != -1);
 	}
-	
+
 	// Make a new texinfo if we need to.
 	if( !bHasTexInfo )
 	{
@@ -715,12 +715,12 @@ void Cubemap_FixupBrushSidesMaterials( void )
 			int sideIndex = SideIDToIndex( brushSideID );
 			if( sideIndex < 0 )
 			{
-				Warning("env_cubemap pointing at deleted brushside near (%d, %d, %d)\n", 
+				Warning("env_cubemap pointing at deleted brushside near (%d, %d, %d)\n",
 					g_CubemapSamples[cubemapID].origin[0], g_CubemapSamples[cubemapID].origin[1], g_CubemapSamples[cubemapID].origin[2] );
 
 				continue;
 			}
-			
+
 			side_t *pSide = &g_MainMap->brushsides[sideIndex];
 
 #ifdef DEBUG
@@ -729,7 +729,7 @@ void Cubemap_FixupBrushSidesMaterials( void )
 				Assert( pSide->texinfo == pSide->pMapDisp->face.texinfo );
 			}
 #endif
-			
+
 			pSide->texinfo = Cubemap_CreateTexInfo( pSide->texinfo, g_CubemapSamples[cubemapID].origin );
 			if ( pSide->pMapDisp )
 			{
@@ -859,7 +859,7 @@ int Cubemap_FindClosestCubemap( const Vector &entityOrigin, side_t *pSide )
 
 	// Look for cubemaps in front of the surface first.
 	for ( int iCubemap = 0; iCubemap < g_nCubemapSamples; ++iCubemap )
-	{	
+	{
 		dcubemapsample_t *pSample = &g_CubemapSamples[iCubemap];
 		Vector vecSampleOrigin( static_cast<float>( pSample->origin[0] ),
 								static_cast<float>( pSample->origin[1] ),
@@ -879,7 +879,7 @@ int Cubemap_FindClosestCubemap( const Vector &entityOrigin, side_t *pSide )
 	if( iMinCubemap == -1 )
 	{
 		for ( int iCubemap = 0; iCubemap < g_nCubemapSamples; ++iCubemap )
-		{	
+		{
 			dcubemapsample_t *pSample = &g_CubemapSamples[iCubemap];
 			Vector vecSampleOrigin( static_cast<float>( pSample->origin[0] ),
 				static_cast<float>( pSample->origin[1] ),
@@ -945,7 +945,7 @@ void Cubemap_AttachDefaultCubemapToSpecularSides( void )
 		{
 			Assert( pSide->texinfo == pSide->pMapDisp->face.texinfo );
 		}
-#endif				
+#endif
 		pSide->texinfo = Cubemap_CreateTexInfo( pSide->texinfo, g_CubemapSamples[iCubemap].origin );
 		if ( pSide->pMapDisp )
 		{
@@ -965,7 +965,7 @@ void Cubemap_AddUnreferencedCubemaps()
 
 	for ( i=0; i<g_nCubemapSamples; ++i )
 	{
-		pSample = &g_CubemapSamples[i];	
+		pSample = &g_CubemapSamples[i];
 
 		// generate the formatted texture name based on cubemap origin
 		info.m_pMapName   = mapbase;
@@ -973,7 +973,7 @@ void Cubemap_AddUnreferencedCubemaps()
 		info.m_pOrigin[1] = pSample->origin[1];
 		info.m_pOrigin[2] = pSample->origin[2];
 		GeneratePatchedName( "c", info, false, pTextureName, 1024 );
-		
+
 		// find or add
 		for ( j=0; j<s_DefaultCubemapNames.Count(); ++j )
 		{

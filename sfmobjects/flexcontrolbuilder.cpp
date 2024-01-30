@@ -106,7 +106,7 @@ void CFlexControlBuilder::BuildDesiredControlList( CDmeGameModel *pGameModel )
 			Q_strncpy( controlInfo.m_pControlName, pFlexName + 6, sizeof(controlInfo.m_pControlName) );
 
 			// Convert default values into value/balance
-			LeftRightToValueBalance( &controlInfo.m_pDefaultValue[ CONTROL_VALUE ], 
+			LeftRightToValueBalance( &controlInfo.m_pDefaultValue[ CONTROL_VALUE ],
 				&controlInfo.m_pDefaultValue[ CONTROL_BALANCE ],
 				leftInfo.m_flDefaultValue, info.m_flDefaultValue );
 
@@ -174,7 +174,7 @@ void CFlexControlBuilder::RemoveChannelFromClips( CDmeChannel *pChannel )
 	}
 
 	// Next, remove the channel from values controls it may be attached to
-	for ( int i = 0; i < CONTROL_CHANNEL_ATTRIBUTE_COUNT; ++i ) 
+	for ( int i = 0; i < CONTROL_CHANNEL_ATTRIBUTE_COUNT; ++i )
 	{
 		UtlSymId_t symChannelControl = g_pDataModel->GetSymbol( s_pChannelControls[i] );
 		CDmElement *pControl = FindReferringElement< CDmElement >( pChannel, symChannelControl );
@@ -308,7 +308,7 @@ void CFlexControlBuilder::RemoveUnusedExistingFlexControllers( CDmeGameModel *pG
 //-----------------------------------------------------------------------------
 // Returns an existing mono log
 //-----------------------------------------------------------------------------
-void CFlexControlBuilder::GetExistingMonoLog( ExistingLogInfo_t *pExistingLog, 
+void CFlexControlBuilder::GetExistingMonoLog( ExistingLogInfo_t *pExistingLog,
 											 CDmeFilmClip *pClip, CDmeGlobalFlexControllerOperator *pMonoOp )
 {
 	pExistingLog->m_pLog = NULL;
@@ -419,7 +419,7 @@ void CFlexControlBuilder::GetExistingVBLog( ExistingLogInfo_t *pLogs, CDmeFilmCl
 		if ( !ComputeChannelTimeTransform( &pLogs[nLogIndex].m_GlobalOffset, &pLogs[nLogIndex].m_flGlobalScale, pClip, pChannel ) )
 			continue;
 
-		// Detach the  
+		// Detach the
 		pLogs[nLogIndex].m_pLog = pLog;
 		pChannel->SetLog( NULL );	// Detach
 	}
@@ -470,7 +470,7 @@ static void ConvertLRToVBLog( CDmeFloatLog *pValueLog, CDmeFloatLog *pBalanceLog
 
 		if ( leftKeyTime < rightKeyTime )
 		{
-			// pull a value from the right log at the leftKeyTime 
+			// pull a value from the right log at the leftKeyTime
 			// and advance to the next sample on the left side
 			float lval = pLeftLog->GetKeyValue( nLeft++ );
 			float rval = pRightLog->GetValue( leftKeyTime );
@@ -478,7 +478,7 @@ static void ConvertLRToVBLog( CDmeFloatLog *pValueLog, CDmeFloatLog *pBalanceLog
 			continue;
 		}
 
-		// Pull a value from the left log at the rightKeyTime 
+		// Pull a value from the left log at the rightKeyTime
 		// and advance to the next sample on the right side
 		float lval = pLeftLog->GetValue( rightKeyTime );
 		float rval = pRightLog->GetKeyValue( nRight++ );
@@ -489,7 +489,7 @@ static void ConvertLRToVBLog( CDmeFloatLog *pValueLog, CDmeFloatLog *pBalanceLog
 //-----------------------------------------------------------------------------
 // Converts an existing value/balance log
 //-----------------------------------------------------------------------------
-void CFlexControlBuilder::ConvertExistingLRLogs( ExistingLogInfo_t *pLogs, 
+void CFlexControlBuilder::ConvertExistingLRLogs( ExistingLogInfo_t *pLogs,
 												CDmeFilmClip *pClip, CDmeChannel *pLeftChannel, CDmeChannel *pRightChannel )
 {
 	CDmeFloatLog *pRightLog = CastElement< CDmeFloatLog >( pRightChannel->GetLog() );
@@ -677,7 +677,7 @@ struct FlexOpInfo_t
 	const char *m_pControlLinkAttributeName;
 };
 
-static FlexOpInfo_t s_pFlexOpInfo[2] = 
+static FlexOpInfo_t s_pFlexOpInfo[2] =
 {
 	{ "value",		"" },
 	{ "multilevel", "multilevel" },
@@ -691,13 +691,13 @@ void CFlexControlBuilder::BuildFlexControllerOps( CDmeGameModel *pGameModel, CDm
 	const FlexControllerInfo_t& fcInfo = m_FlexControllerInfo[ info.m_pControllerIndex[field] ];
 
 	// Create operator which drives facial flex setting
-	CDmeGlobalFlexControllerOperator *pFlexControllerOp = pGameModel->AddGlobalFlexController( 
+	CDmeGlobalFlexControllerOperator *pFlexControllerOp = pGameModel->AddGlobalFlexController(
 		fcInfo.m_pFlexControlName, fcInfo.m_nGlobalIndex );
 
 	// Create a channel which passes from the control value to the global flex controller
 	char pName[ 256 ];
 	Q_snprintf( pName, sizeof( pName ), "%s_flex_channel", fcInfo.m_pFlexControlName );
-	info.m_ppControlChannel[field] = pChannelsClip->CreatePassThruConnection( pName, 
+	info.m_ppControlChannel[field] = pChannelsClip->CreatePassThruConnection( pName,
 		info.m_pControl, flexInfo.m_pControlAttributeName, pFlexControllerOp, "flexWeight" );
 
 	// NOTE: The animation set slider panel looks for these custom attributes
@@ -712,24 +712,24 @@ void CFlexControlBuilder::BuildFlexControllerOps( CDmeGameModel *pGameModel, CDm
 //-----------------------------------------------------------------------------
 // Creates a flex controller and a channel connecting it to stereo controls
 //-----------------------------------------------------------------------------
-static const char *s_pStereoOutputPrefix[2] = 
+static const char *s_pStereoOutputPrefix[2] =
 {
 	"right",
 	"left",
 };
 
-static const char *s_pStereoInputPrefix[2] = 
+static const char *s_pStereoInputPrefix[2] =
 {
 	"value",
 	"balance",
 };
 
-void CFlexControlBuilder::BuildStereoFlexControllerOps( CDmeAnimationSet *pAnimationSet, 
+void CFlexControlBuilder::BuildStereoFlexControllerOps( CDmeAnimationSet *pAnimationSet,
 													   CDmeGameModel *pGameModel, CDmeChannelsClip *pChannelsClip, ControlInfo_t &info )
 {
 	// Create an operator which converts value/balance to left/right
 	CDmrElementArray< CDmeOperator > operators = pAnimationSet->GetOperators();
-	CDmeBalanceToStereoCalculatorOperator *pStereoCalcOp = 
+	CDmeBalanceToStereoCalculatorOperator *pStereoCalcOp =
 		CreateElement< CDmeBalanceToStereoCalculatorOperator >( info.m_pControlName, pAnimationSet->GetFileId() );
 	operators.AddToTail( pStereoCalcOp->GetHandle() );
 
@@ -751,12 +751,12 @@ void CFlexControlBuilder::BuildStereoFlexControllerOps( CDmeAnimationSet *pAnima
 		// Now create a channel which connects the output of the stereo op to the flex controller op
 		Q_snprintf( pResultName, sizeof( pResultName ), "result_%s", s_pStereoOutputPrefix[ i ] );
 		Q_snprintf( pChannelName, sizeof( pChannelName ), "%s_flex_channel", fcInfo.m_pFlexControlName );
-		pChannelsClip->CreatePassThruConnection( pChannelName, pStereoCalcOp, 
+		pChannelsClip->CreatePassThruConnection( pChannelName, pStereoCalcOp,
 			pResultName, pFlexControllerOp, "flexWeight" );
 
 		// Create a channel which connects the control to the input of the stereo op
 		Q_snprintf( pChannelName, sizeof( pChannelName ), "%s_%s_channel", info.m_pControlName, s_pStereoInputPrefix[ i ] );
-		info.m_ppControlChannel[i] = pChannelsClip->CreatePassThruConnection( pChannelName, 
+		info.m_ppControlChannel[i] = pChannelsClip->CreatePassThruConnection( pChannelName,
 			info.m_pControl, s_pStereoInputPrefix[ i ], pStereoCalcOp, s_pStereoInputPrefix[ i ] );
 
 		// NOTE: The animation set slider panel looks for these custom attributes
@@ -904,7 +904,7 @@ void CFlexControlBuilder::SetupLogs( CDmeChannelsClip *pChannelsClip, bool bUseE
 //-----------------------------------------------------------------------------
 // Main entry point for creating flex animation set controls
 //-----------------------------------------------------------------------------
-void CFlexControlBuilder::CreateAnimationSetControls( CDmeFilmClip *pMovie, CDmeAnimationSet *pAnimationSet, 
+void CFlexControlBuilder::CreateAnimationSetControls( CDmeFilmClip *pMovie, CDmeAnimationSet *pAnimationSet,
 	CDmeGameModel *pGameModel, CDmeFilmClip *pSourceClip, CDmeChannelsClip *pDestClip, bool bUseExistingLogs )
 {
 	m_pMovie = pMovie;

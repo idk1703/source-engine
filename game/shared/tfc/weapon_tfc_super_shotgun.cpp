@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -74,8 +74,8 @@ void CTFCSuperShotgun::PrimaryAttack()
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
 	pOwner->DoAnimationEvent( PLAYERANIMEVENT_FIRE_GUN );
 
-	
-	// Shoot!	
+
+	// Shoot!
 	FireBulletsInfo_t info;
 	info.m_vecSrc = pOwner->Weapon_ShootPosition();
 	info.m_vecDirShooting = pOwner->GetAutoaimVector( AUTOAIM_5DEGREES );
@@ -94,13 +94,13 @@ void CTFCSuperShotgun::PrimaryAttack()
 	// Setup fire delays
 	if ( Clip1() != 0 )
 		m_flPumpTime = gpGlobals->curtime + 0.7;
-	
+
 	m_flNextPrimaryAttack = gpGlobals->curtime + 0.7;
 }
 
 
 #ifdef CLIENT_DLL
-	
+
 	// ------------------------------------------------------------------------------------------------ //
 	// ------------------------------------------------------------------------------------------------ //
 	// CLIENT DLL SPECIFIC CODE

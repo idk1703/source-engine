@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -188,14 +188,14 @@ CFogUIPanel::CFogUIPanel( vgui::Panel *parent ) : vgui::Frame( parent, "FogUIPan
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CFogUIPanel::~CFogUIPanel()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFogUIPanel::OnTick()
 {
@@ -209,7 +209,7 @@ void CFogUIPanel::OnTick()
 	bool bFogEnabled = ( m_pFogEnable->IsSelected() && m_pFogOverride->IsSelected() );
 	m_pFogEnable->SetEnabled( bEnabled );
 	m_pFogStart->SetEnabled( bFogEnabled );
-	m_pFogEnd->SetEnabled( bFogEnabled);  
+	m_pFogEnd->SetEnabled( bFogEnabled);
 	m_pFogStartText->SetEnabled( bFogEnabled );
 	m_pFogEndText->SetEnabled( bFogEnabled );
 	m_pFogColorRed->SetEnabled( bFogEnabled );
@@ -222,7 +222,7 @@ void CFogUIPanel::OnTick()
 	bool bFogSkyEnabled = ( m_pFogEnableSky->IsSelected() && m_pFogOverride->IsSelected() );
 	m_pFogEnableSky->SetEnabled( bEnabled );
 	m_pFogStartSky->SetEnabled( bFogSkyEnabled );
-	m_pFogEndSky->SetEnabled( bFogSkyEnabled);  
+	m_pFogEndSky->SetEnabled( bFogSkyEnabled);
 	m_pFogStartTextSky->SetEnabled( bFogSkyEnabled );
 	m_pFogEndTextSky->SetEnabled( bFogSkyEnabled );
 	m_pFogColorRedSky->SetEnabled( bFogSkyEnabled);
@@ -312,32 +312,32 @@ void CFogUIPanel::OnTextNewLine( KeyValues *data )
 	}
 
 	// World
-	if ( pTextEntry == m_pFogStartText || pTextEntry == m_pFogStartTextSky ) 
+	if ( pTextEntry == m_pFogStartText || pTextEntry == m_pFogStartTextSky )
 	{
 		UpdateFogStartSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogEndText || pTextEntry == m_pFogEndTextSky ) 
+	if ( pTextEntry == m_pFogEndText || pTextEntry == m_pFogEndTextSky )
 	{
 		UpdateFogEndSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogColorRedText || pTextEntry == m_pFogColorRedTextSky ) 
+	if ( pTextEntry == m_pFogColorRedText || pTextEntry == m_pFogColorRedTextSky )
 	{
 		UpdateFogColorRedSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogColorGreenText || pTextEntry == m_pFogColorGreenTextSky ) 
+	if ( pTextEntry == m_pFogColorGreenText || pTextEntry == m_pFogColorGreenTextSky )
 	{
 		UpdateFogColorGreenSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogColorBlueText || pTextEntry == m_pFogColorBlueTextSky ) 
+	if ( pTextEntry == m_pFogColorBlueText || pTextEntry == m_pFogColorBlueTextSky )
 	{
 		UpdateFogColorBlueSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFarZText ) 
+	if ( pTextEntry == m_pFarZText )
 	{
 		UpdateFarZSlider();
 		return;
@@ -354,7 +354,7 @@ void CFogUIPanel::OnTextKillFocus( KeyValues *data )
 	{
 		return;
 	}
-	
+
 	vgui::TextEntry *pTextEntry = dynamic_cast<vgui::TextEntry *>( pPanel );
 	if ( !pTextEntry )
 	{
@@ -362,32 +362,32 @@ void CFogUIPanel::OnTextKillFocus( KeyValues *data )
 	}
 
 	// World
-	if ( pTextEntry == m_pFogStartText || pTextEntry == m_pFogStartTextSky ) 
+	if ( pTextEntry == m_pFogStartText || pTextEntry == m_pFogStartTextSky )
 	{
 		UpdateFogStartSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogEndText || pTextEntry == m_pFogEndTextSky ) 
+	if ( pTextEntry == m_pFogEndText || pTextEntry == m_pFogEndTextSky )
 	{
 		UpdateFogEndSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogColorRedText || pTextEntry == m_pFogColorRedTextSky ) 
+	if ( pTextEntry == m_pFogColorRedText || pTextEntry == m_pFogColorRedTextSky )
 	{
 		UpdateFogColorRedSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogColorGreenText || pTextEntry == m_pFogColorGreenTextSky ) 
+	if ( pTextEntry == m_pFogColorGreenText || pTextEntry == m_pFogColorGreenTextSky )
 	{
 		UpdateFogColorGreenSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFogColorBlueText || pTextEntry == m_pFogColorBlueTextSky ) 
+	if ( pTextEntry == m_pFogColorBlueText || pTextEntry == m_pFogColorBlueTextSky )
 	{
 		UpdateFogColorBlueSlider();
 		return;
 	}
-	if ( pTextEntry == m_pFarZText ) 
+	if ( pTextEntry == m_pFarZText )
 	{
 		UpdateFarZSlider();
 		return;
@@ -400,7 +400,7 @@ void CFogUIPanel::OnTextKillFocus( KeyValues *data )
 void CFogUIPanel::OnMessage( const KeyValues *params, VPANEL fromPanel )
 {
 	BaseClass::OnMessage( params, fromPanel );
-	
+
 	if ( !Q_strcmp( "SliderMoved", params->GetName() ) )
 	{
 		// World

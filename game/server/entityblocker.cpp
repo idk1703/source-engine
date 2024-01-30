@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,17 +13,17 @@
 LINK_ENTITY_TO_CLASS( entity_blocker, CEntityBlocker );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &origin - 
-//			&mins - 
-//			&maxs - 
-//			NULL - 
+// Purpose:
+// Input  : &origin -
+//			&mins -
+//			&maxs -
+//			NULL -
 // Output : CEntityBlocker
 //-----------------------------------------------------------------------------
 CEntityBlocker *CEntityBlocker::Create( const Vector &origin, const Vector &mins, const Vector &maxs, CBaseEntity *pOwner, bool bBlockPhysics )
 {
 	CEntityBlocker *pBlocker = (CEntityBlocker *) CBaseEntity::Create( "entity_blocker", origin, vec3_angle, pOwner );
-	
+
 	if ( pBlocker != NULL )
 	{
 		pBlocker->SetSize( mins, maxs );
@@ -37,7 +37,7 @@ CEntityBlocker *CEntityBlocker::Create( const Vector &origin, const Vector &mins
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEntityBlocker::Spawn( void )
 {
@@ -54,7 +54,7 @@ bool CEntityBlocker::TestCollision( const Ray_t &ray, unsigned int mask, trace_t
 }
 
 //------------------------------------------------------------------------------
-// Purpose : 
+// Purpose :
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------

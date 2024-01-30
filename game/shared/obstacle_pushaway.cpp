@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -169,7 +169,7 @@ bool IsBreakableEntity( CBaseEntity *pEnt )
 //-----------------------------------------------------------------------------------------------------
 int GetPushawayEnts( CBaseCombatCharacter *pPushingEntity, CBaseEntity **ents, int nMaxEnts, float flPlayerExpand, int PartitionMask, CPushAwayEnumerator *enumerator )
 {
-	
+
 	Vector vExpand( flPlayerExpand, flPlayerExpand, flPlayerExpand );
 
 	Ray_t ray;
@@ -194,7 +194,7 @@ int GetPushawayEnts( CBaseCombatCharacter *pPushingEntity, CBaseEntity **ents, i
 
 void AvoidPushawayProps( CBaseCombatCharacter *pPlayer, CUserCmd *pCmd )
 {
-	// Figure out what direction we're moving and the extents of the box we're going to sweep 
+	// Figure out what direction we're moving and the extents of the box we're going to sweep
 	// against physics objects.
 	Vector currentdir;
 	Vector rightdir;
@@ -226,7 +226,7 @@ void AvoidPushawayProps( CBaseCombatCharacter *pPlayer, CUserCmd *pCmd )
 			mass = pInterface->GetMass();
 		}
 		mass = clamp( mass, minMass, maxMass );
-		
+
 		mass = MAX( mass, 0 );
 		mass /= maxMass; // bring into a 0..1 range
 
@@ -303,7 +303,7 @@ void PerformObstaclePushaway( CBaseCombatCharacter *pPushingEntity )
 #else
 	int nEnts = GetPushawayEnts( pPushingEntity, props, ARRAYSIZE( props ), 3.0f, PARTITION_ENGINE_SOLID_EDICTS, NULL );
 #endif
-	
+
 	for ( int i=0; i < nEnts; i++ )
 	{
 		// If this entity uas PHYSICS_MULTIPLAYER_FULL set (ie: it's not just debris), and we're moving too slow, don't push it away.
@@ -319,13 +319,13 @@ void PerformObstaclePushaway( CBaseCombatCharacter *pPushingEntity )
 		IPhysicsObject *pObj = props[i]->VPhysicsGetObject();
 
 		if ( pObj )
-		{		
+		{
 			Vector vPushAway = (props[i]->WorldSpaceCenter() - pPushingEntity->WorldSpaceCenter());
 			vPushAway.z = 0;
-			
+
 			float flDist = VectorNormalize( vPushAway );
 			flDist = MAX( flDist, 1 );
-			
+
 			float flForce = sv_pushaway_force.GetFloat() / flDist;
 			flForce = MIN( flForce, sv_pushaway_max_force.GetFloat() );
 

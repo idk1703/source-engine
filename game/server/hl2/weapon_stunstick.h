@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,17 +38,17 @@ public:
 
 	bool		Deploy( void );
 	bool		Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
-	
+
 	void		Drop( const Vector &vecVelocity );
 	void		ImpactEffect( trace_t &traceHit );
 	void		SecondaryAttack( void )	{}
 	void		SetStunState( bool state );
 	bool		GetStunState( void );
 	void		Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
-	
+
 	float		GetDamageForActivity( Activity hitActivity );
 
-	bool		CanBePickedUpByNPCs( void ) { return false;	}		
+	bool		CanBePickedUpByNPCs( void ) { return false;	}
 
 private:
 

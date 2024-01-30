@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -68,7 +68,7 @@ public:
 	// Set button to be mouse clickable or not.
 	virtual void SetMouseClickEnabled( MouseCode code, bool state );
 
-   // sets the how this button activates
+	// sets the how this button activates
 	enum ActivationType_t
 	{
 		ACTIVATE_ONPRESSEDANDRELEASED,	// normal button behaviour
@@ -105,7 +105,7 @@ public:
 
 	/* CUSTOM MESSAGE HANDLING
 		"PressButton"	- makes the button act as if it had just been pressed by the user (just like DoClick())
-			input: none		
+			input: none
 	*/
 
 	virtual void OnCursorEntered();
@@ -124,8 +124,8 @@ protected:
 	// Get button border attributes.
 
 	virtual void ApplySchemeSettings(IScheme *pScheme);
-	MESSAGE_FUNC_INT( OnSetState, "SetState", state );		
-	
+	MESSAGE_FUNC_INT( OnSetState, "SetState", state );
+
 	virtual void OnMousePressed(MouseCode code);
 	virtual void OnMouseDoublePressed(MouseCode code);
 	virtual void OnMouseReleased(MouseCode code);

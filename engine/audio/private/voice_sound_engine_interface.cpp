@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,7 +28,7 @@ class CAudioSourceVoice : public CAudioSourceWave
 public:
 								CAudioSourceVoice(CSfxTable *pSfx, int iEntity);
 								virtual ~CAudioSourceVoice();
-	
+
 	virtual int					GetType( void )
 	{
 		return AUDIO_SOURCE_VOICE;
@@ -42,7 +42,7 @@ public:
 	virtual CAudioMixer			*CreateMixer( int initialStreamPosition = 0 );
 	virtual int					GetOutputData( void **pData, int samplePosition, int sampleCount, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] );
 	virtual int					SampleRate( void );
-	
+
 	// Sample size is in bytes.  It will not be accurate for compressed audio.  This is a best estimate.
 	// The compressed audio mixers understand this, but in general do not assume that SampleSize() * SampleCount() = filesize
 	// or even that SampleSize() is 100% accurate due to compression.
@@ -64,7 +64,7 @@ public:
 
 	virtual int					ZeroCrossingBefore( int sample )	{return sample;}
 	virtual int					ZeroCrossingAfter( int sample )		{return sample;}
-	
+
 	// mixer's references
 	virtual void				ReferenceAdd( CAudioMixer *pMixer );
 	virtual void				ReferenceRemove( CAudioMixer *pMixer );
@@ -75,7 +75,7 @@ public:
 	virtual void				Prefetch() {}
 
 	// Nothing, not a cache object...
-	virtual void				CheckAudioSourceCache() {} 
+	virtual void				CheckAudioSourceCache() {}
 
 private:
 
@@ -89,16 +89,16 @@ private:
 		{
 			return m_source;
 		}
-		
+
 		// this file is in memory, simply pass along the data request to the source
 		virtual int ReadSourceData( void **pData, int sampleIndex, int sampleCount, char copyBuf[AUDIOSOURCE_COPYBUF_SIZE] )
 		{
 			return m_source.GetOutputData( pData, sampleIndex, sampleCount, copyBuf );
 		}
 
-		virtual bool IsReadyToMix() 
-		{ 
-			return true; 
+		virtual bool IsReadyToMix()
+		{
+			return true;
 		}
 
 	private:
@@ -111,7 +111,7 @@ private:
 
 	// Which entity's voice this is for.
 	int							m_iChannel;
-	
+
 	// How many mixers are referencing us.
 	int							m_refCount;
 };
@@ -197,7 +197,7 @@ int CAudioSourceVoice::GetOutputData( void **pData, int samplePosition, int samp
 		AUDIOSOURCE_COPYBUF_SIZE,
 		samplePosition,
 		sampleCount );
-	
+
 	// If there weren't enough bytes in the received data channel, pad it with zeros.
 	if( nSamplesGotten < sampleCount )
 	{
@@ -373,5 +373,3 @@ CAudioSource* Voice_SetupAudioSource( int soundsource, int entchannel )
 	else
 		return NULL;
 }
-
-

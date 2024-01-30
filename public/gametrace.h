@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ public:
 	// Returns true if hEnt points at the world entity.
 	// If this returns true, then you can't use GetHitBoxIndex().
 	bool DidHitWorld() const;
-	
+
 	// Returns true if we hit something and it wasn't the world.
 	bool DidHitNonWorldEntity() const;
 
@@ -45,12 +45,12 @@ public:
 	// Returns true if there was any kind of impact at all
 	bool DidHit() const;
 
-	// The engine doesn't know what a CBaseEntity is, so it has a backdoor to 
+	// The engine doesn't know what a CBaseEntity is, so it has a backdoor to
 	// let it get at the edict.
 #if defined( ENGINE_DLL )
 	void SetEdict( edict_t *pEdict );
 	edict_t* GetEdict() const;
-#endif	
+#endif
 
 
 public:
@@ -83,9 +83,9 @@ private:
 //-----------------------------------------------------------------------------
 // Returns true if there was any kind of impact at all
 //-----------------------------------------------------------------------------
-inline bool CGameTrace::DidHit() const 
-{ 
-	return fraction < 1 || allsolid || startsolid; 
+inline bool CGameTrace::DidHit() const
+{
+	return fraction < 1 || allsolid || startsolid;
 }
 
 
@@ -162,7 +162,7 @@ public:
 
 		return ITERATION_CONTINUE;
 	}
-	
+
 public:
 
 	int							m_nLeafCount;
@@ -173,4 +173,3 @@ public:
 };
 
 #endif // GAMETRACE_H
-

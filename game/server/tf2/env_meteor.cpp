@@ -31,7 +31,7 @@
 class CCollideList : public IEntityEnumerator
 {
 public:
-	CCollideList( Ray_t *pRay, CBaseEntity* pIgnoreEntity, int nContentsMask ) : 
+	CCollideList( Ray_t *pRay, CBaseEntity* pIgnoreEntity, int nContentsMask ) :
 		m_Entities( 0, 32 ), m_pIgnoreEntity( pIgnoreEntity ),
 		m_nContentsMask( nContentsMask ), m_pRay(pRay) {}
 
@@ -65,7 +65,7 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMeteorFactory::CreateMeteor( int nID, int iType,
-								   const Vector &vecPosition, const Vector &vecDirection, 
+								   const Vector &vecPosition, const Vector &vecDirection,
 		                           float flSpeed, float flStartTime, float flDamageRadius,
 								   const Vector &vecTriggerMins, const Vector &vecTriggerMaxs )
 {
@@ -129,13 +129,13 @@ BEGIN_SEND_TABLE_NOBASE( CEnvMeteorSpawnerShared, DT_EnvMeteorSpawnerShared )
 	// Setup (read from) Worldcraft.
 	SendPropInt		( SENDINFO( m_iMeteorType ),		 8, SPROP_UNSIGNED ),
 	SendPropInt     ( SENDINFO( m_bSkybox ),             4, SPROP_UNSIGNED ),
-	SendPropFloat	( SENDINFO( m_flMinSpawnTime ),      0, SPROP_NOSCALE ),	
-	SendPropFloat	( SENDINFO( m_flMaxSpawnTime ),      0, SPROP_NOSCALE ),	
+	SendPropFloat	( SENDINFO( m_flMinSpawnTime ),      0, SPROP_NOSCALE ),
+	SendPropFloat	( SENDINFO( m_flMaxSpawnTime ),      0, SPROP_NOSCALE ),
 	SendPropInt     ( SENDINFO( m_nMinSpawnCount ),     16, SPROP_UNSIGNED ),
 	SendPropInt     ( SENDINFO( m_nMaxSpawnCount ),     16, SPROP_UNSIGNED ),
-	SendPropFloat	( SENDINFO( m_flMinSpeed ),          0, SPROP_NOSCALE ),	
+	SendPropFloat	( SENDINFO( m_flMinSpeed ),          0, SPROP_NOSCALE ),
 	SendPropFloat	( SENDINFO( m_flMaxSpeed ),          0, SPROP_NOSCALE ),
-	
+
 	// Setup through Init.
 	SendPropFloat	( SENDINFO( m_flStartTime ),	    -1, SPROP_NOSCALE ),
 	SendPropInt		( SENDINFO( m_nRandomSeed ),		-1, SPROP_UNSIGNED ),
@@ -145,12 +145,12 @@ BEGIN_SEND_TABLE_NOBASE( CEnvMeteorSpawnerShared, DT_EnvMeteorSpawnerShared )
 	SendPropVector  ( SENDINFO( m_vecTriggerMaxs ),		-1, SPROP_NOSCALE ),
 
 	// Target List
-	SendPropArray2( SendProxyArrayLength_MeteorTargets, 
-	                SendPropVector( "meteortargetposition_array_element", 0, 0, 0, SPROP_NOSCALE, 0, 0, SendProxy_MeteorTargetPositions ), 
+	SendPropArray2( SendProxyArrayLength_MeteorTargets,
+	                SendPropVector( "meteortargetposition_array_element", 0, 0, 0, SPROP_NOSCALE, 0, 0, SendProxy_MeteorTargetPositions ),
 		            16, 0, "meteortargetposition_array" ),
 
 	SendPropArray2( SendProxyArrayLength_MeteorTargets,
-		            SendPropFloat( "meteortargetradius_array_element", 0, 0, 0, SPROP_NOSCALE, 0, 0, SendProxy_MeteorTargetRadii ), 
+		            SendPropFloat( "meteortargetradius_array_element", 0, 0, 0, SPROP_NOSCALE, 0, 0, SendProxy_MeteorTargetRadii ),
 		            16, 0, "meteortargetradius_array" )
 END_SEND_TABLE()
 
@@ -227,7 +227,7 @@ void CEnvMeteorSpawner::InputDisable( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CEnvMeteorSpawner::Get3DSkyboxWorldBounds( Vector &vecTriggerMins, 
+void CEnvMeteorSpawner::Get3DSkyboxWorldBounds( Vector &vecTriggerMins,
 											    Vector &vecTriggerMaxs )
 {
 	CBaseEntity *pEntity = gEntList.FindEntityByClassname( NULL, "trigger_skybox2world" );
@@ -281,7 +281,7 @@ void CEnvMeteorSpawner::Activate( void )
 		if ( !pEntity )
 			continue;
 
-		if ( pEntity->GetFlags()& FL_STATICPROP ) 
+		if ( pEntity->GetFlags()& FL_STATICPROP )
 			continue;
 
 		if ( !Q_strcmp( pEntity->GetClassname(), "env_meteortarget" ) )
@@ -341,7 +341,7 @@ void CEnvMeteorTarget::Spawn( void )
 {
 	BaseClass::Spawn();
 }
-	
+
 //=============================================================================
 //
 // Meteor Functions
@@ -372,7 +372,7 @@ CEnvMeteor::CEnvMeteor()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-CEnvMeteor *CEnvMeteor::Create( int nID, int iMeteorType, 
+CEnvMeteor *CEnvMeteor::Create( int nID, int iMeteorType,
 							    const Vector &vecOrigin, const Vector &vecDirection,
 								float flSpeed, float flStartTime, float flDamageRadius,
 								const Vector &vecTriggerMins, const Vector &vecTriggerMaxs )
@@ -423,7 +423,7 @@ void CEnvMeteor::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: This think function should be called at the time when the meteor 
+// Purpose: This think function should be called at the time when the meteor
 //          will be leaving the skybox and entering the world.
 //-----------------------------------------------------------------------------
 void CEnvMeteor::MeteorSkyboxThink( void )
@@ -478,7 +478,7 @@ void CEnvMeteor::MeteorWorldThink( void )
 			if ( pPhysObject )
 			{
 //				float flMass = pPhysObject->GetMass();
-				
+
 				// Send it flying!!!
 				vecForceDir *= 5000000000000.0f;
 				pPhysObject->ApplyForceCenter( vecForceDir );
@@ -519,7 +519,7 @@ void CEnvMeteor::MeteorWorldThink( void )
 
 				// Splash damage!
 				Vector vecImpactPoint;
-				vecImpactPoint = GetAbsOrigin() + ( ( vecEndPosition - GetAbsOrigin() ) * trace.fraction ); 
+				vecImpactPoint = GetAbsOrigin() + ( ( vecEndPosition - GetAbsOrigin() ) * trace.fraction );
 
 				// Debugging!!
 //				NDebugOverlay::Box( vecImpactPoint, m_vecMin, m_vecMax, 0, 255, 0, 0, 5 );
@@ -533,11 +533,11 @@ void CEnvMeteor::MeteorWorldThink( void )
 					float flDistance = vecSegment.Length();
 
 					float flScale = flDistance / ( m_Meteor.GetDamageRadius() * 0.75f );
-					if ( flScale > 1.0f ) 
-					{ 
-						flScale = 1.0f; 
+					if ( flScale > 1.0f )
+					{
+						flScale = 1.0f;
 					}
-					
+
 					Vector vecForceDir = m_Meteor.m_vecDirection;
 
 					// Check for a physics object and apply force!
@@ -578,7 +578,7 @@ void CEnvMeteor::MeteorWorldThink( void )
 }
 
 //=============================================================================
-// 
+//
 // Shooting Star Spawner Functionality.
 //
 
@@ -588,7 +588,7 @@ LINK_ENTITY_TO_CLASS( env_shootingstarspawner, CShootingStarSpawner );
 
 BEGIN_DATADESC( CShootingStarSpawner )
 
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_flSpawnInterval, FIELD_FLOAT, "SpawnInterval" ),
 	DEFINE_KEYFIELD_NOT_SAVED( m_bSkybox, FIELD_INTEGER, "SpawnInSkybox" ),
 

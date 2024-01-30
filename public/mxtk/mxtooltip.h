@@ -20,7 +20,7 @@ class mxWidget;
 
 
 
-class mxToolTip  
+class mxToolTip
 {
 public:
 	// NO CREATORS

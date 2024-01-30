@@ -21,7 +21,7 @@ bool CBaseCombatCharacter::HasPowerup( int iPowerup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatCharacter::CanPowerupEver( int iPowerup )
 {
@@ -37,7 +37,7 @@ bool CBaseCombatCharacter::CanPowerupEver( int iPowerup )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatCharacter::CanPowerupNow( int iPowerup )
 {
@@ -78,7 +78,7 @@ bool CBaseCombatCharacter::CanPowerupNow( int iPowerup )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatCharacter::SetPowerup( int iPowerup, bool bState, float flTime, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier )
 {
@@ -125,7 +125,7 @@ void CBaseCombatCharacter::SetPowerup( int iPowerup, bool bState, float flTime, 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseCombatCharacter::PowerupThink( void )
 {
@@ -154,7 +154,7 @@ void CBaseCombatCharacter::PowerupThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseCombatCharacter::AttemptToPowerup( int iPowerup, float flTime, float flAmount, CBaseEntity *pAttacker, CDamageModifier *pDamageModifier )
 {
@@ -216,7 +216,7 @@ void CBaseCombatCharacter::PowerupStart( int iPowerup, float flAmount, CBaseEnti
 				// It uses floating point in here so it doesn't lose the fractional healing part on small frame times.
 				float flHealthToAdd = flAmount + m_flFractionalBoost;
 				int nHealthToAdd = (int)flHealthToAdd;
-				m_flFractionalBoost = flHealthToAdd - nHealthToAdd; 
+				m_flFractionalBoost = flHealthToAdd - nHealthToAdd;
 				if ( nHealthToAdd )
 				{
 					int nHealthAdded = MIN( nHealthToAdd, maxHealthToAdd );
@@ -246,4 +246,3 @@ void CBaseCombatCharacter::PowerupStart( int iPowerup, float flAmount, CBaseEnti
 		break;
 	}
 }
-

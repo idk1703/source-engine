@@ -216,7 +216,7 @@ static void ReadTextControlFile( char const *fname )
 					eRequestedMode = PCKM_FLAT;
 				else if ( !stricmp( Words[1], "rgb+a" ) )
 					eRequestedMode = PCKM_RGB_A;
-				
+
 				if ( eRequestedMode == PCKM_INVALID )
 					printf( "*** line %d: invalid packmode specified, allowed values are 'rgba' or 'rgb+a'!\n", numActualLinesRead ),
 					exit( -1 );
@@ -227,7 +227,7 @@ static void ReadTextControlFile( char const *fname )
 					// Allow special changes:
 					// flat -> rgb+a
 					if ( s_ePackingMode == PCKM_FLAT && eRequestedMode == PCKM_RGB_A )
-						s_ePackingMode = eRequestedMode; 
+						s_ePackingMode = eRequestedMode;
 					// everything else
 					else
 						printf( "*** line %d: incompatible packmode change when %d sequences already defined!\n", numActualLinesRead, Sequences.Count() ),
@@ -298,7 +298,7 @@ static void ReadTextControlFile( char const *fname )
 						}
 						else
 							pBM = ImageList[ fnamebuf ];
-						
+
 						new_entry.m_pSeqFrame[i] = pBM;
 
 						// Validate that frame packing is correct
@@ -319,7 +319,7 @@ static void ReadTextControlFile( char const *fname )
 						}
 
 						pBM->m_mapSequences.Insert( pCurSequence, 1 );
-						
+
 						if (i == 0 )
 							for( int j=1; j<MAX_IMAGES_PER_FRAME; j++ )
 								new_entry.m_pSeqFrame[j]=new_entry.m_pSeqFrame[0];
@@ -374,10 +374,10 @@ bool PackImages_Flat( char const *pFname, int nWidth )
 		{
 			return false;									// didn't fit! doh
 		}
-		
+
 		frm.m_XCoord=cur_column;
 		frm.m_YCoord=cur_line;
-		
+
 		if ( pFname )										// don't actually pack the pixel if we're not keeping them
 		{
 			for(int y=0;y<frm.m_pImage->Height; y++)
@@ -393,16 +393,16 @@ bool PackImages_Flat( char const *pFname, int nWidth )
 		cur_column += frm.m_pImage->Width;
 		max_column_written=max(max_column_written, cur_column);
 	}
-	
+
 	// now, truncate height
 	int h=1;
-	for(h; h<next_line; h*=2) 
+	for(h; h<next_line; h*=2)
 		;
 	// truncate width;
 	int w=1;
 	for(1; w<max_column_written; w*=2)
 		;
-	
+
 	if ( pFname )
 	{
 		FloatBitMap_t cropped_output( w, h);
@@ -562,7 +562,7 @@ void main(int argc,char **argv)
 	const char *pSourceFile;
 	const char *pShtFile;
 	const char *pTgaFile;
-				   
+
 	Q_strncpy( pMksFileBuf, argv[1], sizeof(pMksFileBuf) );
 	Q_DefaultExtension( pMksFileBuf, ".mks", sizeof(pMksFileBuf) );
 	pSourceFile = pMksFileBuf;
@@ -625,7 +625,7 @@ void main(int argc,char **argv)
 			break;
 		}
 	}
-	
+
 	if ( nBestWidth < 0 )
 	{
 		printf( "Packing error: failed to pack images!\n" );
@@ -636,7 +636,7 @@ void main(int argc,char **argv)
 	s_nHeight = nBestSize / nBestWidth;
 	printf( "Best option: %dx%d (%d pixels)%s\n", s_nWidth, s_nHeight, s_nWidth * s_nHeight, ( s_nWidth == s_nHeight ) ? " : square texture" : "" );
 	PackImages( pTgaFile, nBestWidth );
-	
+
 	// now, write ouput
 	ReportProgress("Writing SHT output file",0,0);
 	COutputFile Outfile( pShtFile );
@@ -667,11 +667,11 @@ void main(int argc,char **argv)
 					//ymin
 					Outfile.PutFloat( VCoord( Sequences[i]->m_Frames[j].m_pSeqFrame[t]->m_YCoord ) );
 					//xmax
-					Outfile.PutFloat( 
+					Outfile.PutFloat(
 						UCoord( Sequences[i]->m_Frames[j].m_pSeqFrame[t]->m_XCoord+
 								Sequences[i]->m_Frames[j].m_pSeqFrame[t]->m_pImage->Width-1 ));
 					//ymax
-					Outfile.PutFloat( 
+					Outfile.PutFloat(
 						VCoord( Sequences[i]->m_Frames[j].m_pSeqFrame[t]->m_YCoord+
 								Sequences[i]->m_Frames[j].m_pSeqFrame[t]->m_pImage->Height-1 ));
 	// 				printf( "T %d UV1:( %.2f, %.2f ) UV2:( %.2f, %.2f )\n", t,

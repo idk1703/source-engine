@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -78,7 +78,7 @@ public:
 
 	color32			m_Color;
 	int				m_SpawnRate;
-	
+
 	float			m_flSizeMin;
 	float			m_flSizeMax;
 

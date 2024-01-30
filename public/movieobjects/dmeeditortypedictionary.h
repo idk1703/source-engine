@@ -127,6 +127,3 @@ private:
 
 
 #endif // DMEEDITORTYPEDICTIONARY_H
-
-
-

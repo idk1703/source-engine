@@ -1,6 +1,6 @@
 //========= Copyright 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -11,7 +11,7 @@
 #pragma once
 
 #ifdef _WIN32
-// 
+//
 // Prevent tons of unused windows definitions
 //
 #define WIN32_LEAN_AND_MEAN

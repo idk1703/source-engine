@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -124,7 +124,7 @@ CVoiceStatus::~CVoiceStatus()
 		m_pHeadLabelMaterial->DecrementReferenceCount();
 	}
 
-	g_pInternalVoiceStatus = NULL;			
+	g_pInternalVoiceStatus = NULL;
 
 	const char *pGameDir = engine->GetGameDirectory();
 	if( pGameDir )
@@ -219,9 +219,9 @@ void CVoiceStatus::DrawHeadLabels()
 	{
 		if ( !m_VoicePlayers[i] )
 			continue;
-		
+
 		IClientNetworkable *pClient = cl_entitylist->GetClientEntity( i+1 );
-		
+
 		// Don't show an icon if the player is not in our PVS.
 		if ( !pClient || pClient->IsDormant() )
 			continue;
@@ -238,7 +238,7 @@ void CVoiceStatus::DrawHeadLabels()
 		Vector vOrigin = pPlayer->WorldSpaceCenter();
 		vOrigin.z += g_flHeadOffset;
 
-		
+
 		// Align it so it never points up or down.
 		Vector vUp( 0, 0, 1 );
 		Vector vRight = CurrentViewRight();
@@ -346,7 +346,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 
 		return;
 	}
-	
+
 	int bCVarModEnable = !!voice_modenable.GetInt();
 	if(bForce || m_bServerModEnable != bCVarModEnable)
 	{
@@ -367,7 +367,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 	bool bChange = false;
 
 	for(unsigned long dw=0; dw < VOICE_MAX_PLAYERS_DW; dw++)
-	{	
+	{
 		unsigned long serverBanMask = 0;
 		unsigned long banMask = 0;
 		for(unsigned long i=0; i < 32; i++)
@@ -419,7 +419,7 @@ void CVoiceStatus::UpdateServerState(bool bForce)
 			Msg( "CVoiceStatus::UpdateServerState: no change\n" );
 		}
 	}
-	
+
 	m_LastUpdateServerState = gpGlobals->curtime;
 }
 
@@ -449,7 +449,7 @@ void CVoiceStatus::HandleReqStateMsg(bf_read &msg)
 		Msg("CVoiceStatus::HandleReqStateMsg\n");
 	}
 
-	UpdateServerState(true);	
+	UpdateServerState(true);
 }
 
 void CVoiceStatus::StartSquelchMode()
@@ -472,9 +472,9 @@ bool CVoiceStatus::IsInSquelchMode()
 	return m_bInSquelchMode;
 }
 
-void SetOrUpdateBounds( 
-	vgui::Panel *pPanel, 
-	int left, int top, int wide, int tall, 
+void SetOrUpdateBounds(
+	vgui::Panel *pPanel,
+	int left, int top, int wide, int tall,
 	bool bOnlyUpdateBounds, int &topCoord, int &bottomCoord )
 {
 	if ( bOnlyUpdateBounds )
@@ -493,7 +493,7 @@ void SetOrUpdateBounds(
 
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the target client has been banned
-// Input  : playerID - 
+// Input  : playerID -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CVoiceStatus::IsPlayerBlocked(int iPlayer)
@@ -508,7 +508,7 @@ bool CVoiceStatus::IsPlayerBlocked(int iPlayer)
 
 //-----------------------------------------------------------------------------
 // Purpose: returns true if the player can't hear the other client due to game rules (eg. the other team)
-// Input  : playerID - 
+// Input  : playerID -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CVoiceStatus::IsPlayerAudible(int iPlayer)
@@ -546,7 +546,7 @@ bool CVoiceStatus::IsLocalPlayerSpeaking( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: blocks/unblocks the target client from being heard
-// Input  : playerID - 
+// Input  : playerID -
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 void CVoiceStatus::SetPlayerBlockedState(int iPlayer, bool blocked)
@@ -576,7 +576,7 @@ void CVoiceStatus::SetPlayerBlockedState(int iPlayer, bool blocked)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CVoiceStatus::SetHeadLabelMaterial( const char *pszMaterial )
 {

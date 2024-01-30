@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -17,7 +17,7 @@ BEGIN_NETWORK_TABLE( C_TFProjectile_Flare, DT_TFProjectile_Flare )
 END_NETWORK_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_Flare::C_TFProjectile_Flare( void )
 {
@@ -25,7 +25,7 @@ C_TFProjectile_Flare::C_TFProjectile_Flare( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFProjectile_Flare::~C_TFProjectile_Flare( void )
 {
@@ -37,7 +37,7 @@ C_TFProjectile_Flare::~C_TFProjectile_Flare( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Flare::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -45,12 +45,12 @@ void C_TFProjectile_Flare::OnDataChanged( DataUpdateType_t updateType )
 
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
-		CreateTrails();		
+		CreateTrails();
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const char *GetFlareTrailParticleName( int iTeamNumber, bool bCritical, int nType )
 {
@@ -83,7 +83,7 @@ const char *GetFlareTrailParticleName( int iTeamNumber, bool bCritical, int nTyp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_TFProjectile_Flare::CreateTrails( void )
 {

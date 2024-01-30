@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -24,7 +24,7 @@ BEGIN_VS_SHADER( Bik_dx81, "Help for Bik_dx81" )
 	SHADER_FALLBACK
 	{
 		if ( g_pHardwareConfig->GetDXSupportLevel() < 81 )
-		{	
+		{
 			return "bik_dx80";
 		}
 		return 0;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ static Color GetTeamColor( int iTeam )
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-C_PasstimeReticle::~C_PasstimeReticle() 
+C_PasstimeReticle::~C_PasstimeReticle()
 {
 	for( int i = 0; i < m_pSprites.Count(); ++i )
 	{
@@ -146,7 +146,7 @@ C_PasstimeBallReticle::C_PasstimeBallReticle()
 //-----------------------------------------------------------------------------
 bool C_PasstimeBallReticle::Update()
 {
-	if ( !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() ) 
+	if ( !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() )
 	{
 		return false;
 	}
@@ -160,11 +160,11 @@ bool C_PasstimeBallReticle::Update()
 	{
 		return false;
 	}
-	
+
 	auto vecTargetPos = pTarget->WorldSpaceCenter();
 	SetAllOrigins( vecTargetPos );
 	SetAllNormals( -MainViewForward() );
-		
+
 	auto teamColor = GetTeamColor( pTarget->GetTeamNumber() );
 	auto iAlpha = ( bHomingActive || pLocalPlayer->m_Shared.IsTargetedForPasstimePass() )
 		? (int)( (fmodf( gpGlobals->curtime * 3.0f, 1.0f )) * 255 )
@@ -216,7 +216,7 @@ bool C_PasstimeGoalReticle::Update()
 	}
 
 	auto *pGoal = m_hGoal.Get();
-	if ( !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() || IsLocalPlayerSpectator() 
+	if ( !g_pPasstimeLogic || !g_pPasstimeLogic->GetBall() || IsLocalPlayerSpectator()
 		|| !pGoal || pGoal->BGoalTriggerDisabled() || (pGoal->GetTeamNumber() != pEnt->GetTeamNumber()) )
 	{
 		return false;
@@ -237,7 +237,7 @@ bool C_PasstimeGoalReticle::Update()
 	auto flPulseSpeed = 10.0f;
 	auto flPulseFrac = Clamp( FastCos( gpGlobals->curtime * flPulseSpeed ), 0.0f, 1.0f );
 	SetRgba( 0, teamColor.r(), teamColor.g(), teamColor.b(), flPulseFrac * (120 * facingFrac) );
-	
+
 	// arrow
 	float tmp;
 	flPulseFrac = 1.0f - modff( gpGlobals->curtime, &tmp );
@@ -254,7 +254,7 @@ bool C_PasstimeGoalReticle::Update()
 
 const float kPassReticleScale = 64;
 //-----------------------------------------------------------------------------
-C_PasstimePassReticle::C_PasstimePassReticle() 
+C_PasstimePassReticle::C_PasstimePassReticle()
 {
 	m_flTargetScore = FLT_MAX;
 	AddSprite( CreateReticleSprite( "passtime/hud/passtime_ball_reticle_passlock", kPassReticleScale, 100 ) ); // the *
@@ -279,7 +279,7 @@ bool C_PasstimePassReticle::Update()
 	{
 		return false;
 	}
-	
+
 	SetAllNormals( -MainViewForward() );
 
 	// the player's actual pass target always takes precedence, but if it's
@@ -319,15 +319,15 @@ bool C_PasstimePassReticle::Update()
 		SetRgba( 0, teamColor.r(), teamColor.g(), teamColor.b(), iAlpha );
 		SetRgba( 1, neutralColor.r(), neutralColor.g(), neutralColor.b(), 80 );
 		SetRgba( 2, teamColor.r(), teamColor.g(), teamColor.b(), iAlpha );
-		
+
 		auto vecTargetPos = m_hTarget->WorldSpaceCenter();
 		SetAllOrigins( vecTargetPos );
-	
+
 		auto flDist = (vecTargetPos - MainViewOrigin()).Length();
 		auto flScale = RemapValClamped( flDist, 768.0f, 8192.0f, 1.0f, 8.0f );
 		SetAllScales( flScale * kPassReticleScale );
 	}
-	
+
 	return true;
 }
 
@@ -356,7 +356,7 @@ void C_PasstimePassReticle::FindPassHintTarget( C_TFPlayer *pLocalPlayer )
 
 		auto vecTargetPos = pPlayer->EyePosition();
 		auto vecToTarget = vecTargetPos - vecViewPos;
-		if ( vecToTarget.NormalizeInPlace() > flMaxPassDist ) 
+		if ( vecToTarget.NormalizeInPlace() > flMaxPassDist )
 		{
 			// the server may disagree on this, so the client is less permissive
 			// when it guesses in order to prevent false positives
@@ -369,7 +369,7 @@ void C_PasstimePassReticle::FindPassHintTarget( C_TFPlayer *pLocalPlayer )
 			continue; // not in front
 		}
 
-		// determine player's distance from center of screen 
+		// determine player's distance from center of screen
 		Vector vecScreenPos;
 		auto bBehindViewplane = HudTransform( vecTargetPos, vecScreenPos );
 		if ( bBehindViewplane )
@@ -391,7 +391,7 @@ void C_PasstimePassReticle::FindPassHintTarget( C_TFPlayer *pLocalPlayer )
 		{
 			continue; // not visible
 		}
-	
+
 		m_flTargetScore = flScore;
 		m_hTarget = pPlayer;
 	}
@@ -440,20 +440,20 @@ C_PasstimePlayerReticle::C_PasstimePlayerReticle( C_TFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 bool C_PasstimePlayerReticle::Update()
 {
-	if ( !g_pPasstimeLogic ) 
+	if ( !g_pPasstimeLogic )
 	{
 		return false;
 	}
 
 	auto *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	auto *pPlayer = m_hPlayer.Get();
-	if ( !pLocalPlayer || pLocalPlayer->IsPlayerDead() 
+	if ( !pLocalPlayer || pLocalPlayer->IsPlayerDead()
 		|| !pPlayer || pPlayer->IsPlayerDead() )
 	{
 		return false;
 	}
 
-	if ( pPlayer->m_Shared.GetPercentInvisible() > 0 ) 
+	if ( pPlayer->m_Shared.GetPercentInvisible() > 0 )
 	{
 		// dont' show because player is invisible, friend or foe
 		return false;
@@ -462,13 +462,13 @@ bool C_PasstimePlayerReticle::Update()
 	auto iFriendsDetail = tf_passtime_player_reticles_friends.GetInt();
 	auto iEnemiesDetail = tf_passtime_player_reticles_enemies.GetInt();
 
-	auto bIsDisguisedEnemy = pPlayer->m_Shared.InCond( TF_COND_DISGUISED ) 
+	auto bIsDisguisedEnemy = pPlayer->m_Shared.InCond( TF_COND_DISGUISED )
 		&& ( pPlayer->m_Shared.GetDisguiseTeam() == pLocalPlayer->GetTeamNumber() )
 		&& !pPlayer->m_Shared.IsFullyInvisible();
 
 	auto bIsFriend = pLocalPlayer->InSameTeam( pPlayer ) || bIsDisguisedEnemy;
 
-	if ( (bIsFriend && (iFriendsDetail <= 0)) 
+	if ( (bIsFriend && (iFriendsDetail <= 0))
 		|| (!bIsFriend && (iEnemiesDetail <= 0)) )
 	{
 		// don't show because disabled
@@ -476,7 +476,7 @@ bool C_PasstimePlayerReticle::Update()
 	}
 
 	if ( !pLocalPlayer->m_Shared.HasPasstimeBall()
-		&& ((bIsFriend && (iFriendsDetail == 1)) 
+		&& ((bIsFriend && (iFriendsDetail == 1))
 			|| (!bIsFriend && (iEnemiesDetail == 1))))
 	{
 		// don't show because not visible unless have ball
@@ -553,7 +553,7 @@ C_PasstimeAskForBallReticle::C_PasstimeAskForBallReticle( C_TFPlayer *pPlayer )
 //-----------------------------------------------------------------------------
 bool C_PasstimeAskForBallReticle::Update()
 {
-	if ( !g_pPasstimeLogic ) 
+	if ( !g_pPasstimeLogic )
 	{
 		return false;
 	}

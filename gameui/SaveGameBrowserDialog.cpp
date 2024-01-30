@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -27,9 +27,9 @@
 extern const char *COM_GetModDirectory( void );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CGameSavePanel::CGameSavePanel( CSaveGameBrowserDialog *parent, SaveGameDescription_t *pSaveDesc, bool bCommandPanel ) 
+CGameSavePanel::CGameSavePanel( CSaveGameBrowserDialog *parent, SaveGameDescription_t *pSaveDesc, bool bCommandPanel )
 : BaseClass( parent, "SaveGamePanel" )
 {
 	// Store our save description internally for reference later by our parent
@@ -78,11 +78,11 @@ CGameSavePanel::CGameSavePanel( CSaveGameBrowserDialog *parent, SaveGameDescript
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CGameSavePanel::~CGameSavePanel( void )
 {
-	if ( m_pLevelPicBorder ) 
+	if ( m_pLevelPicBorder )
 		delete m_pLevelPicBorder;
 
 	if ( m_pLevelPic )
@@ -102,7 +102,7 @@ CGameSavePanel::~CGameSavePanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CGameSavePanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -186,7 +186,7 @@ void CGameSavePanel::SetDescription( SaveGameDescription_t *pDesc )
 //-----------------------------------------------------------------------------
 // Purpose: new game chapter selection
 //-----------------------------------------------------------------------------
-CSaveGameBrowserDialog::CSaveGameBrowserDialog( vgui::Panel *parent ) 
+CSaveGameBrowserDialog::CSaveGameBrowserDialog( vgui::Panel *parent )
 :	BaseClass( parent, "SaveGameDialog" ),
 	m_bFilterAutosaves( false ),
 	m_iSelectedSave( -1 ),
@@ -218,7 +218,7 @@ CSaveGameBrowserDialog::CSaveGameBrowserDialog( vgui::Panel *parent )
 	{
 		pKeys = BasePanel()->GetConsoleControlSettings()->FindKey( "SaveGameDialog.res" );
 	}
-	
+
 	LoadControlSettings( "Resource/SaveGameDialog.res", NULL, pKeys );
 }
 
@@ -229,7 +229,7 @@ CSaveGameBrowserDialog::~CSaveGameBrowserDialog( void )
 {
 	// Release all elements
 	m_SavePanels.PurgeAndDeleteElements();
-	
+
 	// Kill the footer
 	if ( m_pFooter )
 	{
@@ -288,7 +288,7 @@ void CSaveGameBrowserDialog::HideNoSaveGameUI( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::LayoutPanels( void )
 {
@@ -326,7 +326,7 @@ void CSaveGameBrowserDialog::LayoutPanels( void )
 		ShowNoSaveGameUI();
 
 	}
-	
+
 	// Do internal cleanup to make sure we present a correct state to the user
 	UpdateMenuComponents( SCROLL_NONE );
 	UpdateFooterOptions();
@@ -352,7 +352,7 @@ void CSaveGameBrowserDialog::AnimateDialogStart( void )
 			panel->SetPos( m_PanelXPos[0], m_PanelYPos[0] );
 			panel->SetAlpha( m_PanelAlpha[0] );
 			panel->SetVisible( true );
-			panel->SetEnabled( true );		
+			panel->SetEnabled( true );
 			panel->SetZPos( NUM_SLOTS - i );
 		}
 
@@ -390,7 +390,7 @@ void CSaveGameBrowserDialog::Activate( void )
 {
 	// Start scanning for saved games
 	ScanSavedGames( m_bFilterAutosaves );
-	
+
 	// Finish our layout depending on what the result of the scan was
 	LayoutPanels();
 
@@ -448,7 +448,7 @@ void CSaveGameBrowserDialog::UpdateMenuComponents( EScrollDirection dir )
 	{
 		--centerIdx;
 	}
-	
+
 	int leftIdx = centerIdx - 1;
 	int rightIdx = centerIdx + 1;
 
@@ -529,7 +529,7 @@ void CSaveGameBrowserDialog::RemoveActivePanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::CloseAfterSave( void )
 {
@@ -537,7 +537,7 @@ void CSaveGameBrowserDialog::CloseAfterSave( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::FinishInsert( void )
 {
@@ -562,7 +562,7 @@ void CSaveGameBrowserDialog::AnimateInsertNewPanel( const SaveGameDescription_t 
 	// This is the panel that's going to move
 	CGameSavePanel *pNewPanel = SETUP_PANEL( new CGameSavePanel( this, (SaveGameDescription_t *) pDesc ) );
 	pNewPanel->SetVisible( false );
-	
+
 	// Tack this onto the list
 	m_nAddedPanel = m_SavePanels.InsertAfter( 0, pNewPanel );
 
@@ -665,7 +665,7 @@ void CSaveGameBrowserDialog::PreScroll( EScrollDirection dir )
 	{
 		hideIdx = m_PanelIndex[SLOT_RIGHT];
 	}
-	
+
 	if ( hideIdx != INVALID_INDEX )
 	{
 		// Push back the panel that's about to be hidden
@@ -729,7 +729,7 @@ void CSaveGameBrowserDialog::PerformSlideAction( int nPanelIndex, int nNextPanel
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Initiates the scripted scroll and fade effects of all five slotted panels 
+// Purpose: Initiates the scripted scroll and fade effects of all five slotted panels
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::AnimateSelectionPanels( void )
 {
@@ -797,7 +797,7 @@ void CSaveGameBrowserDialog::AnimateSelectionPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: After a scroll, each panel slot holds the index of a panel that has 
+// Purpose: After a scroll, each panel slot holds the index of a panel that has
 //			scrolled to an adjacent slot. This function updates each slot so
 //			it holds the index of the panel that is actually in that slot's position.
 //-----------------------------------------------------------------------------
@@ -805,13 +805,13 @@ void CSaveGameBrowserDialog::ShiftPanelIndices( int offset )
 {
 	// Shift all the elements over one slot, then calculate what the last slot's index should be.
 	int lastSlot = NUM_SLOTS - 1;
-	
+
 	// Handle the deletion case
 	if ( m_nDeletedPanel != INVALID_INDEX )
 	{
 		// Scroll panels in from the right
 		Q_memmove( &m_PanelIndex[SLOT_CENTER], &m_PanelIndex[SLOT_RIGHT], 2* sizeof( m_PanelIndex[SLOT_CENTER] ) );
-		
+
 		if ( m_PanelIndex[lastSlot] != INVALID_INDEX )
 		{
 			int num = m_PanelIndex[ lastSlot ] + 1;
@@ -883,7 +883,7 @@ bool CSaveGameBrowserDialog::IsValidPanel( const int idx )
 {
 	if ( idx < 0 || idx >= m_SavePanels.Count() )
 		return false;
-	
+
 	return true;
 }
 
@@ -915,7 +915,7 @@ void CSaveGameBrowserDialog::SetFastScroll( bool fast )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Checks if a button is being held down, and speeds up the scroll 
+// Purpose: Checks if a button is being held down, and speeds up the scroll
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::ContinueScrolling( void )
 {
@@ -955,12 +955,12 @@ void CSaveGameBrowserDialog::FinishDelete( void )
 	{
 		m_nDeletedPanel = INVALID_INDEX;
 		m_SavePanels.PurgeAndDeleteElements();
-	
+
 		for ( int i = 0; i < NUM_SLOTS; i++ )
 		{
 			m_PanelIndex[i] = INVALID_INDEX;
 		}
-		
+
 		LayoutPanels();
 		return;
 	}
@@ -976,7 +976,7 @@ void CSaveGameBrowserDialog::FinishScroll( void )
 {
 	// Fade the center bg panel back in
 	GetAnimationController()->RunAnimationCommand( m_pCenterBg, "alpha", 255, 0, m_ScrollSpeed * 0.25f, vgui::AnimationController::INTERPOLATOR_LINEAR );
-	
+
 	ShiftPanelIndices( m_ScrollDirection );
 	m_bScrolling = false;
 	m_ScrollCt = 0;
@@ -997,7 +997,7 @@ void CSaveGameBrowserDialog::FinishScroll( void )
 		CGameSavePanel *pPanel = m_SavePanels[ m_nDeletedPanel ];
 		m_SavePanels.Remove( m_nDeletedPanel );
 		delete pPanel;
-		
+
 		// Decrement all the indices to reflect the change
 		for ( int i = 0; i < NUM_SLOTS; i++ )
 		{
@@ -1027,14 +1027,14 @@ void CSaveGameBrowserDialog::FinishScroll( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::OnClose( void )
 {
 	SetControlDisabled( true );
 
 	m_KeyRepeat.Reset();
-	BasePanel()->RunCloseAnimation( "CloseNewGameDialog_OpenMainMenu" );			
+	BasePanel()->RunCloseAnimation( "CloseNewGameDialog_OpenMainMenu" );
 
 	BaseClass::OnClose();
 }
@@ -1052,16 +1052,16 @@ void CSaveGameBrowserDialog::RefreshSaveGames( void )
 
 	// Re-scan the saved games
 	ScanSavedGames( m_bFilterAutosaves );
-	
+
 	// Re-layout the panels
 	LayoutPanels();
-	
+
 	// Run our animation again
 	AnimateDialogStart();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::PerformSelectedAction( void )
 {
@@ -1070,7 +1070,7 @@ void CSaveGameBrowserDialog::PerformSelectedAction( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::PerformDeletion( void )
 {
@@ -1103,7 +1103,7 @@ void CSaveGameBrowserDialog::OnThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::OnKeyCodePressed( vgui::KeyCode code )
 {
@@ -1158,7 +1158,7 @@ void CSaveGameBrowserDialog::OnKeyCodePressed( vgui::KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSaveGameBrowserDialog::PaintBackground( void )
 {
@@ -1169,7 +1169,7 @@ void CSaveGameBrowserDialog::PaintBackground( void )
 	DrawBox( 0, 0, wide, tall, col, 1.0f );
 
 	int y = 32;
-	
+
 	// draw an inset
 	Color darkColor;
 	darkColor.SetColor( 0.70f * (float)col.r(), 0.70f * (float)col.g(), 0.70f * (float)col.b(), col.a() );
@@ -1224,7 +1224,7 @@ bool CSaveGameBrowserDialog::ParseSaveData( char const *pszFileName, char const 
 		minutes %= 60;
 
 		wchar_t wzHours[6];
-		wchar_t wzMins[4];	
+		wchar_t wzMins[4];
 		wchar_t wzSecs[4];
 
 		_snwprintf( wzHours, ARRAYSIZE(wzHours), L"%d", hours );
@@ -1373,7 +1373,7 @@ void CSaveGameBrowserDialog::ScanSavedGames( bool bIgnoreAutosave )
 				pFileName = g_pFullFileSystem->FindNext( handle );
 				continue;
 			}
-			
+
 			// If we're ignoring autosaves, skip it here
 			if ( bIgnoreAutosave )
 			{
@@ -1406,7 +1406,7 @@ void CSaveGameBrowserDialog::ScanSavedGames( bool bIgnoreAutosave )
 
 	// Notify derived classes that save games are done being scanned
 	OnDoneScanningSaveGames();
-	
+
 	// Always start with the first panel (as we're sorted in a specific order)
 	SetSelectedSaveIndex( 0 );
 }

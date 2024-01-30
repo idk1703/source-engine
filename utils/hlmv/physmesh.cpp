@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -8,9 +8,9 @@
 /***
 *
 *	Copyright (c) 1998, Valve LLC. All rights reserved.
-*	
-*	This product contains software technology licensed from Id 
-*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
+*
+*	This product contains software technology licensed from Id
+*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
 *	All Rights Reserved.
 *
 ****/
@@ -56,7 +56,7 @@ public:
 		memset( &m_edit, 0, sizeof(editparams_t) );
 	}
 
-	~CStudioPhysics( void ) 
+	~CStudioPhysics( void )
 	{
 		if ( physcollision )
 		{
@@ -241,7 +241,7 @@ public:
 class CRagdollCollisionRulesParse : public IVPhysicsKeyHandler
 {
 public:
-	CRagdollCollisionRulesParse( CStudioPhysics *pStudio ) : m_pStudio(pStudio) 
+	CRagdollCollisionRulesParse( CStudioPhysics *pStudio ) : m_pStudio(pStudio)
 	{
 		pStudio->m_noselfCollisions = false;
 	}
@@ -378,7 +378,7 @@ public:
 
 	inline int GetSize( void ) { return m_buffer.Size(); }
 	inline char *GetData( void ) { return m_buffer.Base(); }
-	
+
 	void WriteText( const char *pText )
 	{
 		int len = strlen( pText );
@@ -574,7 +574,7 @@ char *CStudioPhysics::DumpQC( void )
 		}
 	}
 	out.WriteText( "}\r\n" );
-	
+
 	// only need the pose for ragdolls
 	if ( m_listCount != 1 )
 	{

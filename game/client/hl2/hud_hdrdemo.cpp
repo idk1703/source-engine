@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -21,7 +21,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudHDRDemo : public CHudElement, public vgui::Panel
 {
@@ -56,7 +56,7 @@ private:
 DECLARE_HUDELEMENT( CHudHDRDemo );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudHDRDemo::CHudHDRDemo( const char *name ) : vgui::Panel( NULL, "HudHDRDemo" ), CHudElement( name )
 {
@@ -70,7 +70,7 @@ CHudHDRDemo::CHudHDRDemo( const char *name ) : vgui::Panel( NULL, "HudHDRDemo" )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHDRDemo::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -79,7 +79,7 @@ void CHudHDRDemo::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudHDRDemo::Paint()
 {
@@ -93,12 +93,12 @@ void CHudHDRDemo::Paint()
   	vgui::surface()->DrawFilledRect( m_iBorderLeft, 0, wide-m_iBorderRight, m_iBorderTop );			// Top
 	vgui::surface()->DrawFilledRect( m_iBorderLeft, tall-m_iBorderBottom, wide-m_iBorderRight, tall ); // Bottom
 	vgui::surface()->DrawFilledRect( ((wide-m_iBorderCenter)/2), m_iBorderTop, ((wide+m_iBorderCenter)/2), tall-m_iBorderBottom ); // Center
- 
+
 	// Get our scheme and font information
 	vgui::HScheme scheme = vgui::scheme()->GetScheme( "ClientScheme" );
 	vgui::HFont hFont = vgui::scheme()->GetIScheme(scheme)->GetFont( "HDRDemoText" );
 	vgui::surface()->DrawSetTextFont( hFont );
-	vgui::surface()->DrawSetTextColor( m_TextColor ); 
+	vgui::surface()->DrawSetTextColor( m_TextColor );
 
 	// Left Title
  	wchar_t *tempString = g_pVGuiLocalize->Find("#Valve_HDRDEMO_LeftTitle");
@@ -125,27 +125,27 @@ void CHudHDRDemo::Paint()
  		vgui::surface()->DrawSetTextPos( ceil(wide * 0.75) - (iLength / 2), m_iRightY );
 		vgui::surface()->DrawPrintText(tempString, wcslen(tempString));
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudHDRDemo::ShouldDraw()
 {
-	return ( 
+	return (
 		// no split screen hud if not hdr
 		(g_pMaterialSystemHardwareConfig->GetHDRType() != HDR_TYPE_NONE) &&
-		m_bHDRDemoActive 
+		m_bHDRDemoActive
 		); //&& m_flAlphaOverride > 0 );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bActive - 
+// Purpose:
+// Input  : bActive -
 //-----------------------------------------------------------------------------
-void CHudHDRDemo::SetHDRDemoActive( bool bActive ) 
-{ 
+void CHudHDRDemo::SetHDRDemoActive( bool bActive )
+{
 	if ( bActive && !m_bHDRDemoActive )
 	{
 		ConVarRef pHideHud( "hidehud" );
@@ -157,7 +157,7 @@ void CHudHDRDemo::SetHDRDemoActive( bool bActive )
 		pHideHud.SetValue( 0 );
 	}
 
-	m_bHDRDemoActive = bActive; 
+	m_bHDRDemoActive = bActive;
 }
 
 //=======================================================================================================

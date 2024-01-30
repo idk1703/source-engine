@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -286,7 +286,7 @@ bool CCurveEditorHelper<T>::HelperHandleEvent( mxEvent *event )
 			{
 			default:
 				// Hotkey pressed
-				if ( event->key >= '0' && 
+				if ( event->key >= '0' &&
 					 event->key <= '9' )
 				{
 					bool shiftdown = GetAsyncKeyState( VK_SHIFT ) ? true : false;
@@ -316,7 +316,7 @@ bool CCurveEditorHelper<T>::HelperHandleEvent( mxEvent *event )
 				}
 				break;
 			case 'H':
-				{	
+				{
 					handled = true;
 
 					bool shiftdown = GetAsyncKeyState( VK_SHIFT ) ? true : false;
@@ -367,4 +367,3 @@ bool CCurveEditorHelper<T>::HelperHandleEvent( mxEvent *event )
 }
 
 #endif // CURVEEDITORHELPERS_H
-

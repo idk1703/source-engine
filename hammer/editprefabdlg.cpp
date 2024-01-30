@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -71,10 +71,10 @@ void CEditPrefabDlg::EnableLibrary(BOOL b)
 	m_bEnableLibrary = b;
 }
 
-BOOL CEditPrefabDlg::OnInitDialog() 
+BOOL CEditPrefabDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
 	if(!m_bEnableLibrary)
 	{
 		GetDlgItem(IDC_CREATEINPROMPT)->SetRedraw(FALSE);
@@ -101,7 +101,7 @@ BOOL CEditPrefabDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CEditPrefabDlg::OnSelchangeCreatein() 
+void CEditPrefabDlg::OnSelchangeCreatein()
 {
-	m_dwLibraryID = m_CreateIn.GetItemData(m_CreateIn.GetCurSel());	
+	m_dwLibraryID = m_CreateIn.GetItemData(m_CreateIn.GetCurSel());
 }

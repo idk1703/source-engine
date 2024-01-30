@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -97,7 +97,7 @@ void CGrenadeAR2::Spawn( void )
 	if( g_CV_SmokeTrail.GetInt() && !IsXbox() )
 	{
 		m_hSmokeTrail = SmokeTrail::CreateSmokeTrail();
-		
+
 		if( m_hSmokeTrail )
 		{
 			m_hSmokeTrail->m_SpawnRate = 48;
@@ -136,7 +136,7 @@ void CGrenadeAR2::GrenadeAR2Think( void )
 			m_bIsLive  = true;
 		}
 	}
-	
+
 	// If I just went solid and my velocity is zero, it means I'm resting on
 	// the floor already when I went solid so blow up
 	if (m_bIsLive)
@@ -195,7 +195,7 @@ void CGrenadeAR2::Detonate(void)
 		return;
 	}
 	m_bIsLive		= false;
-	m_takedamage	= DAMAGE_NO;	
+	m_takedamage	= DAMAGE_NO;
 
 	if(m_hSmokeTrail)
 	{
@@ -206,9 +206,9 @@ void CGrenadeAR2::Detonate(void)
 	CPASFilter filter( GetAbsOrigin() );
 
 	te->Explosion( filter, 0.0,
-		&GetAbsOrigin(), 
+		&GetAbsOrigin(),
 		g_sModelIndexFireball,
-		2.0, 
+		2.0,
 		15,
 		TE_EXPLFLAG_NONE,
 		m_DmgRadius,
@@ -217,7 +217,7 @@ void CGrenadeAR2::Detonate(void)
 	Vector vecForward = GetAbsVelocity();
 	VectorNormalize(vecForward);
 	trace_t		tr;
-	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + 60*vecForward, MASK_SHOT, 
+	UTIL_TraceLine ( GetAbsOrigin(), GetAbsOrigin() + 60*vecForward, MASK_SHOT,
 		this, COLLISION_GROUP_NONE, &tr);
 
 
@@ -243,7 +243,7 @@ void CGrenadeAR2::Detonate(void)
 
 void CGrenadeAR2::Precache( void )
 {
-	PrecacheModel("models/Weapons/ar2_grenade.mdl"); 
+	PrecacheModel("models/Weapons/ar2_grenade.mdl");
 }
 
 

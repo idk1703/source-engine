@@ -16,7 +16,7 @@ IMPLEMENT_CLIENTCLASS_DT(C_TFCarrier, DT_TFCarrier, CTFCarrier)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_TFCarrier::C_TFCarrier()
 {

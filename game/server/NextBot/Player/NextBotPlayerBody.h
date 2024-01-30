@@ -63,14 +63,14 @@ public:
 	virtual const Vector &GetEyePosition( void ) const;				// return the eye position of the bot in world coordinates
 	virtual const Vector &GetViewVector( void ) const;				// return the view unit direction vector in world coordinates
 
-	virtual void AimHeadTowards( const Vector &lookAtPos, 
-								 LookAtPriorityType priority = BORING, 
+	virtual void AimHeadTowards( const Vector &lookAtPos,
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// aim the bot's head towards the given goal
 
 	virtual void AimHeadTowards( CBaseEntity *subject,
-								 LookAtPriorityType priority = BORING, 
+								 LookAtPriorityType priority = BORING,
 								 float duration = 0.0f,
 								 INextBotReply *replyWhenAimed = NULL,
 								 const char *reason = NULL );		// continually aim the bot's head towards the given subject
@@ -114,7 +114,7 @@ public:
 	virtual CBaseEntity *GetEntity( void );					// get the entity
 private:
 	CBasePlayer *m_player;
-	
+
 	PostureType m_posture;
 	ArousalType m_arousal;
 
@@ -126,7 +126,7 @@ private:
 	Vector m_lookAtPos;					// if m_lookAtSubject is non-NULL, it continually overwrites this position with its own
 	EHANDLE m_lookAtSubject;
 	Vector m_lookAtVelocity;			// world velocity of lookat point, for tracking moving subjects
-	CountdownTimer m_lookAtTrackingTimer;	
+	CountdownTimer m_lookAtTrackingTimer;
 
 	LookAtPriorityType m_lookAtPriority;
 	CountdownTimer m_lookAtExpireTimer;		// how long until this lookat expired

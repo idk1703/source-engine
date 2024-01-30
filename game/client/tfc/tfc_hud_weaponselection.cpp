@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -40,7 +40,7 @@ public:
 	virtual void SelectWeaponSlot( int iSlot );
 
 	virtual C_BaseCombatWeapon	*GetSelectedWeapon( void )
-	{ 
+	{
 		return m_hSelectedWeapon;
 	}
 
@@ -55,7 +55,7 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 	virtual bool IsWeaponSelectable()
-	{ 
+	{
 		if (IsInSelectionMode())
 			return true;
 
@@ -66,8 +66,8 @@ private:
 	C_BaseCombatWeapon *FindNextWeaponInWeaponSelection(int iCurrentSlot, int iCurrentPosition);
 	C_BaseCombatWeapon *FindPrevWeaponInWeaponSelection(int iCurrentSlot, int iCurrentPosition);
 
-	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon ) 
-	{ 
+	virtual	void SetSelectedWeapon( C_BaseCombatWeapon *pWeapon )
+	{
 		m_hSelectedWeapon = pWeapon;
 	}
 
@@ -164,12 +164,12 @@ bool CHudWeaponSelection::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudWeaponSelection::LevelInit()
 {
 	CHudElement::LevelInit();
-	
+
 	m_iMaxSlots = clamp( m_iMaxSlots, 0, MAX_WEAPON_SLOTS );
 }
 
@@ -256,7 +256,7 @@ void CHudWeaponSelection::Paint()
 #ifdef WIN32
 						_snwprintf(text, sizeof(text)/sizeof(wchar_t) - 1, L"%s", tempString);
 #else
-						_snwprintf(text, sizeof(text)/sizeof(wchar_t) - 1, L"%S", tempString);						
+						_snwprintf(text, sizeof(text)/sizeof(wchar_t) - 1, L"%S", tempString);
 #endif
 						text[sizeof(text)/sizeof(wchar_t) - 1] = 0;
 					}
@@ -265,7 +265,7 @@ void CHudWeaponSelection::Paint()
 						// string wasn't found by g_pVGuiLocalize->Find()
 						g_pVGuiLocalize->ConvertANSIToUnicode(weaponInfo.szPrintName, text, sizeof(text));
 					}
-					
+
 					surface()->DrawSetTextColor( col );
 					surface()->DrawSetTextFont( m_hTextFont );
 
@@ -274,7 +274,7 @@ void CHudWeaponSelection::Paint()
 					{
 						for (wchar_t *pch = text; *pch != 0; pch++)
 						{
-							if (*pch == '\n') 
+							if (*pch == '\n')
 							{
 								// newline character, drop to the next line
 								if (slen > maxslen)
@@ -612,7 +612,7 @@ C_BaseCombatWeapon *CHudWeaponSelection::GetWeaponInSlot( int iSlot, int iSlotPo
 	for ( int i = 0; i < MAX_WEAPONS; i++ )
 	{
 		C_BaseCombatWeapon *pWeapon = player->GetWeapon(i);
-		
+
 		if ( pWeapon == NULL )
 			continue;
 
@@ -640,7 +640,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	// Don't try and read past our possible number of slots
 	if ( iSlot > MAX_WEAPON_SLOTS )
 		return;
-	
+
 	// Make sure the player's allowed to switch weapons
 	if ( pPlayer->IsAllowedToSwitchWeapons() == false )
 		return;
@@ -660,7 +660,7 @@ void CHudWeaponSelection::SelectWeaponSlot( int iSlot )
 	{
 		pActiveWeapon = GetNextActivePos( iSlot, 0 );
 	}
-	
+
 	if ( pActiveWeapon != NULL )
 	{
 		// Mark the change

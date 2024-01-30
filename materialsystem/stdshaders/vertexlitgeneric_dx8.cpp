@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -20,7 +20,7 @@
 DEFINE_FALLBACK_SHADER( VertexLitGeneric, VertexLitGeneric_DX8 )
 DEFINE_FALLBACK_SHADER( Skin_DX9, VertexLitGeneric_DX8 )
 
-BEGIN_VS_SHADER( VertexLitGeneric_DX8, 
+BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 				"Help for VertexLitGeneric" )
 	BEGIN_SHADER_PARAMS
 		SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
@@ -40,7 +40,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 		SHADER_PARAM( ENVMAPSATURATION, SHADER_PARAM_TYPE_FLOAT, "1.0", "saturation 0 == greyscale 1 == normal" )
 		SHADER_PARAM( ENVMAPOPTIONAL, SHADER_PARAM_TYPE_BOOL, "0", "Make the envmap only apply to dx9 and higher hardware" )
 		SHADER_PARAM( FORCEBUMP, SHADER_PARAM_TYPE_BOOL, "0", "0 == Do bumpmapping if the card says it can handle it. 1 == Always do bumpmapping." )
-		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )	
+		SHADER_PARAM( ALPHATESTREFERENCE, SHADER_PARAM_TYPE_FLOAT, "0.0", "" )
 
 	    SHADER_PARAM( DETAILBLENDMODE, SHADER_PARAM_TYPE_INTEGER, "0", "mode for combining detail texture with base. 0=normal, 1= additive, 2=alpha blend detail over base, 3=crossfade" )
 		SHADER_PARAM( DETAILBLENDFACTOR, SHADER_PARAM_TYPE_FLOAT, "1", "blend amount for detail texture." )
@@ -101,8 +101,8 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 		info.m_nBumpTransform = BUMPTRANSFORM;
 	}
 
-	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const 
-	{ 
+	bool NeedsPowerOfTwoFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame ) const
+	{
 		if ( params[CLOAKPASSENABLED]->GetIntValue() ) // If material supports cloaking
 		{
 			if ( bCheckSpecificToThisFrame == false ) // For setting model flag at load time
@@ -113,7 +113,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 		}
 
 		// Check flag2 if not drawing cloak pass
-		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE ); 
+		return IS_FLAG2_SET( MATERIAL_VAR2_NEEDS_POWER_OF_TWO_FRAME_BUFFER_TEXTURE );
 	}
 
 	bool IsTranslucent( IMaterialVar **params ) const
@@ -126,7 +126,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 		}
 
 		// Check flag if not drawing cloak pass
-		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT ); 
+		return IS_FLAG_SET( MATERIAL_VAR_TRANSLUCENT );
 	}
 
 	// Emissive Scroll Pass
@@ -189,7 +189,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 
 		if( !params[ENVMAPMASKFRAME]->IsDefined() )
 			params[ENVMAPMASKFRAME]->SetIntValue( 0 );
-		
+
 		if( !params[ENVMAPTINT]->IsDefined() )
 			params[ENVMAPTINT]->SetVecValue( 1.0f, 1.0f, 1.0f );
 
@@ -207,10 +207,10 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 
 		if( !params[ENVMAPCONTRAST]->IsDefined() )
 			params[ENVMAPCONTRAST]->SetFloatValue( 0.0f );
-		
+
 		if( !params[ENVMAPSATURATION]->IsDefined() )
 			params[ENVMAPSATURATION]->SetFloatValue( 1.0f );
-		
+
 		if( !params[ENVMAPFRAME]->IsDefined() )
 			params[ENVMAPFRAME]->SetIntValue( 0 );
 
@@ -237,7 +237,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 		{
 			SET_FLAGS2( MATERIAL_VAR2_NEEDS_TANGENT_SPACES );
 		}
-		
+
 		SET_FLAGS2( MATERIAL_VAR2_LIGHTING_VERTEX_LIT );
 
 		// Get rid of the envmap if it's optional for this dx level.
@@ -308,7 +308,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 	}
 
 	SHADER_FALLBACK
-	{	
+	{
 		if ( IsPC() )
 		{
 			if ( g_pHardwareConfig->GetDXSupportLevel() < 70)
@@ -353,7 +353,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 		{
 			CLEAR_FLAGS( MATERIAL_VAR_ALPHATEST );
 		}
-			
+
 		if (params[ENVMAP]->IsDefined())
 		{
 			if( !IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) )
@@ -403,7 +403,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 
 	inline const char *GetUnbumpedPixelShaderName( IMaterialVar** params, bool bSkipEnvmap )
 	{
-		static char const* s_pPixelShaders[] = 
+		static char const* s_pPixelShaders[] =
 		{
 			"VertexLitGeneric_EnvmapV2",
 			"VertexLitGeneric_SelfIlluminatedEnvmapV2",
@@ -500,7 +500,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 						case 6:
 							return "VertexLitGeneric_Detail_Additive_selfillum";
 							break;
-							
+
 						default:
 							return "VertexLitGeneric_Detail_LerpBase";
 					}
@@ -612,11 +612,11 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 						BindTexture( SHADER_SAMPLER2, ENVMAPMASK, ENVMAPMASKFRAME );
 					else
 						BindTexture( SHADER_SAMPLER2, BASETEXTURE, FRAME );
-		
+
 					SetVertexShaderTextureScaledTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_2, BASETEXTURETRANSFORM, ENVMAPMASKSCALE );
 				}
 
-				if (IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) || 
+				if (IS_FLAG_SET(MATERIAL_VAR_ENVMAPSPHERE) ||
 					IS_FLAG_SET(MATERIAL_VAR_ENVMAPCAMERASPACE))
 				{
 					LoadViewMatrixIntoVertexShaderConstant( VERTEX_SHADER_VIEWMODEL );
@@ -693,7 +693,7 @@ BEGIN_VS_SHADER( VertexLitGeneric_DX8,
 
 			if( hasFlashlight )
 			{
-				DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, bBump, BUMPMAP, BUMPFRAME, BUMPTRANSFORM, 
+				DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, bBump, BUMPMAP, BUMPFRAME, BUMPTRANSFORM,
 					FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, false, false, 0, -1, -1 );
 			}
 			else if( bBump )
@@ -792,7 +792,7 @@ BEGIN_INHERITED_SHADER( VertexLitGeneric_NoBump_DX8, VertexLitGeneric_DX8,
 		return 0;
 	}
 
-	virtual bool ShouldUseBumpmapping( IMaterialVar **params ) 
+	virtual bool ShouldUseBumpmapping( IMaterialVar **params )
 	{
 		if ( !g_pConfig->UseBumpmapping() )
 			return false;
@@ -804,4 +804,3 @@ BEGIN_INHERITED_SHADER( VertexLitGeneric_NoBump_DX8, VertexLitGeneric_DX8,
 	}
 
 END_INHERITED_SHADER
-

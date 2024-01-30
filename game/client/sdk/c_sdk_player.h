@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -38,7 +38,7 @@ public:
 
 // Called by shared code.
 public:
-	
+
 	// ISDKPlayerAnimState overrides.
 	virtual CWeaponSDKBase* SDKAnim_GetActiveWeapon();
 	virtual bool SDKAnim_CanMove();
@@ -61,11 +61,11 @@ public:
 	C_BaseAnimating *BecomeRagdollOnClient();
 	IRagdoll* C_SDKPlayer::GetRepresentativeRagdoll() const;
 
-	void FireBullet( 
-		Vector vecSrc, 
-		const QAngle &shootAngles, 
-		float vecSpread, 
-		int iDamage, 
+	void FireBullet(
+		Vector vecSrc,
+		const QAngle &shootAngles,
+		float vecSpread,
+		int iDamage,
 		int iBulletType,
 		CBaseEntity *pevAttacker,
 		bool bDoEffects,

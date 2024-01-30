@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -13,7 +13,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEnvStarfield : public CBaseEntity
 {
@@ -53,7 +53,7 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( env_starfield, CEnvStarfield );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvStarfield::Spawn()
 {
@@ -73,7 +73,7 @@ void CEnvStarfield::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CEnvStarfield::UpdateTransmitState()
 {
@@ -81,7 +81,7 @@ int CEnvStarfield::UpdateTransmitState()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CEnvStarfield::InputTurnOn( inputdata_t &inputdata )
 {
@@ -89,8 +89,8 @@ void CEnvStarfield::InputTurnOn( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnvStarfield::InputTurnOff( inputdata_t &inputdata )
 {
@@ -98,8 +98,8 @@ void CEnvStarfield::InputTurnOff( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CEnvStarfield::InputSetDensity( inputdata_t &inputdata )
 {

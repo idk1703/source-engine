@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -36,7 +36,7 @@ void CActBusyDoc::NotifyDataChanged( const char *pReason, int nNotifySource, int
 	OnDataChanged( pReason, nNotifySource, nNotifyFlags );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Gets the file name
 //-----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ CDmElement *CActBusyDoc::GetRootObject()
 	return m_hRoot;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Called when data changes
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:  Interfaces to the OS Interface classes.  
+// Purpose:  Interfaces to the OS Interface classes.
 //
 // $Workfile:     $
 // $Date:         $
@@ -21,7 +21,7 @@
 using std::string;
 
 //----------------------------------------------------------------------------------------------------
-// Purpose: The OS Interface classes contain OS / Compiler specific code in 
+// Purpose: The OS Interface classes contain OS / Compiler specific code in
 // them, so that it is abstracted away from TFStats. This removes compatibility
 //issues from TFStats and isolates them to this class.
 // Subclasses of this abstract class implement each platform.
@@ -35,7 +35,7 @@ public:
 	virtual char* getcwd(char* buf,int maxlen)=0;
 	virtual int chdrive(int drive)=0;
 	virtual int getdrive()=0;
-	
+
 	virtual char** gettzname()=0;
 
 	virtual bool makeHier(string dir);
@@ -92,23 +92,23 @@ public:
 		chmod(ccs,PERMIT);
 		return result;
 	}
-	
+
 	int chdir(const char* ccs){return ::chdir(ccs);}
 	char* getcwd(char* buf,int maxlen){return ::getcwd(buf,maxlen);}
 	int chdrive(int drive){return -1;}
 	int getdrive(){return -1;}
-	
+
 	char** gettzname(){return tzname;}
 
 	int foundFileIterator;
 	int numFiles;
 	dirent** foundFiles;
 
-	
+
 	static string filemask;
 	static void filemask2RegExp(char* buf);
 	static int filenameCompare(dirent* file);
-	
+
 	bool findfirstfile(char* filemask,string& filename);
 	bool findnextfile(string& filename);
 	bool findfileclose();

@@ -95,7 +95,7 @@ void CObjectCatapult::CatapultThink()
 			m_jumpers.Remove(i);
 			continue;
 		}
-		
+
 		CTFPlayer *pPlayer = ToTFPlayer( jumper.m_hJumper );
 		if ( !pPlayer )
 		{
@@ -187,7 +187,7 @@ void CObjectCatapult::EndTouch( CBaseEntity *pOther )
 void CObjectCatapult::Launch( CBaseEntity* pEnt )
 {
 	CTFPlayer *pPlayer = ToTFPlayer( pEnt );
-	if ( !pPlayer ) 
+	if ( !pPlayer )
 		return;
 
 	//Vector vForward;
@@ -197,7 +197,7 @@ void CObjectCatapult::Launch( CBaseEntity* pEnt )
 	//vForward.z += 2.0f;
 	//vForward.NormalizeInPlace();
 
-	
+
 	//pPlayer->ApplyAirBlastImpulse( tf_engineer_catapult_force.GetFloat() * vForward );
 	pPlayer->m_Shared.AddCond( TF_COND_SPEED_BOOST, 5.0f );
 }

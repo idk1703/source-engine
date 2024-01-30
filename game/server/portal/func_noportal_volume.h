@@ -26,7 +26,7 @@ public:
 
 	// Overloads from base entity
 	virtual void	Spawn( void );
-	
+
 	void OnActivate( void );
 
 	// Inputs to flip functionality on and off
@@ -38,15 +38,15 @@ public:
 	unsigned int GetIndex () { return m_iListIndex; } // returns the list index of this camera
 	bool IsActive() { return m_bActive; }	// is this area currently blocking portals
 
-	CFuncNoPortalVolume		*m_pNext;			// Needed for the template list	
+	CFuncNoPortalVolume		*m_pNext;			// Needed for the template list
 
 	DECLARE_DATADESC();
 
 private:
 	bool					m_bActive;			// are we currently blocking portals
 	unsigned int			m_iListIndex;		// what is my index into the global noportal_volume list
-	
-	
+
+
 };
 
 // Global interface for getting the list of noportal_volumes

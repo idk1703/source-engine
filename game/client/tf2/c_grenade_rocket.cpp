@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -30,14 +30,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_GrenadeRocket, DT_GrenadeRocket, CGrenadeRocket)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_GrenadeRocket::C_GrenadeRocket( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_GrenadeRocket::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -79,5 +79,3 @@ void C_GrenadeRocket::ClientThink( void )
 		pParticle->m_uchColor[2] = 50;
 	}
 }
-
-

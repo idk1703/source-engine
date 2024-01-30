@@ -42,7 +42,7 @@ $Configuration "Release"
 		// General
 		$AdditionalIncludeDirectories		"$SRCDIR\common;$SRCDIR\public;$SRCDIR\public\tier0;$SRCDIR\public\tier1"
 		$DebugInformationFormat				"Program Database (/Zi)"
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$WarningLevel						"Level 4 (/W4)"
 		$TreatWarningsAsErrors				"No"
 
@@ -139,7 +139,7 @@ $Configuration "Release"
 		// Input
 		$AdditionalDependencies				"d3d9.lib xapilib.lib xboxkrnl.lib xgraphics.lib libpmcpb.lib"				[!$PROFILE]
 		$AdditionalDependencies				"d3d9i.lib xapilibi.lib xboxkrnl.lib xgraphics.lib libpmcpb.lib xbdm.lib"	[$PROFILE]
-		$AdditionalDependencies				"d3d9.lib xapilib.lib xboxkrnl.lib xgraphics.lib"							[$CERT]			
+		$AdditionalDependencies				"d3d9.lib xapilib.lib xboxkrnl.lib xgraphics.lib"							[$CERT]
 		$IgnoreAllDefaultLibraries			"No"
 		$IgnoreSpecificLibrary				"libc;libcd;libcmtd"			[!$PROFILE]
 		$IgnoreSpecificLibrary				"libc;libcd;libcmtd;xapilib"	[$PROFILE]
@@ -178,7 +178,7 @@ $Configuration "Release"
 
 		// Command Line
 	}
- 
+
 	$Xbox360ImageConversion
 	{
 		// General
@@ -205,7 +205,7 @@ $Configuration "Release"
 
 	$BrowseInformation
 	{
-		$SuppressStartupBanner				"Yes (/nologo)"	
+		$SuppressStartupBanner				"Yes (/nologo)"
 		$OutputFile							"$(OutDir)/$OUTBINNAME.bsc"
 		$AdditionalOptions
 	}
@@ -218,7 +218,7 @@ $Configuration "Release"
 	}
 
 	$PreLinkEvent
-	{	
+	{
 		$CommandLine
 		$Description
 		$ExcludedFromBuild					"No"
@@ -234,7 +234,7 @@ $Configuration "Release"
 	$CustomBuildStep
 	{
 		// General
-		$CommandLine						
+		$CommandLine
 		$Description
 		$Outputs
 		$AdditionalDependencies
@@ -262,4 +262,3 @@ $Configuration "Release"
 		$AdditionalOptions
 	}
 }
-

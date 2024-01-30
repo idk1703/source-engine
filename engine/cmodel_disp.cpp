@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -538,7 +538,7 @@ void CM_PostTraceToDispTree( TraceInfo_t *pTraceInfo )
 
 	//
 	// determine whether or not we are in solid
-	//	
+	//
 	if( DotProduct( pTraceInfo->m_trace.plane.normal, pTraceInfo->m_delta ) > 0.0f )
 	{
 		pTraceInfo->m_trace.startsolid = true;

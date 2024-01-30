@@ -47,10 +47,10 @@ ConVar cl_hud_playerclass_playermodel_showed_confirm_dialog( "cl_hud_playerclass
 extern ConVar tf_max_health_boost;
 
 
-static const char *g_szBlueClassImages[] = 
-{ 
+static const char *g_szBlueClassImages[] =
+{
 	"",
-	"../hud/class_scoutblue", 
+	"../hud/class_scoutblue",
 	"../hud/class_sniperblue",
 	"../hud/class_soldierblue",
 	"../hud/class_demoblue",
@@ -62,10 +62,10 @@ static const char *g_szBlueClassImages[] =
 	"../hud/class_scoutblue",
 };
 
-static const char *g_szRedClassImages[] = 
-{ 
+static const char *g_szRedClassImages[] =
+{
 	"",
-	"../hud/class_scoutred", 
+	"../hud/class_scoutred",
 	"../hud/class_sniperred",
 	"../hud/class_soldierred",
 	"../hud/class_demored",
@@ -87,7 +87,7 @@ enum
 DECLARE_BUILD_FACTORY( CTFClassImage );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudPlayerClass::CTFHudPlayerClass( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
@@ -121,7 +121,7 @@ CTFHudPlayerClass::CTFHudPlayerClass( Panel *parent, const char *name ) : Editab
 
 	for ( int i = 0; i < TF_CLASS_COUNT_ALL; i++ )
 	{
-		// The materials are given to vgui via the SetImage() function, which prepends 
+		// The materials are given to vgui via the SetImage() function, which prepends
 		// the "vgui/", so we need to precache them with the same.
 		if ( g_szBlueClassImages[i] && g_szBlueClassImages[i][0] )
 		{
@@ -139,7 +139,7 @@ CTFHudPlayerClass::CTFHudPlayerClass( Panel *parent, const char *name ) : Editab
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerClass::Reset()
 {
@@ -149,7 +149,7 @@ void CTFHudPlayerClass::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerClass::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -185,7 +185,7 @@ void CTFHudPlayerClass::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerClass::OnThink()
 {
@@ -361,7 +361,7 @@ void CTFHudPlayerClass::OnThink()
 					{
 						m_pCarryingOwnerLabel->SetText( "" );
 					}
-					
+
 					int nMaxWide = 0, nMaxTall = 0;
 					// Resize the panel to just be the width of whichever label is longer
 					int nTall, nWide;
@@ -381,7 +381,7 @@ void CTFHudPlayerClass::OnThink()
 				}
 				else
 				{
-					bShowCarryingWeaponPanel = false;	
+					bShowCarryingWeaponPanel = false;
 				}
 			}
 		}
@@ -394,7 +394,7 @@ void CTFHudPlayerClass::OnThink()
 		{
 			if ( pPlayer->HasTheFlag() )
 			{
-				bShowCarryingWeaponPanel = false;			
+				bShowCarryingWeaponPanel = false;
 			}
 		}
 
@@ -420,7 +420,7 @@ static void HudPlayerClassUsePlayerModelDialogCallback( bool bConfirmed, void *p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerClass::UpdateModelPanel()
 {
@@ -440,7 +440,7 @@ void CTFHudPlayerClass::UpdateModelPanel()
 		// only show this message one time
 		ShowConfirmDialog(	"#GameUI_HudPlayerClassUsePlayerModelDialogTitle",
 			"#GameUI_HudPlayerClassUsePlayerModelDialogMessage",
-			"#GameUI_HudPlayerClassUsePlayerModelDialogConfirm", 
+			"#GameUI_HudPlayerClassUsePlayerModelDialogConfirm",
 			"#GameUI_HudPlayerClassUsePlayerModelDialogCancel",
 			&HudPlayerClassUsePlayerModelDialogCallback );
 		cl_hud_playerclass_playermodel_showed_confirm_dialog.SetValue( true );
@@ -532,7 +532,7 @@ void CTFHudPlayerClass::UpdateModelPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerClass::FireGameEvent( IGameEvent * event )
 {
@@ -554,7 +554,7 @@ void CTFHudPlayerClass::FireGameEvent( IGameEvent * event )
 			}
 
 			m_pSpyOutlineImage->SetAlpha( 0 );
-			
+
 			m_pSpyImage->SetVisible( true );
 			m_pSpyOutlineImage->SetVisible( true );
 
@@ -580,7 +580,7 @@ void CTFHudPlayerClass::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHealthPanel::CTFHealthPanel( Panel *parent, const char *name ) : vgui::Panel( parent, name )
 {
@@ -589,20 +589,20 @@ CTFHealthPanel::CTFHealthPanel( Panel *parent, const char *name ) : vgui::Panel(
 	m_iMaterialIndex = surface()->DrawGetTextureId( "hud/health_color" );
 	if ( m_iMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iMaterialIndex = surface()->CreateNewTextureID();	
+		m_iMaterialIndex = surface()->CreateNewTextureID();
 		surface()->DrawSetTextureFile( m_iMaterialIndex, "hud/health_color", true, false );
 	}
 
 	m_iDeadMaterialIndex = surface()->DrawGetTextureId( "hud/health_dead" );
 	if ( m_iDeadMaterialIndex == -1 ) // we didn't find it, so create a new one
 	{
-		m_iDeadMaterialIndex = surface()->CreateNewTextureID();	
+		m_iDeadMaterialIndex = surface()->CreateNewTextureID();
 		surface()->DrawSetTextureFile( m_iDeadMaterialIndex, "hud/health_dead", true, false );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHealthPanel::Paint()
 {
@@ -611,7 +611,7 @@ void CTFHealthPanel::Paint()
 	int x, y, w, h;
 	GetBounds( x, y, w, h );
 
-	Vertex_t vert[4];	
+	Vertex_t vert[4];
 	float uv1 = 0.0f;
 	float uv2 = 1.0f;
 	int xpos = 0, ypos = 0;
@@ -620,10 +620,10 @@ void CTFHealthPanel::Paint()
 	{
 		// Draw the dead material
 		surface()->DrawSetTexture( m_iDeadMaterialIndex );
-		
+
 		vert[0].Init( Vector2D( xpos, ypos ), Vector2D( uv1, uv1 ) );
 		vert[1].Init( Vector2D( xpos + w, ypos ), Vector2D( uv2, uv1 ) );
-		vert[2].Init( Vector2D( xpos + w, ypos + h ), Vector2D( uv2, uv2 ) );				
+		vert[2].Init( Vector2D( xpos + w, ypos + h ), Vector2D( uv2, uv2 ) );
 		vert[3].Init( Vector2D( xpos, ypos + h ), Vector2D( uv1, uv2 ) );
 
 		surface()->DrawSetColor( Color(255,255,255,255) );
@@ -642,7 +642,7 @@ void CTFHealthPanel::Paint()
 
 		vert[0].Init( Vector2D( xpos, flDamageY ), uv11 );
 		vert[1].Init( Vector2D( xpos + w, flDamageY ), uv21 );
-		vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );				
+		vert[2].Init( Vector2D( xpos + w, ypos + h ), uv22 );
 		vert[3].Init( Vector2D( xpos, ypos + h ), uv12 );
 
 		surface()->DrawSetColor( GetFgColor() );
@@ -652,11 +652,11 @@ void CTFHealthPanel::Paint()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFHudPlayerHealth::CTFHudPlayerHealth( Panel *parent, const char *name ) : EditablePanel( parent, name )
 {
-	m_pHealthImage = new CTFHealthPanel( this, "PlayerStatusHealthImage" );	
+	m_pHealthImage = new CTFHealthPanel( this, "PlayerStatusHealthImage" );
 	m_pHealthImageBG = new ImagePanel( this, "PlayerStatusHealthImageBG" );
 	m_pHealthBonusImage = new ImagePanel( this, "PlayerStatusHealthBonusImage" );
 	m_pBuildingHealthImageBG = new ImagePanel( this, "BuildingStatusHealthImageBG" );
@@ -717,7 +717,7 @@ CTFHudPlayerHealth::~CTFHudPlayerHealth()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerHealth::Reset()
 {
@@ -729,7 +729,7 @@ void CTFHudPlayerHealth::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerHealth::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -751,7 +751,7 @@ void CTFHudPlayerHealth::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuffedHealth )
 {
@@ -812,8 +812,8 @@ void CTFHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuff
 				int nPosAdj = RoundFloatToInt( flPercent * m_nHealthBonusPosAdj );
 				int nSizeAdj = 2 * nPosAdj;
 
-				m_pHealthBonusImage->SetBounds( m_nBonusHealthOrigX - nPosAdj, 
-					m_nBonusHealthOrigY - nPosAdj, 
+				m_pHealthBonusImage->SetBounds( m_nBonusHealthOrigX - nPosAdj,
+					m_nBonusHealthOrigY - nPosAdj,
 					m_nBonusHealthOrigW + nSizeAdj,
 					m_nBonusHealthOrigH + nSizeAdj );
 			}
@@ -845,8 +845,8 @@ void CTFHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuff
 				int nPosAdj = RoundFloatToInt( flPercent * m_nHealthBonusPosAdj );
 				int nSizeAdj = 2 * nPosAdj;
 
-				m_pHealthBonusImage->SetBounds( m_nBonusHealthOrigX - nPosAdj, 
-					m_nBonusHealthOrigY - nPosAdj, 
+				m_pHealthBonusImage->SetBounds( m_nBonusHealthOrigX - nPosAdj,
+					m_nBonusHealthOrigY - nPosAdj,
 					m_nBonusHealthOrigW + nSizeAdj,
 					m_nBonusHealthOrigH + nSizeAdj );
 			}
@@ -871,11 +871,11 @@ void CTFHudPlayerHealth::SetHealth( int iNewHealth, int iMaxHealth, int	iMaxBuff
 	else
 	{
 		SetDialogVariable( "Health", "" );
-	}	
+	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerHealth::SetLevel( int nLevel )
 {
@@ -895,7 +895,7 @@ void CTFHudPlayerHealth::SetLevel( int nLevel )
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerHealth::HideHealthBonusImage( void )
 {
@@ -914,7 +914,7 @@ void CTFHudPlayerHealth::HideHealthBonusImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void SetPlayerHealthImagePanelVisibility( CTFPlayer *pPlayer, ETFCond eCond, vgui::ImagePanel *pImagePanel, int& nXOffset, const Color& colorIfVisible )
 {
@@ -924,7 +924,7 @@ static void SetPlayerHealthImagePanelVisibility( CTFPlayer *pPlayer, ETFCond eCo
 	{
 		pImagePanel->SetVisible( true );
 		pImagePanel->SetDrawColor( colorIfVisible );
-		
+
 		// Reposition ourselves and increase the offset if we are active
 		int x,y;
 		pImagePanel->GetPos( x, y );
@@ -998,7 +998,7 @@ void CTFHudPlayerHealth::OnThink()
 			m_pMilkImage->SetVisible( false );
 			m_pMarkedForDeathImage->SetVisible( false );
 			m_pMarkedForDeathImageSilent->SetVisible( false );
-			
+
 			// Old method for goofy color manipulation
 			int nBloodX = nXOffset;
 			SetPlayerHealthImagePanelVisibility( pPlayer, TF_COND_BLEEDING,					m_pBleedImage,					nXOffset,	Color( color_fade, 0, 0, 255 ) );
@@ -1007,7 +1007,7 @@ void CTFHudPlayerHealth::OnThink()
 			SetPlayerHealthImagePanelVisibility( pPlayer, TF_COND_MARKEDFORDEATH,			m_pMarkedForDeathImage,			nXOffset,	Color( 255 - color_fade, 245 - color_fade, 245 - color_fade, 255 ) );
 			SetPlayerHealthImagePanelVisibility( pPlayer, TF_COND_MARKEDFORDEATH_SILENT,	m_pMarkedForDeathImageSilent,	nXOffset,	Color( 125 - color_fade, 255 - color_fade, 255 - color_fade, 255 ) );
 			SetPlayerHealthImagePanelVisibility( pPlayer, TF_COND_PASSTIME_PENALTY_DEBUFF,	m_pMarkedForDeathImageSilent,	nXOffset,	Color( 125 - color_fade, 255 - color_fade, 255 - color_fade, 255 ) );
-			
+
 			UpdateHalloweenStatus();
 		}
 
@@ -1058,9 +1058,9 @@ void CTFHudPlayerHealth::UpdateHalloweenStatus( void )
 DECLARE_HUDELEMENT( CTFHudPlayerStatus );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CTFHudPlayerStatus::CTFHudPlayerStatus( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudPlayerStatus" ) 
+CTFHudPlayerStatus::CTFHudPlayerStatus( const char *pElementName ) : CHudElement( pElementName ), BaseClass( NULL, "HudPlayerStatus" )
 {
 	Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
@@ -1072,7 +1072,7 @@ CTFHudPlayerStatus::CTFHudPlayerStatus( const char *pElementName ) : CHudElement
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerStatus::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1088,7 +1088,7 @@ void CTFHudPlayerStatus::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFHudPlayerStatus::ShouldDraw( void )
 {
@@ -1106,7 +1106,7 @@ bool CTFHudPlayerStatus::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFHudPlayerStatus::Reset()
 {
@@ -1122,7 +1122,7 @@ void CTFHudPlayerStatus::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFClassImage::SetClass( int iTeam, int iClass, int iCloakstate )
 {

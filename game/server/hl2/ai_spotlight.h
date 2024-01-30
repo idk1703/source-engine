@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -79,5 +79,3 @@ private:
 
 
 #endif // AI_SPOTLIGHT_H
-
-

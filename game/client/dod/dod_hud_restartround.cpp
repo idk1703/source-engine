@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -78,7 +78,7 @@ CDODRestartRoundLabel::CDODRestartRoundLabel( const char *pElementName ) : BaseC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODRestartRoundLabel::Reset()
 {
@@ -88,7 +88,7 @@ void CDODRestartRoundLabel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODRestartRoundLabel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {

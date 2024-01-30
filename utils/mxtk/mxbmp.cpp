@@ -38,7 +38,7 @@ mxBmpRead (const char *filename)
 	// File exists?
 	if ((pfile = fopen (filename, "rb")) == 0)
 		return 0;
-	
+
 	// Read file header
 	if (fread (&bmfh, sizeof bmfh, 1/*count*/, pfile) != 1)
 		goto GetOut;
@@ -69,7 +69,7 @@ mxBmpRead (const char *filename)
 		bmih.biClrUsed = 256;
 		cbPalBytes = (1 << bmih.biBitCount) * sizeof (mxBitmapRGBQuad);
 	}
-	else 
+	else
 	{
 		cbPalBytes = bmih.biClrUsed * sizeof (mxBitmapRGBQuad);
 	}
@@ -99,7 +99,7 @@ mxBmpRead (const char *filename)
 	}
 
 	// Fill in unused entires will 0,0,0
-	for (i = bmih.biClrUsed; i < 256; i++) 
+	for (i = bmih.biClrUsed; i < 256; i++)
 	{
 		*pb++ = 0;
 		*pb++ = 0;
@@ -134,7 +134,7 @@ mxBmpRead (const char *filename)
 
 	// data is actually stored with the width being rounded up to a multiple of 4
 	biTrueWidth = (bmih.biWidth + 3) & ~3;
-	
+
 	// reverse the order of the data.
 	pb += (bmih.biHeight - 1) * biTrueWidth;
 	for(i = 0; i < bmih.biHeight; i++)
@@ -147,7 +147,7 @@ mxBmpRead (const char *filename)
 	free (pb);
 
 GetOut:
-	if (pfile) 
+	if (pfile)
 		fclose (pfile);
 
 	return image;
@@ -201,7 +201,7 @@ mxBmpWrite (const char *filename, mxImage *image)
 	bmih.biWidth = biTrueWidth;
 	// Height
 	bmih.biHeight = image->height;
-	// Only 1 plane 
+	// Only 1 plane
 	bmih.biPlanes = 1;
 	// Only 8-bit supported.
 	bmih.biBitCount = 8;
@@ -216,14 +216,14 @@ mxBmpWrite (const char *filename, mxImage *image)
 	// Always full palette
 	bmih.biClrUsed = 256;
 	bmih.biClrImportant = 0;
-	
+
 	// Write info header
 	if (fwrite (&bmih, sizeof bmih, 1/*count*/, pfile) != 1)
 	{
 		fclose (pfile);
 		return false;
 	}
-	
+
 
 	// convert to expanded palette
 	pb = (byte *) image->palette;
@@ -234,7 +234,7 @@ mxBmpWrite (const char *filename, mxImage *image)
 		rgrgbPalette[i].rgbRed   = *pb++;
 		rgrgbPalette[i].rgbGreen = *pb++;
 		rgrgbPalette[i].rgbBlue  = *pb++;
-        rgrgbPalette[i].rgbReserved = 0;
+	rgrgbPalette[i].rgbReserved = 0;
 	}
 
 	// Write palette (bmih.biClrUsed entries)

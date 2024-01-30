@@ -103,7 +103,7 @@ BEGIN_DATADESC( CBaseTrigger )
 	DEFINE_KEYFIELD( m_bDisabled,		FIELD_BOOLEAN,	"StartDisabled" ),
 	DEFINE_UTLVECTOR( m_hTouchingEntities, FIELD_EHANDLE ),
 
-	// Inputs	
+	// Inputs
 	DEFINE_INPUTFUNC( FIELD_VOID, "Enable", InputEnable ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputDisable ),
 	DEFINE_INPUTFUNC( FIELD_VOID, "DisableAndEndTouch", InputDisableAndEndTouch ),
@@ -136,7 +136,7 @@ CBaseTrigger::CBaseTrigger()
 // Purpose: Input handler to turn on this trigger.
 //------------------------------------------------------------------------------
 void CBaseTrigger::InputEnable( inputdata_t &inputdata )
-{ 
+{
 	Enable();
 }
 
@@ -145,7 +145,7 @@ void CBaseTrigger::InputEnable( inputdata_t &inputdata )
 // Purpose: Input handler to turn off this trigger.
 //------------------------------------------------------------------------------
 void CBaseTrigger::InputDisable( inputdata_t &inputdata )
-{ 
+{
 	Disable();
 }
 
@@ -226,7 +226,7 @@ void CBaseTrigger::Enable( void )
 
 	if (!IsSolidFlagSet( FSOLID_TRIGGER ))
 	{
-		AddSolidFlags( FSOLID_TRIGGER ); 
+		AddSolidFlags( FSOLID_TRIGGER );
 		PhysicsTouchTriggers();
 	}
 }
@@ -235,8 +235,8 @@ void CBaseTrigger::Enable( void )
 //------------------------------------------------------------------------------
 // Purpose :
 //------------------------------------------------------------------------------
-void CBaseTrigger::Activate( void ) 
-{ 
+void CBaseTrigger::Activate( void )
+{
 	// Get a handle to my filter entity if there is one
 	if (m_iFilterName != NULL_STRING)
 	{
@@ -264,7 +264,7 @@ void CBaseTrigger::PostClientActive( void )
 // Purpose: Turns off this trigger.
 //------------------------------------------------------------------------------
 void CBaseTrigger::Disable( void )
-{ 
+{
 	m_bDisabled = true;
 
 	if ( VPhysicsGetObject())
@@ -274,7 +274,7 @@ void CBaseTrigger::Disable( void )
 
 	if (IsSolidFlagSet(FSOLID_TRIGGER))
 	{
-		RemoveSolidFlags( FSOLID_TRIGGER ); 
+		RemoveSolidFlags( FSOLID_TRIGGER );
 		PhysicsTouchTriggers();
 	}
 }
@@ -288,7 +288,7 @@ void CBaseTrigger::TouchTest( void )
 	{
 		if ( m_hTouchingEntities.Count() !=0 )
 		{
-			
+
 			m_OnTouching.FireOutput( this, this );
 		}
 		else
@@ -302,17 +302,17 @@ void CBaseTrigger::TouchTest( void )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CBaseTrigger::DrawDebugTextOverlays(void) 
+int CBaseTrigger::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// --------------
 		// Print Target
 		// --------------
 		char tempstr[255];
-		if (IsSolidFlagSet(FSOLID_TRIGGER)) 
+		if (IsSolidFlagSet(FSOLID_TRIGGER))
 		{
 			Q_strncpy(tempstr,"State: Enabled",sizeof(tempstr));
 		}
@@ -341,19 +341,19 @@ bool CBaseTrigger::PointIsWithin( const Vector &vecPoint )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseTrigger::InitTrigger( )
 {
-	SetSolid( GetParent() ? SOLID_VPHYSICS : SOLID_BSP );	
+	SetSolid( GetParent() ? SOLID_VPHYSICS : SOLID_BSP );
 	AddSolidFlags( FSOLID_NOT_SOLID );
 	if (m_bDisabled)
 	{
-		RemoveSolidFlags( FSOLID_TRIGGER );	
+		RemoveSolidFlags( FSOLID_TRIGGER );
 	}
 	else
 	{
-		AddSolidFlags( FSOLID_TRIGGER );	
+		AddSolidFlags( FSOLID_TRIGGER );
 	}
 
 	SetMoveType( MOVETYPE_NONE );
@@ -383,12 +383,12 @@ bool CBaseTrigger::PassesTriggerFilters(CBaseEntity *pOther)
 		(HasSpawnFlags(SF_TRIGGER_ALLOW_CLIENTS) && (pOther->GetFlags() & FL_CLIENT)) ||
 		(HasSpawnFlags(SF_TRIGGER_ALLOW_NPCS) && (pOther->GetFlags() & FL_NPC)) ||
 		(HasSpawnFlags(SF_TRIGGER_ALLOW_PUSHABLES) && FClassnameIs(pOther, "func_pushable")) ||
-		(HasSpawnFlags(SF_TRIGGER_ALLOW_PHYSICS) && pOther->GetMoveType() == MOVETYPE_VPHYSICS) 
-#if defined( HL2_EPISODIC ) || defined( TF_DLL )		
+		(HasSpawnFlags(SF_TRIGGER_ALLOW_PHYSICS) && pOther->GetMoveType() == MOVETYPE_VPHYSICS)
+#if defined( HL2_EPISODIC ) || defined( TF_DLL )
 		||
-		(	HasSpawnFlags(SF_TRIG_TOUCH_DEBRIS) && 
+		(	HasSpawnFlags(SF_TRIG_TOUCH_DEBRIS) &&
 			(pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
-			pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS_TRIGGER || 
+			pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS_TRIGGER ||
 			pOther->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS)
 		)
 #endif
@@ -470,7 +470,7 @@ void CBaseTrigger::InputStartTouch( inputdata_t &inputdata )
 void CBaseTrigger::InputEndTouch( inputdata_t &inputdata )
 {
 	//And... pretend we left the trigger.
-	EndTouch( inputdata.pCaller );	
+	EndTouch( inputdata.pCaller );
 }
 
 //-----------------------------------------------------------------------------
@@ -483,7 +483,7 @@ void CBaseTrigger::StartTouch(CBaseEntity *pOther)
 	{
 		EHANDLE hOther;
 		hOther = pOther;
-		
+
 		bool bAdded = false;
 		if ( m_hTouchingEntities.Find( hOther ) == m_hTouchingEntities.InvalidIndex() )
 		{
@@ -514,7 +514,7 @@ void CBaseTrigger::EndTouch(CBaseEntity *pOther)
 		EHANDLE hOther;
 		hOther = pOther;
 		m_hTouchingEntities.FindAndRemove( hOther );
-		
+
 		//FIXME: Without this, triggers fire their EndTouch outputs when they are disabled!
 		//if ( !m_bDisabled )
 		//{
@@ -616,9 +616,9 @@ public:
 
 	void Spawn( void );
 	void Touch( CBaseEntity *pOther );
-	
+
 	DECLARE_DATADESC();
-	
+
 	// Outputs
 	COutputEvent m_OnRemove;
 };
@@ -635,7 +635,7 @@ LINK_ENTITY_TO_CLASS( trigger_remove, CTriggerRemove );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerRemove::Spawn( void )
 {
@@ -719,7 +719,7 @@ void CTriggerHurt::Spawn( void )
 void CTriggerHurt::RadiationThink( void )
 {
 	// check to see if a player is in pvs
-	// if not, continue	
+	// if not, continue
 	Vector vecSurroundMins, vecSurroundMaxs;
 	CollisionProp()->WorldSpaceSurroundingBounds( &vecSurroundMins, &vecSurroundMaxs );
 	CBasePlayer *pPlayer = static_cast<CBasePlayer *>(UTIL_FindClientInPVS( vecSurroundMins, vecSurroundMaxs ));
@@ -783,7 +783,7 @@ bool CTriggerHurt::HurtEntity( CBaseEntity *pOther, float damage )
 		{
 			info.SetDamageForce( vec3_origin );
 		}
-		
+
 		pOther->TakeDamage( info );
 	}
 
@@ -975,8 +975,8 @@ void CTriggerMultiple::MultiTouch(CBaseEntity *pOther)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pActivator - 
+// Purpose:
+// Input  : pActivator -
 //-----------------------------------------------------------------------------
 void CTriggerMultiple::ActivateMultiTrigger(CBaseEntity *pActivator)
 {
@@ -1106,8 +1106,8 @@ void CTriggerLook::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pOther - 
+// Purpose:
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CTriggerLook::StartTouch(CBaseEntity *pOther)
 {
@@ -1124,7 +1124,7 @@ void CTriggerLook::StartTouch(CBaseEntity *pOther)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerLook::TimeoutThink(void)
 {
@@ -1265,11 +1265,11 @@ void CTriggerLook::Trigger(CBaseEntity *pActivator, bool bTimeout)
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CTriggerLook::DrawDebugTextOverlays(void) 
+int CTriggerLook::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// ----------------
 		// Print Look time
@@ -1421,7 +1421,7 @@ bool CChangeLevel::KeyValue( const char *szKeyName, const char *szValue )
 			Warning( "Landmark name '%s' too long (32 chars)\n", szValue );
 			Assert(0);
 		}
-		
+
 		Q_strncpy(m_szLandmarkName, szValue, sizeof( m_szLandmarkName ));
 	}
 	else
@@ -1445,7 +1445,7 @@ void CChangeLevel::Spawn( void )
 	}
 
 	InitTrigger();
-	
+
 	if ( !HasSpawnFlags(SF_CHANGELEVEL_NOTOUCH) )
 	{
 		SetTouch( &CChangeLevel::TouchChangeLevel );
@@ -1477,7 +1477,7 @@ void CChangeLevel::Activate( void )
 		if ( clusterIndex < 0 )
 		{
 			Warning( "trigger_changelevel to map %s has a landmark embedded in solid!\n"
-					"This will break level transitions!\n", m_szMapName ); 
+					"This will break level transitions!\n", m_szMapName );
 		}
 
 		if ( g_debug_transitions.GetInt() )
@@ -1536,7 +1536,7 @@ void CChangeLevel::InputChangeLevel( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: Performs the level change and fires targets.
-// Input  : pActivator - 
+// Input  : pActivator -
 //-----------------------------------------------------------------------------
 bool CChangeLevel::IsEntityInTransition( CBaseEntity *pEntity )
 {
@@ -1546,7 +1546,7 @@ bool CChangeLevel::IsEntityInTransition( CBaseEntity *pEntity )
 		return false;
 	}
 
-	// look for a landmark entity		
+	// look for a landmark entity
 	CBaseEntity	*pLandmark = FindLandmark( m_szLandmarkName );
 
 	if ( !pLandmark )
@@ -1604,7 +1604,7 @@ void CChangeLevel::WarnAboutActiveLead( void )
 			if ( dynamic_cast<CAI_LeadBehavior *>( behavior ) )
 			{
 				Warning( "Entity '%s' is still actively leading\n", STRING( ai->GetEntityName() ) );
-			} 
+			}
 		}
 	}
 }
@@ -1635,7 +1635,7 @@ void CChangeLevel::ChangeLevelNow( CBaseEntity *pActivator )
 		return;
 	}
 
-	// look for a landmark entity		
+	// look for a landmark entity
 	pLandmark = FindLandmark( m_szLandmarkName );
 
 	if ( !pLandmark )
@@ -1737,7 +1737,7 @@ void CChangeLevel::TouchChangeLevel( CBaseEntity *pOther )
 }
 
 
-// Add a transition to the list, but ignore duplicates 
+// Add a transition to the list, but ignore duplicates
 // (a designer may have placed multiple trigger_changelevels with the same landmark)
 int CChangeLevel::AddTransitionToList( levellist_t *pLevelList, int listCount, const char *pMapName, const char *pLandmarkName, edict_t *pentLandmark )
 {
@@ -1946,7 +1946,7 @@ int CChangeLevel::ComputeEntitySaveFlags( CBaseEntity *pEntity )
 	{
 		flags |= FENTTABLE_GLOBAL;
 	}
-	
+
 	if ( g_iDebuggingTransition == DEBUG_TRANSITIONS_VERBOSE && !flags )
 	{
 		Msg( "IGNORED, no across_transition flag & no globalname\n" );
@@ -2008,7 +2008,7 @@ int CChangeLevel::BuildEntityTransitionList( CBaseEntity *pLandmarkEntity, const
 	}
 
 	// Follow the linked list of entities in the PVS of the transition landmark
-	CBaseEntity *pEntity = NULL; 
+	CBaseEntity *pEntity = NULL;
 	while ( (pEntity = UTIL_EntitiesInPVS( pLandmarkEntity, pEntity)) != NULL )
 	{
 		int flags = ComputeEntitySaveFlags( pEntity );
@@ -2061,7 +2061,7 @@ int CChangeLevel::AddDependentEntities( int nCount, CBaseEntity **ppEntList, int
 {
 	char pEntitiesSaved[MAX_ENTITY_BYTE_COUNT];
 	memset( pEntitiesSaved, 0, MAX_ENTITY_BYTE_COUNT * sizeof(char) );
-			  
+
 	// Populate the initial bitfield
 	int i;
 	for ( i = 0; i < nCount; ++i )
@@ -2136,7 +2136,7 @@ int CChangeLevel::AddDependentEntities( int nCount, CBaseEntity **ppEntList, int
 
 
 //------------------------------------------------------------------------------
-// This builds the list of all transitions on this level and which entities 
+// This builds the list of all transitions on this level and which entities
 // are in their PVS's and can / should be moved across.
 //------------------------------------------------------------------------------
 
@@ -2199,7 +2199,7 @@ public:
 	Vector m_vecPushDir;
 
 	DECLARE_DATADESC();
-	
+
 	float m_flAlternateTicksFix; // Scale factor to apply to the push speed when running with alternate ticks
 	float m_flPushSpeed;
 };
@@ -2252,14 +2252,14 @@ void CTriggerPush::Activate()
 	{
 		m_flPushSpeed = m_flSpeed;
 	}
-	
+
 	BaseClass::Activate();
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CTriggerPush::Touch( CBaseEntity *pOther )
 {
@@ -2313,8 +2313,8 @@ void CTriggerPush::Touch( CBaseEntity *pOther )
 		{
 #if defined( HL2_DLL )
 			// HACK HACK  HL2 players on ladders will only be disengaged if the sf is set, otherwise no push occurs.
-			if ( pOther->IsPlayer() && 
-				 pOther->GetMoveType() == MOVETYPE_LADDER )
+			if ( pOther->IsPlayer() &&
+				pOther->GetMoveType() == MOVETYPE_LADDER )
 			{
 				if ( !HasSpawnFlags(SF_TRIG_PUSH_AFFECT_PLAYER_ON_LADDER) )
 				{
@@ -2345,7 +2345,7 @@ void CTriggerPush::Touch( CBaseEntity *pOther )
 
 			// apply x, y as a base velocity so we travel at constant speed on conveyors
 			vecPush.z = 0;
-#endif			
+#endif
 
 			pOther->SetBaseVelocity( vecPush );
 			pOther->AddFlag( FL_BASEVELOCITY );
@@ -2410,9 +2410,9 @@ void CTriggerTeleport::Touch( CBaseEntity *pOther )
 	pentTarget = gEntList.FindEntityByName( pentTarget, m_target, NULL, pOther, pOther );
 	if (!pentTarget)
 	{
-	   return;
+		return;
 	}
-	
+
 	//
 	// If a landmark was specified, offset the player relative to the landmark.
 	//
@@ -2429,7 +2429,7 @@ void CTriggerTeleport::Touch( CBaseEntity *pOther )
 	}
 
 	pOther->SetGroundEntity( NULL );
-	
+
 	Vector tmp = pentTarget->GetAbsOrigin();
 
 	if (!pentLandmark && pOther->IsPlayer())
@@ -2445,7 +2445,7 @@ void CTriggerTeleport::Touch( CBaseEntity *pOther )
 	Vector *pVelocity = NULL;
 
 #ifdef HL1_DLL
-	Vector vecZero(0,0,0);		
+	Vector vecZero(0,0,0);
 #endif
 
 	if (!pentLandmark && !HasSpawnFlags(SF_TELEPORT_PRESERVE_ANGLES) )
@@ -2529,7 +2529,7 @@ public:
 	}
 
 	bool	m_bDisabled;		// Initial state
-	
+
 	DECLARE_DATADESC();
 };
 
@@ -2560,7 +2560,7 @@ void CTriggerToggleSave::Spawn( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Performs the autosave when the player touches us.
-// Input  : pOther - 
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CTriggerToggleSave::Touch( CBaseEntity *pOther )
 {
@@ -2570,7 +2570,7 @@ void CTriggerToggleSave::Touch( CBaseEntity *pOther )
 	// Only save on clients
 	if ( !pOther->IsPlayer() )
 		return;
-    
+
 	// Can be re-enabled
 	m_bDisabled = true;
 
@@ -2622,7 +2622,7 @@ void CTriggerSave::Spawn( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Performs the autosave when the player touches us.
-// Input  : pOther - 
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CTriggerSave::Touch( CBaseEntity *pOther )
 {
@@ -2645,7 +2645,7 @@ void CTriggerSave::Touch( CBaseEntity *pOther )
 		}
 	}
 
-    // this is a one-way transition - there is no way to return to the previous map.
+	// this is a one-way transition - there is no way to return to the previous map.
 	if ( m_bForceNewLevelUnit )
 	{
 		engine->ClearSaveDir();
@@ -2808,7 +2808,7 @@ CAI_BaseNPC *CAI_ChangeHintGroup::FindQualifiedNPC( CAI_BaseNPC *pPrev, CBaseEnt
 				pEntity = gEntList.FindEntityByNameWithin( pEntity, pszSearchName, GetLocalOrigin(), m_flRadius, NULL, pActivator, pCaller );
 				break;
 			}
-			
+
 			case 1:
 			{
 				pEntity = gEntList.FindEntityByClassnameWithin( pEntity, pszSearchName, GetLocalOrigin(), m_flRadius );
@@ -2859,7 +2859,7 @@ void CAI_ChangeHintGroup::InputActivate( inputdata_t &inputdata )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTriggerCamera : public CBaseEntity
 {
@@ -2876,7 +2876,7 @@ public:
 
 	// Always transmit to clients so they know where to move the view to
 	virtual int UpdateTransmitState();
-	
+
 	DECLARE_DATADESC();
 
 	// Input handlers
@@ -2968,7 +2968,7 @@ BEGIN_DATADESC( CTriggerCamera )
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCamera::Spawn( void )
 {
@@ -2980,7 +2980,7 @@ void CTriggerCamera::Spawn( void )
 	m_nRenderMode = kRenderTransTexture;
 
 	m_state = USE_OFF;
-	
+
 	m_initialSpeed = m_flSpeed;
 
 	if ( m_acceleration == 0 )
@@ -3007,7 +3007,7 @@ int CTriggerCamera::UpdateTransmitState()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTriggerCamera::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -3037,7 +3037,7 @@ bool CTriggerCamera::KeyValue( const char *szKeyName, const char *szValue )
 // Purpose: Input handler to turn on this trigger.
 //------------------------------------------------------------------------------
 void CTriggerCamera::InputEnable( inputdata_t &inputdata )
-{ 
+{
 	m_hPlayer = inputdata.pActivator;
 	Enable();
 }
@@ -3047,12 +3047,12 @@ void CTriggerCamera::InputEnable( inputdata_t &inputdata )
 // Purpose: Input handler to turn off this trigger.
 //------------------------------------------------------------------------------
 void CTriggerCamera::InputDisable( inputdata_t &inputdata )
-{ 
+{
 	Disable();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCamera::Enable( void )
 {
@@ -3107,16 +3107,16 @@ void CTriggerCamera::Enable( void )
 
 	m_nPlayerButtons = pPlayer->m_nButtons;
 
-	
+
 	// Make the player invulnerable while under control of the camera.  This will prevent situations where the player dies while under camera control but cannot restart their game due to disabled player inputs.
 	m_nOldTakeDamage = m_hPlayer->m_takedamage;
 	m_hPlayer->m_takedamage = DAMAGE_NO;
-	
+
 	if ( HasSpawnFlags( SF_CAMERA_PLAYER_NOT_SOLID ) )
 	{
 		m_hPlayer->AddSolidFlags( FSOLID_NOT_SOLID );
 	}
-	
+
 	m_flReturnTime = gpGlobals->curtime + m_flWait;
 	m_flSpeed = m_initialSpeed;
 	m_targetSpeed = m_initialSpeed;
@@ -3176,7 +3176,7 @@ void CTriggerCamera::Enable( void )
 	{
 		if ( m_pPath->m_flSpeed != 0 )
 			m_targetSpeed = m_pPath->m_flSpeed;
-		
+
 		m_flStopTime += m_pPath->GetDelay();
 	}
 
@@ -3232,7 +3232,7 @@ void CTriggerCamera::Enable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCamera::Disable( void )
 {
@@ -3266,7 +3266,7 @@ void CTriggerCamera::Disable( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCamera::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -3286,7 +3286,7 @@ void CTriggerCamera::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCamera::FollowTarget( )
 {
@@ -3326,7 +3326,7 @@ void CTriggerCamera::FollowTarget( )
 	}
 
 	// Should we just snap to the goal angles?
-	if ( m_bSnapToGoal ) 
+	if ( m_bSnapToGoal )
 	{
 		SetAbsAngles( vecGoal );
 		m_bSnapToGoal = false;
@@ -3347,14 +3347,14 @@ void CTriggerCamera::FollowTarget( )
 		float dx = vecGoal.x - GetLocalAngles().x;
 		float dy = vecGoal.y - GetLocalAngles().y;
 
-		if (dx < -180) 
+		if (dx < -180)
 			dx += 360;
-		if (dx > 180) 
+		if (dx > 180)
 			dx = dx - 360;
-		
-		if (dy < -180) 
+
+		if (dy < -180)
 			dy += 360;
-		if (dy > 180) 
+		if (dy > 180)
 			dy = dy - 360;
 
 		QAngle vecAngVel;
@@ -3362,7 +3362,7 @@ void CTriggerCamera::FollowTarget( )
 		SetLocalAngularVelocity(vecAngVel);
 	}
 
-	if (!HasSpawnFlags(SF_CAMERA_PLAYER_TAKECONTROL))	
+	if (!HasSpawnFlags(SF_CAMERA_PLAYER_TAKECONTROL))
 	{
 		SetAbsVelocity( GetAbsVelocity() * 0.8 );
 		if (GetAbsVelocity().Length( ) < 10.0)
@@ -3390,8 +3390,8 @@ void CTriggerCamera::Move()
 
 				if ( buttonsChanged && pPlayer->m_nButtons )
 				{
-					 Disable();
-					 return;
+					Disable();
+					return;
 				}
 
 				m_nPlayerButtons = pPlayer->m_nButtons;
@@ -3400,7 +3400,7 @@ void CTriggerCamera::Move()
 	}
 
 	// In vanilla HL2, the camera is either on a path, or doesn't move. In episodic
-	// we add the capacity for interpolation to the start point. 
+	// we add the capacity for interpolation to the start point.
 #if HL2_EPISODIC
 	if (m_pPath)
 #else
@@ -3425,7 +3425,7 @@ void CTriggerCamera::Move()
 			{
 				SetAbsVelocity( vec3_origin );
 			}
-			else 
+			else
 			{
 				if ( m_pPath->m_flSpeed != 0 )
 					m_targetSpeed = m_pPath->m_flSpeed;
@@ -3505,7 +3505,7 @@ void CTriggerCDAudio::Touch ( CBaseEntity *pOther )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerCDAudio::Spawn( void )
 {
@@ -3528,12 +3528,12 @@ void CTriggerCDAudio::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 static void PlayCDTrack( int iTrack )
 {
 	edict_t *pClient;
-	
-	// manually find the single player. 
+
+	// manually find the single player.
 	pClient = engine->PEntityOfEntIndex( 1 );
 
 	Assert(gpGlobals->maxClients == 1);
-	
+
 	// Can't play if the client is not connected!
 	if ( !pClient )
 		return;
@@ -3560,7 +3560,7 @@ static void PlayCDTrack( int iTrack )
 void CTriggerCDAudio::PlayTrack( void )
 {
 	PlayCDTrack( (int)m_iHealth );
-	
+
 	SetTouch( NULL );
 	UTIL_Remove( this );
 }
@@ -3657,7 +3657,7 @@ void CTriggerProximity::Activate(void)
 //-----------------------------------------------------------------------------
 // Purpose: Decrements the touch count and cancels the think if the count reaches
 //			zero.
-// Input  : pOther - 
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CTriggerProximity::StartTouch(CBaseEntity *pOther)
 {
@@ -3665,7 +3665,7 @@ void CTriggerProximity::StartTouch(CBaseEntity *pOther)
 
 	if ( PassesTriggerFilters( pOther ) )
 	{
-		m_nTouchers++;	
+		m_nTouchers++;
 
 		SetThink( &CTriggerProximity::MeasureThink );
 		SetNextThink( gpGlobals->curtime );
@@ -3676,7 +3676,7 @@ void CTriggerProximity::StartTouch(CBaseEntity *pOther)
 //-----------------------------------------------------------------------------
 // Purpose: Decrements the touch count and cancels the think if the count reaches
 //			zero.
-// Input  : pOther - 
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CTriggerProximity::EndTouch(CBaseEntity *pOther)
 {
@@ -3779,10 +3779,10 @@ public:
 			return IMotionEvent::SIM_NOTHING;
 
 		// Get a cosine modulated noise between 5 and 20 that is object specific
-		int nNoiseMod = 5+(int)pObject%15; // 
+		int nNoiseMod = 5+(int)pObject%15; //
 
 		// Turn wind yaw direction into a vector and add noise
-		QAngle vWindAngle = vec3_angle;	
+		QAngle vWindAngle = vec3_angle;
 		vWindAngle[1] = m_nWindYaw+(30*cos(nNoiseMod * gpGlobals->curtime + nNoiseMod));
 		Vector vWind;
 		AngleVectors(vWindAngle,&vWind);
@@ -3792,7 +3792,7 @@ public:
 
 		linear = 3*vWind*m_flWindSpeed;
 		angular = vec3_origin;
-		return IMotionEvent::SIM_GLOBAL_FORCE;	
+		return IMotionEvent::SIM_GLOBAL_FORCE;
 	}
 
 	int		m_nWindYaw;
@@ -3812,7 +3812,7 @@ extern float	GetFloorZ(const Vector &origin);
 #define WIND_THINK_CONTEXT		"WindThinkContext"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTriggerWind : public CBaseVPhysicsTrigger
 {
@@ -3899,7 +3899,7 @@ void CTriggerWind::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTriggerWind::KeyValue( const char *szKeyName, const char *szValue )
 {
@@ -4029,7 +4029,7 @@ void CTriggerWind::WindThink( void )
 			m_nDirCurrent = UTIL_ApproachAngle( m_nDirTarget, m_nDirCurrent, MAX_WIND_CHANGE );
 			bDone = false;
 		}
-		
+
 		if (bDone)
 		{
 			m_nSpeedCurrent = m_nSpeedTarget;
@@ -4072,11 +4072,11 @@ void CTriggerWind::InputSetSpeed( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CTriggerWind::DrawDebugTextOverlays(void) 
+int CTriggerWind::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		// --------------
 		// Print Target
@@ -4152,7 +4152,7 @@ END_DATADESC()
 // Purpose:
 //------------------------------------------------------------------------------
 void CTriggerImpact::Spawn( void )
-{	
+{
 	// Clamp date in case user made an error
 	m_flNoise = clamp(m_flNoise,0.f,1.f);
 	m_flViewkick = clamp(m_flViewkick,0.f,1.f);
@@ -4219,11 +4219,11 @@ void CTriggerImpact::InputSetMagnitude( inputdata_t &inputdata )
 // Purpose: Draw any debug text overlays
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CTriggerImpact::DrawDebugTextOverlays(void) 
+int CTriggerImpact::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[255];
 		Q_snprintf(tempstr,sizeof(tempstr),"Magnitude: %3.2f",m_flMagnitude);
@@ -4248,7 +4248,7 @@ public:
 	void Spawn( void );
 	void StartTouch( CBaseEntity *pOther );
 	void EndTouch( CBaseEntity *pOther );
-	
+
 	DECLARE_DATADESC();
 
 };
@@ -4282,7 +4282,7 @@ void CTriggerPlayerMovement::Spawn( void )
 // UNDONE: This will not support a player touching more than one of these
 // UNDONE: Do we care?  If so, ref count automovement in the player?
 void CTriggerPlayerMovement::StartTouch( CBaseEntity *pOther )
-{	
+{
 	if (!PassesTriggerFilters(pOther))
 		return;
 
@@ -4347,10 +4347,10 @@ void CBaseVPhysicsTrigger::Spawn()
 {
 	Precache();
 
-	SetSolid( SOLID_VPHYSICS );	
+	SetSolid( SOLID_VPHYSICS );
 	AddSolidFlags( FSOLID_NOT_SOLID );
 
-	// NOTE: Don't make yourself FSOLID_TRIGGER here or you'll get game 
+	// NOTE: Don't make yourself FSOLID_TRIGGER here or you'll get game
 	// collisions AND vphysics collisions.  You don't want any game collisions
 	// so just use FSOLID_NOT_SOLID
 
@@ -4399,8 +4399,8 @@ void CBaseVPhysicsTrigger::UpdateOnRemove()
 //------------------------------------------------------------------------------
 // Activate
 //------------------------------------------------------------------------------
-void CBaseVPhysicsTrigger::Activate( void ) 
-{ 
+void CBaseVPhysicsTrigger::Activate( void )
+{
 	// Get a handle to my filter entity if there is one
 	if (m_iFilterName != NULL_STRING)
 	{
@@ -4426,7 +4426,7 @@ void CBaseVPhysicsTrigger::InputToggle( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseVPhysicsTrigger::InputEnable( inputdata_t &inputdata )
 {
@@ -4441,7 +4441,7 @@ void CBaseVPhysicsTrigger::InputEnable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseVPhysicsTrigger::InputDisable( inputdata_t &inputdata )
 {
@@ -4456,21 +4456,21 @@ void CBaseVPhysicsTrigger::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseVPhysicsTrigger::StartTouch( CBaseEntity *pOther )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseVPhysicsTrigger::EndTouch( CBaseEntity *pOther )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CBaseVPhysicsTrigger::PassesTriggerFilters( CBaseEntity *pOther )
 {
@@ -4617,7 +4617,7 @@ void CTriggerVPhysicsMotion::Precache()
 #ifndef _XBOX
 	if ( m_ParticleTrail.m_strMaterialName != NULL_STRING )
 	{
-		PrecacheMaterial( STRING(m_ParticleTrail.m_strMaterialName) ); 
+		PrecacheMaterial( STRING(m_ParticleTrail.m_strMaterialName) );
 	}
 #endif //!_XBOX
 }
@@ -4642,7 +4642,7 @@ float CTriggerVPhysicsMotion::LinearLimit()
 	return flLimit;
 }
 
-	
+
 //------------------------------------------------------------------------------
 // Create VPhysics
 //------------------------------------------------------------------------------
@@ -4714,7 +4714,7 @@ void CTriggerVPhysicsMotion::StartTouch( CBaseEntity *pOther )
 #ifndef _XBOX
 	if ( m_ParticleTrail.m_strMaterialName != NULL_STRING )
 	{
-		CEntityParticleTrail::Create( pOther, m_ParticleTrail, this ); 
+		CEntityParticleTrail::Create( pOther, m_ParticleTrail, this );
 	}
 #endif
 
@@ -4725,7 +4725,7 @@ void CTriggerVPhysicsMotion::StartTouch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerVPhysicsMotion::EndTouch( CBaseEntity *pOther )
 {
@@ -4750,7 +4750,7 @@ void CTriggerVPhysicsMotion::EndTouch( CBaseEntity *pOther )
 #ifndef _XBOX
 	if ( m_ParticleTrail.m_strMaterialName != NULL_STRING )
 	{
-		CEntityParticleTrail::Destroy( pOther, m_ParticleTrail ); 
+		CEntityParticleTrail::Destroy( pOther, m_ParticleTrail );
 	}
 #endif //!_XBOX
 
@@ -4953,7 +4953,7 @@ CTriggerApplyImpulse::CTriggerApplyImpulse()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerApplyImpulse::Spawn()
 {
@@ -4972,7 +4972,7 @@ void CTriggerApplyImpulse::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerApplyImpulse::InputApplyImpulse( inputdata_t& )
 {
@@ -5064,6 +5064,6 @@ bool IsTriggerClass( CBaseEntity *pEntity )
 
 	if ( NULL != dynamic_cast<CTriggerVolume *>(pEntity) )
 		return true;
-	
+
 	return false;
 }

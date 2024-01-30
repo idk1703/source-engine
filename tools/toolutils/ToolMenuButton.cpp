@@ -181,5 +181,3 @@ vgui::Menu *CToolMenuButton::GetMenu()
 {
 	return m_pMenu;
 }
-
-

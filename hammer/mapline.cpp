@@ -97,7 +97,7 @@ CMapClass *CMapLine::Create(CHelperInfo *pHelperInfo, CMapEntity *pParent)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapLine::CMapLine(void)
 {
@@ -113,7 +113,7 @@ CMapLine::CMapLine(void)
 //			pszEndValueKey - The key in our parent entity from which to get a search term for the end entity ex 'beamend01'.
 //-----------------------------------------------------------------------------
 CMapLine::CMapLine(const char *pszStartKey, const char *pszStartValueKey, const char *pszEndKey, const char *pszEndValueKey)
-{	
+{
 	Initialize();
 
 	strcpy(m_szStartKey, pszStartKey);
@@ -182,7 +182,7 @@ void CMapLine::BuildLine(void)
 void CMapLine::CalcBounds(BOOL bFullUpdate)
 {
 	CMapClass::CalcBounds(bFullUpdate);
-	
+
 	//
 	// Don't calculate 2D bounds - we don't occupy any space in 2D. This keeps our
 	// parent entity's bounds from expanding to encompass our endpoints.
@@ -214,8 +214,8 @@ void CMapLine::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bUpdateDependencies - 
+// Purpose:
+// Input  : bUpdateDependencies -
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapLine::Copy(bool bUpdateDependencies)
@@ -234,8 +234,8 @@ CMapClass *CMapLine::Copy(bool bUpdateDependencies)
 //-----------------------------------------------------------------------------
 // Purpose: Turns 'this' into an exact replica of 'pObject'.
 // Input  : pObject - Object to replicate.
-//			bUpdateDependencies - 
-// Output : 
+//			bUpdateDependencies -
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CMapLine::CopyFrom(CMapClass *pObject, bool bUpdateDependencies)
 {
@@ -319,9 +319,9 @@ void CMapLine::OnNotifyDependent(CMapClass *pObject, Notify_Dependent_t eNotifyT
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : key - 
-//			value - 
+// Purpose:
+// Input  : key -
+//			value -
 //-----------------------------------------------------------------------------
 void CMapLine::OnParentKeyChanged( const char* key, const char* value )
 {
@@ -371,8 +371,8 @@ void CMapLine::Render2D(CRender2D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapLine::Render3D(CRender3D *pRender)
 {
@@ -381,9 +381,9 @@ void CMapLine::Render3D(CRender3D *pRender)
 
 	pRender->BeginRenderHitTarget(this);
 	pRender->PushRenderMode(RENDER_MODE_WIREFRAME);
-	
+
 	Vector Start, End;
-	
+
 	m_pStartEntity->GetOrigin(Start);
 	m_pEndEntity->GetOrigin(End);
 
@@ -400,14 +400,14 @@ void CMapLine::Render3D(CRender3D *pRender)
 	unsigned char color[3];
 	if (IsSelected())
 	{
-		color[0] = SELECT_EDGE_RED; 
+		color[0] = SELECT_EDGE_RED;
 		color[1] = SELECT_EDGE_GREEN;
 		color[2] = SELECT_EDGE_BLUE;
 	}
 	else
 	{
 		color[0] = r;
-		color[1] = g; 
+		color[1] = g;
 		color[2] = b;
 	}
 
@@ -428,9 +428,9 @@ void CMapLine::Render3D(CRender3D *pRender)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapLine::SerializeRMF(std::fstream &File, BOOL bRMF)
@@ -440,9 +440,9 @@ int CMapLine::SerializeRMF(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : File - 
-//			bRMF - 
+// Purpose:
+// Input  : File -
+//			bRMF -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapLine::SerializeMAP(std::fstream &File, BOOL bRMF)
@@ -452,8 +452,8 @@ int CMapLine::SerializeMAP(std::fstream &File, BOOL bRMF)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pTransBox - 
+// Purpose:
+// Input  : pTransBox -
 //-----------------------------------------------------------------------------
 void CMapLine::DoTransform(const VMatrix &matrix)
 {
@@ -506,5 +506,3 @@ CMapClass *CMapLine::PrepareSelection(SelectMode_t eSelectMode)
 {
 	return NULL;
 }
-
-

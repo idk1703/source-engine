@@ -80,7 +80,7 @@ bool CSpellPickup::ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer )
 			ClientPrint( pPlayer, HUD_PRINTCENTER, "Equip a SpellBook in your ActionSlot to pick this up.", pPlayer->GetPlayerName() );
 			return false;
 		}
-		
+
 		if ( pSpellBook->HasASpellWithCharges() )
 		{
 			return false;

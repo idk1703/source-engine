@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -53,7 +53,7 @@ void CHudPortalCrosshair::ApplySchemeSettings( IScheme *scheme )
 
 //-----------------------------------------------------------------------------
 // Purpose: Save CPU cycles by letting the HUD system early cull
-// costly traversal.  Called per frame, return true if thinking and 
+// costly traversal.  Called per frame, return true if thinking and
 // painting need to occur.
 //-----------------------------------------------------------------------------
 bool CHudPortalCrosshair::ShouldDraw()
@@ -70,10 +70,10 @@ bool CHudPortalCrosshair::ShouldDraw()
 	if ( !pWeapon )
 		return false;
 
-	bool bNeedsDraw = m_pCrosshair && 
+	bool bNeedsDraw = m_pCrosshair &&
 			crosshair.GetInt() &&
 			!engine->IsDrawingLoadingImage() &&
-			!engine->IsPaused() && 
+			!engine->IsPaused() &&
 			g_pClientMode->ShouldDrawCrosshair() &&
 			!( pPlayer->GetFlags() & FL_FROZEN ) &&
 			( pPlayer->entindex() == render->GetViewEntity() ) &&
@@ -99,7 +99,7 @@ void CHudPortalCrosshair::Paint( void )
 	y = ScreenHeight()/2;
 
 	// MattB - m_vecCrossHairOffsetAngle is the autoaim angle.
-	// if we're not using autoaim, just draw in the middle of the 
+	// if we're not using autoaim, just draw in the middle of the
 	// screen
 	if ( m_vecCrossHairOffsetAngle != vec3_angle )
 	{
@@ -117,14 +117,14 @@ void CHudPortalCrosshair::Paint( void )
 		y += 0.5f * screen[1] * ScreenHeight() + 0.5f;
 	}
 
-	m_pCrosshair->DrawSelf( 
-		x - 0.5f * m_pCrosshair->Width(), 
+	m_pCrosshair->DrawSelf(
+		x - 0.5f * m_pCrosshair->Width(),
 		y - 0.5f * m_pCrosshair->Height(),
 		m_clrCrosshair );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPortalCrosshair::SetCrosshairAngle( const QAngle& angle )
 {
@@ -132,7 +132,7 @@ void CHudPortalCrosshair::SetCrosshairAngle( const QAngle& angle )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPortalCrosshair::SetCrosshair( CHudTexture *texture, Color& clr )
 {

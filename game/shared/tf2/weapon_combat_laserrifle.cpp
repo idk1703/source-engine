@@ -33,13 +33,13 @@ ConVar	weapon_combat_laserrifle_ducking_mod( "weapon_combat_laserrifle_ducking_m
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponCombatLaserRifle : public CWeaponCombatUsedWithShieldBase
 {
 	DECLARE_CLASS( CWeaponCombatLaserRifle, CWeaponCombatUsedWithShieldBase );
 public:
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponCombatLaserRifle( void );
@@ -56,7 +56,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool	IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 private:
@@ -66,7 +66,7 @@ public:
 #if defined( CLIENT_DLL )
 	virtual bool	ShouldPredict( void )
 	{
-		if ( GetOwner() && 
+		if ( GetOwner() &&
 			GetOwner() == C_BasePlayer::GetLocalPlayer() )
 			return true;
 
@@ -81,7 +81,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponCombatLaserRifle::CWeaponCombatLaserRifle( void )
 {
@@ -111,7 +111,7 @@ const Vector& CWeaponCombatLaserRifle::GetBulletSpread( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatLaserRifle::ItemBusyFrame( void )
 {
@@ -121,7 +121,7 @@ void CWeaponCombatLaserRifle::ItemBusyFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatLaserRifle::ItemPostFrame( void )
 {
@@ -153,9 +153,9 @@ void CWeaponCombatLaserRifle::ItemPostFrame( void )
 		}
 
 		// Reload button (or fire button when we're out of ammo)
-		if ( m_flNextPrimaryAttack <= gpGlobals->curtime ) 
+		if ( m_flNextPrimaryAttack <= gpGlobals->curtime )
 		{
-			if ( pOwner->m_nButtons & IN_RELOAD ) 
+			if ( pOwner->m_nButtons & IN_RELOAD )
 			{
 				Reload();
 			}
@@ -174,14 +174,14 @@ void CWeaponCombatLaserRifle::ItemPostFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatLaserRifle::PrimaryAttack( void )
 {
 	CBaseTFPlayer *pPlayer = (CBaseTFPlayer*)GetOwner();
 	if (!pPlayer)
 		return;
-	
+
 	WeaponSound(SINGLE);
 
 	// Fire the bullets
@@ -195,7 +195,7 @@ void CWeaponCombatLaserRifle::PrimaryAttack( void )
 	Vector vecSpread = GetBulletSpread();
 	vecSpread *= m_flInaccuracy;
 
-	TFGameRules()->FireBullets( CTakeDamageInfo( this, pPlayer, weapon_combat_laserrifle_damage.GetFloat(), DMG_PLASMA), 1, 
+	TFGameRules()->FireBullets( CTakeDamageInfo( this, pPlayer, weapon_combat_laserrifle_damage.GetFloat(), DMG_PLASMA), 1,
 		vecSrc, vecAiming, vecSpread, weapon_combat_laserrifle_range.GetFloat(), m_iPrimaryAmmoType, 0, entindex(), 0 );
 
 	m_flInaccuracy += 0.3;
@@ -206,10 +206,10 @@ void CWeaponCombatLaserRifle::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponCombatLaserRifle::GetFireRate( void )
-{	
+{
 	float flFireRate = ( SequenceDuration() * 0.4 ) + SHARED_RANDOMFLOAT( 0.0, 0.035f );
 
 	CBaseTFPlayer *pPlayer = static_cast<CBaseTFPlayer*>( GetOwner() );
@@ -221,12 +221,12 @@ float CWeaponCombatLaserRifle::GetFireRate( void )
 			flFireRate *= weapon_combat_laserrifle_ducking_mod.GetFloat();
 		}
 	}
-	
+
 	return flFireRate;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCombatLaserRifle::RecalculateAccuracy( void )
 {
@@ -340,7 +340,7 @@ void CWeaponCombatLaserRifle::DrawCrosshair( void )
 	int iBarHeight = YRES(10);
 	int iTotalWidth = (iBarWidth * 2) + (40 * m_flInaccuracy) + XRES(10);
 	int iTotalHeight = (iBarHeight * 2) + (40 * m_flInaccuracy) + YRES(10);
-	
+
 	// Horizontal bars
 	int iLeft = (ScreenWidth() - iTotalWidth) / 2;
 	int iMidHeight = (ScreenHeight() / 2);
@@ -357,13 +357,13 @@ void CWeaponCombatLaserRifle::DrawCrosshair( void )
 
 	vgui::surface()->DrawFilledRect( iLeft, iMidHeight, iLeft + iBarWidth, iMidHeight + 1 );
 	vgui::surface()->DrawFilledRect( iLeft + iTotalWidth - iBarWidth, iMidHeight, iLeft + iTotalWidth, iMidHeight + 1 );
-	
+
 	// Vertical bars
 	int iTop = (ScreenHeight() - iTotalHeight) / 2;
 	int iMidWidth = (ScreenWidth() / 2);
 
 	vgui::surface()->DrawSetColor( dark );
-	
+
 	vgui::surface()->DrawFilledRect( iMidWidth-1, iTop, iMidWidth + 2, iTop + iBarHeight );
 	vgui::surface()->DrawFilledRect( iMidWidth-1, iTop + iTotalHeight - iBarHeight, iMidWidth + 2, iTop + iTotalHeight );
 

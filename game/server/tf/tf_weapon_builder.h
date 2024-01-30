@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,7 +36,7 @@ public:
 	virtual void	PrimaryAttack( void );
 	virtual void	SecondaryAttack( void );
 	virtual void	WeaponIdle( void );
-	virtual bool	Deploy( void );	
+	virtual bool	Deploy( void );
 	virtual Activity GetDrawActivity( void );
 	virtual const char *GetViewModel( int iViewModel ) const;
 	virtual const char *GetWorldModel( void ) const;
@@ -99,11 +99,11 @@ public:
 
 	float m_flNextDenySound;
 
-	// P Sapper (Wheatley) 
+	// P Sapper (Wheatley)
 	float		m_flNextVoicePakIdleStartTime;
 	KeyValues	*m_pkvWavList;
 	int			m_iSapState;
-	
+
 	float		m_flWheatleyLastDamage;
 	float		m_flWheatleyLastDeploy;
 	float		m_flWheatleyLastHolster;
@@ -119,7 +119,7 @@ private:
 // P Sapper (Wheatley) States
 enum
 {
-	TF_PSAPSTATE_IDLE = 0,	
+	TF_PSAPSTATE_IDLE = 0,
 	TF_PSAPSTATE_WAITINGHACK,
 	TF_PSAPSTATE_WAITINGHACKPW,
 	TF_PSAPSTATE_WAITINGHACKED,
@@ -132,7 +132,7 @@ enum
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTFWeaponSapper : public CTFWeaponBuilder, public ITFChargeUpWeapon
 {

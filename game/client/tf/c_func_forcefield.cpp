@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -12,7 +12,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_FuncForceField : public C_BaseEntity
 {
@@ -28,7 +28,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_FuncForceField, DT_FuncForceField, CFuncForceField )
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_FuncForceField::DrawModel( int flags )
 {

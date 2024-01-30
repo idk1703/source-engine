@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -40,7 +40,7 @@ END_PREDICTION_DATA()
 LINK_ENTITY_TO_CLASS( tf_weaponbase_melee, CTFWeaponBaseMelee );
 
 // Server specific.
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 BEGIN_DATADESC( CTFWeaponBaseMelee )
 DEFINE_THINKFUNC( Smack )
 END_DATADESC()
@@ -220,7 +220,7 @@ void CTFWeaponBaseMelee::PrimaryAttack()
 	}
 #endif
 
-#if !defined( CLIENT_DLL ) 
+#if !defined( CLIENT_DLL )
 	pPlayer->SpeakWeaponFire();
 	CTF_GameStats.Event_PlayerFiredWeapon( pPlayer, IsCurrentAttackACrit() );
 
@@ -261,8 +261,8 @@ void CTFWeaponBaseMelee::SecondaryAttack()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseMelee::Swing( CTFPlayer *pPlayer )
 {
@@ -288,7 +288,7 @@ void CTFWeaponBaseMelee::Swing( CTFPlayer *pPlayer )
 	pPlayer->m_Shared.SetNextStealthTime( m_flNextSecondaryAttack );
 
 	SetWeaponIdleTime( m_flNextPrimaryAttack + m_pWeaponInfo->GetWeaponData( m_iWeaponMode ).m_flTimeIdleEmpty );
-	
+
 	if ( IsCurrentAttackACrit() )
 	{
 		WeaponSound( BURST );
@@ -325,7 +325,7 @@ void CTFWeaponBaseMelee::Swing( CTFPlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseMelee::DoViewModelAnimation( void )
 {
@@ -345,7 +345,7 @@ void CTFWeaponBaseMelee::DoViewModelAnimation( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Allow melee weapons to send different anim events
-// Input  :  - 
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseMelee::SendPlayerAnimEvent( CTFPlayer *pPlayer )
 {
@@ -370,8 +370,8 @@ void CTFWeaponBaseMelee::ItemPreFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTFWeaponBaseMelee::ItemPostFrame()
 {
@@ -421,12 +421,12 @@ bool CTFWeaponBaseMelee::DoSwingTraceInternal( trace_t &trace, bool bCleave, CUt
 
 	CALL_ATTRIB_HOOK_FLOAT( fSwingRange, melee_range_multiplier );
 
-	Vector vecForward; 
+	Vector vecForward;
 	AngleVectors( pPlayer->EyeAngles(), &vecForward );
 	Vector vecSwingStart = pPlayer->Weapon_ShootPosition();
 	Vector vecSwingEnd = vecSwingStart + vecForward * fSwingRange;
 
-	// In MvM, melee hits from the robot team wont hit teammates to ensure mobs of melee bots don't 
+	// In MvM, melee hits from the robot team wont hit teammates to ensure mobs of melee bots don't
 	// swarm so tightly they hit each other and no-one else
 	bool bDontHitTeammates = pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS && TFGameRules()->IsMannVsMachineMode();
 	CTraceFilterIgnoreTeammates ignoreTeammatesFilter( pPlayer, COLLISION_GROUP_NONE, pPlayer->GetTeamNumber() );
@@ -437,7 +437,7 @@ bool CTFWeaponBaseMelee::DoSwingTraceInternal( trace_t &trace, bool bCleave, CUt
 		ray.Init( vecSwingStart, vecSwingEnd, vecSwingMins, vecSwingMaxs );
 		CBaseEntity *pList[256];
 		int nTargetCount = UTIL_EntitiesAlongRay( pList, ARRAYSIZE( pList ), ray, FL_CLIENT|FL_OBJECT );
-		
+
 		int nHitCount = 0;
 		for ( int i=0; i<nTargetCount; ++i )
 		{
@@ -532,7 +532,7 @@ bool CTFWeaponBaseMelee::DoSwingTraceInternal( trace_t &trace, bool bCleave, CUt
 					}
 
 					// This is the point on the actual surface (the hull could have hit space)
-					vecSwingEnd = trace.endpos;	
+					vecSwingEnd = trace.endpos;
 				}
 			}
 		}
@@ -549,7 +549,7 @@ bool CTFWeaponBaseMelee::DoSwingTrace( trace_t &trace )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
@@ -571,7 +571,7 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 		CTFPlayer *pTargetPlayer = ToTFPlayer( trace.m_pEnt );
 
 		bool bPlayMvMHitOnly = false;
-		// handle hitting a robot	
+		// handle hitting a robot
 		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
 		{
 			if ( pTargetPlayer  && pTargetPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS && !pTargetPlayer->IsPlayer() )
@@ -605,7 +605,7 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 					EmitSound( filter, GetOwner()->entindex(), "MVM_Weapon_Default.HitFlesh", NULL );
 				}
 			}
-		} 
+		}
 		if(! bPlayMvMHitOnly )
 		{
 			WeaponSound( MELEE_HIT );
@@ -613,7 +613,7 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 
 #if !defined (CLIENT_DLL)
 
-		if ( pTargetPlayer->m_Shared.HasPasstimeBall() && g_pPasstimeLogic ) 
+		if ( pTargetPlayer->m_Shared.HasPasstimeBall() && g_pPasstimeLogic )
 		{
 			// This handles stealing the ball from teammates since there's no damage involved
 			// TODO find a better place for this
@@ -689,7 +689,7 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 
 // -----------------------------------------------------------------------------
 // Purpose:
-// Note: Think function to delay the impact decal until the animation is finished 
+// Note: Think function to delay the impact decal until the animation is finished
 //       playing.
 // -----------------------------------------------------------------------------
 void CTFWeaponBaseMelee::Smack( void )
@@ -729,7 +729,7 @@ void CTFWeaponBaseMelee::Smack( void )
 	}
 	else
 	{
-		// if ALL of my potential targets have been killed by someone else between the 
+		// if ALL of my potential targets have been killed by someone else between the
 		// time I started my swing and the time my swing would have landed, don't
 		// punish me for it.
 		bool bIsCleanMiss = true;
@@ -794,7 +794,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 	if ( !pPlayer )
 		return;
 
-	Vector vecForward; 
+	Vector vecForward;
 	AngleVectors( pPlayer->EyeAngles(), &vecForward );
 	Vector vecSwingStart = pPlayer->Weapon_ShootPosition();
 	Vector vecSwingEnd = vecSwingStart + vecForward * 48;
@@ -808,7 +808,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 	CALL_ATTRIB_HOOK_INT( iCritFromBehind, crit_from_behind );
 	if ( iCritFromBehind > 0 )
 	{
-		Vector entForward; 
+		Vector entForward;
 		AngleVectors( ent->EyeAngles(), &entForward );
 
 		Vector toEnt = ent->GetAbsOrigin() - pPlayer->GetAbsOrigin();
@@ -832,7 +832,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 				flDamage *= 1.9f;
 			}
 			// Strength powerup multiplies damage later and we only want double regular damage. Shields are a source of increased melee damage (charge crit) so they don't need a base boost
-			else if ( pPlayer && pPlayer->m_Shared.GetCarryingRuneType() != RUNE_STRENGTH && !pPlayer->m_Shared.IsShieldEquipped() ) 
+			else if ( pPlayer && pPlayer->m_Shared.GetCarryingRuneType() != RUNE_STRENGTH && !pPlayer->m_Shared.IsShieldEquipped() )
 			{
 				flDamage *= 1.3f;
 			}
@@ -859,8 +859,8 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 	{
 		info.SetDamageForce( vec3_origin );
 	}
-	
-	ent->DispatchTraceAttack( info, vecForward, &trace ); 
+
+	ent->DispatchTraceAttack( info, vecForward, &trace );
 	ApplyMultiDamage();
 
 	OnEntityHit( ent, &info );
@@ -922,16 +922,16 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 			Vector origin = pPlayer->GetAbsOrigin();
 			Vector vecDir = pVictimPlayer->GetAbsOrigin() - origin;
 			VectorNormalize( vecDir );
-				
+
 			if ( !pVictimPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_USER_BUFF ) &&
 				!pVictimPlayer->m_Shared.InCond( TF_COND_INVULNERABLE ) )
 			{
-				if ( pVictimPlayer->m_Shared.IsCarryingRune() ) 
+				if ( pVictimPlayer->m_Shared.IsCarryingRune() )
 				{
 					pVictimPlayer->DropRune();
 					ClientPrint( pVictimPlayer, HUD_PRINTCENTER, "#TF_Powerup_Knocked_Out" );
 				}
-				else if ( pVictimPlayer->HasTheFlag() )	
+				else if ( pVictimPlayer->HasTheFlag() )
 				{
 					pVictimPlayer->DropFlag();
 					ClientPrint( pVictimPlayer, HUD_PRINTCENTER, "#TF_CTF_PlayerDrop" );
@@ -955,7 +955,7 @@ void CTFWeaponBaseMelee::DoMeleeDamage( CBaseEntity* ent, trace_t& trace, float 
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CTFWeaponBaseMelee::GetForceScale( void )
@@ -965,7 +965,7 @@ float CTFWeaponBaseMelee::GetForceScale( void )
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CTFWeaponBaseMelee::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage )
@@ -979,7 +979,7 @@ float CTFWeaponBaseMelee::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageTyp
 	{
 		if ( IsCurrentAttackACrit() )
 		{
-			return 0.0f;	
+			return 0.0f;
 		}
 
 		if ( piDamageType && *piDamageType & DMG_CRITICAL )
@@ -1022,7 +1022,7 @@ void CTFWeaponBaseMelee::OnEntityHit( CBaseEntity *pEntity, CTakeDamageInfo *inf
 
 
 //-----------------------------------------------------------------------------
-// 
+//
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseMelee::CalcIsAttackCriticalHelperNoCrits( void )
 {
@@ -1050,7 +1050,7 @@ bool CTFWeaponBaseMelee::CalcIsAttackCriticalHelperNoCrits( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFWeaponBaseMelee::CalcIsAttackCriticalHelper( void )
 {
@@ -1119,7 +1119,7 @@ bool CTFWeaponBaseMelee::CalcIsAttackCriticalHelper( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 char const *CTFWeaponBaseMelee::GetShootSound( int iIndex ) const
 {

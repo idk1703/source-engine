@@ -77,5 +77,3 @@ private:
 
 
 #endif // RECENTFILELIST_H
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -37,7 +37,7 @@ public:
 	int						BreakLock( memhandle_t handle );
 	int						BreakAllLocks();
 
-	// HACKHACK: For convenience - offers no lock protection 
+	// HACKHACK: For convenience - offers no lock protection
 	// type-safe implementation in derived class
 	//void					*GetResource_NoLock( memhandle_t handle );
 
@@ -83,8 +83,8 @@ protected:
 
 							CDataManagerBase( unsigned int maxSize );
 	virtual					~CDataManagerBase();
-	
-	
+
+
 	inline unsigned int		MemTotal_Inline() const { return m_targetMemorySize; }
 	inline unsigned int		MemAvailable_Inline() const { return m_targetMemorySize - m_memUsed; }
 	inline unsigned int		MemUsed_Inline() const { return m_memUsed; }
@@ -95,7 +95,7 @@ protected:
 
 	memhandle_t				ToHandle( unsigned short index );
 	unsigned short			FromHandle( memhandle_t handle );
-	
+
 	void					TouchByIndex( unsigned short memoryIndex );
 	void *					GetForFreeByIndex( unsigned short memoryIndex );
 
@@ -116,9 +116,9 @@ protected:
 
 	unsigned int m_targetMemorySize;
 	unsigned int m_memUsed;
-	
+
 	CUtlMultiList< resource_lru_element_t, unsigned short >  m_memoryLists;
-	
+
 	unsigned short m_lruList;
 	unsigned short m_lockList;
 	unsigned short m_freeList;
@@ -134,7 +134,7 @@ class CDataManager : public CDataManagerBase
 public:
 
 	CDataManager<STORAGE_TYPE, CREATE_PARAMS, LOCK_TYPE, MUTEX_TYPE>( unsigned int size = (unsigned)-1 ) : BaseClass(size) {}
-	
+
 
 	~CDataManager<STORAGE_TYPE, CREATE_PARAMS, LOCK_TYPE, MUTEX_TYPE>()
 	{
@@ -215,7 +215,7 @@ public:
 		}
 
 		unsigned short iNext = m_memoryLists.Next( FromHandle( hPrev ) );
-		if ( iNext == m_memoryLists.InvalidIndex() ) 
+		if ( iNext == m_memoryLists.InvalidIndex() )
 		{
 			return INVALID_MEMHANDLE;
 		}
@@ -238,7 +238,7 @@ private:
 	{
 		StoragePointer(pStore)->DestroyResource();
 	}
-	
+
 	virtual unsigned int GetRealSize( void *pStore )
 	{
 		return StoragePointer(pStore)->Size();

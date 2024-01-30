@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -46,7 +46,7 @@ C_WeaponCombatShield *CTFShieldProxy::BindArgToShield( void *pArg )
 		C_BaseTFPlayer* pPlayer = C_BaseTFPlayer::GetLocalPlayer();
 		return pPlayer->GetShield();
 	}
-	
+
 	if ( dynamic_cast<C_BaseTFPlayer*>(pEntity) )
 	{
 		C_BaseTFPlayer* pPlayer = dynamic_cast<C_BaseTFPlayer*>( pEntity );
@@ -59,7 +59,7 @@ C_WeaponCombatShield *CTFShieldProxy::BindArgToShield( void *pArg )
 
 //=============================================================================
 //
-// TF Shield raising proxy. 
+// TF Shield raising proxy.
 //
 class CTFShieldRaiseProxy : public CTFShieldProxy
 {
@@ -96,7 +96,7 @@ void CTFShieldRaiseProxy::OnBind( void *pArg )
 	{
 		flTimeSinceRaised = pShield->GetRaisingTime();
 	}
-	
+
 	// Return the time in seconds from when we started raising.
 	SetFloatResult( flTimeSinceRaised * m_Factor.GetFloat() );
 }
@@ -105,7 +105,7 @@ EXPOSE_INTERFACE( CTFShieldRaiseProxy, IMaterialProxy, "TFShieldRaise" IMATERIAL
 
 //=============================================================================
 //
-// TF Shield lowering proxy. 
+// TF Shield lowering proxy.
 //
 class CTFShieldLowerProxy : public CTFShieldProxy
 {
@@ -164,7 +164,7 @@ EXPOSE_INTERFACE( CTFShieldLowerProxy, IMaterialProxy, "TFShieldLower" IMATERIAL
 
 //=============================================================================
 //
-// TF Shield raising proxy. 
+// TF Shield raising proxy.
 //
 class CTFShieldVisibilityProxy : public CTFShieldProxy
 {
@@ -224,7 +224,7 @@ EXPOSE_INTERFACE( CTFShieldVisibilityProxy, IMaterialProxy, "TFShieldVisibility"
 
 //=============================================================================
 //
-// TF Shield active proxy. 
+// TF Shield active proxy.
 //
 class CTFShieldActiveProxy : public CTFShieldProxy
 {
@@ -275,7 +275,7 @@ EXPOSE_INTERFACE( CTFShieldActiveProxy, IMaterialProxy, "TFShieldActive" IMATERI
 
 //=============================================================================
 //
-// TF Shield health proxy. 
+// TF Shield health proxy.
 //
 class CTFShieldHealthProxy : public CTFShieldProxy
 {

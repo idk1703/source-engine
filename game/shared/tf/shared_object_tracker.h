@@ -35,7 +35,7 @@ extern short g_nQuestSpewFlags;
 #define SO_TRACKER_SPEW_SOCACHE_ACTIVITY 1<<4
 #define SO_TRACKER_SPEW_TRACKER_ACCEPTANCE 1<<5
 void SOTrackerSpew( const char* pszBuff, int nType );
-#define SO_TRACKER_SPEW( pszBuff, nType ) SOTrackerSpew( pszBuff, nType );		
+#define SO_TRACKER_SPEW( pszBuff, nType ) SOTrackerSpew( pszBuff, nType );
 
 class CBaseSOTracker
 {
@@ -62,7 +62,7 @@ protected:
 
 struct CommitRecord_t
 {
-	CommitRecord_t( ::google::protobuf::Message* pMessage ) 
+	CommitRecord_t( ::google::protobuf::Message* pMessage )
 		: m_flLastCommitTime( Plat_FloatTime() )
 		, m_flReportedTime( Plat_FloatTime() )
 		, m_pProtoMsg( pMessage )

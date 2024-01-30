@@ -26,14 +26,14 @@ PRECACHE_REGISTER(obj_sandbag_bunker);
 ConVar	obj_sandbag_bunker_health( "obj_sandbag_bunker_health","100", FCVAR_NONE, "Sandbag bunker health" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectSandbagBunker::CObjectSandbagBunker( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSandbagBunker::Spawn( void )
 {
@@ -57,7 +57,7 @@ void CObjectSandbagBunker::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectSandbagBunker::Precache( void )
 {

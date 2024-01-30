@@ -49,7 +49,7 @@ public:
 	void Precache( void );
 
 	int OnTakeDamage_Alive( const CTakeDamageInfo &info );
-	
+
 	void WarningThink( void );
 	void PowerupThink( void );
 	void RopeBreakThink( void );

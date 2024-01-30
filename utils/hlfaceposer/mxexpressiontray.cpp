@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -82,7 +82,7 @@ mxExpressionTray::mxExpressionTray( mxWindow *parent, int id /*=0*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : mxExpressionTray::~mxExpressionTray
 //-----------------------------------------------------------------------------
 mxExpressionTray::~mxExpressionTray ( void )
@@ -92,8 +92,8 @@ mxExpressionTray::~mxExpressionTray ( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : cellsize - 
+// Purpose:
+// Input  : cellsize -
 //-----------------------------------------------------------------------------
 void mxExpressionTray::SetCellSize( int cellsize )
 {
@@ -107,7 +107,7 @@ void mxExpressionTray::SetCellSize( int cellsize )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::Deselect( void )
 {
@@ -129,8 +129,8 @@ void mxExpressionTray::Deselect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : exp - 
+// Purpose:
+// Input  : exp -
 //-----------------------------------------------------------------------------
 void mxExpressionTray::Select( int exp, bool deselect /*=true*/ )
 {
@@ -161,8 +161,8 @@ void mxExpressionTray::Select( int exp, bool deselect /*=true*/ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *btn - 
+// Purpose:
+// Input  : *btn -
 //-----------------------------------------------------------------------------
 void mxExpressionTray::AddButton( const char *name, const char *tooltip, const char *bitmap, ETMEMBERFUNC pfnCallback,
 	bool active, int x, int y, int w, int h )
@@ -188,7 +188,7 @@ void mxExpressionTray::AddButton( const char *name, const char *tooltip, const c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::CreateButtons( void )
 {
@@ -224,7 +224,7 @@ mxExpressionTray::mxETButton *mxExpressionTray::FindButton( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::DeleteAllButtons( void )
 {
@@ -240,9 +240,9 @@ void mxExpressionTray::DeleteAllButtons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : x - 
-//			y - 
+// Purpose:
+// Input  : x -
+//			y -
 // Output : mxExpressionTray::mxETButton
 //-----------------------------------------------------------------------------
 mxExpressionTray::mxETButton *mxExpressionTray::GetItemUnderCursor( int x, int y )
@@ -266,7 +266,7 @@ mxExpressionTray::mxETButton *mxExpressionTray::GetItemUnderCursor( int x, int y
 	while ( p )
 	{
 		if ( p->m_bActive &&
-			x >= cx && 
+			x >= cx &&
 			x <= cx + cw &&
 			y >= cy &&
 			y <= cy + ch )
@@ -313,7 +313,7 @@ void mxExpressionTray::DrawButton( CChoreoWidgetDrawHelper& helper, int cell, mx
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int mxExpressionTray::ComputePixelsNeeded( void )
@@ -404,13 +404,13 @@ void mxExpressionTray::DrawExpressionDescription( CChoreoWidgetDrawHelper& helpe
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dc - 
-//			current - 
-//			rcx - 
-//			rcy - 
-//			rcw - 
-//			rch - 
+// Purpose:
+// Input  : dc -
+//			current -
+//			rcx -
+//			rcy -
+//			rcw -
+//			rch -
 //-----------------------------------------------------------------------------
 void mxExpressionTray::DrawDirtyFlag( CChoreoWidgetDrawHelper& helper, CExpression *current, int rcx, int rcy, int rcw, int rch )
 {
@@ -482,7 +482,7 @@ void mxExpressionTray::DrawThumbNail( CExpClass *active, CExpression *current, C
 			rc.right = rc.left + 2 * ( m_nButtonSquare + 4 );
 			rc.bottom = rc.top + 15;
 
-			helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 200, 200, 200 ), rc, 
+			helper.DrawColoredText( "Arial", 9, FW_NORMAL, RGB( 200, 200, 200 ), rc,
 				"%i/%i", current->UndoCurrent(), current->UndoLevels() );
 		}
 
@@ -523,7 +523,7 @@ void mxExpressionTray::redraw()
 	{
 		RECT clipRect;
 		helper.GetClientRect( clipRect );
-		
+
 		clipRect.top += TOP_GAP + GetCaptionHeight();
 
 		helper.StartClipping( clipRect );
@@ -722,7 +722,7 @@ void mxExpressionTray::ShowRightClickMenu( int mx, int my )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::DrawFocusRect( void )
 {
@@ -736,7 +736,7 @@ void mxExpressionTray::DrawFocusRect( void )
 static bool IsWindowOrChild( mxWindow *parent, HWND test )
 {
 	HWND parentHwnd = (HWND)parent->getHandle();
-	if ( test == parentHwnd || 
+	if ( test == parentHwnd ||
 		IsChild( parentHwnd, test ) )
 	{
 		return true;
@@ -812,46 +812,46 @@ int mxExpressionTray::handleEvent (mxEvent *event)
 					if (event->modifiers == SB_THUMBTRACK)
 					{
 						int offset = event->height;
-						
+
 						slScrollbar->setValue( offset );
-						
+
 						m_nTopOffset = offset;
-						
+
 						redraw();
 					}
 					else if ( event->modifiers == SB_PAGEUP )
 					{
 						int offset = slScrollbar->getValue();
-						
+
 						offset -= m_nGranularity;
 						offset = max( offset, slScrollbar->getMinValue() );
-						
+
 						slScrollbar->setValue( offset );
 						InvalidateRect( (HWND)slScrollbar->getHandle(), NULL, TRUE );
-						
+
 						m_nTopOffset = offset;
-						
+
 						redraw();
 					}
 					else if ( event->modifiers == SB_PAGEDOWN )
 					{
 						int offset = slScrollbar->getValue();
-						
+
 						offset += m_nGranularity;
 						offset = min( offset, slScrollbar->getMaxValue() );
-						
+
 						slScrollbar->setValue( offset );
 						InvalidateRect( (HWND)slScrollbar->getHandle(), NULL, TRUE );
-						
+
 						m_nTopOffset = offset;
-						
+
 						redraw();
 					}
 				}
 				break;
 			case IDC_AB:
 				{
-					AB();	
+					AB();
 				}
 				break;
 			case IDC_THUMBNAIL_INCREASE:
@@ -899,12 +899,12 @@ int mxExpressionTray::handleEvent (mxEvent *event)
 					{
 						mxETButton *btn = GetItemUnderCursor( event->x, event->y );
 						if ( btn && btn->m_fnCallback )
-						{	
+						{
 							(this->*(btn->m_fnCallback))( cell );
 							return iret;
 						}
 					}
-					
+
 					if ( cell >= 0 && cell < active->GetNumExpressions() )
 					{
 						active->SelectExpression( cell, event->modifiers & mxEvent::KeyShift ? false : true );
@@ -914,7 +914,7 @@ int mxExpressionTray::handleEvent (mxEvent *event)
 						{
 							m_bDragging = true;
 							m_nDragCell = cell;
-							
+
 							m_nXStart = (short)event->x;
 							m_nYStart = (short)event->y;
 
@@ -951,12 +951,12 @@ int mxExpressionTray::handleEvent (mxEvent *event)
 			{
 				// Draw drag line of some kind
 				DrawFocusRect();
-	
+
 				// update pos
 				m_rcFocus = m_rcOrig;
-				OffsetRect( &m_rcFocus, ( (short)event->x - m_nXStart ), 
+				OffsetRect( &m_rcFocus, ( (short)event->x - m_nXStart ),
 					( (short)event->y - m_nYStart ) );
-				
+
 				DrawFocusRect();
 			}
 			iret = 1;
@@ -1003,7 +1003,7 @@ int mxExpressionTray::handleEvent (mxEvent *event)
 								return iret;
 							}
 						}
-					
+
 						if ( IsWindowOrChild( g_pExpressionTool, maybeTool ) )
 						{
 							if ( g_pExpressionTool->SetFlexAnimationTrackFromExpression( pt.x, pt.y, active, exp ) )
@@ -1018,8 +1018,8 @@ int mxExpressionTray::handleEvent (mxEvent *event)
 			if ( active )
 			{
 				// Over a new cell
-				if ( cell >= 0 && 
-					cell < active->GetNumExpressions() && 
+				if ( cell >= 0 &&
+					cell < active->GetNumExpressions() &&
 					cell != m_nCurCell &&
 					m_nCurCell != -1 )
 				{
@@ -1097,7 +1097,7 @@ void mxExpressionTray::ET_Redo( int cell )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::ThumbnailIncrease( void )
 {
@@ -1114,7 +1114,7 @@ void mxExpressionTray::ThumbnailIncrease( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::ThumbnailDecrease( void )
 {
@@ -1123,7 +1123,7 @@ void mxExpressionTray::ThumbnailDecrease( void )
 		m_nSnapshotWidth -= THUMBNAIL_SIZE_STEP;
 		g_viewerSettings.thumbnailsize = m_nSnapshotWidth;
 		m_nSnapshotHeight = m_nSnapshotWidth + m_nDescriptionHeight;
-		
+
 		Con_Printf( "Thumbnail size %i x %i\n", m_nSnapshotWidth, m_nSnapshotWidth );
 
 		redraw();
@@ -1131,7 +1131,7 @@ void mxExpressionTray::ThumbnailDecrease( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void mxExpressionTray::RestoreThumbnailSize( void )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -291,7 +291,7 @@ void CClientThinkList::PerformThinkFunctions()
 	int i;
 	for ( i = 0; i < nThinkCount; ++i )
 	{
-		PerformThinkFunction( ppThinkEntryList[i], gpGlobals->curtime );		
+		PerformThinkFunction( ppThinkEntryList[i], gpGlobals->curtime );
 	}
 
 	m_bInThinkLoop = false;
@@ -399,4 +399,3 @@ void CClientThinkList::CleanUpDeleteList()
 
 	m_aDeleteList.RemoveAll();
 }
-

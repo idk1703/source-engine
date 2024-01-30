@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -100,10 +100,10 @@ struct eyeballstate_t
 	matrix3x4_t	mat;
 
 	Vector	org;		// world center of eyeball
-	Vector	forward;	
+	Vector	forward;
 	Vector	right;
 	Vector	up;
-	
+
 	Vector	cornea;		// world center of cornea
 
 	eyeballstate_t() {}
@@ -115,7 +115,7 @@ private:
 
 
 //-----------------------------------------------------------------------------
-// Store decal vertex data here 
+// Store decal vertex data here
 //-----------------------------------------------------------------------------
 #pragma pack(1)
 struct DecalVertex_t
@@ -237,8 +237,8 @@ public:
 	void DestroyDecalList( StudioDecalHandle_t handle );
 
 	// Add decals to a decal list by doing a planar projection along the ray
-	void AddDecal( StudioDecalHandle_t handle, const StudioRenderContext_t& rc, matrix3x4_t *pBoneToWorld, studiohdr_t *pStudioHdr, 
-			const Ray_t & ray, const Vector& decalUp, IMaterial* pDecalMaterial, 
+	void AddDecal( StudioDecalHandle_t handle, const StudioRenderContext_t& rc, matrix3x4_t *pBoneToWorld, studiohdr_t *pStudioHdr,
+			const Ray_t & ray, const Vector& decalUp, IMaterial* pDecalMaterial,
 			float radius, int body, bool noPokethru, int maxLODToDecal = ADDDECAL_TO_ALL_LODS );
 
 	// Shadow state (affects the models as they are rendered)
@@ -391,24 +391,24 @@ private:
 private:
 	void SetLightingRenderState();
 
-	int R_StudioRenderModel( IMatRenderContext *pRenderContext, int skin, int body, int hitboxset, void /*IClientEntity*/ *pEntity, 
+	int R_StudioRenderModel( IMatRenderContext *pRenderContext, int skin, int body, int hitboxset, void /*IClientEntity*/ *pEntity,
 		IMaterial **ppMaterials, int *pMaterialFlags, int flags, int boneMask, int lod, ColorMeshInfo_t *pColorMeshes = NULL );
 	IMaterial* R_StudioSetupSkinAndLighting( IMatRenderContext *pRenderContext, int index, IMaterial **ppMaterials, int materialFlags,
 		void /*IClientEntity*/ *pClientEntity, ColorMeshInfo_t *pColorMeshes, StudioModelLighting_t &lighting );
 	int R_StudioDrawEyeball( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh,  studiomeshdata_t* pMeshData,
 		StudioModelLighting_t lighting, IMaterial *pMaterial, int lod );
-	int R_StudioDrawPoints( IMatRenderContext *pRenderContext, int skin, void /*IClientEntity*/ *pClientEntity, 
+	int R_StudioDrawPoints( IMatRenderContext *pRenderContext, int skin, void /*IClientEntity*/ *pClientEntity,
 		IMaterial **ppMaterials, int *pMaterialFlags, int boneMask, int lod, ColorMeshInfo_t *pColorMeshes );
 	int R_StudioDrawMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh, studiomeshdata_t* pMeshData,
-		  				   StudioModelLighting_t lighting, IMaterial *pMaterial, ColorMeshInfo_t *pColorMeshes, int lod );
-	int R_StudioRenderFinal( IMatRenderContext *pRenderContext, 
+								StudioModelLighting_t lighting, IMaterial *pMaterial, ColorMeshInfo_t *pColorMeshes, int lod );
+	int R_StudioRenderFinal( IMatRenderContext *pRenderContext,
 		int skin, int nBodyPartCount, BodyPartInfo_t *pBodyPartInfo, void /*IClientEntity*/ *pClientEntity,
 		IMaterial **ppMaterials, int *pMaterialFlags, int boneMask, int lod, ColorMeshInfo_t *pColorMeshes = NULL );
-	int R_StudioDrawStaticMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh, 
+	int R_StudioDrawStaticMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh,
 		studiomeshgroup_t* pGroup, StudioModelLighting_t lighting, float r_blend, IMaterial* pMaterial,
 		int lod, ColorMeshInfo_t *pColorMeshes );
-	int R_StudioDrawDynamicMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh, 
-				studiomeshgroup_t* pGroup, StudioModelLighting_t lighting, 
+	int R_StudioDrawDynamicMesh( IMatRenderContext *pRenderContext, mstudiomesh_t* pmesh,
+				studiomeshgroup_t* pGroup, StudioModelLighting_t lighting,
 				float r_blend, IMaterial* pMaterial, int lod );
 	int R_StudioDrawGroupHWSkin( IMatRenderContext *pRenderContext, studiomeshgroup_t* pGroup, IMesh* pMesh, ColorMeshInfo_t *pColorMeshInfo = NULL );
 	int R_StudioDrawGroupSWSkin( studiomeshgroup_t* pGroup, IMesh* pMesh );
@@ -419,11 +419,11 @@ private:
 	void BoneMatToMaterialMat( matrix3x4_t& boneMat, float materialMat[4][4] );
 
 	// Various inner-loop methods
-	void R_StudioSoftwareProcessMesh( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder, 
+	void R_StudioSoftwareProcessMesh( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder,
 			int numVertices, unsigned short* pGroupToMesh, StudioModelLighting_t lighting, bool doFlex, float r_blend,
 			bool bNeedsTangentSpace, bool bDX8Vertex, IMaterial *pMaterial );
 
-	void R_StudioSoftwareProcessMesh_Normals( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder, 
+	void R_StudioSoftwareProcessMesh_Normals( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder,
 			int numVertices, unsigned short* pGroupToMesh, StudioModelLighting_t lighting, bool doFlex, float r_blend,
 			bool bShowNormals, bool bShowTangentFrame );
 
@@ -436,11 +436,11 @@ private:
 	void R_StudioFlexMeshGroup( studiomeshgroup_t *pGroup );
 
 	template<VertexCompressionType_t T> void R_StudioRestoreMesh( mstudiomesh_t* pmesh, studiomeshgroup_t* pMeshData );
-	void R_StudioProcessFlexedMesh( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder, 
+	void R_StudioProcessFlexedMesh( mstudiomesh_t* pmesh, CMeshBuilder& meshBuilder,
 		int numVertices, unsigned short* pGroupToMesh );
 
 	// Eye rendering using vertex shaders
-	void SetEyeMaterialVars( IMaterial* pMaterial, mstudioeyeball_t* peyeball, 
+	void SetEyeMaterialVars( IMaterial* pMaterial, mstudioeyeball_t* peyeball,
 		const Vector& eyeOrigin, const matrix3x4_t& irisTransform, const matrix3x4_t& glintTransform );
 
 	void ComputeEyelidStateFACS( mstudiomodel_t *pSubModel );
@@ -450,10 +450,10 @@ private:
 	void R_StudioEyeballPosition( const mstudioeyeball_t *peyeball, eyeballstate_t *pstate );
 
 	// Computes the texture projection matrix for the glint texture
-	void ComputeGlintTextureProjection( eyeballstate_t const* pState, 
+	void ComputeGlintTextureProjection( eyeballstate_t const* pState,
 		const Vector& vright, const Vector& vup, matrix3x4_t& mat );
 
-	void R_StudioEyeballGlint( const eyeballstate_t *pstate, IMaterialVar *pGlintTextureVar, 
+	void R_StudioEyeballGlint( const eyeballstate_t *pstate, IMaterialVar *pGlintTextureVar,
 								const Vector& vright, const Vector& vup, const Vector& r_origin );
 	ITexture* RenderGlintTexture( const eyeballstate_t *pstate,
 		const Vector& vright, const Vector& vup, const Vector& r_origin );
@@ -470,7 +470,7 @@ private:
 		return true;
 		/*
 		// FIXME: commented out until Gary can change them to just draw black
-		mstudiomouth_t *pMouth = m_pStudioHdr->pMouth( 0 ); 
+		mstudiomouth_t *pMouth = m_pStudioHdr->pMouth( 0 );
 		float fIllum = m_FlexWeights[pMouth->flexdesc];
 		return fIllum > 0.0f;
 		*/
@@ -480,7 +480,7 @@ private:
 	inline void R_StudioTransform( Vector& in1, mstudioboneweight_t *pboneweight, Vector& out1 );
 	inline void R_StudioRotate( Vector& in1, mstudioboneweight_t *pboneweight, Vector& out1 );
 	inline void R_StudioRotate( Vector4D& in1, mstudioboneweight_t *pboneweight, Vector4D& out1 );
-	inline void R_StudioEyeballNormal( mstudioeyeball_t const* peyeball, Vector& org, 
+	inline void R_StudioEyeballNormal( mstudioeyeball_t const* peyeball, Vector& org,
 									Vector& pos, Vector& normal );
 	void MaterialPlanerProjection( const matrix3x4_t& mat, int count, const Vector *psrcverts, Vector2D *pdesttexcoords );
 	void AddGlint( CPixelWriter &pixelWriter, float x, float y, const Vector& color );
@@ -503,7 +503,7 @@ private:
 	void ShutdownDebugMaterials( void );
 	int SortMeshes( int* pIndices, IMaterial **ppMaterials, short* pskinref, const Vector& vforward, const Vector& r_origin );
 
-	// Computes pose to decal space transforms for decal creation 
+	// Computes pose to decal space transforms for decal creation
 	// returns false if it can't for some reason.
 	bool ComputePoseToDecal( Ray_t const& ray, const Vector& up );
 
@@ -544,13 +544,13 @@ private:
 	void DrawDecalMaterial( IMatRenderContext *pRenderContext, DecalMaterial_t& decalMaterial, studiohdr_t *pStudioHdr, studioloddata_t *pStudioLOD );
 	void DrawDecal( const DrawModelInfo_t &drawInfo, int lod, int body );
 	bool PreDrawDecal( IMatRenderContext *pRenderContext, const DrawModelInfo_t &drawInfo );
-	
+
 	// Draw shadows
 	void DrawShadows( const DrawModelInfo_t& info, int flags, int boneMask );
 
 	// Draw flashlight lighting on decals.
 	void DrawFlashlightDecals( const DrawModelInfo_t& info, int lod );
-	
+
 	// Helper methods related to extracting and balancing
 	float RampFlexWeight( mstudioflex_t &flex, float w );
 
@@ -753,9 +753,9 @@ inline void CStudioRender::R_StudioRotate( Vector4D& realIn1, mstudioboneweight_
 // Compute the contribution of a light depending on it's angle
 //-----------------------------------------------------------------------------
 /*
-  light_normal (lights normal translated to same space as other normals)
-  surface_normal
-  light_direction_normal | (light_pos - vertex_pos) |
+	light_normal (lights normal translated to same space as other normals)
+	surface_normal
+	light_direction_normal | (light_pos - vertex_pos) |
 */
 
 template< int nLightType >
@@ -766,7 +766,7 @@ public:
 	{
 		float dot, dot2, ratio;
 
-		switch (nLightType)	
+		switch (nLightType)
 		{
 			case MATERIAL_LIGHT_POINT:
 #if 1
@@ -791,7 +791,7 @@ public:
 				dot = dot * dot;
 #endif
 
- 				dot2 = -DotProduct (delta, lnormal);
+				dot2 = -DotProduct (delta, lnormal);
 				if (dot2 <= wl->m_PhiDot)
 					return 0.f; // outside light cone
 
@@ -799,14 +799,14 @@ public:
 				if (dot2 >= wl->m_ThetaDot)
 					return ratio;	// inside inner cone
 
- 				if ((wl->m_Falloff == 1.f) || (wl->m_Falloff == 0.f))
- 				{
- 					ratio *= (dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot);
- 				}
- 				else
- 				{
- 					ratio *= pow((dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot), wl->m_Falloff );
- 				}
+				if ((wl->m_Falloff == 1.f) || (wl->m_Falloff == 0.f))
+				{
+					ratio *= (dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot);
+				}
+				else
+				{
+					ratio *= pow((dot2 - wl->m_PhiDot) / (wl->m_ThetaDot - wl->m_PhiDot), wl->m_Falloff );
+				}
 				return ratio;
 
 			case MATERIAL_LIGHT_DIRECTIONAL:
@@ -825,7 +825,7 @@ public:
 				return 0.f;
 
 			NO_DEFAULT;
-		} 
+		}
 	}
 };
 
@@ -842,7 +842,7 @@ public:
 		if (dot < 0.f)
 			return 0.f;
 
-		switch (nLightType)	
+		switch (nLightType)
 		{
 		case MATERIAL_LIGHT_POINT:
 		case MATERIAL_LIGHT_DIRECTIONAL:
@@ -871,13 +871,13 @@ public:
 			return 0.f;
 
 			NO_DEFAULT;
-		} 
+		}
 	}
 };
 
 inline float CStudioRender::R_WorldLightAngle( const LightDesc_t *wl, const Vector& lnormal, const Vector& snormal, const Vector& delta )
 {
-	switch (wl->m_Type) 
+	switch (wl->m_Type)
 	{
 		case MATERIAL_LIGHT_DISABLE:		return CWorldLightAngleWrapper<MATERIAL_LIGHT_DISABLE>::WorldLightAngle( wl, lnormal, snormal, delta );
 		case MATERIAL_LIGHT_POINT:			return CWorldLightAngleWrapper<MATERIAL_LIGHT_POINT>::WorldLightAngle( wl, lnormal, snormal, delta );
@@ -891,7 +891,7 @@ inline float CStudioRender::R_WorldLightAngle( const LightDesc_t *wl, const Vect
 //-----------------------------------------------------------------------------
 // Draws eyeballs
 //-----------------------------------------------------------------------------
-inline void CStudioRender::R_StudioEyeballNormal( mstudioeyeball_t const* peyeball, Vector& org, 
+inline void CStudioRender::R_StudioEyeballNormal( mstudioeyeball_t const* peyeball, Vector& org,
 									Vector& pos, Vector& normal )
 {
 	// inside of a flattened torus

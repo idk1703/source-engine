@@ -21,10 +21,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static char *g_pszPortalNonCleansable[] = 
-{ 
-	"func_door", 
-	"func_door_rotating", 
+static char *g_pszPortalNonCleansable[] =
+{
+	"func_door",
+	"func_door_rotating",
 	"prop_door_rotating",
 	"func_tracktrain",
 	"env_ghostanimating",
@@ -67,10 +67,10 @@ LINK_ENTITY_TO_CLASS( trigger_portal_cleanser, CTriggerPortalCleanser );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerPortalCleanser::Spawn( void )
-{	
+{
 	BaseClass::Spawn();
 	InitTrigger();
 }
@@ -98,7 +98,7 @@ CBaseEntity* ConvertToSimpleProp ( CBaseEntity* pEnt )
 	pRetVal->SetAbsAngles( pEnt->GetAbsAngles() );
 	pRetVal->Spawn();
 	pRetVal->VPhysicsInitNormal( SOLID_VPHYSICS, 0, false );
-	
+
 	return pRetVal;
 }
 
@@ -137,7 +137,7 @@ void CTriggerPortalCleanser::Touch( CBaseEntity *pOther )
 					// Cancel portals that are still mid flight
 					if ( pPortal && pPortal->GetNextThink( s_pDelayedPlacementContext ) > gpGlobals->curtime )
 					{
-						pPortal->SetContextThink( NULL, gpGlobals->curtime, s_pDelayedPlacementContext ); 
+						pPortal->SetContextThink( NULL, gpGlobals->curtime, s_pDelayedPlacementContext );
 						pPortalgun->m_fEffectsMaxSize2 = 50.0f;
 						bFizzledPortal = true;
 					}
@@ -156,11 +156,11 @@ void CTriggerPortalCleanser::Touch( CBaseEntity *pOther )
 
 						bFizzledPortal = true;
 					}
-					
+
 					// Cancel portals that are still mid flight
 					if ( pPortal && pPortal->GetNextThink( s_pDelayedPlacementContext ) > gpGlobals->curtime )
 					{
-						pPortal->SetContextThink( NULL, gpGlobals->curtime, s_pDelayedPlacementContext ); 
+						pPortal->SetContextThink( NULL, gpGlobals->curtime, s_pDelayedPlacementContext );
 						pPortalgun->m_fEffectsMaxSize2 = 50.0f;
 						bFizzledPortal = true;
 					}
@@ -257,9 +257,9 @@ void CTriggerPortalCleanser::Touch( CBaseEntity *pOther )
 			pBaseAnimating->AddFlag( FL_DISSOLVING );
 			UTIL_Remove( pBaseAnimating );
 		}
-		
+
 		CBaseAnimating *pDisolvingAnimating = dynamic_cast<CBaseAnimating*>( pDisolvingObj );
-		if ( pDisolvingAnimating ) 
+		if ( pDisolvingAnimating )
 		{
 			pDisolvingAnimating->Dissolve( "", gpGlobals->curtime, false, ENTITY_DISSOLVE_NORMAL );
 		}

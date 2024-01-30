@@ -49,7 +49,7 @@ void CFuncWall::Spawn( void )
 	SetLocalAngles( vec3_angle );
 	SetMoveType( MOVETYPE_PUSH );  // so it doesn't get pushed by anything
 	SetModel( STRING( GetModelName() ) );
-	
+
 	// If it can't move/go away, it's really part of the world
 	AddFlag( FL_WORLDBRUSH );
 
@@ -119,7 +119,7 @@ void CFuncWallToggle::Spawn( void )
 	BaseClass::Spawn();
 	if ( HasSpawnFlags( SF_WALL_START_OFF ) )
 		TurnOff();
-	
+
 	SetMoveType( MOVETYPE_PUSH );
 }
 
@@ -213,7 +213,7 @@ void CFuncVehicleClip::Spawn()
 	SetLocalAngles( vec3_angle );
 	SetMoveType( MOVETYPE_PUSH );  // so it doesn't get pushed by anything
 	SetModel( STRING( GetModelName() ) );
-	
+
 	// It's part of the world
 	AddFlag( FL_WORLDBRUSH );
 
@@ -337,7 +337,7 @@ void CFuncConveyor::UpdateSpeed( float flNewSpeed )
 
 void CFuncConveyor::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
-    m_flSpeed = -m_flSpeed;
+	m_flSpeed = -m_flSpeed;
 	UpdateSpeed( m_flSpeed );
 }
 
@@ -350,7 +350,7 @@ void CFuncConveyor::InputToggleDirection( inputdata_t &inputdata )
 
 void CFuncConveyor::InputSetSpeed( inputdata_t &inputdata )
 {
-    m_flSpeed = inputdata.value.Float();
+	m_flSpeed = inputdata.value.Float();
 	UpdateSpeed( m_flSpeed );
 }
 
@@ -366,7 +366,7 @@ void CFuncConveyor::GetGroundVelocityToApply( Vector &vecGroundVel )
 
 // =================== FUNC_ILLUSIONARY ==============================================
 // A simple entity that looks solid but lets you walk through it.
-class CFuncIllusionary : public CBaseEntity 
+class CFuncIllusionary : public CBaseEntity
 {
 	DECLARE_CLASS( CFuncIllusionary, CBaseEntity );
 public:
@@ -378,7 +378,7 @@ LINK_ENTITY_TO_CLASS( func_illusionary, CFuncIllusionary );
 void CFuncIllusionary::Spawn( void )
 {
 	SetLocalAngles( vec3_angle );
-	SetMoveType( MOVETYPE_NONE );  
+	SetMoveType( MOVETYPE_NONE );
 	SetSolid( SOLID_NONE );
 	SetModel( STRING( GetModelName() ) );
 }
@@ -387,7 +387,7 @@ void CFuncIllusionary::Spawn( void )
 //-----------------------------------------------------------------------------
 // Purpose: A rotating brush entity.
 //
-//			You need to have an origin brush as part of this entity.  The  
+//			You need to have an origin brush as part of this entity.  The
 //			center of that brush will be the point around which it is rotated.
 //
 //			It will rotate around the Z axis by default. Spawnflags can be set
@@ -414,7 +414,7 @@ public:
 	void Blocked( CBaseEntity *pOther );
 	void SetTargetSpeed( float flSpeed );
 	void UpdateSpeed( float flNewSpeed );
-	
+
 	int	 DrawDebugTextOverlays(void);
 
 	DECLARE_DATADESC();
@@ -608,7 +608,7 @@ bool CFuncRotating::KeyValue( const char *szKeyName, const char *szValue )
 		m_flVolume = clamp(m_flVolume, 0.0f, 1.0f);
 	}
 	else
-	{ 
+	{
 		return BaseClass::KeyValue( szKeyName, szValue );
 	}
 
@@ -660,7 +660,7 @@ void CFuncRotating::Spawn( )
 	{
 		m_flFanFriction = 1;
 	}
-	
+
 	//
 	// Build the axis of rotation based on spawnflags.
 	//
@@ -719,7 +719,7 @@ void CFuncRotating::Spawn( )
 	// If the brush should be initially rotating, use it in a little while.
 	//
 	if ( HasSpawnFlags(SF_BRUSH_ROTATE_START_ON) )
-	{		
+	{
 		SetThink( &CFuncRotating::SUB_CallUseToggle );
 		SetNextThink( gpGlobals->curtime + .2 );	// leave a magic delay for client to start up
 	}
@@ -736,12 +736,12 @@ void CFuncRotating::Spawn( )
 	// Set speed to 0 in case there's an old "speed" key lying around.
 	//
 	m_flSpeed = 0;
-	
+
 	Precache( );
 	CreateVPhysics();
 
 	m_angStart = GetLocalAngles();
-	
+
 	// Slam the object back to solid - if we really want it to be solid.
 	if ( m_bSolidBsp )
 	{
@@ -758,7 +758,7 @@ void CFuncRotating::Spawn( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CFuncRotating::CreateVPhysics( void )
 {
@@ -771,7 +771,7 @@ bool CFuncRotating::CreateVPhysics( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFuncRotating::Precache( void )
 {
@@ -785,7 +785,7 @@ void CFuncRotating::Precache( void )
 		m_NoiseRunning = AllocPooledString("DoorSound.Null");
 	}
 	PrecacheScriptSound( STRING( m_NoiseRunning ) );
-	
+
 	if (GetLocalAngularVelocity() != vec3_angle )
 	{
 		//
@@ -800,7 +800,7 @@ void CFuncRotating::Precache( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Will hurt others based on how fast the brush is spinning.
-// Input  : pOther - 
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CFuncRotating::HurtTouch ( CBaseEntity *pOther )
 {
@@ -816,7 +816,7 @@ void CFuncRotating::HurtTouch ( CBaseEntity *pOther )
 #endif
 	{
 		pOther->TakeDamage( CTakeDamageInfo( this, this, m_flBlockDamage, DMG_CRUSH ) );
-	
+
 		Vector vecNewVelocity = pOther->GetAbsOrigin() - WorldSpaceCenter();
 		VectorNormalize(vecNewVelocity);
 		vecNewVelocity *= m_flBlockDamage;
@@ -841,8 +841,8 @@ void CFuncRotating::RampPitchVol( void )
 	float fpct = fabs(m_flSpeed) / m_flMaxSpeed;
 	float fvol = clamp(m_flVolume * fpct, 0.f, 1.f);			  // slowdown volume ramps down to 0
 
-	float fpitch = FANPITCHMIN + (FANPITCHMAX - FANPITCHMIN) * fpct;	
-	
+	float fpitch = FANPITCHMIN + (FANPITCHMAX - FANPITCHMIN) * fpct;
+
 	int pitch = clamp(FastFloatToSmallInt(fpitch), 0, 255);
 	if (pitch == PITCH_NORM)
 	{
@@ -867,7 +867,7 @@ void CFuncRotating::RampPitchVol( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : float
 //-----------------------------------------------------------------------------
 float CFuncRotating::GetNextMoveInterval() const
@@ -927,7 +927,7 @@ void CFuncRotating::UpdateSpeed( float flNewSpeed )
 				float minSpeed =  fabs( angDelta );
 				if ( minSpeed < 20 )
 					minSpeed = 20;
-	
+
 				m_flSpeed = flOldSpeed > 0.0f ? minSpeed : -minSpeed;
 			}
 		}
@@ -939,7 +939,7 @@ void CFuncRotating::UpdateSpeed( float flNewSpeed )
 		// Starting to move - emit the sound.
 		CPASAttenuationFilter filter( GetAbsOrigin(), m_flAttenuation );
 		filter.MakeReliable();
-	
+
 		EmitSound_t ep;
 		ep.m_nChannel = CHAN_STATIC;
 		ep.m_pSoundName = STRING(m_NoiseRunning);
@@ -954,7 +954,7 @@ void CFuncRotating::UpdateSpeed( float flNewSpeed )
 	{
 		// Stopping - stop the sound.
 		StopSound( entindex(), CHAN_STATIC, STRING(m_NoiseRunning) );
-		
+
 	}
 	else
 	{
@@ -1000,7 +1000,7 @@ void CFuncRotating::SpinUpMove( void )
 	{
 		SetMoveDone( &CFuncRotating::RotateMove );
 		RotateMove();
-	} 
+	}
 
 	SetMoveDoneTime( GetNextMoveInterval() );
 }
@@ -1181,7 +1181,7 @@ void CFuncRotating::SetTargetSpeed( float flSpeed )
 		//
 		// Check for reversing directions.
 		//
-		if ((( m_flSpeed > 0 ) && ( m_flTargetSpeed < 0 )) || 
+		if ((( m_flSpeed > 0 ) && ( m_flTargetSpeed < 0 )) ||
 			(( m_flSpeed < 0 ) && ( m_flTargetSpeed > 0 )))
 		{
 			SetMoveDone( &CFuncRotating::ReverseMove );
@@ -1215,10 +1215,10 @@ void CFuncRotating::SetTargetSpeed( float flSpeed )
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when a rotating brush is used by the player.
-// Input  : pActivator - 
-//			pCaller - 
-//			useType - 
-//			value - 
+// Input  : pActivator -
+//			pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CFuncRotating::RotatingUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -1305,8 +1305,8 @@ void CFuncRotating::InputStop( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CFuncRotating::InputStopAtStartPos( inputdata_t &inputdata )
 {
@@ -1319,7 +1319,7 @@ void CFuncRotating::InputStopAtStartPos( inputdata_t &inputdata )
 // Purpose: Starts the rotator if it is still, stops it if it is spinning.
 //-----------------------------------------------------------------------------
 void CFuncRotating::InputToggle( inputdata_t &inputdata )
-{	
+{
 	if (m_flSpeed > 0)
 	{
 		SetTargetSpeed( 0 );
@@ -1333,7 +1333,7 @@ void CFuncRotating::InputToggle( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 // Purpose: An entity has blocked the brush.
-// Input  : pOther - 
+// Input  : pOther -
 //-----------------------------------------------------------------------------
 void CFuncRotating::Blocked( CBaseEntity *pOther )
 {
@@ -1349,11 +1349,11 @@ void CFuncRotating::Blocked( CBaseEntity *pOther )
 // Input  :
 // Output : Current text offset from the top
 //-----------------------------------------------------------------------------
-int CFuncRotating::DrawDebugTextOverlays(void) 
+int CFuncRotating::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf( tempstr, sizeof( tempstr ),"Speed cur (target): %3.2f (%3.2f)", GetMoveSpeed( m_flSpeed ), GetMoveSpeed( m_flTargetSpeed ) );
@@ -1423,8 +1423,8 @@ bool CFuncVPhysicsClip::CreateVPhysics( void )
 }
 
 
-void CFuncVPhysicsClip::Activate( void ) 
-{ 
+void CFuncVPhysicsClip::Activate( void )
+{
 	// Get a handle to my filter entity if there is one
 	if (m_iFilterName != NULL_STRING)
 	{
@@ -1442,7 +1442,7 @@ bool CFuncVPhysicsClip::EntityPassesFilter( CBaseEntity *pOther )
 
 	if ( pOther->GetMoveType() == MOVETYPE_VPHYSICS && pOther->VPhysicsGetObject()->IsMoveable() )
 		return true;
-	
+
 	return false;
 }
 

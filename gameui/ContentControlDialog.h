@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -14,7 +14,7 @@
 #include "vgui_controls/Frame.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CContentControlDialog : public vgui::Frame
 {
@@ -28,10 +28,10 @@ public:
 	virtual void OnClose();
 	virtual void Activate();
 
-    void        ResetPassword();
-    void        ApplyPassword();
-    bool        IsPasswordEnabledInDialog();
-    bool        IsPasswordEnabled()             { return ( m_szGorePW[0] != 0 ); }
+	void        ResetPassword();
+	void        ApplyPassword();
+	bool        IsPasswordEnabledInDialog();
+	bool        IsPasswordEnabled()             { return ( m_szGorePW[0] != 0 ); }
 
 protected:
 	void			WriteToken( const char *str );
@@ -40,9 +40,9 @@ protected:
 
 	void			Explain( PRINTF_FORMAT_STRING char const *fmt, ... );
 
-    void            HashPassword(const char *newPW, char *hashBuffer, int maxlen );
-    bool            EnablePassword(const char *newPW);
-    bool            DisablePassword(const char *oldPW);
+	void            HashPassword(const char *newPW, char *hashBuffer, int maxlen );
+	bool            EnablePassword(const char *newPW);
+	bool            DisablePassword(const char *oldPW);
 
 	enum
 	{
@@ -51,12 +51,12 @@ protected:
 
 	char			m_szGorePW[ MAX_GORE_PW ];
 
-    bool            m_bDefaultPassword;
+	bool            m_bDefaultPassword;
 	vgui::Label		*m_pStatus;
 	vgui::Button	*m_pOK;
 	vgui::TextEntry	*m_pPassword;
-    vgui::Label     *m_pPasswordLabel;
-    vgui::Label     *m_pPassword2Label;
+	vgui::Label     *m_pPasswordLabel;
+	vgui::Label     *m_pPassword2Label;
 	vgui::TextEntry	*m_pPassword2;
 
 	vgui::Label		*m_pExplain;

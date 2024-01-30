@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ ConVar weapon_arcwelder_stick_range( "weapon_arcwelder_stick_range", "100", FCVA
 ConVar weapon_arcwelder_rate( "weapon_arcwelder_rate", "15", FCVAR_REPLICATED );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CWeaponArcWelder : public CWeaponRepairGun
 {
@@ -56,7 +56,7 @@ public:
 
 	// All predicted weapons need to implement and return true
 	virtual bool			IsPredicted( void ) const
-	{ 
+	{
 		return true;
 	}
 
@@ -81,7 +81,7 @@ private:
 	float		m_flNextEffectTime;
 #endif
 
-private:														
+private:
 	CWeaponArcWelder( const CWeaponArcWelder & );
 };
 
@@ -98,7 +98,7 @@ BEGIN_PREDICTION_DATA( CWeaponArcWelder )
 END_PREDICTION_DATA()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponArcWelder::CWeaponArcWelder()
 {
@@ -117,7 +117,7 @@ void CWeaponArcWelder::Precache()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponArcWelder::GetTargetRange( void )
 {
@@ -125,7 +125,7 @@ float CWeaponArcWelder::GetTargetRange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponArcWelder::GetStickRange( void )
 {
@@ -133,7 +133,7 @@ float CWeaponArcWelder::GetStickRange( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponArcWelder::GetHealRate( void )
 {
@@ -172,7 +172,7 @@ CBaseEntity *CWeaponArcWelder::GetTargetToHeal( CBaseEntity *pCurHealing )
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponArcWelder::ClientThink( void )
 {
@@ -204,7 +204,7 @@ void CWeaponArcWelder::ClientThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponArcWelder::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& origin, const QAngle& angles, int event, const char *options )
 {
@@ -235,7 +235,7 @@ CLIENTEFFECT_MATERIAL( "effects/blueflare2" )
 CLIENTEFFECT_REGISTER_END()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponArcWelder::ViewModelDrawn( C_BaseViewModel *pViewModel )
 {
@@ -248,7 +248,7 @@ void CWeaponArcWelder::ViewModelDrawn( C_BaseViewModel *pViewModel )
 
 	// Get our weldpoint
 	Vector attachOrigin;
-	QAngle attachAngles; 
+	QAngle attachAngles;
 	pViewModel->GetAttachment( pViewModel->LookupAttachment("muzzle"), attachOrigin, attachAngles );
 	Vector vecEnd = m_hHealingTarget->WorldSpaceCenter();
 	trace_t tr;
@@ -275,13 +275,13 @@ void CWeaponArcWelder::ViewModelDrawn( C_BaseViewModel *pViewModel )
 	Vector vecVelocity = tr.plane.normal;
 	vecVelocity.z += random->RandomFloat( 8, 12 );
 	// Add it
-	CSmartPtr<CSimpleEmitter> pSimple = FX_Smoke( vecOrigin, vecVelocity, 
+	CSmartPtr<CSimpleEmitter> pSimple = FX_Smoke( vecOrigin, vecVelocity,
 		random->RandomFloat( 4, 8 ),		// Scale
-		1,	
+		1,
 		random->RandomFloat( 0.5, 3.0 ),	// Dietime
-		color, 
+		color,
 		random->RandomInt( 64, 200 ),		// Alpha
-		"particle/smoke_arcwelder",	
+		"particle/smoke_arcwelder",
 		random->RandomInt(0,255),			// Roll
 		0 );								// Rolldelta
 

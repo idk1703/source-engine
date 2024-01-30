@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -75,7 +75,7 @@ void CStudioRender::R_StudioEyeballPosition( const mstudioeyeball_t *peyeball, e
 #endif
 
 	VectorNormalize( pstate->forward );
-	// re-aim eyes 
+	// re-aim eyes
 	CrossProduct( pstate->forward, pstate->up, pstate->right );
 	VectorNormalize( pstate->right );
 
@@ -135,7 +135,7 @@ void CStudioRender::R_StudioEyelidFACS( const mstudioeyeball_t *peyeball, const 
 	lowerlid += m_pFlexWeights[peyeball->lowerflexdesc[1]] * asin( vecNormTarget.y );
 	lowerlid += m_pFlexWeights[peyeball->lowerflexdesc[2]] * asin( vecNormTarget.z );
 
-	// ConDMsg("%.1f %.1f\n", RAD2DEG( upperlid ), RAD2DEG( lowerlid ) );		
+	// ConDMsg("%.1f %.1f\n", RAD2DEG( upperlid ), RAD2DEG( lowerlid ) );
 
 	float sinupper, cosupper, sinlower, coslower;
 	SinCos( upperlid, &sinupper, &cosupper );
@@ -250,7 +250,7 @@ void CStudioRender::R_StudioFlexVerts( mstudiomesh_t *pmesh, int lod )
 	}
 
 	mstudioflex_t *pflex = pmesh->pFlex( 0 );
-	
+
 	m_VertexCache.SetupComputation( pmesh, true );
 
 	// apply flex weights
@@ -408,12 +408,12 @@ void CStudioRender::AddGlint( CPixelWriter &pixelWriter, float x, float y, const
 			float fu = ((float)u) - x;
 			float fv = ((float)v) - y;
 			const float offset = 0.25;
-			float intensity =	GlintGaussSpotCoefficient( fu-offset, fv-offset ) + 
-								GlintGaussSpotCoefficient( fu+offset, fv-offset ) + 
-								5 * GlintGaussSpotCoefficient( fu, fv ) + 
-								GlintGaussSpotCoefficient( fu-offset, fv+offset ) + 
+			float intensity =	GlintGaussSpotCoefficient( fu-offset, fv-offset ) +
+								GlintGaussSpotCoefficient( fu+offset, fv-offset ) +
+								5 * GlintGaussSpotCoefficient( fu, fv ) +
+								GlintGaussSpotCoefficient( fu-offset, fv+offset ) +
 								GlintGaussSpotCoefficient( fu+offset, fv+offset );
-			
+
 			// NOTE: Old filter code multiplies the signal by 8X, so we will too
 			intensity *= (4.0f/9.0f);
 
@@ -464,7 +464,7 @@ public:
 		if ( !m_pStudioRender )
 			return;
 
-		if ( ( m_pStudioRender->m_GlintWidth != pVTFTexture->Width() ) || 
+		if ( ( m_pStudioRender->m_GlintWidth != pVTFTexture->Width() ) ||
 			( m_pStudioRender->m_GlintHeight != pVTFTexture->Height() ) )
 		{
 			m_pStudioRender->m_GlintWidth = pVTFTexture->Width();
@@ -472,7 +472,7 @@ public:
 		}
 
 		CStudioRender::GlintRenderData_t pRenderData[16];
-		int nGlintCount = m_pStudioRender->BuildGlintRenderData( pRenderData, 
+		int nGlintCount = m_pStudioRender->BuildGlintRenderData( pRenderData,
 			ARRAYSIZE(pRenderData),	m_pState, *m_pVRight, *m_pVUp, *m_pROrigin );
 
 		// setup glint texture
@@ -486,7 +486,7 @@ public:
 		for ( int i = 0; i < nGlintCount; ++i )
 		{
 			// NOTE: AddGlint is a more expensive solution but it looks better close-up
-			m_pStudioRender->AddGlint( pixelWriter, pRenderData[i].m_vecPosition[0], 
+			m_pStudioRender->AddGlint( pixelWriter, pRenderData[i].m_vecPosition[0],
 				pRenderData[i].m_vecPosition[1], pRenderData[i].m_vecIntensity );
 		}
 	}
@@ -512,7 +512,7 @@ void CStudioRender::PrecacheGlint()
 		g_pMaterialSystem->BeginRenderTargetAllocation();
 
 		// Get the texture that we are going to be updating procedurally.
-		m_pGlintTexture = g_pMaterialSystem->CreateNamedRenderTargetTextureEx2( 
+		m_pGlintTexture = g_pMaterialSystem->CreateNamedRenderTargetTextureEx2(
 			"_rt_eyeglint", 32, 32, RT_SIZE_NO_CHANGE, IMAGE_FORMAT_BGRA8888, MATERIAL_RT_DEPTH_NONE );
 		m_pGlintTexture->IncrementReferenceCount();
 
@@ -522,7 +522,7 @@ void CStudioRender::PrecacheGlint()
 		if ( !IsX360() )
 		{
 			// Get the texture that we are going to be updating procedurally.
-			s_pProcGlint = g_pMaterialSystem->CreateProceduralTexture( 
+			s_pProcGlint = g_pMaterialSystem->CreateProceduralTexture(
 				"proc_eyeglint", TEXTURE_GROUP_MODEL, 32, 32, IMAGE_FORMAT_BGRA8888, TEXTUREFLAGS_NOMIP|TEXTUREFLAGS_NOLOD );
 			s_pProcGlint->SetTextureRegenerator( &s_GlintTextureRegen );
 		}
@@ -658,7 +658,7 @@ ITexture* CStudioRender::RenderGlintTexture( const eyeballstate_t *pState,
 	pRenderContext->SetHeightClipMode( MATERIAL_HEIGHTCLIPMODE_DISABLE );
 	pRenderContext->SetNumBoneWeights( 0 );
 	pRenderContext->Bind( m_pGlintBuildMaterial );
-	
+
 	pRenderContext->MatrixMode( MATERIAL_MODEL );
 	pRenderContext->PushMatrix();
 	pRenderContext->LoadIdentity();
@@ -713,13 +713,13 @@ ITexture* CStudioRender::RenderGlintTexture( const eyeballstate_t *pState,
 		meshBuilder.AdvanceVertex();
 
 		meshBuilder.Position3f( screenX1, screenY1, 0.0f );
-		meshBuilder.TexCoord2f(  0, x1, y1 ); 
+		meshBuilder.TexCoord2f(  0, x1, y1 );
 		meshBuilder.TexCoord2fv( 1, vGlintCenter.Base() );
 		meshBuilder.TexCoord3fv( 2, glint.m_vecIntensity.Base() );
 		meshBuilder.AdvanceVertex();
 
 		meshBuilder.Position3f( screenX0, screenY1, 0.0f );
-		meshBuilder.TexCoord2f(  0, x0, y1 ); 
+		meshBuilder.TexCoord2f(  0, x0, y1 );
 		meshBuilder.TexCoord2fv( 1, vGlintCenter.Base() );
 		meshBuilder.TexCoord3fv( 2, glint.m_vecIntensity.Base() );
 		meshBuilder.AdvanceVertex();
@@ -764,7 +764,7 @@ ITexture* CStudioRender::RenderGlintTexture( const eyeballstate_t *pState,
 static ConVar r_glint_procedural( "r_glint_procedural", "0" );
 static ConVar r_glint_alwaysdraw( "r_glint_alwaysdraw", "0" );
 
-void CStudioRender::R_StudioEyeballGlint( const eyeballstate_t *pstate, IMaterialVar *pGlintVar, 
+void CStudioRender::R_StudioEyeballGlint( const eyeballstate_t *pstate, IMaterialVar *pGlintVar,
 							const Vector& vright, const Vector& vup, const Vector& r_origin )
 {
 	// Kick off a PIX event, since this process encompasses a bunch of locks etc...
@@ -777,7 +777,7 @@ void CStudioRender::R_StudioEyeballGlint( const eyeballstate_t *pstate, IMateria
 	{
 		// backfaced or too small to bother?
 		float pixelArea = pRenderContext->ComputePixelWidthOfSphere( pstate->org, pstate->peyeball->radius );
-		if( 
+		if(
 			// FIXME: this backface doesn't work for something that isn't a plane.
 			 // DotProduct( pstate->forward, m_ViewPlaneNormal ) > 0.0f ||
 			 pixelArea < m_pRC->m_Config.fEyeGlintPixelWidthLODThreshold )
@@ -822,7 +822,7 @@ void CStudioRender::R_StudioEyeballGlint( const eyeballstate_t *pstate, IMateria
 	}
 }
 
-void CStudioRender::ComputeGlintTextureProjection( eyeballstate_t const* pState, 
+void CStudioRender::ComputeGlintTextureProjection( eyeballstate_t const* pState,
 							const Vector& vright, const Vector& vup, matrix3x4_t& mat )
 {
 	// project eyeball into screenspace texture
@@ -851,7 +851,7 @@ void R_MouthLighting( int count, const Vector *psrcverts, const Vector *psrcnorm
 
 
 	VectorRotate( pMouth->forward, g_StudioInternalState.boneToWorld[ pMouth->bone ], forward );
-	
+
 	for (int i = 0; i < count; i++)
 	{
 		float dot = -DotProduct( psrcnorms[i], forward );
@@ -871,7 +871,7 @@ void R_MouthLighting( int count, const Vector *psrcverts, const Vector *psrcnorm
 void CStudioRender::R_MouthComputeLightingValues( float& fIllum, Vector& forward )
 {
 	// FIXME: this needs to get the mouth index from the shader
-	mstudiomouth_t *pMouth = m_pStudioHdr->pMouth( 0 ); 
+	mstudiomouth_t *pMouth = m_pStudioHdr->pMouth( 0 );
 
 	fIllum = m_pFlexWeights[pMouth->flexdesc];
 	if (fIllum < 0) fIllum = 0;
@@ -902,7 +902,7 @@ void CStudioRender::R_MouthSetupVertexShader( IMaterial* pMaterial )
 		return;
 
 	// FIXME: this needs to get the mouth index from the shader
-	mstudiomouth_t *pMouth = m_pStudioHdr->pMouth( 0 ); 
+	mstudiomouth_t *pMouth = m_pStudioHdr->pMouth( 0 );
 
 	// Don't deal with illum gamma, we apply it at a different point
 	// for vertex shaders

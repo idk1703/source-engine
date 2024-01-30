@@ -59,7 +59,7 @@ public:
 
 	// Initialization
 	virtual void Init( const char *pName, int iNumber );
-	
+
 	virtual void Precache( void );
 	virtual void PrecacheTechnology( CBaseTechnology *pTech );
 	virtual void Think( void );
@@ -98,7 +98,7 @@ public:
 	virtual bool HasNamedTechnology( const char *name );
 	virtual void GainedNewTechnology( CBaseTechnology *pTechnology );
 	virtual void UpdateTechnologies( void );
-	
+
 	//-----------------------------------------------------------------------------
 	// Players
 	//-----------------------------------------------------------------------------
@@ -140,21 +140,21 @@ public:
 	// Orders
 	//-----------------------------------------------------------------------------
 	void	InitializeOrders( void );
-	
-	COrder*	AddOrder( 
-		int iOrderType, 
-		CBaseEntity *pTarget, 
-		CBaseTFPlayer *pPlayer = NULL, 
-		float flDistanceToRemove = 1e24, 
+
+	COrder*	AddOrder(
+		int iOrderType,
+		CBaseEntity *pTarget,
+		CBaseTFPlayer *pPlayer = NULL,
+		float flDistanceToRemove = 1e24,
 		float flLifetime = 60,
-		COrder *pDefaultOrder = NULL	// If this is specified, then it is used instead of 
+		COrder *pDefaultOrder = NULL	// If this is specified, then it is used instead of
 										// asking COrder to allocate an order.
 		);
 	void	RemoveOrder( COrder *pOrder );
 	void	RecalcOrders( void );
 	void	UpdateOrders( void );
 	void	UpdateOrdersOnEvent( COrderEvent_Base *pEvent );
-	
+
 	// Flags is a combination of COUNTORDERS_ flags telling which fields to check.
 	int		CountOrders( int flags, int iOrderType, CBaseEntity *pTarget=0, CBaseTFPlayer *pOwner=0 );
 	int		CountOrdersOwnedByPlayer( CBaseTFPlayer *pPlayer );

@@ -42,7 +42,7 @@ void CTFGameMovementMedic::ProcessClassMovement( CBaseTFPlayer *pPlayer, CTFMove
 //-----------------------------------------------------------------------------
 const Vector &CTFGameMovementMedic::GetPlayerMins( bool bDucked ) const
 {
-	return bDucked ? m_vDuckMins : m_vStandMins; 
+	return bDucked ? m_vDuckMins : m_vStandMins;
 }
 
 //-----------------------------------------------------------------------------

@@ -18,7 +18,7 @@ using namespace vgui;
 // Purpose: creates child panels, passes down name to pick up any settings from res files.
 //-----------------------------------------------------------------------------
 CMatchStatsPage::CMatchStatsPage(vgui::Panel *parent, const char *name) : BaseClass(parent, "CSMatchStatsDialog")
-{	
+{
 	m_allStatsGroupPanel =					AddGroup( L"all",      "Stats_Button_All",       L"All" );
 	m_detailedWeaponStatsGroupPanel =		AddGroup( L"weapon",   "Stats_Button_Weapon",    L"Weapon Stats" );
 	m_specialSkillsStatsGroupPanel =		AddGroup( L"skills",   "Stats_Button_Skills",    L"Special Skills" );
@@ -34,13 +34,13 @@ CMatchStatsPage::CMatchStatsPage(vgui::Panel *parent, const char *name) : BaseCl
 //-----------------------------------------------------------------------------
 void CMatchStatsPage::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
-    BaseClass::ApplySchemeSettings( pScheme );
-    LoadControlSettings("resource/ui/CSMatchStatsDialog.res");  
+	BaseClass::ApplySchemeSettings( pScheme );
+	LoadControlSettings("resource/ui/CSMatchStatsDialog.res");
 	m_statsList->AddColumnToSection( 0, "name", "", SectionedListPanel::COLUMN_CENTER, 180);
 	m_statsList->AddColumnToSection( 0, "playerValue", "", SectionedListPanel::COLUMN_CENTER, 100);
 	m_statsList->AddColumnToSection( 0, "ctValue", "", SectionedListPanel::COLUMN_CENTER, 100);
-	m_statsList->AddColumnToSection( 0, "tValue", " ", SectionedListPanel::COLUMN_CENTER, 100);	
-	m_statsList->AddColumnToSection( 0, "serverValue", "", SectionedListPanel::COLUMN_CENTER, 100);	
+	m_statsList->AddColumnToSection( 0, "tValue", " ", SectionedListPanel::COLUMN_CENTER, 100);
+	m_statsList->AddColumnToSection( 0, "serverValue", "", SectionedListPanel::COLUMN_CENTER, 100);
 }
 
 void CMatchStatsPage::RepopulateStats()
@@ -51,7 +51,7 @@ void CMatchStatsPage::RepopulateStats()
 	RoundStatsDirectAverage_t*	ctStats = g_CSClientGameStats.GetDirectCTStatsAverages();
 	RoundStatsDirectAverage_t*	serverStats = g_CSClientGameStats.GetDirectPlayerStatsAverages();
 	const StatsCollection_t&	personalMatchStats = g_CSClientGameStats.GetMatchStats();
-	
+
 	if (m_missionAndObjectiveStatsGroupPanel->IsGroupActive() || m_allStatsGroupPanel->IsGroupActive())
 	{
 		AddSimpleStat(CSSTAT_ROUNDS_WON, personalMatchStats, tStats, ctStats, serverStats);
@@ -69,7 +69,7 @@ void CMatchStatsPage::RepopulateStats()
 	{
 		AddSimpleStat(CSSTAT_MVPS, personalMatchStats, tStats, ctStats, serverStats);
 		AddSimpleStat(CSSTAT_SHOTS_FIRED, personalMatchStats, tStats, ctStats, serverStats);
-		AddSimpleStat(CSSTAT_SHOTS_HIT, personalMatchStats, tStats, ctStats, serverStats);		
+		AddSimpleStat(CSSTAT_SHOTS_HIT, personalMatchStats, tStats, ctStats, serverStats);
 		AddAccuracyStat(personalMatchStats, tStats, ctStats, serverStats);
 		AddSimpleStat(CSSTAT_DOMINATIONS, personalMatchStats, tStats, ctStats, serverStats);
 		AddSimpleStat(CSSTAT_DOMINATION_OVERKILLS, personalMatchStats, tStats, ctStats, serverStats);
@@ -84,11 +84,11 @@ void CMatchStatsPage::RepopulateStats()
 	if (m_mapAndMiscellanyStatsGroupPanel->IsGroupActive() || m_allStatsGroupPanel->IsGroupActive())
 	{
 		AddSimpleStat(CSSTAT_MONEY_EARNED, personalMatchStats, tStats, ctStats, serverStats);
-		AddSimpleStat(CSSTAT_DECAL_SPRAYS, personalMatchStats, tStats, ctStats, serverStats);		
+		AddSimpleStat(CSSTAT_DECAL_SPRAYS, personalMatchStats, tStats, ctStats, serverStats);
 		AddSimpleStat(CSSTAT_NIGHTVISION_DAMAGE, personalMatchStats, tStats, ctStats, serverStats);
 		AddSimpleStat(CSSTAT_NUM_BROKEN_WINDOWS, personalMatchStats, tStats, ctStats, serverStats);
 		AddSimpleStat(CSSTAT_WEAPONS_DONATED, personalMatchStats, tStats, ctStats, serverStats);
-	}	
+	}
 
 	if (m_detailedWeaponStatsGroupPanel->IsGroupActive() || m_allStatsGroupPanel->IsGroupActive())
 	{
@@ -158,7 +158,7 @@ int CMatchStatsPage::AddSimpleStat( int desiredStat, const StatsCollection_t& pe
 	Q_snprintf( buf, sizeof( buf ), "%.1f", serverStats->m_fStat[stat.iStatId] );
 	pKeyValues->SetString( "serverValue", (serverStats->m_fStat[stat.iStatId]||personalMatchStats[stat.iStatId])?buf:"" );
 
-	int newItem = m_statsList->AddItem(0, pKeyValues);		
+	int newItem = m_statsList->AddItem(0, pKeyValues);
 	pKeyValues->deleteThis();
 
 	m_statsList->SetItemFont(newItem , m_listItemFont);
@@ -187,7 +187,7 @@ int CMatchStatsPage::AddKillToDeathStat(const StatsCollection_t& personalMatchSt
 	float tDeaths = tStats->m_fStat[statDeaths.iStatId];
 	float ctDeaths = ctStats->m_fStat[statDeaths.iStatId];
 	float serverDeaths = serverStats->m_fStat[statDeaths.iStatId];
-	
+
 	char buf[64];
 
 	if (playerDeaths > 0)
@@ -206,7 +206,7 @@ int CMatchStatsPage::AddKillToDeathStat(const StatsCollection_t& personalMatchSt
 	{
 		float tKillToDeathRatio = tKills / tDeaths;
 		Q_snprintf( buf, sizeof( buf ), "%.2f", tKillToDeathRatio );
-		pKeyValues->SetString( "tValue", ((playerKills&&playerDeaths)||tKillToDeathRatio)?buf:"" );	
+		pKeyValues->SetString( "tValue", ((playerKills&&playerDeaths)||tKillToDeathRatio)?buf:"" );
 
 	}
 	else
@@ -218,7 +218,7 @@ int CMatchStatsPage::AddKillToDeathStat(const StatsCollection_t& personalMatchSt
 	{
 		float ctKillToDeathRatio = ctKills / ctDeaths;
 		Q_snprintf( buf, sizeof( buf ), "%.2f", ctKillToDeathRatio);
-		pKeyValues->SetString( "ctValue", ((playerKills&&playerDeaths)||ctKillToDeathRatio)?buf:"" );		
+		pKeyValues->SetString( "ctValue", ((playerKills&&playerDeaths)||ctKillToDeathRatio)?buf:"" );
 	}
 	else
 	{
@@ -229,16 +229,16 @@ int CMatchStatsPage::AddKillToDeathStat(const StatsCollection_t& personalMatchSt
 	{
 		float serverKillToDeathRatio = serverKills / serverDeaths;
 		Q_snprintf( buf, sizeof( buf ), "%.2f", serverKillToDeathRatio );
-		pKeyValues->SetString( "serverValue", ((playerKills&&playerDeaths)||serverKillToDeathRatio)?buf:"" );		
+		pKeyValues->SetString( "serverValue", ((playerKills&&playerDeaths)||serverKillToDeathRatio)?buf:"" );
 	}
 	else
 	{
 		pKeyValues->SetString( "serverValue", "" );
 	}
 
-	
 
-	int newItem = m_statsList->AddItem(0, pKeyValues);		
+
+	int newItem = m_statsList->AddItem(0, pKeyValues);
 	pKeyValues->deleteThis();
 
 	m_statsList->SetItemFont(newItem , m_listItemFont);
@@ -306,7 +306,7 @@ int CMatchStatsPage::AddAccuracyStat(const StatsCollection_t& personalMatchStats
 	Q_snprintf( buf, sizeof( buf ), "%.1f%%", serverAccuracy );
 	pKeyValues->SetString( "serverValue", (playerAccuracy||serverAccuracy)?buf:"" );
 
-	int newItem = m_statsList->AddItem(0, pKeyValues);		
+	int newItem = m_statsList->AddItem(0, pKeyValues);
 	pKeyValues->deleteThis();
 
 	m_statsList->SetItemFont(newItem , m_listItemFont);

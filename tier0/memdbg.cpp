@@ -71,7 +71,7 @@ static char s_szStatsComment[256];
 #pragma auto_inline(off)
 __declspec(naked) DWORD GetEIP()
 {
-	__asm 
+	__asm
 	{
 		mov eax, [ebp + 4]
 		ret
@@ -102,16 +102,16 @@ int WalkStack( void **ppAddresses, int nMaxAddresses, int nSkip = 0 )
 	// Walk the stack.
 	int nWalked = 0;
 	nSkip++;
-	while ( nMaxAddresses - nWalked > 0 ) 
+	while ( nMaxAddresses - nWalked > 0 )
 	{
-		if ( !StackWalk64(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &frame, NULL, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL ) ) 
+		if ( !StackWalk64(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &frame, NULL, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL ) )
 		{
 			break;
 		}
 
 		if ( nSkip == 0 )
 		{
-			if (frame.AddrFrame.Offset == 0) 
+			if (frame.AddrFrame.Offset == 0)
 			{
 				// End of stack.
 				break;
@@ -119,7 +119,7 @@ int WalkStack( void **ppAddresses, int nMaxAddresses, int nSkip = 0 )
 
 			*ppAddresses++ = (void *)frame.AddrPC.Offset;
 			nWalked++;
-			
+
 			if (frame.AddrPC.Offset == frame.AddrReturn.Offset)
 			{
 				// Catching a stack loop
@@ -187,7 +187,7 @@ char * StackDescribe( void **ppAddresses, int nMaxAddresses )
 {
 	static char s_chStackDescription[ 32 * 1024 ];
 	static char s_chSymbolBuffer[ sizeof( IMAGEHLP_SYMBOL64 ) + 1024 ];
-	
+
 	IMAGEHLP_SYMBOL64 &hlpSymbol = * ( IMAGEHLP_SYMBOL64 * ) s_chSymbolBuffer;
 	hlpSymbol.SizeOfStruct = sizeof( IMAGEHLP_SYMBOL64 );
 	hlpSymbol.MaxNameLength = 1024;
@@ -371,7 +371,7 @@ inline void InternalFree( void *pMem )
 #elif LINUX
 	free( pInternalMem );
 #else
-	free( pInternalMem );	
+	free( pInternalMem );
 #endif
 #else
 	_free_dbg( pInternalMem, _NORMAL_BLOCK );
@@ -390,7 +390,7 @@ inline size_t InternalMSize( void *pMem )
 #else
 	DbgMemHeader_t *pInternalMem = (DbgMemHeader_t *)pMem - 1;
 	return _msize_dbg( pInternalMem, _NORMAL_BLOCK ) - sizeof(DbgMemHeader_t);
-#endif	
+#endif
 }
 
 inline size_t InternalLogicalSize( void *pMem )
@@ -462,7 +462,7 @@ bool operator!=(const CNoRecurseAllocator<T1>&, const CNoRecurseAllocator<T2>&)
 class CStringLess
 {
 public:
-	bool operator()(const char *pszLeft, const char *pszRight ) const 
+	bool operator()(const char *pszLeft, const char *pszRight ) const
 	{
 		return ( stricmp( pszLeft, pszRight ) < 0 );
 	}
@@ -487,20 +487,20 @@ public:
 	virtual void *Alloc( size_t nSize );
 	virtual void *Realloc( void *pMem, size_t nSize );
 	virtual void  Free( void *pMem );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize );
 
 	// Debug versions
-    virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
-    virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
-    virtual void  Free( void *pMem, const char *pFileName, int nLine );
-    virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void *Alloc( size_t nSize, const char *pFileName, int nLine );
+	virtual void *Realloc( void *pMem, size_t nSize, const char *pFileName, int nLine );
+	virtual void  Free( void *pMem, const char *pFileName, int nLine );
+	virtual void *Expand_NoLongerSupported( void *pMem, size_t nSize, const char *pFileName, int nLine );
 
 	// Returns size of a particular allocation
 	virtual size_t GetSize( void *pMem );
 
-    // Force file + line information for an allocation
-    virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
-    virtual void PopAllocDbgInfo();
+	// Force file + line information for an allocation
+	virtual void PushAllocDbgInfo( const char *pFileName, int nLine );
+	virtual void PopAllocDbgInfo();
 
 	virtual long CrtSetBreakAlloc( long lNewBreakAlloc );
 	virtual	int CrtSetReportMode( int nReportType, int nReportMode );
@@ -513,7 +513,7 @@ public:
 	// handles storing allocation info for coroutines
 	virtual uint32 GetDebugInfoSize();
 	virtual void SaveDebugInfo( void *pvDebugInfo );
-	virtual void RestoreDebugInfo( const void *pvDebugInfo );	
+	virtual void RestoreDebugInfo( const void *pvDebugInfo );
 	virtual void InitDebugInfo( void *pvDebugInfo, const char *pchRootFileName, int nLine );
 
 	// FIXME: Remove when we have our own allocator
@@ -528,7 +528,7 @@ public:
 
 	virtual int GetVersion() { return MEMALLOC_VERSION; }
 
-	virtual void CompactHeap() 
+	virtual void CompactHeap()
 	{
 #if defined( _X360 ) && defined( _DEBUG )
 		HeapCompact( GetProcessHeap(), 0 );
@@ -704,16 +704,16 @@ CThreadMutex g_DbgMemMutex CONSTRUCT_EARLY;
 //-----------------------------------------------------------------------------
 // Byte count buckets
 //-----------------------------------------------------------------------------
-int CDbgMemAlloc::s_pCountSizes[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] = 
+int CDbgMemAlloc::s_pCountSizes[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] =
 {
 	16, 32, 128, 1024, INT_MAX
 };
 
-const char *CDbgMemAlloc::s_pCountHeader[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] = 
+const char *CDbgMemAlloc::s_pCountHeader[CDbgMemAlloc::NUM_BYTE_COUNT_BUCKETS] =
 {
-	"<=16 byte allocations", 
+	"<=16 byte allocations",
 	"17-32 byte allocations",
-	"33-128 byte allocations", 
+	"33-128 byte allocations",
 	"129-1024 byte allocations",
 	">1024 byte allocations"
 };
@@ -1043,7 +1043,7 @@ CDbgMemAlloc::MemInfo_t &CDbgMemAlloc::FindOrCreateEntry( const char *pFileName,
 {
 	Initialize();
 	// Oh how I love crazy STL. retval.first == the StatMapIter_t in the std::pair
-	// retval.first->second == the MemInfo_t that's part of the StatMapIter_t 
+	// retval.first->second == the MemInfo_t that's part of the StatMapIter_t
 	std::pair<StatMapIter_t, bool> retval;
 	if ( m_pStatMap )
 	{
@@ -1257,7 +1257,7 @@ void  CDbgMemAlloc::Free( void *pMem, const char * /*pFileName*/, int nLine )
 
 	m_Timer.Start();
 	InternalFree( pMem );
- 	m_Timer.End();
+	m_Timer.End();
 
 	RegisterDeallocation( pOldFileName, oldLine, nOldLogicalSize, nOldSize, m_Timer.GetDuration().GetMicroseconds() );
 }
@@ -1468,7 +1468,7 @@ void CDbgMemAlloc::DumpStatsFileBase( char const *pchFileBase )
 		char szXboxName[32];
 		strcpy( szXboxName, "xbox" );
 		DWORD numChars = sizeof( szXboxName );
-		DmGetXboxName( szXboxName, &numChars ); 
+		DmGetXboxName( szXboxName, &numChars );
 		char *pXboxName = strstr( szXboxName, "_360" );
 		if ( pXboxName )
 		{
@@ -1596,57 +1596,57 @@ CThreadMutex g_HookMutex;
 
 static void *override_malloc_hook(size_t s, const void *caller)
 {
-    void *retval;
-    AUTO_LOCK( g_HookMutex );
-    set_glibc_hooks();  /* put glibc back in control. */
-    retval = InternalMalloc( s, NULL, 0 );
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	void *retval;
+	AUTO_LOCK( g_HookMutex );
+	set_glibc_hooks();  /* put glibc back in control. */
+	retval = InternalMalloc( s, NULL, 0 );
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 
-    return(retval);
+	return(retval);
 } /* override_malloc_hook */
 
 
 static void *override_realloc_hook(void *ptr, size_t s, const void *caller)
 {
-    void *retval;
-    AUTO_LOCK( g_HookMutex );
+	void *retval;
+	AUTO_LOCK( g_HookMutex );
 
-    set_glibc_hooks();  /* put glibc back in control. */
-    retval = InternalRealloc(ptr, s, NULL, 0);  /* call glibc version. */
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	set_glibc_hooks();  /* put glibc back in control. */
+	retval = InternalRealloc(ptr, s, NULL, 0);  /* call glibc version. */
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 
-    return(retval);
+	return(retval);
 } /* override_realloc_hook */
 
 
 static void *override_memalign_hook(size_t a, size_t s, const void *caller)
 {
-    void *retval;
-    AUTO_LOCK( g_HookMutex );
+	void *retval;
+	AUTO_LOCK( g_HookMutex );
 
-    set_glibc_hooks();  /* put glibc back in control. */
-    retval = memalign(a, s);  /* call glibc version. */
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	set_glibc_hooks();  /* put glibc back in control. */
+	retval = memalign(a, s);  /* call glibc version. */
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 
-    return(retval);
+	return(retval);
 } /* override_memalign_hook */
 
 
 static void override_free_hook(void *ptr, const void *caller)
 {
-    AUTO_LOCK( g_HookMutex );
+	AUTO_LOCK( g_HookMutex );
 
-    set_glibc_hooks();  /* put glibc back in control. */
-    InternalFree(ptr);  /* call glibc version. */
-    save_glibc_hooks();  /* update in case glibc changed them. */
+	set_glibc_hooks();  /* put glibc back in control. */
+	InternalFree(ptr);  /* call glibc version. */
+	save_glibc_hooks();  /* update in case glibc changed them. */
 
-    set_override_hooks(); /* only restore hooks if daemon is listening */
+	set_override_hooks(); /* only restore hooks if daemon is listening */
 } /* override_free_hook */
 
 
@@ -1664,10 +1664,10 @@ static void override_free_hook(void *ptr, const void *caller)
  */
 static inline void save_glibc_hooks(void)
 {
-    glibc_malloc_hook = (void *)__malloc_hook;
-    glibc_realloc_hook = (void *)__realloc_hook;
-    glibc_memalign_hook = (void *)__memalign_hook;
-    glibc_free_hook = (void *)__free_hook;
+	glibc_malloc_hook = (void *)__malloc_hook;
+	glibc_realloc_hook = (void *)__realloc_hook;
+	glibc_memalign_hook = (void *)__memalign_hook;
+	glibc_free_hook = (void *)__free_hook;
 } /* save_glibc_hooks */
 
 /*
@@ -1678,10 +1678,10 @@ static inline void save_glibc_hooks(void)
  */
 static inline void set_glibc_hooks(void)
 {
-    __malloc_hook = (void* (*)(size_t, const void*))glibc_malloc_hook;
-    __realloc_hook = (void* (*)(void*, size_t, const void*))glibc_realloc_hook;
-    __memalign_hook = (void* (*)(size_t, size_t, const void*))glibc_memalign_hook;
-    __free_hook = (void (*)(void*, const void*))glibc_free_hook;
+	__malloc_hook = (void* (*)(size_t, const void*))glibc_malloc_hook;
+	__realloc_hook = (void* (*)(void*, size_t, const void*))glibc_realloc_hook;
+	__memalign_hook = (void* (*)(size_t, size_t, const void*))glibc_memalign_hook;
+	__free_hook = (void (*)(void*, const void*))glibc_free_hook;
 } /* set_glibc_hooks */
 
 
@@ -1693,10 +1693,10 @@ static inline void set_glibc_hooks(void)
  */
 static inline void set_override_hooks(void)
 {
-    __malloc_hook = override_malloc_hook;
-    __realloc_hook = override_realloc_hook;
-    __memalign_hook = override_memalign_hook;
-    __free_hook = override_free_hook;
+	__malloc_hook = override_malloc_hook;
+	__realloc_hook = override_realloc_hook;
+	__memalign_hook = override_memalign_hook;
+	__free_hook = override_free_hook;
 } /* set_override_hooks */
 
 
@@ -1711,11 +1711,11 @@ static inline void set_override_hooks(void)
  */
 static void __attribute__((constructor)) override_init_hook(void)
 {
-    AUTO_LOCK( g_HookMutex );
+	AUTO_LOCK( g_HookMutex );
 
-    /* install our hooks. Will connect to daemon on first malloc, etc. */
-    save_glibc_hooks();
-    set_override_hooks();
+	/* install our hooks. Will connect to daemon on first malloc, etc. */
+	save_glibc_hooks();
+	set_override_hooks();
 } /* override_init_hook */
 
 
@@ -1737,7 +1737,7 @@ static void *osx_malloc_hook = NULL;
 static void *osx_realloc_hook = NULL;
 static void *osx_free_hook = NULL;
 
-// convenience functions for setting the hooks... 
+// convenience functions for setting the hooks...
 static inline void save_osx_hooks(void);
 static inline void set_osx_hooks(void);
 static inline void set_override_hooks(void);
@@ -1750,25 +1750,25 @@ CThreadMutex g_HookMutex;
 
 static void *override_malloc_hook(struct _malloc_zone_t *zone, size_t s)
 {
-    void *retval;
-    set_osx_hooks(); 
-    retval = InternalMalloc( s, NULL, 0 );
-    set_override_hooks(); 
-	
-    return(retval);
-} 
+	void *retval;
+	set_osx_hooks();
+	retval = InternalMalloc( s, NULL, 0 );
+	set_override_hooks();
+
+	return(retval);
+}
 
 
 static void *override_realloc_hook(struct _malloc_zone_t *zone, void *ptr, size_t s)
 {
-    void *retval;
-	
-    set_osx_hooks();  
-    retval = InternalRealloc(ptr, s, NULL, 0);	
-    set_override_hooks(); 
-	
-    return(retval);
-} 
+	void *retval;
+
+	set_osx_hooks();
+	retval = InternalRealloc(ptr, s, NULL, 0);
+	set_override_hooks();
+
+	return(retval);
+}
 
 
 static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
@@ -1776,36 +1776,36 @@ static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
 	// sometime they pass in a null pointer from higher level calls, just ignore it
 	if ( !ptr )
 		return;
-	
-    set_osx_hooks(); 
-	
+
+	set_osx_hooks();
+
 	DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( ptr );
 	if ( *((int*)pInternalMem->m_Reserved) == 0xf00df00d )
 	{
 		InternalFree( ptr );
 	}
-    
-    set_override_hooks(); 
-} 
+
+	set_override_hooks();
+}
 
 
 /*
- 
+
  These are func's we could optionally override right now on OSX but don't need to
- 
+
  static size_t override_size_hook(struct _malloc_zone_t *zone, const void *ptr)
  {
- set_osx_hooks();  
+ set_osx_hooks();
  DbgMemHeader_t *pInternalMem = GetCrtDbgMemHeader( (void *)ptr );
- set_override_hooks(); 
+ set_override_hooks();
  if ( *((int*)pInternalMem->m_Reserved) == 0xf00df00d )
  {
  return pInternalMem->nLogicalSize;
  }
  return 0;
- } 
- 
- 
+ }
+
+
  static void *override_calloc_hook(struct _malloc_zone_t *zone, size_t num_items, size_t size )
  {
  void *ans = override_malloc_hook( zone, num_items*size );
@@ -1814,12 +1814,12 @@ static void override_free_hook(struct _malloc_zone_t *zone, void *ptr)
  memset( ans, 0x0, num_items*size );
  return ans;
  }
- 
+
  static void *override_valloc_hook(struct _malloc_zone_t *zone, size_t size )
  {
  return override_calloc_hook( zone, 1, size );
  }
- 
+
  static void override_destroy_hook(struct _malloc_zone_t *zone)
  {
  }
@@ -1925,24 +1925,24 @@ static inline void set_override_hooks(void)
 
 void __attribute__ ((constructor)) mem_init(void)
 {
-    AUTO_LOCK( g_HookMutex );
+	AUTO_LOCK( g_HookMutex );
 	save_osx_hooks();
-    set_override_hooks();
+	set_override_hooks();
 }
 
 void *operator new( size_t nSize, int nBlockUse, const char *pFileName, int nLine )
 {
-	set_osx_hooks(); 
+	set_osx_hooks();
 	void *pMem = g_pMemAlloc->Alloc(nSize, pFileName, nLine);
-	set_override_hooks(); 
+	set_override_hooks();
 	return pMem;
 }
 
 void *operator new[] ( size_t nSize, int nBlockUse, const char *pFileName, int nLine )
 {
-	set_osx_hooks(); 
+	set_osx_hooks();
 	void *pMem = g_pMemAlloc->Alloc(nSize, pFileName, nLine);
-	set_override_hooks(); 
+	set_override_hooks();
 	return pMem;
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 // The solo track
 //-----------------------------------------------------------------------------
-DmElementHandle_t CDmeTrack::m_hSoloTrack[ DMECLIP_TYPE_COUNT ] = 
+DmElementHandle_t CDmeTrack::m_hSoloTrack[ DMECLIP_TYPE_COUNT ] =
 {
 	DMELEMENT_HANDLE_INVALID,
 	DMELEMENT_HANDLE_INVALID,
@@ -98,7 +98,7 @@ void CDmeTrack::SetClipType( DmeClipType_t type )
 {
 	m_ClipType = type;
 }
-		
+
 void CDmeTrack::SetCollapsed( bool state )
 {
 	m_Collapsed = state;
@@ -425,7 +425,7 @@ void CDmeTrack::ShiftAllFilmClipsBefore( CDmeClip *pClip, DmeTime_t dt, bool bSh
 	Assert( IsFilmTrack() );
 	if ( !IsFilmTrack() || ( m_Clips.Count() == 0 ) || ( dt == DmeTime_t( 0 ) ) )
 		return;
-	 
+
 	// This algorithm requires sorted clips
 	SortClipsByStartTime();
 
@@ -579,7 +579,7 @@ CDmeClip* CDmeTrack::FindFilmClipAtTime( DmeTime_t localTime )
 	return NULL;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Find first clip in a specific time range
 //-----------------------------------------------------------------------------
@@ -606,7 +606,7 @@ CDmeClip* CDmeTrack::FindFirstFilmClipIntesectingTime( DmeTime_t localStartTime,
 	return NULL;
 }
 
-		
+
 //-----------------------------------------------------------------------------
 // Inserts space in a film track for a film clip
 //-----------------------------------------------------------------------------
@@ -623,7 +623,7 @@ void CDmeTrack::InsertSpaceInFilmTrack( DmeTime_t localStartTime, DmeTime_t loca
 	{
 		DmeTime_t filmStart = pClip->GetStartTime();
 		DmeTime_t dt = localEndTime - filmStart;
-		ShiftAllFilmClipsAfter( pClip, dt, true ); 
+		ShiftAllFilmClipsAfter( pClip, dt, true );
 	}
 
 	return;
@@ -672,7 +672,7 @@ CDmeClip* CDmeTrack::FindNextFilmClip( CDmeClip *pClip )
 	SortClipsByStartTime();
 
 	if ( !pClip )
-		return m_Clips[ 0 ]; 
+		return m_Clips[ 0 ];
 
 	CDmeClip *pNextClip = NULL;
 

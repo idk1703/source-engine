@@ -1,4 +1,4 @@
-//===== Copyright © 2005-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 2005-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: A higher level link library for general use in the game and tools.
 //
@@ -288,7 +288,7 @@ void ReconnectInterface( CreateInterfaceFn factory, const char *pInterfaceName )
 	for ( int i = 0; i < ARRAYSIZE( g_pInterfaceGlobals ); ++i )
 	{
 		if ( strcmp( g_pInterfaceGlobals[i].m_pInterfaceName, pInterfaceName ) )
-			continue;		
+			continue;
 		ReconnectInterface( factory, g_pInterfaceGlobals[i].m_pInterfaceName, (void**)g_pInterfaceGlobals[i].m_ppGlobal );
 	}
 }

@@ -4,7 +4,7 @@
 //
 // $NoKeywords: $
 //
-// 
+//
 //=============================================================================//
 #ifndef MOVING_AVERAGE_H
 #define MOVING_AVERAGE_H
@@ -31,9 +31,9 @@ public:
 		m_flTotal = 0.0f;
 	}
 
-	uint32 GetTotalValuesPushed() const 
-	{ 
-		return m_nValuesPushed; 
+	uint32 GetTotalValuesPushed() const
+	{
+		return m_nValuesPushed;
 	}
 
 	float GetAverage( )
@@ -77,7 +77,7 @@ public:
 	void PushValue( float v )
 	{
 		uint nIndex = m_nValuesPushed % TBufferSize;
-		
+
 		if ( m_nValuesPushed >= TBufferSize )
 		{
 			m_flTotal = MAX( m_flTotal - m_Buffer[nIndex], 0.0f );
@@ -92,7 +92,7 @@ public:
 			Reset();
 		}
 	}
-		
+
 private:
 	float m_Buffer[TBufferSize];
 	uint32 m_nValuesPushed;

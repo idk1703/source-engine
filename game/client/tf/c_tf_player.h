@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -73,7 +73,7 @@ struct BonusEffect_t
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_TFPlayer : public C_BasePlayer, public IHasAttributes, public IInventoryUpdateListener, public C_TFMvMBossProgressUser
 {
@@ -238,7 +238,7 @@ public:
 	CNetworkVar( int, m_iKartState );
 
 	bool IsAllowedToTaunt( void );
-	
+
 	virtual bool	IsOverridingViewmodel( void );
 	virtual int		DrawOverriddenViewmodel( C_BaseViewModel *pViewmodel, int flags );
 
@@ -254,7 +254,7 @@ public:
 	void			StopBurningSound( void );
 
 	void			StopBlastJumpLoopSound( int iUserID );
-	
+
 	void			UpdateSpyStateChange( void );
 
 	void			UpdateRecentlyTeleportedEffect( void );
@@ -315,7 +315,7 @@ public:
 
 	virtual const char* ModifyEventParticles( const char* token );
 
-	// Set the distances the camera should use. 
+	// Set the distances the camera should use.
 	void			SetTauntCameraTargets( float back, float up );
 
 	// TF-specific color values for GlowEffect
@@ -758,7 +758,7 @@ public:
 	Vector m_vEyeGlowColor2;
 	HPARTICLEFFECT m_pEyeGlowEffect[ 2 ];
 	float m_flNextSheenStartTime;
-	
+
 	HPARTICLEFFECT m_pMVMBotRadiowave;
 
 	HPARTICLEFFECT m_pRuneChargeReadyEffect;
@@ -871,7 +871,7 @@ private:
 
 	// Medic healtarget active weapon ammo/clip count
 	uint16	m_nActiveWpnClip;
-	
+
 	// Blast jump whistle
 	CSoundPatch		*m_pBlastJumpLoop;
 	float			m_flBlastJumpLaunchTime;
@@ -906,7 +906,7 @@ public:
 
 	bool IsUsingActionSlot() const { return m_bUsingActionSlot; }
 	void SetUsingActionSlot( bool bUsingActionSlot ) { m_bUsingActionSlot = bUsingActionSlot; }
-	
+
 	void SetSecondaryLastWeapon( CBaseCombatWeapon *pSecondaryLastWeapon ) { m_hSecondaryLastWeapon = pSecondaryLastWeapon; }
 	CBaseCombatWeapon* GetSecondaryLastWeapon() const { return m_hSecondaryLastWeapon; }
 

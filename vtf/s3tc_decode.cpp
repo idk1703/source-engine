@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -115,7 +115,7 @@ void S3TC_BuildPalette( ImageFormat format, const char *pS3Block, S3RGBA palette
 			// Opaque and transparent texels are defined. The lookup is 3 colors. 11 means
 			// a black, transparent pixel.
 			palette[1] = S3TC_RGBAFrom565( pBlock->m_Ref2, 255 );
-			palette[2] = S3TC_RGBABlend( palette[0], palette[1], 1, 1, 2 );	
+			palette[2] = S3TC_RGBABlend( palette[0], palette[1], 1, 1, 2 );
 			palette[3].r = palette[3].g = palette[3].b = palette[3].a = 0;
 		}
 		else
@@ -153,7 +153,7 @@ S3PaletteIndex S3TC_GetPixelPaletteIndex( ImageFormat format, const char *pS3Blo
 		Assert( format == IMAGE_FORMAT_DXT5 );
 
 		const S3TCBlock_DXT5 *pBlock = reinterpret_cast<const S3TCBlock_DXT5 *>( pS3Block );
-		
+
 		int64 &alphaBits = *((int64*)pBlock->m_AlphaBits);
 		ret.m_ColorIndex = (unsigned char)((pBlock->m_PixelBits >> (iQuadPixel << 1)) & 3);
 		ret.m_AlphaIndex = (unsigned char)((alphaBits >> (iQuadPixel * 3)) & 7);
@@ -172,7 +172,7 @@ void S3TC_SetPixelPaletteIndex( ImageFormat format, char *pS3Block, int x, int y
 
 	int iQuadPixel = y*4 + x;
 	int iColorBit = iQuadPixel * 2;
-	
+
 	if ( format == IMAGE_FORMAT_DXT1 )
 	{
 		S3TCBlock_DXT1 *pBlock = reinterpret_cast<S3TCBlock_DXT1 *>( pS3Block );
@@ -183,22 +183,22 @@ void S3TC_SetPixelPaletteIndex( ImageFormat format, char *pS3Block, int x, int y
 	else
 	{
 		Assert( format == IMAGE_FORMAT_DXT5 );
-		 
+
 		S3TCBlock_DXT5 *pBlock = reinterpret_cast<S3TCBlock_DXT5 *>( pS3Block );
 
 		// Copy the color portion in.
 		pBlock->m_PixelBits &= ~( 3 << iColorBit );
 		pBlock->m_PixelBits |= (unsigned int)iPaletteIndex.m_ColorIndex << iColorBit;
-		 
+
 		 // Copy the alpha portion in.
 		WriteBitInt( (char*)pBlock->m_AlphaBits, iQuadPixel*3, 3, iPaletteIndex.m_AlphaIndex );
 	}
 }
 
 
-const char* S3TC_GetBlock( 
-	const void *pCompressed, 
-	ImageFormat format, 
+const char* S3TC_GetBlock(
+	const void *pCompressed,
+	ImageFormat format,
 	int nBlocksWidth,
 	int xBlock,
 	int yBlock )
@@ -208,9 +208,9 @@ const char* S3TC_GetBlock(
 }
 
 
-char* S3TC_GetBlock( 
-	void *pCompressed, 
-	ImageFormat format, 
+char* S3TC_GetBlock(
+	void *pCompressed,
+	ImageFormat format,
 	int nBlocksWidth,
 	int xBlock,
 	int yBlock )
@@ -227,7 +227,7 @@ void GenerateRepresentativePalette(
 	char mergedBlocks[16*MAX_S3TC_BLOCK_BYTES]
 	)
 {
-	Error( "GenerateRepresentativePalette: not implemented" );	
+	Error( "GenerateRepresentativePalette: not implemented" );
 #if 0														// this code was ifdefed out. no idea under what circumstances it was meant to be called.
 
 	Assert( nBlocks == 2 || nBlocks == 3 );
@@ -244,9 +244,9 @@ void GenerateRepresentativePalette(
 				int outIndex = y*width+(i*4+x);
 				values[outIndex] = pOriginals[i][y * (lPitch/4) + x];
 			}
-		}			
+		}
 	}
-	
+
 	DDSURFACEDESC descIn;
 	DDSURFACEDESC descOut;
 	memset( &descIn, 0, sizeof(descIn) );
@@ -268,11 +268,11 @@ void GenerateRepresentativePalette(
 	descIn.ddpfPixelFormat.dwRGBAlphaBitMask = 0xff000000;
 
 	descOut.dwSize = sizeof( descOut );
-	
+
 	float weight[3] = {0.3086f, 0.6094f, 0.0820f};
-	
+
 	S3TC_BLOCK_WIDTH = nBlocks * 4;
-	
+
 	DWORD encodeFlags = S3TC_ENCODE_RGB_FULL;
 	if ( format == IMAGE_FORMAT_DXT5 )
 		encodeFlags |= S3TC_ENCODE_ALPHA_INTERPOLATED;
@@ -283,7 +283,7 @@ void GenerateRepresentativePalette(
 #endif
 }
 
-void S3TC_MergeBlocks( 
+void S3TC_MergeBlocks(
 	char **blocks,
 	S3RGBA **pOriginals,	// Original RGBA colors in the texture. This allows it to avoid doubly compressing.
 	int nBlocks,
@@ -292,7 +292,7 @@ void S3TC_MergeBlocks(
 	)
 {
 	// Figure out a good palette to represent all of these blocks.
-	char mergedBlocks[16*MAX_S3TC_BLOCK_BYTES]; 
+	char mergedBlocks[16*MAX_S3TC_BLOCK_BYTES];
 	GenerateRepresentativePalette( format, pOriginals, nBlocks, lPitch, mergedBlocks );
 
 	// Build a remap table to remap block 2's colors to block 1's colors.
@@ -305,17 +305,17 @@ void S3TC_MergeBlocks(
 		for ( int iBlock=0; iBlock < nBlocks; iBlock++ )
 		{
 			S3TCBlock_DXT1 *pBlock = ((S3TCBlock_DXT1*)blocks[iBlock]);
-			
+
 			// Remap all of the block's pixels.
 			for ( int x=0; x < 4; x++ )
 			{
 				for ( int y=0; y < 4; y++ )
 				{
 					int iBaseBit = (y*nBlocks*4 + x + iBlock*4) * 2;
-					
+
 					S3PaletteIndex index = {0, 0};
 					index.m_ColorIndex = ReadBitInt( pBase, iBaseBit, 2 );
-					
+
 					S3TC_SetPixelPaletteIndex( format, (char*)pBlock, x, y, index );
 				}
 			}
@@ -332,7 +332,7 @@ void S3TC_MergeBlocks(
 		// Skip past the alpha palette.
 		const char *pAlphaPalette = mergedBlocks;
 		const char *pAlphaBits = mergedBlocks + 2;
-		
+
 		// Skip past the alpha pixel bits and past the color palette.
 		const char *pColorPalette = pAlphaBits + 6*nBlocks;
 		const char *pColorBits = pColorPalette + 4;
@@ -340,18 +340,18 @@ void S3TC_MergeBlocks(
 		for ( int iBlock=0; iBlock < nBlocks; iBlock++ )
 		{
 			S3TCBlock_DXT5 *pBlock = ((S3TCBlock_DXT5*)blocks[iBlock]);
-			
+
 			// Remap all of the block's pixels.
 			for ( int x=0; x < 4; x++ )
 			{
 				for ( int y=0; y < 4; y++ )
 				{
 					int iBasePixel = (y*nBlocks*4 + x + iBlock*4);
-					
+
 					S3PaletteIndex index;
 					index.m_ColorIndex = ReadBitInt( pColorBits, iBasePixel * 2, 2 );
 					index.m_AlphaIndex = ReadBitInt( pAlphaBits, iBasePixel * 3, 3 );
-					
+
 					S3TC_SetPixelPaletteIndex( format, (char*)pBlock, x, y, index );
 				}
 			}
@@ -366,7 +366,7 @@ void S3TC_MergeBlocks(
 }
 
 
-S3PaletteIndex S3TC_GetPaletteIndex( 
+S3PaletteIndex S3TC_GetPaletteIndex(
 	unsigned char *pFaceData,
 	ImageFormat format,
 	int imageWidth,
@@ -378,7 +378,7 @@ S3PaletteIndex S3TC_GetPaletteIndex(
 }
 
 
-void S3TC_SetPaletteIndex( 
+void S3TC_SetPaletteIndex(
 	unsigned char *pFaceData,
 	ImageFormat format,
 	int imageWidth,
@@ -389,7 +389,3 @@ void S3TC_SetPaletteIndex(
 	char *pBlock = S3TC_GetBlock( pFaceData, format, imageWidth>>2, x>>2, y>>2 );
 	S3TC_SetPixelPaletteIndex( format, pBlock, x&3, y&3, paletteIndex );
 }
-
-
-
-

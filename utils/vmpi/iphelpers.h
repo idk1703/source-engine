@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -29,7 +29,7 @@ public:
 					CIPAddr();
 					CIPAddr( const int inputIP[4], const int inputPort );
 					CIPAddr( int ip0, int ip1, int ip2, int ip3, int ipPort );
-	
+
 	void			Init( int ip0, int ip1, int ip2, int ip3, int ipPort );
 	bool			operator==( const CIPAddr &o ) const;
 	bool			operator!=( const CIPAddr &o ) const;
@@ -53,14 +53,14 @@ public:
 					CChunkWalker( void const * const *pChunks, const int *pChunkLengths, int nChunks );
 
 	int				GetTotalLength() const;
-	void			CopyTo( void *pOut, int nBytes );	
+	void			CopyTo( void *pOut, int nBytes );
 
 private:
-	
+
 	void const * const		*m_pChunks;
 	const int				*m_pChunkLengths;
 	int						m_nChunks;
-	
+
 	int						m_iCurChunk;
 	int						m_iCurChunkPos;
 
@@ -87,7 +87,7 @@ class CWaitTimer
 public:
 			CWaitTimer( double flSeconds );
 
-	bool	ShouldKeepWaiting();	
+	bool	ShouldKeepWaiting();
 
 private:
 	unsigned long	m_StartTime;
@@ -103,19 +103,19 @@ class ISocket
 {
 public:
 
-	// Call this when you're done.	
+	// Call this when you're done.
 	virtual void	Release() = 0;
 
-	
+
 	// Bind the socket so you can send and receive with it.
 	// If you bind to port 0, then the system will select the port for you.
 	virtual bool	Bind( const CIPAddr *pAddr ) = 0;
 	virtual bool	BindToAny( const unsigned short port ) = 0;
 
-	
+
 	// Broadcast some data.
 	virtual bool	Broadcast( const void *pData, const int len, const unsigned short port ) = 0;
-	
+
 	// Send a packet.
 	virtual bool	SendTo( const CIPAddr *pAddr, const void *pData, const int len ) = 0;
 	virtual bool	SendChunksTo( const CIPAddr *pAddr, void const * const *pChunks, const int *pChunkLengths, int nChunks ) = 0;
@@ -134,9 +134,9 @@ ISocket* CreateIPSocket();
 // This sets up the socket to receive multicast data on the specified group.
 // By default, localInterface is INADDR_ANY, but if you want to specify a specific interface
 // the data should come in through, you can.
-ISocket* CreateMulticastListenSocket( 
-	const CIPAddr &addr, 
-	const CIPAddr &localInterface = CIPAddr() 
+ISocket* CreateMulticastListenSocket(
+	const CIPAddr &addr,
+	const CIPAddr &localInterface = CIPAddr()
 	);
 
 
@@ -159,4 +159,3 @@ void IPAddrToSockAddr( const CIPAddr *pIn, struct sockaddr_in *pOut );
 
 
 #endif
-

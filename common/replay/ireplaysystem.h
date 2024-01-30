@@ -35,7 +35,7 @@ public:
 	virtual bool		IsRecording() = 0;
 
 	// To be called client-side only - on dedicated servers, only subs defined
-	virtual bool		CL_Init( CreateInterfaceFn fnClientFactory ) = 0; 
+	virtual bool		CL_Init( CreateInterfaceFn fnClientFactory ) = 0;
 	virtual void		CL_Shutdown() = 0;
 	virtual void		CL_Render() = 0;
 	virtual IClientReplayContext	*CL_GetContext() = 0;

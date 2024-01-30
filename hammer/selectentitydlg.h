@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -51,4 +51,3 @@ class CSelectEntityDlg : public CDialog
 		//}}AFX_MSG
 		DECLARE_MESSAGE_MAP()
 };
-

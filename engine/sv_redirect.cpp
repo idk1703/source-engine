@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,7 +38,7 @@ void SV_RedirectFlush( void )
 	{
 		RCONServer().FinishRedirect( sv_redirect_buffer, sv_redirectto );
 	}
-	
+
 	// clear it
 	sv_redirect_buffer[0] = 0;
 	bInFlush = false;
@@ -46,8 +46,8 @@ void SV_RedirectFlush( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Sents console printfs to remote client instead of to console
-// Input  : rd - 
-//			*addr - 
+// Input  : rd -
+//			*addr -
 //-----------------------------------------------------------------------------
 void SV_RedirectStart (redirect_t rd, const netadr_t *addr)
 {
@@ -66,8 +66,8 @@ void SV_RedirectEnd (void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : len - 
+// Purpose:
+// Input  : len -
 //-----------------------------------------------------------------------------
 void SV_RedirectCheckFlush( int len )
 {
@@ -78,17 +78,17 @@ void SV_RedirectCheckFlush( int len )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : bool
 //-----------------------------------------------------------------------------
 bool SV_RedirectActive( void )
-{	
+{
 	return ( sv_redirected != RD_NONE ) ? true : false;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *txt - 
+// Purpose:
+// Input  : *txt -
 //-----------------------------------------------------------------------------
 void SV_RedirectAddText( const char *txt )
 {

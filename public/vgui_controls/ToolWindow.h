@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -39,7 +39,7 @@ public:
 
 	virtual bool IsDraggableTabContainer() const;
 
-	// returns a pointer to the PropertySheet this dialog encapsulates 
+	// returns a pointer to the PropertySheet this dialog encapsulates
 	PropertySheet *GetPropertySheet();
 
 	// wrapper for PropertySheet interface

@@ -108,12 +108,12 @@ struct PolygonClipState_t
 class CClipTop
 {
 public:
-	static inline bool Inside( vgui::Vertex_t const& vert )					
-	{ 
+	static inline bool Inside( vgui::Vertex_t const& vert )
+	{
 		return vert.m_Position.y >= g_ScissorRect.top;
 	}
-	static inline float Clip( const Vector2D& one, const Vector2D& two )	
-	{ 
+	static inline float Clip( const Vector2D& one, const Vector2D& two )
+	{
 		return (g_ScissorRect.top - one.y) / (two.y - one.y);
 	}
 };
@@ -121,12 +121,12 @@ public:
 class CClipLeft
 {
 public:
-	static inline bool Inside( vgui::Vertex_t const& vert )					
-	{ 
+	static inline bool Inside( vgui::Vertex_t const& vert )
+	{
 		return vert.m_Position.x >= g_ScissorRect.left;
 	}
-	static inline float Clip( const Vector2D& one, const Vector2D& two )	
-	{ 
+	static inline float Clip( const Vector2D& one, const Vector2D& two )
+	{
 		return (one.x - g_ScissorRect.left) / (one.x - two.x);
 	}
 };
@@ -134,11 +134,11 @@ public:
 class CClipRight
 {
 public:
-	static inline bool Inside( vgui::Vertex_t const& vert )					
+	static inline bool Inside( vgui::Vertex_t const& vert )
 	{
 		return vert.m_Position.x < g_ScissorRect.right;
 	}
-	static inline float Clip( const Vector2D& one, const Vector2D& two )	
+	static inline float Clip( const Vector2D& one, const Vector2D& two )
 	{
 		return (g_ScissorRect.right - one.x) / (two.x - one.x);
 	}
@@ -147,11 +147,11 @@ public:
 class CClipBottom
 {
 public:
-	static inline bool Inside( vgui::Vertex_t const& vert )					
+	static inline bool Inside( vgui::Vertex_t const& vert )
 	{
 		return vert.m_Position.y < g_ScissorRect.bottom;
 	}
-	static inline float Clip( const Vector2D& one, const Vector2D& two )	
+	static inline float Clip( const Vector2D& one, const Vector2D& two )
 	{
 		return (one.y - g_ScissorRect.bottom) / (one.y - two.y);
 	}
@@ -189,7 +189,7 @@ bool ClipLineToPlane( Clipper &clipper, const vgui::Vertex_t *pInVerts, vgui::Ve
 	{
 		int inIndex = startInside ? 0 : 1;
 		pOutVerts[inIndex] = pInVerts[inIndex];
-		Intersect( pInVerts[0], pInVerts[1], &pOutVerts[1 - inIndex], clipper ); 
+		Intersect( pInVerts[0], pInVerts[1], &pOutVerts[1 - inIndex], clipper );
 	}
 
 	return true;
@@ -267,13 +267,13 @@ static void ScreenClip( ScreenClipState_t& clip, Clipper& clipper )
 			if (!startInside)
 			{
 				// Started outside, ended inside, need to clip the edge
-				Assert( clip.m_iTempCount <= clip.m_pTempVertices.Count() ); 
+				Assert( clip.m_iTempCount <= clip.m_pTempVertices.Count() );
 
-				// Allocate a new clipped vertex 
+				// Allocate a new clipped vertex
 				pDestVert[numOutVerts] = &clip.m_pTempVertices[clip.m_iTempCount++];
 
 				// Clip the edge to the clip plane
-				Intersect( *pStart, *pEnd, pDestVert[numOutVerts], clipper ); 
+				Intersect( *pStart, *pEnd, pDestVert[numOutVerts], clipper );
 				++numOutVerts;
 			}
 			pDestVert[numOutVerts++] = pEnd;
@@ -283,13 +283,13 @@ static void ScreenClip( ScreenClipState_t& clip, Clipper& clipper )
 			if (startInside)
 			{
 				// Started inside, ended outside, need to clip the edge
-				Assert( clip.m_iTempCount <= clip.m_pTempVertices.Count() ); 
+				Assert( clip.m_iTempCount <= clip.m_pTempVertices.Count() );
 
-				// Allocate a new clipped vertex 
+				// Allocate a new clipped vertex
 				pDestVert[numOutVerts] = &clip.m_pTempVertices[clip.m_iTempCount++];
 
 				// Clip the edge to the clip plane
-				Intersect( *pStart, *pEnd, pDestVert[numOutVerts], clipper ); 
+				Intersect( *pStart, *pEnd, pDestVert[numOutVerts], clipper );
 				++numOutVerts;
 			}
 		}
@@ -306,12 +306,12 @@ static void ScreenClip( ScreenClipState_t& clip, Clipper& clipper )
 //-----------------------------------------------------------------------------
 // Clips a polygon to the screen area
 //-----------------------------------------------------------------------------
-int ClipPolygon( int iCount, vgui::Vertex_t *pVerts, int iTranslateX, int iTranslateY, vgui::Vertex_t ***pppOutVertex ) 
+int ClipPolygon( int iCount, vgui::Vertex_t *pVerts, int iTranslateX, int iTranslateY, vgui::Vertex_t ***pppOutVertex )
 {
 	static ScreenClipState_t clip;
 
 	// Allocate enough room in the clip state...
-	// Having no reallocations during clipping 
+	// Having no reallocations during clipping
 	clip.m_pTempVertices.EnsureCount( iCount * 4 );
 	clip.m_ppClipVertices[0].EnsureCount( iCount * 4 );
 	clip.m_ppClipVertices[1].EnsureCount( iCount * 4 );
@@ -374,17 +374,17 @@ inline float InterpTCoord(float val, float mins, float maxs, float tMin, float t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: Does a scissor clip of the input rectangle.  
+// Purpose: Does a scissor clip of the input rectangle.
 // Returns false if it is completely clipped off.
 //-----------------------------------------------------------------------------
-bool ClipRect( const vgui::Vertex_t &inUL, const vgui::Vertex_t &inLR, 
+bool ClipRect( const vgui::Vertex_t &inUL, const vgui::Vertex_t &inLR,
 			   vgui::Vertex_t *pOutUL, vgui::Vertex_t *pOutLR )
 {
 	// Check for a valid rectangle...
 //	Assert( inUL.m_Position.x <= inLR.m_Position.x );
 //	Assert( inUL.m_Position.y <= inLR.m_Position.y );
- 
-	if ( IsX360() && ( !g_bScissor || g_bFullScreenScissor || 
+
+	if ( IsX360() && ( !g_bScissor || g_bFullScreenScissor ||
 		( inUL.m_Position.x >= g_ScissorRect.left && inLR.m_Position.x <= g_ScissorRect.right && inUL.m_Position.y >= g_ScissorRect.top && inLR.m_Position.y <= g_ScissorRect.bottom ) ) )
 	{
 		// clipping is not needed
@@ -429,14 +429,14 @@ bool ClipRect( const vgui::Vertex_t &inUL, const vgui::Vertex_t &inLR,
 
 		if ( !g_bStretchTexture )
 		{
-			pOutUL->m_TexCoord.x = InterpTCoord(pOutUL->m_Position.x, 
+			pOutUL->m_TexCoord.x = InterpTCoord(pOutUL->m_Position.x,
 				inUL.m_Position.x, inLR.m_Position.x, inUL.m_TexCoord.x, inLR.m_TexCoord.x);
-			pOutLR->m_TexCoord.x = InterpTCoord(pOutLR->m_Position.x,  
+			pOutLR->m_TexCoord.x = InterpTCoord(pOutLR->m_Position.x,
 				inUL.m_Position.x, inLR.m_Position.x, inUL.m_TexCoord.x, inLR.m_TexCoord.x);
 
-			pOutUL->m_TexCoord.y = InterpTCoord(pOutUL->m_Position.y, 
+			pOutUL->m_TexCoord.y = InterpTCoord(pOutUL->m_Position.y,
 				inUL.m_Position.y, inLR.m_Position.y, inUL.m_TexCoord.y, inLR.m_TexCoord.y);
-			pOutLR->m_TexCoord.y = InterpTCoord(pOutLR->m_Position.y,  
+			pOutLR->m_TexCoord.y = InterpTCoord(pOutLR->m_Position.y,
 				inUL.m_Position.y, inLR.m_Position.y, inUL.m_TexCoord.y, inLR.m_TexCoord.y);
 		}
 		else
@@ -454,4 +454,3 @@ bool ClipRect( const vgui::Vertex_t &inUL, const vgui::Vertex_t &inLR,
 
 	return true;
 }
-

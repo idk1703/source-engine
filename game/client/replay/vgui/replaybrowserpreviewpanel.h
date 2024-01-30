@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,7 +34,7 @@ class CReplayScreenshotSlideshowPanel;
 //-----------------------------------------------------------------------------
 class CGenericClassBasedReplay;
 class CCrossfadableImagePanel;
-class CSlideshowPanel;	
+class CSlideshowPanel;
 
 class CReplayPreviewPanelBase : public EditablePanel
 {
@@ -42,7 +42,7 @@ class CReplayPreviewPanelBase : public EditablePanel
 public:
 	CReplayPreviewPanelBase( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
 	~CReplayPreviewPanelBase();
-	
+
 	virtual void ApplySchemeSettings( IScheme *pScheme );
 	virtual void PerformLayout();
 

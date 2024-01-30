@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -18,13 +18,13 @@
 //-----------------------------------------------------------------------------
 class CConfigPanel : public vgui::Frame
 {
-	DECLARE_CLASS_SIMPLE( CConfigPanel, vgui::Frame ); 
+	DECLARE_CLASS_SIMPLE( CConfigPanel, vgui::Frame );
 public:
 	CConfigPanel(vgui::Panel *parent, bool autorefresh,bool savercon,int refreshtime,bool graphs, int graphsrefreshtime,bool getlogs);
 	~CConfigPanel();
 
 	void Run();
-	
+
 protected:
 	// message handlers
 	MESSAGE_FUNC_PTR( OnButtonToggled, "ButtonToggled", panel );

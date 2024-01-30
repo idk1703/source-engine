@@ -4,7 +4,7 @@
 //
 // On win32 this is 0.0 to 1.0 indicating the amount of CPU time used
 // On posix its the load avg from the last minute
-// 
+//
 // On win32 you need to call this once in a while.  Every few seconds.
 // First call returns zero
 //=============================================================================//
@@ -58,7 +58,7 @@ typedef LONG (WINAPI *PROCNTQSI)(UINT,PVOID,ULONG,PULONG);
 
 static PROCNTQSI NtQuerySystemInformation;
 
-float GetCPUUsage() 
+float GetCPUUsage()
 {
 	SYSTEM_PERFORMANCE_INFORMATION SysPerfInfo;
 	SYSTEM_TIME_INFORMATION SysTimeInfo;
@@ -122,7 +122,7 @@ float GetCPUUsage()
 #ifdef POSIX
 #include <stdlib.h>
 
-float GetCPUUsage() 
+float GetCPUUsage()
 {
 	double loadavg[3];
 

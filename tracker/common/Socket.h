@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -30,7 +30,7 @@ typedef struct
 } SPLITPACKET;
 #pragma pack()
 
-#define MAX_PACKETS 16 // 4 bits for the packet count, so only 
+#define MAX_PACKETS 16 // 4 bits for the packet count, so only
 #define MAX_RETRIES 2 // the number of fragments from other packets to drop before we declare the outstanding
 					  // fragment lost :)
 

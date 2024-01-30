@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 #include <KeyValues.h>
-#include <vgui_controls/ListPanel.h>	
+#include <vgui_controls/ListPanel.h>
 
 
 int __cdecl PlayerNameCompare(const KeyValues *elem1, const KeyValues *elem2 )
@@ -16,7 +16,7 @@ int __cdecl PlayerNameCompare(const KeyValues *elem1, const KeyValues *elem2 )
 
 	if ( !elem1 || !elem2 )  // No meaningful comparison
 	{
-		return 0;  
+		return 0;
 	}
 
 /*	const char *name1 = elem1->GetString("name");
@@ -39,7 +39,7 @@ int __cdecl PlayerPingCompare(const KeyValues *elem1, const KeyValues *elem2 )
 
 	if ( !p1 || !p2 )  // No meaningful comparison
 	{
-		return 0;  
+		return 0;
 	}
 
 	int ping1 = p1->kv->GetInt("ping");
@@ -65,7 +65,7 @@ int __cdecl PlayerAuthCompare(const void *elem1, const void *elem2 )
 
 	if ( !p1 || !p2 )  // No meaningful comparison
 	{
-		return 0;  
+		return 0;
 	}
 
 	const char *authid1 = p1->kv->GetString("authid");
@@ -88,7 +88,7 @@ int __cdecl PlayerLossCompare(const void *elem1, const void *elem2 )
 
 	if ( !p1 || !p2 )  // No meaningful comparison
 	{
-		return 0;  
+		return 0;
 	}
 
 	int loss1 = p1->kv->GetInt("loss");
@@ -114,7 +114,7 @@ int __cdecl PlayerFragsCompare(const void *elem1, const void *elem2 )
 
 	if ( !p1 || !p2 )  // No meaningful comparison
 	{
-		return 0;  
+		return 0;
 	}
 
 	int frags1 = p1->kv->GetInt("frags");
@@ -181,7 +181,7 @@ int __cdecl PlayerTimeCompare( vgui::ListPanel *pPanel, const vgui::ListPanelIte
 
 	t1=(float)(h1*3600+m1*60+s1);
 	t2=(float)(h2*3600+m2*60+s2);
-	
+
 	if ( t1 < t2 )
 		return -1;
 	else if ( t1 > t2 )

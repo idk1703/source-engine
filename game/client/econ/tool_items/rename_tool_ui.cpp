@@ -52,7 +52,7 @@ void CEconTool_NameTag::OnClientApplyTool( CEconItemView *pTool, CEconItemView *
 }
 
 //-----------------------------------------------------------------------------
-CRequestNameDialog::CRequestNameDialog( vgui::Panel *parent, const char* pszName, CEconItemView *pTool, CEconItemView *pToolSubject, bool bDescription ) : 
+CRequestNameDialog::CRequestNameDialog( vgui::Panel *parent, const char* pszName, CEconItemView *pTool, CEconItemView *pToolSubject, bool bDescription ) :
 	CNameToolUsageDialog( parent, pszName, pTool, pToolSubject, bDescription )
 {
 	m_pCustomNameEntry = new vgui::TextEntry( this, "CustomNameEntry" );
@@ -122,7 +122,7 @@ void	CRequestNameDialog::MoveToFront()
 {
 	BaseClass::MoveToFront();
 
-	// do this after MoveToFront so we can force the text box to have focus instead 
+	// do this after MoveToFront so we can force the text box to have focus instead
 	// of the dialog itself
 	m_pCustomNameEntry->RequestFocus();
 }
@@ -160,10 +160,10 @@ void CRequestNameDialog::OnItemPanelEntered( vgui::Panel *panel )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-CConfirmNameDialog::CConfirmNameDialog( vgui::Panel *parent, const char* pszName, CEconItemView *pTool, CEconItemView *pToolSubject, const wchar_t *name, bool bDescription ) : 
+CConfirmNameDialog::CConfirmNameDialog( vgui::Panel *parent, const char* pszName, CEconItemView *pTool, CEconItemView *pToolSubject, const wchar_t *name, bool bDescription ) :
 	CNameToolUsageDialog( parent, pszName, pTool, pToolSubject, bDescription )
 {
-	Q_wcsncpy( m_name, name, sizeof(m_name) ); 
+	Q_wcsncpy( m_name, name, sizeof(m_name) );
 	m_bDescription = bDescription;
 }
 

@@ -45,7 +45,7 @@ void main(int argc,char **argv)
 			}
 	}
 	printf( "sum of areas of cubemap cells = %2.2f\n", flAreaSum / ( 4.0 * M_PI ) );
-	
+
 #if 0  // visual spherical harmonics as (confusing) point sets
 	// spherical harmonics
 	DirectionalSampler_t sampler;
@@ -76,4 +76,3 @@ void main(int argc,char **argv)
 #endif
 
 }
-

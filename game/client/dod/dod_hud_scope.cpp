@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -39,7 +39,7 @@ class CHudScope : public vgui::Panel, public CHudElement
 
 public:
 			CHudScope( const char *pElementName );
-	
+
 	void	Init( void );
 
 protected:
@@ -62,7 +62,7 @@ CHudScope::CHudScope( const char *pElementName ) : CHudElement(pElementName), Ba
 {
 	vgui::Panel *pParent = g_pClientMode->GetViewport();
 	SetParent( pParent );
-	
+
 	SetHiddenBits( HIDEHUD_PLAYERDEAD );
 }
 
@@ -110,7 +110,7 @@ void CHudScope::ApplySchemeSettings( vgui::IScheme *scheme )
 void CHudScope::Paint( void )
 {
 	C_DODPlayer *pPlayer = C_DODPlayer::GetLocalDODPlayer();
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -118,13 +118,13 @@ void CHudScope::Paint( void )
 		return;
 
 	CWeaponDODBase *pWeapon = pPlayer->GetActiveDODWeapon();
-		
+
 	if( !pWeapon )
 		return;
 
 	Assert( m_iScopeSpringfield );
 	Assert( m_iScopeK98 );
-	
+
 	int *piScopeTex = NULL;
 
 	switch( pWeapon->GetWeaponID() )
@@ -163,13 +163,13 @@ void CHudScope::Paint( void )
 
 		float uv1 = 0.5f / 256.0f, uv2 = 1.0f - uv1;
 
-		vgui::Vertex_t vert[4];	
-		
+		vgui::Vertex_t vert[4];
+
 		Vector2D uv11( uv1, uv1 );
 		Vector2D uv12( uv1, uv2 );
 		Vector2D uv21( uv2, uv1 );
 		Vector2D uv22( uv2, uv2 );
-	
+
 		vgui::surface()->DrawSetColor(0,0,0,255);
 
 		//Draw the outline
@@ -210,7 +210,7 @@ void CHudScope::Paint( void )
 		{
 			// Left block
 			vgui::surface()->DrawFilledRect( 0, 0, xLeft, screenTall );
-			
+
 			// Right block
 			vgui::surface()->DrawFilledRect( xRight, 0, screenWide, screenTall );
 		}

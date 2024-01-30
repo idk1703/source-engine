@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -8,17 +8,17 @@
 #include "tcpsocket_helpers.h"
 
 
-// This connects to an ISocket listening with Listen(). 
+// This connects to an ISocket listening with Listen().
 bool TCPSocket_Connect( ITCPSocket *pSocket, const CIPAddr *pAddr, double flTimeout )
 {
 	pSocket->BeginConnect( *pAddr );
-	
+
 	CWaitTimer waitTimer( flTimeout );
 	while ( 1 )
 	{
 		if ( pSocket->UpdateConnect() )
 			return true;
-	
+
 		if ( waitTimer.ShouldKeepWaiting() )
 			Sleep( 10 );
 		else

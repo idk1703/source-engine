@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -31,7 +31,7 @@ public:
 	virtual			~CTEExplosion( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 
 public:
 	CNetworkVar( int, m_nModelIndex );
@@ -45,8 +45,8 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEExplosion::CTEExplosion( const char *name ) :
 	BaseClass( name )
@@ -62,16 +62,16 @@ CTEExplosion::CTEExplosion( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEExplosion::~CTEExplosion( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTEExplosion::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -81,7 +81,7 @@ void CTEExplosion::Test( const Vector& current_origin, const QAngle& current_ang
 	m_nFrameRate = 15;
 	m_nFlags = TE_EXPLFLAG_NONE;
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -114,7 +114,7 @@ void TE_Explosion( IRecipientFilter& filter, float delay,
 	const Vector* pos, int modelindex, float scale, int framerate, int flags, int radius, int magnitude, const Vector* normal, unsigned char materialType )
 {
 	g_TEExplosion.m_vecOrigin		= *pos;
-	g_TEExplosion.m_nModelIndex		= modelindex;	
+	g_TEExplosion.m_nModelIndex		= modelindex;
 	g_TEExplosion.m_fScale			= scale;
 	g_TEExplosion.m_nFrameRate		= framerate;
 	g_TEExplosion.m_nFlags			= flags;
@@ -123,7 +123,7 @@ void TE_Explosion( IRecipientFilter& filter, float delay,
 
 	if ( normal )
 		g_TEExplosion.m_vecNormal	= *normal;
-	else 
+	else
 		g_TEExplosion.m_vecNormal	= Vector(0,0,1);
 	g_TEExplosion.m_chMaterialType	= materialType;
 

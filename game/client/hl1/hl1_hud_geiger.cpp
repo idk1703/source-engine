@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -28,7 +28,7 @@ using namespace vgui;
 static const float TARGET_FRAMETIME = 1.0 / 60.0;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CHudGeiger: public CHudElement, public vgui::Panel
 {
@@ -41,7 +41,7 @@ public:
 	virtual void	ApplySchemeSettings( vgui::IScheme *scheme );
 	virtual void	Paint( void );
 	void MsgFunc_Geiger(bf_read &msg);
-	
+
 private:
 	int m_iGeigerRange;
 
@@ -51,7 +51,7 @@ DECLARE_HUDELEMENT( CHudGeiger );
 DECLARE_HUD_MESSAGE( CHudGeiger, Geiger );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudGeiger::CHudGeiger( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "HudGeiger" )
@@ -70,7 +70,7 @@ void CHudGeiger::ApplySchemeSettings( IScheme *scheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudGeiger::Init(void)
 {
@@ -80,7 +80,7 @@ void CHudGeiger::Init(void)
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudGeiger::VidInit(void)
 {
@@ -88,7 +88,7 @@ void CHudGeiger::VidInit(void)
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudGeiger::MsgFunc_Geiger(bf_read &msg)
 {
@@ -98,7 +98,7 @@ void CHudGeiger::MsgFunc_Geiger(bf_read &msg)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudGeiger::ShouldDraw( void )
 {
@@ -106,7 +106,7 @@ bool CHudGeiger::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudGeiger::Paint()
 {
@@ -221,7 +221,7 @@ void CHudGeiger::Paint()
 			ep.m_SoundLevel = params.soundlevel;
 			ep.m_nPitch = params.pitch;
 
-			C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, ep ); 
+			C_BaseEntity::EmitSound( filter, SOUND_FROM_LOCAL_PLAYER, ep );
 		}
 	}
 }

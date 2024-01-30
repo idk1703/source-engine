@@ -62,18 +62,18 @@ class CGLMShaderPair;
 class CGLMShaderPairCache;
 
 // CGLMProgram can contain two flavors of the same program, one in assembler, one in GLSL.
-// these flavors are pretty different in terms of the API's that are used to activate them - 
+// these flavors are pretty different in terms of the API's that are used to activate them -
 // for example, assembler programs can just get bound to the context, whereas GLSL programs
 // have to be linked.  To some extent we try to hide that detail inside GLM.
 
 // for now, make CGLMProgram a container, it does not set policy or hold a preference as to which
-// flavor you want to use.  GLMContext has to handle that. 
+// flavor you want to use.  GLMContext has to handle that.
 
 enum EGLMProgramType
 {
 	kGLMVertexProgram,
 	kGLMFragmentProgram,
-	
+
 	kGLMNumProgramTypes
 };
 
@@ -81,7 +81,7 @@ enum EGLMProgramLang
 {
 	kGLMARB,
 	kGLMGLSL,
-	
+
 	kGLMNumProgramLangs
 };
 
@@ -97,12 +97,12 @@ struct GLMShaderDesc
 	bool	m_textPresent;	// is this flavor(lang) of text present in the buffer?
 	int		m_textOffset;	// where is it
 	int		m_textLength;	// how big
-	
+
 	bool	m_compiled;		// has this text been through a compile attempt
 	bool	m_valid;		// and if so, was the compile successful
 
 	int		m_slowMark;		// has it been flagged during a non native draw batch before. increment every time it's slow.
-	
+
 	int		m_highWater;	// count of vec4's in the major uniform array ("vc" on vs, "pc" on ps)
 							// written by dxabstract.... gross!
 	int		m_VSHighWaterBone; // count of vec4's in the bone-specific uniform array (only valid for vertex shaders)
@@ -119,28 +119,28 @@ public:
 	friend class CGLMShaderPairCache;
 	friend class CGLMShaderPair;
 	friend class GLMContext;			// only GLMContext can make CGLMProgram objects
-	friend class GLMTester;	
+	friend class GLMTester;
 	friend struct IDirect3D9;
 	friend struct IDirect3DDevice9;
-		
+
 	//===============================
-	
+
 	// constructor is very light, it just makes one empty program object per flavor.
 	CGLMProgram( GLMContext *ctx, EGLMProgramType type );
-	~CGLMProgram( );	
+	~CGLMProgram( );
 
 	void	SetProgramText			( char *text );				// import text to GLM object - invalidate any prev compiled program
 	void	SetShaderName			( const char *name );				// only used for debugging/telemetry markup
-	
+
 	void	CompileActiveSources	( void );					// compile only the flavors that were provided.
-	void	Compile					( EGLMProgramLang lang );	
+	void	Compile					( EGLMProgramLang lang );
 	bool	CheckValidity			( EGLMProgramLang lang );
 
 	void	LogSlow					( EGLMProgramLang lang );	// detailed spew when called for first time; one liner or perhaps silence after that
-	
-	void	GetLabelIndexCombo		( char *labelOut, int labelOutMaxChars, int *indexOut, int *comboOut );	
+
+	void	GetLabelIndexCombo		( char *labelOut, int labelOutMaxChars, int *indexOut, int *comboOut );
 	void	GetComboIndexNameString	( char *stringOut, int stringOutMaxChars );		// mmmmmmmm-nnnnnnnn-filename
-	
+
 #if GLMDEBUG
 	bool	PollForChanges( void );			// check mirror for changes.
 	void	ReloadStringFromEditable( void );	// populate m_string from editable item (react to change)
@@ -148,7 +148,7 @@ public:
 #endif
 
 	//===============================
-	
+
 	// common stuff
 
 	GLMContext				*m_ctx;					// link back to parent context
@@ -156,14 +156,14 @@ public:
 	EGLMProgramType			m_type;					// vertex or pixel
 
 	uint					m_nHashTag;				// serial number for hashing
-	
+
 	char					*m_text;				// copy of text passed into constructor.  Can change if editable shaders is enabled.
 													// note - it can contain multiple flavors, so use CGLMTextSectioner to scan it and locate them
 #if GLMDEBUG
 	CGLMEditableTextItem	*m_editable;			// editable text item for debugging
-#endif	
-	
-	GLMShaderDesc			m_descs[ kGLMNumProgramLangs ];	
+#endif
+
+	GLMShaderDesc			m_descs[ kGLMNumProgramLangs ];
 
 	uint					m_samplerMask;			// (1<<n) mask of sampler active locs, if this is a fragment shader (dxabstract sets this field)
 	uint					m_samplerTypes;			// SAMPLER_2D, etc.
@@ -175,7 +175,7 @@ public:
 	uint					m_maxVertexAttrs;
 	uint					m_nCentroidMask;
 	uint					m_nShadowDepthSamplerMask;
-	
+
 	bool					m_bTranslatedProgram;
 
 	char					m_shaderName[64];
@@ -186,18 +186,18 @@ public:
 	char					m_labelName[1024];
 	int						m_labelIndex;
 	int						m_labelCombo;
-};	
+};
 
 //===============================================================================
 
 struct GLMShaderPairInfo
 {
 	int		m_status;		// -1 means req'd index was out of bounds (loop stop..)  0 means not present.  1 means present/active.
-	
+
 	char	m_vsName[ 128 ];
 	int		m_vsStaticIndex;
 	int		m_vsDynamicIndex;
-	
+
 	char	m_psName[ 128 ];
 	int		m_psStaticIndex;
 	int		m_psDynamicIndex;
@@ -211,12 +211,12 @@ public:
 	friend class CGLMProgram;
 	friend class GLMContext;
 	friend class CGLMShaderPairCache;
-		
+
 	//===============================
-	
+
 	// constructor just sets up a GLSL program object and leaves it empty.
 	CGLMShaderPair( GLMContext *ctx  );
-	~CGLMShaderPair( );	
+	~CGLMShaderPair( );
 
 	bool	SetProgramPair			( CGLMProgram *vp, CGLMProgram *fp );
 		// true result means successful link and query
@@ -233,7 +233,7 @@ public:
 	{
 		if ( m_nScreenWidthHeight == nWidthHeight )
 			return;
-		
+
 		m_nScreenWidthHeight = nWidthHeight;
 
 		float fWidth = (float)( nWidthHeight & 0xFFFF ), fHeight = (float)( nWidthHeight >> 16 );
@@ -243,14 +243,14 @@ public:
 		if ( m_locVertexScreenParams >= 0 )
 			gGL->glUniform4fv( m_locVertexScreenParams, 1, v );
 	}
-	
+
 	//===============================
-	
+
 	// common stuff
 
 	GLMContext				*m_ctx;					// link back to parent context
 
-	CGLMProgram				*m_vertexProg;	
+	CGLMProgram				*m_vertexProg;
 	CGLMProgram				*m_fragmentProg;
 
 	GLhandleARB				m_program;				// linked program object
@@ -258,24 +258,24 @@ public:
 	// need meta data for attribs / samplers / params
 	// actually we only need it for samplers and params.
 	// attributes are hardwired.
-	
+
 	// vertex stage uniforms
 	GLint					m_locVertexParams;		// "vc" per dx9asmtogl2 convention
 	GLint					m_locVertexBoneParams;	// "vcbones"
 	GLint					m_locVertexInteger0;	// "i0"
-			
+
 	enum { cMaxVertexShaderBoolUniforms = 4, cMaxFragmentShaderBoolUniforms = 1 };
 
 	GLint					m_locVertexBool[cMaxVertexShaderBoolUniforms];		// "b0", etc.
 	GLint					m_locFragmentBool[cMaxFragmentShaderBoolUniforms];		// "fb0", etc.
 	bool					m_bHasBoolOrIntUniforms;
-			
+
 	// fragment stage uniforms
 	GLint					m_locFragmentParams;			// "pc" per dx9asmtogl2 convention
-	
+
 	int						m_NumUniformBufferParams[kGLMNumProgramTypes];
 	GLint					m_UniformBufferParams[kGLMNumProgramTypes][256];
-	
+
 	GLint					m_locFragmentFakeSRGBEnable;	// "flSRGBWrite" - set to 1.0 to effect sRGB encoding on output
 	float					m_fakeSRGBEnableValue;			// shadow to avoid redundant sets of the m_locFragmentFakeSRGBEnable uniform
 		// init it to -1.0 at link or relink, so it will trip on any legit incoming value (0.0 or 1.0)
@@ -289,8 +289,8 @@ public:
 
 	GLint					m_locVertexScreenParams; // vcscreen
 	uint					m_nScreenWidthHeight;
-		
-};	
+
+};
 
 //===============================================================================
 
@@ -316,33 +316,33 @@ protected:
 	friend class CGLMShaderPair;
 	friend class CGLMProgram;
 	friend class GLMContext;
-		
+
 	//===============================
-	
+
 	CGLMShaderPairCache( GLMContext *ctx  );
-	~CGLMShaderPairCache( );	
+	~CGLMShaderPairCache( );
 
 	FORCEINLINE CGLMShaderPair *SelectShaderPair	( CGLMProgram *vp, CGLMProgram *fp, uint extraKeyBits );
 	void			QueryShaderPair		( int index, GLMShaderPairInfo *infoOut );
-	
+
 	// shoot down linked pairs that use the program in the arg
 	// return true if any had to be skipped due to conflict with currently bound pair
 	bool			PurgePairsWithShader( CGLMProgram *prog );
-	
+
 	// purge everything (when would GLM know how to do this ?  at context destroy time, but any other times?)
 	// return true if any had to be skipped due to conflict with currently bound pair
 	bool			Purge				( void );
-	
+
 	// stats
 	void			DumpStats			( void );
-	
+
 	//===============================
 
 	FORCEINLINE uint HashRowIndex( CGLMProgram *vp, CGLMProgram *fp, uint extraKeyBits ) const;
 	FORCEINLINE CGLMPairCacheEntry*	HashRowPtr( uint hashRowIndex ) const;
-	
+
 	FORCEINLINE void HashRowProbe( CGLMPairCacheEntry *row, CGLMProgram *vp, CGLMProgram *fp, uint extraKeyBits, int &hitway, int &emptyway, int &oldestway );
-		
+
 	CGLMShaderPair *SelectShaderPairInternal( CGLMProgram *vp, CGLMProgram *fp, uint extraKeyBits, int rowIndex );
 	//===============================
 
@@ -355,12 +355,12 @@ protected:
 	uint					m_rowsLg2;
 	uint					m_rows;
 	uint					m_rowsMask;
-	
+
 	uint					m_waysLg2;
 	uint					m_ways;
-	
+
 	uint					m_entryCount;
-	
+
 	CGLMPairCacheEntry		*m_entries;				// array[ m_rows ][ m_ways ]
 
 	uint					*m_evictions;			// array[ m_rows ];
@@ -368,7 +368,7 @@ protected:
 #if GL_SHADER_PAIR_CACHE_STATS
 	uint					*m_hits;				// array[ m_rows ];
 #endif
-};	
+};
 
 FORCEINLINE uint CGLMShaderPairCache::HashRowIndex( CGLMProgram *vp, CGLMProgram *fp, uint extraKeyBits ) const
 {
@@ -426,7 +426,7 @@ FORCEINLINE CGLMShaderPair *CGLMShaderPairCache::SelectShaderPair( CGLMProgram *
 	uint rowIndex = HashRowIndex( vp, fp, extraKeyBits );
 
 	CGLMPairCacheEntry *pCursor = HashRowPtr( rowIndex );
-	
+
 	if ( ( pCursor->m_fragmentProg != fp ) || ( pCursor->m_vertexProg != vp ) || ( pCursor->m_extraKeyBits != extraKeyBits ) )
 	{
 		CGLMPairCacheEntry *pLastCursor = pCursor + m_ways;
@@ -439,11 +439,11 @@ FORCEINLINE CGLMShaderPair *CGLMShaderPairCache::SelectShaderPair( CGLMProgram *
 				break;
 			++pCursor;
 		};
-	
+
 		if ( pCursor == pLastCursor )
 			return SelectShaderPairInternal( vp, fp, extraKeyBits, rowIndex );
 	}
-		
+
 	// found it.  mark it and return
 	pCursor->m_lastMark = m_mark++;
 

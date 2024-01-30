@@ -53,7 +53,7 @@ private:
 
 	Vector FindTargetAimPoint( void );
 	Vector FindAimPointThroughPortal ( const CProp_Portal* pPortal );
-	
+
 	bool m_bEnabled;
 	bool m_bCanSeeTarget;
 	int m_iFrontMarkerAttachment;
@@ -63,7 +63,7 @@ private:
 	EHANDLE	m_hTelescopicPoseController;
 
 	EHANDLE m_hAimTarget;
-	
+
 	COutputEvent m_OnLostTarget;
 	COutputEvent m_OnFoundTarget;
 };
@@ -71,7 +71,7 @@ private:
 LINK_ENTITY_TO_CLASS( prop_telescopic_arm, CPropTelescopicArm );
 
 //-----------------------------------------------------------------------------
-// Save/load 
+// Save/load
 //-----------------------------------------------------------------------------
 BEGIN_DATADESC( CPropTelescopicArm )
 	DEFINE_FIELD( m_bEnabled, FIELD_BOOLEAN ),
@@ -248,7 +248,7 @@ void CPropTelescopicArm::EnabledThink( void )
 					}
 				}
 			}
-		}	
+		}
 
 		if( pTarget )
 			SetTarget( pTarget );
@@ -335,7 +335,7 @@ Vector CPropTelescopicArm::FindTargetAimPoint( void )
 // Output : Vector& output point in world space where the target *appears* to be as seen through the portal
 //-----------------------------------------------------------------------------
 Vector CPropTelescopicArm::FindAimPointThroughPortal( const CProp_Portal* pPortal )
-{ 
+{
 	if ( pPortal && pPortal->m_bActivated )
 	{
 		CProp_Portal* pLinked = pPortal->m_hLinkedPortal.Get();
@@ -349,7 +349,7 @@ Vector CPropTelescopicArm::FindAimPointThroughPortal( const CProp_Portal* pPorta
 			return matToPortalView * vTargetAimPoint;
 		}
 	}
-	
+
 	// Bad portal pointer, not linked, no target or otherwise failed
 	return vec3_invalid;
 }
@@ -402,14 +402,14 @@ void CPropTelescopicArm::AimAt( Vector vTarget )
 	if ( pPoseController )
 	{
 		pPoseController->SetInterpolationTime( TELESCOPE_ROTATEX_TIME );
-		pPoseController->SetPoseValue( fNewX );	
+		pPoseController->SetPoseValue( fNewX );
 	}
 
 	pPoseController = static_cast<CPoseController*>( m_hRotYPoseController.Get() );
 	if ( pPoseController )
 	{
 		pPoseController->SetInterpolationTime( TELESCOPE_ROTATEY_TIME );
-		pPoseController->SetPoseValue( fNewY );	
+		pPoseController->SetPoseValue( fNewY );
 	}
 }
 
@@ -433,7 +433,7 @@ void CPropTelescopicArm::InputDisable( inputdata_t &inputdata )
 	if ( m_bEnabled )
 	{
 		m_bEnabled = false;
-		
+
 		EmitSound( "coast.thumper_shutdown" );
 
 		CPoseController *pPoseController;
@@ -531,7 +531,7 @@ void CPropTelescopicArm::InputTargetPlayer( inputdata_t &inputdata )
 				}
 			}
 		}
-	}	
+	}
 
 	if( pTarget )
 		SetTarget( pTarget );

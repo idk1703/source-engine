@@ -69,7 +69,7 @@ AI_Waypoint_t::AI_Waypoint_t( const Vector &initPosition, float initYaw, Navigat
 
 AI_Waypoint_t *	AI_Waypoint_t::GetLast()
 {
-	Assert( !pNext || pNext->pPrev == this ); 
+	Assert( !pNext || pNext->pPrev == this );
 	AI_Waypoint_t *pCurr = this;
 	while (pCurr->GetNext())
 	{
@@ -136,7 +136,7 @@ const AI_Waypoint_t *CAI_WaypointList::GetLast() const
 void AssertRouteValid( AI_Waypoint_t* route )
 {
 	// Check that the goal wasn't just clobbered
-	if (route) 
+	if (route)
 	{
 		AI_Waypoint_t* waypoint = route;
 
@@ -176,7 +176,7 @@ void AddWaypointLists(AI_Waypoint_t *oldRoute, AI_Waypoint_t *addRoute)
 	// Add to the end of the route
 	AI_Waypoint_t *waypoint = oldRoute;
 
-	while (waypoint->GetNext()) 
+	while (waypoint->GetNext())
 	{
 		waypoint = waypoint->GetNext();
 	}
@@ -197,7 +197,7 @@ void AddWaypointLists(AI_Waypoint_t *oldRoute, AI_Waypoint_t *addRoute)
 		waypoint->SetNext(addRoute);
 	}
 
-	while (waypoint->GetNext()) 
+	while (waypoint->GetNext())
 	{
 		waypoint = waypoint->GetNext();
 	}

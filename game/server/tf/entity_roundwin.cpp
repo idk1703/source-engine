@@ -39,7 +39,7 @@ LINK_ENTITY_TO_CLASS( game_round_win, CTeamplayRoundWin );
 CTeamplayRoundWin::CTeamplayRoundWin()
 {
 	// default win reason for map-fired event (map may change it)
-	m_iWinReason = WINREASON_DEFEND_UNTIL_TIME_LIMIT;	
+	m_iWinReason = WINREASON_DEFEND_UNTIL_TIME_LIMIT;
 }
 
 //-----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ CTeamplayRoundWin::CTeamplayRoundWin()
 //-----------------------------------------------------------------------------
 void CTeamplayRoundWin::RoundWin( void )
 {
-    CTeamplayRoundBasedRules *pGameRules = dynamic_cast<CTeamplayRoundBasedRules *>( GameRules() );
+	CTeamplayRoundBasedRules *pGameRules = dynamic_cast<CTeamplayRoundBasedRules *>( GameRules() );
 
 	if ( pGameRules )
 	{
@@ -81,4 +81,3 @@ void CTeamplayRoundWin::InputRoundWin( inputdata_t &inputdata )
 {
 	RoundWin();
 }
-

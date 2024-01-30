@@ -30,9 +30,9 @@ public:
 	virtual Vector SelectTargetPoint( const INextBot *me, const CBaseCombatCharacter *subject ) const;		// given a subject, return the world space position we should aim at
 	virtual QueryResultType IsPositionAllowed( const INextBot *me, const Vector &pos ) const;
 
-	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me, 
+	virtual const CKnownEntity *	SelectMoreDangerousThreat( const INextBot *me,
 															   const CBaseCombatCharacter *subject,
-															   const CKnownEntity *threat1, 
+															   const CKnownEntity *threat1,
 															   const CKnownEntity *threat2 ) const;	// return the more dangerous of the two threats to 'subject', or NULL if we have no opinion
 
 	virtual const char *GetName( void ) const	{ return "MainAction"; };
@@ -60,9 +60,9 @@ private:
 	const CKnownEntity *SelectCloserThreat( CTFBot *me, const CKnownEntity *threat1, const CKnownEntity *threat2 ) const;
 	const CKnownEntity *GetHealerOfThreat( const CKnownEntity *threat ) const;
 
-	const CKnownEntity *SelectMoreDangerousThreatInternal( const INextBot *me, 
+	const CKnownEntity *SelectMoreDangerousThreatInternal( const INextBot *me,
 														   const CBaseCombatCharacter *subject,
-														   const CKnownEntity *threat1, 
+														   const CKnownEntity *threat1,
 														   const CKnownEntity *threat2 ) const;
 
 

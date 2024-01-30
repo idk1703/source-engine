@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,14 +11,14 @@
 #endif
 
 
-void TE_HL2MPFireBullets( 
+void TE_HL2MPFireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const Vector &vDir,
 	int	iAmmoID,
 	int iSeed,
 	int iShots,
-	float flSpread, 
+	float flSpread,
 	bool bDoTracers,
 	bool bDoImpacts );
 

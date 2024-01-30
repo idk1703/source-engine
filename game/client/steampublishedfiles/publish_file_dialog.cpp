@@ -130,7 +130,7 @@ CFilePublishDialog::CFilePublishDialog( Panel *parent, const char *name, Publish
 }
 
 //-----------------------------------------------------------------------------
-// Destructor 
+// Destructor
 //-----------------------------------------------------------------------------
 CFilePublishDialog::~CFilePublishDialog()
 {
@@ -195,19 +195,19 @@ void CFilePublishDialog::ErrorMessage( ErrorCode_t errorCode, KeyValues *pkvToke
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::ErrorMessage( const char *lpszText )
 {
 	vgui::MessageBox *pBox = new vgui::MessageBox( "", lpszText, this );
 	pBox->SetPaintBorderEnabled( false );
 	pBox->SetPaintBackgroundEnabled( true );
-	pBox->SetBgColor( Color(0,0,0,255) ); 
+	pBox->SetBgColor( Color(0,0,0,255) );
 	pBox->DoModal();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 const char* CFilePublishDialog::GetStatusString( StatusCode_t statusCode )
 {
@@ -242,7 +242,7 @@ void CFilePublishDialog::ShowStatusWindow( StatusCode_t statusCode )
 	m_pStatusBox = new vgui::MessageBox( "", lpszText, this );
 	m_pStatusBox->SetPaintBorderEnabled( false );
 	m_pStatusBox->SetPaintBackgroundEnabled( true );
-	m_pStatusBox->SetBgColor( Color(0,0,0,255) ); 
+	m_pStatusBox->SetBgColor( Color(0,0,0,255) );
 	m_pStatusBox->SetOKButtonVisible( false );
 	m_pStatusBox->DoModal();
 }
@@ -258,7 +258,7 @@ void CFilePublishDialog::HideStatusWindow( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::DownloadPreviewImage( void )
 {
@@ -274,7 +274,7 @@ void CFilePublishDialog::DownloadPreviewImage( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::OnTick( void )
 {
@@ -321,7 +321,7 @@ void CFilePublishDialog::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::SetPreviewImage( const char *lpszFilename )
 {
@@ -349,7 +349,7 @@ void CFilePublishDialog::SetPreviewImage( const char *lpszFilename )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::PerformSquarize()
 {
@@ -377,7 +377,7 @@ void CFilePublishDialog::PerformSquarize()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 Bitmap_t &CFilePublishDialog::GetPreviewBitmap()
 {
@@ -403,7 +403,7 @@ void CFilePublishDialog::PopulateEditFields( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:	
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -790,7 +790,7 @@ bool CFilePublishDialog::UpdateFileInternal()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFilePublishDialog::PerformLayout()
 {
@@ -898,7 +898,7 @@ void CFilePublishDialog::OnCommand( const char *command )
 	else if ( Q_stricmp( command, "PreviewBrowse" ) == 0 )
 	{
 		m_fileOpenMode = FILEOPEN_PREVIEW;
-		
+
 		// Create a new dialog
 		vgui::FileOpenDialog *pDlg = new vgui::FileOpenDialog( NULL, "Select File", true );
 		pDlg->AddFilter( GetPreviewFileTypes(), GetPreviewFileTypeDescriptions(), true );

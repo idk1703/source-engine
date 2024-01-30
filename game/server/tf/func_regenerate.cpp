@@ -36,7 +36,7 @@ END_DATADESC();
 //
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CRegenerateZone::CRegenerateZone()
 {
@@ -82,7 +82,7 @@ void CRegenerateZone::Activate( void )
 			{
 				Warning("%s(%s) tried to use associated model named '%s', but it isn't a dynamic prop.\n", GetClassname(), GetDebugName(), STRING(m_iszAssociatedModel) );
 			}
-		}	
+		}
 	}
 	else
 	{
@@ -91,7 +91,7 @@ void CRegenerateZone::Activate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRegenerateZone::Touch( CBaseEntity *pOther )
 {
@@ -136,7 +136,7 @@ void CRegenerateZone::Touch( CBaseEntity *pOther )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRegenerateZone::EndTouch( CBaseEntity *pOther )
 {
@@ -200,7 +200,7 @@ void CRegenerateZone::SetDisabled( bool bDisabled )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CRegenerateZone::Regenerate( CTFPlayer *pPlayer )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -52,7 +52,7 @@ public:
 private:
 	// Called when the selection changes moves
 	MESSAGE_FUNC( OnPageChanged, "PageChanged" );
-    MESSAGE_FUNC_PARAMS( OnDmeElementChanged, "DmeElementChanged", kv );
+	MESSAGE_FUNC_PARAMS( OnDmeElementChanged, "DmeElementChanged", kv );
 
 	vgui::PropertySheet *m_pEditorSheet;
 	vgui::PropertyPage *m_pControlsPage;
@@ -82,7 +82,7 @@ public:
 	virtual void OnCommand( const char *pCommand );
 
 private:
-    MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );
+	MESSAGE_FUNC( OnDmeElementChanged, "DmeElementChanged" );
 
 	CDmeCombinationSystemEditorPanel *m_pEditor;
 	vgui::Button *m_pOpenButton;

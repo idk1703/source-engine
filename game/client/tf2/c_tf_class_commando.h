@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -17,7 +17,7 @@
 class C_PlayerClassCommando : public C_PlayerClass
 {
 public:
-	
+
 	DECLARE_CLASS( C_PlayerClassCommando, C_PlayerClass );
 
 	DECLARE_PREDICTABLE();
@@ -25,7 +25,7 @@ public:
 								C_PlayerClassCommando( C_BaseTFPlayer *pPlayer );
 	virtual						~C_PlayerClassCommando();
 
-	PlayerClassCommandoData_t	*GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassCommandoData_t	*GetClassData( void ) { return &m_ClassData; }
 
 	void						ClassThink( void );
 	void						PostClassThink( void );

@@ -109,8 +109,8 @@ CMapSphere::~CMapSphere(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bFullUpdate - 
+// Purpose:
+// Input  : bFullUpdate -
 //-----------------------------------------------------------------------------
 void CMapSphere::CalcBounds(BOOL bFullUpdate)
 {
@@ -136,7 +136,7 @@ void CMapSphere::CalcBounds(BOOL bFullUpdate)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CMapClass
 //-----------------------------------------------------------------------------
 CMapClass *CMapSphere::Copy(bool bUpdateDependencies)
@@ -204,10 +204,10 @@ CBaseTool *CMapSphere::GetToolObject(int nHitData, bool bAttachObject)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pView - 
+// Purpose:
+// Input  : pView -
 //			point - point in client coordinates
-// Output : 
+// Output :
 //-----------------------------------------------------------------------------
 bool CMapSphere::HitTest2D(CMapView2D *pView, const Vector2D &point, HitInfo_t &HitData)
 {
@@ -299,8 +299,8 @@ void CMapSphere::OnParentKeyChanged(const char *szKey, const char *szValue)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pRender - 
+// Purpose:
+// Input  : pRender -
 //-----------------------------------------------------------------------------
 void CMapSphere::Render2D(CRender2D *pRender)
 {
@@ -312,11 +312,11 @@ void CMapSphere::Render2D(CRender2D *pRender)
 		pRender->TransformNormal(ptClientRadius, Vector(m_flRadius,m_flRadius,m_flRadius) );
 
 		int radius = ptClientRadius.x;
-        
+
 		pRender->DrawCircle( m_Origin, m_flRadius );
 
 		bool bPopMode = pRender->BeginClientSpace();
-		
+
 		//
 		// Draw the four resize handles.
 		//
@@ -357,5 +357,3 @@ void CMapSphere::Render3D(CRender3D *pRender)
 		pRender->RenderWireframeSphere(m_Origin, m_flRadius, 12, 12, 255, 255, 0);
 	}
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -52,7 +52,7 @@
 #define	A2M_GET_MOTD			'g'	// no params
 
 // MOTD response Server Master
-#define	M2A_MOTD				'h'	// + string 
+#define	M2A_MOTD				'h'	// + string
 
 // Generic Ping Request
 #define	A2A_PING				'i'	// respond with an A2A_ACK
@@ -109,7 +109,7 @@
 #define S2M_GETFILE				'J'	// request module from master
 #define M2S_SENDFILE			'K'	// send module to server
 
-#define S2C_REDIRECT			'L'	// + IP x.x.x.x:port, redirect client to other server/proxy 
+#define S2C_REDIRECT			'L'	// + IP x.x.x.x:port, redirect client to other server/proxy
 
 #define	C2M_CHECKMD5			'M'	// player client asks secure master if Module MD5 is valid
 #define M2C_ISVALIDMD5			'N'	// secure servers answer to C2M_CHECKMD5
@@ -137,7 +137,7 @@
 
 #define A2M_GETACTIVEMODS2		'2' // New style mod info query
 
-#define C2S_AUTHREQUEST1        '3' // 
+#define C2S_AUTHREQUEST1        '3' //
 #define S2C_AUTHCHALLENGE1      '4' //
 #define C2S_AUTHCHALLENGE2      '5' //
 #define S2C_AUTHCOMPLETE        '6'

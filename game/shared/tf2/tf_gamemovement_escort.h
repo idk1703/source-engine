@@ -38,7 +38,7 @@ public:
 
 protected:
 
-	PlayerClassEscortData_t	*m_pEscortData; 
+	PlayerClassEscortData_t	*m_pEscortData;
 	Vector					m_vStandMins;
 	Vector					m_vStandMaxs;
 	Vector					m_vStandViewOffset;

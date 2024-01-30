@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -34,8 +34,8 @@ public:
 	virtual	IHLTVDirector *GetDirector( void ) = 0;	// get director interface
 	virtual	int		GetHLTVSlot( void ) = 0; // return entity index-1 of HLTV in game
 	virtual float	GetOnlineTime( void ) = 0; // seconds since broadcast started
-	virtual void	GetLocalStats( int &proxies, int &slots, int &specs ) = 0; 
-	virtual void	GetGlobalStats( int &proxies, int &slots, int &specs ) = 0; 
+	virtual void	GetLocalStats( int &proxies, int &slots, int &specs ) = 0;
+	virtual void	GetGlobalStats( int &proxies, int &slots, int &specs ) = 0;
 
 	virtual const netadr_s *GetRelayAddress( void ) = 0; // returns relay address
 

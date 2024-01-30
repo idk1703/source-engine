@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -26,7 +26,7 @@
 const char *COM_GetModDirectory(); // return the mod dir (rather than the complete -game param, which can be a path)
 
 CClientVirtualReality g_ClientVirtualReality;
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CClientVirtualReality, IClientVirtualReality, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CClientVirtualReality, IClientVirtualReality,
 	CLIENTVIRTUALREALITY_INTERFACE_VERSION, g_ClientVirtualReality );
 
 
@@ -194,7 +194,7 @@ bool IsOrthonormal ( VMatrix Mat, float fTolerance )
 void CalcFovFromProjection ( float *pFov, const VMatrix &proj )
 {
 	// The projection matrices should be of the form:
-	// p0  0   z1 p1 
+	// p0  0   z1 p1
 	// 0   p2  z2 p3
 	// 0   0   z3 1
 	// (p0 = X fov, p1 = X offset, p2 = Y fov, p3 = Y offset )
@@ -249,7 +249,7 @@ CClientVirtualReality::CClientVirtualReality()
 	m_PlayerTorsoAngle.Init();
 	m_WorldFromWeapon.Identity();
 	m_WorldFromMidEye.Identity();
-	
+
 	m_bOverrideTorsoAngle = false;
 	m_OverrideTorsoOffset.Init();
 
@@ -264,7 +264,7 @@ CClientVirtualReality::CClientVirtualReality()
 	m_bMotionUpdated = false;
 
 #if defined( USE_SDL )
-    m_nNonVRSDLDisplayIndex = 0;
+	m_nNonVRSDLDisplayIndex = 0;
 #endif
 }
 
@@ -274,7 +274,7 @@ CClientVirtualReality::~CClientVirtualReality()
 
 
 // --------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------
 bool			CClientVirtualReality::Connect( CreateInterfaceFn factory )
 {
@@ -289,7 +289,7 @@ bool			CClientVirtualReality::Connect( CreateInterfaceFn factory )
 
 
 // --------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------
 void			CClientVirtualReality::Disconnect()
 {
@@ -298,7 +298,7 @@ void			CClientVirtualReality::Disconnect()
 
 
 // --------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------
 void *			CClientVirtualReality::QueryInterface( const char *pInterfaceName )
 {
@@ -308,7 +308,7 @@ void *			CClientVirtualReality::QueryInterface( const char *pInterfaceName )
 
 
 // --------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------
 InitReturnVal_t	CClientVirtualReality::Init()
 {
@@ -321,7 +321,7 @@ InitReturnVal_t	CClientVirtualReality::Init()
 
 
 // --------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // --------------------------------------------------------------------
 void			CClientVirtualReality::Shutdown()
 {
@@ -339,7 +339,7 @@ void CClientVirtualReality::DrawMainMenu()
 	// Draw it into the render target first
 	ITexture *pTexture = materials->FindTexture( "_rt_gui", NULL, false );
 	Assert( pTexture );
-	if( !pTexture) 
+	if( !pTexture)
 		return;
 
 	CMatRenderContextPtr pRenderContext( materials );
@@ -356,7 +356,7 @@ void CClientVirtualReality::DrawMainMenu()
 	pRenderContext->PushRenderTargetAndViewport( pTexture, NULL, 0, 0, viewActualWidth, viewActualHeight );
 	pRenderContext->OverrideAlphaWriteEnable( true, true );
 
-	// clear the render target 
+	// clear the render target
 	pRenderContext->ClearColor4ub( 0, 0, 0, 0 );
 	pRenderContext->ClearBuffers( true, false );
 
@@ -524,7 +524,7 @@ bool CClientVirtualReality::OverrideView ( CViewSetup *pViewMiddle, Vector *pVie
 
 	case HMM_SHOOTMOVELOOKMOUSEFACE:
 		// mouse does everything, and then we add head tracking on top of that
-		worldFromTorso = worldFromTorso * matMideyeZeroFromMideyeCurrent; 
+		worldFromTorso = worldFromTorso * matMideyeZeroFromMideyeCurrent;
 
 		m_TorsoFromMideye = matMideyeZeroFromMideyeCurrent;
 		m_WorldFromWeapon = worldFromTorso;
@@ -572,7 +572,7 @@ bool CClientVirtualReality::OverrideView ( CViewSetup *pViewMiddle, Vector *pVie
 // --------------------------------------------------------------------
 // Purpose:
 //		In some aim/move modes, the HUD aim reticle lags because it's
-//		using slightly stale data. This will feed it the newest data. 
+//		using slightly stale data. This will feed it the newest data.
 // --------------------------------------------------------------------
 bool CClientVirtualReality::OverrideWeaponHudAimVectors ( Vector *pAimOrigin, Vector *pAimDirection )
 {
@@ -1004,7 +1004,7 @@ bool CClientVirtualReality::CurrentlyZoomed()
 
 // --------------------------------------------------------------------
 // Purpose: Tells the headtracker to keep the torso angle of the player
-//			fixed at this point until the game tells us something 
+//			fixed at this point until the game tells us something
 //			different.
 // --------------------------------------------------------------------
 void CClientVirtualReality::OverrideTorsoTransform( const Vector & position, const QAngle & angles )
@@ -1030,13 +1030,13 @@ void CClientVirtualReality::OverrideTorsoTransform( const Vector & position, con
 	m_OverrideTorsoAngle[ ROLL ] = 0;
 
 	NormalizeAngles( m_OverrideTorsoAngle );
-	
+
 	m_PlayerTorsoAngle = m_OverrideTorsoAngle;
 }
 
 
 // --------------------------------------------------------------------
-// Purpose: Tells the headtracker to resume using its own notion of 
+// Purpose: Tells the headtracker to resume using its own notion of
 //			where the torso is pointed.
 // --------------------------------------------------------------------
 void CClientVirtualReality::CancelTorsoTransformOverride()
@@ -1059,7 +1059,7 @@ bool CClientVirtualReality::CanOverlayHudQuad()
 
 
 // --------------------------------------------------------------------
-// Purpose: Returns the bounds in world space where the game should 
+// Purpose: Returns the bounds in world space where the game should
 //			position the HUD.
 // --------------------------------------------------------------------
 void CClientVirtualReality::GetHUDBounds( Vector *pViewer, Vector *pUL, Vector *pUR, Vector *pLL, Vector *pLR )
@@ -1263,7 +1263,7 @@ float CClientVirtualReality::GetHUDDistance()
 
 
 // --------------------------------------------------------------------
-// Purpose: Returns true if the HUD should be rendered into a render 
+// Purpose: Returns true if the HUD should be rendered into a render
 //			target and then into the world on a quad.
 // --------------------------------------------------------------------
 bool CClientVirtualReality::ShouldRenderHUDInWorld()
@@ -1273,10 +1273,10 @@ bool CClientVirtualReality::ShouldRenderHUDInWorld()
 
 
 // --------------------------------------------------------------------
-// Purpose: Lets headtrack tweak the view model origin and angles to match 
+// Purpose: Lets headtrack tweak the view model origin and angles to match
 //			aim angles and handle strange viewmode FOV stuff
 // --------------------------------------------------------------------
-void CClientVirtualReality::OverrideViewModelTransform( Vector & vmorigin, QAngle & vmangles, bool bUseLargeOverride ) 
+void CClientVirtualReality::OverrideViewModelTransform( Vector & vmorigin, QAngle & vmangles, bool bUseLargeOverride )
 {
 	Vector vForward, vRight, vUp;
 	AngleVectors( vmangles, &vForward, &vRight, &vUp );
@@ -1403,8 +1403,8 @@ void CClientVirtualReality::Activate()
 	m_bNonVRWindowed = g_pMaterialSystem->GetCurrentConfigForVideoCard().Windowed();
 	vgui::surface()->GetScreenSize( m_nNonVRWidth, m_nNonVRHeight );
 #if defined( USE_SDL )
-    static ConVarRef sdl_displayindex( "sdl_displayindex" );
-    m_nNonVRSDLDisplayIndex = sdl_displayindex.GetInt();
+	static ConVarRef sdl_displayindex( "sdl_displayindex" );
+	m_nNonVRSDLDisplayIndex = sdl_displayindex.GetInt();
 #endif
 
 	if( !g_pSourceVR->Activate() )
@@ -1421,12 +1421,12 @@ void CClientVirtualReality::Activate()
 	sCmd.Format( "exec sourcevr_%s.cfg\n", COM_GetModDirectory() );
 	engine->ExecuteClientCmd( sCmd.Get() );
 
-    vgui::surface()->SetSoftwareCursor( true );
+	vgui::surface()->SetSoftwareCursor( true );
 
 #if defined(POSIX)
 	ConVarRef m_rawinput( "m_rawinput" );
-    m_bNonVRRawInput = m_rawinput.GetBool();
-    m_rawinput.SetValue( 1 );
+	m_bNonVRRawInput = m_rawinput.GetBool();
+	m_rawinput.SetValue( 1 );
 
 	ConVarRef mat_vsync( "mat_vsync" );
 	mat_vsync.SetValue( 0 );
@@ -1468,20 +1468,20 @@ void CClientVirtualReality::Deactivate()
 	g_pMaterialSystem->GetRenderContext()->Viewport( 0, 0, m_nNonVRWidth, m_nNonVRHeight );
 	g_pMatSystemSurface->SetFullscreenViewportAndRenderTarget( 0, 0, m_nNonVRWidth, m_nNonVRHeight, NULL );
 
-    static ConVarRef cl_software_cursor( "cl_software_cursor" );
-    vgui::surface()->SetSoftwareCursor( cl_software_cursor.GetBool() );
+	static ConVarRef cl_software_cursor( "cl_software_cursor" );
+	vgui::surface()->SetSoftwareCursor( cl_software_cursor.GetBool() );
 
 #if defined( USE_SDL )
-    static ConVarRef sdl_displayindex( "sdl_displayindex" );
-    sdl_displayindex.SetValue( m_nNonVRSDLDisplayIndex );
+	static ConVarRef sdl_displayindex( "sdl_displayindex" );
+	sdl_displayindex.SetValue( m_nNonVRSDLDisplayIndex );
 #endif
 
 #if defined(POSIX)
-    ConVarRef m_rawinput( "m_rawinput" );
-    m_rawinput.SetValue( m_bNonVRRawInput );
+	ConVarRef m_rawinput( "m_rawinput" );
+	m_rawinput.SetValue( m_bNonVRRawInput );
 #endif
 
-    // Make sure the client .dll root panel is at the proper point before doing the "SolveTraverse" calls
+	// Make sure the client .dll root panel is at the proper point before doing the "SolveTraverse" calls
 	vgui::VPANEL root = enginevgui->GetPanel( PANEL_CLIENTDLL );
 	if ( root != 0 )
 	{
@@ -1513,4 +1513,3 @@ void CClientVirtualReality::StartupComplete()
 	if ( vr_activate_default.GetBool() || ShouldForceVRActive() )
 		Activate();
 }
-

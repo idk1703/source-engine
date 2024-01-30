@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -13,7 +13,7 @@
 #include "vcollide_parse.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 enum vehiclesound
 {
@@ -37,7 +37,7 @@ extern const char *vehiclesound_parsenames[VS_NUM_SOUNDS];
 extern vehiclesound g_iSoundsToStopOnExit[NUM_SOUNDS_TO_STOP_ON_EXIT];
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct vehicle_gear_t
 {
@@ -86,7 +86,7 @@ enum sound_states
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct vehiclesounds_t
 {
@@ -94,7 +94,7 @@ struct vehiclesounds_t
 	{
 		pGears.Purge();
 		crashSounds.Purge();
-		
+
 		for ( int i = 0; i < VS_NUM_SOUNDS; i++ )
 		{
 			iszSound[i] = NULL_STRING;

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -177,7 +177,7 @@ bool CTestScriptMgr::StartTestScript( const char *pFilename )
 	if ( m_hFile == FILESYSTEM_INVALID_HANDLE )
 		return false;
 
-	RunCommands();	
+	RunCommands();
 	return true;
 }
 
@@ -276,7 +276,7 @@ void CTestScriptMgr::RunCommands()
 		}
 
 		curCommand[iCurPos] = 0;
-		
+
 		// Did we hit the end of the file?
 		if ( curCommand[0] == 0 )
 		{
@@ -288,7 +288,7 @@ void CTestScriptMgr::RunCommands()
 			else
 			{
 				continue;
-			}			
+			}
 		}
 
 		Cbuf_AddText( curCommand );
@@ -414,7 +414,7 @@ void CTestScriptMgr::SetWaitCheckPoint( const char *pCheckPointName, bool bOnce 
 			Msg( "TESTSCRIPT: waiting for checkpoint '%s'%s\n", pCheckPointName, bOnce ? " (once)." : "." );
 		}
 	}
-	
+
 	// Don't wait on this checkpoint if we alereayd
 	if ( bOnce && m_CheckPointsHit.Find( pCheckPointName ) != m_CheckPointsHit.InvalidIndex() )
 		return;

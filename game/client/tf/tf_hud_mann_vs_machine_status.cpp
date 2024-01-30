@@ -93,7 +93,7 @@ void __MsgFunc_MVMVictory( bf_read &msg )
 	CTFHudMannVsMachineStatus *pMannVsMachineStatus = GET_HUDELEMENT( CTFHudMannVsMachineStatus );
 	if ( !pMannVsMachineStatus )
 		return;
-	
+
 	bool bIsKicking = (bool)msg.ReadByte();
 	int nTime = (int)msg.ReadByte();
 
@@ -114,7 +114,7 @@ void __MsgFunc_MVMServerKickTimeUpdate( bf_read &msg )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CEnemyCountPanel );
 
@@ -176,7 +176,7 @@ void CEnemyCountPanel::SetFlashing( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CMvMBossProgressBar );
 
@@ -214,7 +214,7 @@ void CMvMBossProgressBar::ApplySchemeSettings( IScheme *pScheme )
 
 //-----------------------------------------------------------------------------
 void CMvMBossProgressBar::SetPercentage( float flPercentage )
-{ 
+{
 	m_flPercentage = flPercentage;
 	if ( m_flPercentage < 0.0f )
 	{
@@ -237,14 +237,14 @@ void CMvMBossProgressBar::SetImage( const char* pszImageName )
 
 //-----------------------------------------------------------------------------
 void CMvMBossProgressBar::OnTick( void )
-{	
+{
 	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
 		return;
 
 	if ( m_flOldPercentage != m_flPercentage )
 	{
 		m_flOldPercentage = m_flPercentage;
-				
+
 		if ( m_pProgressBar )
 		{
 			m_pProgressBar->SetBounds(m_nBarOrgX, m_nBarOrgY, (int)(m_nBarOrgW * m_flPercentage) + m_nWidthSpacer, m_nBarOrgT );
@@ -258,7 +258,7 @@ void CMvMBossProgressBar::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CMvMBossStatusPanel );
 
@@ -271,7 +271,7 @@ CMvMBossStatusPanel::CMvMBossStatusPanel( Panel *parent, const char *pName ): vg
 		m_ProgressBars.AddToTail();
 		m_ProgressBars[ i ] = new CMvMBossProgressBar( this, "TankProgressBar" );
 		m_ProgressBars[ i ]->SetVisible( false );
-	}	
+	}
 
 	m_nBackGroundTall = 0;
 	m_bPanelDirty = false;
@@ -297,7 +297,7 @@ void CMvMBossStatusPanel::ApplySchemeSettings( IScheme *pScheme )
 
 //-----------------------------------------------------------------------------
 void CMvMBossStatusPanel::OnTick( void )
-{	
+{
 	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
 		return;
 
@@ -323,7 +323,7 @@ void CMvMBossStatusPanel::OnTick( void )
 	}
 
 	int nBackgroundTall = 0;
-	int nHeightPerPanel = m_ProgressBars[0]->GetTall(); 
+	int nHeightPerPanel = m_ProgressBars[0]->GetTall();
 	int nTotalPanelHeight = ( activeBosses.Count() * nHeightPerPanel );// + ( ( nNumBosses - 1 ) * m_nSpaceBetweenPanels );
 	if ( m_pBackground && bBackgroundVisible )
 	{
@@ -335,7 +335,7 @@ void CMvMBossStatusPanel::OnTick( void )
 			m_pBackground->SetBounds( m_nBackgroundOriginalX, m_nBackgroundOriginalY, m_nBackgroundOriginalW, m_nBackGroundTall );
 		}
 	}
-	 
+
 	// setup the tank progress bars
 	int iPanelIndex = 0;
 	int nYPos = 0;
@@ -365,7 +365,7 @@ void CMvMBossStatusPanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CWaveStatusPanel );
 
@@ -430,14 +430,14 @@ void CWaveStatusPanel::ApplySchemeSettings( IScheme *pScheme )
 
 //-----------------------------------------------------------------------------
 void CWaveStatusPanel::OnTick( void )
-{	
+{
 	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
 		return;
 
 	if ( !TFObjectiveResource() )
 		return;
 
-	if ( m_nWaveCount != TFObjectiveResource()->GetMannVsMachineWaveCount() || 
+	if ( m_nWaveCount != TFObjectiveResource()->GetMannVsMachineWaveCount() ||
 		m_nMaxWaveCount != TFObjectiveResource()->GetMannVsMachineMaxWaveCount() || m_bPanelDirty )
 	{
 		m_nWaveCount = TFObjectiveResource()->GetMannVsMachineWaveCount();
@@ -473,7 +473,7 @@ void CWaveStatusPanel::OnTick( void )
 	if ( pLocalPlayer )
 	{
 		bool bVisible = m_bVerbose || pLocalPlayer->IsAlive() || ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) || ( !m_bVerbose && !pLocalPlayer->IsAlive() );
-		
+
 		// turn off if game is over
 		bVisible &= TFGameRules()->State_Get() != GR_STATE_GAME_OVER;
 		if ( IsVisible() != bVisible )
@@ -508,7 +508,7 @@ bool CWaveStatusPanel::IsClassIconBeingUsed( CUtlVector< const char* > &vector, 
 
 	return false;
 }
- 
+
 //-----------------------------------------------------------------------------
 void CWaveStatusPanel::UpdateEnemyCounts( void )
 {
@@ -615,7 +615,7 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 				float flPercent = (float)m_nEnemyRemainingNoSupport / (float)nMaxEnemyCountNoSupport;
 				m_pProgressBar->SetBounds( m_nBarOrgX, m_nBarOrgY, (int)(m_nBarOrgW * flPercent) + m_nWidthSpacer, m_nBarOrgT );
 			}
-			
+
 			if ( m_pProgressBarBG )
 			{
 				m_pProgressBarBG->SetBounds( m_nBgOrgX, m_nBgOrgY, m_nBgOrgW + m_nWidthSpacer, m_nBgOrgT );
@@ -628,8 +628,8 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 	int nEnemyCountWide = m_EnemyCountPanels[0]->GetWide();
 
 	CTFPlayer *pLocalPlayer = ToTFPlayer( C_TFPlayer::GetLocalPlayer() );
-	bool bVerbose = ( m_bVerbose || 
-		            ( TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) || 
+	bool bVerbose = ( m_bVerbose ||
+		            ( TFGameRules()->State_Get() != GR_STATE_RND_RUNNING ) ||
 					( pLocalPlayer && ( pLocalPlayer->GetTeamNumber() == TEAM_SPECTATOR ) ) ||
 					  cl_mvm_wave_status_visible_during_wave.GetBool() );
 	if ( !bVerbose )
@@ -664,7 +664,7 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 		}
 
 		nBgX = ( GetWide() * 0.5 ) - ( nUpdatedBgWidth * 0.5 );
-		
+
 		nBgTall = m_nNormalHeight + nMinModeReduction;
 
 		if ( nNumEnemyTypes > 0 )
@@ -706,7 +706,7 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 				pPanel->m_pEnemyCountImage->SetImage( VarArgs( "../hud/leaderboard_class_%s", miniboss[i].pchClassIconName ) );
 				pPanel->m_pEnemyCountImage->SetVisible( true );
 			}
-			
+
 			if ( pPanel->m_pEnemyCountImageBG  )
 			{
 				pPanel->m_pEnemyCountImageBG->SetBgColor( m_clrMiniBoss );
@@ -823,7 +823,7 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 			}
 		}
 	}
-	
+
   	CUtlVector< const char* > classIconsBeingUsed; // used temporarily to track the icons we're showing
 
 	// support
@@ -901,7 +901,7 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 				{
 					pPanel->SetFlashing( false );
 				}
-			
+
 				if ( pPanel->m_pEnemyCountCritBG )
 				{
 					pPanel->m_pEnemyCountCritBG->SetVisible( mission[i].iFlags & MVM_CLASS_FLAG_ALWAYSCRIT );
@@ -919,13 +919,13 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 					}
 				}
 			}
-			
+
 			AddClassIconBeingUsed( classIconsBeingUsed, mission[i].pchClassIconName );
 
 			nXPos += nEnemyCountWide + m_nWaveCountOffset;
 		}
 	}
-	
+
 	// final check to make sure the background covers the support label
 	if ( nSupportLabelRightSide > nBackGroundRightSide )
 	{
@@ -948,7 +948,7 @@ void CWaveStatusPanel::UpdateEnemyCounts( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CCurrencyStatusPanel );
 
@@ -970,8 +970,8 @@ void CCurrencyStatusPanel::OnTick( void )
 		return;
 
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
-	if ( !pLocalPlayer || 
-		 ( pLocalPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS ) || 
+	if ( !pLocalPlayer ||
+		 ( pLocalPlayer->GetTeamNumber() != TF_TEAM_PVE_DEFENDERS ) ||
 		 ( pLocalPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_UNDEFINED ) )
 	{
 		if ( IsVisible() )
@@ -1047,12 +1047,12 @@ bool CCurrencyStatusPanel::UpdateHUD( void )
 	char szTmp[16];
 	Q_snprintf( szTmp, ARRAYSIZE( szTmp ), "$%d", m_nCurrency );
 	SetDialogVariable( "currency", szTmp );
-	
+
 	return true;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CInWorldCurrencyStatus );
 
@@ -1126,7 +1126,7 @@ void CInWorldCurrencyStatus::OnTick( void )
 	SetDialogVariable( "currency", szTmp );
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CWarningSwoop );
 
@@ -1172,7 +1172,7 @@ void CWarningSwoop::StartSwoop( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CWaveCompleteSummaryPanel );
 
@@ -1208,7 +1208,7 @@ void CWaveCompleteSummaryPanel::ApplySchemeSettings( IScheme *pScheme )
 		m_pCreditBonusTextLabel = dynamic_cast<vgui::Label*>( m_pCreditContainerPanel->FindChildByName("CreditBonusTextLabel") );
 		m_pCreditBonusCountLabel = dynamic_cast<vgui::Label*>( m_pCreditContainerPanel->FindChildByName("CreditBonusCountLabel") );
 	}
-	
+
 	m_pRespecBackground = dynamic_cast<vgui::ScalableImagePanel*>( FindChildByName("RespecBackground") );
 	m_pRespecContainerPanel = dynamic_cast<vgui::EditablePanel*>( FindChildByName("RespecContainer") );
 
@@ -1223,7 +1223,7 @@ void CWaveCompleteSummaryPanel::ApplySchemeSettings( IScheme *pScheme )
 void CWaveCompleteSummaryPanel::ShowWaveSummary( int nWaveNumber )
 {
 	// if in progress just add time (reset it)
-	if ( m_eState != FINISHED ) 
+	if ( m_eState != FINISHED )
 	{
 		m_fStateRunningTime = 0;
 		return;
@@ -1299,7 +1299,7 @@ void CWaveCompleteSummaryPanel::ShowWaveSummary( int nWaveNumber )
 
 //-----------------------------------------------------------------------------
 void CWaveCompleteSummaryPanel::OnTick( void )
-{	
+{
 	if ( TFGameRules()->State_Get() != GR_STATE_BETWEEN_RNDS && TFGameRules()->State_Get() != GR_STATE_GAME_OVER && TFGameRules()->State_Get() != GR_STATE_TEAM_WIN )
 	{
 		SetVisible( false );
@@ -1314,7 +1314,7 @@ void CWaveCompleteSummaryPanel::OnTick( void )
 
 	if ( m_eState == FINISHED )
 		return;
-	
+
 	m_fStateRunningTime += gpGlobals->curtime - m_fPreviousTick;
 	m_fPreviousTick = gpGlobals->curtime;
 
@@ -1370,7 +1370,7 @@ bool CWaveCompleteSummaryPanel::StateUpdateValue( vgui::EditablePanel *parent, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaveCompleteSummaryPanel::RatingLabelUpdate( void )
 {
@@ -1381,7 +1381,7 @@ void CWaveCompleteSummaryPanel::RatingLabelUpdate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWaveCompleteSummaryPanel::RatingScoreUpdate( )
 {
@@ -1433,7 +1433,7 @@ bool CWaveCompleteSummaryPanel::CheckState( float targetTime, float currentTime,
 //-----------------------------------------------------------------------------
 // Purpose: Check CreditCounts incase they have changed after Summary first showed on screen.
 //-----------------------------------------------------------------------------
-void CWaveCompleteSummaryPanel::CheckCredits() 
+void CWaveCompleteSummaryPanel::CheckCredits()
 {
 	int nAcquired = MannVsMachineStats_GetAcquiredCredits( m_nWaveNumber, false );
 	int nDropped = MannVsMachineStats_GetDroppedCredits( m_nWaveNumber );
@@ -1525,7 +1525,7 @@ void CWaveCompleteSummaryPanel::CheckCredits()
 					if ( m_pRespecTextLabel->IsVisible() != bVisible )
 					{
 						m_pRespecTextLabel->SetVisible( bVisible );
-					}					
+					}
 				}
 			}
 		}
@@ -1540,13 +1540,13 @@ void CWaveCompleteSummaryPanel::CheckCredits()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 DECLARE_BUILD_FACTORY( CVictorySplash );
 
 CVictorySplash::CVictorySplash( Panel *parent, const char *pName ): vgui::EditablePanel( parent, pName )
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1559,7 +1559,7 @@ void CVictorySplash::ApplySchemeSettings( IScheme *pScheme )
 //-----------------------------------------------------------------------------
 void CVictorySplash::OnTick( void )
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1580,7 +1580,7 @@ void CMvMBombCarrierProgress::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// CTFHudMannVsMachineStatus 
+// CTFHudMannVsMachineStatus
 //-----------------------------------------------------------------------------
 DECLARE_HUDELEMENT( CTFHudMannVsMachineStatus );
 
@@ -1598,7 +1598,7 @@ CHudElement( pElementName ), BaseClass( NULL, "HudMannVsMachineStatus" )
 
 	m_pVictorySplash = new CVictorySplash( this, "VictorySplash" );
 	m_pVictoryContainer = new CMvMVictoryPanelContainer( this, "VictoryPanelContainer" );
-	
+
 	m_pWaveLossPanel = new CMvMWaveLossPanel ( this, "WaveLossPanel" );
 
 	m_nFlagCarrierUpgradeLevel = -1;
@@ -1690,7 +1690,7 @@ void CTFHudMannVsMachineStatus::FireGameEvent( IGameEvent * event )
 // 					{
 // 						switch ( nCount )
 // 						{
-// 						case 6: 
+// 						case 6:
 // 							pPlayer->EmitSound( "Announcer.mvm_spybot_death_six" );
 // 							break;
 // 						case 5:
@@ -1753,7 +1753,7 @@ bool CTFHudMannVsMachineStatus::ShouldDraw( void )
 
 //-----------------------------------------------------------------------------
 void CTFHudMannVsMachineStatus::OnTick( void )
-{	
+{
 	if ( !TFGameRules() || !TFGameRules()->IsMannVsMachineMode() )
 		return;
 
@@ -1766,9 +1766,9 @@ void CTFHudMannVsMachineStatus::OnTick( void )
 		return;
 
 	m_pWaveCompletePanel->OnTick();
-	
+
 	m_pWaveLossPanel->OnTick();
-	
+
 	if ( g_pSpectatorGUI && m_pWaveStatusPanel )
 	{
 		if ( ( m_bSpecPanelVisible != g_pSpectatorGUI->IsVisible() ) || m_bAdjustWaveStatusPanel )
@@ -1899,7 +1899,7 @@ void CTFHudMannVsMachineStatus::OnTick( void )
 	{
 		m_pServerChangeMessage->SetVisible( false );
 	}
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1912,7 +1912,7 @@ void CTFHudMannVsMachineStatus::WaveFailed( void )
 }
 
 //-----------------------------------------------------------------------------
-void CTFHudMannVsMachineStatus::ShowWaveSummary( int nWaveNumber) 
+void CTFHudMannVsMachineStatus::ShowWaveSummary( int nWaveNumber)
 {
 	m_pWaveCompletePanel->ShowWaveSummary( nWaveNumber );
 }
@@ -1960,14 +1960,14 @@ void CTFHudMannVsMachineStatus::UpdateBombCarrierProgress ( void )
 	// Width of Meter
 	float flBase = TFObjectiveResource()->GetNextMvMBombUpgradeTime() - TFObjectiveResource()->GetBaseMvMBombUpgradeTime();
 	float flCurr = TFObjectiveResource()->GetNextMvMBombUpgradeTime() - gpGlobals->curtime;
-	
+
 	float flPercent = 0;
 	int nFlagLevel = TFObjectiveResource()->GetFlagCarrierUpgradeLevel();
 	if ( flBase <= 0 || nFlagLevel >= 3 )
 	{
 		flPercent = nFlagLevel >= 3 ? 1.0 : 0;
 	}
-	else 
+	else
 	{
 		flPercent = MIN( 1.0f, 1.0f - (flCurr / flBase) );
 	}
@@ -2013,5 +2013,5 @@ void CTFHudMannVsMachineStatus::UpdateBombCarrierProgress ( void )
 //-----------------------------------------------------------------------------
 void CTFHudMannVsMachineStatus::UpdateServerMessage( void )
 {
-	
+
 }

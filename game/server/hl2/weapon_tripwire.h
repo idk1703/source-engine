@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		TRIPWIRE 
+// Purpose:		TRIPWIRE
 //
 // $Workfile:     $
 // $Date:         $
@@ -43,10 +43,10 @@ public:
 	void				SecondaryAttack( void );
 	void				WeaponIdle( void );
 	void				WeaponSwitch( void );
-	
+
 	void				SetPickupTouch( void );
 	void				TripwireTouch( CBaseEntity *pOther );	// default weapon touch
-	void				ItemPostFrame( void );	
+	void				ItemPostFrame( void );
 	bool				Reload( void );
 	bool				CanAttachTripwire(void);		// In position where can attach TRIPWIRE?
 	void				StartTripwireAttach( void );

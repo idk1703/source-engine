@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -15,7 +15,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Forward declarations: 
+// Forward declarations:
 //-----------------------------------------------------------------------------
 class INetworkMessageHandler;
 class INetworkMessage;
@@ -62,7 +62,7 @@ public:
 
 	// send a net message
 	// NOTE: There are special connect/disconnect messages?
-	virtual bool AddNetMsg( INetworkMessage *msg, bool bForceReliable = false ) = 0; 
+	virtual bool AddNetMsg( INetworkMessage *msg, bool bForceReliable = false ) = 0;
 //	virtual bool RegisterMessage( INetworkMessage *msg ) = 0;
 
 	virtual ConnectionStatus_t GetConnectionState( ) = 0;

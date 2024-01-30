@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -25,9 +25,9 @@ class CWeaponSG550 : public CWeaponCSBaseGun
 {
 public:
 	DECLARE_CLASS( CWeaponSG550, CWeaponCSBaseGun );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
-	
+
 	CWeaponSG550();
 
 	virtual void Spawn();
@@ -105,8 +105,8 @@ void CWeaponSG550::SecondaryAttack()
 #ifndef CLIENT_DLL
 	// If this isn't guarded, the sound will be emitted twice, once by the server and once by the client.
 	// Let the server play it since if only the client plays it, it's liable to get played twice cause of
-	// a prediction error. joy.	
-	
+	// a prediction error. joy.
+
 	//=============================================================================
 	// HPE_BEGIN:
 	// [tj] Playing this from the player so that we don't try to play the sound outside the level.
@@ -128,7 +128,7 @@ void CWeaponSG550::SecondaryAttack()
 #endif
 
 	m_flNextSecondaryAttack = gpGlobals->curtime + 0.3f;
-	m_zoomFullyActiveTime = gpGlobals->curtime + 0.3; // The worst zoom time from above.  
+	m_zoomFullyActiveTime = gpGlobals->curtime + 0.3; // The worst zoom time from above.
 }
 
 float CWeaponSG550::GetInaccuracy() const
@@ -138,9 +138,9 @@ float CWeaponSG550::GetInaccuracy() const
 		CCSPlayer *pPlayer = GetPlayerOwner();
 		if ( !pPlayer )
 			return 0.0f;
-	
+
 		float fSpread = 0.0f;
-	
+
 		if ( !FBitSet( pPlayer->GetFlags(), FL_ONGROUND ) )
 			fSpread = 0.45f * (1 - m_flAccuracy);
 		else if (pPlayer->GetAbsVelocity().Length2D() > 5)
@@ -149,11 +149,11 @@ float CWeaponSG550::GetInaccuracy() const
 			fSpread = 0.04f * (1 - m_flAccuracy);
 		else
 			fSpread = 0.05f * (1 - m_flAccuracy);
-	
+
 		// If we are not zoomed in, or we have very recently zoomed and are still transitioning, the bullet diverts more.
 		if (pPlayer->GetFOV() == pPlayer->GetDefaultFOV() || (gpGlobals->curtime < m_zoomFullyActiveTime))
 			fSpread += 0.025;
-	
+
 		return fSpread;
 	}
 	else
@@ -167,7 +167,7 @@ void CWeaponSG550::PrimaryAttack()
 		return;
 
 	// Mark the time of this shot and determine the accuracy modifier based on the last shot fired...
-	m_flAccuracy = 0.65 + (0.35) * (gpGlobals->curtime - m_flLastFire);	
+	m_flAccuracy = 0.65 + (0.35) * (gpGlobals->curtime - m_flLastFire);
 
 	if (m_flAccuracy > 0.98)
 		m_flAccuracy = 0.98;
@@ -186,20 +186,20 @@ void CWeaponSG550::PrimaryAttack()
 bool CWeaponSG550::Reload()
 {
 	bool ret = BaseClass::Reload();
-	
+
 	m_flAccuracy = 0.98;
 	m_weaponMode = Primary_Mode;
-	
+
 	return ret;
 }
 
 bool CWeaponSG550::Deploy()
 {
 	bool ret = BaseClass::Deploy();
-	
+
 	m_flAccuracy = 0.98;
 	m_weaponMode = Primary_Mode;
-	
+
 	return ret;
 }
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -83,9 +83,9 @@ void CTFShovel::PrimaryAttack()
 				vForce.z = 350.0f;
 			}
 			pPlayer->ApplyAbsVelocityImpulse( vForce );
-		}	
+		}
 	}
-	
+
 
 	BaseClass::PrimaryAttack();
 }
@@ -98,7 +98,7 @@ void CTFShovel::ItemPreFrame( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFShovel::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* piCustomDamage )
 {
@@ -118,7 +118,7 @@ float CTFShovel::GetMeleeDamage( CBaseEntity *pTarget, int* piDamageType, int* p
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFShovel::GetSpeedMod( void )
 {
@@ -143,7 +143,7 @@ float CTFShovel::GetSpeedMod( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFShovel::Deploy( void )
 {
@@ -159,7 +159,7 @@ bool CTFShovel::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFShovel::Holster( CBaseCombatWeapon *pSwitchingTo )
 {
@@ -171,7 +171,7 @@ bool CTFShovel::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFShovel::MoveSpeedThink( void )
 {
@@ -189,7 +189,7 @@ void CTFShovel::MoveSpeedThink( void )
 
 #ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CTFShovel::GetForceScale( void )
 {

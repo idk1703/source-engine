@@ -13,13 +13,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Expose this class to the scene database 
+// Expose this class to the scene database
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeHitbox, CDmeHitbox );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeHitbox::OnConstruction()
 {
@@ -46,4 +46,3 @@ void CDmeHitbox::Draw( const matrix3x4_t &shapeToWorld, CDmeDrawSettings *pDrawS
 	MatrixAngles( shapeToWorld, angles, vecOrigin );
 	RenderBox( vecOrigin, angles, m_vecMins, m_vecMaxs, m_RenderColor, true );
 }
-

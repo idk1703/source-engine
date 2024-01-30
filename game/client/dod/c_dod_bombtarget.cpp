@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -62,7 +62,7 @@ void C_DODBombTarget::ClientThink( void )
 			}
 		}
 	}
-		
+
 	SetNextClientThink( gpGlobals->curtime + 0.5 );
 }
 

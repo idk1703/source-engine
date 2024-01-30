@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -140,7 +140,7 @@ protected:
 	virtual void HandleDragTo( CItemModelPanel *pItemPanel, int iPanelIndex );
 	virtual int GetBackpackPosForPanelIndex( int iPanelIndex ) { return iPanelIndex + 1 + (GetCurrentPage() * GetNumSlotsPerPage()); }
 	virtual bool NeedsDerivedTickSignal( void ) { return false; }
-	
+
 	int			GetBackpackPositionForPanel( CItemModelPanel *pItemPanel );
 	virtual const char *GetGreyOutItemPanelReason( CItemModelPanel *pItemPanel );
 	virtual void	SetBorderForItem( CItemModelPanel *pItemPanel, bool bMouseOver );

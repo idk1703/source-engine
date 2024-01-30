@@ -9,7 +9,7 @@ namespace vgui
 	typedef unsigned long HCursor;
 }
 
-class CVGuiWnd 
+class CVGuiWnd
 {
 
 public:
@@ -30,11 +30,11 @@ public:
 
 	void				SetRepaintInterval( int msecs );
 	int					GetVGuiContext();
-	
+
 protected:
 	void DrawVGuiPanel();  // overridden to draw this view
 	long WindowProcVGui( UINT message, WPARAM wParam, LPARAM lParam ); //
-	
+
 	vgui::EditablePanel	*m_pMainPanel;
 	CWnd		*m_pParentWnd;
 	int			m_hVGuiContext;
@@ -58,4 +58,3 @@ public:
 
 	DECLARE_MESSAGE_MAP()
 };
-

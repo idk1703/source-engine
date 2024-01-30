@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -24,7 +24,7 @@ public:
 		{
 			return true;
 		}
-	
+
 		if ( Q_strcmp(event->GetName(), "sdk_") == 0 )
 		{
 			return PrintSDKEvent( event );
@@ -52,4 +52,3 @@ IGameSystem* GameLogSystem()
 {
 	return &g_SDKEventLog;
 }
-

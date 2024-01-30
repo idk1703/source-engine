@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmeclip.h"
@@ -37,7 +37,7 @@
 //-----------------------------------------------------------------------------
 // String to clip type + back
 //-----------------------------------------------------------------------------
-static const char *s_pClipTypeNames[DMECLIP_TYPE_COUNT] = 
+static const char *s_pClipTypeNames[DMECLIP_TYPE_COUNT] =
 {
 	"Channel",
 	"Audio",
@@ -279,7 +279,7 @@ CDmeTrackGroup *CDmeClip::GetTrackGroup( int nIndex ) const
 		return m_TrackGroups[ nIndex ];
 	return NULL;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Is a track group valid to add?
 //-----------------------------------------------------------------------------
@@ -353,7 +353,7 @@ void CDmeClip::RemoveTrackGroup( CDmeTrackGroup *pTrackGroup )
 }
 
 void CDmeClip::RemoveTrackGroup( const char *pTrackGroupName )
-{	
+{
 	if ( !pTrackGroupName )
 	{
 		pTrackGroupName = DMETRACKGROUP_DEFAULT_NAME;
@@ -400,7 +400,7 @@ void CDmeClip::SwapOrder( CDmeTrackGroup *pTrackGroup1, CDmeTrackGroup *pTrackGr
 	m_TrackGroups.Swap( nIndex1, nIndex2 );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Track group finding
 //-----------------------------------------------------------------------------
@@ -993,7 +993,7 @@ void CDmeFilmClip::OnAttributeChanged( CDmAttribute *pAttribute )
 		{
 			m_FilmTrackGroup->SetMaxTrackCount( 1 );
 			m_FilmTrackGroup->SetOwnerClip( this );
-		}																											 
+		}
 	}
 	else if ( pAttribute->GetOwner() == m_TimeFrame.GetElement() )
 	{
@@ -1050,7 +1050,7 @@ void CDmeFilmClip::OnElementUnserialized( )
 
 cleanUp:
 		// Always strip out the old overlay attribute
-		RemoveAttribute( "overlay" );							
+		RemoveAttribute( "overlay" );
 		RemoveAttribute( "overlayalpha" );
 	}
 }
@@ -1211,13 +1211,13 @@ IVideoMaterial *CDmeFilmClip::GetCachedVideoMaterial()
 			{
 				m_pCachedVersion = g_pVideo->CreateVideoMaterial( m_AVIFile, m_AVIFile, "MOD" );
 			}
-		
+
 		}
 		m_bReloadCachedVersion = false;
 	}
 	return m_pCachedVersion;
 }
-	
+
 void CDmeFilmClip::SetCachedAVI( const char *pAVIFile )
 {
 	m_AVIFile = pAVIFile;
@@ -1508,7 +1508,7 @@ void CDmeFilmClip::BuildClipAssociations( CUtlVector< ClipAssociation_t > &assoc
 			{
 				CDmeClip *pClip = pTrack->GetClip( k );
 				CDmeClip *pFilmClip = pFilmTrack->FindFilmClipAtTime( pClip->GetStartTime() );
-				
+
 				int nIndex = association.AddToTail();
 				association[nIndex].m_hClip = pClip;
 				association[nIndex].m_hAssociation = pFilmClip;
@@ -1555,7 +1555,7 @@ void CDmeFilmClip::RollAssociatedClips( CDmeClip *pClip, CUtlVector< ClipAssocia
 
 		if ( association[i].m_hAssociation.Get() != pClip )
 			continue;
-		  
+
 		DmeTime_t newStartTime = association[i].m_hClip->GetStartTime() - dt;
 		association[i].m_hClip->SetStartTime( newStartTime );
 	}
@@ -1590,7 +1590,7 @@ void CDmeFilmClip::UpdateAssociatedClips( CUtlVector< ClipAssociation_t > &assoc
 	if ( !pFilmTrack )
 		return;
 
-	int c = association.Count(); 
+	int c = association.Count();
 	if ( c > 0 )
 	{
 		DmeTime_t clipStartTime = GetStartInChildMediaTime();
@@ -1607,16 +1607,16 @@ void CDmeFilmClip::UpdateAssociatedClips( CUtlVector< ClipAssociation_t > &assoc
 			case ClipAssociation_t::HAS_CLIP:
 				if ( curr.m_hAssociation.Get() )
 				{
-					curr.m_hClip->SetStartTime( curr.m_hAssociation->GetStartTime() + curr.m_offset ); 
+					curr.m_hClip->SetStartTime( curr.m_hAssociation->GetStartTime() + curr.m_offset );
 				}
 				break;
 
 			case ClipAssociation_t::BEFORE_START:
-				curr.m_hClip->SetStartTime( clipStartTime + curr.m_offset ); 
+				curr.m_hClip->SetStartTime( clipStartTime + curr.m_offset );
 				break;
 
 			case ClipAssociation_t::AFTER_END:
- 				curr.m_hClip->SetStartTime( clipEndTime + curr.m_offset ); 
+ 				curr.m_hClip->SetStartTime( clipEndTime + curr.m_offset );
 				break;
 			}
 		}
@@ -1671,7 +1671,7 @@ CDmeTrack *GetParentTrack( CDmeClip *pClip )
 
 
 //-----------------------------------------------------------------------------
-// Finds a channel in a channel or film clip targetting a particular element 
+// Finds a channel in a channel or film clip targetting a particular element
 //-----------------------------------------------------------------------------
 CDmeChannel *FindChannelTargetingElement( CDmeChannelsClip *pChannelsClip, CDmElement *pElement, const char *pAttributeName )
 {

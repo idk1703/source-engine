@@ -17,7 +17,7 @@
 #include "tier0/memdbgon.h"
 
 
-static float g_flDX7NoiseScale = 4.0f; 
+static float g_flDX7NoiseScale = 4.0f;
 
 //------------------------------------------------------------------------------
 // Film grain post-processing effect
@@ -38,10 +38,10 @@ struct FilmDustParticle_t
 
 class CFilmGrainEffect : public IScreenSpaceEffect
 {
-public:													
+public:
 
 	CFilmGrainEffect( );
-   ~CFilmGrainEffect( );
+	~CFilmGrainEffect( );
 
 	void Init( );
 	void Shutdown( );
@@ -83,7 +83,7 @@ private:
 
 	float				m_flEffectAlpha;
 
-	IMaterial *			m_pFlickerMaterial; 
+	IMaterial *			m_pFlickerMaterial;
 };
 
 ADD_SCREENSPACE_EFFECT( CFilmGrainEffect, filmgrain );
@@ -96,14 +96,14 @@ CFilmGrainEffect::CFilmGrainEffect( )
 	m_NoiseScale = Vector4D( 0.14f, 0.14f, 0.14f, 0.78f );
 
 	m_nMaxDustParticles = 3;
-	
+
 	m_flMinDustSize = 0.03f;
 	m_flMaxDustSize = 0.15f;
 
 	m_flChanceOfDust = 0.75f;
 
 	m_flUpdateRate = 24.0f;
-	
+
 	m_nCachedParticleTime = -1;
 
 	m_bSplitScreen = false;
@@ -161,14 +161,14 @@ void CFilmGrainEffect::Shutdown( )
 {
 	m_DustMaterial.Shutdown();
 	m_GrainMaterial.Shutdown();
-	
+
 	if ( m_pFlickerMaterial )
 	{
 		m_pFlickerMaterial->Release();
 	}
 }
 
- 
+
 //------------------------------------------------------------------------------
 // CFilmGrainEffect enable
 //------------------------------------------------------------------------------
@@ -338,19 +338,19 @@ void CFilmGrainEffect::Render( int x, int y, int w, int h )
 
 		// alpha operates from 1.0 -> m_NoiseScale.w
 		float alpha = 1.0 - ( 1.0 - m_NoiseScale.w ) * m_flEffectAlpha;
-		
+
 		if( !Q_stricmp( pVar->GetName(), "$noisescale" ) )
 		{
 			if( g_pMaterialSystemHardwareConfig->GetDXSupportLevel()<=70 )
 			{
-			 	pVar->SetVecValue( m_NoiseScale.x*g_flDX7NoiseScale * m_flEffectAlpha,
+				pVar->SetVecValue( m_NoiseScale.x*g_flDX7NoiseScale * m_flEffectAlpha,
 									m_NoiseScale.y*g_flDX7NoiseScale * m_flEffectAlpha,
 									m_NoiseScale.z*g_flDX7NoiseScale * m_flEffectAlpha,
 									alpha );
 			}
 			else
 			{
-			 	pVar->SetVecValue( m_NoiseScale.x * m_flEffectAlpha,
+				pVar->SetVecValue( m_NoiseScale.x * m_flEffectAlpha,
 									m_NoiseScale.y * m_flEffectAlpha,
 									m_NoiseScale.z * m_flEffectAlpha,
 									alpha );
@@ -372,7 +372,7 @@ void CFilmGrainEffect::Render( int x, int y, int w, int h )
 	}
 
 	int screenWidth, screenHeight;
- 	pRenderContext->GetRenderTargetDimensions( screenWidth, screenHeight );
+	pRenderContext->GetRenderTargetDimensions( screenWidth, screenHeight );
 
 	// Now let's do the flicker
 	if( m_bEnableFlicker )
@@ -411,7 +411,7 @@ void CFilmGrainEffect::Render( int x, int y, int w, int h )
 			{
 				FilmDustParticle_t particle;
 
-				particle.m_nChannel = RandomInt( 0, 2 );				
+				particle.m_nChannel = RandomInt( 0, 2 );
 
 				particle.m_flPositionX = RandomFloat( -1.0f, 1.0f );
 				particle.m_flPositionY = RandomFloat( -1.0f, 1.0f );
@@ -420,7 +420,7 @@ void CFilmGrainEffect::Render( int x, int y, int w, int h )
 
 				particle.m_nSplotchIndex = RandomInt( 0, 15 );
 				clamp( particle.m_nSplotchIndex, 0, 15 );
-                                      
+
 				particle.m_flHeight = RandomFloat( m_flMinDustSize, m_flMaxDustSize );
 				particle.m_flWidth = particle.m_flHeight * (float)screenHeight / (float)screenWidth;
 
@@ -437,21 +437,21 @@ void CFilmGrainEffect::Render( int x, int y, int w, int h )
 		FilmDustParticle_t *particle = &m_CachedParticles[i];
 
 		float channelSelect[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
- 		channelSelect[ particle->m_nChannel ] = 1.0f;
+		channelSelect[ particle->m_nChannel ] = 1.0f;
 
 		paramCount = m_DustMaterial->ShaderParamCount();
 		pParams = m_DustMaterial->GetShaderParams();
 		for( int i=0;i<paramCount;i++ )
 		{
 			IMaterialVar *pVar = pParams[i];
-			
+
 			if( !Q_stricmp( pVar->GetName(), "$channel_select" ) )
 			{
 				pVar->SetVecValue( channelSelect[0], channelSelect[1], channelSelect[2], channelSelect[3] );
 			}
 		}
 
-        float flUOffset = (particle->m_nSplotchIndex % 4) / 4.0f;
+			float flUOffset = (particle->m_nSplotchIndex % 4) / 4.0f;
 		float flVOffset = (particle->m_nSplotchIndex / 4) / 4.0f;
 
 		pRenderContext->Bind( m_DustMaterial );
@@ -479,4 +479,3 @@ static void EnableFilmGrain( IConVar *pConVar, char const *pOldString, float flO
 }
 
 static ConVar mat_filmgrain( "mat_filmgrain", "0", FCVAR_CLIENTDLL, "Enable/disable film grain post effect", EnableFilmGrain );
-

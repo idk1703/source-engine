@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -18,10 +18,10 @@ class CWeaponK98Scoped : public CDODSniperWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponK98Scoped, CDODSniperWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 	DECLARE_ACTTABLE();
-	
+
 	CWeaponK98Scoped()  {}
 
 	virtual void Spawn( void );
@@ -33,7 +33,7 @@ public:
 	{
 		if ( IsFullyZoomed() )
 			return WEAPON_K98_SCOPED_ZOOMED;
-		else 
+		else
 			return WEAPON_K98_SCOPED;
 	}
 
@@ -92,7 +92,7 @@ void CWeaponK98Scoped::Spawn( void )
 	BaseClass::Spawn();
 }
 
-acttable_t CWeaponK98Scoped::m_acttable[] = 
+acttable_t CWeaponK98Scoped::m_acttable[] =
 {
 	{ ACT_DOD_STAND_AIM,					ACT_DOD_STAND_AIM_BOLT,					false },
 	{ ACT_DOD_CROUCH_AIM,					ACT_DOD_CROUCH_AIM_BOLT,				false },
@@ -138,7 +138,7 @@ Activity CWeaponK98Scoped::GetPrimaryAttackActivity( void )
 	Activity actPrim;
 
 	if( m_iClip1 <= 0 )
-		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;	
+		actPrim = ACT_VM_PRIMARYATTACK_EMPTY;
 	else
 		actPrim = ACT_VM_PRIMARYATTACK;
 

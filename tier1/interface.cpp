@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 #if defined( _WIN32 ) && !defined( _X360 )
@@ -58,9 +58,9 @@ InterfaceReg::InterfaceReg( InstantiateInterfaceFn fn, const char *pName ) :
 // This is the primary exported function by a dll, referenced by name via dynamic binding
 // that exposes an opqaue function pointer to the interface.
 //
-// We have the Internal variant so Sys_GetFactoryThis() returns the correct internal 
+// We have the Internal variant so Sys_GetFactoryThis() returns the correct internal
 // symbol under GCC/Linux/Mac as CreateInterface is DLL_EXPORT so its global so the loaders
-// on those OS's pick exactly 1 of the CreateInterface symbols to be the one that is process wide and 
+// on those OS's pick exactly 1 of the CreateInterface symbols to be the one that is process wide and
 // all Sys_GetFactoryThis() calls find that one, which doesn't work. Using the internal walkthrough here
 // makes sure Sys_GetFactoryThis() has the dll specific symbol and GetProcAddress() returns the module specific
 // function for CreateInterface again getting the dll specific symbol we need.
@@ -68,7 +68,7 @@ InterfaceReg::InterfaceReg( InstantiateInterfaceFn fn, const char *pName ) :
 void* CreateInterfaceInternal( const char *pName, int *pReturnCode )
 {
 	InterfaceReg *pCur;
-	
+
 	for (pCur=InterfaceReg::s_pInterfaceRegs; pCur; pCur=pCur->m_pNext)
 	{
 		if (strcmp(pCur->m_pName, pName) == 0)
@@ -80,17 +80,17 @@ void* CreateInterfaceInternal( const char *pName, int *pReturnCode )
 			return pCur->m_CreateFn();
 		}
 	}
-	
+
 	if (pReturnCode)
 	{
 		*pReturnCode = IFACE_FAILED;
 	}
-	return NULL;	
+	return NULL;
 }
 
 void* CreateInterface( const char *pName, int *pReturnCode )
 {
-    return CreateInterfaceInternal( pName, pReturnCode );
+	return CreateInterfaceInternal( pName, pReturnCode );
 }
 
 
@@ -108,12 +108,12 @@ void *GetModuleHandle(const char *name)
 		return NULL;
 	}
 
-    if( (handle=dlopen(name, RTLD_NOW))==NULL)
-    {
-            printf("DLOPEN Error:%s\n",dlerror());
-            // couldn't open this file
-            return NULL;
-    }
+	if( (handle=dlopen(name, RTLD_NOW))==NULL)
+	{
+	printf("DLOPEN Error:%s\n",dlerror());
+	// couldn't open this file
+	return NULL;
+	}
 
 	// read "man dlopen" for details
 	// in short dlopen() inc a ref count
@@ -256,7 +256,7 @@ HMODULE Sys_LoadLibrary( const char *pLibraryName, Sys_Flags flags )
 			Msg( " failed to dlopen %s error=%s\n", str, pError );
 		}
 	}
-	
+
 	return ret;
 #endif
 }
@@ -297,7 +297,7 @@ CSysModule *Sys_LoadModule( const char *pModuleName, Sys_Flags flags /* = SYS_NO
 		if ( strstr( pModuleName, "bin/") == pModuleName || ( szCwd[ cCwd - 1 ] == 'n'  && szCwd[ cCwd - 2 ] == 'i' && szCwd[ cCwd - 3 ] == 'b' )  )
 		{
 			// don't make bin/bin path
-			Q_snprintf( szAbsoluteModuleName, sizeof(szAbsoluteModuleName), "%s/%s", szCwd, pModuleName );			
+			Q_snprintf( szAbsoluteModuleName, sizeof(szAbsoluteModuleName), "%s/%s", szCwd, pModuleName );
 		}
 		else
 		{
@@ -316,17 +316,17 @@ CSysModule *Sys_LoadModule( const char *pModuleName, Sys_Flags flags /* = SYS_NO
 // So you can see what the error is in the debugger...
 #if defined( _WIN32 ) && !defined( _X360 )
 			char *lpMsgBuf;
-			
-			FormatMessage( 
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
+
+			FormatMessage(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,
 				NULL,
 				GetLastError(),
 				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 				(LPTSTR) &lpMsgBuf,
 				0,
-				NULL 
+				NULL
 			);
 
 			LocalFree( (HLOCAL)lpMsgBuf );
@@ -344,9 +344,9 @@ CSysModule *Sys_LoadModule( const char *pModuleName, Sys_Flags flags /* = SYS_NO
 	// If running in the debugger, assume debug binaries are okay, otherwise they must run with -allowdebug
 	if ( Sys_GetProcAddress( hDLL, "BuiltDebug" ) )
 	{
-		if ( !IsX360() && hDLL && 
-			 !CommandLine()->FindParm( "-allowdebug" ) && 
-			 !Sys_IsDebuggerPresent() )
+		if ( !IsX360() && hDLL &&
+			!CommandLine()->FindParm( "-allowdebug" ) &&
+			!Sys_IsDebuggerPresent() )
 		{
 			Error( "Module %s is a debug build\n", pModuleName );
 		}
@@ -356,11 +356,11 @@ CSysModule *Sys_LoadModule( const char *pModuleName, Sys_Flags flags /* = SYS_NO
 		if ( !s_bRunningWithDebugModules )
 		{
 			s_bRunningWithDebugModules = true;
-			
+
 #if 0 //def IS_WINDOWS_PC
 			char chMemoryName[ MAX_PATH ];
 			DebugKernelMemoryObjectName( chMemoryName );
-			
+
 			(void) CreateFileMapping( INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 1024, chMemoryName );
 			// Created a shared memory kernel object specific to process id
 			// Existence of this object indicates that we have debug modules loaded
@@ -416,7 +416,7 @@ void Sys_UnloadModule( CSysModule *pModule )
 
 //-----------------------------------------------------------------------------
 // Purpose: returns a pointer to a function, given a module
-// Input  : module - windows HMODULE from Sys_LoadModule() 
+// Input  : module - windows HMODULE from Sys_LoadModule()
 //			*pName - proc name
 // Output : factory for this module
 //-----------------------------------------------------------------------------
@@ -466,8 +466,8 @@ CreateInterfaceFn Sys_GetFactory( const char *pModuleName )
 
 //-----------------------------------------------------------------------------
 // Purpose: get the interface for the specified module and version
-// Input  : 
-// Output : 
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 bool Sys_LoadInterface(
 	const char *pModuleName,
@@ -500,14 +500,14 @@ bool Sys_LoadInterface(
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Place this as a singleton at module scope (e.g.) and use it to get the factory from the specified module name.  
-// 
+// Purpose: Place this as a singleton at module scope (e.g.) and use it to get the factory from the specified module name.
+//
 // When the singleton goes out of scope (.dll unload if at module scope),
-//  then it'll call Sys_UnloadModule on the module so that the refcount is decremented 
+//  then it'll call Sys_UnloadModule on the module so that the refcount is decremented
 //  and the .dll actually can unload from memory.
 //-----------------------------------------------------------------------------
-CDllDemandLoader::CDllDemandLoader( char const *pchModuleName ) : 
-	m_pchModuleName( pchModuleName ), 
+CDllDemandLoader::CDllDemandLoader( char const *pchModuleName ) :
+	m_pchModuleName( pchModuleName ),
 	m_hModule( 0 ),
 	m_bLoadAttempted( false )
 {
@@ -564,4 +564,3 @@ extern "C" int backtrace( void **buffer, int size )
 }
 
 #endif // STAGING_ONLY && _WIN32
-

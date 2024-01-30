@@ -49,7 +49,7 @@ void UtlStrcpy( CUtlVector<char> &dest, const char *pSrc )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *GetBaseDirectory( void )
@@ -132,7 +132,7 @@ DEFINE_WINDOWED_STEAM_APPLICATION_OBJECT( CQCGeneratorApp );
 //-----------------------------------------------------------------------------
 bool CQCGeneratorApp::Create()
 {
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "inputsystem.dll",		INPUTSYSTEM_INTERFACE_VERSION },
 		{ "vgui2.dll",				VGUI_IVGUI_INTERFACE_VERSION },
@@ -166,7 +166,7 @@ bool CQCGeneratorApp::PreInit()
 	}
 
 	// the "base dir" so we can scan mod name
-	g_pFullFileSystem->AddSearchPath( GetBaseDirectory(), QCGENERATOR_MAIN_PATH_ID );	
+	g_pFullFileSystem->AddSearchPath( GetBaseDirectory(), QCGENERATOR_MAIN_PATH_ID );
 
 	// the main platform dir
 	g_pFullFileSystem->AddSearchPath( "platform", "PLATFORM", PATH_ADD_TO_HEAD );

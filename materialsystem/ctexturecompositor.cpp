@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ================================== //
 //
-// Purpose: 
+// Purpose:
 //
 //============================================================================================== //
 
@@ -55,7 +55,7 @@ struct CTCStageResult_t
 
 	matrix3x4_t m_mUvAdjust;
 
-	inline CTCStageResult_t() 
+	inline CTCStageResult_t()
 	: m_pTexture(NULL)
 	, m_pRenderTarget(NULL)
 	, m_fAdjustBlackPoint(0.0f)
@@ -92,7 +92,7 @@ public:
 	virtual int AddRef() OVERRIDE;
 	virtual int Release() OVERRIDE;
 	virtual int GetRefCount() const OVERRIDE { return m_nReferenceCount; }
-	virtual void OnAsyncCreateComplete( ITexture* pTex, void* pExtraArgs ) OVERRIDE { } 
+	virtual void OnAsyncCreateComplete( ITexture* pTex, void* pExtraArgs ) OVERRIDE { }
 	virtual void OnAsyncFindComplete( ITexture* pTex, void* pExtraArgs ) OVERRIDE { }
 	virtual void OnAsyncMapComplete( ITexture* pTex, void* pExtraArgs, void* pMemory, int pPitch ) OVERRIDE { }
 	virtual void OnAsyncReadbackBegin( ITexture* pDst, ITexture* pSrc, void* pExtraArgs ) OVERRIDE { }
@@ -117,7 +117,7 @@ public:
 
 	void AppendChildren( const CUtlVector< CTCStage* >& _children )
 	{
-		// Do these in reverse order, they will wind up in the right order 
+		// Do these in reverse order, they will wind up in the right order
 		FOR_EACH_VEC_BACK( _children, i )
 		{
 			CTCStage* childStage = _children[i];
@@ -129,11 +129,11 @@ public:
 	void CleanupChildResults( CTextureCompositor* _comp );
 
 	// Render a quad with _mat using _inputs to _destRT
-	void Render( ITexture* _destRT, IMaterial* _mat, const CUtlVector<CTCStageResult_t>& _inputs, CTextureCompositor* _comp, bool bClear ); 
+	void Render( ITexture* _destRT, IMaterial* _mat, const CUtlVector<CTCStageResult_t>& _inputs, CTextureCompositor* _comp, bool bClear );
 
 	void Cleanup( CTextureCompositor* _comp );
 
-	// Does this stage target a render target or a texture? 
+	// Does this stage target a render target or a texture?
 	virtual bool DoesTargetRenderTarget() const = 0;
 
 	inline void SetResult( const CTCStageResult_t& _result )
@@ -160,7 +160,7 @@ protected:
 	// not have resolved yet.
 	virtual void ResolveThis( CTextureCompositor* _comp ) = 0;
 
-	// This function is called during HasTeamSpecifics traversal. 
+	// This function is called during HasTeamSpecifics traversal.
 	virtual bool HasTeamSpecificsThis() const = 0;
 
 	virtual bool ComputeRandomValuesThis( CUniformRandomStream* pRNG ) = 0;
@@ -195,12 +195,12 @@ struct Range
 	Range( )
 	: low( 0 )
 	, high( 0 )
-	{ } 
+	{ }
 
 	Range( float _l, float _h )
 	: low( _l )
 	, high( _h )
-	{ } 
+	{ }
 };
 
 // ------------------------------------------------------------------------------------------------
@@ -287,7 +287,7 @@ template< class T, int N = INT_MAX >
 void ParseVectorFromKV( KeyValues* _kv, void* _pDest )
 {
 	CCopyableUtlVector< T >* realDest = ( CCopyableUtlVector< T >* ) _pDest;
-	
+
 	T parsedValue = T();
 	ParseTFromKV<T>( _kv, &parsedValue );
 
@@ -411,7 +411,7 @@ struct TextureStageParameters
 };
 
 // ------------------------------------------------------------------------------------------------
-const ParseTableEntry cTextureStageParametersParseTable[] = 
+const ParseTableEntry cTextureStageParametersParseTable[] =
 {
 	{ "texture",			ParseStringFromKV,				offsetof( TextureStageParameters, m_pTexFilename ) },
 	{ "texture_red",		ParseStringFromKV,				offsetof( TextureStageParameters, m_pTexRedFilename ) },
@@ -436,27 +436,27 @@ const ParseTableEntry cTextureStageParametersParseTable[] =
 class CTCTextureStage : public CTCStage
 {
 public:
-	CTCTextureStage( const TextureStageParameters& _tsp, uint32 nTexCompositeCreateFlags ) 
-	: m_Parameters( _tsp ) 
+	CTCTextureStage( const TextureStageParameters& _tsp, uint32 nTexCompositeCreateFlags )
+	: m_Parameters( _tsp )
 	, m_pTex( NULL )
 	, m_pTexRed( NULL )
 	, m_pTexBlue( NULL )
-	{ 
+	{
 	}
 
 	virtual ~CTCTextureStage()
 	{
-		SafeRelease( &m_pTex );	
+		SafeRelease( &m_pTex );
 		SafeRelease( &m_pTexBlue );
 		SafeRelease( &m_pTexRed );
 	}
 
-	virtual void OnAsyncFindComplete( ITexture* pTex, void* pExtraArgs ) 
-	{ 
+	virtual void OnAsyncFindComplete( ITexture* pTex, void* pExtraArgs )
+	{
 		switch ( ( int ) pExtraArgs )
 		{
 		case Neutral:
-			SafeAssign( &m_pTex, pTex ); 
+			SafeAssign( &m_pTex, pTex );
 			break;
 		case Red:
 			SafeAssign( &m_pTexRed, pTex );
@@ -475,7 +475,7 @@ public:
 protected:
 	bool AreTexturesLoaded() const
 	{
-		if ( !m_Parameters.m_pTexFilename.IsEmpty() && !m_pTex ) 
+		if ( !m_Parameters.m_pTexFilename.IsEmpty() && !m_pTex )
 			return false;
 
 		if ( !m_Parameters.m_pTexRedFilename.IsEmpty() && !m_pTexRed )
@@ -505,7 +505,7 @@ protected:
 		if ( !m_Parameters.m_pTexRedFilename.IsEmpty() )
 			materials->AsyncFindTexture( m_Parameters.m_pTexRedFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, ( void* ) Red, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );
 		if ( !m_Parameters.m_pTexBlueFilename.IsEmpty() )
-			materials->AsyncFindTexture( m_Parameters.m_pTexBlueFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, ( void* ) Blue, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );	
+			materials->AsyncFindTexture( m_Parameters.m_pTexBlueFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, ( void* ) Blue, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );
 	}
 
 	virtual void ResolveThis( CTextureCompositor* _comp )
@@ -639,7 +639,7 @@ const char* cCombineMaterialName[] =
 
 	"dev/CompositorBlend",
 
-	"\0 ECO_LastPrecacheMaterial", // 
+	"\0 ECO_LastPrecacheMaterial", //
 
 	"CompositorError",
 
@@ -698,7 +698,7 @@ void ParseOperationFromKV( KeyValues* _kv, void* _pDest )
 }
 
 // ------------------------------------------------------------------------------------------------
-const ParseTableEntry cCombineStageParametersParseTable[] = 
+const ParseTableEntry cCombineStageParametersParseTable[] =
 {
 	{ "adjust_black",	ParseRangeThenDivideBy<255>,	offsetof( CombineStageParameters, m_AdjustBlack ) },
 	{ "adjust_offset",	ParseRangeThenDivideBy<255>,	offsetof( CombineStageParameters, m_AdjustOffset ) },
@@ -717,22 +717,22 @@ const ParseTableEntry cCombineStageParametersParseTable[] =
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-class CTCCombineStage : public CTCStage 
+class CTCCombineStage : public CTCStage
 {
 public:
 	CTCCombineStage( const CombineStageParameters& _csp, uint32 nTexCompositeCreateFlags )
-	: m_Parameters( _csp ) 
+	: m_Parameters( _csp )
 	, m_pMaterial( NULL )
-	{ 
+	{
 		Assert( m_Parameters.m_CombineOp >= 0 && m_Parameters.m_CombineOp < ECO_COUNT );
 
 		SafeAssign( &m_pMaterial, materials->FindMaterial( cCombineMaterialName[ m_Parameters.m_CombineOp ], TEXTURE_GROUP_RUNTIME_COMPOSITE ) );
-	} 
+	}
 
-	virtual ~CTCCombineStage() 
-	{ 
+	virtual ~CTCCombineStage()
+	{
 		SafeRelease( &m_pMaterial );
-	} 
+	}
 
 	virtual bool DoesTargetRenderTarget() const { return true; }
 
@@ -761,7 +761,7 @@ protected:
 			if ( child->GetResolveStatus() != ECRS_Complete )
 				return;
 		}
-		
+
 		ITexture* pRenderTarget = _comp->AllocateCompositorRenderTarget();
 
 		CUtlVector<CTCStageResult_t> results;
@@ -784,7 +784,7 @@ protected:
 
 		SetResult( res );
 
-		// As soon as we have scheduled the read of a child render target, we can release that 
+		// As soon as we have scheduled the read of a child render target, we can release that
 		// texture back to the pool for use by another stage. Everything is pipelined, so this just
 		// works.
 		CleanupChildResults( _comp );
@@ -825,12 +825,12 @@ struct SelectStageParameters
 
 	SelectStageParameters()
 	: m_Evaluate( true )
-	{ 
+	{
 	}
 };
 
 // ------------------------------------------------------------------------------------------------
-const ParseTableEntry cSelectStageParametersParseTable[] = 
+const ParseTableEntry cSelectStageParametersParseTable[] =
 {
 	{ "groups",		ParseStringFromKV,							offsetof( SelectStageParameters, m_pTexFilename ) },
 	{ "select",		ParseVectorFromKV< int, cMaxSelectors >,	offsetof( SelectStageParameters, m_Select ) },
@@ -845,15 +845,15 @@ const ParseTableEntry cSelectStageParametersParseTable[] =
 class CTCSelectStage : public CTCStage
 {
 public:
-	CTCSelectStage( const SelectStageParameters& _ssp, uint32 nTexCompositeCreateFlags ) 
-	: m_Parameters( _ssp ) 
-	, m_pMaterial( NULL ) 
+	CTCSelectStage( const SelectStageParameters& _ssp, uint32 nTexCompositeCreateFlags )
+	: m_Parameters( _ssp )
+	, m_pMaterial( NULL )
 	, m_pTex( NULL )
-	{ 
+	{
 		SafeAssign( &m_pMaterial, materials->FindMaterial( cCombineMaterialName[ ECO_Select ], TEXTURE_GROUP_RUNTIME_COMPOSITE ) );
 	}
-	virtual ~CTCSelectStage() 
-	{ 
+	virtual ~CTCSelectStage()
+	{
 		SafeRelease( &m_pMaterial );
 		SafeRelease( &m_pTex );
 	}
@@ -864,7 +864,7 @@ public:
 
 
 protected:
-	virtual void RequestTextures() 
+	virtual void RequestTextures()
 	{
 		materials->AsyncFindTexture( m_Parameters.m_pTexFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, NULL, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );
 	}
@@ -947,9 +947,9 @@ private:
 struct Sticker_t
 {
 	float m_fWeight;				// Random likelihood this one is to be selected
-	CUtlString m_baseFilename;	// Name of the base file for the sticker (the albedo). 
+	CUtlString m_baseFilename;	// Name of the base file for the sticker (the albedo).
 	CUtlString m_specFilename;	// Name of the specular file for the sticker, or if blank we will assume it is baseFilename + _spec + baseExtension
-	
+
 	Sticker_t()
 	: m_fWeight( 1.0 )
 	{ }
@@ -965,12 +965,12 @@ void ParseTFromKV< Sticker_t >( KeyValues* _kv, void* _pDest )
 	tmpDest.m_fWeight = _kv->GetFloat( "weight", 1.0 );
 	tmpDest.m_baseFilename = _kv->GetString( "base" );
 	KeyValues* pSpec = _kv->FindKey( "spec" );
-	if ( pSpec ) 
-		tmpDest.m_specFilename = pSpec->GetString();	
+	if ( pSpec )
+		tmpDest.m_specFilename = pSpec->GetString();
 	else
 	{
-		CUtlString specPath = tmpDest.m_baseFilename.StripExtension() 
-							+ "_s" 
+		CUtlString specPath = tmpDest.m_baseFilename.StripExtension()
+							+ "_s"
 							+ tmpDest.m_baseFilename.GetExtension();
 
 		tmpDest.m_specFilename = specPath;
@@ -1014,7 +1014,7 @@ void ParseSettable( KeyValues *_kv, void* _pDest )
 // ------------------------------------------------------------------------------------------------
 struct ApplyStickerStageParameters
 {
-	CCopyableUtlVector< Sticker_t > m_possibleStickers; 
+	CCopyableUtlVector< Sticker_t > m_possibleStickers;
 
 	Settable_t< Vector2D > m_vDestBL;
 	Settable_t< Vector2D > m_vDestTL;
@@ -1034,7 +1034,7 @@ struct ApplyStickerStageParameters
 };
 
 // ------------------------------------------------------------------------------------------------
-const ParseTableEntry cApplyStickerStageParametersParseTable[] = 
+const ParseTableEntry cApplyStickerStageParametersParseTable[] =
 {
 	{ "sticker",			ParseVectorFromKV< Sticker_t >, offsetof( ApplyStickerStageParameters, m_possibleStickers ) },
 	{ "dest_bl",			ParseSettable< Vector2D >,		offsetof( ApplyStickerStageParameters, m_vDestBL ) },
@@ -1051,27 +1051,27 @@ const ParseTableEntry cApplyStickerStageParametersParseTable[] =
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-class CTCApplyStickerStage : public CTCStage 
+class CTCApplyStickerStage : public CTCStage
 {
 	enum { Albedo = 0, Specular = 1 };
 
 public:
 	CTCApplyStickerStage( const ApplyStickerStageParameters& _assp, uint32 nTexCompositeCreateFlags )
-	: m_Parameters( _assp ) 
+	: m_Parameters( _assp )
 	, m_pMaterial( NULL )
 	, m_pTex( NULL )
 	, m_pTexSpecular( NULL )
 	, m_nChoice( 0 )
-	{ 
+	{
 		SafeAssign( &m_pMaterial, materials->FindMaterial( cCombineMaterialName[ ECO_Blend ], TEXTURE_GROUP_RUNTIME_COMPOSITE ) );
-	} 
+	}
 
-	virtual ~CTCApplyStickerStage() 
-	{ 
+	virtual ~CTCApplyStickerStage()
+	{
 		SafeRelease( &m_pTex );
 		SafeRelease( &m_pTexSpecular );
 		SafeRelease( &m_pMaterial );
-	} 
+	}
 
 	virtual bool DoesTargetRenderTarget() const { return true; }
 
@@ -1093,7 +1093,7 @@ protected:
 			materials->AsyncFindTexture( m_Parameters.m_possibleStickers[ m_nChoice ].m_baseFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, ( void* ) Albedo, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );
 
 		if ( !m_Parameters.m_possibleStickers[ m_nChoice ].m_specFilename.IsEmpty() )
-			materials->AsyncFindTexture( m_Parameters.m_possibleStickers[ m_nChoice ].m_specFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, ( void* ) Specular, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );	
+			materials->AsyncFindTexture( m_Parameters.m_possibleStickers[ m_nChoice ].m_specFilename.Get(), TEXTURE_GROUP_RUNTIME_COMPOSITE, this, ( void* ) Specular, false, TEXTUREFLAGS_IMMEDIATE_CLEANUP );
 	}
 
 	virtual void ResolveThis( CTextureCompositor* _comp )
@@ -1121,18 +1121,18 @@ protected:
 		// Ensure we only have zero or one direct children.
 		Assert( !pChild || pChild->GetNextSibling() == NULL );
 
-		// We expect exactly one or zero children. If we have a child, use its render target to render to, otherwise 
+		// We expect exactly one or zero children. If we have a child, use its render target to render to, otherwise
 		// Get one and use that.
 		ITexture* pRenderTarget = _comp->AllocateCompositorRenderTarget();
-		
+
 		CUtlVector<CTCStageResult_t> results;
 
-		// If we have a child, great! Use it. If not, 
+		// If we have a child, great! Use it. If not,
 		if ( pChild )
 			results.AddToTail( pChild->GetResult() );
 		else
 		{
-			CTCStageResult_t fakeRes;					
+			CTCStageResult_t fakeRes;
 			fakeRes.m_pTexture = materials->FindTexture( "black", TEXTURE_GROUP_RUNTIME_COMPOSITE );
 		}
 
@@ -1155,7 +1155,7 @@ protected:
 
 		SetResult( res );
 
-		// As soon as we have scheduled the read of a child render target, we can release that 
+		// As soon as we have scheduled the read of a child render target, we can release that
 		// texture back to the pool for use by another stage. Everything is pipelined, so this just
 		// works.
 		CleanupChildResults( _comp );
@@ -1169,7 +1169,7 @@ protected:
 		float m_fTotalWeight = 0;
 		FOR_EACH_VEC( m_Parameters.m_possibleStickers, i )
 		{
-			m_fTotalWeight += m_Parameters.m_possibleStickers[ i ].m_fWeight;		
+			m_fTotalWeight += m_Parameters.m_possibleStickers[ i ].m_fWeight;
 		}
 
 		float fWeight = pRNG->RandomFloat( 0.0f, m_fTotalWeight );
@@ -1186,7 +1186,7 @@ protected:
 				fWeight -= thisWeight;
 			}
 		}
-		
+
 		const float adjustBlack = pRNG->RandomFloat( m_Parameters.m_AdjustBlack.low, m_Parameters.m_AdjustBlack.high );
 		const float adjustOffset = pRNG->RandomFloat( m_Parameters.m_AdjustOffset.low, m_Parameters.m_AdjustOffset.high );
 		const float adjustGamma = pRNG->RandomFloat( m_Parameters.m_AdjustGamma.low, m_Parameters.m_AdjustGamma.high );
@@ -1195,7 +1195,7 @@ protected:
 		m_fAdjustBlack = adjustBlack;
 		m_fAdjustWhite = adjustWhite;
 		m_fAdjustGamma = adjustGamma;
-		
+
 		ComputeTextureMatrixFromRectangle( &m_mTextureAdjust, m_Parameters.m_vDestBL.m_val, m_Parameters.m_vDestTL.m_val, m_Parameters.m_vDestTR.m_val );
 		return true;
 	}
@@ -1237,7 +1237,7 @@ private:
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// This is a procedural stage we use to copy the results of a composite into a texture so we can 
+// This is a procedural stage we use to copy the results of a composite into a texture so we can
 // release the render targets back to a pool to be used later.
 class CTCCopyStage : public CTCStage
 {
@@ -1245,7 +1245,7 @@ public:
 	CTCCopyStage()
 	: m_pTex( NULL )
 	{
-	
+
 	}
 
 	~CTCCopyStage()
@@ -1253,9 +1253,9 @@ public:
 		SafeRelease( &m_pTex );
 	}
 
-	virtual void OnAsyncCreateComplete( ITexture* pTex, void* pExtraArgs ) 
-	{ 
-		SafeAssign( &m_pTex, pTex ); 
+	virtual void OnAsyncCreateComplete( ITexture* pTex, void* pExtraArgs )
+	{
+		SafeAssign( &m_pTex, pTex );
 		tmMessage( TELEMETRY_LEVEL0, TMMF_ICON_NOTE, "Completed: %s", __FUNCTION__ );
 	}
 
@@ -1284,7 +1284,7 @@ private:
 			return;
 
 		// Compositing has completed!
-		if ( m_pTex ) 
+		if ( m_pTex )
 		{
 			if ( m_pTex->IsError() )
 			{
@@ -1313,7 +1313,7 @@ private:
 
 		ImageFormat fmt = IMAGE_FORMAT_DXT5_RUNTIME;
 
-		if ( _comp->GetCreateFlags() & TEX_COMPOSITE_CREATE_FLAGS_NO_COMPRESSION ) 
+		if ( _comp->GetCreateFlags() & TEX_COMPOSITE_CREATE_FLAGS_NO_COMPRESSION )
 			fmt = IMAGE_FORMAT_RGBA8888;
 
 		bool bGenMipmaps = !( _comp->GetCreateFlags() & TEX_COMPOSITE_CREATE_FLAGS_NO_MIPMAPS );
@@ -1322,7 +1322,7 @@ private:
 		char buffer[_MAX_PATH];
 		_comp->GetTextureName( buffer, ARRAYSIZE( buffer ) );
 
-		int nCreateFlags = TEXTUREFLAGS_IMMEDIATE_CLEANUP 
+		int nCreateFlags = TEXTUREFLAGS_IMMEDIATE_CLEANUP
 					     | TEXTUREFLAGS_TRILINEAR
 						 | TEXTUREFLAGS_ANISOTROPIC;
 
@@ -1412,7 +1412,7 @@ void CTextureCompositor::Restart()
 // ------------------------------------------------------------------------------------------------
 void CTextureCompositor::Shutdown()
 {
-	// If this thing is a template, then it's a faker and doesn't have an m_pRootStage. This is 
+	// If this thing is a template, then it's a faker and doesn't have an m_pRootStage. This is
 	// only true during startup when we're just verifying that the templates look sane--later
 	// they should have real data.
 	if ( m_pRootStage )
@@ -1432,11 +1432,11 @@ int CTextureCompositor::AddRef()
 int CTextureCompositor::Release()
 {
 	int retVal = --m_nReferenceCount;
-	Assert( retVal >= 0 ); 
-	if ( retVal == 0 ) 
+	Assert( retVal >= 0 );
+	if ( retVal == 0 )
 	{
 		Shutdown();
-		delete this;	
+		delete this;
 	}
 
 	return retVal;
@@ -1457,8 +1457,8 @@ void CTextureCompositor::Update()
 			Restart();
 		}
 		else
-			m_ResolveStatus = ECRS_Error;		
-		return;	
+			m_ResolveStatus = ECRS_Error;
+		return;
 	}
 
 	if ( m_pRootStage->GetResolveStatus() != ECRS_Complete )
@@ -1587,7 +1587,7 @@ void CTextureCompositor::SetRootStage( CTCStage* rootStage )
 	CUniformRandomStream streams[2];
 	streams[0].SetSeed( seedhi );
 	streams[1].SetSeed( seedlo );
-	
+
 	int currentIndex = 0;
 
 	m_pRootStage->ComputeRandomValues( &currentIndex, streams, ARRAYSIZE( streams ) );
@@ -1617,7 +1617,7 @@ ITexture* CTextureCompositor::AllocateCompositorRenderTarget( )
 	Assert( retVal );
 	materials->OverrideRenderTargetAllocation( false );
 
-	// Used to count how many we actually allocated so we can verify we cleaned them all up at 
+	// Used to count how many we actually allocated so we can verify we cleaned them all up at
 	// shutdown
 	++m_nRenderTargetsAllocated;
 	return retVal;
@@ -1658,7 +1658,7 @@ void CTextureCompositor::GetSeed( uint32* pOutHi, uint32* pOutLo ) const
 	( *pOutLo ) = 0;
 
 	// This is most definitely not the most efficient way to do this.
-	for ( int i = 0; i < 32; ++i ) 
+	for ( int i = 0; i < 32; ++i )
 	{
 		( *pOutHi ) |= (uint32)( ( m_nRandomSeed & ( uint64( 1 ) << ( ( 2 * i ) + 0 ) ) ) >> i );
 		( *pOutLo ) |= (uint32)( ( m_nRandomSeed & ( uint64( 1 ) << ( ( 2 * i ) + 1 ) ) ) >> ( i + 1 ) );
@@ -1668,7 +1668,7 @@ void CTextureCompositor::GetSeed( uint32* pOutHi, uint32* pOutLo ) const
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-CTCStage::CTCStage() 
+CTCStage::CTCStage()
 : m_nReferenceCount( 1 ) // This is 1 because the common case is to assign these as children, and we don't want to play with refs there.
 , m_pFirstChild( NULL )
 , m_pNextSibling( NULL )
@@ -1676,25 +1676,25 @@ CTCStage::CTCStage()
 { }
 
 // ------------------------------------------------------------------------------------------------
-CTCStage::~CTCStage() 
-{ 
+CTCStage::~CTCStage()
+{
 	Assert ( m_nReferenceCount == 0 );
-	SafeRelease( &m_pFirstChild ); 
+	SafeRelease( &m_pFirstChild );
 	SafeRelease( &m_pNextSibling );
 }
 
 // ------------------------------------------------------------------------------------------------
-int CTCStage::AddRef() 
-{ 
-	return ++m_nReferenceCount; 
+int CTCStage::AddRef()
+{
+	return ++m_nReferenceCount;
 }
 
 // ------------------------------------------------------------------------------------------------
-int CTCStage::Release() 
-{ 
+int CTCStage::Release()
+{
 	int retVal = --m_nReferenceCount;
 	if ( retVal == 0 )
-		delete this; 
+		delete this;
 	return retVal;
 }
 
@@ -1706,7 +1706,7 @@ void CTCStage::Resolve( bool bFirstTime, CTextureCompositor* _comp )
 		m_pFirstChild->Resolve( bFirstTime, _comp );
 
 	// Update our status, which may be updated below. Only do this the first time through.
-	if ( bFirstTime ) 
+	if ( bFirstTime )
 	{
 		m_ResolveStatus = ECRS_Scheduled;
 		// Request textures here. We used to request in the constructor, but it caused us
@@ -1714,7 +1714,7 @@ void CTCStage::Resolve( bool bFirstTime, CTextureCompositor* _comp )
 		// where we are super memory constrained.
 		RequestTextures();
 	}
-	
+
 	ResolveThis( _comp );
 
 	if ( m_pNextSibling )
@@ -1757,7 +1757,7 @@ void CTCStage::ComputeRandomValues( int* pCurIndex, CUniformRandomStream* pRNGs,
 // ------------------------------------------------------------------------------------------------
 void CTCStage::CleanupChildResults( CTextureCompositor* _comp )
 {
-	// This does not recurse. We call it as we move through the tree to clean up our 
+	// This does not recurse. We call it as we move through the tree to clean up our
 	// first-generation children.
 	for ( CTCStage* child = GetFirstChild(); child; child = child->GetNextSibling() )
 	{
@@ -1779,8 +1779,8 @@ void CTCStage::Render( ITexture* _destRT, IMaterial* _mat, const CUtlVector<CTCS
 		const CTCStageResult_t& stageParams = _inputs[ i ];
 
 		Assert( stageParams.m_pTexture || stageParams.m_pRenderTarget );
-		ITexture* inTex = stageParams.m_pTexture 
-			            ? stageParams.m_pTexture 
+		ITexture* inTex = stageParams.m_pTexture
+			            ? stageParams.m_pTexture
 						: stageParams.m_pRenderTarget;
 
 		V_snprintf( buffer, ARRAYSIZE( buffer ), "$srctexture%d", i );
@@ -1814,7 +1814,7 @@ void CTCStage::Render( ITexture* _destRT, IMaterial* _mat, const CUtlVector<CTCS
 	int h = _destRT->GetActualHeight();
 
 	pRenderContext->PushRenderTargetAndViewport( _destRT, 0, 0, w, h );
- 
+
 	if ( bClear )
 	{
 		pRenderContext->ClearColor4ub( 0, 0, 0, 255 );
@@ -1879,7 +1879,7 @@ struct NodeDefinitionEntry
 	TBuildNodeFromKVFunc buildFunc;
 };
 
-NodeDefinitionEntry cNodeParseTable[] = 
+NodeDefinitionEntry cNodeParseTable[] =
 {
 	{ "texture_lookup",		TexStageFromKV },
 
@@ -1925,7 +1925,7 @@ void ParseIntoStruct( S* _outStruct, CUtlVector< KeyValues *>* _leftovers, KeyVa
 
 		if ( !parsed )
 		{
-			( *_leftovers ).AddToTail( thisKey );		
+			( *_leftovers ).AddToTail( thisKey );
 		}
 	}
 }
@@ -1943,7 +1943,7 @@ bool ParseNodes( CUtlVector< CTCStage* >* _outStages, const CUtlVector< KeyValue
 
 		bool parsed = false;
 		for ( int e = 0; cNodeParseTable[ e ].keyName; ++e )
-		{			
+		{
 			if ( V_stricmp( cNodeParseTable[ e ].keyName, thisKV->GetName() ) == 0 )
 			{
 				CTCStage* pNewStage = NULL;
@@ -2029,7 +2029,7 @@ bool SelectStageFromKV( CTCStage** ppOutStage, const char* _key, KeyValues* _kv,
 		( *ppOutStage ) = new CTCSelectStage( ssp, nTexCompositeCreateFlags );
 		( *ppOutStage )->AppendChildren( childNodes );
 	}
-	
+
 	return true;
 }
 
@@ -2045,7 +2045,7 @@ bool ApplyStickerStageFromKV( CTCStage** ppOutStage, const char* _key, KeyValues
 	if ( !ParseNodes( &childNodes, leftovers, nTexCompositeCreateFlags ) )
 		return false;
 
-	// These stages can have exactly one child. 
+	// These stages can have exactly one child.
 	if ( childNodes.Count() > 1 )
 		return false;
 
@@ -2061,7 +2061,7 @@ bool ApplyStickerStageFromKV( CTCStage** ppOutStage, const char* _key, KeyValues
 		( *ppOutStage ) = new CTCApplyStickerStage( assp, nTexCompositeCreateFlags );
 		( *ppOutStage )->AppendChildren( childNodes );
 	}
-	
+
 	return true;
 }
 
@@ -2090,7 +2090,7 @@ KeyValues* ResolveTemplate( const char* pRootName, KeyValues* pValues, uint32 nT
 			if ( bImplementsTemplate )
 			{
 				Warning( "ERROR[%s]: implements field can only appear once, seen a second time as 'implements \"%s\"\n", pRootName, pChild->GetString() );
-				return NULL;			
+				return NULL;
 			}
 
 			bImplementsTemplate = true;
@@ -2107,8 +2107,8 @@ KeyValues* ResolveTemplate( const char* pRootName, KeyValues* pValues, uint32 nT
 		Warning( "ERROR[%s]: if using 'implements', can only have variable definitions--other fields not allowed.\n", pRootName );
 		return NULL;
 	}
-	
-	// If we're not doing templates, we're all finished. 
+
+	// If we're not doing templates, we're all finished.
 	if ( !bImplementsTemplate )
 		return pValues;
 
@@ -2140,11 +2140,11 @@ KeyValues* ResolveTemplate( const char* pRootName, KeyValues* pValues, uint32 nT
 	}
 	else
 	{
-		// Just return the original KV back to the caller, who just wants a success code here. 
-		return pValues;	
+		// Just return the original KV back to the caller, who just wants a success code here.
+		return pValues;
 	}
 
-	// Now, copy any child var definitions from pValues into pNewKV. Because of the recursive call stack, 
+	// Now, copy any child var definitions from pValues into pNewKV. Because of the recursive call stack,
 	// this has the net effect that more concrete templates will write their values later than more remote templates.
 	FOR_EACH_SUBKEY( pValues, pChild )
 	{
@@ -2201,7 +2201,7 @@ CUtlString GetErrorTrail( CUtlVector< const char* >& errorStack )
 
 	int totalStrLength = 0;
 
-	for ( int i = 0; i < stackLength; ++i ) 
+	for ( int i = 0; i < stackLength; ++i )
 	{
 		totalStrLength += V_strlen( errorStack[ i ] );
 	}
@@ -2219,7 +2219,7 @@ CUtlString GetErrorTrail( CUtlVector< const char* >& errorStack )
 	{
 		// Copy the string
 		const char* pSrc = errorStack[ i ];
-		while ( ( *pDst++ = *pSrc++ ) != 0 ) 
+		while ( ( *pDst++ = *pSrc++ ) != 0 )
 			++destPos;
 		--pDst;
 
@@ -2249,7 +2249,7 @@ enum ParseMode
 };
 
 // ------------------------------------------------------------------------------------------------
-// Returns the number of characters written into pOutBuffer or -1 if there was an error. 
+// Returns the number of characters written into pOutBuffer or -1 if there was an error.
 int SubstituteVarsRecursive( char* pOutBuffer, int* pOutSubsts, CUtlVector< const char* >& errorStack, const char* pStr, uint32 nTexCompositeCreateFlags, const VariableDefs_t& varDefs )
 {
 	ParseMode mode = Copy;
@@ -2297,7 +2297,7 @@ int SubstituteVarsRecursive( char* pOutBuffer, int* pOutSubsts, CUtlVector< cons
 
 				if ( ndx != varDefs.InvalidIndex() )
 				{
-					pSubstText = varDefs[ ndx ];	
+					pSubstText = varDefs[ ndx ];
 				}
 				else if ( ( nTexCompositeCreateFlags & TEX_COMPOSITE_CREATE_FLAGS_VERIFY_TEMPLATE_ONLY ) != 0 )
 				{
@@ -2307,7 +2307,7 @@ int SubstituteVarsRecursive( char* pOutBuffer, int* pOutSubsts, CUtlVector< cons
 				{
 					Warning( "ERROR[%s]: Couldn't find variable named $%s that was requested to be substituted.\n", ( const char* ) GetErrorTrail( errorStack ), pCurVariable );
 
-					// Restore the string first. 
+					// Restore the string first.
 					pCurVariable[ srcC - pCurVariable ] = ']';
 
 					return -1;
@@ -2351,19 +2351,19 @@ bool SubstituteVars( CUtlString* pOutStr, int* pOutSubsts, CUtlVector< const cha
 	Assert( pOutStr != NULL && pOutSubsts != NULL && pStr != NULL );
 
 	( *pOutSubsts ) = 0;
-	
-	// Even though this involves a traversal, we're saving a malloc by walking this thing once looking for the start token. 
+
+	// Even though this involves a traversal, we're saving a malloc by walking this thing once looking for the start token.
 	const char* pFirstRepl = V_strstr( pStr, "$[" );
 
 	// No substitutions, so bail out now.
 	if ( pFirstRepl == NULL )
 	{
-		( *pOutStr ) = pStr;		
+		( *pOutStr ) = pStr;
 		return true;
 	}
 
 	// We could do this as we go, but we're trying to avoid re-mallocing memory repeatedly in here so process once
-	// to find out what the size is. 
+	// to find out what the size is.
 	int expectedLen = SubstituteVarsRecursive( NULL, pOutSubsts, errorStack, pStr, nTexCompositeCreateFlags, varDefs );
 	if ( expectedLen < 0 )
 		return false;
@@ -2406,7 +2406,7 @@ bool ResolveAllVariablesRecursive( CUtlVector< const char* >& errorStack, const 
 			if ( !ResolveAllVariablesRecursive( errorStack, varDefs, pChild, nTexCompositeCreateFlags, tmpStr ) )
 				success = false;
 		}
-		else 
+		else
 		{
 			int nSubsts = 0;
 			if ( !SubstituteVars( &tmpStr, &nSubsts, errorStack, pChild->GetString(), nTexCompositeCreateFlags, varDefs ) )
@@ -2419,7 +2419,7 @@ bool ResolveAllVariablesRecursive( CUtlVector< const char* >& errorStack, const 
 
 		errorStack.RemoveMultipleFromTail( 1 );
 	}
-	
+
 	return success;
 }
 
@@ -2450,9 +2450,9 @@ KeyValues* ResolveAllVariables( const char* pRootName, const VariableDefs_t& var
 }
 
 // ------------------------------------------------------------------------------------------------
-// Perform all template expansion and variable substitution here. What should be output 
+// Perform all template expansion and variable substitution here. What should be output
 // should look like v1.0 paintkits without templates or variables. Return NULL
-// if var substitution fails or if we can't resolve a template or something 
+// if var substitution fails or if we can't resolve a template or something
 // (after outputting a meaningful error message, of course).
 KeyValues* ParseTopLevelIntoKV( const char* pRootName, KeyValues* pValues, uint32 nTexCompositeCreateFlags, bool *pOutAllocdNew )
 {
@@ -2514,7 +2514,7 @@ KeyValues* ParseTopLevelIntoKV( const char* pRootName, KeyValues* pValues, uint3
 	autoCleanup_pExpandedKV.Assign( NULL );
 
 	( *pOutAllocdNew ) = bRequiresCleanup;
-	return pExpandedKV;	
+	return pExpandedKV;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -2528,7 +2528,7 @@ bool HasTemplateOrVariables( const char** ppOutTemplateName, KeyValues* pKV)
 	FOR_EACH_SUBKEY( pKV, pChild )
 	{
 		const char* pName = pChild->GetName();
-		if ( V_stricmp( pName, "implements" ) == 0 )	
+		if ( V_stricmp( pName, "implements" ) == 0 )
 		{
 			( *ppOutTemplateName ) = pChild->GetString();
 			retVal = true;
@@ -2570,7 +2570,7 @@ CTextureCompositor* CreateTextureCompositor( int _w, int _h, const char* pCompos
 	}
 
 	_stageDesc = ParseTopLevelIntoKV( pCompositeName, _stageDesc, nTexCompositeCreateFlags, &bRequiresCleanup );
-	if ( !_stageDesc ) 
+	if ( !_stageDesc )
 	{
 		if ( ( nTexCompositeCreateFlags & TEX_COMPOSITE_CREATE_FLAGS_LOG_NODES_ONLY ) != 0 )
 			Msg( "ERROR[%s]: Failed to create compositor, errors above.\n", pCompositeName );
@@ -2594,7 +2594,7 @@ CTextureCompositor* CreateTextureCompositor( int _w, int _h, const char* pCompos
 	}
 
 	const char* pTemplateName = NULL;
-	// If we're just doing a template verification, and we still have keys or values that look like template stuff, bail out now. 
+	// If we're just doing a template verification, and we still have keys or values that look like template stuff, bail out now.
 	if ( HasTemplateOrVariables( &pTemplateName, _stageDesc ) && ( ( nTexCompositeCreateFlags & TEX_COMPOSITE_CREATE_FLAGS_VERIFY_TEMPLATE_ONLY ) != 0 ) )
 	{
 		CTextureCompositor* pComp = new CTextureCompositor( _w, _h, nTeamNum, pCompositeName, nRandomSeed, nTexCompositeCreateFlags );
@@ -2602,20 +2602,20 @@ CTextureCompositor* CreateTextureCompositor( int _w, int _h, const char* pCompos
 			pComp->SetTemplate( pTemplateName );
 		return pComp;
 	}
-	
+
 	KeyValues* kv = _stageDesc->GetFirstTrueSubKey();
 	if ( !kv )
 		return NULL;
 
 	kvs.AddToTail( kv );
-	
+
 	if ( !ParseNodes( &vecStage, kvs, nTexCompositeCreateFlags  ) )
 	{
 		FOR_EACH_VEC( vecStage, i )
 		{
 			SafeRelease( &vecStage[ i ] );
 		}
-	
+
 		return NULL;
 	}
 
@@ -2674,7 +2674,7 @@ CTextureCompositorTemplate::~CTextureCompositorTemplate()
 // ------------------------------------------------------------------------------------------------
 bool CTextureCompositorTemplate::ResolveDependencies() const
 {
-	// If we don't reference another template, then our verification was validated at construction 
+	// If we don't reference another template, then our verification was validated at construction
 	// time.
 	if ( m_ImplementsName.IsEmpty() )
 		return true;
@@ -2694,7 +2694,7 @@ bool CTextureCompositorTemplate::ResolveDependencies() const
 // ------------------------------------------------------------------------------------------------
 bool CTextureCompositorTemplate::HasDependencyCycles()
 {
-	// Uses Floyd's algorithm to determine if there's a cycle. 
+	// Uses Floyd's algorithm to determine if there's a cycle.
 	TM_ZONE_DEFAULT( TELEMETRY_LEVEL1 );
 
 	if ( HasCycle( this ) )
@@ -2705,7 +2705,7 @@ bool CTextureCompositorTemplate::HasDependencyCycles()
 	}
 	else
 	{
-		// Mark everything in this lineage as having been tested for cycles. 
+		// Mark everything in this lineage as having been tested for cycles.
 		CTextureCompositorTemplate* pTmpl = this;
 		while ( pTmpl != NULL )
 		{
@@ -2740,16 +2740,16 @@ void ComputeTextureMatrixFromRectangle( VMatrix* pOutMat, const Vector2D& bl, co
 	// Simplification of acos( ( A . L ) / ( mag( A ) * mag( L ) )
 	// Because A is ( 0, 1), which means A . L is just L.y
 	// and mag( A ) * mag( L ) is just mag( L )
-	float rotationD = RAD2DEG( acos( leftEdge.y / magLeftEdge ) ) 
+	float rotationD = RAD2DEG( acos( leftEdge.y / magLeftEdge ) )
 		            * ( leftEdge.x < 0 ? 1 : -1 );
-	
+
 	VMatrix tmpMat;
 	tmpMat.Identity();
 	MatrixTranslate( tmpMat, Vector( tl.x, tl.y, 0 ) );
 	MatrixRotate( tmpMat, Vector( 0, 0, 1 ), rotationD );
 	tmpMat = tmpMat.Scale( Vector( xScalar * magTopEdge, magLeftEdge, 1.0f ) );
 	MatrixInverseGeneral( tmpMat, *pOutMat );
-	
+
 	// Copy W into Z because this is a 2-D matrix.
 	( *pOutMat )[ 0 ][ 2 ] = ( *pOutMat )[ 0 ][ 3 ];
 	( *pOutMat )[ 1 ][ 2 ] = ( *pOutMat )[ 1 ][ 3 ];
@@ -2763,7 +2763,7 @@ CTextureCompositorTemplate* Advance( CTextureCompositorTemplate* pTmpl, int nSte
 {
 	Assert( pTmpl != NULL );
 
-	for ( int i = 0; i < nSteps; ++i ) 
+	for ( int i = 0; i < nSteps; ++i )
 	{
 		if ( pTmpl->ImplementsTemplate() )
 		{
@@ -2839,4 +2839,3 @@ void PrintMinimumCycle( CTextureCompositorTemplate* pTmpl )
 
 	Warning( "...\n" );
 }
-

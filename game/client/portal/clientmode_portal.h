@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ namespace vgui
 	typedef unsigned long HScheme;
 }
 
-class ClientModePortalNormal : public ClientModeShared 
+class ClientModePortalNormal : public ClientModeShared
 {
 DECLARE_CLASS( ClientModePortalNormal, ClientModeShared );
 
@@ -36,9 +36,9 @@ public:
 	virtual void	Init();
 	virtual void	InitViewport();
 
-	
+
 private:
-	
+
 	//	void	UpdateSpectatorMode( void );
 
 };

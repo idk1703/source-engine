@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -83,4 +83,4 @@ void CNPC_Bloater::Spawn()
 void CNPC_Bloater::Precache()
 {
 	PrecacheModel("models/floater.mdl");
-}	
+}

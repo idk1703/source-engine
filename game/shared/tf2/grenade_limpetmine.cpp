@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -42,12 +42,12 @@ END_SEND_TABLE()
 LINK_ENTITY_TO_CLASS( grenade_limpetmine, CLimpetMine );
 
 //-----------------------------------------------------------------------------
-// Static initializers: 
+// Static initializers:
 //-----------------------------------------------------------------------------
 CLimpetMine*	CLimpetMine::allLimpets		= NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLimpetMine::CLimpetMine( void )
 {
@@ -62,7 +62,7 @@ CLimpetMine::CLimpetMine( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CLimpetMine::~CLimpetMine( void )
 {
@@ -100,7 +100,7 @@ void CLimpetMine::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLimpetMine::Spawn( void )
 {
@@ -120,7 +120,7 @@ void CLimpetMine::Spawn( void )
 	// Causes these to collide with everything but NPCs and players
 	SetCollisionGroup( TFCOLLISION_GROUP_GRENADE );
 
-	AddFlag( FL_OBJECT ); 
+	AddFlag( FL_OBJECT );
 	// Prevent sentry guns detecting these.
 	AddFlag( FL_NOTARGET );
 
@@ -138,7 +138,7 @@ bool CLimpetMine::IsLive( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CLimpetMine::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -174,7 +174,7 @@ void CLimpetMine::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 
 		// If the owning player is directly using the limpet, then pick it up:
 		if( pPlayer && pCallerPlayer && pPlayer->IsSameClass( pCallerPlayer ) )
-		{	
+		{
 			if ( m_hLauncher )
 			{
 				pPlayer->GiveAmmo( 1, m_hLauncher->m_iPrimaryAmmoType );
@@ -215,7 +215,7 @@ void CLimpetMine::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CLimpetMine::TakeEMPDamage( float duration )
 {

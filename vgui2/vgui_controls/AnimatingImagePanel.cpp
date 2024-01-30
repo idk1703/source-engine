@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,8 +65,8 @@ void AnimatingImagePanel::AddImage(IImage *image)
 
 //-----------------------------------------------------------------------------
 // Purpose: Load a set of animations by name.
-// Input: 
-//		baseName: is the name of the animations without their frame number or 
+// Input:
+//		baseName: is the name of the animations without their frame number or
 //			file extension, (e.g. c1.tga becomes just c.)
 //		framecount: number of frames in the animation
 //-----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void AnimatingImagePanel::PaintBackground()
 
 		surface()->DrawSetColor( 255, 255, 255, 255 );
 		pImage->SetPos(0, 0);
-		
+
 		if ( m_bScaleImage )
 		{
 			// Image size is stored in the bitmap, so temporarily set its size

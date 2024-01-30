@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -59,7 +59,7 @@ public:
 	// players firing, jumping, throwing grenades, etc.
 	virtual void DoAnimationEvent( PlayerAnimEvent_t event, int nData );
 	virtual void ClearAnimationState();
-	virtual Activity CalcMainActivity();	
+	virtual Activity CalcMainActivity();
 	virtual void Update( float eyeYaw, float eyePitch );
 
 	virtual void DebugShowAnimState( int iStartLine );
@@ -110,7 +110,7 @@ protected:
 private:
 
 	void InitDOD( CDODPlayer *pPlayer );
-	
+
 	bool HandleJumping( Activity *idealActivity );
 	bool HandleProne( Activity *idealActivity );
 	bool HandleProneDown( CDODPlayer *pPlayer, Activity *idealActivity );
@@ -130,7 +130,7 @@ private:
 private:
 	// Current state variables.
 	bool m_bJumping;			// Set on a jump event.
-	float m_flJumpStartTime;	
+	float m_flJumpStartTime;
 	bool m_bFirstJumpFrame;
 
 	// These control the prone state _achine.
@@ -196,7 +196,7 @@ IDODPlayerAnimState* CreatePlayerAnimState( CDODPlayer *pPlayer )
 // -------------------------------------------------------------------------------- //
 // CDODPlayerAnimState implementation.
 // -------------------------------------------------------------------------------- //
-											
+
 CDODPlayerAnimState::CDODPlayerAnimState()
 {
 	m_bGettingDown = false;
@@ -223,12 +223,12 @@ CDODPlayerAnimState::CDODPlayerAnimState()
 void CDODPlayerAnimState::InitDOD( CDODPlayer *pPlayer )
 {
 	m_pOuterDOD = pPlayer;
-	
+
 	CModAnimConfig config;
 	config.m_flMaxBodyYawDegrees = 45;
 	config.m_LegAnimType = LEGANIM_GOLDSRC;
 	config.m_bUseAimSequences = false;
-	
+
 	BaseClass::Init( pPlayer, config );
 }
 
@@ -256,7 +256,7 @@ void CDODPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event, int nData )
 		else
 		{
 			// hold last frame of fire pose for 2 seconds ( if we are moving )
-			m_flFireIdleTime = gpGlobals->curtime + 2;	
+			m_flFireIdleTime = gpGlobals->curtime + 2;
 		}
 	}
 	if ( event == PLAYERANIMEVENT_SECONDARY_ATTACK )
@@ -467,7 +467,7 @@ bool CDODPlayerAnimState::HandleDucked( Activity *idealActivity )
 			*idealActivity = ACT_RUN_CROUCH;
 		else
 			*idealActivity = ACT_CROUCHIDLE;
-		
+
 		return true;
 	}
 	else
@@ -482,7 +482,7 @@ Activity CDODPlayerAnimState::CalcMainActivity()
 
 	float flSpeed = GetOuterXYSpeed();
 
-	if ( HandleJumping( &idealActivity ) || 
+	if ( HandleJumping( &idealActivity ) ||
 		HandleProne( &idealActivity ) ||
 		HandleDucked( &idealActivity ) )
 	{
@@ -495,7 +495,7 @@ Activity CDODPlayerAnimState::CalcMainActivity()
 			if( flSpeed >= DOD_SPRINT_SPEED )
 			{
 				idealActivity = ACT_SPRINT;
-				
+
 				// If we sprint, cancel the fire idle time
 				CancelGestures();
 			}
@@ -535,11 +535,11 @@ void CDODPlayerAnimState::CancelGestures( void )
 	m_bPlayingGesture = false;
 	m_iGestureType = GESTURE_NONE;
 
-#ifdef CLIENT_DLL	
+#ifdef CLIENT_DLL
 	m_iGestureSequence = -1;
 #else
 	m_pOuter->RemoveAllGestures();
-#endif 
+#endif
 }
 
 void CDODPlayerAnimState::RestartGesture( int iGestureType, Activity act, bool bAutoKill /* = true */ )
@@ -583,7 +583,7 @@ Activity CDODPlayerAnimState::TranslateActivity( Activity actDesired )
 		default:
 			break;
 		}
-	} 
+	}
 	else if ( m_pOuterDOD->m_Shared.IsProneDeployed() )
 	{
 		switch( idealActivity )
@@ -600,7 +600,7 @@ Activity CDODPlayerAnimState::TranslateActivity( Activity actDesired )
 		default:
 			break;
 		}
-	} 
+	}
 	else if ( m_pOuterDOD->m_Shared.IsSniperZoomed() || m_pOuterDOD->m_Shared.IsBazookaDeployed() )
 	{
 		switch( idealActivity )
@@ -659,7 +659,7 @@ Activity CDODPlayerAnimState::TranslateActivity( Activity actDesired )
 		case ACT_RANGE_ATTACK2:
 			idealActivity = ACT_DOD_SECONDARYATTACK_PRONE;
 			break;
-		case ACT_RELOAD:			
+		case ACT_RELOAD:
 			idealActivity = ACT_DOD_RELOAD_PRONE;
 			break;
 		default:
@@ -718,7 +718,7 @@ CDODPlayer* CDODPlayerAnimState::GetOuterDOD() const
 
 float CDODPlayerAnimState::GetCurrentMaxGroundSpeed()
 {
-	return PLAYER_SPEED_SPRINT; 
+	return PLAYER_SPEED_SPRINT;
 }
 
 float CDODPlayerAnimState::CalcMovementPlaybackRate( bool *bIsMoving )
@@ -752,7 +752,7 @@ void CDODPlayerAnimState::ComputeSequences( CStudioHdr *pStudioHdr )
 	// do this before ComputeSequences
 	CWeaponDODBase *pWeapon = GetOuterDOD()->m_Shared.GetActiveDODWeapon();
 	if ( pWeapon )
-	{	
+	{
 		if( pWeapon->GetWeaponID() != m_iLastWeaponID )
 		{
 			CancelGestures();
@@ -766,7 +766,7 @@ void CDODPlayerAnimState::ComputeSequences( CStudioHdr *pStudioHdr )
 	if( !m_bGettingDown && !m_bGettingUp )
 	{
 		ComputeFireSequence();
-	
+
 #ifdef CLIENT_DLL
 
 		ComputeGestureSequence( pStudioHdr );
@@ -776,7 +776,7 @@ void CDODPlayerAnimState::ComputeSequences( CStudioHdr *pStudioHdr )
 
 		CWeaponDODBase *pWeapon = GetOuterDOD()->m_Shared.GetActiveDODWeapon();
 		if ( pWeapon )
-		{	
+		{
 			int iCurrentState = ALTWPN_CRITERIA_NONE;
 
 			if( m_bPlayingGesture && m_iGestureType == GESTURE_ATTACK1 )
@@ -876,7 +876,7 @@ void CDODPlayerAnimState::UpdateLayerSequenceGeneric( CStudioHdr *pStudioHdr, in
 	pLayer->m_flPlaybackRate = 1.0;
 	pLayer->m_flWeight = flWeight;
 	pLayer->m_nOrder = iLayer;
-	
+
 }
 
 extern ConVar mp_facefronttime;
@@ -929,7 +929,7 @@ void CDODPlayerAnimState::Update( float eyeYaw, float eyePitch )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDODPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
 {
@@ -970,7 +970,7 @@ bool CDODPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
 #define DOD_MOVEMENT_ERROR_LIMIT  1.0
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 {
@@ -1049,7 +1049,7 @@ void CDODPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 		*/
 
 		bool retry = true;
-		do 
+		do
 		{
 			// Set the 9-way blend movement pose parameters.
 			GetOuter()->SetPoseParameter( pStudioHdr, m_iMoveX, vecCurrentMoveYaw.x );
@@ -1089,9 +1089,9 @@ void CDODPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 		/*
 		if ( m_pOuter->entindex() == 2 )
 		{
-			DevMsgRT("%d(%.2f : %.2f) %.3f : (%.2f : %.2f) %.3f\n", 
+			DevMsgRT("%d(%.2f : %.2f) %.3f : (%.2f : %.2f) %.3f\n",
 				i,
-				vecEstVelocity.x, vecAnimVelocity.x, vecCurrentMoveYaw.x, 
+				vecEstVelocity.x, vecAnimVelocity.x, vecCurrentMoveYaw.x,
 				vecEstVelocity.y, vecAnimVelocity.y, vecCurrentMoveYaw.y );
 		}
 		*/
@@ -1102,7 +1102,7 @@ void CDODPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerAnimState::EstimateYaw( void )
 {
@@ -1149,7 +1149,7 @@ void CDODPlayerAnimState::EstimateYaw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerAnimState::ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr )
 {
@@ -1173,7 +1173,7 @@ void CDODPlayerAnimState::ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 {
@@ -1250,7 +1250,7 @@ void CDODPlayerAnimState::ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerAnimState::ConvergeYawAngles( float flGoalYaw, float flYawRate, float flDeltaTime, float &flCurrentYaw )
 {
@@ -1283,7 +1283,7 @@ void CDODPlayerAnimState::ConvergeYawAngles( float flGoalYaw, float flYawRate, f
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODPlayerAnimState::ComputePoseParam_BodyHeight( CStudioHdr *pStudioHdr )
 {
@@ -1308,7 +1308,7 @@ void Anim_StateLog( const char *pMsg, ... )
 	Q_vsnprintf( str, sizeof( str ), pMsg, marker );
 	va_end( marker );
 
-	// Log it?	
+	// Log it?
 	if ( anim_showstatelog.GetInt() == 1 || anim_showstatelog.GetInt() == 3 )
 	{
 		Msg( "%s", str );
@@ -1403,8 +1403,8 @@ void CDODPlayerAnimState::DebugShowEyeYaw( void )
 	AngleVectors( angles, &vecForward, &vecRight, &vecUp );
 
 	// Draw a red triangle on the ground for the eye yaw.
-	debugoverlay->AddTriangleOverlay( ( vecPos + vecRight * flBaseSize / 2.0f ), 
-		( vecPos - vecRight * flBaseSize / 2.0f ), 
+	debugoverlay->AddTriangleOverlay( ( vecPos + vecRight * flBaseSize / 2.0f ),
+		( vecPos - vecRight * flBaseSize / 2.0f ),
 		( vecPos + vecForward * flHeight, 255, 0, 0, 255, false, 0.01f );
 
 #endif

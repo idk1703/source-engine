@@ -79,12 +79,12 @@ public:
 
 	/**
 	 * Can we climb onto this entity?
-	 */	
+	 */
 	virtual bool IsAbleToClimbOnto( const CBaseEntity *object ) const;
 
 	/**
 	 * Can we break this entity?
-	 */	
+	 */
 	virtual bool IsAbleToBreak( const CBaseEntity *object ) const;
 
 	/**
@@ -105,12 +105,12 @@ public:
 	 */
 	virtual bool IsImmobile( void ) const;					// return true if we haven't moved in awhile
 	virtual float GetImmobileDuration( void ) const;		// how long have we been immobile
-	virtual void ClearImmobileStatus( void );		
+	virtual void ClearImmobileStatus( void );
 	virtual float GetImmobileSpeedThreshold( void ) const;	// return units/second below which this actor is considered "immobile"
 
 	/**
 	 * Get the last PathFollower we followed. This method gives other interfaces a
-	 * single accessor to the most recent Path being followed by the myriad of 
+	 * single accessor to the most recent Path being followed by the myriad of
 	 * different PathFollowers used in the various behaviors the bot may be doing.
 	 */
 	virtual const PathFollower *GetCurrentPath( void ) const;

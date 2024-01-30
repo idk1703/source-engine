@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -41,7 +41,7 @@ CTFTeam* CSortBase::GetTeam()
 int SortFn_TeamPlayersByDistance( void *pUserData, int a, int b )
 {
 	CSortBase *p = (CSortBase*)pUserData;
-	
+
 	const Vector &vPlayer = p->m_pPlayer->GetAbsOrigin();
 	const Vector &va = p->m_pPlayer->GetTeam()->GetPlayer( a )->GetAbsOrigin();
 	const Vector &vb = p->m_pPlayer->GetTeam()->GetPlayer( b )->GetAbsOrigin();
@@ -52,9 +52,9 @@ int SortFn_TeamPlayersByDistance( void *pUserData, int a, int b )
 
 // This is a generic function that takes a number of items and builds a sorted
 // list of the valid items.
-int BuildSortedActiveList( 
+int BuildSortedActiveList(
 	int *pList,		// This is the list where the final data is placed.
-	int nMaxItems, 
+	int nMaxItems,
 	sortFn pSortFn,			// Callbacks.
 	isValidFn pIsValidFn,	// This can be null, in which case all items are valid.
 	void *pUserData,		// Passed into the function pointers.
@@ -104,11 +104,11 @@ int BuildSortedActiveList(
 	return nActive;
 }
 
-	
+
 // Finds the closest resource zone without the specified object on it and
 // gives an order to the player to build the object.
-bool OrderCreator_ResourceZoneObject( 
-	CBaseTFPlayer *pPlayer, 
+bool OrderCreator_ResourceZoneObject(
+	CBaseTFPlayer *pPlayer,
 	int objType,
 	COrder *pOrder
 	)
@@ -129,11 +129,11 @@ bool OrderCreator_ResourceZoneObject(
 	while( (pEntity = gEntList.FindEntityByClassname( pEntity, "trigger_resourcezone" )) != NULL )
 	{
 		CResourceZone *pZone = (CResourceZone*)pEntity;
-		
+
 		// Ignore empty zones and zones not captured by this team.
 		if ( pZone->IsEmpty() || !pZone->GetActive() )
 			continue;
-		
+
 		Vector vZoneCenter = pZone->WorldSpaceCenter();
 
 		// Look for a resource pump on this zone.
@@ -153,7 +153,7 @@ bool OrderCreator_ResourceZoneObject(
 	if ( pClosest )
 	{
 		// No pump here. Build one!
-		pPlayer->GetTFTeam()->AddOrder( 
+		pPlayer->GetTFTeam()->AddOrder(
 			ORDER_BUILD,
 			pClosest,
 			pPlayer,
@@ -174,7 +174,7 @@ bool OrderCreator_ResourceZoneObject(
 int SortFn_PlayerObjectsByDistance( void *pUserData, int a, int b )
 {
 	CSortBase *pSortBase = (CSortBase*)pUserData;
-	
+
 	CBaseObject* pObjA = pSortBase->m_pPlayer->GetObject(a);
 	CBaseObject* pObjB = pSortBase->m_pPlayer->GetObject(b);
 	if (!pObjA)
@@ -191,7 +191,7 @@ int SortFn_PlayerObjectsByDistance( void *pUserData, int a, int b )
 int SortFn_TeamObjectsByDistance( void *pUserData, int a, int b )
 {
 	CSortBase *pSortBase = (CSortBase*)pUserData;
-	
+
 	CBaseObject *pObj1 = pSortBase->m_pPlayer->GetTFTeam()->GetObject( a );
 	CBaseObject *pObj2 = pSortBase->m_pPlayer->GetTFTeam()->GetObject( b );
 	const Vector &v = pSortBase->m_pPlayer->GetAbsOrigin();
@@ -203,7 +203,7 @@ int SortFn_TeamObjectsByDistance( void *pUserData, int a, int b )
 int SortFn_PlayerEntitiesByDistance( void *pUserData, int a, int b )
 {
 	CSortBase *pSortBase = (CSortBase*)pUserData;
-	
+
 	CBaseEntity *pObj1 = CBaseEntity::Instance( engine->PEntityOfEntIndex( a+1 ) );
 	CBaseEntity *pObj2 = CBaseEntity::Instance( engine->PEntityOfEntIndex( b+1 ) );
 	const Vector &v = pSortBase->m_pPlayer->GetAbsOrigin();
@@ -215,8 +215,8 @@ int SortFn_PlayerEntitiesByDistance( void *pUserData, int a, int b )
 int SortFn_DistanceAndConcentration( void *pUserData, int a, int b )
 {
 	CSortBase *p = (CSortBase*)pUserData;
-	
-	// Compare distances. Each rope attachment to another ent 
+
+	// Compare distances. Each rope attachment to another ent
 	// subtracts 200 inches, so the order is biased towards covering
 	// groups of objects together.
 	CBaseObject *pObjectA = p->GetTeam()->GetObject( a );
@@ -256,7 +256,7 @@ bool IsValidFn_NearAndNotCovered( void *pUserData, int a )
 				return false;
 		}
 		break;
-		
+
 		case OBJ_SHIELDWALL:
 		{
 			if ( !pObj->WantsCover() )
@@ -292,9 +292,9 @@ bool IsValidFn_NearAndNotCovered( void *pUserData, int a )
 }
 
 
-bool OrderCreator_GenericObject( 
-	CPlayerClass *pClass, 
-	int objectType, 
+bool OrderCreator_GenericObject(
+	CPlayerClass *pClass,
+	int objectType,
 	float flMaxDist,
 	COrder *pOrder
 	)
@@ -327,7 +327,7 @@ bool OrderCreator_GenericObject(
 		// Ok, make an order to cover the closest object with a sentry gun.
 		CBaseEntity *pEnt = pTeam->GetObject( sorted[0] );
 
-		pTeam->AddOrder( 
+		pTeam->AddOrder(
 			ORDER_BUILD,
 			pEnt,
 			pPlayer,

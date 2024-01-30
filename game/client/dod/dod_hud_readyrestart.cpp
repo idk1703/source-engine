@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -87,7 +87,7 @@ CDODReadyRestartLabel::CDODReadyRestartLabel( const char *pElementName ) : BaseC
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODReadyRestartLabel::Reset()
 {
@@ -95,7 +95,7 @@ void CDODReadyRestartLabel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODReadyRestartLabel::Init()
 {
@@ -109,7 +109,7 @@ void CDODReadyRestartLabel::Init()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODReadyRestartLabel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {

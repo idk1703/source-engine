@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ CReplayReminderPanel::CReplayReminderPanel( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayReminderPanel::SetupText()
 {
@@ -65,7 +65,7 @@ void CReplayReminderPanel::SetupText()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayReminderPanel::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -77,7 +77,7 @@ void CReplayReminderPanel::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayReminderPanel::Show()
 {
@@ -87,7 +87,7 @@ void CReplayReminderPanel::Show()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayReminderPanel::Hide()
 {
@@ -96,7 +96,7 @@ void CReplayReminderPanel::Hide()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CReplayReminderPanel::HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding )
 {
@@ -112,7 +112,7 @@ int CReplayReminderPanel::HudElementKeyInput( int down, ButtonCode_t keynum, con
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayReminderPanel::OnThink()
 {
@@ -120,7 +120,7 @@ void CReplayReminderPanel::OnThink()
 
 	if ( !IsVisible() )
 		return;
-	
+
 	// If we're displaying the element for some specific duration...
 	if ( m_flShowTime )
 	{
@@ -137,7 +137,7 @@ void CReplayReminderPanel::OnThink()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CReplayReminderPanel::SetVisible( bool bState )
 {
@@ -153,7 +153,7 @@ void CReplayReminderPanel::SetVisible( bool bState )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CReplayReminderPanel::ShouldDraw()
 {

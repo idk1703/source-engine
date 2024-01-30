@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -65,7 +65,7 @@ public:
 		m_pUploadCheck = new CheckButton( this, "UploadCheck", "#GameUI_BenchmarkResults_UploadNow" );
 
 		LoadControlSettings("Resource/BenchmarkResultsDialog.res");
-		
+
 		m_pUploadCheck->SetSelected( true );
 		MoveToCenterOfScreen();
 	}

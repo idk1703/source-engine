@@ -42,14 +42,14 @@ class C_OP_InstantaneousEmitter : public CParticleOperatorInstance
 		return 0;
 	}
 
-	virtual uint64 GetReadControlPointMask() const 
+	virtual uint64 GetReadControlPointMask() const
 	{
 		if ( m_nScaleControlPoint >= 0 )
 			return ( 1ULL << m_nScaleControlPoint );
-		return 0; 
+		return 0;
 	}
 
-	virtual uint32 Emit( CParticleCollection *pParticles, float flCurStrength, 
+	virtual uint32 Emit( CParticleCollection *pParticles, float flCurStrength,
 						 void *pContext ) const;
 
 	// unpack structure will be applied by creator. add extra initialization needed here
@@ -92,7 +92,7 @@ class C_OP_InstantaneousEmitter : public CParticleOperatorInstance
 	virtual void SkipToTime( float flTime, CParticleCollection *pParticles, void *pContext ) const
 	{
 		// NOTE: This is a bit of a hack. We're saying that if we're skipping more than two seconds, that we're
-		//		 probably not going to bother emitting at all.  Really, this would have to know the maximum 
+		//		 probably not going to bother emitting at all.  Really, this would have to know the maximum
 		//		 lifetime of the child particles and only skip if past that.
 
 		InstantaneousEmitterContext_t *pCtx = reinterpret_cast<InstantaneousEmitterContext_t *>( pContext );
@@ -148,7 +148,7 @@ class C_OP_InstantaneousEmitter : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_InstantaneousEmitter, "emit_instantaneously", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_InstantaneousEmitter ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_InstantaneousEmitter )
 	DMXELEMENT_UNPACK_FIELD( "emission_start_time", "0", float, m_flStartTime )
 	DMXELEMENT_UNPACK_FIELD( "num_to_emit_minimum", "-1", int, m_nMinParticlesToEmit )
 	DMXELEMENT_UNPACK_FIELD( "num_to_emit", "100", int, m_nParticlesToEmit )
@@ -158,7 +158,7 @@ BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_InstantaneousEmitter )
 END_PARTICLE_OPERATOR_UNPACK( C_OP_InstantaneousEmitter )
 
 
-uint32 C_OP_InstantaneousEmitter::Emit( CParticleCollection *pParticles, float flCurStrength, 
+uint32 C_OP_InstantaneousEmitter::Emit( CParticleCollection *pParticles, float flCurStrength,
 										void *pContext ) const
 {
 	// Don't emit any more if the particle system has emitted all it's supposed to.
@@ -194,7 +194,7 @@ uint32 C_OP_InstantaneousEmitter::Emit( CParticleCollection *pParticles, float f
 	pCtx->m_nRemainingParticles = max( pCtx->m_nRemainingParticles, 0 );
 
 	// NOTE: Applying the scale here because I don't believe we can sample the control point
-	// values inside 
+	// values inside
 	// We're only allowed to emit so many particles, though..
 	// If we run out of room, only emit the last N particles
 	int nAllowedParticlesToEmit = pParticles->m_nMaxAllowedParticles - pParticles->m_nActiveParticles;
@@ -207,7 +207,7 @@ uint32 C_OP_InstantaneousEmitter::Emit( CParticleCollection *pParticles, float f
 
 	if ( nActualParticlesToEmit == 0 )
 		return 0;
-	
+
 	int nStartParticle = pParticles->m_nActiveParticles;
 	pParticles->SetNActiveParticles( nActualParticlesToEmit + pParticles->m_nActiveParticles );
 
@@ -233,7 +233,7 @@ struct ContinuousEmitterContext_t
 	float	m_flTimeOffset;
 	bool	m_bStoppedEmission;
 };
-	  
+
 bool g_bDontMakeSkipToTimeTakeForever = false;
 
 
@@ -313,7 +313,7 @@ class C_OP_ContinuousEmitter : public CParticleOperatorInstance
 	}
 
 	// Called when the SFM wants to skip forward in time
-	// Currently hacked for save/load pre-sim - correct solution is to serialize rather 
+	// Currently hacked for save/load pre-sim - correct solution is to serialize rather
 	// than skip-to-time and simulate
 	virtual void SkipToTime( float flTime, CParticleCollection *pParticles, void *pContext ) const
 	{
@@ -321,11 +321,11 @@ class C_OP_ContinuousEmitter : public CParticleOperatorInstance
 		float flStartTime = m_flStartTime + pCtx->m_flTimeOffset;
 		if ( flTime <= flStartTime )
 			return;
-	
+
 		float flControlPointScale = pParticles->GetHighestControlPoint();
 		flControlPointScale *= m_flEmissionScale;
 		float flEmissionRate = m_flEmitRate;
-	
+
 		float flEmitStrength;
 		if ( pParticles->CheckIfOperatorShouldRun( this, &flEmitStrength ) )
 		{
@@ -356,7 +356,7 @@ class C_OP_ContinuousEmitter : public CParticleOperatorInstance
 		flPrevDrawTime = flCurrDrawTime - flDeltaTime;
 		//disabled for now
 		pCtx->m_flTotalActualParticlesSoFar = flDeltaTime * flEmissionRate;
-		
+
 
 		//if ( !IsInfinitelyEmitting() )
 		//	pCtx->m_flTotalActualParticlesSoFar = min( pCtx->m_ActualParticlesToEmit, pCtx->m_flTotalActualParticlesSoFar );
@@ -371,7 +371,7 @@ class C_OP_ContinuousEmitter : public CParticleOperatorInstance
 		}
 
 		pParticles->SetNActiveParticles( nActualParticlesToEmit + pParticles->m_nActiveParticles );
-		
+
 		float flTimeStampStep = ( flDeltaTime ) / ( nActualParticlesToEmit );
 		float flTimeStep = flPrevDrawTime + flTimeStampStep;
 
@@ -428,7 +428,7 @@ class C_OP_ContinuousEmitter : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_ContinuousEmitter, "emit_continuously", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ContinuousEmitter ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_ContinuousEmitter )
 	DMXELEMENT_UNPACK_FIELD( "emission_start_time", "0", float, m_flStartTime )
 	DMXELEMENT_UNPACK_FIELD( "emission_rate", "100", float, m_flEmitRate )
 	DMXELEMENT_UNPACK_FIELD( "emission_duration", "0", float, m_flEmissionDuration )
@@ -447,12 +447,12 @@ uint32 C_OP_ContinuousEmitter::Emit( CParticleCollection *pParticles, float flCu
 	float flControlPointScale = pParticles->GetHighestControlPoint();
 	//The emission scale here allows for a scalar value per controlpoint, like 2 or .25...
 	flControlPointScale *= m_flEmissionScale;
-	//Global strength scale brought in by operator fade in/fade out/oscillate 
+	//Global strength scale brought in by operator fade in/fade out/oscillate
 	float flEmissionRate = m_flEmitRate * flCurStrength;
 	if ( flControlPointScale != 0.0f || m_bScalePerParticle )
 	{
 		if ( m_bScalePerParticle )
-		{ 
+		{
 			if ( pParticles->m_pParent )
 			{
 				flControlPointScale = pParticles->m_pParent->m_nActiveParticles * m_flEmissionScale;
@@ -493,7 +493,7 @@ uint32 C_OP_ContinuousEmitter::Emit( CParticleCollection *pParticles, float flCu
 			flCurrDrawTime = flStartTime + m_flEmissionDuration;
 		}
 	}
-	
+
 	float flDeltaTime = flCurrDrawTime - flPrevDrawTime;
 
 	//Calculate emission rate by delta time from last frame to determine number of particles to emit this frame as a fractional float
@@ -508,7 +508,7 @@ uint32 C_OP_ContinuousEmitter::Emit( CParticleCollection *pParticles, float flCu
 	//Add emitted particles to running int total.
 	pCtx->m_nTotalEmittedSoFar += nParticlesToEmit;
 
- 
+
 	if ( nParticlesToEmit == 0 )
 		return 0;
 
@@ -530,7 +530,7 @@ uint32 C_OP_ContinuousEmitter::Emit( CParticleCollection *pParticles, float flCu
 
 	float flTimeStampStep = ( flDeltaTime ) / ( nActualParticlesToEmit );
 	float flTimeStep = flPrevDrawTime + flTimeStampStep;
-	
+
 	// Set the particle creation time to the exact sub-frame particle emission time
 	// !! speed!! do sse init here
 	for( int i = nStartParticle; i < nStartParticle + nActualParticlesToEmit; i++ )
@@ -609,7 +609,7 @@ class C_OP_NoiseEmitter : public CParticleOperatorInstance
 			SkipToTime( pParticles->m_flCurTime, pParticles, pCtx );
 		}
 	}
-	 
+
 	virtual void InitializeContextData( CParticleCollection *pParticles, void *pContext ) const
 	{
 		NoiseEmitterContext_t *pCtx = reinterpret_cast<NoiseEmitterContext_t *>( pContext );
@@ -700,7 +700,7 @@ class C_OP_NoiseEmitter : public CParticleOperatorInstance
 
 DEFINE_PARTICLE_OPERATOR( C_OP_NoiseEmitter, "emit noise", OPERATOR_GENERIC );
 
-BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_NoiseEmitter ) 
+BEGIN_PARTICLE_OPERATOR_UNPACK( C_OP_NoiseEmitter )
 	DMXELEMENT_UNPACK_FIELD( "emission_start_time", "0", float, m_flStartTime )
 	DMXELEMENT_UNPACK_FIELD( "emission_duration", "0", float, m_flEmissionDuration )
 	DMXELEMENT_UNPACK_FIELD( "scale emission to used control points", "0.0", float, m_flEmissionScale )
@@ -729,7 +729,7 @@ uint32 C_OP_NoiseEmitter::Emit( CParticleCollection *pParticles, float flCurStre
 
 	float	flAbsScale;
 	int		nAbsVal;
-	nAbsVal = 0xffffffff; 
+	nAbsVal = 0xffffffff;
 	flAbsScale = 0.5;
 	if ( m_bAbsVal )
 	{
@@ -748,7 +748,7 @@ uint32 C_OP_NoiseEmitter::Emit( CParticleCollection *pParticles, float flCurStre
 	float ValueScale, ValueBase;
 
 	Vector Coord, CoordLoc, CoordWorldTime;
-	//CoordLoc.x = pxyz[0]; 
+	//CoordLoc.x = pxyz[0];
 	//CoordLoc.y = pxyz[4];
 	//CoordLoc.z = pxyz[8];
 	//CoordLoc += m_vecOffsetLoc;
@@ -782,7 +782,7 @@ uint32 C_OP_NoiseEmitter::Emit( CParticleCollection *pParticles, float flCurStre
 	float flInitialNoise = ( ValueBase + ( ValueScale * flNoise ) );
 	flInitialNoise = clamp(flInitialNoise, 0.0f, (float) INT_MAX );
 
-	//Global strength scale brought in by operator fade in/fade out/oscillate 
+	//Global strength scale brought in by operator fade in/fade out/oscillate
 	float flEmissionRate = flInitialNoise * flCurStrength;
 	if ( flControlPointScale != 0.0f )
 	{
@@ -873,4 +873,3 @@ void AddBuiltInParticleEmitters( void )
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_EMITTER, C_OP_InstantaneousEmitter );
 	REGISTER_PARTICLE_OPERATOR( FUNCTION_EMITTER, C_OP_NoiseEmitter );
 }
-

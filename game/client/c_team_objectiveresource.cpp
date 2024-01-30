@@ -23,7 +23,7 @@ extern ConVar mp_capdeteriorate_time;
 //-----------------------------------------------------------------------------
 void RecvProxy_Owner( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
-	// hacks? Not sure how else to get the index of the integer that is 
+	// hacks? Not sure how else to get the index of the integer that is
 	// being transmitted.
 	int index = pData->m_pRecvProp->GetOffset() / sizeof(int);
 
@@ -41,7 +41,7 @@ void RecvProxy_CappingTeam( const CRecvProxyData *pData, void *pStruct, void *pO
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void RecvProxy_CapLayout( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
@@ -96,7 +96,7 @@ END_RECV_TABLE()
 C_BaseTeamObjectiveResource *g_pObjectiveResource = NULL;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseTeamObjectiveResource::C_BaseTeamObjectiveResource()
 {
@@ -161,7 +161,7 @@ C_BaseTeamObjectiveResource::C_BaseTeamObjectiveResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseTeamObjectiveResource::~C_BaseTeamObjectiveResource()
 {
@@ -169,7 +169,7 @@ C_BaseTeamObjectiveResource::~C_BaseTeamObjectiveResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -188,7 +188,7 @@ void C_BaseTeamObjectiveResource::OnPreDataChanged( DataUpdateType_t updateType 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -246,7 +246,7 @@ void C_BaseTeamObjectiveResource::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::UpdateControlPoint( const char *pszEvent, int index_ )
 {
@@ -259,7 +259,7 @@ void C_BaseTeamObjectiveResource::UpdateControlPoint( const char *pszEvent, int 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float C_BaseTeamObjectiveResource::GetCPCapPercentage( int index_ )
 {
@@ -279,7 +279,7 @@ float C_BaseTeamObjectiveResource::GetCPCapPercentage( int index_ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseTeamObjectiveResource::GetNumControlPointsOwned( void )
 {
@@ -300,8 +300,8 @@ int C_BaseTeamObjectiveResource::GetNumControlPointsOwned( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-//			team - 
+// Purpose:
+//			team -
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::SetOwningTeam( int index_, int team )
 {
@@ -319,7 +319,7 @@ void C_BaseTeamObjectiveResource::SetOwningTeam( int index_, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::SetCappingTeam( int index_, int team )
 {
@@ -341,7 +341,7 @@ void C_BaseTeamObjectiveResource::SetCappingTeam( int index_, int team )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::SetCapLayout( const char *pszLayout )
 {
@@ -351,7 +351,7 @@ void C_BaseTeamObjectiveResource::SetCapLayout( const char *pszLayout )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool C_BaseTeamObjectiveResource::CapIsBlocked( int index_ )
 {
@@ -368,7 +368,7 @@ bool C_BaseTeamObjectiveResource::CapIsBlocked( int index_ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTeamObjectiveResource::ClientThink()
 {
@@ -407,8 +407,8 @@ void C_BaseTeamObjectiveResource::ClientThink()
 							C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 							if ( pPlayer )
 							{
-								if ( m_iCappingTeam[i] != TEAM_UNASSIGNED && 
-									pPlayer->GetTeamNumber() != m_iCappingTeam[i] && 
+								if ( m_iCappingTeam[i] != TEAM_UNASSIGNED &&
+									pPlayer->GetTeamNumber() != m_iCappingTeam[i] &&
 									GetCapWarningLevel( i ) == CP_WARN_FINALCAP )
 								{
 									// Prevent spam
@@ -453,7 +453,7 @@ void C_BaseTeamObjectiveResource::ClientThink()
 					m_bWarnedOnFinalCap[i] = false;
 				}
 			}
-			
+
 			UpdateControlPoint( "controlpoint_updatelayout", i );
 			m_flCapLastThinkTime[i] = gpGlobals->curtime;
 		}

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -31,15 +31,15 @@ public:
 	virtual			~CTELargeFunnel( void );
 
 	virtual void	Test( const Vector& current_origin, const QAngle& current_angles );
-	
+
 public:
 	CNetworkVar( int, m_nModelIndex );
 	CNetworkVar( int, m_nReversed );
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTELargeFunnel::CTELargeFunnel( const char *name ) :
 	BaseClass( name )
@@ -49,16 +49,16 @@ CTELargeFunnel::CTELargeFunnel( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTELargeFunnel::~CTELargeFunnel( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *current_origin - 
-//			*current_angles - 
+// Purpose:
+// Input  : *current_origin -
+//			*current_angles -
 //-----------------------------------------------------------------------------
 void CTELargeFunnel::Test( const Vector& current_origin, const QAngle& current_angles )
 {
@@ -66,7 +66,7 @@ void CTELargeFunnel::Test( const Vector& current_origin, const QAngle& current_a
 	m_nModelIndex = g_sModelIndexSmoke;
 	m_nReversed = 0;
 	m_vecOrigin = current_origin;
-	
+
 	Vector forward, right;
 
 	m_vecOrigin.GetForModify()[2] += 24;
@@ -95,7 +95,7 @@ void TE_LargeFunnel( IRecipientFilter& filter, float delay,
 	const Vector* pos, int modelindex, int reversed )
 {
 	g_TELargeFunnel.m_vecOrigin		= *pos;
-	g_TELargeFunnel.m_nModelIndex	= modelindex;	
+	g_TELargeFunnel.m_nModelIndex	= modelindex;
 	g_TELargeFunnel.m_nReversed		= reversed;
 
 	// Send it over the wire

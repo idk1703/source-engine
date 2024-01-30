@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -30,7 +30,7 @@ struct AttachedModelData_t
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CEconEntity : public CBaseAnimating, public IHasAttributes
 {
@@ -62,7 +62,7 @@ public:
 #else
 	enum ParticleSystemState_t
 	{
-		PARTICLE_SYSTEM_STATE_NOT_VISIBLE, 
+		PARTICLE_SYSTEM_STATE_NOT_VISIBLE,
 		PARTICLE_SYSTEM_STATE_VISIBLE,
 		PARTICLE_SYSTEM_STATE_VISIBLE_VM
 	};
@@ -146,7 +146,7 @@ public:
 
 protected:
 	virtual Activity		TranslateViewmodelHandActivityInternal( Activity actBase ) { return actBase; }
-	
+
 protected:
 	CNetworkVarEmbedded(	CAttributeContainer, m_AttributeManager );
 
@@ -185,7 +185,7 @@ public:
 #define ITEM_PICKUP_BOX_BLOAT		24
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CBaseAttributableItem : public CEconEntity
 {
@@ -200,7 +200,7 @@ public:
 #if defined( CLIENT_DLL )
 #ifndef DOTA_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class C_ViewmodelAttachmentModel : public C_BaseAnimating, public IHasOwner
 {
@@ -212,7 +212,7 @@ public:
 	int  InternalDrawModel( int flags );
 	bool OnPostInternalDrawModel( ClientModelRenderInfo_t *pInfo );
 	virtual void StandardBlendingRules( CStudioHdr *hdr, Vector pos[], Quaternion q[], float currentTime, int boneMask );
-	
+
 	virtual CBaseEntity	*GetOwnerViaInterface( void ) { return GetOuter()->GetAttributeOwner(); }
 
 	virtual void FormatViewModelAttachment( int nAttachment, matrix3x4_t &attachmentToWorld );

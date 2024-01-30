@@ -1,6 +1,6 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -9,7 +9,7 @@
 /* This product contains Speex software.  The license terms of the Speex
 software, distributed with this product, are as follows:
 
-© 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
+ï¿½ 2002-2003, Jean-Marc Valin/Xiph.Org Foundation
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -46,10 +46,10 @@ damage. */
 #define RAW_FRAME_SIZE		160		// in 160 samples per frame
 
 // each quality has a differnt farme size
-const int ENCODED_FRAME_SIZE [11] = {6,6,15,15,20,20,28,28,38,38,38};	
+const int ENCODED_FRAME_SIZE [11] = {6,6,15,15,20,20,28,28,38,38,38};
 
 /* useful Speex voice qualities are 0,2,4,6 and 8. each quality level
-   has a diffrent encoded frame size and needed bitrate:
+	has a diffrent encoded frame size and needed bitrate:
 
 	Quality 0 :  6 bytes/frame,  2400bps
 	Quality 2 : 15 bytes/frame,  6000bps
@@ -157,7 +157,7 @@ void VoiceEncoder_Speex::DecodeFrame(const char *pCompressed, char *pDecompresse
 
 	/*Decode the data*/
 	speex_decode(m_DecoderState, &m_Bits, output);
-	
+
 	/*Copy from float to short (16 bits) for output*/
 	for (int i=0;i<RAW_FRAME_SIZE;i++)
 	{
@@ -176,11 +176,11 @@ bool VoiceEncoder_Speex::ResetState()
 bool VoiceEncoder_Speex::InitStates()
 {
 	speex_bits_init(&m_Bits);
-	
+
 	m_EncoderState = speex_encoder_init( &speex_nb_mode );	// narrow band mode 8kbp
 
 	m_DecoderState = speex_decoder_init( &speex_nb_mode );
-	
+
 	return m_EncoderState && m_DecoderState;
 }
 

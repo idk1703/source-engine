@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -41,12 +41,12 @@ class IWorkUnitDistributorWorker
 {
 public:
 	virtual void Release() = 0;
-	
+
 	virtual void Init( CDSInfo *pInfo ) = 0;
-	
+
 	// Called by worker threads to get the next work unit to do.
 	virtual bool GetNextWorkUnit( WUIndexType *pWUIndex ) = 0;
-	
+
 	// Called by the worker threads after a work unit is completed.
 	virtual void NoteLocalWorkUnitCompleted( WUIndexType iWU ) = 0;
 
@@ -200,7 +200,7 @@ public:
 			pBuf->write( &iWU, sizeof( iWU ) );
 		}
 	}
-	
+
 	inline void ReadWUIndex( WUIndexType *pWU, MessageBuffer *pBuf )
 	{
 		if ( m_nWorkUnits <= 0xFFFF )

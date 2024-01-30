@@ -33,7 +33,7 @@ public:
 private:
 	EHANDLE m_hOldOwner;
 	int m_iAmmoTeam;
-	
+
 private:
 	CAmmoBox( const CAmmoBox & );
 

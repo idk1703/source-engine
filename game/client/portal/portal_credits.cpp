@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -78,14 +78,14 @@ public:
 	void MsgFunc_CreditsPortalMsg( bf_read &msg );
 	void MsgFunc_LogoTimeMsg( bf_read &msg );
 
-	virtual bool	ShouldDraw( void ) 
-	{ 
+	virtual bool	ShouldDraw( void )
+	{
 		g_bPortalRollingCredits = IsActive();
 
 		if ( g_bPortalRollingCredits && m_iCreditsType == CREDITS_INTRO )
 			 g_bPortalRollingCredits = false;
 
-		return IsActive(); 
+		return IsActive();
 	}
 
 protected:
@@ -146,7 +146,7 @@ private:
 	int   m_iXOffset;
 	int   m_iXOffsetNames;
 	int   m_iLongestName;
-	
+
 	float m_flFadeInTime;
 	float m_flFadeHoldTime;
 	float m_flFadeOutTime;
@@ -160,7 +160,7 @@ private:
 	float m_flSongStartTime;
 
 
-	//Screen adjustment properties 
+	//Screen adjustment properties
 	int m_iScreenXOffset;
 	int m_iScreenYOffset;
 	int m_iScreenWidthAdjustment;
@@ -171,7 +171,7 @@ private:
 	int m_iAAScreenXOffset;
 	int m_iAAScreenYOffset;
 
-	
+
 	float m_flLogoTimeMod;
 	float m_flLogoTime;
 	float m_flLogoDesiredLength;
@@ -183,7 +183,7 @@ private:
 	float m_flLyricsStartTime;
 
 	Color m_cColor;
-};	
+};
 
 void CHudPortalCredits::PrepareCredits( const char *pKeyName )
 {
@@ -196,7 +196,7 @@ void CHudPortalCredits::PrepareCredits( const char *pKeyName )
 		if ( !pKV->LoadFromFile( filesystem, CREDITS_FILE_PORTAL, "MOD" ) )
 		{
 			pKV->deleteThis();
-	
+
 			Assert( !"env_portal_credits couldn't be initialized!" );
 			return;
 		}
@@ -206,7 +206,7 @@ void CHudPortalCredits::PrepareCredits( const char *pKeyName )
 		if ( !pKV->LoadFromFile( filesystem, CREDITS_FILE, "MOD" ) )
 		{
 			pKV->deleteThis();
-	
+
 			Assert( !"env_portal_credits couldn't be initialized!" );
 			return;
 		}
@@ -262,7 +262,7 @@ void CHudPortalCredits::Clear( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudPortalCredits::Init()
 {
@@ -281,7 +281,7 @@ void CHudPortalCredits::ReadNames( KeyValues *pKeyValue )
 
 	// Now try and parse out each act busy anim
 	KeyValues *pKVNames = pKeyValue->GetFirstSubKey();
-	
+
 	char *cTmp;
 
 	while ( pKVNames )
@@ -295,7 +295,7 @@ void CHudPortalCredits::ReadNames( KeyValues *pKeyValue )
 		cTmp=Q_strstr(Credits.szCreditName,"[");
 		if (!(cTmp == NULL)) {
 			Credits.flTimeInit = Q_atof(cTmp+1);
-		} 
+		}
 
 		cTmp=Q_strstr(Credits.szCreditName,"]");
 		if (!(cTmp == NULL)) {
@@ -327,7 +327,7 @@ void CHudPortalCredits::ReadLyrics( KeyValues *pKeyValue )
 	char tmpstr[255] = "";
 
 	float flTotalTime = 0.00;
-	
+
 	while ( pKVNames )
 	{
 		bNoY = false;
@@ -342,7 +342,7 @@ void CHudPortalCredits::ReadLyrics( KeyValues *pKeyValue )
 		cTmp=Q_strstr(Credits.szCreditName,"[");
 		if (!(cTmp == NULL)) {
 			Credits.flTimeInit = Q_atof(cTmp+1);
-		} 
+		}
 
 		cTmp=Q_strstr(Credits.szCreditName,"]");
 		if (!(cTmp == NULL)) {
@@ -350,11 +350,11 @@ void CHudPortalCredits::ReadLyrics( KeyValues *pKeyValue )
 		}
 
 		Credits.iAsciiIndex = 0;
-		
+
 		cTmp=Q_strstr(Credits.szCreditName,"<<<");
 		if (!(cTmp == NULL)) {
 			Credits.iAsciiIndex = Q_atoi(cTmp+3);
-		} 
+		}
 
 		cTmp=Q_strstr(Credits.szCreditName,">>>");
 		if (!(cTmp == NULL)) {
@@ -378,7 +378,7 @@ void CHudPortalCredits::ReadLyrics( KeyValues *pKeyValue )
 			//GetPixelWidth( tmpstr, m_hTFont )
 			bNextOnSameLine = false;
 		}
-		else 
+		else
 		{
 			iXOffsetTemp=0;
 			Credits.iXOffset = 0;
@@ -392,15 +392,15 @@ void CHudPortalCredits::ReadLyrics( KeyValues *pKeyValue )
 			bNoY = true;
 		}
 
-		if ((!(Q_strcmp(" ",Credits.szCreditName)==0)) && !bNoY) 
+		if ((!(Q_strcmp(" ",Credits.szCreditName)==0)) && !bNoY)
 		{
 			iHeight += surface()->GetFontTall ( m_hTFont ) + m_flSeparation;
-			if (Q_strcmp("^",Credits.szCreditName)==0) 
+			if (Q_strcmp("^",Credits.szCreditName)==0)
 			{
 				Q_strcpy(Credits.szCreditName," ");
 			}
 		}
-		
+
 		if ( Credits.szCreditName[0] == '#' )
 		{
 			g_pVGuiLocalize->ConstructString( Credits.szLyricLine, sizeof(Credits.szLyricLine), g_pVGuiLocalize->Find(Credits.szCreditName), 0 );
@@ -443,7 +443,7 @@ void CHudPortalCredits::ReadAscii( KeyValues *pKeyValue )
 	KeyValues *pKVNames = pKeyValue->GetFirstSubKey();
 
 	char *cTmp;
-	
+
 	while ( pKVNames )
 	{
 		portalcreditname_t Credits;
@@ -458,7 +458,7 @@ void CHudPortalCredits::ReadAscii( KeyValues *pKeyValue )
 		cTmp=Q_strstr(Credits.szCreditName,"[");
 		if (!(cTmp == NULL)) {
 			Credits.flTimeInit = Q_atof(cTmp+1);
-		} 
+		}
 
 		cTmp=Q_strstr(Credits.szCreditName,"]");
 		if (!(cTmp == NULL)) {
@@ -582,7 +582,7 @@ void CHudPortalCredits::DrawOutroCreditsName( void )
 			if ( m_bLastOneInPlace == false )
 			{
 				pCredit->flYPos -= gpGlobals->frametime * ( (float)g_iPortalCreditsPixelHeight / m_flScrollTime );
-		
+
 				if ( (int)pCredit->flYPos + ( iFontTall / 2 ) <= iTall / 2 )
 				{
 					m_bLastOneInPlace = true;
@@ -613,15 +613,15 @@ void CHudPortalCredits::DrawOutroCreditsName( void )
 			pCredit->flYPos -= gpGlobals->frametime * ( (float)g_iPortalCreditsPixelHeight / m_flScrollTime );
 
 		}
-		
+
 		if ( pCredit->bActive == false )
 			 continue;
-			
+
 		surface()->DrawSetTextFont( m_hTFont );
 		surface()->DrawSetTextColor( cColor[0], cColor[1], cColor[2], cColor[3]  );
-		
+
 		wchar_t unicode[256];
-		
+
 		if ( pCredit->szCreditName[0] == '#' )
 		{
 			g_pVGuiLocalize->ConstructString( unicode, sizeof(unicode), g_pVGuiLocalize->Find(pCredit->szCreditName), 0 );
@@ -631,7 +631,7 @@ void CHudPortalCredits::DrawOutroCreditsName( void )
 			g_pVGuiLocalize->ConvertANSIToUnicode( pCredit->szCreditName, unicode, sizeof( unicode ) );
 		}
 
-		int iStringWidth = GetStringPixelWidth( unicode, m_hTFont ); 
+		int iStringWidth = GetStringPixelWidth( unicode, m_hTFont );
 
 		surface()->DrawSetTextPos( ( iWidth / 2 ) - ( iStringWidth / 2 ), pCredit->flYPos );
 		surface()->DrawUnicodeString( unicode );
@@ -667,16 +667,16 @@ void CHudPortalCredits::DrawPortalOutroCreditsName( void )
 			bCursor = !bCursor;
 			iCounter = 0;
 			m_iXOffset += 1;
-	
+
 			if (m_iXOffset > Q_strlen(m_CreditsList[m_iYOffset].szCreditName) && m_iYOffset<(m_CreditsList.Count()-1))
 			{
 				m_iXOffset = 1;
 				m_iYOffset += 1;
-	
+
 				vgui::HScheme scheme = vgui::scheme()->GetScheme( "ClientScheme" );
 				vgui::HFont m_hTFont = vgui::scheme()->GetIScheme(scheme)->GetFont( m_CreditsList[m_iYOffset].szFontName, true );
 				int iFontTall = surface()->GetFontTall ( m_hTFont )+ m_flSeparation;
-	
+
 				if ( m_CreditsList[m_iYOffset].flYPos +iFontTall > iTall )
 				{
 					for ( int i = 0; i < m_CreditsList.Count(); i++ )
@@ -725,7 +725,7 @@ void CHudPortalCredits::DrawPortalOutroCreditsName( void )
 			if ( m_bLastOneInPlace == false )
 			{
 				pCredit->flYPos -= gpGlobals->frametime * ( (float)g_iPortalCreditsPixelHeight / m_flScrollTime );
-		
+
 				if ( (int)pCredit->flYPos + ( iFontTall / 2 ) <= iTall / 2 )
 				{
 					m_bLastOneInPlace = true;
@@ -758,13 +758,13 @@ void CHudPortalCredits::DrawPortalOutroCreditsName( void )
 			//iCounter += 1;
 			//pCredit->flYPos -= gpGlobals->frametime * ( (float)g_iPortalCreditsPixelHeight / m_flScrollTime );
 		}
-		
+
 		if ( pCredit->bActive == false )
 			 continue;
-			
+
 		surface()->DrawSetTextFont( m_hTFont );
 		surface()->DrawSetTextColor( cColor[0], cColor[1], cColor[2], cColor[3]  );
-		
+
 		wchar_t unicode[256];
 
 		char tmpstr[256];
@@ -791,7 +791,7 @@ void CHudPortalCredits::DrawPortalOutroCreditsName( void )
 			g_pVGuiLocalize->ConvertANSIToUnicode( tmpstr, unicode, sizeof( unicode ) );
 		}
 
-		// int iStringWidth = GetStringPixelWidth( unicode, m_hTFont ); 
+		// int iStringWidth = GetStringPixelWidth( unicode, m_hTFont );
 		// surface()->DrawSetTextPos( ( iWidth / 2 ) - ( iStringWidth / 2 ), pCredit->flYPos );
 		surface()->DrawSetTextColor( m_cColor[0], m_cColor[1], m_cColor[2], 255 );
 		surface()->DrawSetTextPos( 20+m_iScreenXOffset, pCredit->flYPos + m_iScreenYOffset );
@@ -871,7 +871,7 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 
 	static bool bCursor = false;
 	static int iLastNameY = 0;
-	
+
 	if (m_flLyricsStartTime == -1) m_flLyricsStartTime = gpGlobals->curtime;
 
 	//get the screen stats
@@ -913,12 +913,12 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 		if (pCredit->flTimeStart <= flCurTime && pCredit->flTimeEnd > flCurTime)
 		{
 			m_iYOffset = i;
-			if (pCredit->bReset) 
+			if (pCredit->bReset)
 			{
 				m_iCurrentLowY = i;
 			}
 			m_iXOffset = (int) (((flCurTime-pCredit->flTimeStart) / pCredit->flTimeInit)*Q_wcslen(pCredit->szLyricLine))+1;
-			if ( m_iXOffset<1 ) 
+			if ( m_iXOffset<1 )
 				m_iXOffset = 1;
 			else if ( m_iXOffset>Q_wcslen(pCredit->szLyricLine) )
 				m_iXOffset = Q_wcslen(pCredit->szLyricLine);
@@ -946,11 +946,11 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 
 		if (pCredit->iAsciiIndex>0)
 		{
-			m_iCurrentAsciiArt = pCredit->iAsciiIndex; 
+			m_iCurrentAsciiArt = pCredit->iAsciiIndex;
 		}
 		surface()->DrawSetTextFont( m_hTFont );
 		surface()->DrawSetTextColor( cColor[0], cColor[1], cColor[2], cColor[3]  );
-		
+
 		if (!bBorders)
 		{
 			wchar_t bunicode[512];
@@ -1001,7 +1001,7 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 			Q_wcsncpy( tmpstr, pCredit->szLyricLine, m_iXOffset * sizeof( wchar_t ) );
 			if (bCursor)
 				tmpstr[m_iXOffset - 1] = '_';
-			
+
 		}
 		else
 		{
@@ -1014,7 +1014,7 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 	}
 
 	DrawPortalAsciiArt();
-	
+
 	//Draw Credits
 	int iCreditsListCount = m_CreditsList.Count();
 	for ( int i = iCreditsListCount-1; i >=0; i-- )
@@ -1034,7 +1034,7 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 		{
 			if (iLastNameY!=i)
 			{
-				int iYDelta = iFontTall + (int) m_flSeparation;			
+				int iYDelta = iFontTall + (int) m_flSeparation;
 				for (int j = 0; j <i; j++)
 				{
 					m_CreditsList[j].flYPos -= (float) iYDelta;
@@ -1064,10 +1064,10 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 
 		if ( pCredit->bActive == false )
 			 continue;
-			
+
 		surface()->DrawSetTextFont( m_hTFont );
 		surface()->DrawSetTextColor( cColor[0], cColor[1], cColor[2], cColor[3]  );
-		
+
 		wchar_t unicode[256];
 
 		char tmpstr[256];
@@ -1090,11 +1090,11 @@ void CHudPortalCredits::DrawPortalOutroCreditsLyrics( void )
 			g_pVGuiLocalize->ConstructString( unicode, sizeof(unicode), g_pVGuiLocalize->Find(tmpstr), 0 );
 		}
 		else
-		{			
+		{
 			g_pVGuiLocalize->ConvertANSIToUnicode( tmpstr, unicode, sizeof( unicode ) );
 		}
 
-		// int iStringWidth = GetStringPixelWidth( unicode, m_hTFont ); 
+		// int iStringWidth = GetStringPixelWidth( unicode, m_hTFont );
 		// surface()->DrawSetTextPos( ( iWidth / 2 ) - ( iStringWidth / 2 ), pCredit->flYPos );
 		surface()->DrawSetTextColor( m_cColor[0], m_cColor[1], m_cColor[2], cColor[3] );
 		surface()->DrawSetTextPos( (iWidth/2)+10+m_iScreenXOffset, pCredit->flYPos+m_iScreenYOffset );
@@ -1188,14 +1188,14 @@ void CHudPortalCredits::DrawLogo( void )
 
 	Color cColor = m_TextColor;
 	cColor[3] = m_Alpha;
-				
+
 	surface()->DrawSetTextFont( m_hTFont );
 	surface()->DrawSetTextColor( cColor[0], cColor[1], cColor[2], cColor[3]  );
-	
+
 	wchar_t unicode[256];
 	g_pVGuiLocalize->ConvertANSIToUnicode( "HALF-LIFE'", unicode, sizeof( unicode ) );
 
-	int iStringWidth = GetStringPixelWidth( unicode, m_hTFont ); 
+	int iStringWidth = GetStringPixelWidth( unicode, m_hTFont );
 
 	surface()->DrawSetTextPos( ( iWidth / 2 ) - ( iStringWidth / 2 ), ( iTall / 2 ) - ( iFontTall / 2 ) );
 	surface()->DrawUnicodeString( unicode );
@@ -1205,17 +1205,17 @@ void CHudPortalCredits::DrawLogo( void )
 	{
 		g_pVGuiLocalize->ConvertANSIToUnicode( "== episode one==", unicode, sizeof( unicode ) );
 
-		iStringWidth = GetStringPixelWidth( unicode, m_hTFont ); 
+		iStringWidth = GetStringPixelWidth( unicode, m_hTFont );
 
 		surface()->DrawSetTextPos( ( iWidth / 2 ) - ( iStringWidth / 2 ), ( iTall / 2 ) + ( iFontTall / 2 ));
 		surface()->DrawUnicodeString( unicode );
 	}
 
-	
+
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CHudPortalCredits::FadeBlend( float fadein, float fadeout, float hold, float localTime )
 {
@@ -1249,7 +1249,7 @@ void CHudPortalCredits::DrawIntroCreditsName( void )
 {
 	if ( m_CreditsList.Count() == 0 )
 		 return;
-	
+
 	// fill the screen
 	int iWidth, iTall;
 	GetHudSize(iWidth, iTall);
@@ -1267,7 +1267,7 @@ void CHudPortalCredits::DrawIntroCreditsName( void )
 
 		if ( pCredit->bActive == false )
 			 continue;
-				
+
 		vgui::HScheme scheme = vgui::scheme()->GetScheme( "ClientScheme" );
 		vgui::HFont m_hTFont = vgui::scheme()->GetIScheme(scheme)->GetFont( pCredit->szFontName );
 
@@ -1275,16 +1275,16 @@ void CHudPortalCredits::DrawIntroCreditsName( void )
 
 		surface()->DrawSetTextFont( m_hTFont );
 		surface()->DrawSetTextColor( m_cColor[0], m_cColor[1], m_cColor[2], FadeBlend( m_flFadeInTime, m_flFadeOutTime, m_flFadeHoldTime + pCredit->flTimeAdd, localTime ) * m_cColor[3] );
-		
+
 		wchar_t unicode[256];
 		g_pVGuiLocalize->ConvertANSIToUnicode( pCredit->szCreditName, unicode, sizeof( unicode ) );
 
 		surface()->DrawSetTextPos( XRES( pCredit->flXPos ), YRES( pCredit->flYPos ) );
 		surface()->DrawUnicodeString( unicode );
-		
+
 		if ( m_flLogoTime > gpGlobals->curtime )
 			 continue;
-		
+
 		if ( pCredit->flTime - m_flNextStartTime <= gpGlobals->curtime )
 		{
 			if ( m_CreditsList.IsValidIndex( i + 3 ) )
@@ -1368,7 +1368,7 @@ void CHudPortalCredits::PrepareLogo( float flTime )
 void CHudPortalCredits::PrepareOutroCredits( void )
 {
 	PrepareCredits( "OutroCreditsNames" );
-	
+
 	if ( m_CreditsList.Count() == 0 )
 		 return;
 
@@ -1410,9 +1410,9 @@ void CHudPortalCredits::PreparePortalOutroCredits( void )
 	m_flLyricsStartTime = -1;
 
 	m_iCurrentAsciiArt = 0;
-	
+
 	PrepareCredits( "OutroCreditsNames" );
-	
+
 	if ( m_CreditsList.Count() == 0 )
 		 return;
 
@@ -1435,7 +1435,7 @@ void CHudPortalCredits::PreparePortalOutroCredits( void )
 	int iHeight = -1;
 	int iTotalNameLen = 0;
 
-	
+
 	//Prepare Credit Names
 	for ( int i = 0; i < m_CreditsList.Count(); i++ )
 	{
@@ -1487,10 +1487,10 @@ void CHudPortalCredits::PreparePortalOutroCredits( void )
 		flStart += m_CreditsList[i].flTimeInit;
 		m_CreditsList[i].flTimeEnd=flStart;
 	}
-	
+
 	SetActive( true );
 
-	
+
 	m_flScrollTime = 2;
 	m_flLastPaintTime = gpGlobals->curtime;
 	m_flLastBlinkTime = gpGlobals->curtime;
@@ -1514,7 +1514,7 @@ void CHudPortalCredits::PrepareIntroCredits( void )
 
 		pCredit->flYPos = m_flY + ( iSlot * surface()->GetFontTall ( m_hTFont ) );
 		pCredit->flXPos = m_flX;
-				
+
 		if ( i < 3 )
 		{
 			pCredit->bActive = true;
@@ -1570,5 +1570,3 @@ void CHudPortalCredits::MsgFunc_LogoTimeMsg( bf_read &msg )
 	m_iCreditsType = CREDITS_LOGO;
 	PrepareLogo( msg.ReadFloat() );
 }
-
-

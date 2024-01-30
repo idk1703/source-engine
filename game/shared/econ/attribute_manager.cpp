@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -119,7 +119,7 @@ void *CAttributeManager::operator new( size_t stAllocateBlock )
 void *CAttributeManager::operator new( size_t stAllocateBlock, int nBlockUse, const char *pFileName, int nLine )
 {
 	// call into engine to get memory
-	Assert( stAllocateBlock != 0 );				
+	Assert( stAllocateBlock != 0 );
 	void *pMem = malloc( stAllocateBlock );
 	memset( pMem, 0, stAllocateBlock );
 	return pMem;
@@ -133,7 +133,7 @@ CAttributeManager::CAttributeManager()
 
 #ifdef CLIENT_DLL
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -141,7 +141,7 @@ void CAttributeManager::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -175,7 +175,7 @@ void CAttributeManager::InitializeAttributes( CBaseEntity *pEntity )
 // ATTRIBUTE PROVIDERS
 //=====================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::ProvideTo( CBaseEntity *pProvider )
 {
@@ -192,7 +192,7 @@ void CAttributeManager::ProvideTo( CBaseEntity *pProvider )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::StopProvidingTo( CBaseEntity *pProvider )
 {
@@ -208,7 +208,7 @@ void CAttributeManager::StopProvidingTo( CBaseEntity *pProvider )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::AddProvider( CBaseEntity *pProvider )
 {
@@ -227,7 +227,7 @@ void CAttributeManager::AddProvider( CBaseEntity *pProvider )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::RemoveProvider( CBaseEntity *pProvider )
 {
@@ -238,7 +238,7 @@ void CAttributeManager::RemoveProvider( CBaseEntity *pProvider )
 
 	if ( !IsBeingProvidedToBy( pProvider ) )
 		return;
-	
+
 	Assert( pProviderAttrInterface->GetAttributeManager()->IsProvidingTo( GetOuter() ) );
 	Assert( pProviderAttrInterface->GetAttributeManager()->m_Receivers.Find( GetOuter() ) != pProviderAttrInterface->GetAttributeManager()->m_Receivers.InvalidIndex() );
 
@@ -249,7 +249,7 @@ void CAttributeManager::RemoveProvider( CBaseEntity *pProvider )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CAttributeManager::ClearCache( void )
 {
@@ -287,7 +287,7 @@ void CAttributeManager::ClearCache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CAttributeManager::GetGlobalCacheVersion() const
 {
@@ -295,7 +295,7 @@ int	CAttributeManager::GetGlobalCacheVersion() const
 	return TFGameRules() ? TFGameRules()->GetGlobalAttributeCacheVersion() : 0;
 #else
 	return 0;
-#endif 
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ float CAttributeManager::ApplyAttributeFloatWrapper( float flValue, CBaseEntity 
 	AssertMsg1( m_nCalls != 5000, "%d calls for attributes in a single tick.  This is slow and bad.", m_nCalls );
 
 	if( m_nCurrentTick != gpGlobals->tickcount )
-	{	
+	{
 		m_nCalls = 0;
 		m_nCurrentTick = gpGlobals->tickcount;
 	}
@@ -456,13 +456,13 @@ float CAttributeManager::ApplyAttributeFloat( float flValue, CBaseEntity *pIniti
 	FOR_EACH_VEC( m_Providers, iHook )
 	{
 		CBaseEntity *pProvider = m_Providers[iHook].Get();
-		
+
 		if ( !pProvider )
 			continue;
-			
+
 		if ( pProvider == pInitiator )
 			continue;
-			
+
 		IHasAttributes *pAttribInterface = GetAttribInterface( pProvider );
 		Assert( pAttribInterface );
 
@@ -623,7 +623,7 @@ static void ApplyAttribute( const CEconItemAttributeDefinition *pAttributeDef, f
 		break;
 
 	default:
-		// Unknown value format. 
+		// Unknown value format.
 		AssertMsg1( false, "Unknown attribute value type %i in ApplyAttribute().", iAttrDescFormat );
 		break;
 	}
@@ -665,7 +665,7 @@ float CollateAttributeValues( const CEconItemAttributeDefinition *pAttrDef1, con
 		break;
 
 	default:
-		// Unknown value format. 
+		// Unknown value format.
 		AssertMsg1( false, "Unknown attribute value type %i in ApplyAttribute().", iAttrDescFormat );
 		break;
 	}
@@ -803,7 +803,7 @@ public:
 	virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& value )
 	{
 		Assert( pAttrDef );
-		
+
 		if ( pAttrDef->GetCachedClass() != m_iszAttribHook )
 			return true;
 

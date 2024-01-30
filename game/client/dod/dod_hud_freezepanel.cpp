@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -76,7 +76,7 @@ CDODFreezePanel::CDODFreezePanel( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::Reset()
 {
@@ -84,7 +84,7 @@ void CDODFreezePanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::Init()
 {
@@ -141,7 +141,7 @@ void CDODFreezePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::FireGameEvent( IGameEvent * event )
 {
@@ -176,7 +176,7 @@ void CDODFreezePanel::FireGameEvent( IGameEvent * event )
 			{
 				m_iShowNemesisPanel = SHOW_NO_NEMESIS;
 			}
-		}		
+		}
 	}
 	else if ( Q_strcmp( "hide_freezepanel", pEventName ) == 0 )
 	{
@@ -287,7 +287,7 @@ void CDODFreezePanel::FireGameEvent( IGameEvent * event )
 
 				//If this was just a regular kill but this guy is our nemesis then just show it.
 				if ( pTFKiller && pTFKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
-				{					
+				{
 					pchNemesisText = g_pVGuiLocalize->Find( "#FreezePanel_FreezeNemesis" );
 				}
 			}
@@ -299,9 +299,9 @@ void CDODFreezePanel::FireGameEvent( IGameEvent * event )
 				// check to see if killer is still the nemesis of victim; victim may have managed to kill him after victim's
 				// death by grenade or some such, extracting revenge and clearing nemesis condition
 				if ( pTFKiller && pTFKiller->m_Shared.IsPlayerDominated( pVictim->entindex() ) )
-				{					
+				{
 					pchNemesisText = g_pVGuiLocalize->Find( "#FreezePanel_NewNemesis" );
-				}			
+				}
 			}
 			break;
 		case SHOW_REVENGE:
@@ -319,7 +319,7 @@ void CDODFreezePanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::ShowCalloutsIn( float flTime )
 {
@@ -327,9 +327,9 @@ void CDODFreezePanel::ShowCalloutsIn( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CDODFreezePanelCallout *CDODFreezePanel::TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL, 
+CDODFreezePanelCallout *CDODFreezePanel::TestAndAddCallout( Vector &origin, Vector &vMins, Vector &vMaxs, CUtlVector<Vector> *vecCalloutsTL,
 														 CUtlVector<Vector> *vecCalloutsBR, Vector &vecFreezeTL, Vector &vecFreezeBR, Vector &vecStatTL, Vector &vecStatBR, int *iX, int *iY )
 {
 	// This is the offset from the topleft of the callout to the arrow tip
@@ -390,7 +390,7 @@ CDODFreezePanelCallout *CDODFreezePanel::TestAndAddCallout( Vector &origin, Vect
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::UpdateCallout( void )
 {
@@ -426,15 +426,15 @@ void CDODFreezePanel::UpdateCallout( void )
 		pRagdoll->GetRagdollBounds( vMins, vMaxs );
 
 		// Try and add the callout
-		//CDODFreezePanelCallout *pCallout = 
-			
-		TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR, 
+		//CDODFreezePanelCallout *pCallout =
+
+		TestAndAddCallout( origin, vMins, vMaxs, &vecCalloutsTL, &vecCalloutsBR,
 			vecFreezeTL, vecFreezeBR, vecStatTL, vecStatBR, &iX, &iY );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::Show()
 {
@@ -449,7 +449,7 @@ void CDODFreezePanel::Show()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::Hide()
 {
@@ -471,7 +471,7 @@ void CDODFreezePanel::Hide()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDODFreezePanel::ShouldDraw( void )
 {
@@ -482,7 +482,7 @@ bool CDODFreezePanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::OnThink( void )
 {
@@ -509,7 +509,7 @@ void CDODFreezePanel::OnThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::ShowSnapshotPanelIn( float flTime )
 {
@@ -517,7 +517,7 @@ void CDODFreezePanel::ShowSnapshotPanelIn( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDODFreezePanel::ShowSnapshotPanel( bool bShow )
 {
@@ -650,7 +650,7 @@ void CDODFreezePanel::ShowNemesisPanel( bool bShow )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CDODFreezePanelCallout::CDODFreezePanelCallout( Panel *parent, const char *name ) : EditablePanel(parent,name)
 {

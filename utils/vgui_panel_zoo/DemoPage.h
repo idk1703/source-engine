@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,6 +21,6 @@ class DemoPage: public PropertyPage
 	public:
 		DemoPage(Panel *parent, const char *name);
 		~DemoPage();
-		
+
 	private:
 };

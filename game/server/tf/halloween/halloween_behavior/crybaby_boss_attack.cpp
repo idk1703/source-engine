@@ -266,4 +266,3 @@ EventDesiredResult< CHeadlessHatman > CCryBabyBossAttack::OnContact( CHeadlessHa
 
 	return TryContinue( RESULT_TRY );
 }
-

@@ -1,7 +1,7 @@
 
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -62,7 +62,7 @@ CTFArenaWinPanel::CTFArenaWinPanel( IViewPort *pViewPort ) : EditablePanel( NULL
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaWinPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -71,7 +71,7 @@ void CTFArenaWinPanel::ApplySettings( KeyValues *inResourceData )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaWinPanel::Reset( void )
 {
@@ -80,14 +80,14 @@ void CTFArenaWinPanel::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaWinPanel::Update( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaWinPanel::SetVisible( bool state )
 {
@@ -109,7 +109,7 @@ void CTFArenaWinPanel::SetVisible( bool state )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 {
@@ -157,7 +157,7 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 
 		m_iWinningPlayerTeam = event->GetInt( "winning_team" );
 		int iWinReason = event->GetInt( "winreason" );
-	
+
 		SetDialogVariable( "WinningTeamLabel", "" );
 		SetDialogVariable( "AdvancingTeamLabel", "" );
 		SetDialogVariable( "WinReasonLabel", "" );
@@ -205,7 +205,7 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 		}
 
 		SetDialogVariable( "TopPlayersLabel", pTopPlayersLabel );
-		
+
 		wchar_t wzTeamWin[256] = L"";
 		if ( TFGameRules() && TFGameRules()->IsInTournamentMode() )
 		{
@@ -230,10 +230,10 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 		{
 			pTeamLabel = wzTeamWin;
 		}
-	
+
 		SetDialogVariable( "WinningTeamLabel", pTeamLabel );
 		SetDialogVariable( "LosingTeamLabel", "" );
-	
+
 		wchar_t wzWinReason[256] = L"";
 		switch ( iWinReason )
 		{
@@ -257,7 +257,7 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 			{
 				g_pVGuiLocalize->ConstructString_safe( wzWinReason, g_pVGuiLocalize->Find( "#Winreason_Stalemate" ), 0 );
 			}
-			break;	
+			break;
 
 			default:
 			Assert( false );
@@ -273,7 +273,7 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 			const char *pCappers = event->GetString( "cappers" );
 			int iCappers = Q_strlen( pCappers );
 			if ( iCappers > 0 )
-			{	
+			{
 				char szPlayerNames[256]="";
 				wchar_t wzPlayerNames[256]=L"";
 				wchar_t wzCapMsg[512]=L"";
@@ -303,9 +303,9 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 		int iRedTeamPrevScore = event->GetInt( "red_score_prev", 0 );
 		m_iBlueTeamScore = event->GetInt( "blue_score", 0 );
 		m_iRedTeamScore = event->GetInt( "red_score", 0 );
-		
+
 		if ( m_pTeamScorePanel )
-		{			
+		{
 			m_pTeamScorePanel->SetDialogVariable( "blueteamname", pBlueTeamName );
 			m_pTeamScorePanel->SetDialogVariable( "redteamname", pRedTeamName );
 
@@ -403,7 +403,7 @@ void CTFArenaWinPanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFArenaWinPanel::IsFlawlessVictory( void )
 {
@@ -451,7 +451,7 @@ void CTFArenaWinPanel::SetupPlayerStats( void )
 
 		int iPlayerIndex = m_vecPlayerScore[i].iPlayerIndex;
 		int iIndex = 0;
-	
+
 		if ( m_iWinningPlayerTeam != TEAM_UNASSIGNED )
 		{
 			if ( m_iWinningPlayerTeam == g_TF_PR->GetTeam( iPlayerIndex ) )
@@ -516,7 +516,7 @@ void CTFArenaWinPanel::SetupPlayerStats( void )
 		if ( bShow )
 		{
 			// set the player labels to team color
-			Color clr = g_TF_PR->GetTeamColor( g_TF_PR->GetTeam( iPlayerIndex ) );				
+			Color clr = g_TF_PR->GetTeamColor( g_TF_PR->GetTeam( iPlayerIndex ) );
 			pPlayerName->SetFgColor( clr );
 			pPlayerClass->SetFgColor( clr );
 			pPlayerDamage->SetFgColor( clr );
@@ -551,7 +551,7 @@ void CTFArenaWinPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
 
-	LoadControlSettings( "resource/UI/HudArenaWinPanel.res" );	
+	LoadControlSettings( "resource/UI/HudArenaWinPanel.res" );
 
 	m_pArenaStreakPanel = m_pTeamScorePanel->FindChildByName( "ArenaStreaksBG" );
 	m_pArenaStreakLabel = m_pTeamScorePanel->FindChildByName("ArenaStreakLabel" );
@@ -591,7 +591,7 @@ void CTFArenaWinPanel::OnTick()
 
 			if ( pImagePanelBG == NULL )
 				return;
-		
+
 			switch ( m_iWinningPlayerTeam )
 			{
 			case TF_TEAM_BLUE:

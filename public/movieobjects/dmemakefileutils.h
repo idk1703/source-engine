@@ -210,24 +210,24 @@ public:
 	void OpenEditor( _className *pClassName );	\
 	COpenEditorFuncAdapter< ThisClass, _className > m_##_className##OpenEditorAdapter
 
-	
+
 //-----------------------------------------------------------------------------
 // Interface for makefiles to build differently depending on where they are run from
 //-----------------------------------------------------------------------------
 class CDmeMakefileUtils : public CTier3AppSystem<IDmeMakefileUtils>
 {
 protected:
-	struct CompileFuncTree_t										
-	{																
-		CCompileFuncAdapterBase *m_pFirstAdapter;					
-		CompileFuncTree_t *m_pBaseAdapterTree;						
+	struct CompileFuncTree_t
+	{
+		CCompileFuncAdapterBase *m_pFirstAdapter;
+		CompileFuncTree_t *m_pBaseAdapterTree;
 	};
 
-	struct OpenEditorFuncTree_t										
-	{																
-		COpenEditorFuncAdapterBase *m_pFirstAdapter;				
-		OpenEditorFuncTree_t *m_pBaseAdapterTree;					
-	};																
+	struct OpenEditorFuncTree_t
+	{
+		COpenEditorFuncAdapterBase *m_pFirstAdapter;
+		OpenEditorFuncTree_t *m_pBaseAdapterTree;
+	};
 
 	typedef CTier3AppSystem< IDmeMakefileUtils > BaseClass;
 

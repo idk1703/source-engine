@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -46,7 +46,7 @@ BEGIN_VS_SHADER_FLAGS( Fillrate, "Help for Fillrate", SHADER_NOT_EDITABLE )
 		return 0;
 	}
 
-	
+
 	SHADER_DRAW
 	{
 		SHADOW_STATE
@@ -236,7 +236,7 @@ BEGIN_VS_SHADER_FLAGS( Fillrate, "Help for Fillrate", SHADER_NOT_EDITABLE )
 			}
 
 #else
-	
+
 			fillrate_Dynamic_Index vshIndex;
 			vshIndex.SetDOWATERFOG( pShaderAPI->GetSceneFogMode() == MATERIAL_FOG_LINEAR_BELOW_FOG_Z );
 			vshIndex.SetSKINNING( pShaderAPI->GetCurrentNumBones() > 0 );
@@ -247,5 +247,3 @@ BEGIN_VS_SHADER_FLAGS( Fillrate, "Help for Fillrate", SHADER_NOT_EDITABLE )
 		Draw();
 	}
 END_SHADER
-
-

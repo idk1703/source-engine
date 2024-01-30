@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -28,8 +28,8 @@ END_MESSAGE_MAP()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pParentWnd - 
+// Purpose:
+// Input  : pParentWnd -
 // Output : Returns TRUE on success, FALSE on failure.
 //-----------------------------------------------------------------------------
 BOOL CSelectModeDlgBar::Create(CWnd *pParentWnd)
@@ -45,8 +45,8 @@ BOOL CSelectModeDlgBar::Create(CWnd *pParentWnd)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pCmdUI - 
+// Purpose:
+// Input  : pCmdUI -
 //-----------------------------------------------------------------------------
 void CSelectModeDlgBar::UpdateControlGroups(CCmdUI *pCmdUI)
 {
@@ -64,7 +64,7 @@ void CSelectModeDlgBar::UpdateControlGroups(CCmdUI *pCmdUI)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectModeDlgBar::UpdateControlObjects(CCmdUI *pCmdUI)
 {
@@ -82,7 +82,7 @@ void CSelectModeDlgBar::UpdateControlObjects(CCmdUI *pCmdUI)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectModeDlgBar::UpdateControlSolids(CCmdUI *pCmdUI)
 {
@@ -100,7 +100,7 @@ void CSelectModeDlgBar::UpdateControlSolids(CCmdUI *pCmdUI)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectModeDlgBar::OnGroups(void)
 {
@@ -114,7 +114,7 @@ void CSelectModeDlgBar::OnGroups(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectModeDlgBar::OnObjects(void)
 {
@@ -128,7 +128,7 @@ void CSelectModeDlgBar::OnObjects(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CSelectModeDlgBar::OnSolids(void)
 {
@@ -139,4 +139,3 @@ void CSelectModeDlgBar::OnSolids(void)
 		((CButton *)GetDlgItem(IDC_SOLIDS))->SetCheck(TRUE);
 	}
 }
-

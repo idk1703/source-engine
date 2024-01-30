@@ -79,7 +79,7 @@ IMPLEMENT_SERVERCLASS_ST( CTriggerPortal, DT_TriggerPortal )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerPortal::Spawn( void )
 {
@@ -89,8 +89,8 @@ void CTriggerPortal::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  :  - 
+// Purpose:
+// Input  :  -
 //-----------------------------------------------------------------------------
 void CTriggerPortal::Activate()
 {
@@ -107,8 +107,8 @@ void CTriggerPortal::Activate()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : &inputdata - 
+// Purpose:
+// Input  : &inputdata -
 //-----------------------------------------------------------------------------
 void CTriggerPortal::InputSetRemotePortal(inputdata_t &inputdata )
 {
@@ -116,8 +116,8 @@ void CTriggerPortal::InputSetRemotePortal(inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : strRemotePortalName - 
+// Purpose:
+// Input  : strRemotePortalName -
 //-----------------------------------------------------------------------------
 void CTriggerPortal::SetRemotePortal(const char *strRemotePortalName )
 {
@@ -129,8 +129,8 @@ void CTriggerPortal::SetRemotePortal(const char *strRemotePortalName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOther - 
+// Purpose:
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CTriggerPortal::EndTouch(CBaseEntity *pOther)
 {
@@ -149,7 +149,7 @@ void CTriggerPortal::EndTouch(CBaseEntity *pOther)
 //-----------------------------------------------------------------------------
 // Purpose: Upon touching a non-filtered entity, CTriggerPortal teleports them to it's
 //			remote portal location.
-// Input  : *pOther - 
+// Input  : *pOther -
 //-----------------------------------------------------------------------------
 void CTriggerPortal::Touch( CBaseEntity *pOther )
 {
@@ -181,7 +181,7 @@ void CTriggerPortal::Touch( CBaseEntity *pOther )
 		Pickup_ForcePlayerToDropThisObject( pOther );
 
 		// de-ground this entity
-        pOther->SetGroundEntity( NULL );
+		pOther->SetGroundEntity( NULL );
 
 		// Build a this --> remote transformation
 		VMatrix matMyModelToWorld, matMyInverse;
@@ -202,14 +202,14 @@ void CTriggerPortal::Touch( CBaseEntity *pOther )
 		vNewLook	= matRemotePortalTransform.ApplyRotation( Vector( -vNewLook.x, -vNewLook.y, vNewLook.z ) );
 
 		// Reorient the physics
-	 	Vector vVelocity, vOldVelocity;
+		Vector vVelocity, vOldVelocity;
 		pOther->GetVelocity( &vOldVelocity );
 		vVelocity = matMyInverse.ApplyRotation( vOldVelocity );
 		vVelocity = matRemotePortalTransform.ApplyRotation( Vector( -vVelocity.x, -vVelocity.y, vVelocity.z ) );
 
 		QAngle qNewAngles;
 		VectorAngles( vNewLook, qNewAngles );
-		
+
 		if ( pOther->IsPlayer() )
 		{
 			((CBasePlayer*)pOther)->SnapEyeAngles(qNewAngles);
@@ -255,15 +255,15 @@ void CTriggerPortal::Touch( CBaseEntity *pOther )
 		// Teleportation caused us to hit something, deal with it.
 		if ( tr.DidHit() )
 		{
-			
+
 		}
 
-		
+
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerPortal::DisableForIncomingEntity( CBaseEntity *pEntity )
 {
@@ -279,7 +279,7 @@ void CTriggerPortal::DisableForIncomingEntity( CBaseEntity *pEntity )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTriggerPortal::DisabledThink( void )
 {
@@ -303,12 +303,12 @@ void CTriggerPortal::DisabledThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTriggerPortal::IsTouchingPortal( CBaseEntity *pEntity )
 {
 	// First, check the touchlinks. This will find non-vphysics entities touching us
-    touchlink_t *root = ( touchlink_t * )GetDataObject( TOUCHLINK );
+	touchlink_t *root = ( touchlink_t * )GetDataObject( TOUCHLINK );
 	if ( root )
 	{
 		for ( touchlink_t *link = root->nextLink; link != root; link = link->nextLink )

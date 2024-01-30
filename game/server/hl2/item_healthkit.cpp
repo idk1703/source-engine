@@ -15,9 +15,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-ConVar	sk_healthkit( "sk_healthkit","0" );		
-ConVar	sk_healthvial( "sk_healthvial","0" );		
-ConVar	sk_healthcharger( "sk_healthcharger","0" );		
+ConVar	sk_healthkit( "sk_healthkit","0" );
+ConVar	sk_healthvial( "sk_healthvial","0" );
+ConVar	sk_healthcharger( "sk_healthcharger","0" );
 
 //-----------------------------------------------------------------------------
 // Small health kit. Heals the player when picked up.
@@ -37,7 +37,7 @@ PRECACHE_REGISTER(item_healthkit);
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthKit::Spawn( void )
 {
@@ -49,7 +49,7 @@ void CHealthKit::Spawn( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHealthKit::Precache( void )
 {
@@ -60,9 +60,9 @@ void CHealthKit::Precache( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
-// Output : 
+// Purpose:
+// Input  : *pPlayer -
+// Output :
 //-----------------------------------------------------------------------------
 bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 {
@@ -84,7 +84,7 @@ bool CHealthKit::MyTouch( CBasePlayer *pPlayer )
 		}
 		else
 		{
-			UTIL_Remove(this);	
+			UTIL_Remove(this);
 		}
 
 		return true;
@@ -137,7 +137,7 @@ public:
 			}
 			else
 			{
-				UTIL_Remove(this);	
+				UTIL_Remove(this);
 			}
 
 			return true;
@@ -168,7 +168,7 @@ public:
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	virtual int	ObjectCaps( void ) { return BaseClass::ObjectCaps() | m_iCaps; }
 
-	float m_flNextCharge; 
+	float m_flNextCharge;
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
@@ -208,8 +208,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pkvd - 
+// Purpose:
+// Input  : *pkvd -
 //-----------------------------------------------------------------------------
 bool CWallHealth::KeyValue(  const char *szKeyName, const char *szValue )
 {
@@ -232,7 +232,7 @@ bool CWallHealth::KeyValue(  const char *szKeyName, const char *szValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Spawn(void)
 {
@@ -245,18 +245,18 @@ void CWallHealth::Spawn(void)
 
 	m_iJuice = sk_healthcharger.GetFloat();
 
-	m_nState = 0;	
-	
+	m_nState = 0;
+
 	m_iCaps	= FCAP_CONTINUOUS_USE;
 
 	CreateVPhysics();
 }
 
-int CWallHealth::DrawDebugTextOverlays(void) 
+int CWallHealth::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"Charge left: %i", m_iJuice );
@@ -276,7 +276,7 @@ bool CWallHealth::CreateVPhysics(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Precache(void)
 {
@@ -288,14 +288,14 @@ void CWallHealth::Precache(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	// Make sure that we have a caller
 	if (!pActivator)
 		return;
@@ -312,7 +312,7 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 	// if there is no juice left, turn it off
 	if (m_iJuice <= 0)
 	{
-		m_nState = 1;			
+		m_nState = 1;
 		Off();
 	}
 
@@ -383,19 +383,19 @@ void CWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Recharge(void)
 {
 	EmitSound( "WallHealth.Recharge" );
 	m_iJuice = sk_healthcharger.GetFloat();
-	m_nState = 0;			
+	m_nState = 0;
 	SetThink( NULL );
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWallHealth::Off(void)
 {
@@ -432,7 +432,7 @@ public:
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	virtual int	ObjectCaps( void ) { return BaseClass::ObjectCaps() | m_iCaps; }
 
-	float m_flNextCharge; 
+	float m_flNextCharge;
 	int		m_iReactivate ; // DeathMatch Delay until reactvated
 	int		m_iJuice;
 	int		m_iOn;			// 0 = off, 1 = startup, 2 = going
@@ -481,8 +481,8 @@ END_DATADESC()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pkvd - 
+// Purpose:
+// Input  : *pkvd -
 //-----------------------------------------------------------------------------
 bool CNewWallHealth::KeyValue(  const char *szKeyName, const char *szValue )
 {
@@ -505,7 +505,7 @@ bool CNewWallHealth::KeyValue(  const char *szKeyName, const char *szValue )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNewWallHealth::Spawn(void)
 {
@@ -522,8 +522,8 @@ void CNewWallHealth::Spawn(void)
 
 	m_iJuice = sk_healthcharger.GetFloat();
 
-	m_nState = 0;	
-	
+	m_nState = 0;
+
 	m_iReactivate = 0;
 	m_iCaps	= FCAP_CONTINUOUS_USE;
 
@@ -533,11 +533,11 @@ void CNewWallHealth::Spawn(void)
 	SetCycle( 1.0f - ( m_flJuice /  sk_healthcharger.GetFloat() ) );
 }
 
-int CNewWallHealth::DrawDebugTextOverlays(void) 
+int CNewWallHealth::DrawDebugTextOverlays(void)
 {
 	int text_offset = BaseClass::DrawDebugTextOverlays();
 
-	if (m_debugOverlays & OVERLAY_TEXT_BIT) 
+	if (m_debugOverlays & OVERLAY_TEXT_BIT)
 	{
 		char tempstr[512];
 		Q_snprintf(tempstr,sizeof(tempstr),"Charge left: %i", m_iJuice );
@@ -556,7 +556,7 @@ bool CNewWallHealth::CreateVPhysics(void)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNewWallHealth::Precache(void)
 {
@@ -573,7 +573,7 @@ void CNewWallHealth::StudioFrameAdvance( void )
 	m_flPlaybackRate = 0;
 
 	float flMaxJuice = sk_healthcharger.GetFloat();
-	
+
 	SetCycle( 1.0f - (float)( m_flJuice / flMaxJuice ) );
 //	Msg( "Cycle: %f - Juice: %d - m_flJuice :%f - Interval: %f\n", (float)GetCycle(), (int)m_iJuice, (float)m_flJuice, GetAnimTimeInterval() );
 
@@ -589,14 +589,14 @@ void CNewWallHealth::StudioFrameAdvance( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pActivator - 
-//			*pCaller - 
-//			useType - 
-//			value - 
+// Purpose:
+// Input  : *pActivator -
+//			*pCaller -
+//			useType -
+//			value -
 //-----------------------------------------------------------------------------
 void CNewWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
-{ 
+{
 	// Make sure that we have a caller
 	if (!pActivator)
 		return;
@@ -622,7 +622,7 @@ void CNewWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 	if (m_iJuice <= 0)
 	{
 		ResetSequence( LookupSequence( "emptyclick" ) );
-		m_nState = 1;			
+		m_nState = 1;
 		Off();
 	}
 
@@ -648,7 +648,7 @@ void CNewWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 
 		// Make the user re-use me to get started drawing health.
 		m_iCaps = FCAP_IMPULSE_USE;
-		
+
 		EmitSound( "WallHealth.Deny" );
 		return;
 	}
@@ -694,7 +694,7 @@ void CNewWallHealth::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNewWallHealth::Recharge(void)
 {
@@ -712,7 +712,7 @@ void CNewWallHealth::Recharge(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CNewWallHealth::Off(void)
 {
@@ -740,4 +740,3 @@ void CNewWallHealth::Off(void)
 			SetThink( NULL );
 	}
 }
-

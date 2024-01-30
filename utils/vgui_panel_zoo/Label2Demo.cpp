@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -33,7 +33,7 @@ class Label2Demo: public DemoPage
 		~Label2Demo();
 
 		virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
-		
+
 	private:
 		Label *m_pLabel;
 		TextImage *m_pEndText;
@@ -84,5 +84,3 @@ Panel* Label2Demo_Create(Panel *parent)
 {
 	return new Label2Demo(parent, "Label2Demo");
 }
-
-

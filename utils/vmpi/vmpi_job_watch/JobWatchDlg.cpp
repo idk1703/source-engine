@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -176,13 +176,13 @@ bool ReadStringFromFile( FILE *fp, char *pStr, int strSize )
 }
 
 
-BOOL CJobWatchDlg::OnInitDialog() 
+BOOL CJobWatchDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
 
 	m_Workers.SetExtendedStyle( LVS_EX_FULLROWSELECT );
-	
+
 	// Setup the headers.
 	for ( int i=0; i < ARRAYSIZE( g_ColumnInfos ); i++ )
 	{
@@ -214,7 +214,7 @@ BOOL CJobWatchDlg::OnInitDialog()
 	{
 		char errString[512];
 
-		// If they don't specify the DB info, get it from where 
+		// If they don't specify the DB info, get it from where
 		const char *pFilename = "dbinfo_job_search.txt";
 		FILE *fp = fopen( pFilename, "rt" );
 		if ( !fp )
@@ -226,8 +226,8 @@ BOOL CJobWatchDlg::OnInitDialog()
 		}
 
 		if ( !ReadStringFromFile( fp, hostName, sizeof( hostName ) ) ||
-			 !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) || 
-			 !ReadStringFromFile( fp, userName, sizeof( userName ) ) 
+			 !ReadStringFromFile( fp, dbName, sizeof( dbName ) ) ||
+			 !ReadStringFromFile( fp, userName, sizeof( userName ) )
 			 )
 		{
 			fclose( fp );
@@ -250,7 +250,7 @@ BOOL CJobWatchDlg::OnInitDialog()
 	IMySQL *pSQL;
 	if ( !Sys_LoadInterface( "mysql_wrapper", MYSQL_WRAPPER_VERSION_NAME, &m_hMySQLDLL, (void**)&pSQL ) )
 		return false;
-	
+
 	if ( !pSQL->InitMySQL( pDBName, pHostName, pUserName ) )
 	{
 		pSQL->Release();
@@ -269,8 +269,8 @@ BOOL CJobWatchDlg::OnInitDialog()
 		EndDialog( 0 );
 		return FALSE;
 	}
-	
-	
+
+
 	memset( m_bQueriesInProgress, 0, sizeof( m_bQueriesInProgress ) );
 
 
@@ -292,7 +292,7 @@ BOOL CJobWatchDlg::OnInitDialog()
 
 	m_AnchorMgr.AddAnchor( this, GetDlgItem( IDC_GRAPHS_PANEL ), ANCHOR_WIDTH_PERCENT, ANCHOR_TOP, ANCHOR_RIGHT, ANCHOR_HEIGHT_PERCENT );
 	m_AnchorMgr.AddAnchor( this, &m_GraphControl, ANCHOR_WIDTH_PERCENT, ANCHOR_TOP, ANCHOR_RIGHT, ANCHOR_HEIGHT_PERCENT );
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -340,7 +340,7 @@ void CJobWatchDlg::UpdateWorkersList()
 	while ( ( nIndex = m_Workers.GetNextItem( nIndex, LVNI_ALL ) ) != -1 )
 	{
 		CWorkerInfo *pInfo = (CWorkerInfo*)m_Workers.GetItemData( nIndex );
-	
+
 		char *pConnectedStr = pInfo->m_bConnected ? "yes" : "no";
 		m_Workers.SetItemText( nIndex, COLUMN_CONNECTED, pConnectedStr );
 
@@ -352,7 +352,7 @@ void CJobWatchDlg::UpdateWorkersList()
 
 		// Current stage.
 		SetWorkerListItemInt( nIndex, COLUMN_WORK_UNITS_DONE, pInfo->m_nWorkUnitsDone );
-		
+
 		m_Workers.SetItemText( nIndex, COLUMN_CURRENT_STAGE, pInfo->m_CurrentStage );
 
 		SetWorkerListItemInt( nIndex, COLUMN_THREAD0_WU, pInfo->m_ThreadWUs[0] );
@@ -378,7 +378,7 @@ bool CJobWatchDlg::GetCurJobWorkerID( unsigned long &id )
 }
 
 
-void CJobWatchDlg::OnSelChangeWorkers() 
+void CJobWatchDlg::OnSelChangeWorkers()
 {
 	// Clear the text output and invalidate any old queries for text.
 	int nLen = m_TextOutput.SendMessage( EM_GETLIMITTEXT, 0, 0 );
@@ -409,21 +409,21 @@ void CJobWatchDlg::OnIdle()
 	{
 		m_LastQueryTime = curTime;
 		char query[2048];
-		
+
 		unsigned long jobWorkerID;
 		bool bJobWorkerIDValid = GetCurJobWorkerID( jobWorkerID );
-		
+
 		if ( !m_bQueriesInProgress[QUERY_TEXT] && bJobWorkerIDValid )
 		{
 			Q_snprintf( query, sizeof( query ), "select * from text_messages where JobWorkerID=%lu and MessageIndex >= %lu", jobWorkerID, m_CurMessageIndex );
-			m_pSQL->Execute( query, (void*)(QUERY_TEXT | (m_CurWorkerTextToken << 16)) );	
+			m_pSQL->Execute( query, (void*)(QUERY_TEXT | (m_CurWorkerTextToken << 16)) );
 			m_bQueriesInProgress[QUERY_TEXT] = true;
 		}
 
 		if ( !m_bQueriesInProgress[QUERY_GRAPH] && bJobWorkerIDValid )
 		{
 			Q_snprintf( query, sizeof( query ), "select * from graph_entry where JobWorkerID=%lu", jobWorkerID );
-			m_pSQL->Execute( query, (void*)QUERY_GRAPH );	
+			m_pSQL->Execute( query, (void*)QUERY_GRAPH );
 			m_bQueriesInProgress[QUERY_GRAPH] = true;
 		}
 
@@ -433,7 +433,7 @@ void CJobWatchDlg::OnIdle()
 				"RunningTimeMS, CurrentStage, Thread0WU, Thread1WU, Thread2WU, Thread3WU, IsMaster, MachineName "
 				" from job_worker_start where JobID=%lu", m_JobID );
 
-			m_pSQL->Execute( query, (void*)QUERY_WORKER_STATS );	
+			m_pSQL->Execute( query, (void*)QUERY_WORKER_STATS );
 			m_bQueriesInProgress[QUERY_WORKER_STATS] = true;
 		}
 	}
@@ -463,7 +463,7 @@ void CJobWatchDlg::OnIdle()
 			{
 				ProcessQueryResults_WorkerStats( results.m_pResults );
 			}
-			
+
 			results.m_pResults->Release();
 		}
 
@@ -493,7 +493,7 @@ void CJobWatchDlg::ProcessQueryResults_WorkerStats( IMySQLRowSet *pSet )
 		CWorkerInfo *pInfo = FindWorkerByID( workerID );
 		if ( pInfo )
 		{
-			if ( workerState != pInfo->m_bConnected || 
+			if ( workerState != pInfo->m_bConnected ||
 				nWorkUnits != pInfo->m_nWorkUnitsDone ||
 				runningTimeMS != pInfo->m_RunningTimeMS ||
 				stricmp( pCurrentStage, pInfo->m_CurrentStage ) != 0 ||
@@ -568,7 +568,7 @@ void CJobWatchDlg::ProcessQueryResults_Text( IMySQLRowSet *pSet )
 
 void CJobWatchDlg::ProcessQueryResults_Graph( IMySQLRowSet *pSet )
 {
-	int iMSTime = pSet->GetColumnIndex( "MSSinceJobStart" );	
+	int iMSTime = pSet->GetColumnIndex( "MSSinceJobStart" );
 	int iBytesSent = pSet->GetColumnIndex( "BytesSent" );
 	int iBytesReceived = pSet->GetColumnIndex( "BytesReceived" );
 
@@ -590,22 +590,22 @@ void CJobWatchDlg::ProcessQueryResults_Graph( IMySQLRowSet *pSet )
 	if ( highest > m_CurGraphTime )
 	{
 		m_CurGraphTime = highest;
-		
+
 		m_GraphControl.Clear();
 		m_GraphControl.Fill( entries );
 	}
 }
- 
 
-void CJobWatchDlg::OnSize(UINT nType, int cx, int cy) 
+
+void CJobWatchDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CIdleDialog::OnSize(nType, cx, cy);
-	
-	m_AnchorMgr.UpdateAnchors( this );	
+
+	m_AnchorMgr.UpdateAnchors( this );
 }
 
 
-BOOL CJobWatchDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult) 
+BOOL CJobWatchDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
 	NMHDR *pHdr = (NMHDR*)lParam;
 	if ( pHdr->idFrom == IDC_WORKERS )
@@ -623,7 +623,7 @@ BOOL CJobWatchDlg::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	return CIdleDialog::OnNotify(wParam, lParam, pResult);
 }
 
-void CJobWatchDlg::OnOdstatechangedWorkers(NMHDR* pNMHDR, LRESULT* pResult) 
+void CJobWatchDlg::OnOdstatechangedWorkers(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLVODSTATECHANGE* pStateChanged = (NMLVODSTATECHANGE*)pNMHDR;
 
@@ -631,11 +631,11 @@ void CJobWatchDlg::OnOdstatechangedWorkers(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		OnSelChangeWorkers();
 	}
-	
+
 	*pResult = 0;
 }
 
-void CJobWatchDlg::OnItemchangedWorkers(NMHDR* pNMHDR, LRESULT* pResult) 
+void CJobWatchDlg::OnItemchangedWorkers(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 
@@ -643,6 +643,6 @@ void CJobWatchDlg::OnItemchangedWorkers(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		OnSelChangeWorkers();
 	}
-	
+
 	*pResult = 0;
 }

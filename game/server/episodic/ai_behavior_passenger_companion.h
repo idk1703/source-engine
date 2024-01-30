@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -69,7 +69,7 @@ public:
 		NEXT_TASK,
 
 		// Conditions
-		 
+
 		COND_PASSENGER_CAN_LEAVE_STUCK_VEHICLE = BaseClass::NEXT_CONDITION,
 		COND_PASSENGER_WARN_OVERTURNED,
 		COND_PASSENGER_WARN_COLLISION,
@@ -153,10 +153,10 @@ private:
 
 protected:
 	virtual int	SelectTransitionSchedule( void );
-	
+
 	void	ExtendFidgetDelay( float flDuration );
 	bool	CanPlayJostle( bool bLargeJostle );
-	
+
 	float	m_flEntraceUpdateTime;
 	float	m_flNextEnterAttempt;
 	float	m_flNextFidgetTime;

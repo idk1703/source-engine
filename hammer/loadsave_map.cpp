@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -60,8 +60,8 @@ static UINT uMapVersion = 0;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : buf - 
+// Purpose:
+// Input  : buf -
 //-----------------------------------------------------------------------------
 static void StuffLine(char * buf)
 {
@@ -72,9 +72,9 @@ static void StuffLine(char * buf)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			buf - 
+// Purpose:
+// Input  : file -
+//			buf -
 //-----------------------------------------------------------------------------
 static void GetLine(std::fstream& file, char *buf)
 {
@@ -111,10 +111,10 @@ static void GetLine(std::fstream& file, char *buf)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
-//			file - 
-//			pIntersecting - 
+// Purpose:
+// Input  : pObject -
+//			file -
+//			pIntersecting -
 // Output : int
 //-----------------------------------------------------------------------------
 static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox *pIntersecting = NULL)
@@ -128,7 +128,7 @@ static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox 
 	{
 		return fileOk;	// not an error - return ok
 	}
-	
+
 	//
 	// If we are only saving objects within a particular bounding box and this object isn't, don't save it.
 	//
@@ -137,7 +137,7 @@ static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox 
 		return fileOk;
 	}
 
-	
+
 	const CMapObjectList *pChildren = pObject->GetChildren();
 	FOR_EACH_OBJ( *pChildren, pos )
 	{
@@ -171,10 +171,10 @@ static int SaveSolidChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox 
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pObject - 
-//			file - 
-//			pIntersecting - 
+// Purpose:
+// Input  : pObject -
+//			file -
+//			pIntersecting -
 // Output : int
 //-----------------------------------------------------------------------------
 static int SaveEntityChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox *pIntersecting)
@@ -190,8 +190,8 @@ static int SaveEntityChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox
 	{
 		return fileOk;
 	}
-	
-	
+
+
 	const CMapObjectList *pChildren = pObject->GetChildren();
 	FOR_EACH_OBJ( *pChildren, pos )
 	{
@@ -226,9 +226,9 @@ static int SaveEntityChildrenOf(CMapClass *pObject, std::fstream& file, BoundBox
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pObject - 
-//			file - 
+// Purpose:
+// Input  : *pObject -
+//			file -
 // Output : int
 //-----------------------------------------------------------------------------
 static int ReadSolids(CMapClass *pObject, std::fstream& file)
@@ -270,8 +270,8 @@ static int ReadSolids(CMapClass *pObject, std::fstream& file)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
+// Purpose:
+// Input  : file -
 // Output : int
 //-----------------------------------------------------------------------------
 static int PeekChar(std::fstream& file)
@@ -306,22 +306,22 @@ void SetMapFormat(MAPFORMAT mf)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 {
-	// no info stored in MAPs .. 
+	// no info stored in MAPs ..
 	return fileOk;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
@@ -399,14 +399,14 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 			plane.planepts[0][0], plane.planepts[0][1], plane.planepts[0][2],
 			plane.planepts[1][0], plane.planepts[1][1], plane.planepts[1][2],
 			plane.planepts[2][0], plane.planepts[2][1], plane.planepts[2][2],
-	
+
 			pszTexture,
 
 			(double)texture.UAxis[0], (double)texture.UAxis[1], (double)texture.UAxis[2], (double)texture.UAxis[3],
 			(double)texture.VAxis[0], (double)texture.VAxis[1], (double)texture.VAxis[2], (double)texture.VAxis[3],
 
-			(double)texture.rotate, 
-			(double)texture.scale[0], 
+			(double)texture.rotate,
+			(double)texture.scale[0],
 			(double)texture.scale[1]);
 
 		file << szBuf << ENDLINE;
@@ -431,8 +431,8 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 		int nDummy;
 		int nRead;
 
-        if( uMapVersion >= 340 )
-        {
+		if( uMapVersion >= 340 )
+		{
 			COMPILE_TIME_ASSERT( ARRAYSIZE(szTexName) == 128 );
 			nRead = sscanf(szBuf,
 				"( %f %f %f ) ( %f %f %f ) ( %f %f %f ) "
@@ -445,16 +445,16 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 				&plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2],
 				&plane.planepts[1][0], &plane.planepts[1][1], &plane.planepts[1][2],
 				&plane.planepts[2][0], &plane.planepts[2][1], &plane.planepts[2][2],
-		
+
 				szTexName,
 
 				&texture.UAxis[0], &texture.UAxis[1], &texture.UAxis[2], &texture.UAxis[3],
 				&texture.VAxis[0], &texture.VAxis[1], &texture.VAxis[2], &texture.VAxis[3],
 
-				&texture.rotate, 
-				&texture.scale[0], 
+				&texture.rotate,
+				&texture.scale[0],
 				&texture.scale[1],
-				
+
 				&q2contents,
 				&q2surface,
 				&nLightmapScale);
@@ -477,9 +477,9 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 				}
 			}
 
-            //
-            // very cheesy HACK!!! -- this will be better when we have chunks
-            //
+			//
+			// very cheesy HACK!!! -- this will be better when we have chunks
+			//
 			if( uMapVersion <= 350 )
 			{
 				if( ( file.peek() != '(' ) && ( file.peek() != '}' ) )
@@ -491,7 +491,7 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 					pDisp->SerializedLoadMAP( file, this, uMapVersion );
 				}
 			}
-        }
+		}
 		else if (uMapVersion >= 220 )
 		{
 			COMPILE_TIME_ASSERT( ARRAYSIZE(szTexName) == 128 );
@@ -506,16 +506,16 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 				&plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2],
 				&plane.planepts[1][0], &plane.planepts[1][1], &plane.planepts[1][2],
 				&plane.planepts[2][0], &plane.planepts[2][1], &plane.planepts[2][2],
-		
+
 				szTexName,
 
 				&texture.UAxis[0], &texture.UAxis[1], &texture.UAxis[2], &texture.UAxis[3],
 				&texture.VAxis[0], &texture.VAxis[1], &texture.VAxis[2], &texture.VAxis[3],
 
-				&texture.rotate, 
-				&texture.scale[0], 
+				&texture.rotate,
+				&texture.scale[0],
 				&texture.scale[1],
-				
+
 				&q2contents,
 				&q2surface,
 				&nDummy);		// Pre-340 didn't have lightmap scale.
@@ -545,15 +545,15 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 				&plane.planepts[0][0], &plane.planepts[0][1], &plane.planepts[0][2],
 				&plane.planepts[1][0], &plane.planepts[1][1], &plane.planepts[1][2],
 				&plane.planepts[2][0], &plane.planepts[2][1], &plane.planepts[2][2],
-		
+
 				szTexName,
 
 				&texture.UAxis[3],
 				&texture.VAxis[3],
-				&texture.rotate, 
-				&texture.scale[0], 
+				&texture.rotate,
+				&texture.scale[0],
 				&texture.scale[1],
-				
+
 				&q2contents,
 				&q2surface,
 				&nDummy);		// Pre-340 didn't have lightmap scale.
@@ -594,9 +594,9 @@ int CMapFace::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int MDkeyvalue::SerializeMAP(std::fstream& file, BOOL fIsStoring)
@@ -647,9 +647,9 @@ int MDkeyvalue::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapSolid::SerializeMAP(std::fstream& file, BOOL fIsStoring)
@@ -733,9 +733,9 @@ int CMapSolid::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
@@ -746,7 +746,7 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 	if (fIsStoring)
 	{
 		//
-		// If it's a solidentity but it doesn't have any solids, 
+		// If it's a solidentity but it doesn't have any solids,
 		// don't save it.
 		//
 		if (!IsPlaceholder() && !m_Children.Count())
@@ -806,9 +806,9 @@ int CMapEntity::SerializeMAP(std::fstream &file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
 // Output : int
 //-----------------------------------------------------------------------------
 int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
@@ -829,7 +829,7 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 					// fileDone means the keyvalue was not loaded
 					break;
 				}
-		
+
 				if (!strcmp(newkv.szKey, "classname"))
 				{
 					m_KeyValues.SetValue(newkv.szKey, newkv.szValue);
@@ -845,7 +845,7 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 					//
 					m_KeyValues.SetValue(newkv.szKey, newkv.szValue);
 				}
-			}	
+			}
 		}
 	}
 	else
@@ -907,7 +907,7 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 					//
 					// If the variable is not present in this object, write out the default value.
 					//
-					if (p == NULL) 
+					if (p == NULL)
 					{
 						pKey = &tmpkv;
 						pVar->ResetDefaults();
@@ -935,10 +935,10 @@ int CEditGameClass::SerializeMAP(std::fstream& file, BOOL fIsStoring)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			fIsStoring - 
-//			pIntersecting - 
+// Purpose:
+// Input  : file -
+//			fIsStoring -
+//			pIntersecting -
 // Output : int
 //-----------------------------------------------------------------------------
 int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pIntersecting)
@@ -950,7 +950,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 	nInvalidSolids = 0;
 
 	// load/save a world
-	if (fIsStoring)	
+	if (fIsStoring)
 	{
 		file << "{" << ENDLINE;
 
@@ -1071,7 +1071,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 		pProgDlg = new CProgressDlg;
 		pProgDlg->Create();
 		pProgDlg->SetStep(1);
-		
+
 		CString caption;
 		caption.LoadString(IDS_LOADINGFILE);
 		pProgDlg->SetWindowText(caption);
@@ -1125,7 +1125,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 			pEntity = new CMapEntity;
 			iRvl = pEntity->SerializeMAP(file, fIsStoring);
 			AddChild(pEntity);
-			
+
 			if (iRvl == fileError)
 			{
 				bErrors = TRUE;
@@ -1142,7 +1142,7 @@ int CMapWorld::SerializeMAP(std::fstream &file, BOOL fIsStoring, BoundBox *pInte
 			{
 				CString str;
 				str.Format("For your information, %d solids were not loaded\n"
-					"due to errors in the file.", nInvalidSolids); 
+					"due to errors in the file.", nInvalidSolids);
 				AfxMessageBox(str);
 			}
 			else if (AfxMessageBox("There was a problem loading the MAP file. Do you\n"
@@ -1197,4 +1197,3 @@ FatalError:
 
 	return -1;
 }
-

@@ -67,7 +67,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( tf_objective_resource, CTFObjectiveResource );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFObjectiveResource::CTFObjectiveResource()
 {
@@ -89,7 +89,7 @@ CTFObjectiveResource::CTFObjectiveResource()
 	{
 		m_nMannVsMachineWaveClassCounts.GetForModify( i ) = 0;
 	}
-	
+
 	for ( i = 0 ; i < m_nMannVsMachineWaveClassCounts2.Count() ; ++i )
 	{
 		m_nMannVsMachineWaveClassCounts2.GetForModify( i ) = 0;
@@ -129,14 +129,14 @@ CTFObjectiveResource::CTFObjectiveResource()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFObjectiveResource::~CTFObjectiveResource()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::Spawn( void )
 {
@@ -144,7 +144,7 @@ void CTFObjectiveResource::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::ClearMannVsMachineWaveClassFlags( void )
 {
@@ -161,7 +161,7 @@ void CTFObjectiveResource::ClearMannVsMachineWaveClassFlags( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::AddMannVsMachineWaveClassFlags( int nIndex, unsigned int iFlags )
 {
@@ -170,7 +170,7 @@ void CTFObjectiveResource::AddMannVsMachineWaveClassFlags( int nIndex, unsigned 
 		m_nMannVsMachineWaveClassFlags.GetForModify( nIndex ) |= iFlags;
 		return;
 	}
-	nIndex -= m_nMannVsMachineWaveClassFlags.Count(); 
+	nIndex -= m_nMannVsMachineWaveClassFlags.Count();
 
 	if ( nIndex < m_nMannVsMachineWaveClassFlags2.Count() )
 	{
@@ -179,10 +179,10 @@ void CTFObjectiveResource::AddMannVsMachineWaveClassFlags( int nIndex, unsigned 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CTFObjectiveResource::GetMannVsMachineWaveClassCount( int nIndex )
-{ 
+{
 	if ( nIndex < m_nMannVsMachineWaveClassCounts.Count() )
 	{
 		return m_nMannVsMachineWaveClassCounts[ nIndex ];
@@ -198,7 +198,7 @@ int CTFObjectiveResource::GetMannVsMachineWaveClassCount( int nIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::SetMannVsMachineWaveClassActive( string_t iszClassIconName, bool bActive /*= true*/ )
 {
@@ -222,7 +222,7 @@ void CTFObjectiveResource::SetMannVsMachineWaveClassActive( string_t iszClassIco
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::SetMannVsMachineWaveClassCount( int nIndex, int nCount )
 {
@@ -240,7 +240,7 @@ void CTFObjectiveResource::SetMannVsMachineWaveClassCount( int nIndex, int nCoun
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::SetMannVsMachineWaveClassName( int nIndex, string_t iszClassIconName )
 {
@@ -258,7 +258,7 @@ void CTFObjectiveResource::SetMannVsMachineWaveClassName( int nIndex, string_t i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::IncrementMannVsMachineWaveClassCount( string_t iszClassIconName, unsigned int iFlags )
 {
@@ -295,7 +295,7 @@ void CTFObjectiveResource::IncrementMannVsMachineWaveClassCount( string_t iszCla
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::DecrementMannVsMachineWaveClassCount( string_t iszClassIconName, unsigned int iFlags )
 {
@@ -342,7 +342,7 @@ void CTFObjectiveResource::DecrementMannVsMachineWaveClassCount( string_t iszCla
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::IncrementTeleporterCount()
 {
@@ -351,7 +351,7 @@ void CTFObjectiveResource::IncrementTeleporterCount()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFObjectiveResource::DecrementTeleporterCount()
 {

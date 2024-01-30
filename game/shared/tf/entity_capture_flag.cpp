@@ -68,7 +68,7 @@ enum
 
 enum
 {
-	INVADE_SCORING_TEAM_SCORE = 0,		
+	INVADE_SCORING_TEAM_SCORE = 0,
 	INVADE_SCORING_TEAM_CAPTURE_COUNT,
 };
 
@@ -86,7 +86,7 @@ static void RecvProxy_IsDisabled( const CRecvProxyData *pData, void *pStruct, vo
 
 	if ( pFlag )
 	{
-		pFlag->SetDisabled( bIsDisabled ); 
+		pFlag->SetDisabled( bIsDisabled );
 	}
 }
 
@@ -97,7 +97,7 @@ static void RecvProxy_IsVisibleWhenDisabled( const CRecvProxyData *pData, void *
 
 	if ( pFlag )
 	{
-		pFlag->SetVisibleWhenDisabled( bVisible ); 
+		pFlag->SetVisibleWhenDisabled( bVisible );
 	}
 }
 
@@ -238,7 +238,7 @@ CCaptureFlag::CCaptureFlag()
 	m_nReturnTime = 60;
 	m_hInitialPlayer = NULL;
 	m_hInitialParent = NULL;
-	m_vecOffset.Init( 0, 0, 0 ); 
+	m_vecOffset.Init( 0, 0, 0 );
 
 	m_iszModel = NULL_STRING;
 	m_iszHudIcon = NULL_STRING;
@@ -252,7 +252,7 @@ CCaptureFlag::CCaptureFlag()
 	{
 		m_flNextTeamSoundTime[i] = 0.f;
 	}
-#endif	
+#endif
 
 	m_nNeutralType = INVADE_NEUTRAL_TYPE_DEFAULT;
 	m_nScoringType = INVADE_SCORING_TEAM_SCORE;
@@ -260,7 +260,7 @@ CCaptureFlag::CCaptureFlag()
 	m_bVisibleWhenDisabled = false;
 	m_bUseShotClockMode = false;
 	m_bGlowEnabled = true;
-		
+
 	UseClientSideAnimation();
 
 	m_szModel.GetForModify()[ 0 ] = '\0';
@@ -310,9 +310,9 @@ const char *CCaptureFlag::GetFlagModel( void )
 
 void CCaptureFlag::GetHudIcon( int nTeam, char *pchName, int nBuffSize )
 {
-	V_snprintf( pchName, nBuffSize, "%s_%s", 
-				( ( m_szHudIcon[ 0 ] != '\0' ) ? ( m_szHudIcon.Get() ) : ( TF_FLAG_ICON ) ), 
-				( ( nTeam == TF_TEAM_BLUE ) ? ( "blue" ) : ( "red" ) ) );	
+	V_snprintf( pchName, nBuffSize, "%s_%s",
+				( ( m_szHudIcon[ 0 ] != '\0' ) ? ( m_szHudIcon.Get() ) : ( TF_FLAG_ICON ) ),
+				( ( nTeam == TF_TEAM_BLUE ) ? ( "blue" ) : ( "red" ) ) );
 }
 
 const char *CCaptureFlag::GetPaperEffect( void )
@@ -327,8 +327,8 @@ const char *CCaptureFlag::GetPaperEffect( void )
 
 void CCaptureFlag::GetTrailEffect( int nTeam, char *pchName, int nBuffSize )
 {
-	V_snprintf( pchName, nBuffSize, "effects/%s_%s.vmt", 
-				( ( m_szTrailEffect[ 0 ] != '\0' ) ? ( m_szTrailEffect.Get() ) : ( TF_FLAG_TRAIL ) ), 
+	V_snprintf( pchName, nBuffSize, "effects/%s_%s.vmt",
+				( ( m_szTrailEffect[ 0 ] != '\0' ) ? ( m_szTrailEffect.Get() ) : ( TF_FLAG_TRAIL ) ),
 				( ( nTeam == TF_TEAM_RED ) ? ( "red" ) : ( "blu" ) ) );
 }
 
@@ -358,8 +358,8 @@ void CCaptureFlag::Precache( void )
 	PrecacheScriptSound( TF_AD_TEAM_DROPPED );
 	PrecacheScriptSound( TF_AD_TEAM_CAPTURED );
 	PrecacheScriptSound( TF_AD_TEAM_RETURNED );
-	
- 	PrecacheScriptSound( TF_MVM_AD_ENEMY_STOLEN );
+
+	PrecacheScriptSound( TF_MVM_AD_ENEMY_STOLEN );
 	PrecacheScriptSound( TF_MVM_AD_ENEMY_DROPPED );
 	PrecacheScriptSound( TF_MVM_AD_ENEMY_CAPTURED );
 	PrecacheScriptSound( TF_MVM_AD_ENEMY_RETURNED );
@@ -413,7 +413,7 @@ void CCaptureFlag::Precache( void )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCaptureFlag::ShouldDraw()
 {
@@ -430,15 +430,15 @@ bool CCaptureFlag::ShouldDraw()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCaptureFlag::IsVisibleToTargetID() const
-{ 
+{
 	return !IsDisabled() && GetPointValue() > 0 && const_cast<CCaptureFlag*>( this )->ShouldDraw();
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -447,7 +447,7 @@ void CCaptureFlag::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -476,7 +476,7 @@ void CCaptureFlag::OnDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::CreateSiren( void )
 {
@@ -505,7 +505,7 @@ void CCaptureFlag::DestroySiren( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::UpdateGlowEffect( void )
 {
@@ -532,7 +532,7 @@ void CCaptureFlag::UpdateGlowEffect( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CCaptureFlag::ShouldHideGlowEffect( void )
 {
@@ -545,7 +545,7 @@ bool CCaptureFlag::ShouldHideGlowEffect( void )
 	{
 		return false;
 	}
-	
+
 	if ( m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION && tf_rd_flag_ui_mode.GetInt() )
 		return true;
 
@@ -611,7 +611,7 @@ void CCaptureFlag::Spawn( void )
 
 	// Set the flag solid and the size for touching.
 	SetSolid( SOLID_BBOX );
-#ifdef STAGING_ONLY	
+#ifdef STAGING_ONLY
 	SetSolidFlags( FSOLID_TRIGGER );
 	SetSize( vec3_origin, vec3_origin );
 	SetCollisionGroup( COLLISION_GROUP_DEBRIS );
@@ -705,7 +705,7 @@ void CCaptureFlag::UpdateOnRemove( void )
 #ifdef GAME_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::PlaySound( IRecipientFilter& filter, const char *pszString, int iTeam /*= TEAM_ANY */ )
 {
@@ -747,39 +747,39 @@ void CCaptureFlag::PlaySound( IRecipientFilter& filter, const char *pszString, i
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Gets the return time for first down mode, if enabled and supported, otherwise 
+// Purpose: Gets the return time for first down mode, if enabled and supported, otherwise
 // simply returns the passed in nReturnTime.
 //-----------------------------------------------------------------------------
 int CCaptureFlag::GetReturnTimeShotClockMode(int nStartReturnTime)
 {
-    int nReturnTime = nStartReturnTime;
+	int nReturnTime = nStartReturnTime;
 
-    // Only enable this for specific modes.
-    if (IsFlagShotClockModePossible())
-    {
-        if (m_bUseShotClockMode)
-        {
+	// Only enable this for specific modes.
+	if (IsFlagShotClockModePossible())
+	{
+		if (m_bUseShotClockMode)
+		{
 			// When the game is in a standoff (both flags are stolen and poisonous), return when next dropped
 			// This makes it easier to resolve the standoff and continue the game
 			if ( TFGameRules() && TFGameRules()->IsPowerupMode() && TFGameRules()->PowerupModeFlagStandoffActive() )
 			{
 				return 0;
-	        }
+			}
 
 			float flCreditTime = (gpGlobals->curtime - m_flLastPickupTime) * tf_flag_return_time_credit_factor.GetFloat()
-                               + m_flLastResetDuration;
-            int nPossibleCreditTime = RoundFloatToInt(flCreditTime);
-            int nActualCreditTime = MAX(0, nPossibleCreditTime);
-            nReturnTime = MIN(nStartReturnTime, nActualCreditTime);
-        }
-    }
+								+ m_flLastResetDuration;
+			int nPossibleCreditTime = RoundFloatToInt(flCreditTime);
+			int nActualCreditTime = MAX(0, nPossibleCreditTime);
+			nReturnTime = MIN(nStartReturnTime, nActualCreditTime);
+		}
+	}
 
-    return nReturnTime;
+	return nReturnTime;
 }
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCaptureFlag &CCaptureFlag::operator=( const CCaptureFlag& rhs )
 {
@@ -805,7 +805,7 @@ CCaptureFlag &CCaptureFlag::operator=( const CCaptureFlag& rhs )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::Activate( void )
 {
@@ -817,7 +817,7 @@ void CCaptureFlag::Activate( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCaptureFlag* CCaptureFlag::Create( const Vector& vecOrigin, const char *pszModelName, ETFFlagType type )
 {
@@ -855,9 +855,9 @@ void CCaptureFlag::Reset( void )
 			if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
 			{
 				CTFRobotDestructionLogic::GetRobotDestructionLogic()->ScorePoints( GetTeamNumber()
-																				 , m_nPointValue.Get()
-																				 , SCORE_REACTOR_RETURNED
-																				 , NULL );
+																				, m_nPointValue.Get()
+																				, SCORE_REACTOR_RETURNED
+																				, NULL );
 
 				CTFRobotDestructionLogic::GetRobotDestructionLogic()->FlagDestroyed( GetTeamNumber() );
 				m_nPointValue = 0;
@@ -913,11 +913,11 @@ void CCaptureFlag::Reset( void )
 		TFObjectiveResource()->SetBaseMvMBombUpgradeTime( -1 );
 		TFObjectiveResource()->SetNextMvMBombUpgradeTime( -1 );
 	}
-#endif 
+#endif
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::ResetMessage( void )
 {
@@ -1065,7 +1065,7 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 #ifdef GAME_DLL
 		m_OnTouchSameTeam.FireOutput( this, this );
 #endif
-		
+
 		// Does my team own this flag? If so, no touch.
 		if ( m_nType == TF_FLAGTYPE_CTF || m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION )
 		{
@@ -1078,7 +1078,7 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 	}
 
 	if ( ( m_nType == TF_FLAGTYPE_ATTACK_DEFEND || m_nType == TF_FLAGTYPE_TERRITORY_CONTROL ) &&
-		   pOther->GetTeamNumber() != GetTeamNumber() )
+			pOther->GetTeamNumber() != GetTeamNumber() )
 	{
 		return;
 	}
@@ -1125,8 +1125,8 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 		return;
 
 	// Don't let stealthed spies pickup the flag
- 	if ( pPlayer->m_Shared.IsStealthed() || pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) || pPlayer->m_Shared.GetPercentInvisible() > 0.25f )
- 		return;
+	if ( pPlayer->m_Shared.IsStealthed() || pPlayer->m_Shared.InCond( TF_COND_STEALTHED_BLINK ) || pPlayer->m_Shared.GetPercentInvisible() > 0.25f )
+		return;
 
 	// Don't let phased scouts pickup flags
 	if ( pPlayer->m_Shared.InCond( TF_COND_PHASE ) )
@@ -1146,7 +1146,7 @@ void CCaptureFlag::FlagTouch( CBaseEntity *pOther )
 		Reset();
 		ResetMessage();
 #ifdef GAME_DLL
-		CTF_GameStats.Event_PlayerReturnedFlag( pPlayer ); 
+		CTF_GameStats.Event_PlayerReturnedFlag( pPlayer );
 #endif
 	}
 	else
@@ -1178,7 +1178,7 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 #ifdef GAME_DLL
 	if ( !m_bAllowOwnerPickup )
 	{
-		if ( m_hPrevOwner.Get() && m_hPrevOwner.Get() == pPlayer ) 
+		if ( m_hPrevOwner.Get() && m_hPrevOwner.Get() == pPlayer )
 		{
 			return;
 		}
@@ -1235,7 +1235,7 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 	pPlayer->TeamFortress_SetSpeed();
 
 #ifdef GAME_DLL
-	
+
 	// Update the parent to set the correct place on the model to attach the flag.
 	int iAttachment = pPlayer->LookupAttachment( "flag" );
 	if( iAttachment > 0 )
@@ -1402,26 +1402,26 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 			CTFPlayerDestructionLogic::GetPlayerDestructionLogic()->PlayPropPickupSound( pPlayer );
 		}
 	}
-	
+
 	if ( TFGameRules() && TFGameRules()->IsPowerupMode() && m_flTimeToSetPoisonous == 0.f )
 	{
 		// replace 90.f with a convar?
 		m_flTimeToSetPoisonous = gpGlobals->curtime + 90.f;
 	}
 
-    // If the flag was at home, set the initial reset time to the max allowable time, otherwise it's to whatever it was
-    // right now so we can persist that until later.
-    if ( m_nFlagStatus == TF_FLAGINFO_HOME )
-    {
-        m_flLastResetDuration = GetMaxReturnTime();
-    }
-    else
-    {
-        m_flLastResetDuration = m_flResetTime - gpGlobals->curtime;
-    }
+	// If the flag was at home, set the initial reset time to the max allowable time, otherwise it's to whatever it was
+	// right now so we can persist that until later.
+	if ( m_nFlagStatus == TF_FLAGINFO_HOME )
+	{
+		m_flLastResetDuration = GetMaxReturnTime();
+	}
+	else
+	{
+		m_flLastResetDuration = m_flResetTime - gpGlobals->curtime;
+	}
 
-    // Remember that this is when the item was picked up.
-    m_flLastPickupTime = gpGlobals->curtime;
+	// Remember that this is when the item was picked up.
+	m_flLastPickupTime = gpGlobals->curtime;
 
 	int nOldFlagStatus = m_nFlagStatus;
 	SetFlagStatus( TF_FLAGINFO_STOLEN, pPlayer );
@@ -1446,10 +1446,10 @@ void CCaptureFlag::PickUp( CTFPlayer *pPlayer, bool bInvisible )
 
 	switch ( pPlayer->GetTeamNumber() )
 	{
-	case TF_TEAM_RED: 
+	case TF_TEAM_RED:
 		m_outputOnPickUpTeam1.FireOutput( this, this );
 		break;
-	case TF_TEAM_BLUE: 
+	case TF_TEAM_BLUE:
 		m_outputOnPickUpTeam2.FireOutput( this, this );
 		break;
 	default:
@@ -1546,7 +1546,7 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 						PlaySound( filter, TF_RUNE_INTEL_CAPTURED );
 					}
 					else
-					{	
+					{
 						PlaySound( filter, TF_CTF_TEAM_CAPTURED );
 					}
 
@@ -1567,7 +1567,7 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 #ifdef STAGING_ONLY
 		if ( TFGameRules()->GameModeUsesExperience() )
 		{
-			pPlayer->AddExperiencePoints( nAmount );	
+			pPlayer->AddExperiencePoints( nAmount );
 		}
 #endif // STAGING_ONLY
 		TFGameRules()->DistributeCurrencyAmount( nAmount, pPlayer );
@@ -1623,7 +1623,7 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 		// Reward the player
 		CTF_GameStats.Event_PlayerCapturedPoint( pPlayer );
 
-		// TFTODO:: Reward the team	
+		// TFTODO:: Reward the team
 	}
 	else if ( m_nType == TF_FLAGTYPE_INVADE )
 	{
@@ -1676,11 +1676,11 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 				{
 					pszSound = TF_RESOURCE_TEAM_CAPTURED;
 				}
-	
+
 				CTeamRecipientFilter filter( iTeam, true );
 				PlaySound( filter, pszSound, iTeam );
 			}
-  		}
+		}
 
 		// Reward the player
 		CTF_GameStats.Event_PlayerCapturedPoint( pPlayer );
@@ -1722,9 +1722,9 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 		if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
 		{
 			CTFRobotDestructionLogic::GetRobotDestructionLogic()->ScorePoints( pPlayer->GetTeamNumber()
-																			 , m_nPointValue.Get()
-																			 , SCORE_REACTOR_CAPTURED
-																			 , pPlayer );
+																			, m_nPointValue.Get()
+																			, SCORE_REACTOR_CAPTURED
+																			, pPlayer );
 			CTFRobotDestructionLogic::GetRobotDestructionLogic()->FlagDestroyed( GetTeamNumber() );
 			m_nPointValue = 0;
 		}
@@ -1767,16 +1767,16 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 	{
 		pPlayer->SpeakConceptIfAllowed( MP_CONCEPT_FLAGCAPTURED );
 	}
-	
+
 	// Outputs
 	m_outputOnCapture.FireOutput( this, this );
 
 	switch ( pPlayer->GetTeamNumber() )
 	{
-	case TF_TEAM_RED: 
+	case TF_TEAM_RED:
 		m_OnCapTeam1.FireOutput( this, this );
 		break;
-	case TF_TEAM_BLUE: 
+	case TF_TEAM_BLUE:
 		m_OnCapTeam2.FireOutput( this, this );
 		break;
 	default:
@@ -1797,7 +1797,7 @@ void CCaptureFlag::Capture( CTFPlayer *pPlayer, int nCapturePoint )
 		if ( pTeam->GetFlagCaptures() < tf_flag_caps_per_round.GetInt() )
 		{
 			pTeam->SetFlagCaptures( tf_flag_caps_per_round.GetInt() );
-		}	
+		}
 	}
 
 #endif
@@ -1850,7 +1850,7 @@ void CCaptureFlag::Drop( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 
 					vecEnd = vecStart;
 					vecEnd.z -= 8000.0f;
-					UTIL_TraceHull( vecStart, vecEnd, WorldAlignMins(), WorldAlignMaxs(), MASK_SOLID, this, COLLISION_GROUP_DEBRIS, &trace );	
+					UTIL_TraceHull( vecStart, vecEnd, WorldAlignMins(), WorldAlignMaxs(), MASK_SOLID, this, COLLISION_GROUP_DEBRIS, &trace );
 				}
 			}
 		}
@@ -2012,7 +2012,7 @@ void CCaptureFlag::Drop( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 			// if our return time is less than the neutral time, we don't need a neutral time
 			if ( TF_INVADE_NEUTRAL_TIME < GetMaxReturnTime() )
 			{
-				SetFlagNeutralIn( TF_INVADE_NEUTRAL_TIME ); 
+				SetFlagNeutralIn( TF_INVADE_NEUTRAL_TIME );
 			}
 		}
 	}
@@ -2100,12 +2100,12 @@ void CCaptureFlag::Drop( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 	{
 		pPlayer->m_Shared.RemoveCond( TF_COND_MARKEDFORDEATH );
 	}
-	
+
 	m_nSkin = m_nSkin - TF_FLAG_NUMBEROFSKINS;
 
 	RemoveFlagTrail();
 
-    int nMaxReturnTime = GetMaxReturnTime();
+	int nMaxReturnTime = GetMaxReturnTime();
 	SetFlagReturnIn( GetReturnTime( nMaxReturnTime ), nMaxReturnTime );
 
 	// Reset the flag's angles.
@@ -2152,24 +2152,24 @@ void CCaptureFlag::Drop( CTFPlayer *pPlayer, bool bVisible,  bool bThrown /*= fa
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CCaptureFlag::IsDropped( void )
-{ 
-	return ( m_nFlagStatus == TF_FLAGINFO_DROPPED ); 
+{
+	return ( m_nFlagStatus == TF_FLAGINFO_DROPPED );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CCaptureFlag::IsHome( void )
-{ 
-	return ( m_nFlagStatus == TF_FLAGINFO_HOME ); 
+{
+	return ( m_nFlagStatus == TF_FLAGINFO_HOME );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 bool CCaptureFlag::IsStolen( void )
-{ 
-	return ( m_nFlagStatus == TF_FLAGINFO_STOLEN ); 
+{
+	return ( m_nFlagStatus == TF_FLAGINFO_STOLEN );
 }
 
 //-----------------------------------------------------------------------------
@@ -2211,7 +2211,7 @@ void CCaptureFlag::SetDisabled( bool bDisabled )
 
 		// The flag in RD is not actually touched by players when it's home
 		SetTouch( &CCaptureFlag::FlagTouch );
-		
+
 
 		SetThink( &CCaptureFlag::Think );
 		SetNextThink( gpGlobals->curtime );
@@ -2232,21 +2232,21 @@ void CCaptureFlag::SetDisabled( bool bDisabled )
 void CCaptureFlag::SetVisibleWhenDisabled( bool bVisible )
 {
 	m_bVisibleWhenDisabled = bVisible;
-	SetDisabled( IsDisabled() ); 
+	SetDisabled( IsDisabled() );
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Sets the flag status
 //-----------------------------------------------------------------------------
 void CCaptureFlag::SetFlagStatus( int iStatus, CBasePlayer *pNewOwner /*= NULL*/ )
-{ 
+{
 #ifdef GAME_DLL
 	MDLCACHE_CRITICAL_SECTION();
 #endif
 
 	if ( m_nFlagStatus != iStatus )
 	{
-		m_nFlagStatus = iStatus; 
+		m_nFlagStatus = iStatus;
 
 		IGameEvent *pEvent = gameeventmanager->CreateEvent( "flagstatus_update" );
 		if ( pEvent )
@@ -2258,7 +2258,7 @@ void CCaptureFlag::SetFlagStatus( int iStatus, CBasePlayer *pNewOwner /*= NULL*/
 			gameeventmanager->FireEvent( pEvent );
 		}
 	}
-	
+
 #ifdef CLIENT_DLL
 	UpdateGlowEffect();
 #endif
@@ -2328,7 +2328,7 @@ void CCaptureFlag::Think( void )
 				ResetMessage();
 			}
 		}
-		
+
 		if ( m_nType == TF_FLAGTYPE_INVADE )
 		{
 			if ( m_flResetTime && gpGlobals->curtime > m_flResetTime )
@@ -2417,7 +2417,7 @@ void CCaptureFlag::Think( void )
 	{
 		pPlayer->m_Shared.AddCond( TF_COND_MARKEDFORDEATH );
 	}
-	
+
 	SetNextThink( gpGlobals->curtime + TF_FLAG_THINK_TIME );
 }
 
@@ -2460,7 +2460,7 @@ void CCaptureFlag::InputDisable( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::InputRoundActivate( inputdata_t &inputdata )
 {
@@ -2476,7 +2476,7 @@ void CCaptureFlag::InputRoundActivate( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::InputForceDrop( inputdata_t &inputdata )
 {
@@ -2490,7 +2490,7 @@ void CCaptureFlag::InputForceDrop( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::InternalForceReset( bool bSilent /* = false */ )
 {
@@ -2516,7 +2516,7 @@ void CCaptureFlag::InternalForceReset( bool bSilent /* = false */ )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::InputForceReset( inputdata_t &inputdata )
 {
@@ -2524,7 +2524,7 @@ void CCaptureFlag::InputForceReset( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::InputForceResetSilent( inputdata_t &inputdata )
 {
@@ -2538,7 +2538,7 @@ void CCaptureFlag::InputForceResetAndDisableSilent( inputdata_t &inputdata )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::InputSetReturnTime( inputdata_t &inputdata )
 {
@@ -2559,7 +2559,7 @@ void CCaptureFlag::InputSetReturnTime( inputdata_t &inputdata )
 				// if our return time is less than the neutral time, we don't need a neutral time
 				if ( TF_INVADE_NEUTRAL_TIME < m_nReturnTime )
 				{
-					SetFlagNeutralIn( TF_INVADE_NEUTRAL_TIME ); 
+					SetFlagNeutralIn( TF_INVADE_NEUTRAL_TIME );
 				}
 			}
 		}
@@ -2638,7 +2638,7 @@ void CCaptureFlag::ManageTrailEffects( void )
 
 			if ( pPlayer )
 			{
-				if ( pPlayer->GetAbsVelocity().Length() >= pPlayer->MaxSpeed() * 0.2f )	
+				if ( pPlayer->GetAbsVelocity().Length() >= pPlayer->MaxSpeed() * 0.2f )
 				{
 					if ( m_pPaperTrailEffect == NULL )
 					{
@@ -2659,7 +2659,7 @@ void CCaptureFlag::ManageTrailEffects( void )
 			}
 		}
 
- 	}
+	}
 
 	else
 	{
@@ -2756,8 +2756,8 @@ void CCaptureFlag::RemoveFlagTrail( void )
 		{
 			UTIL_Remove( m_pFlagTrail);
 			m_flFlagTrailLife = 1.0f;
-		}	
-		else	
+		}
+		else
 		{
 			float fAlpha = TF_FLAG_TRAIL_ALPHA * m_flFlagTrailLife;
 
@@ -2776,7 +2776,7 @@ void CCaptureFlag::RemoveFlagTrail( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::AddFollower( CTFBot* pBot )
 {
@@ -2791,7 +2791,7 @@ void CCaptureFlag::AddFollower( CTFBot* pBot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::RemoveFollower( CTFBot* pBot )
 {
@@ -2807,37 +2807,37 @@ void CCaptureFlag::RemoveFollower( CTFBot* pBot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CCaptureFlag::GetReturnTime( int nMaxReturnTime )
 {
-    return GetReturnTimeShotClockMode( nMaxReturnTime );
+	return GetReturnTimeShotClockMode( nMaxReturnTime );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CCaptureFlag::GetMaxReturnTime( void )
 {
-    int nReturnTime = m_nReturnTime;
+	int nReturnTime = m_nReturnTime;
 
 #ifdef STAGING_ONLY
-    if (tf_flag_return_time_override.GetInt() > 0)
-    {
-        nReturnTime = tf_flag_return_time_override.GetInt();
-    }
+	if (tf_flag_return_time_override.GetInt() > 0)
+	{
+		nReturnTime = tf_flag_return_time_override.GetInt();
+	}
 #endif // STAGING_ONLY
 
-    if ( m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION )
-    {
-        int nMaxPoints = 300;
-        if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
-        {
-            nMaxPoints = CTFRobotDestructionLogic::GetRobotDestructionLogic()->GetMaxPoints();
-        }
-        const int nMaxReturnTimePoints = nMaxPoints / 3;
-        nReturnTime = RemapValClamped(m_nPointValue, 0.f, nMaxReturnTimePoints, tf_rd_return_min_time.GetFloat(), tf_rd_return_max_time.GetFloat());
-    }
+	if ( m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION )
+	{
+		int nMaxPoints = 300;
+		if ( CTFRobotDestructionLogic::GetRobotDestructionLogic() )
+		{
+			nMaxPoints = CTFRobotDestructionLogic::GetRobotDestructionLogic()->GetMaxPoints();
+		}
+		const int nMaxReturnTimePoints = nMaxPoints / 3;
+		nReturnTime = RemapValClamped(m_nPointValue, 0.f, nMaxReturnTimePoints, tf_rd_return_min_time.GetFloat(), tf_rd_return_max_time.GetFloat());
+	}
 	else if ( m_nType == TF_FLAGTYPE_PLAYER_DESTRUCTION )
 	{
 		if ( CTFPlayerDestructionLogic::GetPlayerDestructionLogic() )
@@ -2846,14 +2846,14 @@ int CCaptureFlag::GetMaxReturnTime( void )
 		}
 	}
 
-    return nReturnTime;
+	return nReturnTime;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlag::AddPointValue( int nPoints )
-{ 
+{
 	m_nPointValue += nPoints;
 
 	if ( m_nType == TF_FLAGTYPE_ROBOT_DESTRUCTION || m_nType == TF_FLAGTYPE_PLAYER_DESTRUCTION )
@@ -2865,8 +2865,8 @@ void CCaptureFlag::AddPointValue( int nPoints )
 			pEvent->SetInt( "entindex", entindex() );
 			gameeventmanager->FireEvent( pEvent );
 
-            // The return time is determined by how many points are in the flag, so update that. 
-            m_flLastResetDuration = GetMaxReturnTime();
+			// The return time is determined by how many points are in the flag, so update that.
+			m_flLastResetDuration = GetMaxReturnTime();
 		}
 
 		if ( nPoints > 0 )
@@ -2901,7 +2901,7 @@ typedef struct
 
 // This defines the properties of the 8 circle segments
 // in the circular progress bar.
-progress_segment_t Segments[8] = 
+progress_segment_t Segments[8] =
 {
 	{ 0.125, 0.5, 0.0, 1.0, 0.0, 1, 0 },
 	{ 0.25,	 1.0, 0.0, 1.0, 0.5, 0, 1 },
@@ -2914,15 +2914,15 @@ progress_segment_t Segments[8] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-RenderGroup_t CCaptureFlagReturnIcon::GetRenderGroup( void ) 
-{	
-	return RENDER_GROUP_TRANSLUCENT_ENTITY;	
+RenderGroup_t CCaptureFlagReturnIcon::GetRenderGroup( void )
+{
+	return RENDER_GROUP_TRANSLUCENT_ENTITY;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCaptureFlagReturnIcon::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 {
@@ -2931,12 +2931,12 @@ void CCaptureFlagReturnIcon::GetRenderBounds( Vector& theMins, Vector& theMaxs )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CCaptureFlagReturnIcon::DrawModel( int flags )
 {
 	int nRetVal = BaseClass::DrawModel( flags );
-	
+
 	DrawReturnProgressBar();
 
 	return nRetVal;

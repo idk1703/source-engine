@@ -1,5 +1,5 @@
 
-#pragma warning( disable : 4786 4018 4530 )  
+#pragma warning( disable : 4786 4018 4530 )
 
 #include "NvTriStripObjects.h"
 #include "NvTriStrip.h"
@@ -108,7 +108,7 @@ void GenerateStrips(const unsigned short* in_indices, const unsigned int in_numI
 	NvFaceInfoVec tempFaces;
 
 	NvStripifier stripifier;
-	
+
 	//do actual stripification
 	stripifier.Stripify(tempIndices, cacheSize, minStripSize, maxIndex, tempStrips, tempFaces);
 
@@ -172,15 +172,15 @@ void GenerateStrips(const unsigned short* in_indices, const unsigned int in_numI
 
 		//if we're stitching strips together, we better get back only one strip from CreateStrips()
 		assert( (bStitchStrips && (numSeparateStrips == 1)) || !bStitchStrips);
-		
+
 		//convert to output format
 		*numGroups = AsUShort( numSeparateStrips ); //for the strips
 		if(tempFaces.size() != 0)
 			(*numGroups)++;  //we've got a list as well, increment
 		(*primGroups) = new PrimitiveGroup[*numGroups];
-		
+
 		PrimitiveGroup* primGroupArray = *primGroups;
-		
+
 		//first, the strips
 		int startingLoc = 0;
 		for(int stripCtr = 0; stripCtr < numSeparateStrips; stripCtr++)
@@ -196,27 +196,27 @@ void GenerateStrips(const unsigned short* in_indices, const unsigned int in_numI
 					if(stripIndices[i] == -1)
 						break;
 				}
-				
+
 				stripLength = i - startingLoc;
 			}
 			else
 			{
 				stripLength = (int)( stripIndices.size() );
 			}
-			
+
 			primGroupArray[stripCtr].type       = PT_STRIP;
 			primGroupArray[stripCtr].indices    = new unsigned short[stripLength];
 			primGroupArray[stripCtr].numIndices = stripLength;
-			
+
 			int indexCtr = 0;
 			for(int i = startingLoc; i < stripLength + startingLoc; i++)
 				primGroupArray[stripCtr].indices[indexCtr++] = AsUShort( stripIndices[i] );
 
 			//we add 1 to account for the -1 separating strips
 			//this doesn't break the stitched case since we'll exit the loop
-			startingLoc += stripLength + 1; 
+			startingLoc += stripLength + 1;
 		}
-		
+
 		//next, the list
 		if(tempFaces.size() != 0)
 		{
@@ -268,7 +268,7 @@ void GenerateStrips(const unsigned short* in_indices, const unsigned int in_numI
 //  of acceptable values for indices in your primitive groups.
 // remappedGroups: array of remapped PrimitiveGroups
 //
-// Note that, according to the remapping handed back to you, you must reorder your 
+// Note that, according to the remapping handed back to you, you must reorder your
 //  vertex buffer.
 //
 void RemapIndices(const PrimitiveGroup* in_primGroups, const unsigned short numGroups,
@@ -280,7 +280,7 @@ void RemapIndices(const PrimitiveGroup* in_primGroups, const unsigned short numG
 	int *indexCache;
 	indexCache = new int[numVerts];
 	memset(indexCache, -1, sizeof(int)*numVerts);
-	
+
 	//loop over primitive groups
 	unsigned int indexCtr = 0;
 	for(int i = 0; i < numGroups; i++)

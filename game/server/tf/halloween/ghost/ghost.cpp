@@ -37,7 +37,7 @@ void CC_GhostSpawn( const CCommand& args )
 		Vector forward;
 		pPlayer->EyeVectors( &forward );
 		UTIL_TraceLine(pPlayer->EyePosition(),
-			pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_SOLID, 
+			pPlayer->EyePosition() + forward * MAX_TRACE_LENGTH,MASK_SOLID,
 			pPlayer, COLLISION_GROUP_NONE, &tr );
 
 		if ( tr.fraction != 1.0 )
@@ -146,7 +146,7 @@ bool CGhost::ShouldCollide( int collisionGroup, int contentsMask ) const
 	//return BaseClass::ShouldCollide( collisionGroup, contentsMask );
 }
 
-	
+
 //---------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------
 class CGhostBehavior : public Action< CGhost >

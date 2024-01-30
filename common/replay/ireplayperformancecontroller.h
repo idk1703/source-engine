@@ -23,9 +23,9 @@ class CReplayPerformance;
 
 //----------------------------------------------------------------------------------------
 
-// These values are what we use to represent 
+// These values are what we use to represent
 
-struct SetViewParams_t 
+struct SetViewParams_t
 {
 	SetViewParams_t() { V_memset( this, 0, sizeof( SetViewParams_t ) ); }
 	SetViewParams_t( float flTime, Vector *pOrigin, QAngle *pAngles, float flFov, float flAccel,

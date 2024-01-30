@@ -47,10 +47,10 @@ float4 main( PS_INPUT i ) : COLOR
 	}
 
 	float3 specularFactor = 1.0f;
-	
+
 	if( bEnvmapMask )
 	{
-		specularFactor *= tex2D( EnvmapMaskSampler, i.envmapMaskTexCoord ).xyz;	
+		specularFactor *= tex2D( EnvmapMaskSampler, i.envmapMaskTexCoord ).xyz;
 	}
 	if( bBaseAlphaEnvmapMask )
 	{
@@ -118,5 +118,3 @@ float4 main( PS_INPUT i ) : COLOR
 	return result;
 #endif
 }
-
-

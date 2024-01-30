@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,7 +20,7 @@
 
 class CPortal_Player;
 
-// These are the names of the ammo types that go in the CAmmoDefs and that the 
+// These are the names of the ammo types that go in the CAmmoDefs and that the
 // weapon script files reference.
 
 // Given an ammo type (like from a weapon's GetPrimaryAmmoType()), this compares it
@@ -41,7 +41,7 @@ typedef enum
 
 	//Pistols
 	WEAPON_PISTOL,
-	WEAPON_357,	
+	WEAPON_357,
 
 	//Machineguns
 	WEAPON_SMG,
@@ -50,7 +50,7 @@ typedef enum
 	//Grenades
 	WEAPON_FRAG,
 	WEAPON_BUGBAIT,
-	
+
 	//Other
 	WEAPON_SHOTGUN,
 	WEAPON_CROSSBOW,
@@ -64,14 +64,14 @@ class CWeaponPortalBase : public CBaseCombatWeapon
 {
 public:
 	DECLARE_CLASS( CWeaponPortalBase, CBaseCombatWeapon );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CWeaponPortalBase();
 
 	#ifdef GAME_DLL
 		DECLARE_DATADESC();
-	
+
 		void SendReloadSoundEvent( void );
 
 		void Materialize( void );
@@ -87,15 +87,15 @@ public:
 	virtual PortalWeaponID GetWeaponID( void ) const { return WEAPON_NONE; }
 
 	void WeaponSound( WeaponSound_t sound_type, float soundtime = 0.0f );
-	
+
 	CPortalSWeaponInfo const	&GetPortalWpnData() const;
 
 
 	virtual void FireBullets( const FireBulletsInfo_t &info );
-	
+
 public:
 	#if defined( CLIENT_DLL )
-	
+
 		virtual int		DrawModel( int flags );
 		virtual bool	ShouldDraw( void );
 		virtual bool	ShouldDrawCrosshair( void ) { return true; }

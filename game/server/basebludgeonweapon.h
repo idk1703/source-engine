@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:		The class from which all bludgeon melee
-//				weapons are derived. 
+//				weapons are derived.
 //
 // $Workfile:     $
 // $Date:         $
@@ -14,7 +14,7 @@
 #define BASEBLUDGEONWEAPON_H
 
 //=========================================================
-// CBaseHLBludgeonWeapon 
+// CBaseHLBludgeonWeapon
 //=========================================================
 class CBaseHLBludgeonWeapon : public CBaseHLCombatWeapon
 {
@@ -26,14 +26,14 @@ public:
 
 	virtual	void	Spawn( void );
 	virtual	void	Precache( void );
-	
+
 	//Attack functions
 	virtual	void	PrimaryAttack( void );
 	virtual	void	SecondaryAttack( void );
-	
+
 	virtual void	ItemPostFrame( void );
 
-	//Functions to select animation sequences 
+	//Functions to select animation sequences
 	virtual Activity	GetPrimaryAttackActivity( void )	{	return	ACT_VM_HITCENTER;	}
 	virtual Activity	GetSecondaryAttackActivity( void )	{	return	ACT_VM_HITCENTER2;	}
 

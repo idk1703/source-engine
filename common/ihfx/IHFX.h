@@ -81,14 +81,14 @@ enum eMouseClick
 	eHFXMC_Fourth,
 	eHFXMC_COUNT,
 };
-typedef bool (*MouseEmulationFn)( const double &devicex_pos, 
-								 const double &devicey_pos, 
-								 const double &devicez_pos, 
-								 const double &devicex_delta, 
-								 const double &devicey_delta, 
-								 const double &devicez_delta, 
-								 const int &buttons_down, 
-								 const int &buttons_pressed, 
+typedef bool (*MouseEmulationFn)( const double &devicex_pos,
+								 const double &devicey_pos,
+								 const double &devicez_pos,
+								 const double &devicex_delta,
+								 const double &devicey_delta,
+								 const double &devicez_delta,
+								 const int &buttons_down,
+								 const int &buttons_pressed,
 								 const int &buttons_released,
 								 bool moved,
 								 /* adjust if you would liek to send a mouse button */
@@ -99,7 +99,7 @@ struct ApplicationData
 {
 };
 typedef void (*RollCallIndexSetCallBack)(IDevice *pDevice, const int devices_left);
-class HFX_PURE_INTERFACE IHapticsSystem 
+class HFX_PURE_INTERFACE IHapticsSystem
 {
 public:
 
@@ -149,7 +149,7 @@ public:
 	// updates roll call data. only call this if your in a roll call and the roll call was not started
 	// with bCreateThread set to true.
 	// returns true if still in roll call.
-	virtual bool RollCallUpdate() =0; 
+	virtual bool RollCallUpdate() =0;
 
 	// cancles roll call in progress. if ApplyMadeChanges is true the devices who responded
 	// to the roll call will be set in and the unset will be moved to the end of the index list.
@@ -178,7 +178,7 @@ public:
 
 	//returns true if forces are enabled.
 	// Note: this could be true and forces may not be allowed.
-	// MouseMode RollCall window focus and possibly other things will not allow forces. 
+	// MouseMode RollCall window focus and possibly other things will not allow forces.
 	virtual bool ForcesEnabled() =0;
 
 	//HFX_VIRTUAL void DisableForces() HFX_PURE;
@@ -208,11 +208,11 @@ public:
 	virtual IHFXParamGroup *GetCachedParameter(const unsigned int name) =0;
 	virtual const char *GetCachedParameterName(const unsigned int id) const =0;
 
-	// Note: any format ( besides Bitfile ) where it cannot find the file specified will try to 
+	// Note: any format ( besides Bitfile ) where it cannot find the file specified will try to
 	// load a encoded bitfile if it does not exist. A bit file will be generated when you load any
 	// format. When release time comes around just delete the iniFile and include the bitfile output
 
-	// each format has a way to turn this functionality off. if you 
+	// each format has a way to turn this functionality off. if you
 	virtual bool CacheEffectParametersINI( const char *iniFile ) =0;
 
 	virtual bool CacheEffectParametersBitfile( const char *bitFile ) =0;
@@ -275,7 +275,7 @@ public:
 #define HFX_BUTTON_ANY 0xffffffff /**< Mask for any button */
 
 //Internal class.
-struct HFX_PURE_INTERFACE IDeviceData 
+struct HFX_PURE_INTERFACE IDeviceData
 {
 };
 
@@ -290,7 +290,7 @@ namespace NovintHFX{
 // This function callback type will be used with SetServoLoopCallbackFunction.
 //   The main difference between hdlServoOp and this is that you get the device.
 typedef int (*OldServoLoopFn) (void *pParam, class IDevice *pDevice, double outforces[3]);
-class HFX_PURE_INTERFACE IDevice 
+class HFX_PURE_INTERFACE IDevice
 {
 public:
 	//Is this device able to output forces?
@@ -339,14 +339,14 @@ public:
 class Processor;
 //EFFECT STACK
 //note one stack per device handle only.
-class HFX_PURE_INTERFACE IStack 
+class HFX_PURE_INTERFACE IStack
 {
 public:
 
 	// Returns true if effect was created.
 	// --
 	// NOTE: NOT ALL EFFECTS ( SUCH AS SELF DELETING )
-	// WILL ALLOW YOU TO HAVE A HANDLE TO IT. 
+	// WILL ALLOW YOU TO HAVE A HANDLE TO IT.
 	// CHECKING POINTER VALIDITY OF THE HANDLE IN THE
 	// CREATE NEW EFFECT WILL ONLY LET YOU KNOW IF
 	// ANYTHING WAS SET TO IT, NOT NECCISARILLY IF
@@ -462,13 +462,13 @@ public:
 
 	// override this function to return the number of falcons this
 	// effect requires.
-	HFX_INLINE unsigned int RequiredDeviceCount() const 
+	HFX_INLINE unsigned int RequiredDeviceCount() const
 	{
 		HFXNEED needs= GetEffectNeeds();
 		return HFXNEED_UTIL_COUNT_DEVICES(needs);
 	}
 
-	// returns true if the effect is running. 
+	// returns true if the effect is running.
 	HFX_INLINE bool IsRunning() const {return ( (GetEffectState() & (HFXSTATE_RUNNING)) != 0 );}
 
 	// if your effect is not self deleting and requires runtime data you should override this to true.
@@ -486,16 +486,16 @@ public:
 	//HFX_VIRTUAL bool Stop() HFX_PURE;
 
 	// DO NOT OVERRIDE!
-	HFX_INLINE bool NeedsRemoval() const 
+	HFX_INLINE bool NeedsRemoval() const
 	{	return ( ( GetEffectNeeds() & HFXNEED_REMOVE ) ? ( ( ( GetEffectState() & HFXSTATE_RUNNING ) ) ? false : true ) : false ); }
 
 	// DO NOT OVERRIDE!
-	HFX_INLINE bool WantsSyncOp() const 
+	HFX_INLINE bool WantsSyncOp() const
 	{
-		return (((GetEffectNeeds() & HFXNEED_SYNC)!=0) && ((GetEffectState() & HFXSTATE_WANT_SYNC)!=0)); 
+		return (((GetEffectNeeds() & HFXNEED_SYNC)!=0) && ((GetEffectState() & HFXSTATE_WANT_SYNC)!=0));
 	}
 	// DO NOT OVERRIDE!
-	virtual bool WantsUpdate() const {return (((GetEffectNeeds() & HFXNEED_PROCESS)!=0) && ((GetEffectState() & HFXSTATE_WANT_UPDATE)!=0) && ((GetEffectState() & HFXSTATE_RUNNING)!=0));} 
+	virtual bool WantsUpdate() const {return (((GetEffectNeeds() & HFXNEED_PROCESS)!=0) && ((GetEffectState() & HFXSTATE_WANT_UPDATE)!=0) && ((GetEffectState() & HFXSTATE_RUNNING)!=0));}
 
 	virtual HFXSTATE GetEffectState() const =0;
 	virtual const HFXNEED &GetEffectNeeds() const =0;
@@ -704,4 +704,3 @@ inline void DisconnectNovintHFX(IHapticsSystem **ppSystem=0)
 	}
 }
 #endif
-

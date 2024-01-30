@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -25,7 +25,7 @@ using namespace vgui;
 DECLARE_BUILD_FACTORY( ImagePanel );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ImagePanel::ImagePanel(Panel *parent, const char *name) : Panel(parent, name)
 {
@@ -51,7 +51,7 @@ ImagePanel::ImagePanel(Panel *parent, const char *name) : Panel(parent, name)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ImagePanel::~ImagePanel()
 {
@@ -69,7 +69,7 @@ void ImagePanel::OnSizeChanged(int newWide, int newTall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImagePanel::SetImage(IImage *image)
 {
@@ -93,7 +93,7 @@ void ImagePanel::SetImage(const char *imageName)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 IImage *ImagePanel::GetImage()
 {
@@ -101,7 +101,7 @@ IImage *ImagePanel::GetImage()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 Color ImagePanel::GetDrawColor( void )
 {
@@ -109,7 +109,7 @@ Color ImagePanel::GetDrawColor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImagePanel::SetDrawColor( Color drawColor )
 {
@@ -117,7 +117,7 @@ void ImagePanel::SetDrawColor( Color drawColor )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void ImagePanel::PaintBackground()
 {
@@ -133,14 +133,14 @@ void ImagePanel::PaintBackground()
 	{
 		//=============================================================================
 		// HPE_BEGIN:
-		// [pfreese] Color should be always set from GetDrawColor(), not just when 
+		// [pfreese] Color should be always set from GetDrawColor(), not just when
 		// scaling is true (see previous code)
 		//=============================================================================
-		
+
 		// surface()->DrawSetColor( 255, 255, 255, GetAlpha() );
 		m_pImage->SetColor( GetDrawColor() );
 		m_pImage->SetRotation( m_iRotation );
-		
+
 		//=============================================================================
 		// HPE_END
 		//=============================================================================

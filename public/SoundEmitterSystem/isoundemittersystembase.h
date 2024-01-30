@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -29,7 +29,7 @@ typedef short HSOUNDSCRIPTHANDLE;
 class IFileList;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 struct CSoundParameters
 {
@@ -182,7 +182,7 @@ private:
 	pitch_interval_t		pitch;					// 22
 	uint16					channel;				// 24
 	uint16					delay_msec;				// 26
-	
+
 	bool			play_to_owner_only:1; // For weapon sounds...	// 27
 	// Internal use, for warning about missing .wav files
 	bool			had_missing_wave_files:1;

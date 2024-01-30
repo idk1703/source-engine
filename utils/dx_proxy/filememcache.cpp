@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -53,10 +53,10 @@ CachedFileData *CachedFileData::GetByDataPtr( void const *pvDataPtr )
 {
 	unsigned char const *pbBuffer = reinterpret_cast< unsigned char const * >( pvDataPtr );
 	// Assert( pbBuffer );
-	
+
 	CachedFileData const *pData = reinterpret_cast< CachedFileData const * >( pbBuffer - eHeaderSize );
 	// Assert( pData->m_signature == s_ulCachedFileSignature );
-	
+
 	return const_cast< CachedFileData * >( pData );
 }
 
@@ -114,4 +114,3 @@ void FileCache::Clear()
 
 	m_map.clear();
 }
-

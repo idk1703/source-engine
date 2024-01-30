@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -98,7 +98,7 @@ int Q_UChar32ToUTF16( uchar32 uVal, uchar16 *pUTF16Out )
 	pUTF16Out[1] = (uchar16)(uVal & 0x3FF) | 0xDC00;
 	return 2;
 }
-	
+
 
 // Decode one character from a UTF-8 encoded string. Treats 6-byte CESU-8 sequences
 // as a single character, as if they were a correctly-encoded 4-byte UTF-8 sequence.
@@ -428,7 +428,7 @@ uchar16 *Q_UnicodeAdvance( uchar16 *pUTF16, int nChars )
 	}
 	return pUTF16;
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Advance a UTF-32 string pointer by a certain number of Unicode code points, stopping at end of string
 //-----------------------------------------------------------------------------
@@ -537,7 +537,7 @@ int Q_UTF32CharsToUTF8( const uchar32 *pUTF32, int nElements, char *pUTF8, int c
 {
 	return Q_UnicodeConvertT< uchar32, char, false, Q_UTF32ToUChar32, Q_UChar32ToUTF8Len, Q_UChar32ToUTF8 >( pUTF32, nElements, pUTF8, cubDestSizeInBytes, ePolicy );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Perform conversion. Returns number of *bytes* required if output pointer is NULL.
 //-----------------------------------------------------------------------------
@@ -561,7 +561,7 @@ int Q_UnicodeRepair( uchar16 *pUTF16, EStringConvertErrorPolicy ePolicy )
 {
 	return Q_UnicodeConvertT< uchar16, uchar16, true, Q_UTF16ToUChar32, Q_UChar32ToUTF16Len, Q_UChar32ToUTF16 >( pUTF16, 0, pUTF16, INT_MAX/sizeof(uchar16), ePolicy );
 }
-	
+
 //-----------------------------------------------------------------------------
 // Purpose: Repair a UTF-32 string by removing or replacing invalid seqeuences. Returns non-zero on success.
 //-----------------------------------------------------------------------------
@@ -569,4 +569,3 @@ int Q_UnicodeRepair( uchar32 *pUTF32, EStringConvertErrorPolicy ePolicy )
 {
 	return Q_UnicodeConvertT< uchar32, uchar32, true, Q_UTF32ToUChar32, Q_UChar32ToUTF32Len, Q_UChar32ToUTF32 >( pUTF32, 0, pUTF32, INT_MAX/sizeof(uchar32), ePolicy );
 }
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -23,7 +23,7 @@ class ClientClass;
 enum ShouldTransmitState_t
 {
 	SHOULDTRANSMIT_START=0,	// The entity is starting to be transmitted (maybe it entered the PVS).
-	
+
 	SHOULDTRANSMIT_END		// Called when the entity isn't being transmitted by the server.
 							// This signals a good time to hide the entity until next time
 							// the server wants to transmit its state.
@@ -60,15 +60,15 @@ public:
 
 
 	//
-	// NOTE FOR ENTITY WRITERS: 
+	// NOTE FOR ENTITY WRITERS:
 	//
-	// In 90% of the cases, you should hook OnPreDataChanged/OnDataChanged instead of 
+	// In 90% of the cases, you should hook OnPreDataChanged/OnDataChanged instead of
 	// PreDataUpdate/PostDataUpdate.
 	//
 	// The DataChanged events are only called once per frame whereas Pre/PostDataUpdate
 	// are called once per packet (and sometimes multiple times per frame).
 	//
-	// OnDataChanged is called during simulation where entity origins are correct and 
+	// OnDataChanged is called during simulation where entity origins are correct and
 	// attachments can be used. whereas PostDataUpdate is called while parsing packets
 	// so attachments and other entity origins may not be valid yet.
 	//

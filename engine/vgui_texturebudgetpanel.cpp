@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -85,7 +85,7 @@ CTextureBudgetPanel::CTextureBudgetPanel( vgui::Panel *pParent, const char *pEle
 {
 	m_LastCounterGroup = -1;
 	g_pTextureBudgetPanel = this;
-	
+
 	m_MaxValue = 1000;
 	m_SumOfValues = 0;
 
@@ -107,7 +107,7 @@ CTextureBudgetPanel::~CTextureBudgetPanel()
 	}
 }
 
-			 
+
 void CTextureBudgetPanel::OnTick()
 {
 	BaseClass::OnTick();
@@ -142,7 +142,7 @@ void CTextureBudgetPanel::SendConfigDataToBase()
 	for ( int i=0; i < g_VProfCurrentProfile.GetNumCounters(); i++ )
 	{
 		if ( g_VProfCurrentProfile.GetCounterGroup( i ) == GetCurrentCounterGroup() )
-		{		
+		{
 			// Strip off the TexGroup__ prefix.
 			const char *pGroupName = g_VProfCurrentProfile.GetCounterName( i );
 
@@ -163,7 +163,7 @@ void CTextureBudgetPanel::SendConfigDataToBase()
 			}
 
 			CBudgetGroupInfo info;
-			
+
 			int r, g, b, a;
 			g_VProfCurrentProfile.GetBudgetGroupColor( data.m_BudgetGroupInfo.Count(), r, g, b, a );
 			info.m_Color.SetColor( r, g, b, a );
@@ -191,7 +191,7 @@ void CTextureBudgetPanel::SendConfigDataToBase()
 	}
 
 	data.m_flBackgroundAlpha = texture_budget_background_alpha.GetFloat();
-	
+
 	data.m_xCoord = texture_budget_panel_x.GetInt();
 	data.m_yCoord = texture_budget_panel_y.GetInt();
 	data.m_Width = texture_budget_panel_width.GetInt();
@@ -209,7 +209,7 @@ void CTextureBudgetPanel::SendConfigDataToBase()
 
 	// Send the config data to the base class.
 	OnConfigDataChanged( data );
-}	
+}
 
 
 void CTextureBudgetPanel::PerformLayout()
@@ -262,14 +262,14 @@ void CTextureBudgetPanel::SnapshotTextureHistory()
 		{
 			// The counters are in bytes and the panel is all in kilobytes.
 			int value = pProf->GetCounterValue( i ) / 1024;
-			
+
 			m_SumOfValues += value;
 			m_MaxValue = max( m_MaxValue, value );
 		}
 	}
-	
+
 	showbudget_texture_global_sum.SetValue( m_SumOfValues );
-	
+
 	// Send new config data if the range has expanded.
 	bool bForceSendConfigData = false;
 	if ( (float)m_MaxValue > GetConfigData().m_flBarGraphRange || m_SumOfValues > GetConfigData().m_flHistoryRange )
@@ -277,7 +277,7 @@ void CTextureBudgetPanel::SnapshotTextureHistory()
 		bForceSendConfigData = true;
 	}
 
-	
+
 	// If we switched counter groups, reset everything.
 	if ( m_LastCounterGroup != GetCurrentCounterGroup() )
 	{
@@ -343,7 +343,7 @@ void CTextureBudgetPanel::SetHistoryLabelText()
 void CTextureBudgetPanel::ResetAll()
 {
 	BaseClass::ResetAll();
-	
+
 	m_MaxValue = 0;
 	m_SumOfValues = 0;
 }
@@ -357,7 +357,7 @@ void CTextureBudgetPanel::DumpGlobalTextureStats( const CCommand &args )
 	for ( int i=0; i < g_VProfCurrentProfile.GetNumCounters(); i++ )
 	{
 		if ( g_VProfCurrentProfile.GetCounterGroup( i ) == COUNTER_GROUP_TEXTURE_GLOBAL )
-		{		
+		{
 			// Strip off the TexGroup__ prefix.
 			const char *pGroupName = g_VProfCurrentProfile.GetCounterName( i );
 

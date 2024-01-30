@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -100,11 +100,11 @@ CSkyCamera::~CSkyCamera()
 	g_SkyList.Remove( this );
 }
 
-void CSkyCamera::Spawn( void ) 
-{ 
+void CSkyCamera::Spawn( void )
+{
 	m_skyboxData.origin = GetLocalOrigin();
 	m_skyboxData.area = engine->GetArea( m_skyboxData.origin );
-	
+
 	Precache();
 }
 
@@ -112,14 +112,14 @@ void CSkyCamera::Spawn( void )
 //-----------------------------------------------------------------------------
 // Activate!
 //-----------------------------------------------------------------------------
-void CSkyCamera::Activate( ) 
+void CSkyCamera::Activate( )
 {
 	BaseClass::Activate();
 
 	if ( m_bUseAngles )
 	{
 		AngleVectors( GetAbsAngles(), &m_skyboxData.fog.dirPrimary.GetForModify() );
-		m_skyboxData.fog.dirPrimary.GetForModify() *= -1.0f; 
+		m_skyboxData.fog.dirPrimary.GetForModify() *= -1.0f;
 	}
 
 #ifdef HL2_DLL
@@ -127,7 +127,7 @@ void CSkyCamera::Activate( )
 	// on the client DLL that caused it to use the average of the primary and
 	// secondary fog color when blending was enabled. The bug is fixed, but to make
 	// the maps look the same as before the bug fix without having to download new maps,
-	// I have to cheat here and slam the primary and secondary colors to be the average of 
+	// I have to cheat here and slam the primary and secondary colors to be the average of
 	// the primary and secondary colors.
 	if ( m_skyboxData.fog.blend )
 	{

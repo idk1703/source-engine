@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=====================================================================================//
 
@@ -16,7 +16,7 @@
 
 const char *s_ClientElementNames[MAX_ARRAY_ELEMENTS] =
 {
-	"000", "001", "002", "003", "004", "005", "006", "007", "008", "009", 
+	"000", "001", "002", "003", "004", "005", "006", "007", "008", "009",
 	"010", "011", "012", "013", "014", "015", "016", "017", "018", "019",
 	"020", "021", "022", "023", "024", "025", "026", "027", "028", "029",
 	"030", "031", "032", "033", "034", "035", "036", "037", "038", "039",
@@ -135,7 +135,7 @@ CStandardRecvProxies::CStandardRecvProxies()
 }
 
 CStandardRecvProxies g_StandardRecvProxies;
-	
+
 
 // ---------------------------------------------------------------------- //
 // RecvProp.
@@ -190,10 +190,10 @@ void RecvTable::Construct( RecvProp *pProps, int nProps, const char *pNetTableNa
 // ---------------------------------------------------------------------- //
 
 RecvProp RecvPropFloat(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar,
-	int flags, 
+	int flags,
 	RecvVarProxyFn varProxy
 	)
 {
@@ -216,10 +216,10 @@ RecvProp RecvPropFloat(
 }
 
 RecvProp RecvPropVector(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar,
-	int flags, 
+	int flags,
 	RecvVarProxyFn varProxy
 	)
 {
@@ -242,10 +242,10 @@ RecvProp RecvPropVector(
 }
 
 RecvProp RecvPropVectorXY(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar,
-	int flags, 
+	int flags,
 	RecvVarProxyFn varProxy
 	)
 {
@@ -270,10 +270,10 @@ RecvProp RecvPropVectorXY(
 #if 0 // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 
 RecvProp RecvPropQuaternion(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar,	// Handled by RECVINFO macro, but set to SIZEOF_IGNORE if you don't want to bother.
-	int flags, 
+	int flags,
 	RecvVarProxyFn varProxy
 	)
 {
@@ -297,10 +297,10 @@ RecvProp RecvPropQuaternion(
 #endif
 
 RecvProp RecvPropInt(
-	const char *pVarName, 
-	int offset, 
+	const char *pVarName,
+	int offset,
 	int sizeofVar,
-	int flags, 
+	int flags,
 	RecvVarProxyFn varProxy
 	)
 {
@@ -321,7 +321,7 @@ RecvProp RecvPropInt(
 		{
 			varProxy = RecvProxy_Int32ToInt32;
 		}
-#ifdef SUPPORTS_INT64		
+#ifdef SUPPORTS_INT64
 		else if (sizeofVar == 8)
 		{
 			varProxy = RecvProxy_Int64ToInt64;
@@ -393,7 +393,7 @@ RecvProp RecvPropArray3(
 	int sizeofVar,
 	int elements,
 	RecvProp pArrayProp,
-	DataTableRecvVarProxyFn varProxy						
+	DataTableRecvVarProxyFn varProxy
 	)
 {
 	RecvProp ret;
@@ -411,7 +411,7 @@ RecvProp RecvPropArray3(
 
 	for ( int i=0; i < elements; i++ )
 	{
-		pProps[i] = pArrayProp; // copy basic property settings 
+		pProps[i] = pArrayProp; // copy basic property settings
 		pProps[i].SetOffset( i * sizeofVar ); // adjust offset
 		pProps[i].m_pVarName = s_ClientElementNames[i]; // give unique name
 		pProps[i].SetParentArrayPropName( pParentArrayPropName ); // For debugging...
@@ -454,7 +454,7 @@ void RecvProxy_FloatToFloat( const CRecvProxyData *pData, void *pStruct, void *p
 void RecvProxy_VectorToVector( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	const float *v = pData->m_Value.m_Vector;
-	
+
 	Assert( IsFinite( v[0] ) && IsFinite( v[1] ) && IsFinite( v[2] ) );
 	((float*)pOut)[0] = v[0];
 	((float*)pOut)[1] = v[1];
@@ -464,7 +464,7 @@ void RecvProxy_VectorToVector( const CRecvProxyData *pData, void *pStruct, void 
 void RecvProxy_VectorXYToVectorXY( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	const float *v = pData->m_Value.m_Vector;
-	
+
 	Assert( IsFinite( v[0] ) && IsFinite( v[1] ) );
 	((float*)pOut)[0] = v[0];
 	((float*)pOut)[1] = v[1];
@@ -473,7 +473,7 @@ void RecvProxy_VectorXYToVectorXY( const CRecvProxyData *pData, void *pStruct, v
 void RecvProxy_QuaternionToQuaternion( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
 	const float *v = pData->m_Value.m_Vector;
-	
+
 	Assert( IsFinite( v[0] ) && IsFinite( v[1] ) && IsFinite( v[2] ) && IsFinite( v[3] ) );
 	((float*)pOut)[0] = v[0];
 	((float*)pOut)[1] = v[1];
@@ -517,7 +517,7 @@ void RecvProxy_StringToString( const CRecvProxyData *pData, void *pStruct, void 
 		if ( pStrOut[i] == 0 )
 			break;
 	}
-	
+
 	pStrOut[pData->m_pRecvProp->m_StringBufferSize-1] = 0;
 }
 

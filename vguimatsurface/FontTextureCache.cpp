@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -40,7 +40,7 @@ static int g_FontRenderBoundingBoxes = -1;
 #define TEXTURE_PAGE_HEIGHT	256
 
 // row size
-int CFontTextureCache::s_pFontPageSize[FONT_PAGE_SIZE_COUNT] = 
+int CFontTextureCache::s_pFontPageSize[FONT_PAGE_SIZE_COUNT] =
 {
 	16,
 	32,
@@ -60,7 +60,7 @@ CON_COMMAND( mat_texture_outline_fonts, "Outline fonts textures." )
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
-CFontTextureCache::CFontTextureCache() 
+CFontTextureCache::CFontTextureCache()
 	: m_CharCache(0, 256, CacheEntryLessFunc)
 {
 	Clear();
@@ -144,7 +144,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 			Assert( 0 );
 			return false;
 		}
-	
+
 		for ( int i = 0; i < numChars; i++ )
 		{
 			static float	sTexCoords[ 4*MAX_BITMAP_CHARS ];
@@ -152,7 +152,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 			float			left, top, right, bottom;
 			int				index;
 			Page_t			*pPage;
-			
+
 			pWinFont = reinterpret_cast< CBitmapFont* >( FontManager().GetFontForChar( font, wch[i] ) );
 			if ( !pWinFont )
 			{
@@ -194,7 +194,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 			int	drawX;	// X location within the font page
 			int	drawY;	// Y location within the font page
 		};
-		
+
 		// Determine how many characters need to have their texture generated
 		int numNewChars = 0;
 		int maxNewCharTexels = 0;
@@ -205,7 +205,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 		font_t *winFont = FontManager().GetFontForChar( font, wch[0] );
 		if ( !winFont )
 			return false;
-		
+
 		for ( int i = 0; i < numChars; i++ )
 		{
 			CacheEntry_t cacheItem;
@@ -260,7 +260,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 				cacheHandle = m_CharCache.Find( cacheItem );
 				Assert( m_CharCache.IsValidIndex( cacheHandle ) );
 			}
-			
+
 			int page = m_CharCache[cacheHandle].page;
 			textureID[i] = m_PageList[page].textureID[typePage];
 			texCoords[i] = m_CharCache[cacheHandle].texCoords;
@@ -287,7 +287,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 					newChar_t		& newChar	= newChars[i];
 					newPageEntry_t	& newEntry	= newEntries[i];
 
-					// upload the new sub texture 
+					// upload the new sub texture
 					// NOTE: both textureIDs reference the same ITexture, so we're ok
 					g_MatSystemSurface.DrawSetTexture( m_PageList[newEntry.page].textureID[typePage] );
 					unsigned char *characterRGBA = pRGBA + newChar.offset;
@@ -338,7 +338,7 @@ bool CFontTextureCache::GetTextureForChars( vgui::HFont font, vgui::FontDrawType
 						}
 					}
 
-					// upload the new sub texture 
+					// upload the new sub texture
 					// NOTE: both textureIDs reference the same ITexture, so we're ok)
 					g_MatSystemSurface.DrawSetTexture( m_PageList[newEntry.page].textureID[typePage] );
 					g_MatSystemSurface.DrawSetSubTextureRGBA( m_PageList[newEntry.page].textureID[typePage], newEntry.drawX, newEntry.drawY, pRGBA, newChar.fontWide, newChar.fontTall );
@@ -419,9 +419,9 @@ bool CFontTextureCache::AllocatePageForChar(int charWide, int charTall, int &pag
 	if ( nPageType < 0 )
 	{
 		Assert( !"Font is too tall for texture cache of glyphs\n" );
-		return false; 
+		return false;
 	}
-	
+
 	pageIndex = m_pCurrPage[nPageType];
 
 	int nNextX = 0;
@@ -445,7 +445,7 @@ bool CFontTextureCache::AllocatePageForChar(int charWide, int charTall, int &pag
 
 		bNeedsNewPage = ((page.nextY + page.tallestCharOnLine) > page.tall);
 	}
-	
+
 	if ( bNeedsNewPage )
 	{
 		// allocate a new page
@@ -473,13 +473,13 @@ bool CFontTextureCache::AllocatePageForChar(int charWide, int charTall, int &pag
 		++nFontPageId;
 
 		MEM_ALLOC_CREDIT();
-		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture( 
-			pTextureName, 
-			TEXTURE_GROUP_VGUI, 
-			newPage.wide, 
-			newPage.tall, 
-			IMAGE_FORMAT_RGBA8888, 
-			TEXTUREFLAGS_POINTSAMPLE | TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | 
+		ITexture *pTexture = g_pMaterialSystem->CreateProceduralTexture(
+			pTextureName,
+			TEXTURE_GROUP_VGUI,
+			newPage.wide,
+			newPage.tall,
+			IMAGE_FORMAT_RGBA8888,
+			TEXTUREFLAGS_POINTSAMPLE | TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT |
 			TEXTUREFLAGS_NOMIP | TEXTUREFLAGS_NOLOD | TEXTUREFLAGS_PROCEDURAL | TEXTUREFLAGS_SINGLECOPY );
 
 		CreateFontMaterials( newPage, pTexture );

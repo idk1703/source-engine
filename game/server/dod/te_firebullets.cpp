@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -40,12 +40,12 @@ public:
 	CNetworkVar( int, m_iMode );
 	CNetworkVar( int, m_iSeed );
 	CNetworkVar( float, m_flSpread );
-	
+
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CTEFireBullets::CTEFireBullets( const char *name ) :
 	CBaseTempEntity( name )
@@ -53,22 +53,22 @@ CTEFireBullets::CTEFireBullets( const char *name ) :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTEFireBullets::~CTEFireBullets( void )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : msg_dest - 
-//			delay - 
-//			*origin - 
-//			*recipient - 
+// Purpose:
+// Input  : msg_dest -
+//			delay -
+//			*origin -
+//			*recipient -
 //-----------------------------------------------------------------------------
 void CTEFireBullets::Create( IRecipientFilter& filter, float delay )
 {
-	engine->PlaybackTempEntity( filter, delay, 
+	engine->PlaybackTempEntity( filter, delay,
 		(void *)this, GetServerClass()->m_pTable, GetServerClass()->m_ClassID );
 }
 
@@ -80,7 +80,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE(CTEFireBullets, DT_TEFireBullets)
 	SendPropInt( SENDINFO( m_iMode ), 1, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_iSeed ), NUM_BULLET_SEED_BITS, SPROP_UNSIGNED ),
 	SendPropInt( SENDINFO( m_iPlayer ), 6, SPROP_UNSIGNED ), 	// max 64 players, see MAX_PLAYERS
-	SendPropFloat( SENDINFO( m_flSpread ), 10, 0, 0, 1 ),	
+	SendPropFloat( SENDINFO( m_flSpread ), 10, 0, 0, 1 ),
 END_SEND_TABLE()
 
 
@@ -88,7 +88,7 @@ END_SEND_TABLE()
 static CTEFireBullets g_TEFireBullets( "FireBullets" );
 
 
-void TE_FireBullets( 
+void TE_FireBullets(
 	int	iPlayerIndex,
 	const Vector &vOrigin,
 	const QAngle &vAngles,
@@ -109,6 +109,6 @@ void TE_FireBullets(
 	g_TEFireBullets.m_iWeaponID = iWeaponID;
 
 	Assert( iSeed < (1 << NUM_BULLET_SEED_BITS) );
-	
+
 	g_TEFireBullets.Create( filter, 0 );
 }

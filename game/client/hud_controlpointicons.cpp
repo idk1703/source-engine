@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -19,7 +19,7 @@
 #include "tf_hud_objectivestatus.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIconPulseable::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -32,7 +32,7 @@ void CControlPointIconPulseable::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIconPulseable::OnSizeChanged(int newWide, int newTall)
 {
@@ -45,7 +45,7 @@ void CControlPointIconPulseable::OnSizeChanged(int newWide, int newTall)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIconPulseable::PaintBackground( void )
 {
@@ -92,7 +92,7 @@ void CControlPointIconPulseable::PaintBackground( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIconPulseable::StartPulsing( float flDelay, float flPulseTime, bool bAccelerate )
 {
@@ -102,7 +102,7 @@ void CControlPointIconPulseable::StartPulsing( float flDelay, float flPulseTime,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIconPulseable::StopPulsing( void )
 {
@@ -110,7 +110,7 @@ void CControlPointIconPulseable::StopPulsing( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CControlPointIcon::CControlPointIcon( Panel *parent, const char *pName, int iIndex ) : vgui::EditablePanel( parent, "ControlPointIcon" ), CHudElement( pName )
 {
@@ -141,7 +141,7 @@ CControlPointIcon::CControlPointIcon( Panel *parent, const char *pName, int iInd
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -221,7 +221,7 @@ void CControlPointIcon::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::FireGameEvent( IGameEvent *event )
 {
@@ -248,7 +248,7 @@ void CControlPointIcon::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CControlPointIcon::~CControlPointIcon( void )
 {
@@ -278,7 +278,7 @@ CControlPointIcon::~CControlPointIcon( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::UpdateImage( void )
 {
@@ -331,11 +331,11 @@ void CControlPointIcon::UpdateImage( void )
 			}
 			m_pBaseImage->StartPulsing( FINISHCAPANIM_SWOOP_LENGTH, 0.5, false );
 		}
-		
+
 	}
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::UpdateCapImage( void )
 {
@@ -464,7 +464,7 @@ void CControlPointIcon::FakePulse( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CControlPointIcon::IsVisible( void )
 {
@@ -475,7 +475,7 @@ bool CControlPointIcon::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::Paint( void )
 {
@@ -493,7 +493,7 @@ void CControlPointIcon::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::PerformLayout( void )
 {
@@ -504,7 +504,7 @@ void CControlPointIcon::PerformLayout( void )
 
 	m_pBaseImage->SetBounds( 0, 0, GetWide(), GetTall() );
 	m_pCountdown->SetBounds( 0, 0, GetWide(), GetTall() );
-	
+
 	if ( m_pCapImage->IsVisible() )
 	{
 		m_pCapImage->SetBounds( 0, 0, GetWide(), GetTall() );
@@ -570,7 +570,7 @@ void CControlPointIcon::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::OnTick( void )
 {
@@ -606,7 +606,7 @@ void CControlPointIcon::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIcon::SetTimerTime( float flTime )
 {
@@ -626,7 +626,7 @@ void CControlPointIcon::SetTimerTime( float flTime )
 
 			m_pCPTimerBG->SetPos( xPos, yPos );
 			m_pCPTimerBG->SetVisible( true );
-	
+
 			m_bRedText = false;
 			m_pCPTimerLabel->SetFgColor( m_cRegularColor ); // reset our color
 			m_pCPTimerLabel->SetPos( xPos + GetWide() - XRES(1), yPos + ( GetTall() / 2 ) - ( m_pCPTimerLabel->GetTall() / 2 ) );
@@ -637,7 +637,7 @@ void CControlPointIcon::SetTimerTime( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudControlPointIcons::CHudControlPointIcons( const char *pName ) : vgui::Panel( NULL, "HudControlPointIcons" ), CHudElement( pName )
 {
@@ -669,7 +669,7 @@ CHudControlPointIcons::CHudControlPointIcons( const char *pName ) : vgui::Panel(
 DECLARE_HUDELEMENT( CHudControlPointIcons );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CHudControlPointIcons::~CHudControlPointIcons( void )
 {
@@ -705,7 +705,7 @@ CHudControlPointIcons::~CHudControlPointIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::Init( void )
 {
@@ -715,7 +715,7 @@ void CHudControlPointIcons::Init( void )
 		{
 			m_iCPTextures[i] = vgui::surface()->CreateNewTextureID();
 		}
-		
+
 		if ( m_iCPCappingTextures[i] == -1 )
 		{
 			m_iCPCappingTextures[i] = vgui::surface()->CreateNewTextureID();
@@ -744,7 +744,7 @@ void CHudControlPointIcons::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::Reset( void )
 {
@@ -755,7 +755,7 @@ void CHudControlPointIcons::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CHudControlPointIcons::IsVisible( void )
 {
@@ -769,7 +769,7 @@ bool CHudControlPointIcons::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::LevelShutdown( void )
 {
@@ -777,7 +777,7 @@ void CHudControlPointIcons::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::FireGameEvent( IGameEvent *event )
 {
@@ -947,7 +947,7 @@ void CHudControlPointIcons::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -960,7 +960,7 @@ void CHudControlPointIcons::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::PerformLayout( void )
 {
@@ -978,7 +978,7 @@ void CHudControlPointIcons::PerformLayout( void )
 			bUseDefaultLines = false;
 
 			// Cap layout is a string with indexes of cap points seperated by ',' to denote
-			// a new line. So "3,1 2" would create a pyramid, with cap point 3 on the 
+			// a new line. So "3,1 2" would create a pyramid, with cap point 3 on the
 			// first line, and caps 1 & 2 on the second line.
 			int iLine = 0;
 			int iCapIndex = 0;
@@ -1040,7 +1040,7 @@ void CHudControlPointIcons::PerformLayout( void )
 			}
 		}
 	}
-	
+
 	if ( bUseDefaultLines )
 	{
 		// By default, put all the caps on a single line
@@ -1125,7 +1125,7 @@ void CHudControlPointIcons::PerformLayout( void )
 	}
 	SetBounds( flPositionX, flPositionY, iWidest, iTall );
 
-	// Now that we know how wide we are, and how many icons are in each line, 
+	// Now that we know how wide we are, and how many icons are in each line,
 	// we can lay the icons out, centered in the lines.
 	for ( int iLine = 0; iLine < MAX_CONTROL_POINTS; iLine++ )
 	{
@@ -1174,7 +1174,7 @@ void CHudControlPointIcons::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::UpdateProgressBarFor( int iIndex )
 {
@@ -1245,7 +1245,7 @@ void CHudControlPointIcons::InitIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::ShutdownIcons( void )
 {
@@ -1269,7 +1269,7 @@ void CHudControlPointIcons::ShutdownIcons( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::DrawBackgroundBox( int xpos, int ypos, int nBoxWidth, int nBoxHeight, bool bCutCorner )
 {
@@ -1324,13 +1324,13 @@ bool CHudControlPointIcons::PaintTeamBaseIcon( int index, float flXPos, float fl
 				Vector2D uv22( uv2, uv2 );
 				Vector2D uv12( uv1, uv2 );
 
-				vgui::Vertex_t vert[4];	
+				vgui::Vertex_t vert[4];
 				vert[0].Init( Vector2D( flXPos,					flYPos              ), uv11 );
 				vert[1].Init( Vector2D( flXPos + flIconSize,	flYPos              ), uv21 );
-				vert[2].Init( Vector2D( flXPos + flIconSize,	flYPos + flIconSize ), uv22 );				
+				vert[2].Init( Vector2D( flXPos + flIconSize,	flYPos + flIconSize ), uv22 );
 				vert[3].Init( Vector2D( flXPos,					flYPos + flIconSize ), uv12 );
 
-				vgui::surface()->DrawSetColor( Color(255,255,255,255) );	
+				vgui::surface()->DrawSetColor( Color(255,255,255,255) );
 				vgui::surface()->DrawTexturedPolygon( 4, vert );
 
 				return true;
@@ -1342,7 +1342,7 @@ bool CHudControlPointIcons::PaintTeamBaseIcon( int index, float flXPos, float fl
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CHudControlPointIcons::Paint()
 {
@@ -1377,7 +1377,7 @@ CControlPointProgressBar::CControlPointProgressBar(Panel *parent) : vgui::Editab
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointProgressBar::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1399,7 +1399,7 @@ void CControlPointProgressBar::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointProgressBar::PerformLayout( void )
 {
@@ -1445,13 +1445,13 @@ void CControlPointProgressBar::PerformLayout( void )
 			iYPos = iIconY - GetTall();
 			break;
 		}
-		
+
 		SetPos( iXPos, iYPos );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointProgressBar::Reset( void )
 {
@@ -1459,7 +1459,7 @@ void CControlPointProgressBar::Reset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CControlPointProgressBar::IsVisible( void )
 {
@@ -1473,7 +1473,7 @@ bool CControlPointProgressBar::IsVisible( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointProgressBar::Paint( void )
 {
@@ -1481,7 +1481,7 @@ void CControlPointProgressBar::Paint( void )
 	{
 		int iCP = m_pAttachedToIcon->GetCapIndex();
 		if ( m_pBar && m_pBar->IsVisible() )
-		{						
+		{
 			m_pBar->SetProgress( ObjectiveResource()->GetCPCapPercentage( iCP ) );
 		}
 	}
@@ -1490,7 +1490,7 @@ void CControlPointProgressBar::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointProgressBar::SetupForPoint( CControlPointIcon *pIcon )
 {
@@ -1524,7 +1524,7 @@ void CControlPointProgressBar::SetupForPoint( CControlPointIcon *pIcon )
 		{
 			m_pBar->SetVisible( false );
 			m_pBlocked->SetVisible( true );
-			
+
 			UpdateBarText();
 		}
 
@@ -1537,7 +1537,7 @@ void CControlPointProgressBar::SetupForPoint( CControlPointIcon *pIcon )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointProgressBar::UpdateBarText( void )
 {
@@ -1645,9 +1645,9 @@ void CControlPointProgressBar::UpdateBarText( void )
 // CONTROL POINT CAPTURE ARROW SWIPE
 //========================================================================================================================
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-CControlPointIconCapArrow::CControlPointIconCapArrow( CControlPointIcon *pIcon, Panel *parent, const char *name) 
+CControlPointIconCapArrow::CControlPointIconCapArrow( CControlPointIcon *pIcon, Panel *parent, const char *name)
 	: vgui::Panel( parent, name )
 {
 	m_pArrowMaterial = NULL;
@@ -1663,7 +1663,7 @@ bool CControlPointIconCapArrow::IsVisible( void )
 	return BaseClass::IsVisible();
 }
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointIconCapArrow::Paint( void )
 {
@@ -1762,7 +1762,7 @@ void CControlPointIconCapArrow::Paint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CControlPointCountdown::CControlPointCountdown(Panel *parent, const char *name) : vgui::EditablePanel( parent, name )
 {
@@ -1782,7 +1782,7 @@ CControlPointCountdown::CControlPointCountdown(Panel *parent, const char *name) 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointCountdown::ApplySchemeSettings( IScheme *pScheme )
 {
@@ -1793,7 +1793,7 @@ void CControlPointCountdown::ApplySchemeSettings( IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointCountdown::PerformLayout()
 {
@@ -1805,11 +1805,11 @@ void CControlPointCountdown::PerformLayout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointCountdown::SetUnlockTime( float flTime )
-{ 
-	m_flUnlockTime = flTime; 
+{
+	m_flUnlockTime = flTime;
 
 	float flTimeDiff = m_flUnlockTime - gpGlobals->curtime;
 	m_bFire5SecRemain = ( flTimeDiff >= 5.0f );
@@ -1820,7 +1820,7 @@ void CControlPointCountdown::SetUnlockTime( float flTime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CControlPointCountdown::OnTick( void )
 {
@@ -1836,7 +1836,7 @@ void CControlPointCountdown::OnTick( void )
 		return;
 	}
 
-	if ( TeamplayRoundBasedRules() ) 
+	if ( TeamplayRoundBasedRules() )
 	{
 		if ( TeamplayRoundBasedRules()->IsInWaitingForPlayers() || TeamplayRoundBasedRules()->State_Get() != GR_STATE_RND_RUNNING )
 		{

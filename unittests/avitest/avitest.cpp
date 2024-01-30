@@ -60,7 +60,7 @@ bool CAVITestApp::Create()
 	if ( !BaseClass::Create() )
 		return false;
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "valve_avi.dll",				AVI_INTERFACE_VERSION },
 		{ "valve_avi.dll",				BIK_INTERFACE_VERSION },
@@ -144,7 +144,7 @@ void CAVITestApp::DrawStuff( AVIMaterial_t hMaterial )
 	pMesh->Draw();
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // main application
 //-----------------------------------------------------------------------------
@@ -197,8 +197,8 @@ int CAVITestApp::Main()
 	while ( g_pVGui->IsRunning() )
 	{
 		AppPumpMessages();
-	
-		pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+
+		pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 		pRenderContext->ClearBuffers( true, true );
 
 		DrawStuff( hAVIMaterial );
@@ -213,7 +213,7 @@ int CAVITestApp::Main()
 		rect.width = params.m_nWidth;
 		rect.height = params.m_nHeight;
 
-		pRenderContext->ReadPixelsAndStretch( &rect, &rect, (unsigned char*)hp, 
+		pRenderContext->ReadPixelsAndStretch( &rect, &rect, (unsigned char*)hp,
 			IMAGE_FORMAT_BGR888, rect.width * sizeof( BGR888_t ) );
 		g_pAVI->AppendMovieFrame( h, hp );
 
@@ -228,6 +228,3 @@ int CAVITestApp::Main()
 
 	return 1;
 }
-
-
-

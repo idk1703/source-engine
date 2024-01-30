@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -224,7 +224,7 @@ public:
 		for (KeyValues *control = kv->GetFirstSubKey(); control != NULL; control = control->GetNextKey())
 		{
 			const char *t;
-			
+
 			t = control->GetString( "command", "" );
 			if ( t && t[0] )
 			{
@@ -246,7 +246,7 @@ public:
 				m_LayoutItems.AddToTail( increment );
 				continue;
 			}
-			
+
 		}
 	}
 
@@ -285,13 +285,13 @@ public:
 
 					CDebugOptionsPage *page = new CDebugOptionsPage( this, dat->GetName() );
 					page->Init( dat );
-	
+
 					AddPage( page, dat->GetName() );
 				}
 			}
 			kv->deleteThis();
 		}
-	
+
 		GetPropertySheet()->SetTabWidth(72);
 		SetPos( videomode->GetModeStereoWidth() - GetWide() - 10 , 10 );
 		SetVisible( true );
@@ -329,8 +329,8 @@ CDebugMenuButton::CDebugMenuButton(Panel *parent, const char *panelName, const c
 
 //-----------------------------------------------------------------------------
 // Purpose: Container for menu button
-// Input  : *parent - 
-//			*panelName - 
+// Input  : *parent -
+//			*panelName -
 //-----------------------------------------------------------------------------
 CDebugSystemPanel::CDebugSystemPanel( Panel *parent, const char *panelName )
 	: BaseClass( parent, panelName )
@@ -345,7 +345,7 @@ CDebugSystemPanel::CDebugSystemPanel( Panel *parent, const char *panelName )
 	SetPaintBackgroundEnabled( false );
 
 	m_pDebugMenu = new CDebugMenuButton( this, "Debug Menu", "Debug Menu" );
-	
+
 	int h = 24;
 	// Locate it at top left
 	m_pDebugMenu->SetPos( 0, 0 );
@@ -356,7 +356,7 @@ CDebugSystemPanel::CDebugSystemPanel( Panel *parent, const char *panelName )
 
 //-----------------------------------------------------------------------------
 // Purpose: Hook so we can force cursor visible
-// Input  : state - 
+// Input  : state -
 //-----------------------------------------------------------------------------
 void CDebugSystemPanel::SetVisible( bool state )
 {

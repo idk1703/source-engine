@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -62,7 +62,7 @@ IVModeManager *modemanager = ( IVModeManager * )&g_ModeManager;
 void CSDKModeManager::Init()
 {
 	g_pClientMode = GetClientModeNormal();
-	
+
 	PanelMetaClassMgr()->LoadMetaClassDefinitionFile( SCREEN_FILE );
 }
 
@@ -77,7 +77,7 @@ void CSDKModeManager::LevelShutdown( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModeSDKNormal::ClientModeSDKNormal()
 {
@@ -125,7 +125,3 @@ int ClientModeSDKNormal::GetDeathMessageStartHeight( void )
 void ClientModeSDKNormal::PostRenderVGui()
 {
 }
-
-
-
-

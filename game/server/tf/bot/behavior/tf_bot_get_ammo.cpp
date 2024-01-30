@@ -55,7 +55,7 @@ public:
 			if ( !m_ammoArea->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE | TF_NAV_SPAWN_ROOM_RED ) )
 			{
 				// Assume any resupply cabinets not in a teamed spawn room are inaccessible.
-				// Ex: pl_upward has forward spawn rooms that neither team can use until 
+				// Ex: pl_upward has forward spawn rooms that neither team can use until
 				// certain checkpoints are reached.
 				return false;
 			}

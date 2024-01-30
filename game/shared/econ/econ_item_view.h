@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -24,7 +24,7 @@
 #include "tf_item_schema.h"
 #endif
 
-#if defined(CLIENT_DLL) 
+#if defined(CLIENT_DLL)
 #define CEconItemView C_EconItemView
 #endif
 
@@ -42,7 +42,7 @@ class CEconItemAttribute;
 class CAttributeManager;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CAttributeList
 {
@@ -78,7 +78,7 @@ public:
 	// Returns the attribute that matches the attribute id
 	const CEconItemAttribute	*GetAttributeByID( int iAttributeID ) const;
 
-	// The only way to set the value of an attribute after its creation is through the attribute list 
+	// The only way to set the value of an attribute after its creation is through the attribute list
 	// that contains it. This way the matching attribute manager is told one of its attributes has changed.
 	void					SetRuntimeAttributeValue( const CEconItemAttributeDefinition *pAttrDef, float flValue );
 #if ENABLE_ATTRIBUTE_CURRENCY_TRACKING
@@ -138,7 +138,7 @@ public:
 #endif // ENABLE_ATTRIBUTE_CURRENCY_TRACKING
 
 private:
-	// The only way to set the value of an attribute after its creation is through the attribute list 
+	// The only way to set the value of an attribute after its creation is through the attribute list
 	// that contains it. This way the matching attribute manager is told one of its attributes has changed.
 
 	// Set the float value of this attribute.
@@ -279,7 +279,7 @@ public:
 
 	// Access the inventory position of this item
 	void					SetInventoryPosition( uint32 iPosition ) { m_iInventoryPosition = iPosition; }
-	const uint32			GetInventoryPosition( void ) const { return m_iInventoryPosition; } 
+	const uint32			GetInventoryPosition( void ) const { return m_iInventoryPosition; }
 
 	// Return the model to use for model panels containing this item
 	const char				*GetInventoryModel( void );
@@ -300,7 +300,7 @@ public:
 
 	// Return the load-out slot that this item must be placed into
 	int						GetAnimationSlot( void ) const;
-	
+
 	// Return an int that indicates whether the item should be dropped from a dead owner.
 	int						GetDropType( void );
 
@@ -330,7 +330,7 @@ public:
 	// ...
 	CAttributeList			 *GetAttributeList() { return &m_AttributeList; }
 	const CAttributeList	 *GetAttributeList() const { return &m_AttributeList; }
-	
+
 public:
 	virtual CEconItemPaintKitDefinition *GetCustomPainkKitDefinition( void ) const { return GetItemDefinition()->GetCustomPainkKitDefinition(); }
 
@@ -360,7 +360,7 @@ public:
 
 protected:
 	// Index of the item definition in the item script file.
-	CNetworkVar( item_definition_index_t,	m_iItemDefinitionIndex );	
+	CNetworkVar( item_definition_index_t,	m_iItemDefinitionIndex );
 
 	// The quality of this item.
 	CNetworkVar( int,		m_iEntityQuality );
@@ -387,7 +387,7 @@ protected:
 	bool					m_bIsTradeItem;
 	int						m_iEntityQuantity;
 	uint8					m_unClientFlags;
-	
+
 	// clients have the ability to force a style on an item view -- this is used for store previews,
 	// character panels, etc.
 	style_index_t			m_unOverrideStyle;

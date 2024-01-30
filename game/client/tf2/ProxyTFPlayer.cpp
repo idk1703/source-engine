@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -194,5 +194,3 @@ void CPlayerScoreProxy::OnBind( void *pArg )
 }
 
 EXPOSE_INTERFACE( CPlayerScoreProxy, IMaterialProxy, "PlayerScore" IMATERIAL_PROXY_INTERFACE_VERSION );
-
-

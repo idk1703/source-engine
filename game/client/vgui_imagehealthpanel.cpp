@@ -30,7 +30,7 @@ CEntityImageHealthPanel::CEntityImageHealthPanel( vgui::Panel *parent, const cha
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CEntityImageHealthPanel::~CEntityImageHealthPanel()
 {
@@ -133,7 +133,7 @@ void CEntityImageHealthPanel::OnTick()
 	{
 		if ( m_CommanderHealthBar )
 			m_CommanderHealthBar->SetVisible( false );
-		if ( m_NormalHealthBar ) 
+		if ( m_NormalHealthBar )
 			m_NormalHealthBar->SetVisible( false );
 		if ( m_ResourceLevelBar )
 			m_ResourceLevelBar->SetVisible( false );
@@ -144,7 +144,7 @@ void CEntityImageHealthPanel::OnTick()
 	{
 		if ( m_CommanderHealthBar )
 			m_CommanderHealthBar->SetVisible( true );
-		if ( m_NormalHealthBar ) 
+		if ( m_NormalHealthBar )
 			m_NormalHealthBar->SetVisible( false );
 		if ( m_ResourceLevelBar )
 			m_ResourceLevelBar->SetVisible( true );
@@ -155,7 +155,7 @@ void CEntityImageHealthPanel::OnTick()
 	{
 		if ( m_CommanderHealthBar )
 			m_CommanderHealthBar->SetVisible( false );
-		if ( m_NormalHealthBar ) 
+		if ( m_NormalHealthBar )
 			m_NormalHealthBar->SetVisible( true );
 		if ( m_ResourceLevelBar )
 			m_ResourceLevelBar->SetVisible( true );
@@ -174,7 +174,7 @@ void CEntityImageHealthPanel::ComputeAndSetSize( void )
 	// Now update the bars
 	if ( m_CommanderHealthBar )
 		m_CommanderHealthBar->SetSize( GetWide(), m_CommanderHealthBar->GetTall() );
-	if ( m_NormalHealthBar ) 
+	if ( m_NormalHealthBar )
 		m_NormalHealthBar->SetSize( GetWide(), m_CommanderHealthBar->GetTall() );
 	if ( m_ResourceLevelBar )
 		m_ResourceLevelBar->SetSize( GetWide(), m_CommanderHealthBar->GetTall() );

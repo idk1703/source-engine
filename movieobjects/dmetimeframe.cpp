@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #include "movieobjects/dmetimeframe.h"
@@ -12,13 +12,13 @@
 
 
 //-----------------------------------------------------------------------------
-// Class factory 
+// Class factory
 //-----------------------------------------------------------------------------
 IMPLEMENT_ELEMENT_FACTORY( DmeTimeFrame, CDmeTimeFrame );
 
 
 //-----------------------------------------------------------------------------
-// Constructor, destructor 
+// Constructor, destructor
 //-----------------------------------------------------------------------------
 void CDmeTimeFrame::OnConstruction()
 {

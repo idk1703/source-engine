@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,7 +35,7 @@ protected:
 	virtual void OnThink();
 
 private:
-	
+
 	void UpdateAmmoLabels( bool bPrimary, bool bReserve, bool bNoClip );
 	void ShowLowAmmoIndicator( void );
 	void SizeLowAmmoIndicator( float flCurrentAmount, float flMaxAmount );

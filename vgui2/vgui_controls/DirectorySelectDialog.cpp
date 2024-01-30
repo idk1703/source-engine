@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -66,7 +66,7 @@ public:
 		m_pNameEntry->SetText(defaultCreateDirName);
 		m_pNameEntry->RequestFocus();
 		m_pNameEntry->SelectAllText(true);
-	
+
 		// If some other window was hogging the input focus, then we have to hog it or else we'll never get input.
 		m_PrevAppFocusPanel = vgui::input()->GetAppModalSurface();
 		if ( m_PrevAppFocusPanel )
@@ -195,7 +195,7 @@ inline const char *MoveToNextSubDir( const char *pStart, int *nCount )
 	{
 		*nCount = nMoved;
 	}
-	
+
 	// The beginning of the next string, past slash
 	return (pStart+nMoved);
 }
@@ -211,7 +211,7 @@ void DirectorySelectDialog::ExpandTreeToPath( const char *lpszPath, bool bSelect
 	char workPath[MAX_PATH];
 	Q_strncpy( workPath, lpszPath, sizeof(workPath) );
 	Q_FixSlashes( workPath );
-	
+
 	// Set us to the work drive
 	SetStartDirectory( workPath );
 
@@ -224,10 +224,10 @@ void DirectorySelectDialog::ExpandTreeToPath( const char *lpszPath, bool bSelect
 
 	// Start at the root of our tree
 	int nItemIndex = m_pDirTree->GetRootItemIndex();
-	
+
 	// Move past the drive letter to the first subdir
 	int nPathPos = 0;
-	const char *lpszSubDirName = MoveToNextSubDir( workPath, &nPathPos ); 
+	const char *lpszSubDirName = MoveToNextSubDir( workPath, &nPathPos );
 	const char *lpszLastSubDirName = NULL;
 	int nPathIncr = 0;
 	char subDirName[MAX_PATH];
@@ -368,7 +368,7 @@ void DirectorySelectDialog::BuildDirTree()
 
 	// build first level of the tree
 	ExpandTreeNode(m_szCurrentDrive, rootIndex);
-	
+
 	// start the root expanded
 	m_pDirTree->ExpandItem(rootIndex, true);
 }
@@ -397,14 +397,14 @@ void DirectorySelectDialog::ExpandTreeNode(const char *path, int parentNodeIndex
 		// set the folder image
 		kv->SetInt("Image", 1);
 		kv->SetInt("SelectedImage", 1);
-		kv->SetInt("Expand", DoesDirectoryHaveSubdirectories(path, pFileName));	
+		kv->SetInt("Expand", DoesDirectoryHaveSubdirectories(path, pFileName));
 		m_pDirTree->AddItem(kv, parentNodeIndex);
 	}
 	g_pFullFileSystem->FindClose( h );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool DirectorySelectDialog::DoesDirectoryHaveSubdirectories(const char *path, const char *dir)
 {
@@ -417,7 +417,7 @@ bool DirectorySelectDialog::DoesDirectoryHaveSubdirectories(const char *path, co
 	{
 		char szFullPath[ MAX_PATH ];
 		Q_snprintf( szFullPath, sizeof(szFullPath), "%s\\%s", path, pFileName );
-		Q_FixSlashes( szFullPath ); 
+		Q_FixSlashes( szFullPath );
 		if ( g_pFullFileSystem->IsDirectory( szFullPath ) )
 		{
 			g_pFullFileSystem->FindClose( h );

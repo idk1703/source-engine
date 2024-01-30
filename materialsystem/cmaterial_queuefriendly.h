@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -64,7 +64,7 @@ public:
 	virtual IMaterialVar *	FindVarFast( char const *pVarName, unsigned int *pToken );
 	virtual IMaterialVar	**GetShaderParams( void );
 	virtual void			DecrementReferenceCount( void );
-	virtual void			DeleteIfUnreferenced();	
+	virtual void			DeleteIfUnreferenced();
 	virtual void			RecomputeStateSnapshots();
 	virtual bool			IsTranslucent();
 	virtual bool			NeedsPowerOfTwoFrameBufferTexture( bool bCheckSpecificToThisFrame = true );
@@ -149,7 +149,7 @@ public:
 protected:
 	IMaterialInternal *m_pRealTimeVersion; //the material we're wrapping with queued delays
 
-private:	
+private:
 	//some calls need to know what state the material would be in right now if the queue had completed.
 	float m_fAlphaModulationOnQueueCompletion;
 	Vector m_vColorModulationOnQueueCompletion;
@@ -159,4 +159,3 @@ private:
 
 
 #endif //#ifndef CMATERIAL_QUEUEFRIENDLY_H
-

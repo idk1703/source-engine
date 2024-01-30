@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -33,7 +33,7 @@ vgui::HScheme g_hVGuiCombineScheme = 0;
 
 #define SCREEN_FILE		"scripts/vgui_screens.txt"
 
-//void MsgFunc_KillCam(bf_read &msg) 
+//void MsgFunc_KillCam(bf_read &msg)
 //{
 //	C_Portal_Player *pPlayer = C_Portal_Player::GetLocalPortalPlayer();
 //
@@ -48,7 +48,7 @@ vgui::HScheme g_hVGuiCombineScheme = 0;
 //	long iEncodedEHandle = msg.ReadLong();
 //
 //	if( iEncodedEHandle == INVALID_NETWORKED_EHANDLE_VALUE )
-//		return;	
+//		return;
 //
 //	int iEntity = iEncodedEHandle & ((1 << MAX_EDICT_BITS) - 1);
 //	int iSerialNum = iEncodedEHandle >> MAX_EDICT_BITS;
@@ -58,7 +58,7 @@ vgui::HScheme g_hVGuiCombineScheme = 0;
 //	iEncodedEHandle = msg.ReadLong();
 //
 //	if( iEncodedEHandle == INVALID_NETWORKED_EHANDLE_VALUE )
-//		return;	
+//		return;
 //
 //	iEntity = iEncodedEHandle & ((1 << MAX_EDICT_BITS) - 1);
 //	iSerialNum = iEncodedEHandle >> MAX_EDICT_BITS;
@@ -115,7 +115,7 @@ IViewPortPanel* CHudViewport::CreatePanelByName( const char *szPanelName )
 		return newpanel;
 	}*/
 
-	return BaseClass::CreatePanelByName( szPanelName ); 
+	return BaseClass::CreatePanelByName( szPanelName );
 }
 
 
@@ -180,7 +180,7 @@ void CHLModeManager::LevelShutdown( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 ClientModePortalNormal::ClientModePortalNormal()
 {
@@ -224,4 +224,3 @@ ClientModePortalNormal* GetClientModePortalNormal()
 
 static CHLModeManager g_HLModeManager;
 IVModeManager *modemanager = &g_HLModeManager;
-

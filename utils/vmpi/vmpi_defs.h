@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -60,7 +60,7 @@
 #define VMPI_SERVICE_TO_UI_STATE			1	// Updates state reflecting whether it's idle, busy, etc.
 #define VMPI_SERVICE_TO_UI_PATCHING			2	// Updates state reflecting whether it's idle, busy, etc.
 #define VMPI_SERVICE_TO_UI_EXIT				3	// Updates state reflecting whether it's idle, busy, etc.
-	
+
 	// Application state.. these are communicated between the service and the UI.
 	enum
 	{
@@ -84,7 +84,7 @@
 #define VMPI_WORKER_PORT_FIRST		22340
 #define VMPI_WORKER_PORT_LAST		22350
 
-// The VMPI service downloader is still a worker but it uses this port range so the 
+// The VMPI service downloader is still a worker but it uses this port range so the
 // master knows it's just downloading the exes.
 #define VMPI_SERVICE_DOWNLOADER_PORT_FIRST		22351
 #define VMPI_SERVICE_DOWNLOADER_PORT_LAST		22360

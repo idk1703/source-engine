@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -12,7 +12,7 @@
 //
 // Author: Michael S. Booth (mike@turtlerockstudios.com), 2003
 //
-// NOTE: The Navigation code uses Doxygen-style comments. If you run Doxygen over this code, it will 
+// NOTE: The Navigation code uses Doxygen-style comments. If you run Doxygen over this code, it will
 // auto-generate documentation.  Visit www.doxygen.org to download the system for free.
 //
 
@@ -29,7 +29,7 @@
 
 
 class CNavArea;
-class CBaseEntity; 
+class CBaseEntity;
 class CBreakable;
 
 extern ConVar nav_edit;
@@ -137,7 +137,7 @@ public:
 struct NavAttributeLookup
 {
 	const char *name;
-	NavAttributeType attribute;	
+	NavAttributeType attribute;
 };
 
 extern NavAttributeLookup TheNavAttributeTable[];
@@ -208,13 +208,13 @@ public:
 //--------------------------------------------------------------------------------------------------------------
 //
 // The 'place directory' is used to save and load places from
-// nav files in a size-efficient manner that also allows for the 
+// nav files in a size-efficient manner that also allows for the
 // order of the place ID's to change without invalidating the
 // nav files.
 //
-// The place directory is stored in the nav file as a list of 
+// The place directory is stored in the nav file as a list of
 // place name strings.  Each nav area then contains an index
-// into that directory, or zero if no place has been assigned to 
+// into that directory, or zero if no place has been assigned to
 // that area.
 //
 class PlaceDirectory
@@ -235,7 +235,7 @@ public:
 		return &m_directory;
 	}
 
-	bool HasUnnamedPlaces( void ) const 
+	bool HasUnnamedPlaces( void ) const
 	{
 		return m_hasUnnamedAreas;
 	}
@@ -260,7 +260,7 @@ class CNavMesh : public CGameEventListener
 public:
 	CNavMesh( void );
 	virtual ~CNavMesh();
-	
+
 	virtual void PreLoadAreas( int nAreas ) {}
 	virtual CNavArea *CreateArea( void ) const;							// CNavArea factory
 	virtual void DestroyArea( CNavArea * ) const;
@@ -280,7 +280,7 @@ public:
 	 * Return true if nav mesh can be trusted for all climbing/jumping decisions because game environment is fairly simple.
 	 * Authoritative meshes mean path followers can skip CPU intensive realtime scanning of unpredictable geometry.
 	 */
-	virtual bool IsAuthoritative( void ) const { return false; }		
+	virtual bool IsAuthoritative( void ) const { return false; }
 
 	const CUtlVector< Place > *GetPlacesFromNavFile( bool *hasUnnamedPlaces );	// Reads the used place names from the nav file (can be used to selectively precache before the nav is loaded)
 
@@ -307,7 +307,7 @@ public:
 	virtual void OnEditCreateNotify( CNavArea *newArea );				// invoked when given area has just been added to the mesh in edit mode
 	virtual void OnEditDestroyNotify( CNavArea *deadArea );				// invoked when given area has just been deleted from the mesh in edit mode
 	virtual void OnEditDestroyNotify( CNavLadder *deadLadder );			// invoked when given ladder has just been deleted from the mesh in edit mode
-	virtual void OnNodeAdded( CNavNode *node ) {};						
+	virtual void OnNodeAdded( CNavNode *node ) {};
 
 	// Obstructions
 	void RegisterAvoidanceObstacle( INavAvoidanceObstacle *obstruction );
@@ -492,7 +492,7 @@ public:
 		if (IsSelectedSetEmpty())
 		{
 			CNavArea *area = GetSelectedArea();
-			
+
 			if (area)
 			{
 				if (func( area ) == false)
@@ -509,7 +509,7 @@ public:
 					return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -1135,7 +1135,7 @@ private:
 	void GetEditVectors( Vector *pos, Vector *forward );		// Gets the eye position and view direction of the editing player
 
 	CountdownTimer m_showAreaInfoTimer;							// Timer that controls how long area info is displayed
-	
+
 	NavAreaVector m_selectedSet;								// all currently selected areas
 	NavAreaVector m_dragSelectionSet;							// all areas in the current drag selection
 	bool m_isContinuouslySelecting;								// if true, we are continuously adding to the selected set
@@ -1174,7 +1174,7 @@ private:
 	void MarkPlayerClipAreas( void );
 	void MarkJumpAreas( void );
 	void StichAndRemoveJumpAreas( void );
-	void RemoveJumpAreas( void );	
+	void RemoveJumpAreas( void );
 	void SquareUpAreas( void );
 	void MergeGeneratedAreas( void );
 	void ConnectGeneratedAreas( void );
@@ -1189,7 +1189,7 @@ private:
 	void RaiseAreasWithInternalObstacles();
 	void CreateObstacleTopAreas();
 	bool CreateObstacleTopAreaIfNecessary( CNavArea *area, CNavArea *areaOther, NavDirType dir, bool bMultiNode );
-	void RemoveOverlappingObstacleTopAreas();	
+	void RemoveOverlappingObstacleTopAreas();
 
 
 	enum GenerationStateType
@@ -1252,7 +1252,7 @@ private:
 	void EndVisibilityComputations( void );
 
 	void TestAllAreasForBlockedStatus( void );					// Used to update blocked areas after a round restart. Need to delay so the map logic has all fired.
-	CountdownTimer m_updateBlockedAreasTimer;			
+	CountdownTimer m_updateBlockedAreasTimer;
 };
 
 // the global singleton interface
@@ -1306,27 +1306,27 @@ inline int CNavMesh::ComputeHashKey( unsigned int id ) const
 
 //--------------------------------------------------------------------------------------------------------------
 inline int CNavMesh::WorldToGridX( float wx ) const
-{ 
+{
 	int x = (int)( (wx - m_minX) / m_gridCellSize );
 
 	if (x < 0)
 		x = 0;
 	else if (x >= m_gridSizeX)
 		x = m_gridSizeX-1;
-	
+
 	return x;
 }
 
 //--------------------------------------------------------------------------------------------------------------
 inline int CNavMesh::WorldToGridY( float wy ) const
-{ 
+{
 	int y = (int)( (wy - m_minY) / m_gridCellSize );
 
 	if (y < 0)
 		y = 0;
 	else if (y >= m_gridSizeY)
 		y = m_gridSizeY-1;
-	
+
 	return y;
 }
 

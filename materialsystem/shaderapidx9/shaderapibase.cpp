@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -38,5 +38,3 @@ void CShaderAPIBase::GetCurrentColorCorrection( ShaderColorCorrectionInfo_t* pIn
 {
 	g_pShaderUtil->GetCurrentColorCorrection( pInfo );
 }
-
-

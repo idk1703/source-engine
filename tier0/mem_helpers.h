@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -11,7 +11,7 @@
 #endif
 
 
-// Normally, the runtime libraries like to mess with the memory returned by malloc(), 
+// Normally, the runtime libraries like to mess with the memory returned by malloc(),
 // which can create problems trying to repro bugs in debug builds or in the debugger.
 //
 // If the debugger is present, it initializes data to 0xbaadf00d, which makes floating

@@ -1,9 +1,9 @@
 /***
 *
 //========= Copyright Valve Corporation, All rights reserved. ============//
-*	
-*	This product contains software technology licensed from Id 
-*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc. 
+*
+*	This product contains software technology licensed from Id
+*	Software, Inc. ("Id Technology").  Id Technology (c) 1996 Id Software, Inc.
 *	All Rights Reserved.
 *
 *   Use, distribution, and modification of this source code and/or resulting
@@ -16,7 +16,7 @@
 
 ===== tf_client.cpp ========================================================
 
-  HL2 client/server game specific stuff
+	HL2 client/server game specific stuff
 
 */
 
@@ -51,16 +51,16 @@ void FinishClientPutInServer( CTFPlayer *pPlayer )
 {
 	{
 		bool save = engine->LockNetworkStringTables( false );
-	
+
 		pPlayer->InitialSpawn();
 		pPlayer->Spawn();
-	
+
 		engine->LockNetworkStringTables( save );
 	}
 
 	char sName[128];
 	Q_strncpy( sName, pPlayer->GetPlayerName(), sizeof( sName ) );
-	
+
 	// First parse the name and remove any %'s
 	for ( char *pApersand = sName; pApersand != NULL && *pApersand != 0; pApersand++ )
 	{
@@ -138,7 +138,7 @@ void ClientGamePrecache( void )
 		const char *pszFile = pData->GetString();
 
 		if ( Q_strlen( pszType ) > 0 &&
-			 Q_strlen( pszFile ) > 0 )
+			Q_strlen( pszFile ) > 0 )
 		{
 			if ( !Q_stricmp( pData->GetName(), "model" ) )
 			{

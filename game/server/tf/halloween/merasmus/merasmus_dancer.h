@@ -45,5 +45,3 @@ private:
 };
 
 #endif // MERASMUS_DANCE_H
-
-

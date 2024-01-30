@@ -45,11 +45,11 @@ public:
 	}
 
 	virtual float GetAmmoDamage( CBaseEntity *pAttacker, CBaseEntity *pVictim, int nAmmoType );
-    virtual float GetDamageMultiplier( void );    
+	virtual float GetDamageMultiplier( void );
 
 	virtual bool IsConnectedUserInfoChangeAllowed( CBasePlayer *pPlayer )
-	{ 
-		return true; 
+	{
+		return true;
 	}
 	bool ClientCommand( CBaseEntity *pEdict, const CCommand &args );
 

@@ -116,14 +116,14 @@ void FileOpenStateMachine::OverwriteFileDialog( )
 	m_CurrentState = STATE_SHOWING_OVERWRITE_DIALOG;
 
 	char pBuf[1024];
-	Q_snprintf( pBuf, sizeof(pBuf), "File already exists. Overwrite it?\n\n\"%s\"\n", m_FileName.Get() ); 
+	Q_snprintf( pBuf, sizeof(pBuf), "File already exists. Overwrite it?\n\n\"%s\"\n", m_FileName.Get() );
 	vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Overwrite Existing File?", pBuf, GetParent() );
 	pMessageBox->AddActionSignalTarget( this );
 	pMessageBox->SetOKButtonVisible( true );
 	pMessageBox->SetOKButtonText( "Yes" );
 	pMessageBox->SetCancelButtonVisible( true );
 	pMessageBox->SetCancelButtonText( "No" );
-	pMessageBox->SetCloseButtonVisible( false ); 
+	pMessageBox->SetCloseButtonVisible( false );
 	pMessageBox->SetCommand( new KeyValues( "OverwriteFile" ) );
 	pMessageBox->SetCancelCommand( new KeyValues( "CancelOverwriteFile" ) );
 	pMessageBox->DoModal();
@@ -258,14 +258,14 @@ void FileOpenStateMachine::MakeFileWriteableDialog( )
 	m_CurrentState = STATE_SHOWING_MAKE_FILE_WRITEABLE_DIALOG;
 
 	char pBuf[1024];
-	Q_snprintf( pBuf, sizeof(pBuf), "Encountered read-only file. Should it be made writeable?\n\n\"%s\"\n", m_FileName.Get() ); 
+	Q_snprintf( pBuf, sizeof(pBuf), "Encountered read-only file. Should it be made writeable?\n\n\"%s\"\n", m_FileName.Get() );
 	vgui::MessageBox *pMessageBox = new vgui::MessageBox( "Make File Writeable?", pBuf, GetParent() );
 	pMessageBox->AddActionSignalTarget( this );
 	pMessageBox->SetOKButtonVisible( true );
 	pMessageBox->SetOKButtonText( "Yes" );
 	pMessageBox->SetCancelButtonVisible( true );
 	pMessageBox->SetCancelButtonText( "No" );
-	pMessageBox->SetCloseButtonVisible( false ); 
+	pMessageBox->SetCloseButtonVisible( false );
 	pMessageBox->SetCommand( new KeyValues( "MakeFileWriteable" ) );
 	pMessageBox->SetCancelCommand( new KeyValues( "CancelMakeFileWriteable" ) );
 	pMessageBox->DoModal();
@@ -493,5 +493,3 @@ void FileOpenStateMachine::OpenFile( const char *pOpenFileName, const char *pOpe
 
 	OpenFileDialog();
 }
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -22,7 +22,7 @@
 #define KEYVALUE_MAX_VALUE_LENGTH		512
 
 
-class MDkeyvalue 
+class MDkeyvalue
 {
 	public:
 
@@ -34,7 +34,7 @@ class MDkeyvalue
 		~MDkeyvalue(void);
 
 		MDkeyvalue &operator =(const MDkeyvalue &other);
-		
+
 		inline void Set(const char *pszKey, const char *pszValue);
 		inline const char *Key(void) const;
 		inline const char *Value(void) const;
@@ -110,7 +110,7 @@ typedef CUtlVector<MDkeyvalue> KeyValueArray;
 class WCKVBase_Vector
 {
 public:
-	
+
 	// Iteration helpers.
 	inline int GetCount() const			{ return m_KeyValues.Count(); }
 	inline int GetFirst() const			{ return m_KeyValues.Count() - 1; }
@@ -182,8 +182,8 @@ typedef WCKeyValuesT<WCKVBase_Vector> WCKeyValuesVector;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 //-----------------------------------------------------------------------------
 template<class Base>
 inline const char *WCKeyValuesT<Base>::GetKey(int nIndex) const
@@ -193,8 +193,8 @@ inline const char *WCKeyValuesT<Base>::GetKey(int nIndex) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 // Output : MDKeyValue
 //-----------------------------------------------------------------------------
 template<class Base>
@@ -205,8 +205,8 @@ inline MDkeyvalue &WCKeyValuesT<Base>::GetKeyValue(int nIndex)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 // Output : MDkeyvalue
 //-----------------------------------------------------------------------------
 template<class Base>
@@ -217,8 +217,8 @@ inline const MDkeyvalue& WCKeyValuesT<Base>::GetKeyValue(int nIndex) const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : nIndex - 
+// Purpose:
+// Input  : nIndex -
 //-----------------------------------------------------------------------------
 template<class Base>
 inline const char *WCKeyValuesT<Base>::GetValue(int nIndex) const

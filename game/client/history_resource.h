@@ -14,7 +14,7 @@
 
 #include <vgui_controls/Panel.h>
 
-enum 
+enum
 {
 	HISTSLOT_EMPTY,
 	HISTSLOT_AMMO,
@@ -37,13 +37,13 @@ class CHudHistoryResource : public CHudElement, public vgui::Panel
 {
 	DECLARE_CLASS_SIMPLE( CHudHistoryResource, vgui::Panel );
 private:
-	struct HIST_ITEM 
+	struct HIST_ITEM
 	{
-		HIST_ITEM() 
-		{ 
+		HIST_ITEM()
+		{
 			// init this here, because the code that overwrites previous history items will use this
 			// to check to see if the item is empty
-			DisplayTime = 0.0f; 
+			DisplayTime = 0.0f;
 		}
 		int type;
 		float DisplayTime;  // the time at which this item should be removed from the history
@@ -73,7 +73,7 @@ public:
 	void	AddToHistory( C_BaseCombatWeapon *weapon );
 	void	MsgFunc_ItemPickup( bf_read &msg );
 	void	MsgFunc_AmmoDenied( bf_read &msg );
-	
+
 	void	CheckClearHistory( void );
 	void	SetHistoryGap( int iNewHistoryGap );
 	void	AddIconToHistory( int iType, int iId, C_BaseCombatWeapon *weapon, int iCount, CHudTexture *icon );

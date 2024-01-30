@@ -43,7 +43,7 @@ class CWeaponCrowbar : public CBaseHL1MPCombatWeapon
 {
 	DECLARE_CLASS( CWeaponCrowbar, CBaseHL1MPCombatWeapon );
 public:
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 #ifndef CLIENT_DLL
 	DECLARE_DATADESC();
@@ -127,15 +127,15 @@ void CWeaponCrowbar::Precache( void )
 void CWeaponCrowbar::ItemPostFrame( void )
 {
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
+
 	if ( pOwner == NULL )
 		return;
 
 	if ( (pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack <= gpGlobals->curtime) )
 	{
 		PrimaryAttack();
-	} 
-	else 
+	}
+	else
 	{
 		WeaponIdle();
 		return;
@@ -177,13 +177,13 @@ void CWeaponCrowbar::Hit( void )
 		ClearMultiDamage();
 		CTakeDamageInfo info( GetOwner(), GetOwner(), sk_plr_dmg_crowbar.GetFloat(), DMG_CLUB );
 		CalculateMeleeDamageForce( &info, hitDirection, m_traceHit.endpos );
-		pHitEntity->DispatchTraceAttack( info, hitDirection, &m_traceHit ); 
+		pHitEntity->DispatchTraceAttack( info, hitDirection, &m_traceHit );
 		ApplyMultiDamage();
 
-		// Now hit all triggers along the ray that... 
+		// Now hit all triggers along the ray that...
 		TraceAttackToTriggers( CTakeDamageInfo( GetOwner(), GetOwner(), sk_plr_dmg_crowbar.GetFloat(), DMG_CLUB ), m_traceHit.startpos, m_traceHit.endpos, hitDirection );
 
-		//Play an impact sound	
+		//Play an impact sound
 		ImpactSound( pHitEntity );
 	}
 #endif
@@ -211,7 +211,7 @@ void CWeaponCrowbar::ImpactSound( CBaseEntity *pHitEntity )
 	{
 		WeaponSound( MELEE_HIT_WORLD );
 	}
-	else 
+	else
 	{
 		WeaponSound( MELEE_HIT );
 	}
@@ -304,7 +304,7 @@ DECLARE_CLIENT_EFFECT( "ImpactCrowbar", ImpactCrowbarCallback );
 #endif
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponCrowbar::ImpactEffect( void )
 {

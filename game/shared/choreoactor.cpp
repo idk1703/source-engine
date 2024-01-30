@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CChoreoActor::CChoreoActor( void )
 {
@@ -24,8 +24,8 @@ CChoreoActor::CChoreoActor( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 CChoreoActor::CChoreoActor( const char *name )
 {
@@ -35,7 +35,7 @@ CChoreoActor::CChoreoActor( const char *name )
 
 //-----------------------------------------------------------------------------
 // Purpose: // Assignment
-// Input  : src - 
+// Input  : src -
 // Output : CChoreoActor&
 //-----------------------------------------------------------------------------
 CChoreoActor& CChoreoActor::operator=( const CChoreoActor& src )
@@ -58,7 +58,7 @@ CChoreoActor& CChoreoActor::operator=( const CChoreoActor& src )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoActor::Init( void )
 {
@@ -68,8 +68,8 @@ void CChoreoActor::Init( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CChoreoActor::SetName( const char *name )
 {
@@ -78,7 +78,7 @@ void CChoreoActor::SetName( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CChoreoActor::GetName( void )
@@ -87,7 +87,7 @@ const char *CChoreoActor::GetName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoActor::GetNumChannels( void )
@@ -96,8 +96,8 @@ int CChoreoActor::GetNumChannels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : channel - 
+// Purpose:
+// Input  : channel -
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
 CChoreoChannel *CChoreoActor::GetChannel( int channel )
@@ -111,8 +111,8 @@ CChoreoChannel *CChoreoActor::GetChannel( int channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoActor::AddChannel( CChoreoChannel *channel )
 {
@@ -120,8 +120,8 @@ void CChoreoActor::AddChannel( CChoreoChannel *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 //-----------------------------------------------------------------------------
 void CChoreoActor::RemoveChannel( CChoreoChannel *channel )
 {
@@ -133,7 +133,7 @@ void CChoreoActor::RemoveChannel( CChoreoChannel *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoActor::RemoveAllChannels()
 {
@@ -141,9 +141,9 @@ void CChoreoActor::RemoveAllChannels()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : c1 - 
-//			c2 - 
+// Purpose:
+// Input  : c1 -
+//			c2 -
 //-----------------------------------------------------------------------------
 void CChoreoActor::SwapChannels( int c1, int c2 )
 {
@@ -155,8 +155,8 @@ void CChoreoActor::SwapChannels( int c1, int c2 )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *channel - 
+// Purpose:
+// Input  : *channel -
 // Output : int
 //-----------------------------------------------------------------------------
 int CChoreoActor::FindChannelIndex( CChoreoChannel *channel )
@@ -172,8 +172,8 @@ int CChoreoActor::FindChannelIndex( CChoreoChannel *channel )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 //-----------------------------------------------------------------------------
 void CChoreoActor::SetFacePoserModelName( const char *name )
 {
@@ -181,7 +181,7 @@ void CChoreoActor::SetFacePoserModelName( const char *name )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *CChoreoActor::GetFacePoserModelName( void ) const
@@ -190,8 +190,8 @@ const char *CChoreoActor::GetFacePoserModelName( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : active - 
+// Purpose:
+// Input  : active -
 //-----------------------------------------------------------------------------
 void CChoreoActor::SetActive( bool active )
 {
@@ -199,7 +199,7 @@ void CChoreoActor::SetActive( bool active )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CChoreoActor::GetActive( void ) const
@@ -208,7 +208,7 @@ bool CChoreoActor::GetActive( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CChoreoActor::MarkForSaveAll( bool mark )
 {
@@ -223,8 +223,8 @@ void CChoreoActor::MarkForSaveAll( bool mark )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *name - 
+// Purpose:
+// Input  : *name -
 // Output : CChoreoChannel
 //-----------------------------------------------------------------------------
 CChoreoChannel *CChoreoActor::FindChannel( const char *name )
@@ -291,4 +291,3 @@ bool CChoreoActor::RestoreFromBuffer( CUtlBuffer& buf, CChoreoScene *pScene, ICh
 
 	return true;
 }
-

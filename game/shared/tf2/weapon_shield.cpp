@@ -45,7 +45,7 @@ END_PREDICTION_DATA()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CWeaponShield::CWeaponShield( void )
 {
@@ -78,16 +78,16 @@ float CWeaponShield::GetDamage( float flDistance, int iLocation )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CWeaponShield::GetFireRate( void )
-{	
-	return 1.0; 
+{
+	return 1.0;
 }
 
 
 //-----------------------------------------------------------------------------
-// Deploy the shield! 
+// Deploy the shield!
 //-----------------------------------------------------------------------------
 bool CWeaponShield::Deploy( )
 {
@@ -104,7 +104,7 @@ bool CWeaponShield::Deploy( )
 		return false;
 
 #ifdef GAME_DLL
-	Assert( !m_hDeployedShield.Get().IsValid() ); 
+	Assert( !m_hDeployedShield.Get().IsValid() );
 	m_hDeployedShield = CreateMobileShield( pPlayer );
 #endif
 
@@ -135,7 +135,7 @@ bool CWeaponShield::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponShield::ItemPostFrame( void )
 {
@@ -149,7 +149,7 @@ void CWeaponShield::ItemPostFrame( void )
 		// Handle deployment & pick-up (firing is handled on the client)
 		if ( pPlayer->m_nButtons & IN_ATTACK2 )
 		{
-			if ( gpGlobals->curtime >= m_flNextPrimaryAttack) 
+			if ( gpGlobals->curtime >= m_flNextPrimaryAttack)
 			{
 				PrimaryAttack();
 			}
@@ -161,7 +161,7 @@ void CWeaponShield::ItemPostFrame( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponShield::PrimaryAttack( void )
 {
@@ -191,7 +191,7 @@ void CWeaponShield::PrimaryAttack( void )
 //-----------------------------------------------------------------------------
 void CWeaponShield::SetShieldPositionLocked( bool bLocked )
 {
-	m_bShieldPositionLocked = bLocked; 
+	m_bShieldPositionLocked = bLocked;
 	if ( m_hDeployedShield.Get() )
 	{
 		if ( bLocked && m_hDeployedShield.Get()->IsAlwaysOrienting() )
@@ -213,6 +213,6 @@ void CWeaponShield::WeaponIdle( void )
 
 	if (m_hDeployedShield.Get())
 	{
-		m_hDeployedShield.Get()->SetEMPed( isEmped ); 
+		m_hDeployedShield.Get()->SetEMPed( isEmped );
 	}
 }

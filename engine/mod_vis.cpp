@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -184,7 +184,7 @@ static void VisCache_Build( VisCacheEntry &cache, const worldbrushdata_t &worldb
 	{
 		cache.originclusters[i] = vis.rgVisClusters[i].viewcluster;
 	}
-	
+
 	cache.leaflist.RemoveAll();
 	cache.nodelist.RemoveAll();
 
@@ -209,7 +209,7 @@ static void VisCache_Build( VisCacheEntry &cache, const worldbrushdata_t &worldb
 				node = node->parent;
 			}
 		}
-	} 
+	}
 }
 
 
@@ -221,7 +221,7 @@ bool Map_AreAnyLeavesVisible( const worldbrushdata_t &worldbrush, int *leafList,
 		int cluster = leaf->cluster;
 		if ( cluster == -1 )
 			continue;
-		
+
 		if ( vis.rgCurrentVis[cluster>>3] & (1<<(cluster&7)) )
 			return true;
 	}
@@ -232,7 +232,7 @@ bool Map_AreAnyLeavesVisible( const worldbrushdata_t &worldbrush, int *leafList,
 //-----------------------------------------------------------------------------
 // Purpose: Mark the leaves and nodes that are in the PVS for the current
 //  cluster(s)
-// Input  : *worldmodel - 
+// Input  : *worldmodel -
 //-----------------------------------------------------------------------------
 void Map_VisMark( bool forcenovis, model_t *worldmodel )
 {
@@ -307,16 +307,16 @@ void Map_VisMark( bool forcenovis, model_t *worldmodel )
 	for ( i = 1; i < vis.nClusters; i++ )
 	{
 		byte	mapVis[ MAX_MAP_CLUSTERS/8 ];
-		
+
 		CM_Vis( mapVis, sizeof( mapVis ), vis.rgVisClusters[ i ].viewcluster, DVIS_PVS );
-				
+
 		// Copy one dword at a time ( could use memcpy )
 		for ( int j = 0 ; j < c ; j++ )
 		{
 			((int *)vis.rgCurrentVis)[ j ] |= ((int *)mapVis)[ j ];
 		}
 	}
-	
+
 
 	// search the cache for a pre-built list of leaves and nodes that matches
 	// the desired vis setup, and use that to mark the map if found
@@ -326,9 +326,9 @@ void Map_VisMark( bool forcenovis, model_t *worldmodel )
 		if (cache.nClusters != vis.nClusters) continue;
 		for (c = 0; c < cache.nClusters; ++c)
 		{
-			if (cache.originclusters[c] != vis.rgVisClusters[c].viewcluster) 
+			if (cache.originclusters[c] != vis.rgVisClusters[c].viewcluster)
 			{
-				// NJS: This is a nasty goto, but avoids a nasty branch mispredict below 
+				// NJS: This is a nasty goto, but avoids a nasty branch mispredict below
 				// (if a break and if are used instead)
 				goto next_cache_check;
 			}
@@ -393,7 +393,7 @@ void Map_VisSetup( model_t *worldmodel, int visorigincount, const Vector origins
 	{
 		vis.bForceFullSky = false;
 	}
-	
+
 	Map_VisMark( forcenovis, worldmodel );
 }
 
@@ -429,7 +429,7 @@ byte *Map_VisCurrent( void )
 int Map_VisCurrentCluster( void )
 {
 	// BUGBUG: The client DLL can hit this assert during a level transition
-	// because the temporary entities do visibility calculations during the 
+	// because the temporary entities do visibility calculations during the
 	// wrong part of the frame loop (i.e. before a view has been set up!)
 	Assert( vis.rgVisClusters[ 0 ].viewcluster >= 0 );
 	if ( vis.rgVisClusters[ 0 ].viewcluster < 0 )
@@ -438,7 +438,7 @@ int Map_VisCurrentCluster( void )
 
 		if ( ++visclusterwarningcount <= 5 )
 		{
-			ConDMsg( "Map_VisCurrentCluster() < 0!\n" ); 
+			ConDMsg( "Map_VisCurrentCluster() < 0!\n" );
 		}
 	}
 	return vis.rgVisClusters[ 0 ].viewcluster;

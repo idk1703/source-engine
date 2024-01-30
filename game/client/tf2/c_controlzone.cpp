@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Workfile:     $
 // $Date:         $
@@ -15,7 +15,7 @@
 #include "mapdata.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ControlZone::C_ControlZone()
 {
@@ -25,7 +25,7 @@ C_ControlZone::C_ControlZone()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_ControlZone::~C_ControlZone()
 {
@@ -45,7 +45,7 @@ bool C_ControlZone::ShouldDraw()
 
 //-----------------------------------------------------------------------------
 // Purpose: Update global map state based on data received
-// Input  : bnewentity - 
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_ControlZone::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -63,5 +63,3 @@ void C_ControlZone::OnDataChanged( DataUpdateType_t updateType )
 IMPLEMENT_CLIENTCLASS_DT(C_ControlZone, DT_ControlZone, CControlZone)
 	RecvPropInt( RECVINFO(m_nZoneNumber )),
 END_RECV_TABLE()
-
-

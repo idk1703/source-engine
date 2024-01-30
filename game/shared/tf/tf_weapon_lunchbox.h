@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 #ifndef TF_WEAPON_LUNCHBOX_H
@@ -39,7 +39,7 @@ class CTFLunchBox : public CTFWeaponBase
 public:
 
 	DECLARE_CLASS( CTFLunchBox, CTFWeaponBase );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 // Server specific.
@@ -88,7 +88,7 @@ class CTFLunchBox_Drink : public CTFLunchBox
 public:
 
 	DECLARE_CLASS( CTFLunchBox_Drink, CTFLunchBox );
-	DECLARE_NETWORKCLASS(); 
+	DECLARE_NETWORKCLASS();
 	DECLARE_PREDICTABLE();
 
 	CTFLunchBox_Drink();

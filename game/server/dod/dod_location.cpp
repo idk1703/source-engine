@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -17,7 +17,7 @@ void CDODLocation::Spawn( void )
 }
 
 bool CDODLocation::KeyValue( const char *szKeyName, const char *szValue )
-{	
+{
 	if (FStrEq(szKeyName, "location_name"))	//name of this location
 	{
 		Q_strncpy( m_szLocationName, szValue, sizeof(m_szLocationName) );

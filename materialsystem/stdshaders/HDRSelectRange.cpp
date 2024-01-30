@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -21,7 +21,7 @@ BEGIN_VS_SHADER_FLAGS( HDRSelectRange, "Help for HDRSelectRange", SHADER_NOT_EDI
 	{
 		LoadTexture( SOURCEMRTRENDERTARGET );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above
@@ -58,7 +58,7 @@ BEGIN_VS_SHADER_FLAGS( HDRSelectRange, "Help for HDRSelectRange", SHADER_NOT_EDI
 				DECLARE_STATIC_PIXEL_SHADER( hdrselectrange_ps20 );
 				SET_STATIC_PIXEL_SHADER( hdrselectrange_ps20 );
 			}
-			
+
 		}
 
 		DYNAMIC_STATE

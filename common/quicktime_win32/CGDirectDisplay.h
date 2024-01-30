@@ -1,17 +1,17 @@
 /*
-     File:       CGDirectDisplay.h
- 
-     Contains:   CoreGraphics direct display
- 
-     Version:    QuickTime 7.3
- 
-     Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
- 
-     Bugs?:      For bug reports, consult the following page on
-                 the World Wide Web:
- 
-                     http://developer.apple.com/bugreporter/
- 
+		File:       CGDirectDisplay.h
+
+		Contains:   CoreGraphics direct display
+
+		Version:    QuickTime 7.3
+
+		Copyright:  (c) 2007 (c) 2000-2001 by Apple Computer, Inc., all rights reserved.
+
+		Bugs?:      For bug reports, consult the following page on
+								the World Wide Web:
+
+										http://developer.apple.com/bugreporter/
+
 */
 #ifndef CGDIRECTDISPLAY_H_
 #define CGDIRECTDISPLAY_H_
@@ -67,7 +67,7 @@ typedef int32_t                         CGMouseDelta;
 typedef double                          CGRefreshRate;
 typedef CGError                         CGDisplayErr;
 enum {
-  CGDisplayNoErr                = kCGErrorSuccess
+	CGDisplayNoErr                = kCGErrorSuccess
 };
 
 /* A NULL value points to the main display device as a programming convention */
@@ -85,7 +85,7 @@ enum {
  */
 /*
  *  CGGetDisplaysWithPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -93,15 +93,15 @@ enum {
  */
 EXTERN_API_C( CGDisplayErr )
 CGGetDisplaysWithPoint(
-  CGPoint              point,
-  CGDisplayCount       maxDisplays,
-  CGDirectDisplayID *  dspys,
-  CGDisplayCount *     dspyCnt);
+	CGPoint              point,
+	CGDisplayCount       maxDisplays,
+	CGDirectDisplayID *  dspys,
+	CGDisplayCount *     dspyCnt);
 
 
 /*
  *  CGGetDisplaysWithRect()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -109,15 +109,15 @@ CGGetDisplaysWithPoint(
  */
 EXTERN_API_C( CGDisplayErr )
 CGGetDisplaysWithRect(
-  CGRect               rect,
-  CGDisplayCount       maxDisplays,
-  CGDirectDisplayID *  dspys,
-  CGDisplayCount *     dspyCnt);
+	CGRect               rect,
+	CGDisplayCount       maxDisplays,
+	CGDirectDisplayID *  dspys,
+	CGDisplayCount *     dspyCnt);
 
 
 /*
  *  CGGetDisplaysWithOpenGLDisplayMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -125,10 +125,10 @@ CGGetDisplaysWithRect(
  */
 EXTERN_API_C( CGDisplayErr )
 CGGetDisplaysWithOpenGLDisplayMask(
-  CGOpenGLDisplayMask   mask,
-  CGDisplayCount        maxDisplays,
-  CGDirectDisplayID *   dspys,
-  CGDisplayCount *      dspyCnt);
+	CGOpenGLDisplayMask   mask,
+	CGDisplayCount        maxDisplays,
+	CGDirectDisplayID *   dspys,
+	CGDisplayCount *      dspyCnt);
 
 
 /*
@@ -144,7 +144,7 @@ CGGetDisplaysWithOpenGLDisplayMask(
  */
 /*
  *  CGGetActiveDisplayList()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -152,15 +152,15 @@ CGGetDisplaysWithOpenGLDisplayMask(
  */
 EXTERN_API_C( CGDisplayErr )
 CGGetActiveDisplayList(
-  CGDisplayCount       maxDisplays,
-  CGDirectDisplayID *  activeDspys,
-  CGDisplayCount *     dspyCnt);
+	CGDisplayCount       maxDisplays,
+	CGDirectDisplayID *  activeDspys,
+	CGDisplayCount *     dspyCnt);
 
 
 /* Map a display to an OpenGL display mask; returns 0 on invalid display */
 /*
  *  CGDisplayIDToOpenGLDisplayMask()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -173,7 +173,7 @@ CGDisplayIDToOpenGLDisplayMask(CGDirectDisplayID display);
 /* Return screen size and origin in global coords; Empty rect if display is invalid */
 /*
  *  CGDisplayBounds()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -185,7 +185,7 @@ CGDisplayBounds(CGDirectDisplayID display);
 
 /*
  *  CGDisplayPixelsWide()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -197,7 +197,7 @@ CGDisplayPixelsWide(CGDirectDisplayID display);
 
 /*
  *  CGDisplayPixelsHigh()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -224,7 +224,7 @@ CGDisplayPixelsHigh(CGDirectDisplayID display);
  */
 /*
  *  kCGDisplayWidth
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -233,7 +233,7 @@ CGDisplayPixelsHigh(CGDirectDisplayID display);
 extern CFStringRef kCGDisplayWidth;
 /*
  *  kCGDisplayHeight
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -242,7 +242,7 @@ extern CFStringRef kCGDisplayWidth;
 extern CFStringRef kCGDisplayHeight;
 /*
  *  kCGDisplayMode
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -251,7 +251,7 @@ extern CFStringRef kCGDisplayHeight;
 extern CFStringRef kCGDisplayMode;
 /*
  *  kCGDisplayBitsPerPixel
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -260,7 +260,7 @@ extern CFStringRef kCGDisplayMode;
 extern CFStringRef kCGDisplayBitsPerPixel;
 /*
  *  kCGDisplayBitsPerSample
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -269,7 +269,7 @@ extern CFStringRef kCGDisplayBitsPerPixel;
 extern CFStringRef kCGDisplayBitsPerSample;
 /*
  *  kCGDisplaySamplesPerPixel
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -278,7 +278,7 @@ extern CFStringRef kCGDisplayBitsPerSample;
 extern CFStringRef kCGDisplaySamplesPerPixel;
 /*
  *  kCGDisplayRefreshRate
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -287,7 +287,7 @@ extern CFStringRef kCGDisplaySamplesPerPixel;
 extern CFStringRef kCGDisplayRefreshRate;
 /*
  *  kCGDisplayModeUsableForDesktopGUI
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -296,7 +296,7 @@ extern CFStringRef kCGDisplayRefreshRate;
 extern CFStringRef kCGDisplayModeUsableForDesktopGUI;
 /*
  *  kCGDisplayIOFlags
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -309,7 +309,7 @@ extern CFStringRef kCGDisplayIOFlags;
  */
 /*
  *  CGDisplayAvailableModes()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -331,7 +331,7 @@ CGDisplayAvailableModes(CGDirectDisplayID display);
  */
 /*
  *  CGDisplayBestModeForParameters()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -339,16 +339,16 @@ CGDisplayAvailableModes(CGDirectDisplayID display);
  */
 EXTERN_API_C( CFDictionaryRef )
 CGDisplayBestModeForParameters(
-  CGDirectDisplayID   display,
-  size_t              bitsPerPixel,
-  size_t              width,
-  size_t              height,
-  boolean_t *         exactMatch);
+	CGDirectDisplayID   display,
+	size_t              bitsPerPixel,
+	size_t              width,
+	size_t              height,
+	boolean_t *         exactMatch);
 
 
 /*
  *  CGDisplayBestModeForParametersAndRefreshRate()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -356,12 +356,12 @@ CGDisplayBestModeForParameters(
  */
 EXTERN_API_C( CFDictionaryRef )
 CGDisplayBestModeForParametersAndRefreshRate(
-  CGDirectDisplayID   display,
-  size_t              bitsPerPixel,
-  size_t              width,
-  size_t              height,
-  CGRefreshRate       refresh,
-  boolean_t *         exactMatch);
+	CGDirectDisplayID   display,
+	size_t              bitsPerPixel,
+	size_t              width,
+	size_t              height,
+	CGRefreshRate       refresh,
+	boolean_t *         exactMatch);
 
 
 /*
@@ -370,7 +370,7 @@ CGDisplayBestModeForParametersAndRefreshRate(
  */
 /*
  *  CGDisplayCurrentMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -381,7 +381,7 @@ CGDisplayCurrentMode(CGDirectDisplayID display);
 
 
 /*
- * Switch display mode.  Note that after switching, 
+ * Switch display mode.  Note that after switching,
  * display parameters and addresses may change.
  * The selected display mode persists for the life of the program, and automatically
  * reverts to the permanent setting made by Preferences when the program terminates.
@@ -390,7 +390,7 @@ CGDisplayCurrentMode(CGDirectDisplayID display);
  */
 /*
  *  CGDisplaySwitchToMode()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -398,14 +398,14 @@ CGDisplayCurrentMode(CGDirectDisplayID display);
  */
 EXTERN_API_C( CGDisplayErr )
 CGDisplaySwitchToMode(
-  CGDirectDisplayID   display,
-  CFDictionaryRef     mode);
+	CGDirectDisplayID   display,
+	CFDictionaryRef     mode);
 
 
 /* Query parameters for current mode */
 /*
  *  CGDisplayBitsPerPixel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -417,7 +417,7 @@ CGDisplayBitsPerPixel(CGDirectDisplayID display);
 
 /*
  *  CGDisplayBitsPerSample()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -429,7 +429,7 @@ CGDisplayBitsPerSample(CGDirectDisplayID display);
 
 /*
  *  CGDisplaySamplesPerPixel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -441,7 +441,7 @@ CGDisplaySamplesPerPixel(CGDirectDisplayID display);
 
 /*
  *  CGDisplayBytesPerRow()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -469,7 +469,7 @@ CGDisplayBytesPerRow(CGDirectDisplayID display);
 typedef float                           CGGammaValue;
 /*
  *  CGSetDisplayTransferByFormula()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -477,21 +477,21 @@ typedef float                           CGGammaValue;
  */
 EXTERN_API_C( CGDisplayErr )
 CGSetDisplayTransferByFormula(
-  CGDirectDisplayID   display,
-  CGGammaValue        redMin,
-  CGGammaValue        redMax,
-  CGGammaValue        redGamma,
-  CGGammaValue        greenMin,
-  CGGammaValue        greenMax,
-  CGGammaValue        greenGamma,
-  CGGammaValue        blueMin,
-  CGGammaValue        blueMax,
-  CGGammaValue        blueGamma);
+	CGDirectDisplayID   display,
+	CGGammaValue        redMin,
+	CGGammaValue        redMax,
+	CGGammaValue        redGamma,
+	CGGammaValue        greenMin,
+	CGGammaValue        greenMax,
+	CGGammaValue        greenGamma,
+	CGGammaValue        blueMin,
+	CGGammaValue        blueMax,
+	CGGammaValue        blueGamma);
 
 
 /*
  *  CGGetDisplayTransferByFormula()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -499,16 +499,16 @@ CGSetDisplayTransferByFormula(
  */
 EXTERN_API_C( CGDisplayErr )
 CGGetDisplayTransferByFormula(
-  CGDirectDisplayID   display,
-  CGGammaValue *      redMin,
-  CGGammaValue *      redMax,
-  CGGammaValue *      redGamma,
-  CGGammaValue *      greenMin,
-  CGGammaValue *      greenMax,
-  CGGammaValue *      greenGamma,
-  CGGammaValue *      blueMin,
-  CGGammaValue *      blueMax,
-  CGGammaValue *      blueGamma);
+	CGDirectDisplayID   display,
+	CGGammaValue *      redMin,
+	CGGammaValue *      redMax,
+	CGGammaValue *      redGamma,
+	CGGammaValue *      greenMin,
+	CGGammaValue *      greenMax,
+	CGGammaValue *      greenGamma,
+	CGGammaValue *      blueMin,
+	CGGammaValue *      blueMax,
+	CGGammaValue *      blueGamma);
 
 
 /*
@@ -521,7 +521,7 @@ CGGetDisplayTransferByFormula(
  */
 /*
  *  CGSetDisplayTransferByTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -529,11 +529,11 @@ CGGetDisplayTransferByFormula(
  */
 EXTERN_API_C( CGDisplayErr )
 CGSetDisplayTransferByTable(
-  CGDirectDisplayID     display,
-  CGTableCount          tableSize,
-  const CGGammaValue *  redTable,
-  const CGGammaValue *  greenTable,
-  const CGGammaValue *  blueTable);
+	CGDirectDisplayID     display,
+	CGTableCount          tableSize,
+	const CGGammaValue *  redTable,
+	const CGGammaValue *  greenTable,
+	const CGGammaValue *  blueTable);
 
 
 /*
@@ -543,7 +543,7 @@ CGSetDisplayTransferByTable(
  */
 /*
  *  CGGetDisplayTransferByTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -551,18 +551,18 @@ CGSetDisplayTransferByTable(
  */
 EXTERN_API_C( CGDisplayErr )
 CGGetDisplayTransferByTable(
-  CGDirectDisplayID   display,
-  CGTableCount        capacity,
-  CGGammaValue *      redTable,
-  CGGammaValue *      greenTable,
-  CGGammaValue *      blueTable,
-  CGTableCount *      sampleCount);
+	CGDirectDisplayID   display,
+	CGTableCount        capacity,
+	CGGammaValue *      redTable,
+	CGGammaValue *      greenTable,
+	CGGammaValue *      blueTable,
+	CGTableCount *      sampleCount);
 
 
 /* As a convenience, allow setting of the gamma table by byte values */
 /*
  *  CGSetDisplayTransferByByteTable()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -570,17 +570,17 @@ CGGetDisplayTransferByTable(
  */
 EXTERN_API_C( CGDisplayErr )
 CGSetDisplayTransferByByteTable(
-  CGDirectDisplayID    display,
-  CGTableCount         tableSize,
-  const CGByteValue *  redTable,
-  const CGByteValue *  greenTable,
-  const CGByteValue *  blueTable);
+	CGDirectDisplayID    display,
+	CGTableCount         tableSize,
+	const CGByteValue *  redTable,
+	const CGByteValue *  greenTable,
+	const CGByteValue *  blueTable);
 
 
 /* Restore gamma tables of system displays to the user's ColorSync specified values */
 /*
  *  CGDisplayRestoreColorSyncSettings()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -593,7 +593,7 @@ CGDisplayRestoreColorSyncSettings(void);
 /* Display capture and release */
 /*
  *  CGDisplayIsCaptured()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -605,7 +605,7 @@ CGDisplayIsCaptured(CGDirectDisplayID display);
 
 /*
  *  CGDisplayCapture()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -617,7 +617,7 @@ CGDisplayCapture(CGDirectDisplayID display);
 
 /*
  *  CGDisplayRelease()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -635,7 +635,7 @@ CGDisplayRelease(CGDirectDisplayID display);
  */
 /*
  *  CGCaptureAllDisplays()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -652,7 +652,7 @@ CGCaptureAllDisplays(void);
  */
 /*
  *  CGReleaseAllDisplays()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -669,7 +669,7 @@ CGReleaseAllDisplays(void);
  */
 /*
  *  CGShieldingWindowID()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -686,7 +686,7 @@ CGShieldingWindowID(CGDirectDisplayID display);
  */
 /*
  *  CGShieldingWindowLevel()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -703,7 +703,7 @@ CGShieldingWindowLevel(void);
  */
 /*
  *  CGDisplayBaseAddress()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -722,7 +722,7 @@ CGDisplayBaseAddress(CGDirectDisplayID display);
  */
 /*
  *  CGDisplayAddressForPosition()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -730,16 +730,16 @@ CGDisplayBaseAddress(CGDirectDisplayID display);
  */
 EXTERN_API_C( void * )
 CGDisplayAddressForPosition(
-  CGDirectDisplayID   display,
-  CGDisplayCoord      x,
-  CGDisplayCoord      y);
+	CGDirectDisplayID   display,
+	CGDisplayCoord      x,
+	CGDisplayCoord      y);
 
 
 
 /* Mouse Cursor controls */
 /*
  *  CGDisplayHideCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -752,7 +752,7 @@ CGDisplayHideCursor(CGDirectDisplayID display);
 /* increments hide cursor count */
 /*
  *  CGDisplayShowCursor()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -771,7 +771,7 @@ CGDisplayShowCursor(CGDirectDisplayID display);
  */
 /*
  *  CGDisplayMoveCursorToPoint()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -779,8 +779,8 @@ CGDisplayShowCursor(CGDirectDisplayID display);
  */
 EXTERN_API_C( CGDisplayErr )
 CGDisplayMoveCursorToPoint(
-  CGDirectDisplayID   display,
-  CGPoint             point);
+	CGDirectDisplayID   display,
+	CGPoint             point);
 
 
 /*
@@ -789,7 +789,7 @@ CGDisplayMoveCursorToPoint(
  */
 /*
  *  CGGetLastMouseDelta()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -797,8 +797,8 @@ CGDisplayMoveCursorToPoint(
  */
 EXTERN_API_C( void )
 CGGetLastMouseDelta(
-  CGMouseDelta *  deltaX,
-  CGMouseDelta *  deltaY);
+	CGMouseDelta *  deltaX,
+	CGMouseDelta *  deltaY);
 
 
 
@@ -808,7 +808,7 @@ CGGetLastMouseDelta(
  */
 /*
  *  CGDisplayCanSetPalette()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -824,7 +824,7 @@ CGDisplayCanSetPalette(CGDirectDisplayID display);
  */
 /*
  *  CGDisplaySetPalette()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -832,8 +832,8 @@ CGDisplayCanSetPalette(CGDirectDisplayID display);
  */
 EXTERN_API_C( CGDisplayErr )
 CGDisplaySetPalette(
-  CGDirectDisplayID    display,
-  CGDirectPaletteRef   palette);
+	CGDirectDisplayID    display,
+	CGDirectPaletteRef   palette);
 
 
 /*
@@ -868,7 +868,7 @@ CGDisplaySetPalette(
  */
 /*
  *  CGDisplayWaitForBeamPositionOutsideLines()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -876,9 +876,9 @@ CGDisplaySetPalette(
  */
 EXTERN_API_C( CGDisplayErr )
 CGDisplayWaitForBeamPositionOutsideLines(
-  CGDirectDisplayID   display,
-  CGBeamPosition      upperScanLine,
-  CGBeamPosition      lowerScanLine);
+	CGDirectDisplayID   display,
+	CGBeamPosition      upperScanLine,
+	CGBeamPosition      lowerScanLine);
 
 
 /*
@@ -888,7 +888,7 @@ CGDisplayWaitForBeamPositionOutsideLines(
  */
 /*
  *  CGDisplayBeamPosition()
- *  
+ *
  *  Availability:
  *    Non-Carbon CFM:   not available
  *    CarbonLib:        not available
@@ -910,4 +910,3 @@ CGDisplayBeamPosition(CGDirectDisplayID display);
 #endif
 
 #endif /* CGDIRECTDISPLAY_H_ */
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -81,7 +81,7 @@ COptionsDialog::COptionsDialog(vgui::Panel *parent) : PropertyDialog(parent, "Op
 	m_pOptionsSubVideo = new COptionsSubVideo(this);
 	AddPage(m_pOptionsSubVideo, "#GameUI_Video");
 
-	if ( !ModInfo().IsSinglePlayerOnly() ) 
+	if ( !ModInfo().IsSinglePlayerOnly() )
 	{
 		AddPage(new COptionsSubVoice(this), "#GameUI_Voice");
 	}

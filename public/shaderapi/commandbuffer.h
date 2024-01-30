@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -63,7 +63,7 @@ enum CommandBufferCommand_t
 
 //-----------------------------------------------------------------------------
 // Commands used by the per-instance command buffer
-// NOTE: If you add commands, you probably want to change the size of 
+// NOTE: If you add commands, you probably want to change the size of
 // CInstanceStorageBuffer and/or the choice of making it a fixed-size allocation
 // see shaderlib/baseshader.*
 //

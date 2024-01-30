@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -16,7 +16,7 @@
 
 class C_PlayerClassEscort : public C_PlayerClass
 {
-	
+
 	DECLARE_CLASS( C_PlayerClassEscort, C_PlayerClass );
 
 public:
@@ -25,7 +25,7 @@ public:
 	virtual ~C_PlayerClassEscort();
 
 	DECLARE_PREDICTABLE();
-	PlayerClassEscortData_t *GetClassData( void ) { return &m_ClassData; } 
+	PlayerClassEscortData_t *GetClassData( void ) { return &m_ClassData; }
 
 protected:
 

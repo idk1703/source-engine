@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -16,10 +16,10 @@ class CTFNailgunNail : public CBaseAnimating
 public:
 	DECLARE_CLASS( CTFNailgunNail, CBaseAnimating );
 	DECLARE_DATADESC();
-	
+
 	void	Spawn();
 	void	Precache();
-	
+
 	// Functions to create all the various types of nails.
 	static  CTFNailgunNail *CreateNail( bool fSendClientNail, Vector vecOrigin, QAngle vecAngles, CBaseEntity *pOwner, CBaseEntity *pLauncher, bool fCreateClientNail );
 	static  CTFNailgunNail *CreateSuperNail( Vector vecOrigin, QAngle vecAngles, CBaseEntity *pOwner, CBaseEntity *pLauncher );

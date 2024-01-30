@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -67,7 +67,7 @@ END_DATADESC()
 LINK_ENTITY_TO_CLASS( info_input_playsound, CInfoInputPlaySound );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoInputPlaySound::Spawn( void )
 {
@@ -76,7 +76,7 @@ void CInfoInputPlaySound::Spawn( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoInputPlaySound::Precache( void )
 {
@@ -87,7 +87,7 @@ void CInfoInputPlaySound::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CInfoInputPlaySound::Activate( void )
 {

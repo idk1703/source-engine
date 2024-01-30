@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //===========================================================================//
@@ -28,7 +28,7 @@ BEGIN_VS_SHADER_FLAGS( sfm_integercombine_shader, "Help for SFM integer HDR comb
 		LoadTexture( ORIGINALTEXTURE );
 		LoadTexture( BLURREDTEXTURE );
 	}
-	
+
 	SHADER_FALLBACK
 	{
 		// Requires DX9 + above

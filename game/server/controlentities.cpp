@@ -22,7 +22,7 @@ public:
 	DECLARE_CLASS( CTargetCDAudioRep, CPointEntity );
 
 	void InputChangeCDTrack( inputdata_t &inputdata );
-	
+
 	DECLARE_DATADESC();
 
 private:
@@ -46,7 +46,7 @@ END_DATADESC()
 void CTargetCDAudioRep::InputChangeCDTrack( inputdata_t &inputdata )
 {
 	int iTrack = m_iTrack;
-	
+
 
 	edict_t *pClient = NULL;
 	if ( gpGlobals->maxClients == 1 )
@@ -62,7 +62,7 @@ void CTargetCDAudioRep::InputChangeCDTrack( inputdata_t &inputdata )
 			pClient = player->edict();
 		}
 	}
-	
+
 	// Can't play if the client is not connected!
 	if ( !pClient )
 		return;
@@ -142,5 +142,3 @@ void CTargetChangeGravity::InputResetGrav( inputdata_t &inputdata )
 
 	pl->SetGravity(m_iOldGrav);
 }
-
-

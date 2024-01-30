@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,7 +31,7 @@ public:
 	virtual void ActivateOccluder( int nOccluderIndex, bool bActive ) = 0;
 
 	// Sets the view transform
-	virtual void SetView( const Vector &vecCameraPos, float flFOV, const VMatrix &worldToCamera, 
+	virtual void SetView( const Vector &vecCameraPos, float flFOV, const VMatrix &worldToCamera,
 		const VMatrix &cameraToProjection, const VPlane &nearClipPlane ) = 0;
 
 	// Test for occlusion (bounds specified in abs space)

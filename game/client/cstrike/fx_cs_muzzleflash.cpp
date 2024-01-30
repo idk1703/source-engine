@@ -21,7 +21,7 @@ void TE_DynamicLight( IRecipientFilter& filter, float delay,
 
 void CS_MuzzleFlashCallback( const CEffectData &data )
 {
-	CSmartPtr<CLocalSpaceEmitter> pEmitter = 
+	CSmartPtr<CLocalSpaceEmitter> pEmitter =
 		CLocalSpaceEmitter::Create( "CS_MuzzleFlash", data.m_hEntity, data.m_nAttachmentIndex, 0 );
 
 	if ( !pEmitter )
@@ -49,7 +49,7 @@ void CS_MuzzleFlashCallback( const CEffectData &data )
 	Assert( pEmitter );
 	pEmitter->GetBinding().SetBBox( vCenter - Vector( 3, 3, 3 ), vCenter + Vector( 3, 3, 3 ) );
 
-	// haxors - make the clip much shorter so the alpha is not 
+	// haxors - make the clip much shorter so the alpha is not
 	// changed based on large clip distances
 	pEmitter->SetNearClip( 0, 5 );
 
@@ -94,12 +94,12 @@ DECLARE_CLIENT_EFFECT( "CS_MuzzleFlash", CS_MuzzleFlashCallback );
 // 'X' shaped muzzleflash used by certain weapons
 void CS_MuzzleFlashXCallback( const CEffectData &data )
 {
-	CSmartPtr<CLocalSpaceEmitter> pEmitter = 
+	CSmartPtr<CLocalSpaceEmitter> pEmitter =
 		CLocalSpaceEmitter::Create( "CS_MuzzleFlashX", data.m_hEntity, data.m_nAttachmentIndex, 0 );
 
 	Assert( pEmitter );
 
-	// haxors - make the clip much shorter so the alpha is not 
+	// haxors - make the clip much shorter so the alpha is not
 	// changed based on large clip distances
 	pEmitter->SetNearClip( 0, 5 );
 

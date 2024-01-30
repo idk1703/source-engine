@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,7 +20,7 @@ extern ConVar obj_damage_factor;
 #define SF_MAPDEFOBJ_DOESNT_NEED_POWER		0x0004
 
 BEGIN_DATADESC( CObjectMapDefined )
-	// keys 
+	// keys
 	DEFINE_KEYFIELD_NOT_SAVED( m_iszCustomName , FIELD_STRING, "CustomName" ),
 END_DATADESC()
 
@@ -32,7 +32,7 @@ LINK_ENTITY_TO_CLASS(obj_mapdefined, CObjectMapDefined);
 LINK_ENTITY_TO_CLASS(func_obj_mapdefined, CObjectMapDefined);
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CObjectMapDefined::CObjectMapDefined()
 {
@@ -40,7 +40,7 @@ CObjectMapDefined::CObjectMapDefined()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMapDefined::Spawn()
 {
@@ -113,7 +113,7 @@ void CObjectMapDefined::Spawn()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CObjectMapDefined::Precache()
 {
@@ -123,7 +123,7 @@ void CObjectMapDefined::Precache()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CObjectMapDefined::OnTakeDamage( const CTakeDamageInfo &info )
 {

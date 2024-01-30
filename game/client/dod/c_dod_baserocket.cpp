@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -32,14 +32,14 @@ IMPLEMENT_CLIENTCLASS_DT(C_DODBaseRocket, DT_DODBaseRocket, CDODBaseRocket)
 END_RECV_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODBaseRocket::C_DODBaseRocket()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_DODBaseRocket::~C_DODBaseRocket()
 {
@@ -47,7 +47,7 @@ C_DODBaseRocket::~C_DODBaseRocket()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_DODBaseRocket::Spawn()
 {
@@ -56,7 +56,7 @@ void C_DODBaseRocket::Spawn()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_DODBaseRocket::PostDataUpdate( DataUpdateType_t type )
 {
@@ -64,9 +64,9 @@ void C_DODBaseRocket::PostDataUpdate( DataUpdateType_t type )
 
 	if ( type == DATA_UPDATE_CREATED )
 	{
-		// Now stick our initial velocity into the interpolation history 
+		// Now stick our initial velocity into the interpolation history
 		CInterpolatedVar< Vector > &interpolator = GetOriginInterpolator();
-		
+
 		interpolator.ClearHistory();
 		float changeTime = GetLastChangeTime( LATCH_SIMULATION_VAR );
 
@@ -96,7 +96,7 @@ void C_DODBaseRocket::PostDataUpdate( DataUpdateType_t type )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_DODBaseRocket::DrawModel( int flags )
 {

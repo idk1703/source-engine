@@ -68,12 +68,12 @@ class CStatsRecorder : public CAutoGameSystem
 		}
 	}
 
-	void LevelInitPreEntity() 
+	void LevelInitPreEntity()
 	{
 		m_flTimeLevelStart = gpGlobals->curtime;
 	}
 
-	void LevelShutdownPreEntity() 
+	void LevelShutdownPreEntity()
 	{
 		float flLevelTime = gpGlobals->curtime - m_flTimeLevelStart;
 		m_flTotalTimeInLevels += flLevelTime;
@@ -141,7 +141,7 @@ char const *CStatsRecorder::GetPerfStatsString( int iType )
 		char szMap[MAX_PATH+1]="";
 		Q_FileBase( engine->GetLevelName(), szMap, ARRAYSIZE( szMap ) );
 
-		V_snprintf( s_cPerfString, sizeof( s_cPerfString ), 
+		V_snprintf( s_cPerfString, sizeof( s_cPerfString ),
 			"PERFDATA:AvgFps=%4.2f MinFps=%4.2f MaxFps=%4.2f CPUID=\"%s\" CPUGhz=%2.2f "
 			"NumCores=%d GPUDrv=\"%s\" "
 			"GPUVendor=%d GPUDeviceID=%d "
@@ -189,7 +189,7 @@ void CStatsRecorder::UpdatePerfStats( void )
 {
 	float flCurTime = Plat_FloatTime();
 	if (
-		( m_flLastSampleTime == -1 ) || 
+		( m_flLastSampleTime == -1 ) ||
 		( flCurTime - m_flLastSampleTime >= STATS_RECORD_INTERVAL ) )
 	{
 		if ( ( m_flLastRealTime > 0 ) && ( flCurTime > m_flLastRealTime ) )
@@ -237,5 +237,5 @@ void CStatsRecorder::UploadPerfData( int iType )
 														 1 + strlen( pPerfData ),
 														 pPerfData );
 		}
-	}	
+	}
 }

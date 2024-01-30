@@ -47,11 +47,11 @@ class CHammerBar : public CDialogBar
 		BOOL Create( CWnd* pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID, char *pszName );
 
 		CSize m_sizeDocked;
-        CSize m_sizeFloating;
+	CSize m_sizeFloating;
 
 		virtual CSize CalcDynamicLayout(int nLength, DWORD dwMode);
 		virtual void OnSize( UINT nType, int cx, int cy );
-		
+
 		void AddControl( int nIDTemplate, DWORD dwPlacementFlag );
 		void AdjustControls( void );
 
@@ -59,9 +59,9 @@ class CHammerBar : public CDialogBar
 
 	protected:
 
-		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);		
+		afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 
-		DECLARE_MESSAGE_MAP() 
+		DECLARE_MESSAGE_MAP()
 };
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -32,7 +32,7 @@ public:
 class CAchievementTFReplay_SaveReplay : public CReplayAchievement
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		ListenForGameEvent( "replay_saved" );
@@ -52,11 +52,11 @@ DECLARE_ACHIEVEMENT( CAchievementTFReplay_SaveReplay, ACHIEVEMENT_TF_REPLAY_SAVE
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFReplay_PerformanceMode : public CReplayAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		ListenForGameEvent( "entered_performance_mode" );
-		SetGoal( 1 ); 
+		SetGoal( 1 );
 	}
 
 	virtual void FireGameEvent_Internal( IGameEvent *event )
@@ -72,7 +72,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFReplay_PerformanceMode, ACHIEVEMENT_TF_REPLAY
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFReplay_BrowseReplays : public CReplayAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		ListenForGameEvent( "browse_replays" );
@@ -92,7 +92,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFReplay_BrowseReplays, ACHIEVEMENT_TF_REPLAY_B
 //----------------------------------------------------------------------------------------------------------------
 class CAchievementTFReplay_EditTime : public CReplayAchievement
 {
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		SetGoal( 1 );
@@ -106,7 +106,7 @@ DECLARE_ACHIEVEMENT( CAchievementTFReplay_EditTime, ACHIEVEMENT_TF_REPLAY_EDIT_T
 class CAchievementTFReplay_YouTube_Views_Tier  : public CReplayAchievement
 {
 public:
-	void Init() 
+	void Init()
 	{
 		SetFlags( ACH_SAVE_GLOBAL );
 		ListenForGameEvent( "replay_youtube_stats" );
@@ -123,7 +123,7 @@ public:
 			if ( iNewCount > iCurrentCount )
 			{
 				IncrementCount( iNewCount - iCurrentCount );
-			}			
+			}
 		}
 	}
 
@@ -134,7 +134,7 @@ class CAchievementTFReplay_YouTube_Views_Tier1 : public CAchievementTFReplay_You
 {
 	DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 public:
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 
@@ -147,7 +147,7 @@ class CAchievementTFReplay_YouTube_Views_Tier2 : public CAchievementTFReplay_You
 {
 	DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 public:
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetGoal( 1000 );
@@ -159,7 +159,7 @@ class CAchievementTFReplay_YouTube_Views_Tier3 : public CAchievementTFReplay_You
 {
 	DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 public:
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetGoal( 10000 );
@@ -171,7 +171,7 @@ class CAchievementTFReplay_YouTube_Views_Highest : public CAchievementTFReplay_Y
 {
 	DECLARE_CLASS( CAchievementTFReplay_YouTube_Views_Tier1, CAchievementTFReplay_YouTube_Views_Tier );
 public:
-	void Init() 
+	void Init()
 	{
 		BaseClass::Init();
 		SetGoal( 100000 );
@@ -182,6 +182,3 @@ DECLARE_ACHIEVEMENT( CAchievementTFReplay_YouTube_Views_Highest, ACHIEVEMENT_TF_
 //----------------------------------------------------------------------------------------------------------------
 
 #endif // CLIENT_DLL
-
-
-

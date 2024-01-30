@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -8,7 +8,7 @@
 
 #include "cbase.h"
 #include "c_prop_vehicle.h"
-#include "hud.h"		
+#include "hud.h"
 #include <vgui_controls/Controls.h>
 #include <Color.h>
 #include "view.h"
@@ -106,7 +106,7 @@ int C_PropVehicleDriveable::GetJoystickResponseCurve() const
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter *C_PropVehicleDriveable::GetPassenger( int nRole )
 {
@@ -128,8 +128,8 @@ int	C_PropVehicleDriveable::GetPassengerRole( C_BaseCombatCharacter *pPassenger 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : updateType - 
+// Purpose:
+// Input  : updateType -
 //-----------------------------------------------------------------------------
 void C_PropVehicleDriveable::OnPreDataChanged( DataUpdateType_t updateType )
 {
@@ -139,7 +139,7 @@ void C_PropVehicleDriveable::OnPreDataChanged( DataUpdateType_t updateType )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropVehicleDriveable::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -206,7 +206,7 @@ void C_PropVehicleDriveable::GetVehicleViewPosition( int nRole, Vector *pAbsOrig
 	SharedVehicleViewSmoothing( m_hPlayer,
 								pAbsOrigin, pAbsAngles,
 								m_bEnterAnimOn, m_bExitAnimOn,
-								m_vecEyeExitEndpoint, 
+								m_vecEyeExitEndpoint,
 								&m_ViewSmoothingData,
 								pFOV );
 }
@@ -221,7 +221,7 @@ void C_PropVehicleDriveable::GetVehicleClipPlanes( float &flZNear, float &flZFar
 	flZNear = 6;
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Renders hud elements
 //-----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ void C_PropVehicleDriveable::GetVehicleClipPlanes( float &flZNear, float &flZFar
 //-----------------------------------------------------------------------------
 int GetFlashColorIntensity( int LowIntensity, int HighIntensity, bool Dimming, int Increment, int Timer )
 {
-	if ( Dimming ) 
+	if ( Dimming )
 		return ( HighIntensity - Timer * Increment );
 	else
 		return ( LowIntensity + Timer * Increment );
@@ -291,16 +291,16 @@ void C_PropVehicleDriveable::DrawHudElements( )
 			}
 
 
-			x -= pIcon->Width() / 2; 
-			y -= pIcon->Height() / 2; 
-			
+			x -= pIcon->Width() / 2;
+			y -= pIcon->Height() / 2;
+
 			Color	clr = ( m_bUnableToFire ) ? gHUD.m_clrCaution : gHUD.m_clrNormal;
 			pIcon->DrawSelf( x, y, clr );
 		}
 
 		if ( m_nScannerDisabledWeapons )
 		{
-			// Draw icons for scanners "weps disabled"  
+			// Draw icons for scanners "weps disabled"
 			pIcon = gHUD.GetIcon( "dmg_bio" );
 			if ( pIcon )
 			{
@@ -327,7 +327,7 @@ void C_PropVehicleDriveable::DrawHudElements( )
 
 	if ( m_nScannerDisabledVehicle )
 	{
-		// Draw icons for scanners "vehicle disabled"  
+		// Draw icons for scanners "vehicle disabled"
 		pIcon = gHUD.GetIcon( "dmg_bio" );
 		if ( pIcon )
 		{
@@ -353,7 +353,7 @@ void C_PropVehicleDriveable::DrawHudElements( )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropVehicleDriveable::RestrictView( float *pYawBounds, float *pPitchBounds,
 										   float *pRollBounds, QAngle &vecViewAngles )
@@ -389,7 +389,7 @@ void C_PropVehicleDriveable::RestrictView( float *pYawBounds, float *pPitchBound
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropVehicleDriveable::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUserCmd *pCmd )
 {
@@ -401,7 +401,7 @@ void C_PropVehicleDriveable::UpdateViewAngles( C_BasePlayer *pLocalPlayer, CUser
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_PropVehicleDriveable::OnEnteredVehicle( C_BaseCombatCharacter *pPassenger )
 {
@@ -419,4 +419,3 @@ void C_PropVehicleDriveable::OnExitedVehicle( C_BaseCombatCharacter *pPassenger 
 	HapticsExitedVehicle(this,pPassenger);
 #endif
 }
-

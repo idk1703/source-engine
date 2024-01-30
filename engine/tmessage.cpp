@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -31,7 +31,7 @@ int						gMessageTableCount = 0;
 char	gNetworkTextMessageBuffer[MAX_NETMESSAGE][512];
 const char *gNetworkMessageNames[MAX_NETMESSAGE] = { NETWORK_MESSAGE1, NETWORK_MESSAGE2, NETWORK_MESSAGE3, NETWORK_MESSAGE4, NETWORK_MESSAGE5, NETWORK_MESSAGE6 };
 
-client_textmessage_t	gNetworkTextMessage[MAX_NETMESSAGE] = 
+client_textmessage_t	gNetworkTextMessage[MAX_NETMESSAGE] =
 {
 	{ 0, // effect
 	255,255,255,255,
@@ -77,7 +77,7 @@ int IsComment( char *pText )
 
 		if ( length >= 2 && pText[0] == '/' && pText[1] == '/' )
 			return 1;
-		
+
 		// No text?
 		if ( length > 0 )
 			return 0;
@@ -186,7 +186,7 @@ int ParseString( char const *pText, char *buf, size_t bufsize )
 	pTemp = SkipText( pTemp );
 	// Skip any whitespace in between
 	pTemp = SkipSpace( pTemp );
-	
+
 	if ( pTemp )
 	{
 		char const *pStart = pTemp;
@@ -237,7 +237,7 @@ int IsToken( const char *pText, const char *pTokenName )
 
 	if ( !Q_strnicmp( pText+1, pTokenName, strlen(pTokenName) ) )
 		return 1;
-	
+
 	return 0;
 }
 
@@ -361,12 +361,12 @@ void TextMessageParse( byte *pMemFile, int fileSize )
 	char		 currentName[512], nameHeap[ NAME_HEAP_SIZE ];
 	int			lastNamePos;
 
-	int			mode = MSGFILE_NAME;	// Searching for a message name	
+	int			mode = MSGFILE_NAME;	// Searching for a message name
 	int			lineNumber, filePos, lastLinePos;
 	int			messageCount;
 
 	client_textmessage_t	textMessages[ MAX_MESSAGES ];
-	
+
 	int			i, nameHeapSize, textHeapSize, messageSize, nameOffset;
 
 	lastNamePos = 0;
@@ -392,7 +392,7 @@ void TextMessageParse( byte *pMemFile, int fileSize )
 		case MSGFILE_NAME:
 			if ( IsComment( trim ) )	// Skip comment lines
 				break;
-			
+
 			if ( ParseDirective( trim ) )	// Is this a directive "$command"?, if so parse it and break
 				break;
 
@@ -409,7 +409,7 @@ void TextMessageParse( byte *pMemFile, int fileSize )
 			}
 			Q_strncpy( currentName, trim, sizeof( currentName ) );
 			break;
-		
+
 		case MSGFILE_TEXT:
 			if ( IsEndOfText( trim ) )
 			{
@@ -426,7 +426,7 @@ void TextMessageParse( byte *pMemFile, int fileSize )
 				// Terminate text in-place in the memory file (it's temporary memory that will be deleted)
 				// If the string starts with #, it's a localization string and we don't
 				// want the \n (or \r) on the end or the Find() lookup will fail (so subtract 2)
-				if ( pCurrentText && pCurrentText[0] && pCurrentText[0] == '#' && lastLinePos > 1 && 
+				if ( pCurrentText && pCurrentText[0] && pCurrentText[0] == '#' && lastLinePos > 1 &&
 					( ( pMemFile[lastLinePos - 2] == '\n' ) || ( pMemFile[lastLinePos - 2] == '\r' ) ) )
 				{
 					pMemFile[ lastLinePos - 2 ] = 0;
@@ -502,10 +502,10 @@ void TextMessageParse( byte *pMemFile, int fileSize )
 
 	// Must malloc because we need to be able to clear it after initialization
 	gMessageTable = (client_textmessage_t *)malloc( textHeapSize + nameHeapSize + messageSize );
-	
+
 	// Copy table over
 	memcpy( gMessageTable, textMessages, messageSize );
-	
+
 	// Copy Name heap
 	pNameHeap = ((char *)gMessageTable) + messageSize;
 	memcpy( pNameHeap, nameHeap, nameHeapSize );
@@ -567,7 +567,7 @@ void TextMessageInit( void )
 
 	for ( i = 0; i < MAX_NETMESSAGE; i++ )
 	{
-		gNetworkTextMessage[ i ].pMessage = 
+		gNetworkTextMessage[ i ].pMessage =
 			gNetworkTextMessageBuffer[ i ];
 	}
 }
@@ -576,7 +576,7 @@ void TextMessage_DemoMessage( const char *pszMessage, float fFadeInTime, float f
 {
 	if ( !pszMessage || !pszMessage[0] )
 		return;
-	
+
 	// Restore
 	tm_demomessage = orig_demo_message;
 
@@ -587,9 +587,9 @@ void TextMessage_DemoMessage( const char *pszMessage, float fFadeInTime, float f
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pszMessage - 
-//			*message - 
+// Purpose:
+// Input  : *pszMessage -
+//			*message -
 //-----------------------------------------------------------------------------
 void TextMessage_DemoMessageFull( const char *pszMessage, client_textmessage_t const *message )
 {

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //===========================================================================//
 
@@ -46,13 +46,13 @@ void CNetworkClient::Shutdown()
 	m_pSocket->Shutdown();
 }
 
-#define SPEW_MESSAGES 
+#define SPEW_MESSAGES
 
 #if defined( SPEW_MESSAGES )
 #define SM_SPEW_MESSAGE( code, remote ) \
 	Warning( "Message:  %s from '%s'\n", #code, remote );
 #else
-#define SM_SPEW_MESSAGE( code, remote ) 
+#define SM_SPEW_MESSAGE( code, remote )
 #endif
 
 // process a connectionless packet
@@ -89,7 +89,7 @@ INetChannel *CNetworkClient::FindNetChannel( const netadr_t& from )
 
 void CNetworkClient::ReadPackets( void )
 {
-	UDP_ProcessSocket( m_pSocket, this, this );	
+	UDP_ProcessSocket( m_pSocket, this, this );
 }
 
 void CNetworkClient::SendUpdate()
@@ -128,7 +128,7 @@ bool CNetworkClient::Connect( char const *server, int port /*=SM_SERVER_PORT*/ )
 	netadr_t remote;
 	remote.type = NA_IP;
 	remote.port = htons( (unsigned short)port );
-	
+
 	// Resolve remote name
 	sockaddr sa;
 	if ( !Q_stricmp( server, "localhost" ) )

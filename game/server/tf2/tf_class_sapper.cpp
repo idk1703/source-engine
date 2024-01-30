@@ -40,7 +40,7 @@ BEGIN_SEND_TABLE_NOBASE( CPlayerClassSapper, DT_PlayerClassSapperData )
 END_SEND_TABLE()
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : const char
 //-----------------------------------------------------------------------------
 const char *CPlayerClassSapper::GetClassModelString( int nTeam )
@@ -56,7 +56,7 @@ CPlayerClassSapper::CPlayerClassSapper( CBaseTFPlayer *pPlayer, TFClass iClass )
 {
 	for (int i = 0; i < MAX_TF_TEAMS; ++i)
 	{
-		SetClassModel( MAKE_STRING(GetClassModelString(i)), i ); 
+		SetClassModel( MAKE_STRING(GetClassModelString(i)), i );
 	}
 
 	// Setup movement data.
@@ -64,7 +64,7 @@ CPlayerClassSapper::CPlayerClassSapper( CBaseTFPlayer *pPlayer, TFClass iClass )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPlayerClassSapper::~CPlayerClassSapper()
 {
@@ -89,7 +89,7 @@ void CPlayerClassSapper::ClassActivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::ClassDeactivate( void )
 {
@@ -98,7 +98,7 @@ void CPlayerClassSapper::ClassDeactivate( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::CreateClass( void )
 {
@@ -120,7 +120,7 @@ void CPlayerClassSapper::CreateClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::RespawnClass( void )
 {
@@ -135,7 +135,7 @@ void CPlayerClassSapper::RespawnClass( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassSapper::ResupplyAmmo( float flFraction, ResupplyReason_t reason )
 {
@@ -179,7 +179,7 @@ void CPlayerClassSapper::SetupSizeData( void )
 	// Initially set the player to the base player class standing hull size.
 	m_pPlayer->SetCollisionBounds( SAPPERCLASS_HULL_STAND_MIN, SAPPERCLASS_HULL_STAND_MAX );
 	m_pPlayer->SetViewOffset( SAPPERCLASS_VIEWOFFSET_STAND );
-	m_pPlayer->m_Local.m_flStepSize = SAPPERCLASS_STEPSIZE;	
+	m_pPlayer->m_Local.m_flStepSize = SAPPERCLASS_STEPSIZE;
 }
 
 //-----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void CPlayerClassSapper::GainedNewTechnology( CBaseTechnology *pTechnology )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::ClassThink( void )
 {
@@ -241,7 +241,7 @@ void CPlayerClassSapper::ClassThink( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CPlayerClassSapper::CheckStationaryTime( float time_required )
 {
@@ -256,7 +256,7 @@ bool CPlayerClassSapper::CheckStationaryTime( float time_required )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::CreatePersonalOrder( void )
 {
@@ -267,7 +267,7 @@ void CPlayerClassSapper::CreatePersonalOrder( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::SetPlayerHull( void )
 {
@@ -282,7 +282,7 @@ void CPlayerClassSapper::SetPlayerHull( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::ResetViewOffset( void )
 {
@@ -293,12 +293,12 @@ void CPlayerClassSapper::ResetViewOffset( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::AddDrainedEnergy( float flEnergy )
 {
 	// Convert to 0->1
-	flEnergy = ( flEnergy / class_sapper_boost_amount.GetFloat() ); 
+	flEnergy = ( flEnergy / class_sapper_boost_amount.GetFloat() );
 	m_flDrainedEnergy = MIN( 1.0, m_flDrainedEnergy + flEnergy );
 
 	// Did we hit max?
@@ -312,7 +312,7 @@ void CPlayerClassSapper::AddDrainedEnergy( float flEnergy )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CPlayerClassSapper::GetDrainedEnergy( void )
 {
@@ -320,7 +320,7 @@ float CPlayerClassSapper::GetDrainedEnergy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPlayerClassSapper::DeductDrainedEnergy( float flEnergy )
 {

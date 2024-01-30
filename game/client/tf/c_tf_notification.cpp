@@ -225,7 +225,7 @@ void CClientNotification::OnDialogAcknowledged()
 
 
 //-----------------------------------------------------------------------------
-// CAutobalanceVolunteerNotification 
+// CAutobalanceVolunteerNotification
 //-----------------------------------------------------------------------------
 void CAutobalanceVolunteerNotification::SendResponse( bool bResponse )
 {

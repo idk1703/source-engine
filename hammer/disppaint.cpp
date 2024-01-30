@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -37,7 +37,7 @@ CDispPaintMgr::~CDispPaintMgr()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDispPaintMgr::Paint( SpatialPaintData_t &spatialData, bool bAutoSew )
 {
@@ -58,7 +58,7 @@ bool CDispPaintMgr::Paint( SpatialPaintData_t &spatialData, bool bAutoSew )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDispPaintMgr::PrePaint( SpatialPaintData_t &spatialData )
 {
@@ -76,7 +76,7 @@ bool CDispPaintMgr::PrePaint( SpatialPaintData_t &spatialData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDispPaintMgr::PostPaint( bool bAutoSew )
 {
@@ -106,7 +106,7 @@ bool CDispPaintMgr::PostPaint( bool bAutoSew )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDispPaintMgr::DoPaint( SpatialPaintData_t &spatialData )
 {
@@ -137,23 +137,23 @@ bool CDispPaintMgr::DoPaint( SpatialPaintData_t &spatialData )
 				// Paint with the correct effect
 				switch ( spatialData.m_nEffect )
 				{
-				case DISPPAINT_EFFECT_RAISELOWER: 
-					{ 
+				case DISPPAINT_EFFECT_RAISELOWER:
+					{
 						DoPaintAdd( spatialData, pDisp );
-						break; 
+						break;
 					}
-				case DISPPAINT_EFFECT_RAISETO: 
-					{ 
+				case DISPPAINT_EFFECT_RAISETO:
+					{
 						DoPaintEqual( spatialData, pDisp );
 						break;
 					}
-				case DISPPAINT_EFFECT_SMOOTH: 
-					{ 
+				case DISPPAINT_EFFECT_SMOOTH:
+					{
 						DoPaintSmooth( spatialData, pDisp );
 						break;
 					}
 				}
-			}	                             
+			}
 		}
 	}
 
@@ -162,7 +162,7 @@ bool CDispPaintMgr::DoPaint( SpatialPaintData_t &spatialData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::NudgeAdd( CMapDisp *pDisp, int iVert )
 {
@@ -172,7 +172,7 @@ void CDispPaintMgr::NudgeAdd( CMapDisp *pDisp, int iVert )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::DoNudgeAdd( SpatialPaintData_t &spatialData )
 {
@@ -206,16 +206,16 @@ void CDispPaintMgr::DoNudgeAdd( SpatialPaintData_t &spatialData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::PaintSphereDispBBoxOverlap( const Vector &vCenter, float flRadius, 
+bool CDispPaintMgr::PaintSphereDispBBoxOverlap( const Vector &vCenter, float flRadius,
 											    const Vector &vBBoxMin, const Vector &vBBoxMax )
 {
 	return IsBoxIntersectingSphere( vBBoxMin, vBBoxMax, vCenter, flRadius );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CDispPaintMgr::IsInSphereRadius( const Vector &vCenter, float flRadius2,
 									  const Vector &vPos, float &flDistance2 )
@@ -227,7 +227,7 @@ bool CDispPaintMgr::IsInSphereRadius( const Vector &vCenter, float flRadius2,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::AddToUndo( CMapDisp **pDisp )
 {
@@ -245,7 +245,7 @@ void CDispPaintMgr::AddToUndo( CMapDisp **pDisp )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::DoPaintAdd( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
 {
@@ -282,7 +282,7 @@ void CDispPaintMgr::DoPaintAdd( SpatialPaintData_t &spatialData, CMapDisp *pDisp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
 {
@@ -309,7 +309,7 @@ void CDispPaintMgr::DoPaintEqual( SpatialPaintData_t &spatialData, CMapDisp *pDi
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::DoPaintSmooth( SpatialPaintData_t &spatialData, CMapDisp *pDisp )
 {
@@ -335,7 +335,7 @@ void CDispPaintMgr::DoPaintSmooth( SpatialPaintData_t &spatialData, CMapDisp *pD
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 float CDispPaintMgr::CalcSmoothRadius2( const SpatialPaintData_t &spatialData, const Vector &vPoint )
 {
@@ -351,9 +351,9 @@ float CDispPaintMgr::CalcSmoothRadius2( const SpatialPaintData_t &spatialData, c
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialData, 
+bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialData,
 										     const Vector &vNewCenter,
 										     Vector &vPaintPos )
 {
@@ -390,7 +390,7 @@ bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialDa
 				{
 					// Get the current vert.
 					pDisp->GetVert( iVert, vVert );
-					
+
 					float flDistance2 = 0.0f;
 					if ( IsInSphereRadius( vNewCenter, flNewRadius2, vVert, flDistance2 ) )
 					{
@@ -400,7 +400,7 @@ bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialDa
 						{
 							flFactor *= 1.0f / ( spatialData.m_flScalar * 2.0f );
 						}
-						
+
 						Vector vProjectVert;
 						float flProjectDist = DotProduct( vVert, spatialData.m_vPaintAxis ) - flPaintDist;
 						flSmoothDist += ( flProjectDist * flFactor );
@@ -419,10 +419,10 @@ bool CDispPaintMgr::DoPaintSmoothOneOverExp( const SpatialPaintData_t &spatialDa
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::DoPaintOneOverR( const SpatialPaintData_t &spatialData,
-									 const Vector &vPos, float flDistance2, 
+									 const Vector &vPos, float flDistance2,
 									 Vector &vNewPos )
 {
 	float flValue = 1.0f - ( flDistance2 * spatialData.m_flOORadius2 );
@@ -432,7 +432,7 @@ void CDispPaintMgr::DoPaintOneOverR( const SpatialPaintData_t &spatialData,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDispPaintMgr::DoPaintOne( const SpatialPaintData_t &spatialData,
 							    const Vector &vPos, Vector &vNewPos )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -35,15 +35,15 @@ extern bool Sendprop_UsingDebugWatch();
 class CPropCullStack : public CDatatableStack
 {
 public:
-						CPropCullStack( 
-							CSendTablePrecalc *pPrecalc, 
-							int iClient, 
+						CPropCullStack(
+							CSendTablePrecalc *pPrecalc,
+							int iClient,
 							const CSendProxyRecipients *pOldStateProxies,
-							const int nOldStateProxies, 
+							const int nOldStateProxies,
 							const CSendProxyRecipients *pNewStateProxies,
 							const int nNewStateProxies
 							) :
-							
+
 							CDatatableStack( pPrecalc, (unsigned char*)1, -1 ),
 							m_pOldStateProxies( pOldStateProxies ),
 							m_nOldStateProxies( nOldStateProxies ),
@@ -106,13 +106,13 @@ public:
 
 	virtual void RecurseAndCallProxies( CSendNode *pNode, unsigned char *pStructBase )
 	{
-		// Remember where the game code pointed us for this datatable's data so 
+		// Remember where the game code pointed us for this datatable's data so
 		m_pProxies[ pNode->GetRecursiveProxyIndex() ] = pStructBase;
 
 		for ( int iChild=0; iChild < pNode->GetNumChildren(); iChild++ )
 		{
 			CSendNode *pCurChild = pNode->GetChild( iChild );
-			
+
 			unsigned char *pNewStructBase = NULL;
 			if ( pStructBase )
 			{
@@ -122,7 +122,7 @@ public:
 			RecurseAndCallProxies( pCurChild, pNewStructBase );
 		}
 	}
-	
+
 	inline void AddProp( int iProp )
 	{
 		if ( m_nOutProps < m_nMaxOutProps )
@@ -192,7 +192,7 @@ private:
 	int						m_iClient;	// Which client it's encoding out for.
 	const CSendProxyRecipients	*m_pOldStateProxies;
 	const int					m_nOldStateProxies;
-	
+
 	const CSendProxyRecipients	*m_pNewStateProxies;
 	const int					m_nNewStateProxies;
 
@@ -243,16 +243,16 @@ static bool s_debug_info_shown = false;
 static int  s_debug_bits_start = 0;
 
 
-static inline void ShowEncodeDeltaWatchInfo( 
+static inline void ShowEncodeDeltaWatchInfo(
 	const SendTable *pTable,
-	const SendProp *pProp, 
+	const SendProp *pProp,
 	bf_read &buffer,
 	const int objectID,
 	const int index )
 {
 	if ( !ShouldWatchThisProp( pTable, objectID, pProp->GetName()) )
 		return;
-	
+
 	static int lastframe = -1;
 	if ( host_framecount != lastframe )
 	{
@@ -272,7 +272,7 @@ static inline void ShowEncodeDeltaWatchInfo(
 	info.m_pProp = pProp;
 	info.m_pIn = &copy;
 	info.m_Value.m_Type = (SendPropType)pProp->m_Type;
-	
+
 	int startBit = copy.GetNumBitsRead();
 
 	g_PropTypeFns[pProp->m_Type].Decode( &info );
@@ -290,15 +290,15 @@ static FORCEINLINE void SendTable_EncodeProp( CEncodeInfo * pInfo, unsigned long
 {
 	// Call their proxy to get the property's value.
 	DVariant var;
-	
+
 	const SendProp *pProp = pInfo->GetCurProp();
 	unsigned char *pStructBase = pInfo->GetCurStructBase();
 
-	pProp->GetProxyFn()( 
+	pProp->GetProxyFn()(
 		pProp,
-		pStructBase, 
-		pStructBase + pProp->GetOffset(), 
-		&var, 
+		pStructBase,
+		pStructBase + pProp->GetOffset(),
+		&var,
 		0, // iElement
 		pInfo->GetObjectID()
 		);
@@ -306,13 +306,13 @@ static FORCEINLINE void SendTable_EncodeProp( CEncodeInfo * pInfo, unsigned long
 	// Write the index.
 	pInfo->m_DeltaBitsWriter.WritePropIndex( iProp );
 
-	g_PropTypeFns[pProp->m_Type].Encode( 
-		pStructBase, 
-		&var, 
-		pProp, 
-		pInfo->m_DeltaBitsWriter.GetBitBuf(), 
+	g_PropTypeFns[pProp->m_Type].Encode(
+		pStructBase,
+		&var,
+		pProp,
+		pInfo->m_DeltaBitsWriter.GetBitBuf(),
 		pInfo->GetObjectID()
-		); 
+		);
 }
 
 
@@ -323,12 +323,12 @@ static bool SendTable_IsPropZero( CEncodeInfo *pInfo, unsigned long iProp )
 	// Call their proxy to get the property's value.
 	DVariant var;
 	unsigned char *pBase = pInfo->GetCurStructBase();
-	
-	pProp->GetProxyFn()( 
+
+	pProp->GetProxyFn()(
 		pProp,
-		pBase, 
-		pBase + pProp->GetOffset(), 
-		&var, 
+		pBase,
+		pBase + pProp->GetOffset(),
+		&var,
 		0, // iElement
 		pInfo->GetObjectID()
 		);
@@ -337,27 +337,27 @@ static bool SendTable_IsPropZero( CEncodeInfo *pInfo, unsigned long iProp )
 }
 
 
-int SendTable_CullPropsFromProxies( 
+int SendTable_CullPropsFromProxies(
 	const SendTable *pTable,
-	
+
 	const int *pStartProps,
 	int nStartProps,
 
 	const int iClient,
-	
+
 	const CSendProxyRecipients *pOldStateProxies,
-	const int nOldStateProxies, 
-	
+	const int nOldStateProxies,
+
 	const CSendProxyRecipients *pNewStateProxies,
 	const int nNewStateProxies,
-	
+
 	int *pOutProps,
 	int nMaxOutProps
 	)
 {
 	Assert( !( nNewStateProxies && !pNewStateProxies ) );
 	CPropCullStack stack( pTable->m_pPrecalc, iClient, pOldStateProxies, nOldStateProxies, pNewStateProxies, nNewStateProxies );
-	
+
 	stack.CullPropsFromProxies( pStartProps, nStartProps, pOutProps, nMaxOutProps );
 
 	ErrorIfNot( stack.GetNumOutProps() <= nMaxOutProps, ("CullPropsFromProxies: overflow in '%s'.", pTable->GetName()) );
@@ -367,7 +367,7 @@ int SendTable_CullPropsFromProxies(
 
 // compares properties and writes delta properties, it ignores reciepients
 int SendTable_WriteAllDeltaProps(
-	const SendTable *pTable,					
+	const SendTable *pTable,
 	const void *pFromData,
 	const int	nFromDataBits,
 	const void *pToData,
@@ -379,7 +379,7 @@ int SendTable_WriteAllDeltaProps(
 	int deltaProps[MAX_DATATABLE_PROPS];
 
 	int nDeltaProps = SendTable_CalcDelta(
-		pTable, 
+		pTable,
 		pFromData,
 		nFromDataBits,
 		pToData,
@@ -389,7 +389,7 @@ int SendTable_WriteAllDeltaProps(
 		nObjectID );
 
 	// Write the properties.
-	SendTable_WritePropList( 
+	SendTable_WritePropList(
 		pTable,
 		pToData,				// object data
 		nToDataBits,
@@ -405,8 +405,8 @@ int SendTable_WriteAllDeltaProps(
 
 bool SendTable_Encode(
 	const SendTable *pTable,
-	const void *pStruct, 
-	bf_write *pOut, 
+	const void *pStruct,
+	bf_write *pOut,
 	int objectID,
 	CUtlMemory<CSendProxyRecipients> *pRecipients,
 	bool bNonZeroOnly
@@ -428,7 +428,7 @@ bool SendTable_Encode(
 	info.m_pRecipients = pRecipients;	// optional buffer to store the bits for which clients get what data.
 
 	info.Init();
-	
+
 	int iNumProps = pPrecalc->GetNumProps();
 
 	for ( int iProp=0; iProp < iNumProps; iProp++ )
@@ -438,7 +438,7 @@ bool SendTable_Encode(
 			continue;
 
 		info.SeekToProp( iProp );
-        
+
 		// skip empty prop if we only encode non-zero values
 		if ( bNonZeroOnly && SendTable_IsPropZero(&info, iProp) )
 			continue;
@@ -471,7 +471,7 @@ void SendTable_WritePropList(
 
 	s_debug_info_shown = false;
 	s_debug_bits_start = pOut->GetNumBitsWritten();
-	
+
 	CSendTablePrecalc *pPrecalc = pTable->m_pPrecalc;
 	CDeltaBitsWriter deltaBitsWriter( pOut );
 
@@ -494,7 +494,7 @@ void SendTable_WritePropList(
 		{
 			break;
 		}
-		
+
 		if ( iToProp == (unsigned int) pCheckProps[i] )
 		{
 			const SendProp *pProp = pPrecalc->GetProp( iToProp );
@@ -510,7 +510,7 @@ void SendTable_WritePropList(
 			int iStartBit = pOut->GetNumBitsWritten();
 
 			deltaBitsWriter.WritePropIndex( iToProp );
-			inputBitsReader.CopyPropData( deltaBitsWriter.GetBitBuf(), pProp ); 
+			inputBitsReader.CopyPropData( deltaBitsWriter.GetBitBuf(), pProp );
 
 			nToStateBits = pOut->GetNumBitsWritten() - iStartBit;
 
@@ -535,13 +535,13 @@ void SendTable_WritePropList(
 
 int SendTable_CalcDelta(
 	const SendTable *pTable,
-	
+
 	const void *pFromState,
 	const int nFromBits,
-	
+
 	const void *pToState,
 	const int nToBits,
-	
+
 	int *pDeltaProps,
 	int nMaxDeltaProps,
 
@@ -554,7 +554,7 @@ int SendTable_CalcDelta(
 	int *pDeltaPropsEnd = pDeltaProps + nMaxDeltaProps;
 
 	VPROF( "SendTable_CalcDelta" );
-	
+
 	// Trivial reject.
 	//if ( CompareBitArrays( pFromState, pToState, nFromBits, nToBits ) )
 	//{
@@ -586,7 +586,7 @@ int SendTable_CalcDelta(
 
 			if ( iFromProp == iToProp )
 			{
-				// The property is in both states, so compare them and write the index 
+				// The property is in both states, so compare them and write the index
 				// if the states are different.
 				if ( fromBitsReader.ComparePropData( &toBitsReader, pPrecalc->GetProp( iToProp ) ) )
 				{
@@ -670,7 +670,7 @@ bool SendTable_WriteInfos( SendTable *pTable, bf_write *pBuf )
 				pBuf->WriteUBitLong( pProp->GetNumElements(), PROPINFOBITS_NUMELEMENTS );
 			}
 			else
-			{			
+			{
 				pBuf->WriteBitFloat( pProp->m_fLowValue );
 				pBuf->WriteBitFloat( pProp->m_fHighValue );
 				pBuf->WriteUBitLong( pProp->m_nBits, PROPINFOBITS_NUMBITS );
@@ -691,7 +691,7 @@ static void SendTable_Validate( CSendTablePrecalc *pPrecalc )
 	for( int i=0; i < pTable->m_nProps; i++ )
 	{
 		SendProp *pProp = &pTable->m_pProps[i];
-		
+
 		if ( pProp->GetArrayProp() )
 		{
 			if ( pProp->GetArrayProp()->GetType() == DPT_DataTable )
@@ -703,7 +703,7 @@ static void SendTable_Validate( CSendTablePrecalc *pPrecalc )
 		{
 			ErrorIfNot( pProp->GetNumElements() == 1, ("Prop %s/%s has an invalid element count for a non-array.", pTable->m_pNetTableName, pProp->GetName()) );
 		}
-			
+
 		// Check for 1-bit signed properties (their value doesn't get down to the client).
 		if ( pProp->m_nBits == 1 && !(pProp->GetFlags() & SPROP_UNSIGNED) )
 		{
@@ -728,7 +728,7 @@ static void SendTable_CalcNextVectorElems( SendTable *pTable )
 	for ( int i=0; i < pTable->GetNumProps(); i++ )
 	{
 		SendProp *pProp = pTable->GetProp( i );
-		
+
 		if ( pProp->GetType() == DPT_DataTable )
 		{
 			SendTable_CalcNextVectorElems( pProp->GetDataTable() );
@@ -746,8 +746,8 @@ static bool SendTable_InitTable( SendTable *pTable )
 {
 	if( pTable->m_pPrecalc )
 		return true;
-	
-	// Create the CSendTablePrecalc.	
+
+	// Create the CSendTablePrecalc.
 	CSendTablePrecalc *pPrecalc = new CSendTablePrecalc;
 	pTable->m_pPrecalc = pPrecalc;
 
@@ -822,7 +822,7 @@ CRC32_t SendTable_CRCTable( CRC32_t &crc, SendTable *pTable )
 				CRC32_ProcessBuffer( &crc, (void *)&numelements, sizeof( numelements ) );
 			}
 			else
-			{	
+			{
 				float lowvalue;
 				LittleFloat( &lowvalue, &pProp->m_fLowValue );
 				CRC32_ProcessBuffer( &crc, (void *)&lowvalue, sizeof( lowvalue ) );
@@ -857,7 +857,7 @@ void SendTable_PrintStats( void )
 	for ( int i=0; i < g_SendTables.Count(); i++ )
 	{
 		SendTable *st =  g_SendTables[i];
-		
+
 		numTables++;
 		numSendProps += st->GetNumProps();
 		numFlatProps += st->m_pPrecalc->GetNumProps();
@@ -927,7 +927,7 @@ bool SendTable_Init( SendTable **pTables, int nTables )
 		SendTable_PrintStats();
 	}
 
-	return true;	
+	return true;
 }
 void SendTable_Term()
 {
@@ -974,7 +974,7 @@ int	SendTable_GetNum()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : CRC32_t
 //-----------------------------------------------------------------------------
 CRC32_t SendTable_GetCRC()
@@ -1024,22 +1024,17 @@ bool SendTable_CheckIntegrity( SendTable *pTable, const void *pData, const int n
 
 		g_PropTypeFns[ pProp->GetType() ].IsEncodedZero( pProp, &bfRead );
 
-		Assert( nLength == (bfRead.GetNumBitsRead() - iStartBit) ); 
+		Assert( nLength == (bfRead.GetNumBitsRead() - iStartBit) );
 
 		nPropCount++;
 		iLastProp = iProp;
 	}
 
 	Assert( nPropCount <= nMaxProps );
-	Assert( bfRead.GetNumBytesLeft() < 4 ); 
+	Assert( bfRead.GetNumBytesLeft() < 4 );
 	Assert( !bfRead.IsOverflowed() );
 
 #endif
 
 	return true;
 }
-
-
-
-
-

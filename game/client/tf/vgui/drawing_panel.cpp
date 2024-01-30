@@ -15,7 +15,7 @@
 
 extern ConVar cl_mute_all_comms;
 
-Color g_DrawPanel_TeamColors[TF_TEAM_COUNT] = 
+Color g_DrawPanel_TeamColors[TF_TEAM_COUNT] =
 {
 	COLOR_TF_SPECTATOR,		// unassigned
 	COLOR_TF_SPECTATOR,		// spectator
@@ -118,7 +118,7 @@ void CDrawingPanel::Paint()
 					if ( m_iPanelType == DRAWING_PANEL_TYPE_MATCH_SUMMARY )
 					{
 						float t = gpGlobals->curtime - m_vecDrawnLines[iIndex][i].created_time;
-					
+
 						if ( t < DRAWN_LINE_SOLID_TIME )
 						{
 
@@ -154,7 +154,7 @@ void CDrawingPanel::Paint()
 					end.Init( Vector2D( x2, y2 ), Vector2D( 1, 1 ) );
 					SoftLine::DrawPolygonLine( start, end );
 
-					// draw translucent ones around it to give it some softness	
+					// draw translucent ones around it to give it some softness
 					vgui::surface()->DrawSetColor( Color( drawColor.r(), drawColor.g(), drawColor.b(), 0.5f * alpha ) );
 
 					start.Init( Vector2D( x - 0.50f, y - 0.50f ), Vector2D( 0, 0 ) );
@@ -239,7 +239,7 @@ void CDrawingPanel::SendMapLine( int x, int y, bool bInitial )
 	if ( engine->IsPlayingDemo() )
 		return;
 
-	int iIndex = GetLocalPlayerIndex(); 
+	int iIndex = GetLocalPlayerIndex();
 	int nMaxLines = 750; // 12.5 seconds of drawing at 60fps
 	if ( m_iPanelType == DRAWING_PANEL_TYPE_MATCH_SUMMARY )
 	{
@@ -296,7 +296,7 @@ void CDrawingPanel::FireGameEvent( IGameEvent *event )
 	if ( FStrEq( event->GetName(), "cl_drawline" ) )
 	{
 		int iIndex = event->GetInt( "player" );
-		
+
 		// if this is NOT the local player (we've already stored our own data)
 		if ( ( iIndex != GetLocalPlayerIndex() ) || engine->IsPlayingDemo() )
 		{

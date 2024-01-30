@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -41,7 +41,7 @@ long GetFileSize( FILE *fp )
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------ //
-// VProf record mode. Turn it on to record all the vprof data, then when you're playing back, the engine's budget and vprof panels 
+// VProf record mode. Turn it on to record all the vprof data, then when you're playing back, the engine's budget and vprof panels
 // show the data from the recording instead of the real data.
 // ------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -124,7 +124,7 @@ public:
 			g_pFileSystem->Write( &nodeID, sizeof( nodeID ), m_hFile );
 
 			++m_nQueuedStarts;
-			
+
 			// Make sure vprof is recrding.
 			Cbuf_AddText( "vprof_on\n" );
 			return true;
@@ -134,7 +134,7 @@ public:
 	void Record_WriteToken( char val )
 	{
 		g_pFileSystem->Write( &val, sizeof( val ), m_hFile );
-	}		
+	}
 
 	void Record_MatchTree_R( CVProfNode *pOut, const CVProfNode *pIn, CVProfile *pInProfile )
 	{
@@ -162,7 +162,7 @@ public:
 				int budgetGroupID = pToAdd->m_BudgetGroupID;
 				int parentNodeID = pIn->GetUniqueNodeID();
 				int nodeID = pToAdd->GetUniqueNodeID();
-				
+
 				Record_WriteToken( Token_AddNode );
 				g_pFileSystem->Write( &parentNodeID, sizeof( parentNodeID ), m_hFile );						// Parent node ID.
 				g_pFileSystem->Write( pToAdd->m_pszName, strlen( pToAdd->m_pszName ) + 1, m_hFile );	// Name of the new node.
@@ -177,7 +177,7 @@ public:
 				pNewNode->SetUniqueNodeID( pToAdd->GetUniqueNodeID() );
 			}
 		}
-		
+
 		// Recurse.
 		CVProfNode *pOutChild = pOut->m_pChild;
 		const CVProfNode *pInChild = pIn->m_pChild;
@@ -186,7 +186,7 @@ public:
 			Assert( Q_stricmp( pInChild->m_pszName, pOutChild->m_pszName ) == 0 );
 			Assert( pInChild->GetUniqueNodeID() == pOutChild->GetUniqueNodeID() );
 			Record_MatchTree_R( pOutChild, pInChild, pInProfile );
-			
+
 			pOutChild = pOutChild->m_pSibling;
 			pInChild = pInChild->m_pSibling;
 		}
@@ -226,7 +226,7 @@ public:
 		}
 
 		// This allows us to write 2 bytes unless it's > 256 milliseconds (unlikely).
-		unsigned long nMicroseconds = pIn->m_CurFrameTime.GetMicroseconds() / 4; 
+		unsigned long nMicroseconds = pIn->m_CurFrameTime.GetMicroseconds() / 4;
 		if ( nMicroseconds >= 0xFFFF )
 		{
 			unsigned short token = 0xFFFF;
@@ -253,18 +253,18 @@ public:
 		// Record the tick count and start of frame.
 		Record_WriteToken( Token_StartFrame );
 #ifdef SWDS
-		g_pFileSystem->Write( &host_tickcount, sizeof( host_tickcount ), m_hFile );		
+		g_pFileSystem->Write( &host_tickcount, sizeof( host_tickcount ), m_hFile );
 #else
 		g_pFileSystem->Write( &g_ClientGlobalVariables.tickcount, sizeof( g_ClientGlobalVariables.tickcount ), m_hFile );
 #endif
-		
+
 		// Record all the changes to get our tree and budget groups to g_VProfCurrentProfile.
 		Record_MatchBudgetGroups( pInProfile );
 		if ( m_iLastUniqueNodeID != CVProfNode::s_iCurrentUniqueNodeID )
 		{
 			Record_MatchTree_R( GetRoot(), pInProfile->GetRoot(), pInProfile );
 		}
-		
+
 		// Now that we have a matching tree, write all the timings.
 		Record_WriteToken( Token_Timings );
 		Record_WriteTimings_R( pInProfile->GetRoot() );
@@ -273,7 +273,7 @@ public:
 		pInProfile->Resume();
 	}
 
-	
+
 // PLAYBACK FUNCTIONS.
 public:
 
@@ -343,7 +343,7 @@ public:
 			Assert( false );
 			return;
 		}
-		
+
 		// Clear the data and restart playback.
 		m_iPlaybackTick = -1;
 		Term(); // clear the vprof data
@@ -359,11 +359,11 @@ public:
 		char token;
 		if ( g_pFileSystem->Read( &token, 1, m_hFile ) != 1 )
 			token = TOKEN_FILE_FINISHED;
-		
+
 		return token;
 	}
 
-	
+
 	bool Playback_ReadString( char *pOut, int maxLen )
 	{
 		int i = 0;
@@ -411,14 +411,14 @@ public:
 	{
 		if ( pNode->GetUniqueNodeID() == id )
 			return pNode;
-		
+
 		for ( CVProfNode *pCur=pNode->m_pChild; pCur; pCur=pCur->m_pSibling )
 		{
 			CVProfNode *pTest = FindVProfNodeByID_R( pCur, id );
 			if ( pTest )
 				return pTest;
 		}
-		
+
 		return NULL;
 	}
 
@@ -428,7 +428,7 @@ public:
 		int budgetGroupID;
 		int parentNodeID;
 		int nodeID;
-		
+
 		char nodeName[512];
 
 		g_pFileSystem->Read( &parentNodeID, sizeof( parentNodeID ), m_hFile );					// Parent node ID.
@@ -505,7 +505,7 @@ public:
 
 
 	// Read the next tick. If iDontGoPast is set, then it will abort IF the next tick's index
-	// is greater than iDontGoPast. In that case, sets pWouldHaveGonePast to true, 
+	// is greater than iDontGoPast. In that case, sets pWouldHaveGonePast to true,
 	// stays where it was before the call, and returns true.
 	bool Playback_ReadTick( int iDontGoPast = -1, bool *pWouldHaveGonePast = NULL )
 	{
@@ -523,13 +523,13 @@ public:
 			m_iLastTick = m_iPlaybackTick;	// Now we know our last tick.
 			return true;
 		}
-			
+
 		if ( !Playback_Assert( token == Token_StartFrame ) )
 			return false;
 
 		int iPlaybackTick = m_iPlaybackTick;
 		g_pFileSystem->Read( &iPlaybackTick, sizeof( iPlaybackTick ), m_hFile );
-		
+
 		// First test if this tick would go past the number they don't want us to go past.
 		if ( iDontGoPast != -1 && iPlaybackTick > iDontGoPast )
 		{
@@ -579,7 +579,7 @@ public:
 			Playback_ReadTick();
 	}
 
-	
+
 	void Playback_Step()
 	{
 		Playback_ReadTick();
@@ -590,10 +590,10 @@ public:
 	{
 	public:
 		CVProfNode *m_pNode;
-		
+
 		CCycleCount m_CurFrameTime_Total;
 		int m_nCurFrameCalls_Total;
-		
+
 		int m_nSamples;
 	};
 
@@ -619,7 +619,7 @@ public:
 		pAverage->m_CurFrameTime_Total += pNode->m_CurFrameTime;
 		pAverage->m_nCurFrameCalls_Total += pNode->m_nCurFrameCalls;
 		pAverage->m_nSamples++;
-		
+
 		// Recurse.
 		for ( CVProfNode *pCur=pNode->m_pChild; pCur; pCur=pCur->m_pSibling )
 			UpdateAverages_R( averages, pCur );
@@ -639,7 +639,7 @@ public:
 		// Recurse.
 		for ( CVProfNode *pCur=pNode->m_pChild; pCur; pCur=pCur->m_pSibling )
 			DumpAverages_R( averages, pCur );
-	}			
+	}
 
 
 	void Playback_Average( int nFrames )
@@ -648,7 +648,7 @@ public:
 		unsigned long seekPos = g_pFileSystem->Tell( m_hFile );
 		int iOldLastTick = m_iLastTick;
 		int iOldPlaybackTick = m_iPlaybackTick;
-		
+
 		// Take the average of the next N ticks.
 		CUtlVector<CNodeAverage> averages;
 		while ( nFrames > 0 && m_iLastTick == -1 )
@@ -658,14 +658,14 @@ public:
 			--nFrames;
 		}
 		DumpAverages_R( averages, GetRoot() );
-		
+
 		// Now seek back to where we started.
 		g_pFileSystem->Seek( m_hFile, seekPos, FILESYSTEM_SEEK_HEAD );
 		m_iLastTick = iOldLastTick;
 		m_iPlaybackTick = iOldPlaybackTick;
 	}
 
-	
+
 	int Playback_SetPlaybackTick( int iTick )
 	{
 		if ( m_Mode != Mode_Playback )
@@ -680,7 +680,7 @@ public:
 		{
 			// Crap.. have to go back. Restart and seek to this tick.
 			Playback_Restart();
-			
+
 			// If this tick has a smaller value than the first tick in the file, then we can't seek forward to it...
 			if ( iTick <= m_iPlaybackTick )
 			{
@@ -699,7 +699,7 @@ public:
 			// stay on the current tick.
 			if ( bWouldHaveGonePast )
 				break;
-			
+
 			// If we went to the last tick in the file, then stop here.
 			if ( m_iLastTick != -1 && m_iPlaybackTick >= m_iLastTick )
 				return 1 + m_bNodesChanged;
@@ -728,7 +728,7 @@ public:
 		{
 			// Crap.. have to go back. Restart and seek to this tick.
 			Playback_Restart();
-			
+
 			// If this tick has a smaller value than the first tick in the file, then we can't seek forward to it...
 			if ( flWantedPercent <= 0 )
 				return 1 + m_bNodesChanged;	// return 2 if nodes changed
@@ -739,7 +739,7 @@ public:
 		{
 			if ( !Playback_ReadTick() )
 				return 0;	// error
-			
+
 			// If we went to the last tick in the file, then stop here.
 			if ( m_iLastTick != -1 && m_iPlaybackTick >= m_iLastTick )
 				return 1 + m_bNodesChanged; // return 2 if nodes changed
@@ -800,8 +800,8 @@ private:
 			i = m_PooledStrings.Insert( pStr, 0 );
 
 		return m_PooledStrings.GetElementName( i );
-	}			
-			
+	}
+
 
 private:
 	enum
@@ -818,7 +818,7 @@ private:
 	{
 		VPROF_FILE_VERSION = 1
 	};
-	
+
 	enum
 	{
 		Mode_None,
@@ -909,14 +909,14 @@ CON_COMMAND( vprof_playback_average, "Average the next N frames." )
 		int nFrames = atoi( args[ 1 ] );
 		if ( nFrames == -1 )
 			nFrames = 9999999;
-			
+
 		g_VProfRecorder.Playback_Average( nFrames );
 	}
 	else
 	{
 		Warning( "vprof_playback_average [# frames]\n" );
 		Warning( "If # frames is -1, then it will average all the remaining frames in the vprof file.\n" );
-	}	
+	}
 }
 
 

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -21,7 +21,7 @@ class RecvProp;
 // ------------------------------------------------------------------------------------ //
 // CClientSendTable and CClientSendProp. This is the data that we receive a SendTable into.
 //
-// For the most part, it's just a SendTable, but we have slots for extra 
+// For the most part, it's just a SendTable, but we have slots for extra
 // data we need to store.
 // ------------------------------------------------------------------------------------ //
 
@@ -34,7 +34,7 @@ public:
 
 	const char*	GetTableName()				{ return m_pTableName; }
 	void		SetTableName( char *pName )	{ m_pTableName = pName; }
-		
+
 
 private:
 
@@ -52,10 +52,10 @@ class CClientSendTable
 public:
 								CClientSendTable();
 								~CClientSendTable();
-	
+
 	int							GetNumProps() const		{ return m_SendTable.m_nProps; }
 	CClientSendProp*			GetClientProp( int i )	{ return &m_Props[i]; }
-	
+
 	const char*					GetName()				{ return m_SendTable.GetName(); }
 	SendTable*					GetSendTable()			{ return &m_SendTable; }
 
@@ -74,7 +74,7 @@ public:
 class CRecvDecoder
 {
 public:
-				
+
 					CRecvDecoder();
 
 	const char*		GetName() const;
@@ -90,14 +90,14 @@ public:
 
 
 public:
-	
+
 	RecvTable			*m_pTable;
 	CClientSendTable	*m_pClientSendTable;
 
 	// This is from the data that we've received from the server.
 	CSendTablePrecalc	m_Precalc;
 
-	// This mirrors m_Precalc.m_Props. 
+	// This mirrors m_Precalc.m_Props.
 	CUtlVector<const RecvProp*>	m_Props;
 	CUtlVector<const RecvProp*>	m_DatatableProps;
 
@@ -111,17 +111,17 @@ public:
 
 inline const char* CRecvDecoder::GetName() const
 {
-	return m_pTable->GetName(); 
+	return m_pTable->GetName();
 }
 
 inline SendTable* CRecvDecoder::GetSendTable() const
 {
-	return m_Precalc.GetSendTable(); 
+	return m_Precalc.GetSendTable();
 }
 
 inline RecvTable* CRecvDecoder::GetRecvTable() const
 {
-	return m_pTable; 
+	return m_pTable;
 }
 
 inline int CRecvDecoder::GetNumProps() const
@@ -158,7 +158,7 @@ inline int CRecvDecoder::GetNumDatatableProps() const
 
 inline const RecvProp* CRecvDecoder::GetDatatableProp( int i ) const
 {
-	return m_DatatableProps[i]; 
+	return m_DatatableProps[i];
 }
 
 

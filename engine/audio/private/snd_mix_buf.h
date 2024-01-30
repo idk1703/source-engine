@@ -54,7 +54,7 @@ struct paintbuffer_t
 	int nSpecialDSP;
 
 	int flags;								// SOUND_BUSS_ROOM, SOUND_BUSS_FACING, SOUND_BUSS_FACINGAWAY, SOUND_BUSS_SPEAKER, SOUND_BUSS_SPECIAL_DSP, SOUND_BUSS_DRY
-	
+
 	portable_samplepair_t *pbuf;			// front stereo mix buffer, for 2 or 4 channel mixing
 	portable_samplepair_t *pbufrear;		// rear mix buffer, for 4 channel mixing
 	portable_samplepair_t *pbufcenter;		// center mix buffer, for 5 channel mixing
@@ -73,7 +73,7 @@ extern portable_samplepair_t *g_paintbuffer;
 
 // temp paintbuffer - not included in main list of paintbuffers
 extern portable_samplepair_t *g_temppaintbuffer;
-	
+
 extern CUtlVector< paintbuffer_t > g_paintBuffers;
 
 extern void MIX_SetCurrentPaintbuffer( int ipaintbuffer );
@@ -83,7 +83,7 @@ extern paintbuffer_t *MIX_GetPPaintFromIPaint( int ipaintbuffer );
 extern void MIX_ClearAllPaintBuffers( int SampleCount, bool clearFilters );
 extern bool MIX_InitAllPaintbuffers(void);
 extern void MIX_FreeAllPaintbuffers(void);
-	
+
 extern portable_samplepair_t *g_curpaintbuffer;
 extern portable_samplepair_t *g_currearpaintbuffer;
 extern portable_samplepair_t *g_curcenterpaintbuffer;

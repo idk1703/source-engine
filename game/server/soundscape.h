@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -61,7 +61,7 @@ public:
 	int		m_soundscapeIndex;
 	int		m_soundscapeEntityId;
 	string_t m_positionNames[NUM_AUDIO_LOCAL_SOUNDS];
-	
+
 	// If this is set, then this soundscape ignores all its parameters and uses
 	// those of this soundscape.
 	CHandle<CEnvSoundscape> m_hProxySoundscape;
@@ -100,7 +100,7 @@ public:
 	DECLARE_DATADESC();
 
 	CEnvSoundscapeTriggerable();
-	
+
 	// Overrides the base class's think and prevents it from running at all.
 	virtual void Think();
 

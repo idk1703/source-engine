@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -9,7 +9,7 @@
 
 #ifdef CLIENT_DLL
 #define CWeaponRifleGrenadeGER_Live C_WeaponRifleGrenadeGER_Live
-#else 
+#else
 #include "dod_riflegrenade_ger.h"	//the thing that we throw
 #endif
 

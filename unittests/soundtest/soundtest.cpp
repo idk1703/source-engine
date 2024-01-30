@@ -40,7 +40,7 @@ static SpewRetval_t SoundTestOutputFunc( SpewType_t spewType, char const *pMsg )
 
 	if (spewType == SPEW_ERROR)
 		return SPEW_ABORT;
-	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE; 
+	return (spewType == SPEW_ASSERT) ? SPEW_DEBUGGER : SPEW_CONTINUE;
 }
 
 
@@ -87,14 +87,14 @@ bool CSoundTestApp::Create()
 	AppModule_t cvarModule = LoadModule( VStdLib_GetICVarFactory() );
 	AddSystem( cvarModule, CVAR_INTERFACE_VERSION );
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "datacache.dll",			DATACACHE_INTERFACE_VERSION },
 		{ "soundsystem.dll",		SOUNDSYSTEM_INTERFACE_VERSION },
 		{ "", "" }	// Required to terminate the list
 	};
 
-	if ( !AddSystems( appSystems ) ) 
+	if ( !AddSystems( appSystems ) )
 		return false;
 
 	g_pFileSystem = (IFileSystem*)FindSystem( FILESYSTEM_INTERFACE_VERSION );
@@ -118,18 +118,18 @@ bool CSoundTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w, 
 	WNDCLASSEX		wc;
 	memset( &wc, 0, sizeof( wc ) );
 	wc.cbSize		 = sizeof( wc );
-    wc.style         = CS_OWNDC | CS_DBLCLKS;
-    wc.lpfnWndProc   = WinAppWindowProc;
-    wc.hInstance     = (HINSTANCE)GetAppInstance();
-    wc.lpszClassName = "Valve001";
+	wc.style         = CS_OWNDC | CS_DBLCLKS;
+	wc.lpfnWndProc   = WinAppWindowProc;
+	wc.hInstance     = (HINSTANCE)GetAppInstance();
+	wc.lpszClassName = "Valve001";
 	wc.hIcon		 = NULL; //LoadIcon( s_HInstance, MAKEINTRESOURCE( IDI_LAUNCHER ) );
 	wc.hIconSm		 = wc.hIcon;
 
-    RegisterClassEx( &wc );
+	RegisterClassEx( &wc );
 
 	// Note, it's hidden
 	DWORD style = WS_POPUP | WS_CLIPSIBLINGS;
-	
+
 	if ( bWindowed )
 	{
 		// Give it a frame
@@ -150,14 +150,14 @@ bool CSoundTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w, 
 	AdjustWindowRectEx(&windowRect, style, FALSE, 0);
 
 	// Create the window
-	m_hWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0, 
-		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, 
+	m_hWnd = CreateWindow( wc.lpszClassName, pTitle, style, 0, 0,
+		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
 		NULL, NULL, (HINSTANCE)GetAppInstance(), NULL );
 
 	if ( m_hWnd == INVALID_HANDLE_VALUE )
 		return false;
 
-    int     CenterX, CenterY;
+	int     CenterX, CenterY;
 
 	CenterX = (GetSystemMetrics(SM_CXSCREEN) - w) / 2;
 	CenterY = (GetSystemMetrics(SM_CYSCREEN) - h) / 2;
@@ -166,7 +166,7 @@ bool CSoundTestApp::CreateAppWindow( char const *pTitle, bool bWindowed, int w, 
 
 	// In VCR modes, keep it in the upper left so mouse coordinates are always relative to the window.
 	SetWindowPos (m_hWnd, NULL, CenterX, CenterY, 0, 0,
-				  SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
+				SWP_NOSIZE | SWP_NOZORDER | SWP_SHOWWINDOW | SWP_DRAWFRAME);
 
 	return true;
 }
@@ -189,7 +189,7 @@ LONG WINAPI CSoundTestApp::WinAppWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam
 	return s_SoundTestApp.WindowProc( hWnd, uMsg, wParam, lParam );
 }
 
-	
+
 //-----------------------------------------------------------------------------
 // Sets up the game path
 //-----------------------------------------------------------------------------
@@ -260,7 +260,7 @@ bool CSoundTestApp::PreInit( )
 	if ( !CreateAppWindow( "SoundTest", bWindowed, iWidth, iHeight ) )
 		return false;
 
-	return true; 
+	return true;
 }
 
 void CSoundTestApp::PostShutdown()
@@ -301,6 +301,3 @@ int CSoundTestApp::Main()
 
 	return 1;
 }
-
-
-

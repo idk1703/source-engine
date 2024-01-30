@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================
 
@@ -20,7 +20,7 @@ using namespace vgui;
 #include "tier0/memdbgon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCustomTabExplanationDialog::CCustomTabExplanationDialog(vgui::Panel *parent) : BaseClass(parent, "CustomTabExplanationDialog")
 {
@@ -37,14 +37,14 @@ CCustomTabExplanationDialog::CCustomTabExplanationDialog(vgui::Panel *parent) : 
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CCustomTabExplanationDialog::~CCustomTabExplanationDialog()
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomTabExplanationDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -54,7 +54,7 @@ void CCustomTabExplanationDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomTabExplanationDialog::OnKeyCodePressed(KeyCode code)
 {
@@ -84,7 +84,7 @@ void CCustomTabExplanationDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCustomTabExplanationDialog::OnClose( void )
 {

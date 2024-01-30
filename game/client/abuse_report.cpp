@@ -522,7 +522,7 @@ bool CAbuseReportManager::PopulateIncident()
 
 			arrayIndex = m_pIncidentData->m_vecPlayers.AddToTail();
 			p = &m_pIncidentData->m_vecPlayers[ arrayIndex ];
-			
+
 
 			p->m_iClientIndex = -1;
 			p->m_sPersona = "fletch";

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -47,9 +47,9 @@ public:
 	void	RecordCommand( const char *cmdstring );
 	void	RecordUserInput( int cmdnumber ) {} ;  // not need by Replay recorder
 	void	RecordMessages( bf_read &data, int bits );
-	void	RecordPacket(); 
+	void	RecordPacket();
 	void	RecordServerClasses( ServerClass *pClasses );
-	void	RecordStringTables(); 
+	void	RecordStringTables();
 
 	void	ResetDemoInterpolation() {}
 
@@ -76,7 +76,7 @@ public:
 	int				m_nFrameCount;
 	int				m_nStartTick;
 	int				m_SequenceInfo;
-	int				m_nDeltaTick;	
+	int				m_nDeltaTick;
 	int				m_nSignonTick;
 	bf_write		m_MessageData; // temp buffer for all network messages
 	CReplayServer	*m_pReplayServer;

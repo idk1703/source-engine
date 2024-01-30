@@ -11,7 +11,7 @@
 #include "tf_hints.h"
 #include "itfhintitem.h"
 #include "c_tf_basehint.h"
-#include "hud_technologytreedoc.h"  
+#include "hud_technologytreedoc.h"
 #include "c_tf_hintmanager.h"
 #include "hud_ammo.h"
 #include "c_weapon__stubs.h"
@@ -32,7 +32,7 @@ vgui::Label	*C_BaseTFCombatWeapon::m_pCrosshairAmmo = NULL;
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int C_BaseTFCombatWeapon::DrawModel( int flags )
 {
@@ -61,7 +61,7 @@ int C_BaseTFCombatWeapon::DrawModel( int flags )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
 int C_BaseTFCombatWeapon::GetFxBlend( void )
@@ -73,7 +73,7 @@ int C_BaseTFCombatWeapon::GetFxBlend( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFCombatWeapon::IsTransparent( void )
@@ -85,7 +85,7 @@ bool C_BaseTFCombatWeapon::IsTransparent( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : static void
 //-----------------------------------------------------------------------------
 void C_BaseTFCombatWeapon::CreateCrosshairPanels( void )
@@ -94,7 +94,7 @@ void C_BaseTFCombatWeapon::CreateCrosshairPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFCombatWeapon::DestroyCrosshairPanels( void )
 {
@@ -103,7 +103,7 @@ void C_BaseTFCombatWeapon::DestroyCrosshairPanels( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void C_BaseTFCombatWeapon::InitializeCrosshairPanels( void )
 {
@@ -133,15 +133,15 @@ void C_BaseTFCombatWeapon::DrawAmmo()
 	if ( player == NULL )
 		return;
 
-	GetHudAmmo()->SetPrimaryAmmo( 
-		m_iPrimaryAmmoType, 
-		GetPrimaryAmmo(), 
-		Clip1(), 
+	GetHudAmmo()->SetPrimaryAmmo(
+		m_iPrimaryAmmoType,
+		GetPrimaryAmmo(),
+		Clip1(),
 		GetMaxClip1() );
-	GetHudAmmo()->SetSecondaryAmmo( 
-		m_iSecondaryAmmoType, 
-		GetSecondaryAmmo(), 
-		Clip2(), 
+	GetHudAmmo()->SetSecondaryAmmo(
+		m_iSecondaryAmmoType,
+		GetSecondaryAmmo(),
+		Clip2(),
 		GetMaxClip2() );
 
 	// ROBIN: Disabled mini ammo count for now
@@ -161,7 +161,7 @@ void C_BaseTFCombatWeapon::DrawAmmo()
 		// Get the drained energy
 		float flPowerLevel = pSapper->m_flDrainedEnergy;
 		float flInverseFactor = 1.0 - flPowerLevel;
-		
+
 		gHUD.m_clrNormal.GetColor( r, g, b, a );
 
 		int iWidth = XRES(12);
@@ -209,7 +209,7 @@ bool C_BaseTFCombatWeapon::ShouldDrawPickup( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : char const
 //-----------------------------------------------------------------------------
 const char *C_BaseTFCombatWeapon::GetPrintName( void )
@@ -218,7 +218,7 @@ const char *C_BaseTFCombatWeapon::GetPrintName( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool C_BaseTFCombatWeapon::ShouldShowUsageHint( void )
@@ -227,8 +227,8 @@ bool C_BaseTFCombatWeapon::ShouldShowUsageHint( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : bnewentity - 
+// Purpose:
+// Input  : bnewentity -
 //-----------------------------------------------------------------------------
 void C_BaseTFCombatWeapon::OnDataChanged( DataUpdateType_t updateType )
 {
@@ -297,7 +297,7 @@ void C_BaseTFCombatWeapon::OnDataChanged( DataUpdateType_t updateType )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	C_BaseTFCombatWeapon ::GetSecondaryAmmo( void )
 {

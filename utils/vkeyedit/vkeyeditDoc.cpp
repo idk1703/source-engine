@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -86,7 +86,7 @@ void CVkeyeditDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CVkeyeditDoc commands
 
-BOOL CVkeyeditDoc::OnOpenDocument(LPCTSTR lpszPathName) 
+BOOL CVkeyeditDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
@@ -103,8 +103,8 @@ BOOL CVkeyeditDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	m_pKeyValues->LoadFromFile( g_pFileSystem, filename );
 
 	UpdateAllViews( NULL, 1, (CObject*)m_pKeyValues );
- 	
+
 	// TODO: Add your specialized creation code here
-	
+
 	return TRUE;
 }

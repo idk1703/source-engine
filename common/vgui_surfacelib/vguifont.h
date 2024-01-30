@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -34,4 +34,4 @@ typedef CLinuxFont font_t;
 #endif
 
 
-#endif //VGUIFONT_H 
+#endif //VGUIFONT_H

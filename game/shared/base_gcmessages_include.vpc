@@ -10,7 +10,7 @@ $Project
 			{
 				$Configuration
 				{
-					$Compiler 
+					$Compiler
 					{
 						$Create/UsePrecompiledHeader	"Not Using Precompiled Headers" [$WINDOWS]
 					}
@@ -19,4 +19,3 @@ $Project
 		}
 	}
 }
-

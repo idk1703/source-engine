@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -65,7 +65,7 @@ public:
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
-	
+
 public:
 	CClassMenu_TER(IViewPort *pViewPort);
 	virtual Panel* CreateControlByName(const char *controlName);
@@ -94,7 +94,7 @@ public:
 	bool m_backgroundLayoutFinished;
 
 	// End background panel ---------------------------------------------------
-	
+
 public:
 	CClassMenu_CT(IViewPort *pViewPort);
 	virtual Panel *CreateControlByName(const char *controlName);

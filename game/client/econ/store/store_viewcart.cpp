@@ -53,7 +53,7 @@ CStoreViewCartPanel::CStoreViewCartPanel( Panel *parent ) : Frame(parent, "store
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStoreViewCartPanel::~CStoreViewCartPanel()
 {
@@ -65,7 +65,7 @@ CStoreViewCartPanel::~CStoreViewCartPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreViewCartPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -92,7 +92,7 @@ void CStoreViewCartPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreViewCartPanel::ApplySettings( KeyValues *inResourceData )
 {
@@ -111,9 +111,9 @@ void CStoreViewCartPanel::ApplySettings( KeyValues *inResourceData )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CStoreViewCartPanel::PerformLayout( void ) 
+void CStoreViewCartPanel::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -166,7 +166,7 @@ void CStoreViewCartPanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreViewCartPanel::ShowPanel(bool bShow)
 {
@@ -194,12 +194,12 @@ void CStoreViewCartPanel::ShowPanel(bool bShow)
 	if ( bShow )
 	{
 		UpdateCartItemList();
-		m_pItemListContainerScroller->GetScrollbar()->SetValue( 0 );	
+		m_pItemListContainerScroller->GetScrollbar()->SetValue( 0 );
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreViewCartPanel::FireGameEvent( IGameEvent *event )
 {
@@ -216,7 +216,7 @@ void CStoreViewCartPanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreViewCartPanel::UpdateCartItemList( void )
 {
@@ -297,7 +297,7 @@ void CStoreViewCartPanel::UpdateCartItemList( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreViewCartPanel::OnCommand( const char *command )
 {
@@ -330,7 +330,7 @@ void CStoreViewCartPanel::OnCommand( const char *command )
 static vgui::DHANDLE<CStoreViewCartPanel> g_StoreViewCartPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStoreViewCartPanel *OpenStoreViewCartPanel( void )
 {
@@ -347,7 +347,7 @@ CStoreViewCartPanel *OpenStoreViewCartPanel( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStoreViewCartPanel *GetStoreViewCartPanel( void )
 {
@@ -357,7 +357,7 @@ CStoreViewCartPanel *GetStoreViewCartPanel( void )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CCartViewItemEntry::SetEntry( cart_item_t *pEntry, int iEntryIndex )
 {

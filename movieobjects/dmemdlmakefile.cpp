@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Describes an asset: something that is compiled from sources, 
+// Describes an asset: something that is compiled from sources,
 // in potentially multiple steps, to a compiled resource
 //
 //=============================================================================
@@ -25,7 +25,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSourceSkin, CDmeSourceSkin );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSourceSkin::OnConstruction()
 {
@@ -42,7 +42,7 @@ void CDmeSourceSkin::OnDestruction()
 //-----------------------------------------------------------------------------
 // These can be built from DCC makefiles
 //-----------------------------------------------------------------------------
-static const char *s_pSkinMakeFiles[] = 
+static const char *s_pSkinMakeFiles[] =
 {
 	"DmeMayaModelMakefile",
 	"DmeXSIModelMakefile",
@@ -50,8 +50,8 @@ static const char *s_pSkinMakeFiles[] =
 };
 
 const char **CDmeSourceSkin::GetSourceMakefileTypes()
-{ 
-	return s_pSkinMakeFiles; 
+{
+	return s_pSkinMakeFiles;
 }
 
 
@@ -62,7 +62,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSourceCollisionModel, CDmeSourceCollisionModel );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSourceCollisionModel::OnConstruction()
 {
@@ -77,8 +77,8 @@ void CDmeSourceCollisionModel::OnDestruction()
 // These can be built from DCC makefiles
 //-----------------------------------------------------------------------------
 const char **CDmeSourceCollisionModel::GetSourceMakefileTypes()
-{ 
-	return s_pSkinMakeFiles; 
+{
+	return s_pSkinMakeFiles;
 }
 
 
@@ -89,7 +89,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeSourceAnimation, CDmeSourceAnimation );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeSourceAnimation::OnConstruction()
 {
@@ -105,7 +105,7 @@ void CDmeSourceAnimation::OnDestruction()
 //-----------------------------------------------------------------------------
 // These can be built from DCC makefiles
 //-----------------------------------------------------------------------------
-static const char *s_pAnimationMakeFiles[] = 
+static const char *s_pAnimationMakeFiles[] =
 {
 	"DmeMayaAnimationMakefile",
 	"DmeXSIAnimationMakefile",
@@ -113,8 +113,8 @@ static const char *s_pAnimationMakeFiles[] =
 };
 
 const char **CDmeSourceAnimation::GetSourceMakefileTypes()
-{ 
-	return s_pAnimationMakeFiles; 
+{
+	return s_pAnimationMakeFiles;
 }
 
 
@@ -126,7 +126,7 @@ IMPLEMENT_ELEMENT_FACTORY( DmeMDLMakefile, CDmeMDLMakefile );
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CDmeMDLMakefile::OnConstruction()
 {
@@ -143,7 +143,7 @@ void CDmeMDLMakefile::OnDestruction()
 //-----------------------------------------------------------------------------
 // Returns source types
 //-----------------------------------------------------------------------------
-static DmeMakefileType_t s_pSourceTypes[] = 
+static DmeMakefileType_t s_pSourceTypes[] =
 {
 	{ "DmeSourceSkin",				"Skin",				true,	"makefiledir:models\\dmx", "*.dmx", "Valve DMX File (*.dmx)" },
 	{ "DmeSourceAnimation",			"Animation",		false,	"makefiledir:animations\\dmx", "*.dmx", "Valve DMX File (*.dmx)" },
@@ -158,11 +158,11 @@ DmeMakefileType_t* CDmeMDLMakefile::GetSourceTypes()
 
 
 //-----------------------------------------------------------------------------
-// Makefile type 
+// Makefile type
 //-----------------------------------------------------------------------------
-static DmeMakefileType_t s_MakefileType = 
-{ 
-	"DmeMDLMakefile", "Model", true, "contentdir:models", "*.dmx", "Valve Model MakeFile (*.dmx)" 
+static DmeMakefileType_t s_MakefileType =
+{
+	"DmeMDLMakefile", "Model", true, "contentdir:models", "*.dmx", "Valve Model MakeFile (*.dmx)"
 };
 
 
@@ -236,7 +236,7 @@ CDmElement *CDmeMDLMakefile::CreateOutputElement( )
 
 	MDLHandle_t h = g_pMDLCache->FindMDL( pRelativePath );
 	m_hMDL->SetMDL( h );
-	return m_hMDL.Get();	
+	return m_hMDL.Get();
 }
 
 void CDmeMDLMakefile::DestroyOutputElement( CDmElement *pOutput )
@@ -246,7 +246,7 @@ void CDmeMDLMakefile::DestroyOutputElement( CDmElement *pOutput )
 
 
 //-----------------------------------------------------------------------------
-// Compile assets 
+// Compile assets
 //-----------------------------------------------------------------------------
 static const char *s_pOutputExtensions[] =
 {
@@ -284,4 +284,3 @@ void CDmeMDLMakefile::GetOutputs( CUtlVector<CUtlString> &fullPaths )
 		fullPaths.AddToTail( pFullPath );
 	}
 }
-

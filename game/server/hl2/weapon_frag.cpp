@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -50,7 +50,7 @@ public:
 	bool	Holster( CBaseCombatWeapon *pSwitchingTo = NULL );
 
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
-	
+
 	bool	Reload( void );
 
 	bool	ShouldDisplayHUDHint() { return true; }
@@ -63,7 +63,7 @@ private:
 	void	CheckThrowPosition( CBasePlayer *pPlayer, const Vector &vecEye, Vector &vecSrc );
 
 	bool	m_bRedraw;	//Draw the weapon again after throwing a grenade
-	
+
 	int		m_AttackPaused;
 	bool	m_fDrawbackFinished;
 
@@ -79,7 +79,7 @@ BEGIN_DATADESC( CWeaponFrag )
 	DEFINE_FIELD( m_fDrawbackFinished, FIELD_BOOLEAN ),
 END_DATADESC()
 
-acttable_t	CWeaponFrag::m_acttable[] = 
+acttable_t	CWeaponFrag::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SLAM, true },
 };
@@ -102,7 +102,7 @@ CWeaponFrag::CWeaponFrag() :
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponFrag::Precache( void )
 {
@@ -115,7 +115,7 @@ void CWeaponFrag::Precache( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CWeaponFrag::Deploy( void )
 {
@@ -126,7 +126,7 @@ bool CWeaponFrag::Deploy( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponFrag::Holster( CBaseCombatWeapon *pSwitchingTo )
@@ -138,9 +138,9 @@ bool CWeaponFrag::Holster( CBaseCombatWeapon *pSwitchingTo )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pEvent - 
-//			*pOperator - 
+// Purpose:
+// Input  : *pEvent -
+//			*pOperator -
 //-----------------------------------------------------------------------------
 void CWeaponFrag::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
@@ -203,7 +203,7 @@ void CWeaponFrag::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatChar
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
 bool CWeaponFrag::Reload( void )
@@ -229,7 +229,7 @@ bool CWeaponFrag::Reload( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponFrag::SecondaryAttack( void )
 {
@@ -245,7 +245,7 @@ void CWeaponFrag::SecondaryAttack( void )
 		return;
 
 	CBasePlayer *pPlayer = ToBasePlayer( pOwner );
-	
+
 	if ( pPlayer == NULL )
 		return;
 
@@ -265,7 +265,7 @@ void CWeaponFrag::SecondaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponFrag::PrimaryAttack( void )
 {
@@ -273,9 +273,9 @@ void CWeaponFrag::PrimaryAttack( void )
 		return;
 
 	CBaseCombatCharacter *pOwner  = GetOwner();
-	
+
 	if ( pOwner == NULL )
-	{ 
+	{
 		return;
 	}
 
@@ -287,7 +287,7 @@ void CWeaponFrag::PrimaryAttack( void )
 	// Note that this is a primary attack and prepare the grenade attack to pause.
 	m_AttackPaused = GRENADE_PAUSED_PRIMARY;
 	SendWeaponAnim( ACT_VM_PULLBACK_HIGH );
-	
+
 	// Put both of these off indefinitely. We do not know how long
 	// the player will hold the grenade.
 	m_flTimeWeaponIdle = FLT_MAX;
@@ -301,8 +301,8 @@ void CWeaponFrag::PrimaryAttack( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pOwner - 
+// Purpose:
+// Input  : *pOwner -
 //-----------------------------------------------------------------------------
 void CWeaponFrag::DecrementAmmo( CBaseCombatCharacter *pOwner )
 {
@@ -310,7 +310,7 @@ void CWeaponFrag::DecrementAmmo( CBaseCombatCharacter *pOwner )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CWeaponFrag::ItemPostFrame( void )
 {
@@ -371,9 +371,9 @@ void CWeaponFrag::CheckThrowPosition( CBasePlayer *pPlayer, const Vector &vecEye
 {
 	trace_t tr;
 
-	UTIL_TraceHull( vecEye, vecSrc, -Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2), Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2), 
+	UTIL_TraceHull( vecEye, vecSrc, -Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2), Vector(GRENADE_RADIUS+2,GRENADE_RADIUS+2,GRENADE_RADIUS+2),
 		pPlayer->PhysicsSolidMaskForEntity(), pPlayer, pPlayer->GetCollisionGroup(), &tr );
-	
+
 	if ( tr.DidHit() )
 	{
 		vecSrc = tr.endpos;
@@ -381,8 +381,8 @@ void CWeaponFrag::CheckThrowPosition( CBasePlayer *pPlayer, const Vector &vecEye
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CWeaponFrag::ThrowGrenade( CBasePlayer *pPlayer )
 {
@@ -409,8 +409,8 @@ void CWeaponFrag::ThrowGrenade( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CWeaponFrag::LobGrenade( CBasePlayer *pPlayer )
 {
@@ -420,7 +420,7 @@ void CWeaponFrag::LobGrenade( CBasePlayer *pPlayer )
 	pPlayer->EyeVectors( &vForward, &vRight, NULL );
 	Vector vecSrc = vecEye + vForward * 18.0f + vRight * 8.0f + Vector( 0, 0, -8 );
 	CheckThrowPosition( pPlayer, vecEye, vecSrc );
-	
+
 	Vector vecThrow;
 	pPlayer->GetVelocity( &vecThrow, NULL );
 	vecThrow += vForward * 350 + Vector( 0, 0, 50 );
@@ -435,8 +435,8 @@ void CWeaponFrag::LobGrenade( CBasePlayer *pPlayer )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : *pPlayer - 
+// Purpose:
+// Input  : *pPlayer -
 //-----------------------------------------------------------------------------
 void CWeaponFrag::RollGrenade( CBasePlayer *pPlayer )
 {
@@ -477,4 +477,3 @@ void CWeaponFrag::RollGrenade( CBasePlayer *pPlayer )
 	m_iPrimaryAttacks++;
 	gamestats->Event_WeaponFired( pPlayer, true, GetClassname() );
 }
-

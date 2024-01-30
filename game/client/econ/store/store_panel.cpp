@@ -64,7 +64,7 @@ class CStampUpsellDialog : public CTFGenericConfirmDialog
 {
 	DECLARE_CLASS_SIMPLE( CStampUpsellDialog, CTFGenericConfirmDialog );
 public:
-	CStampUpsellDialog( const char *pTitle, const wchar_t *pTextText, const wchar_t *pTextText2, CSchemaItemDefHandle hMapToken, const char *pItemDefName2 ) 
+	CStampUpsellDialog( const char *pTitle, const wchar_t *pTextText, const wchar_t *pTextText2, CSchemaItemDefHandle hMapToken, const char *pItemDefName2 )
 		: CTFGenericConfirmDialog( pTitle, pTextText, NULL, NULL, NULL, NULL )
 		, hItemDef( hMapToken ), hItemDef2( pItemDefName2 )
 	{
@@ -130,7 +130,7 @@ public:
 		else
 		{
 			BaseClass::OnCommand( command );
-		}		
+		}
 	}
 
 	virtual void OnKeyCodePressed( vgui::KeyCode code )
@@ -203,7 +203,7 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 static void ContactSupportConfirm( bool bConfirmed, void *pContext )
 {
@@ -214,7 +214,7 @@ static void ContactSupportConfirm( bool bConfirmed, void *pContext )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePanel::CStorePanel( Panel *parent ) : PropertyDialog(parent, "store_panel")
 , m_CallbackMicroTransactionAuthResponse( this, &CStorePanel::OnMicroTransactionAuthResponse )
@@ -249,7 +249,7 @@ CStorePanel::CStorePanel( Panel *parent ) : PropertyDialog(parent, "store_panel"
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePanel::~CStorePanel()
 {
@@ -257,7 +257,7 @@ CStorePanel::~CStorePanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -272,9 +272,9 @@ void CStorePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
-void CStorePanel::PerformLayout( void ) 
+void CStorePanel::PerformLayout( void )
 {
 	if ( GetVParent() )
 	{
@@ -293,7 +293,7 @@ void CStorePanel::PerformLayout( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::OnStartShopping( void )
 {
@@ -306,7 +306,7 @@ void CStorePanel::OnStartShopping( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::OnFindAndSelectFeaturedItem( void )
 {
@@ -318,7 +318,7 @@ void CStorePanel::OnFindAndSelectFeaturedItem( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::FindAndSelectEntry( const econ_store_entry_t *pEntry )
 {
@@ -329,7 +329,7 @@ void CStorePanel::FindAndSelectEntry( const econ_store_entry_t *pEntry )
 		CStorePage *pPage = dynamic_cast< CStorePage * >( GetPropertySheet()->GetPage(i) );
 		if ( !pPage )
 			continue;
-		
+
 		if ( pPage->FindAndSelectEntry( pEntry ) )
 		{
 			if ( GetPropertySheet()->GetActivePage() != pPage )
@@ -357,7 +357,7 @@ CStorePage *CStorePanel::CreateStorePage( const CEconStoreCategoryManager::Store
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CStorePanel::ShouldShowDx8PurchaseWarning() const
 {
@@ -382,7 +382,7 @@ bool CStorePanel::ShouldShowDx8PurchaseWarning() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::OnItemLinkClicked( KeyValues *pParams )
 {
@@ -417,7 +417,7 @@ void CStorePanel::OnItemLinkClicked( KeyValues *pParams )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::ShowPanel(bool bShow)
 {
@@ -425,7 +425,7 @@ void CStorePanel::ShowPanel(bool bShow)
 
 #ifdef TF_CLIENT_DLL
 	// Keep the MM dashboard on top of us
-	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this ) 
+	bShow ? GetMMDashboardParentManager()->PushModalFullscreenPopup( this )
 		  : GetMMDashboardParentManager()->PopModalFullscreenPopup( this );
 #endif
 
@@ -458,7 +458,7 @@ void CStorePanel::ShowPanel(bool bShow)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::FireGameEvent( IGameEvent *event )
 {
@@ -478,7 +478,7 @@ void CStorePanel::FireGameEvent( IGameEvent *event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::OnCommand( const char *command )
 {
@@ -496,7 +496,7 @@ void CStorePanel::OnCommand( const char *command )
 		{
 			engine->ClientCmd_Unrestricted( "gameui_hide" );
 		}
-		
+
 #ifdef TF_CLIENT_DLL
 		if ( IsFreeTrialAccount() )
 		{
@@ -517,7 +517,7 @@ void CStorePanel::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::OnKeyCodeTyped(vgui::KeyCode code)
 {
@@ -535,7 +535,7 @@ void CStorePanel::OnKeyCodeTyped(vgui::KeyCode code)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 const econ_store_entry_t *CStorePanel::GetFeaturedEntry( void )
 {
@@ -632,7 +632,7 @@ bool CGCClientJobGetUserData::BYieldingRunJob( void *pvStartParam )
 	}
 
 	// Store our experiment membership value.
-	EconUI()->SetExperimentValue( msgResponse.Body().experiment_data() ); 
+	EconUI()->SetExperimentValue( msgResponse.Body().experiment_data() );
 
 	// Store the currency and country code.
 	if ( msgResponse.Body().currency() == k_ECurrencyInvalid )
@@ -658,9 +658,9 @@ bool CGCClientJobGetUserData::BYieldingRunJob( void *pvStartParam )
 	else
 	{
 #ifndef TF_CLIENT_DLL
-		// First time we've loaded the pricesheet, so open the store. 
+		// First time we've loaded the pricesheet, so open the store.
 		// You can remove this if you choose to load the pricesheet on game startup (like TF does)
-		EconUI()->OpenStorePanel( 0, false );	
+		EconUI()->OpenStorePanel( 0, false );
 #endif
 	}
 
@@ -674,14 +674,14 @@ bool CGCClientJobGetUserData::BYieldingRunJob( void *pvStartParam )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStorePage *CStorePanel::AddPageFromPriceSheet( int iPage )
 {
 	CStorePage* pPage = CreateStorePage( GEconStoreCategoryManager()->GetCategoryFromIndex( iPage ) );
 	pPage->OnPostCreate();
 	pPage->AddActionSignalTarget( this );
-	AddPage( pPage, GEconStoreCategoryManager()->GetCategoryFromIndex( iPage )->m_pchName );	
+	AddPage( pPage, GEconStoreCategoryManager()->GetCategoryFromIndex( iPage )->m_pchName );
 
 	if ( iPage == 0 )
 	{
@@ -719,7 +719,7 @@ bool CStorePanel::LoadPricesheet( KeyValuesAD* pKVPricesheet )
 
 #ifdef _DEBUG
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::ReAddPage( int iPage )
 {
@@ -912,9 +912,9 @@ void CStorePanel::UpsellStamps( void )
 
 	wchar_t wchDonationDescription[ 512 ];
 	g_pVGuiLocalize->ConstructString_safe( wchDonationDescription, g_pVGuiLocalize->Find( "#Store_ConfirmStampDonationAddText" ), 2, pwchMapName, wszMapHours );
-	
-	CStampUpsellDialog *pDialog = vgui::SETUP_PANEL( new CStampUpsellDialog( "#Store_ConfirmStampDonationAddTitle", 
-		wchDonationDescription, g_pVGuiLocalize->Find( "#Store_ConfirmStampDonationAddText2" ), 
+
+	CStampUpsellDialog *pDialog = vgui::SETUP_PANEL( new CStampUpsellDialog( "#Store_ConfirmStampDonationAddTitle",
+		wchDonationDescription, g_pVGuiLocalize->Find( "#Store_ConfirmStampDonationAddText2" ),
 		pUpsellMap->mapStampDef, "World Traveler" ) );
 
 	if ( pDialog )
@@ -1200,7 +1200,7 @@ void CStorePanel::CheckoutCancel( void )
 	// The player pressed the CANCEL button on the TF2 GAME UI pop-up that appears over
 	// the store interface while they would be occupied with the overlay.
 	//
-	// If they press the CANCEL button on the overlay's authorize dialog a Steam callback 
+	// If they press the CANCEL button on the overlay's authorize dialog a Steam callback
 	// (OnMicroTransactionAuthResponse) happens not this method.
 	//
 	// We don't expect this to happen! Once the transaction has been finalized we have
@@ -1291,7 +1291,7 @@ void CStorePanel::OnTick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStorePanel::FinalizeTransaction( void )
 {
@@ -1331,7 +1331,7 @@ bool CGCClientJobFinalizePurchase::BYieldingRunJob( void *pvStartParam )
 
 	// Check the message result for errors and handle them.
 	if ( !CStorePanel::CheckMessageResult( (EPurchaseResult)msgResponse.Body().result() ) )
-		return false; 
+		return false;
 
 	EconUI()->Gamestats_Store( IE_STORE_CHECKOUT_SUCCESS, NULL, NULL, 0, NULL, EconUI()->GetStorePanel()->GetCheckoutAttempts(), NULL, EconUI()->GetStorePanel()->GetLastPurchaseAttemptPrice(), EconUI()->GetStorePanel()->GetCurrency()+1 );
 	CStoreCart* cart = EconUI()->GetStorePanel()->GetCart();
@@ -1568,14 +1568,14 @@ void CStorePanel::OnJumpToItem( KeyValues *pParams )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void Open_Store( const CCommand &args )
 {
 	int iItemDef = ( args.ArgC() > 1 ) ? atoi(args[1]) : 0;
 	bool bToFeatured = ( ( ( args.ArgC() > 2 ) ? atoi(args[2]) : 0 ) != 0 );
 
-	EconUI()->OpenStorePanel( iItemDef, bToFeatured );	
+	EconUI()->OpenStorePanel( iItemDef, bToFeatured );
 }
 ConCommand open_store( "open_store", Open_Store, "Open the in-game store", FCVAR_NONE );
 
@@ -1587,7 +1587,7 @@ CStoreCart::CStoreCart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreCart::AddToCart( const econ_store_entry_t *pEntry, const char* pszPageName, ECartItemType eCartItemType )
 {
@@ -1653,7 +1653,7 @@ void CStoreCart::AddToCart( const econ_store_entry_t *pEntry, const char* pszPag
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreCart::RemoveFromCart( int iIndex )
 {
@@ -1686,7 +1686,7 @@ void CStoreCart::RemoveFromCart( int iIndex )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreCart::EmptyCart( void )
 {
@@ -1700,7 +1700,7 @@ void CStoreCart::EmptyCart( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CStoreCart::GetIndexForEntry( const econ_store_entry_t *pEntry, ECartItemType eCartItemType ) const
 {
@@ -1713,7 +1713,7 @@ int CStoreCart::GetIndexForEntry( const econ_store_entry_t *pEntry, ECartItemTyp
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int CStoreCart::GetTotalItems( void ) const
 {
@@ -1727,7 +1727,7 @@ int CStoreCart::GetTotalItems( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 int	CStoreCart::GetTotalConcreteItems( void ) const
 {
@@ -1748,7 +1748,7 @@ int	CStoreCart::GetTotalConcreteItems( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 item_price_t cart_item_t::GetDisplayPrice() const
 {
@@ -1762,7 +1762,7 @@ item_price_t cart_item_t::GetDisplayPrice() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 item_price_t CStoreCart::GetTotalPrice( void ) const
 {
@@ -1775,7 +1775,7 @@ item_price_t CStoreCart::GetTotalPrice( void ) const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CStoreCart::ContainsHolidayRestrictedItems() const
 {
@@ -1804,7 +1804,7 @@ bool CStoreCart::ContainsHolidayRestrictedItems() const
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CStoreCart::ContainsItemDefinition( item_definition_index_t unItemDef ) const
 {
@@ -1823,7 +1823,7 @@ bool CStoreCart::ContainsItemDefinition( item_definition_index_t unItemDef ) con
 static vgui::DHANDLE<CStoreStatusDialog> g_StoreStatusPanel;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CStoreStatusDialog::CStoreStatusDialog( vgui::Panel *pParent, const char *pElementName ) : BaseClass( pParent, "StoreStatusDialog" )
 {
@@ -1834,7 +1834,7 @@ CStoreStatusDialog::CStoreStatusDialog( vgui::Panel *pParent, const char *pEleme
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreStatusDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
@@ -1844,7 +1844,7 @@ void CStoreStatusDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreStatusDialog::OnCommand( const char *command )
 {
@@ -1883,7 +1883,7 @@ void CStoreStatusDialog::OnCommand( const char *command )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreStatusDialog::UpdateSchemeForVersion()
 {
@@ -1891,7 +1891,7 @@ void CStoreStatusDialog::UpdateSchemeForVersion()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CStoreStatusDialog::ShowStatusUpdate( bool bAllowClose, bool bShowOnExit, bool bCancel )
 {
@@ -1916,11 +1916,11 @@ void CStoreStatusDialog::ShowStatusUpdate( bool bAllowClose, bool bShowOnExit, b
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void SetupStoreStatusDialog( vgui::Panel *pParent )
 {
-	// If we parent it to something, we get problems when another panel pops over it, 
+	// If we parent it to something, we get problems when another panel pops over it,
 	// because the modal dialog is no longer visible. So prevent parenting status dialogs.
 	pParent = NULL;
 
@@ -2100,10 +2100,10 @@ private:
 
 CON_COMMAND( store_cancelpurchase, "<TxnID> Simulates cancelling a purchase" )
 {
-	
+
 	if ( args.ArgC() < 2 )
 	{
-		Msg( store_cancelpurchase_command.GetHelpText() );	
+		Msg( store_cancelpurchase_command.GetHelpText() );
 	}
 
 	uint64 ulTxnID;
@@ -2162,7 +2162,7 @@ CON_COMMAND( store_finalizepurchase, "<TxnID> Simulates finalizing a purchase" )
 
 	if ( args.ArgC() < 2 )
 	{
-		Msg( store_finalizepurchase_command.GetHelpText() );	
+		Msg( store_finalizepurchase_command.GetHelpText() );
 	}
 
 	uint64 ulTxnID;

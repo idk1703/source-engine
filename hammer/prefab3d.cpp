@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -21,7 +21,7 @@
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefab3D::CPrefab3D()
 {
@@ -30,7 +30,7 @@ CPrefab3D::CPrefab3D()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefab3D::~CPrefab3D()
 {
@@ -39,7 +39,7 @@ CPrefab3D::~CPrefab3D()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefab3D::FreeData()
 {
@@ -49,7 +49,7 @@ void CPrefab3D::FreeData()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CMapClass *CPrefab3D::Create(void)
 {
@@ -66,7 +66,7 @@ CMapClass *CPrefab3D::Create(void)
 	//
 	if (m_pWorld->GetChildCount() == 1)
 	{
-		
+
 		pOriginal = m_pWorld->GetChildren()->Element(0);
 		pCopy = pOriginal->Copy(false);
 	}
@@ -92,7 +92,7 @@ CMapClass *CPrefab3D::Create(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 // Input  : point - Where to center the prefab.
 // Output : CMapClass
 //-----------------------------------------------------------------------------
@@ -127,9 +127,9 @@ CMapClass *CPrefab3D::CreateAtPoint(const Vector &point)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : 
-// Output : 
+// Purpose:
+// Input  :
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CPrefab3D::CreateAtPointAroundOrigin( Vector const &point )
 {
@@ -153,9 +153,9 @@ CMapClass *CPrefab3D::CreateAtPointAroundOrigin( Vector const &point )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pBox - 
-// Output : 
+// Purpose:
+// Input  : pBox -
+// Output :
 //-----------------------------------------------------------------------------
 CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 {
@@ -208,7 +208,7 @@ CMapClass *CPrefab3D::CreateInBox(BoundBox *pBox)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefab3D::CenterOnZero()
 {
@@ -234,7 +234,7 @@ bool CPrefab3D::IsLoaded(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefabRMF::CPrefabRMF()
 {
@@ -242,7 +242,7 @@ CPrefabRMF::CPrefabRMF()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefabRMF::~CPrefabRMF()
 {
@@ -250,9 +250,9 @@ CPrefabRMF::~CPrefabRMF()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::DoLoad(std::fstream& file, DWORD dwFlags)
@@ -289,9 +289,9 @@ int CPrefabRMF::DoLoad(std::fstream& file, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::DoSave(std::fstream& file, DWORD dwFlags)
@@ -305,8 +305,8 @@ int CPrefabRMF::DoSave(std::fstream& file, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwFlags - 
+// Purpose:
+// Input  : dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Load(DWORD dwFlags)
@@ -328,10 +328,10 @@ int CPrefabRMF::Load(DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszFilename - 
-//			bLoadNow - 
-//			dwFlags - 
+// Purpose:
+// Input  : pszFilename -
+//			bLoadNow -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Init(LPCTSTR pszFilename, BOOL bLoadNow, DWORD dwFlags)
@@ -346,16 +346,16 @@ int CPrefabRMF::Init(LPCTSTR pszFilename, BOOL bLoadNow, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			bLoadNow - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			bLoadNow -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Init(std::fstream &file, BOOL bLoadNow, DWORD dwFlags)
 {
 	int iRvl = 1;	// start off ok
-	
+
 	if(bLoadNow)
 	{
 		// do load now
@@ -373,9 +373,9 @@ int CPrefabRMF::Init(std::fstream &file, BOOL bLoadNow, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszFilename - 
-//			dwFlags - 
+// Purpose:
+// Input  : pszFilename -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
@@ -386,9 +386,9 @@ int CPrefabRMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : file - 
-//			dwFlags - 
+// Purpose:
+// Input  : file -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabRMF::Save(std::fstream& file, DWORD dwFlags)
@@ -404,7 +404,7 @@ int CPrefabRMF::Save(std::fstream& file, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefabVMF::CPrefabVMF()
 {
@@ -412,7 +412,7 @@ CPrefabVMF::CPrefabVMF()
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CPrefabVMF::~CPrefabVMF()
 {
@@ -447,8 +447,8 @@ bool CPrefabVMF::IsLoaded(void)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : dwFlags - 
+// Purpose:
+// Input  : dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabVMF::Load(DWORD dwFlags)
@@ -531,9 +531,9 @@ int CPrefabVMF::Load(DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pData - 
+// Purpose:
+// Input  : pFile -
+//			pData -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CPrefabVMF::LoadEntityCallback(CChunkFile *pFile, CPrefabVMF *pPrefab)
@@ -553,9 +553,9 @@ ChunkFileResult_t CPrefabVMF::LoadEntityCallback(CChunkFile *pFile, CPrefabVMF *
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pFile - 
-//			pData - 
+// Purpose:
+// Input  : pFile -
+//			pData -
 // Output : ChunkFileResult_t
 //-----------------------------------------------------------------------------
 ChunkFileResult_t CPrefabVMF::LoadWorldCallback(CChunkFile *pFile, CPrefabVMF *pPrefab)
@@ -567,9 +567,9 @@ ChunkFileResult_t CPrefabVMF::LoadWorldCallback(CChunkFile *pFile, CPrefabVMF *p
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : pszFilename - 
-//			dwFlags - 
+// Purpose:
+// Input  : pszFilename -
+//			dwFlags -
 // Output : int
 //-----------------------------------------------------------------------------
 int CPrefabVMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
@@ -579,7 +579,7 @@ int CPrefabVMF::Save(LPCTSTR pszFilename, DWORD dwFlags)
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CPrefabVMF::SetFilename(const char *szFilename)
 {
@@ -590,4 +590,3 @@ void CPrefabVMF::SetFilename(const char *szFilename)
 
 	strcpy(m_szFilename, szFilename);
 }
-

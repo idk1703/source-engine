@@ -29,9 +29,9 @@ $Configuration
 $Project "QC_Eyes"
 {
 	$Folder	"Source Files"
-	{		
+	{
 		-$File	"$SRCDIR\public\tier0\memoverride.cpp"
-		
+
 		$File	"QC_Eyes.cpp"
 		$File	"QC_Eyes.rc"
 		$File	"QC_EyesDlg.cpp"

@@ -323,7 +323,7 @@ L 07/22/1999 - 21:17:49: "Zell<75>" say "and I suck"
 L 07/22/1999 - 21:18:10: "Zell<75>" say "really bad"
 L 07/22/1999 - 21:18:29: "[MOE]<71>" say "how long u play for"
 L 07/22/1999 - 21:18:56: =------= MATCH RESULTS =------=
-L 07/22/1999 - 21:18:56: "blue" defeated "red" 
+L 07/22/1999 - 21:18:56: "blue" defeated "red"
 L 07/22/1999 - 21:18:56: "blue" RESULTS: "2" players. "50" frags, "2" unaccounted for. "121" team score. Allies:
 L 07/22/1999 - 21:18:56: "red" RESULTS: "1" players. "37" frags, "1" unaccounted for. "86" team score. Allies:
 L 07/22/1999 - 21:19:34: "MCGILLA<74>" say "ya"

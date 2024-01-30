@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -20,6 +20,6 @@ CControllerDialog::CControllerDialog( vgui::Panel *parent ) : BaseClass( parent,
 void CControllerDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 {
 	BaseClass::ApplySchemeSettings( pScheme );
-	
+
 	SetControlString( "TitleLabel", "#GameUI_Controller" );
 }

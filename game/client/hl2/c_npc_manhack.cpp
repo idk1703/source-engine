@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -179,4 +179,3 @@ void C_NPC_Manhack::SoundShutdown(void)
 		m_pBladeSound = NULL;
 	}
 }
-

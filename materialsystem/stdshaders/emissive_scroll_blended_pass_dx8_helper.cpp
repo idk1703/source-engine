@@ -157,7 +157,7 @@ void DrawEmissiveScrollBlendedPass( CBaseVSShader *pShader, IMaterialVar** param
 		vshIndex.SetSKINNING( pShaderAPI->GetCurrentNumBones() > 0 );
 		pShaderAPI->SetVertexShaderIndex( vshIndex.GetIndex() );
 
-		// Set Vertex Shader Constants 
+		// Set Vertex Shader Constants
 		pShader->SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, BASETEXTURETRANSFORM );
 
 		float vEmissiveScrollVector[4] = { kDefaultEmissiveScrollVector[0], kDefaultEmissiveScrollVector[1], 0.0f, 0.0f };

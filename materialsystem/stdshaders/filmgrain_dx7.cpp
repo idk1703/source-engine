@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $Header: $
 // $NoKeywords: $
@@ -54,7 +54,7 @@ BEGIN_SHADER( FilmGrain_DX7, "Help for FilmGrain_DX7" )
 		{
 			float color[4];
 			params[NOISESCALE]->GetVecValue( color, 4 );
-			s_pShaderAPI->Color4fv( color );	
+			s_pShaderAPI->Color4fv( color );
 			BindTexture( SHADER_SAMPLER0, GRAIN_TEXTURE, -1 );
 		}
 		Draw();

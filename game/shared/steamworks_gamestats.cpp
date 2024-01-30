@@ -124,10 +124,10 @@ CSteamWorksGameStatsUploader& GetSteamWorksSGameStatsUploader()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Constructor. Sets up the steam callbacks accordingly depending on client/server dll 
+// Purpose: Constructor. Sets up the steam callbacks accordingly depending on client/server dll
 //-----------------------------------------------------------------------------
 CSteamWorksGameStatsUploader::CSteamWorksGameStatsUploader() : CAutoGameSystemPerFrame( "CSteamWorksGameStatsUploader" )
-#if !defined(NO_STEAM) && defined(GAME_DLL) 
+#if !defined(NO_STEAM) && defined(GAME_DLL)
 ,		m_CallbackSteamSessionInfoIssued( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued )
 ,		m_CallbackSteamSessionInfoClosed( this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed )
 #endif
@@ -184,7 +184,7 @@ void CSteamWorksGameStatsUploader::UploadCvars()
 			"-heap",
 			"-dxlevel"
 		};
-	
+
 		for ( int hh=0; hh <ARRAYSIZE(csCLcvars) ; ++hh )
 		{
 			const char *pszParamValue = CommandLine()->ParmValue( csCLcvars[hh] );
@@ -373,7 +373,7 @@ void CSteamWorksGameStatsUploader::FireGameEvent( IGameEvent *event )
 #ifdef CLIENT_DLL
 
 //-----------------------------------------------------------------------------
-// Purpose:	Sets the server session ID but ONLY if it's not 0. We are using this to avoid a race 
+// Purpose:	Sets the server session ID but ONLY if it's not 0. We are using this to avoid a race
 // 			condition where a server sends their session stats before a client does, thereby,
 //			resetting the client's server session ID to 0.
 //-----------------------------------------------------------------------------
@@ -684,7 +684,7 @@ void CSteamWorksGameStatsUploader::WriteSessionRow()
 
 	// The Session row is common to both client and server sessions.
 	// It enables keying to other tables.
-	
+
 	// Don't send SessionID. It's provided by steam. Same with the account's id and type.
 //	m_SteamWorksInterface->AddSessionAttributeInt64( m_SessionID, "SessionID", m_SessionID );
 
@@ -693,7 +693,7 @@ void CSteamWorksGameStatsUploader::WriteSessionRow()
 #endif
 
 	m_SteamWorksInterface->AddSessionAttributeInt( m_SessionID, "AppID", m_iAppID );
-	m_SteamWorksInterface->AddSessionAttributeInt( m_SessionID, "StartTime", m_StartTime );		
+	m_SteamWorksInterface->AddSessionAttributeInt( m_SessionID, "StartTime", m_StartTime );
 	m_SteamWorksInterface->AddSessionAttributeInt( m_SessionID, "EndTime", m_EndTime );
 
 #ifndef CLIENT_DLL
@@ -723,7 +723,7 @@ bool CSteamWorksGameStatsUploader::VerifyInterface( void )
 		m_SteamWorksInterface = GetInterface();
 		if ( !m_SteamWorksInterface )
 		{
-			return false; 
+			return false;
 		}
 	}
 	return true;
@@ -737,7 +737,7 @@ EResult CSteamWorksGameStatsUploader::WriteIntToTable( const int value, uint64 i
 	if ( !VerifyInterface() )
 		return k_EResultNoConnection;
 
-	return m_SteamWorksInterface->AddRowAttributeInt( iTableID, pzRow, value );	
+	return m_SteamWorksInterface->AddRowAttributeInt( iTableID, pzRow, value );
 }
 
 //-----------------------------------------------------------------------------
@@ -774,8 +774,8 @@ EResult CSteamWorksGameStatsUploader::WriteStringToTable( const char *value, uin
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the 
-// row. If the key isn't present, return ResultNoMatch to indicate such. 
+// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the
+// row. If the key isn't present, return ResultNoMatch to indicate such.
 //-----------------------------------------------------------------------------
 EResult	CSteamWorksGameStatsUploader::WriteOptionalFloatToTable( KeyValues *pKV, const char* keyName, uint64 iTableID, const char *pzRow )
 {
@@ -792,8 +792,8 @@ EResult	CSteamWorksGameStatsUploader::WriteOptionalFloatToTable( KeyValues *pKV,
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the 
-// row. If the key isn't present, return ResultNoMatch to indicate such. 
+// Purpose: Wrapper function to search a KeyValues for a value with the given keyName and add the result to the
+// row. If the key isn't present, return ResultNoMatch to indicate such.
 //-----------------------------------------------------------------------------
 EResult	CSteamWorksGameStatsUploader::WriteOptionalIntToTable( KeyValues *pKV, const char* keyName, uint64 iTableID, const char *pzRow )
 {
@@ -850,7 +850,7 @@ ISteamGameStats* CSteamWorksGameStatsUploader::GetInterface( void )
 	if ( g_pSteamClientGameServer && engine && (/*engine->IsDedicatedServerForXbox() ||*/ engine->IsDedicatedServer()) )
 	{
 		return (ISteamGameStats*)g_pSteamClientGameServer->GetISteamGenericInterface( hSteamUser, hSteamPipe, STEAMGAMESTATS_INTERFACE_VERSION );
-	}	
+	}
 #elif	CLIENT_DLL
 	if ( steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUtils() )
 	{
@@ -1054,7 +1054,7 @@ void CSteamWorksGameStatsUploader::AddClientPerfData( KeyValues *pKV )
 	WriteIntToTable(	pKV->GetInt( "MaxDxLevel" ),		ulRowID,	"MaxDxLvl" );
 
 	WriteIntToTable( pKV->GetBool( "Map/SteamControllerActive" ), ulRowID, "UsingController" );
-	
+
 	// Loading time information
 
 	// If a player exits a map and then exits the game, LoadTimeMap will not be in the key list the second time
@@ -1151,4 +1151,3 @@ void CSteamWorksGameStatsUploader::ServerAddressToInt()
 	}
 	m_iServerIP = (ip[0]<<24) + (ip[1]<<16) + (ip[2]<<8) + ip[3];
 }
-

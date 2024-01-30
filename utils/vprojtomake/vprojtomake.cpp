@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -20,12 +20,12 @@
 #include "makefilecreator.h"
 
 SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
-{	
+{
 	printf( "%s", pMsg );
 #ifdef _WIN32
 	OutputDebugString( pMsg );
 #endif
-	
+
 	if ( type == SPEW_ERROR )
 	{
 		printf( "\n" );
@@ -41,7 +41,7 @@ SpewRetval_t SpewFunc( SpewType_t type, char const *pMsg )
 	return SPEW_CONTINUE;
 }
 
-class MyFileSystem : public IBaseFileSystem 
+class MyFileSystem : public IBaseFileSystem
 {
 public:
 	int Read( void* pOutput, int size, FileHandle_t file ) { return fread( pOutput, 1, size, (FILE *)file); }
@@ -87,7 +87,7 @@ void OutputKeyValuesVersion( CVCProjConvert & proj )
 		int fileCount = 0;
 		for( int fileIndex = 0; fileIndex < config.GetNumFileNames(); fileIndex++ )
 		{
-			if ( config.GetFileType(fileIndex) == CVCProjConvert::CConfiguration::FILE_SOURCE ) 
+			if ( config.GetFileType(fileIndex) == CVCProjConvert::CConfiguration::FILE_SOURCE )
 			{
 				char num[20];
 				Q_snprintf( num, sizeof(num), "%i", fileCount );
@@ -101,9 +101,9 @@ void OutputKeyValuesVersion( CVCProjConvert & proj )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
-// Input  : argc - 
-//			argv[] - 
+// Purpose:
+// Input  : argc -
+//			argv[] -
 // Output : int
 //-----------------------------------------------------------------------------
 int main( int argc, char* argv[] )

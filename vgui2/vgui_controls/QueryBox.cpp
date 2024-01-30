@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 // This class is a message box that has two buttons, ok and cancel instead of
 // just the ok button of a message box. We use a message box class for the ok button
 // and implement another button here.
@@ -29,7 +29,7 @@ QueryBox::QueryBox(const char *title, const char *queryText, vgui::Panel *parent
 {
 	SetDeleteSelfOnClose(true);
 	m_pCancelButton = new Button(this, "CancelButton", "#QueryBox_Cancel");
-	m_pCancelButton->SetCommand("Cancel"); 
+	m_pCancelButton->SetCommand("Cancel");
 	m_pOkButton->SetCommand("OK");
 	m_pCancelCommand = NULL;
 	m_pOkCommand = NULL;
@@ -45,7 +45,7 @@ QueryBox::QueryBox(const wchar_t *wszTitle, const wchar_t *wszQueryText,vgui::Pa
 {
 	SetDeleteSelfOnClose(true);
 	m_pCancelButton = new Button(this, "CancelButton", "#QueryBox_Cancel");
-	m_pCancelButton->SetCommand("Cancel"); 
+	m_pCancelButton->SetCommand("Cancel");
 	m_pOkButton->SetCommand("OK");
 	m_pCancelCommand = NULL;
 	m_pOkCommand = NULL;
@@ -72,7 +72,7 @@ QueryBox::~QueryBox()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Layout the window for drawing 
+// Purpose: Layout the window for drawing
 //-----------------------------------------------------------------------------
 void QueryBox::PerformLayout()
 {
@@ -88,7 +88,7 @@ void QueryBox::PerformLayout()
 
 	int oldWide, oldTall;
 	m_pCancelButton->GetSize(oldWide, oldTall);
-	
+
 	int btnWide, btnTall;
 	m_pCancelButton->GetContentSize(btnWide, btnTall);
 	btnWide = max(oldWide, btnWide + 10);
@@ -122,16 +122,16 @@ void QueryBox::OnCommand(const char *command)
 	}
 	else if (!stricmp(command, "Cancel"))
 	{
-		OnCommand("Close");	
+		OnCommand("Close");
 
 		if (m_pCancelCommand)
 		{
 			PostActionSignal(m_pCancelCommand->MakeCopy());
 		}
 	}
-	
+
 	BaseClass::OnCommand(command);
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -204,7 +204,7 @@ void QueryBox::OnKeyCodeTyped( KeyCode code )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void QueryBox::OnKeyCodePressed( KeyCode code )
 {
@@ -217,6 +217,3 @@ void QueryBox::OnKeyCodePressed( KeyCode code )
 		Frame::OnKeyCodePressed(code);
 	}
 }
-
-
-

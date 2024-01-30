@@ -16,7 +16,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-		    
+
 // Global list of menus
 CMenu	*gMenus[MENU_LAST];
 
@@ -46,7 +46,7 @@ CMenu::CMenu()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMenu::Display( CBaseTFPlayer *pViewer, int allowed, int display_time )
 {
@@ -94,14 +94,14 @@ void CMenu::Display( CBaseTFPlayer *pViewer, int allowed, int display_time )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMenu::RecalculateMenu( CBaseTFPlayer *pViewer )
 {
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CMenu::Input( CBaseTFPlayer *pViewer, int iInput )
 {
@@ -117,7 +117,7 @@ CMenuTeam::CMenuTeam()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMenuTeam::RecalculateMenu( CBaseTFPlayer *pViewer )
 {
@@ -161,7 +161,7 @@ bool CMenuTeam::Input( CBaseTFPlayer *pViewer, int iInput )
 	// Clear out the class
 	if ( pViewer->GetPlayerClass() )
 	{
-		// Remove all the player's items 
+		// Remove all the player's items
 		pViewer->RemoveAllItems( false );
 		pViewer->HideViewModels();
 		pViewer->ClearPlayerClass();
@@ -180,7 +180,7 @@ CMenuClass::CMenuClass()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CMenuClass::RecalculateMenu( CBaseTFPlayer *pViewer )
 {

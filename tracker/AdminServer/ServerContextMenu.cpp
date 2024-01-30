@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================
@@ -67,7 +67,7 @@ void CServerContextMenu::ShowMenu(Panel *target, unsigned int serverID, bool sho
 		displayed=true;
 		AddMenuItem("AddToFavorites", "&Add server to favorites", new KeyValues("AddToFavorites", "serverID", serverID), target);
 	}
-	
+
 	if(manage)
 	{
 		displayed=true;
@@ -77,7 +77,7 @@ void CServerContextMenu::ShowMenu(Panel *target, unsigned int serverID, bool sho
 /*	if (parent->IsCursorOver() ) // if the cursor is over the tabs
 	{
 		displayed=false;
-		if((int) parent->GetTabPanel()->GetActivePageNum()!=0) // don't let the first tab be deleted, its our servers tab :) 
+		if((int) parent->GetTabPanel()->GetActivePageNum()!=0) // don't let the first tab be deleted, its our servers tab :)
 		{
 			char name[100];
 			displayed=true;
@@ -90,7 +90,7 @@ void CServerContextMenu::ShowMenu(Panel *target, unsigned int serverID, bool sho
 	} */
 
 
-	if(displayed) 
+	if(displayed)
 	{
 		MakePopup();
 		int x, y, gx, gy;

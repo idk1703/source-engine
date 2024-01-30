@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -32,7 +32,7 @@ enum KeyUpTarget_t
 
 struct KeyInfo_t
 {
-    char			*m_pKeyBinding;
+	char			*m_pKeyBinding;
 	unsigned char	m_nKeyUpTarget : 3;	// see KeyUpTarget_t
 	unsigned char	m_bKeyDown : 1;
 };
@@ -70,7 +70,7 @@ void Key_SetBinding( ButtonCode_t keynum, const char *pBinding )
 {
 	char	*pNewBinding;
 	int		l;
-			
+
 	if ( keynum == BUTTON_CODE_INVALID )
 		return;
 
@@ -84,13 +84,13 @@ void Key_SetBinding( ButtonCode_t keynum, const char *pBinding )
 		delete[] s_pKeyInfo[keynum].m_pKeyBinding;
 		s_pKeyInfo[keynum].m_pKeyBinding = NULL;
 	}
-			
+
 	// allocate memory for new binding
-	l = Q_strlen( pBinding );	
+	l = Q_strlen( pBinding );
 	pNewBinding = (char *)new char[ l+1 ];
 	Q_strncpy( pNewBinding, pBinding, l + 1 );
 	pNewBinding[l] = 0;
-	s_pKeyInfo[keynum].m_pKeyBinding = pNewBinding;	
+	s_pKeyInfo[keynum].m_pKeyBinding = pNewBinding;
 }
 
 /*
@@ -107,7 +107,7 @@ CON_COMMAND_F( unbind, "Unbind a key.", FCVAR_DONTRECORD )
 		ConMsg( "unbind <key> : remove commands from a key\n" );
 		return;
 	}
-	
+
 	b = g_pInputSystem->StringToButtonCode( args[1] );
 	if ( b == BUTTON_CODE_INVALID )
 	{
@@ -129,13 +129,13 @@ CON_COMMAND_F( unbind_mac, "Unbind a key on the Mac only.", FCVAR_DONTRECORD )
 	if ( IsOSX() )
 	{
 		ButtonCode_t b;
-		
+
 		if ( args.ArgC() != 2 )
 		{
 			ConMsg( "unbind <key> : remove commands from a key\n" );
 			return;
 		}
-		
+
 		b = g_pInputSystem->StringToButtonCode( args[1] );
 		if ( b == BUTTON_CODE_INVALID )
 		{
@@ -147,7 +147,7 @@ CON_COMMAND_F( unbind_mac, "Unbind a key on the Mac only.", FCVAR_DONTRECORD )
 			ConMsg( "Can't unbind ESCAPE key\n" );
 			return;
 		}
-		
+
 		Key_SetBinding( b, "" );
 	}
 }
@@ -157,14 +157,14 @@ CON_COMMAND_F( unbind_mac, "Unbind a key on the Mac only.", FCVAR_DONTRECORD )
 CON_COMMAND_F( unbindall, "Unbind all keys.", FCVAR_DONTRECORD )
 {
 	int		i;
-	
+
 	for ( i=0; i<BUTTON_CODE_LAST; i++ )
 	{
 		if ( !s_pKeyInfo[i].m_pKeyBinding )
 			continue;
-		
+
 		// Don't ever unbind escape or console key
-		if ( i == KEY_ESCAPE )	
+		if ( i == KEY_ESCAPE )
 			continue;
 
 		if ( i == KEY_BACKQUOTE )
@@ -188,7 +188,7 @@ Key_Bind_f
 */
 
 void BindKey( const char *pchBind, bool bShow, const char *pchCmd )
-{		
+{
 	if ( !g_pInputSystem )
 		return;
 
@@ -198,7 +198,7 @@ void BindKey( const char *pchBind, bool bShow, const char *pchCmd )
 		ConMsg( "\"%s\" isn't a valid key\n", pchBind );
 		return;
 	}
-	
+
 	if ( bShow )
 	{
 		if (s_pKeyInfo[b].m_pKeyBinding)
@@ -211,12 +211,12 @@ void BindKey( const char *pchBind, bool bShow, const char *pchCmd )
 		}
 		return;
 	}
-	
+
 	if ( b == KEY_ESCAPE )
 	{
 		pchCmd = "cancelselect";
 	}
-	
+
 	Key_SetBinding( b, pchCmd );
 }
 
@@ -225,7 +225,7 @@ CON_COMMAND_F( bind, "Bind a key.", FCVAR_DONTRECORD )
 {
 	int i, c;
 	char cmd[1024];
-	
+
 	c = args.ArgC();
 
 	if ( c != 2 && c != 3 )
@@ -233,7 +233,7 @@ CON_COMMAND_F( bind, "Bind a key.", FCVAR_DONTRECORD )
 		ConMsg( "bind <key> [command] : attach a command to a key\n" );
 		return;
 	}
-	
+
 	// copy the rest of the command line
 	cmd[0] = 0;		// start out with a null string
 	for ( i=2 ; i< c ; i++ )
@@ -254,15 +254,15 @@ CON_COMMAND_F( bind_mac, "Bind this key but only on Mac, not win32", FCVAR_DONTR
 	{
 		int i, c;
 		char cmd[1024];
-		
+
 		c = args.ArgC();
-		
+
 		if ( c != 2 && c != 3 )
 		{
 			ConMsg( "bind <key> [command] : attach a command to a key\n" );
 			return;
 		}
-		
+
 		// copy the rest of the command line
 		cmd[0] = 0;		// start out with a null string
 		for ( i=2 ; i< c ; i++ )
@@ -273,12 +273,12 @@ CON_COMMAND_F( bind_mac, "Bind this key but only on Mac, not win32", FCVAR_DONTR
 			}
 			Q_strncat( cmd, args[i], sizeof( cmd ), COPY_ALL_CHARACTERS );
 		}
-		
+
 		BindKey( args[1], c == 2, cmd );
 	}
-	
+
 }
-	
+
 
 
 /*
@@ -329,7 +329,7 @@ void Key_WriteBindings( CUtlBuffer &buf )
 ============
 Key_NameForBinding
 
-Returns the keyname to which a binding string is bound.  E.g., if 
+Returns the keyname to which a binding string is bound.  E.g., if
 TAB is bound to +use then searching for +use will return "TAB"
 ============
 */
@@ -378,7 +378,7 @@ const char *Key_NameForBinding( const char *pBinding )
 ============
 Key_NameForBinding
 
-Returns the keyname to which a binding string is bound.  E.g., if 
+Returns the keyname to which a binding string is bound.  E.g., if
 TAB is bound to +use then searching for +use will return "TAB"
 
 Does not perform "helpful" removal of '+' character from bindings.
@@ -461,7 +461,7 @@ CON_COMMAND( key_findbinding, "Find key bound to specified command string." )
 
 
 //-----------------------------------------------------------------------------
-// Initialization, shutdown 
+// Initialization, shutdown
 //-----------------------------------------------------------------------------
 void Key_Init (void)
 {
@@ -597,7 +597,7 @@ static bool HandleEngineKey( const InputEvent_t &event )
 	bool bDown = event.m_nType != IE_ButtonReleased;
 	ButtonCode_t code = (ButtonCode_t)event.m_nData;
 
-	// Warn about unbound keys 
+	// Warn about unbound keys
 	if ( IsPC() && bDown )
 	{
 		if ( IsJoystickCode( code ) && !IsJoystickAxisCode( code ) && !IsSteamControllerCode( code ) && !s_pKeyInfo[code].m_pKeyBinding )
@@ -727,7 +727,7 @@ void Key_Event( const InputEvent_t &event )
 	}
 #endif
 
-	// Don't handle key ups if the key's already up. 
+	// Don't handle key ups if the key's already up.
 	// NOTE: This should already be taken care of by the input system
 	Assert( s_pKeyInfo[code].m_bKeyDown != bDown );
 	if ( s_pKeyInfo[code].m_bKeyDown == bDown )
@@ -747,7 +747,7 @@ void Key_Event( const InputEvent_t &event )
 	// Let tools have a whack at keys
 	if ( FilterKey( event, KEY_UP_TOOLS, HandleToolKey ) )
 		return;
-							 
+
 	// Let vgui have a whack at keys
 	if ( FilterKey( event, KEY_UP_VGUI, HandleVGuiKey ) )
 		return;
@@ -760,5 +760,3 @@ void Key_Event( const InputEvent_t &event )
 	FilterKey( event, KEY_UP_ENGINE, HandleEngineKey );
 #endif
 }
-
-

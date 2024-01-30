@@ -523,7 +523,7 @@ void CDualPanelList::OnMouseWheeled( int nDelta )
 
 	int nVal = m_pScrollBar->GetValue();
 	nVal -= ( nDelta * DEFAULT_HEIGHT );
-	m_pScrollBar->SetValue( nVal );	
+	m_pScrollBar->SetValue( nVal );
 }
 
 

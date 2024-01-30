@@ -15,12 +15,12 @@
 
 class CMatchStatsPage : public CBaseStatsPage
 {
-    DECLARE_CLASS_SIMPLE ( CMatchStatsPage, CBaseStatsPage );
+	DECLARE_CLASS_SIMPLE ( CMatchStatsPage, CBaseStatsPage );
 
 public:
-    CMatchStatsPage( vgui::Panel *parent, const char *name );
-	
-    virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
+	CMatchStatsPage( vgui::Panel *parent, const char *name );
+
+	virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 	void RepopulateStats();
 	int AddSimpleStat( int desiredStat, const StatsCollection_t& personalMatchStats, RoundStatsDirectAverage_t* tStats, RoundStatsDirectAverage_t* ctStats, RoundStatsDirectAverage_t* serverStats );
 	int AddAccuracyStat(const StatsCollection_t& personalMatchStats, RoundStatsDirectAverage_t* tStats, RoundStatsDirectAverage_t* ctStats, RoundStatsDirectAverage_t* serverStats );

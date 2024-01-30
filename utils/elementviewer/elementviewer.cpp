@@ -99,7 +99,7 @@ bool CElementViewerApp::Create()
 	if ( !BaseClass::Create() )
 		return false;
 
-	AppSystemInfo_t appSystems[] = 
+	AppSystemInfo_t appSystems[] =
 	{
 		{ "vstdlib.dll",			PROCESS_UTILS_INTERFACE_VERSION },
 		{ "p4lib.dll",				P4_INTERFACE_VERSION },
@@ -138,7 +138,7 @@ bool CElementViewerApp::PreInit( )
 
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGui_RecursivePrintTree( int depth, int start, int end, vgui::Panel *current, int& totaldrawn )
 {
@@ -153,36 +153,36 @@ void VGui_RecursivePrintTree( int depth, int start, int end, vgui::Panel *curren
 	for ( int i = 0; i < count ; i++ )
 	{
 		vgui::Panel *panel = current->GetChild( i );
-//		Msg( "%i:  %s : %p, %s %s\n", 
-//			i + 1, 
-//			panel->GetName(), 
-//			panel, 
+//		Msg( "%i:  %s : %p, %s %s\n",
+//			i + 1,
+//			panel->GetName(),
+//			panel,
 //			panel->IsVisible() ? "visible" : "hidden",
 //			panel->IsPopup() ? "popup" : "" );
 
 		int width = panel->GetWide();
 		int height = panel->GetTall();
 		int x, y;
-		
+
 		panel->GetPos( x, y );
 
 		if ( depth >= start && depth <= end )
 		{
 			totaldrawn++;
-			Msg( 
-			// Con_NPrintf( totaldrawn++, 
-				"%s (%i.%i): %p, %s %s x(%i) y(%i) w(%i) h(%i)\n", 
-				panel->GetName(), 
+			Msg(
+			// Con_NPrintf( totaldrawn++,
+				"%s (%i.%i): %p, %s %s x(%i) y(%i) w(%i) h(%i)\n",
+				panel->GetName(),
 				depth + 1,
-				i + 1, 
-				panel, 
+				i + 1,
+				panel,
 				panel->IsVisible() ? "visible" : "hidden",
 				panel->IsPopup() ? "popup" : "",
 				x, y,
 				width, height );
 		}
 
-		VGui_RecursivePrintTree( depth + 1, start, end, panel, totaldrawn );	
+		VGui_RecursivePrintTree( depth + 1, start, end, panel, totaldrawn );
 	}
 }
 
@@ -191,13 +191,13 @@ void VGui_RecursivePrintTree( int depth, int start, int end, vgui::Panel *curren
 #define VGUI_DRAWPANEL ""
 #define VGUI_TREESTART 0
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGui_DrawPopups( void )
 {
 	if ( !VGUI_DRAWPOPUPS )
 		return;
-	
+
 	int c = vgui::surface()->GetPopupCount();
 	for ( int i = 0; i < c; i++ )
 	{
@@ -210,12 +210,12 @@ void VGui_DrawPopups( void )
 
 		int width, height;
 		int x, y;
-		
+
 		vgui::ipanel()->GetSize( popup, width, height );
 		vgui::ipanel()->GetPos( popup, x, y );
 
-		//Con_NPrintf( i, 
-		Msg( 
+		//Con_NPrintf( i,
+		Msg(
 			"%i:  %s : %x, %s pos(%i,%i) w(%i) h(%i)\n",
 			i,
 			p,
@@ -227,7 +227,7 @@ void VGui_DrawPopups( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void VGui_DrawHierarchy( void )
 {
@@ -240,7 +240,7 @@ void VGui_DrawHierarchy( void )
 	int endlevel = 1000;
 
 	bool wholetree = VGUI_DRAWTREE > 0 ? true : false;
-	
+
 	if ( wholetree )
 	{
 		startlevel = VGUI_TREESTART;
@@ -321,11 +321,11 @@ int CElementViewerApp::Main()
 		AppPumpMessages();
 
 		pRenderContext->Viewport( 0, 0, GetWindowWidth(), GetWindowHeight() );
-	
+
 		vgui::GetAnimationController()->UpdateAnimations( Sys_FloatTime() );
 
 		g_pMaterialSystem->BeginFrame( 0 );
-		pRenderContext->ClearColor4ub( 76, 88, 68, 255 ); 
+		pRenderContext->ClearColor4ub( 76, 88, 68, 255 );
 		pRenderContext->ClearBuffers( true, true );
 
 		g_pVGui->RunFrame();
@@ -343,6 +343,3 @@ int CElementViewerApp::Main()
 
 	return 1;
 }
-
-
-

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -121,7 +121,7 @@ void CHudNumericDisplay::PaintNumbers(HFont font, int xpos, int ypos, int value)
 		if ( iSeconds < 10 )
 			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d:0%d", iMinutes, iSeconds );
 		else
-			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d:%d", iMinutes, iSeconds );		
+			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d:%d", iMinutes, iSeconds );
 #else
 		if ( iSeconds < 10 )
 			V_snwprintf( unicode, ARRAYSIZE(unicode), L"%d`0%d", iMinutes, iSeconds );
@@ -194,6 +194,3 @@ void CHudNumericDisplay::Paint()
 
 	PaintLabel();
 }
-
-
-

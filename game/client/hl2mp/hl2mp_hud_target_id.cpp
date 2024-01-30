@@ -24,7 +24,7 @@ static ConVar hud_centerid( "hud_centerid", "1" );
 static ConVar hud_showtargetid( "hud_showtargetid", "1" );
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 class CTargetID : public CHudElement, public vgui::Panel
 {
@@ -50,7 +50,7 @@ DECLARE_HUDELEMENT( CTargetID );
 using namespace vgui;
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTargetID::CTargetID( const char *pElementName ) :
 	CHudElement( pElementName ), BaseClass( NULL, "TargetID" )
@@ -95,7 +95,7 @@ void CTargetID::VidInit()
 Color CTargetID::GetColorForTargetTeam( int iTeamNumber )
 {
 	return GameResources()->GetTeamColor( iTeamNumber );
-} 
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: Draw function for the element
@@ -157,7 +157,7 @@ void CTargetID::Paint()
 
 			bShowPlayerName = true;
 			g_pVGuiLocalize->ConvertANSIToUnicode( pPlayer->GetPlayerName(),  wszPlayerName, sizeof(wszPlayerName) );
-			
+
 			if ( HL2MPRules()->IsTeamplay() == true && pPlayer->InSameTeam(pLocalPlayer) )
 			{
 				printFormatString = "#Playerid_sameteam";
@@ -167,7 +167,7 @@ void CTargetID::Paint()
 			{
 				printFormatString = "#Playerid_diffteam";
 			}
-		
+
 
 			if ( bShowHealth )
 			{
@@ -212,7 +212,7 @@ void CTargetID::Paint()
 			{
 				xpos = (ScreenWidth() - wide) / 2;
 			}
-			
+
 			vgui::surface()->DrawSetTextFont( m_hFont );
 			vgui::surface()->DrawSetTextPos( xpos, ypos );
 			vgui::surface()->DrawSetTextColor( c );

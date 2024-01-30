@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -44,7 +44,7 @@ CTFAnnotationsPanel::CTFAnnotationsPanel( const char *pElementName )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAnnotationsPanel::~CTFAnnotationsPanel()
 {
@@ -52,7 +52,7 @@ CTFAnnotationsPanel::~CTFAnnotationsPanel()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::Reset()
 {
@@ -60,14 +60,14 @@ void CTFAnnotationsPanel::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::Init()
 {
 	// listen for events
 	ListenForGameEvent( "show_annotation" );
 	ListenForGameEvent( "hide_annotation" );
-	
+
 	RemoveAll();
 
 	CHudElement::Init();
@@ -82,7 +82,7 @@ void CTFAnnotationsPanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::FireGameEvent( IGameEvent * event )
 {
@@ -99,7 +99,7 @@ void CTFAnnotationsPanel::FireGameEvent( IGameEvent * event )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAnnotationsPanelCallout *CTFAnnotationsPanel::TestAndAddCallout( int id, Vector &origin, const char *text )
 {
@@ -155,7 +155,7 @@ void CTFAnnotationsPanel::UpdateAnnotations( void )
 	//Find an available slot and also see if this call out already exists in the list.
 	for ( int i = m_pCalloutPanels.Count()-1; i >= 0; i-- )
 	{
-		if ( !m_pCalloutPanels[i] ) 
+		if ( !m_pCalloutPanels[i] )
 		{
 			m_pCalloutPanels.Remove(i);
 			continue;
@@ -177,7 +177,7 @@ void CTFAnnotationsPanel::UpdateAnnotations( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::AddAnnotation( IGameEvent * event )
 {
@@ -192,7 +192,7 @@ void CTFAnnotationsPanel::AddAnnotation( IGameEvent * event )
 	bool bShowDistance = event->GetBool("show_distance");
 	const char *pSound = event->GetString( "play_sound" );
 	bool bShowEffect = event->GetBool( "show_effect" );
-					   
+
 	Vector location;
 
 	location.x = x;
@@ -236,14 +236,14 @@ void CTFAnnotationsPanel::AddAnnotation( IGameEvent * event )
 					QAngle vecAngles;
 					VectorAngles( vecNormal, vecAngles );
 					DispatchParticleEffect( "ping_circle", vecOrigin, vecAngles );
-				}				
+				}
 			}
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::HideAnnotation( int id )
 {
@@ -259,7 +259,7 @@ void CTFAnnotationsPanel::HideAnnotation( int id )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::RemoveAll()
 {
@@ -274,7 +274,7 @@ void CTFAnnotationsPanel::RemoveAll()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAnnotationsPanel::ShouldDraw( void )
 {
@@ -282,7 +282,7 @@ bool CTFAnnotationsPanel::ShouldDraw( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanel::OnThink( void )
 {
@@ -296,7 +296,7 @@ void CTFAnnotationsPanel::OnThink( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAnnotationsPanelCallout::~CTFAnnotationsPanelCallout()
 {
@@ -307,7 +307,7 @@ CTFAnnotationsPanelCallout::~CTFAnnotationsPanelCallout()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 CTFAnnotationsPanelCallout::CTFAnnotationsPanelCallout( Panel *parent, const char *name, int id, Vector &location, const char* text ) : EditablePanel( parent, name )
 {
@@ -443,25 +443,25 @@ void CTFAnnotationsPanelCallout::PerformLayout( void )
 		// If our target isn't visible, we draw transparently
 		trace_t	tr;
 		UTIL_TraceLine( vecTarget, MainViewOrigin(), MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr );
-		
+
 		if ( tr.fraction < 1.0f )
 		{
 			// Not visible ie obstructed by some objects in the world.
 			// Do *not* show entities that are not the same team
 			if ( m_FollowEntity.Get() &&
 				 m_FollowEntity->GetTeamNumber() != TEAM_UNASSIGNED && m_FollowEntity->GetTeamNumber() != TEAM_INVALID &&
-				 m_FollowEntity->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() && 
+				 m_FollowEntity->GetTeamNumber() != pLocalTFPlayer->GetTeamNumber() &&
 				 pLocalTFPlayer->GetTeamNumber() != TEAM_SPECTATOR )
 			{
 				SetAlpha( 0 );
 				m_pArrow->SetAlpha( 0 );
 			}
 		}
-		
+
 		iX = iX - m_pBackground->GetWide() / 2;
 		iY = iY - m_pBackground->GetTall() - m_pArrow->GetTall();
 	}
-	
+
 	if ( m_bWasOffscreen != bOffscreen )
 	{
 		m_flLerpPercentage = 0.0f;
@@ -590,7 +590,7 @@ void CTFAnnotationsPanelCallout::Touch()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanelCallout::SetLifetime( float flLifetime )
 {
@@ -609,7 +609,7 @@ void CTFAnnotationsPanelCallout::SetLifetime( float flLifetime )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanelCallout::SetShowDistance( bool bShowDistance )
 {
@@ -621,7 +621,7 @@ void CTFAnnotationsPanelCallout::SetShowDistance( bool bShowDistance )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanelCallout::SetText( const char *text )
 {
@@ -634,7 +634,7 @@ void CTFAnnotationsPanelCallout::SetText( const char *text )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CTFAnnotationsPanelCallout::FadeAndRemove()
 {
@@ -642,7 +642,7 @@ void CTFAnnotationsPanelCallout::FadeAndRemove()
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 bool CTFAnnotationsPanelCallout::UpdateCallout()
 {
@@ -659,7 +659,7 @@ bool CTFAnnotationsPanelCallout::UpdateCallout()
 	C_TFPlayer *pLocalTFPlayer = C_TFPlayer::GetLocalTFPlayer();
 	if ( !pLocalTFPlayer )
 		return true;
-	
+
 	if ( m_iVisibilityBitfield != 0 )
 	{
 		int bit = 1 << pLocalTFPlayer->entindex();

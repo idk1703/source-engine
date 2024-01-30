@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Dod gamerules round timer 
+// Purpose: Dod gamerules round timer
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -31,7 +31,7 @@
 
 		if ( bTimerPaused == false )
 		{
-			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "TimerFlash" ); 
+			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "TimerFlash" );
 		}
 
 		pTimer->InternalSetPaused( bTimerPaused );

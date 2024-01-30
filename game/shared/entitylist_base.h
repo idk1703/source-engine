@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,7 +34,7 @@ class CBaseEntityList
 public:
 	CBaseEntityList();
 	~CBaseEntityList();
-	
+
 	// Add and remove entities. iForcedSerialNum should only be used on the client. The server
 	// gets to dictate what the networkable serial numbers are on the client so it can send
 	// ehandles over and they work.
@@ -65,7 +65,7 @@ protected:
 
 	// These are notifications to the derived class. It can cache info here if it wants.
 	virtual void OnAddEntity( IHandleEntity *pEnt, CBaseHandle handle );
-	
+
 	// It is safe to delete the entity here. We won't be accessing the pointer after
 	// calling OnRemoveEntity.
 	virtual void OnRemoveEntity( IHandleEntity *pEnt, CBaseHandle handle );
@@ -76,9 +76,9 @@ private:
 	CBaseHandle AddEntityAtSlot( IHandleEntity *pEnt, int iSlot, int iForcedSerialNum );
 	void RemoveEntityAtSlot( int iSlot );
 
-	
+
 private:
-	
+
 	class CEntInfoList
 	{
 	public:
@@ -95,7 +95,7 @@ private:
 		void LinkAfter( CEntInfo *pBefore, CEntInfo *pElement );
 		void Unlink( CEntInfo *pElement );
 		bool IsInList( CEntInfo *pElement );
-	
+
 	private:
 		CEntInfo		*m_pHead;
 		CEntInfo		*m_pTail;
@@ -177,7 +177,7 @@ inline CBaseHandle CBaseEntityList::NextHandle( CBaseHandle hEnt ) const
 
 	return CBaseHandle( index, m_EntPtrArray[index].m_SerialNumber );
 }
-	
+
 inline CBaseHandle CBaseEntityList::InvalidHandle()
 {
 	return INVALID_EHANDLE_INDEX;

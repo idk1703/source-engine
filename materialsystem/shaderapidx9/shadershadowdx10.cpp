@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -23,7 +23,7 @@
 static CShaderShadowDx10 s_ShaderShadow;
 CShaderShadowDx10 *g_pShaderShadowDx10 = &s_ShaderShadow;
 
-EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderShadowDx10, IShaderShadow, 
+EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CShaderShadowDx10, IShaderShadow,
 								  SHADERSHADOW_INTERFACE_VERSION, s_ShaderShadow )
 
 //-----------------------------------------------------------------------------
@@ -68,12 +68,12 @@ void CShaderShadowDx10::EnablePolyOffset( PolygonOffsetMode_t nOffsetMode )
 {
 }
 
-// Suppresses/activates color writing 
+// Suppresses/activates color writing
 void CShaderShadowDx10::EnableColorWrites( bool bEnable )
 {
 }
 
-// Suppresses/activates alpha writing 
+// Suppresses/activates alpha writing
 void CShaderShadowDx10::EnableAlphaWrites( bool bEnable )
 {
 }
@@ -153,7 +153,7 @@ void CShaderShadowDx10::EnableConstantColor( bool bEnable )
 // The flags to pass in here come from the VertexFormatFlags_t enum
 // If pTexCoordDimensions is *not* specified, we assume all coordinates
 // are 2-dimensional
-void CShaderShadowDx10::VertexShaderVertexFormat( unsigned int flags, 
+void CShaderShadowDx10::VertexShaderVertexFormat( unsigned int flags,
 												  int numTexCoords, int* pTexCoordDimensions,
 												  int userDataSize )
 {
@@ -190,7 +190,7 @@ void CShaderShadowDx10::CustomTextureStages( int stageCount )
 {
 }
 
-void CShaderShadowDx10::CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel, 
+void CShaderShadowDx10::CustomTextureOperation( TextureStage_t stage, ShaderTexChannel_t channel,
 												ShaderTexOp_t op, ShaderTexArg_t arg1, ShaderTexArg_t arg2 )
 {
 }
@@ -224,4 +224,3 @@ void CShaderShadowDx10::BlendFuncSeparateAlpha( ShaderBlendFactor_t srcFactor, S
 void CShaderShadowDx10::DrawFlags( unsigned int drawFlags )
 {
 }
-

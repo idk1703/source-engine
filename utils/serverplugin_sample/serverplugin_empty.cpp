@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //
@@ -54,7 +54,7 @@ IEngineTrace *enginetrace = NULL;
 CGlobalVars *gpGlobals = NULL;
 
 // function to initialize any cvars/command in this plugin
-void Bot_RunAll( void ); 
+void Bot_RunAll( void );
 
 // useful helper func
 #ifndef GAME_DLL
@@ -77,7 +77,7 @@ public:
 	virtual void			Unload( void );
 	virtual void			Pause( void );
 	virtual void			UnPause( void );
-	virtual const char     *GetPluginDescription( void );      
+	virtual const char     *GetPluginDescription( void );
 	virtual void			LevelInit( char const *pMapName );
 	virtual void			ServerActivate( edict_t *pEdictList, int edictCount, int clientMax );
 	virtual void			GameFrame( bool simulating );
@@ -92,7 +92,7 @@ public:
 	virtual PLUGIN_RESULT	NetworkIDValidated( const char *pszUserName, const char *pszNetworkID );
 	virtual void			OnQueryCvarValueFinished( QueryCvarCookie_t iCookie, edict_t *pPlayerEntity, EQueryCvarValueStatus eStatus, const char *pCvarName, const char *pCvarValue );
 	virtual void			OnEdictAllocated( edict_t *edict );
-	virtual void			OnEdictFreed( const edict_t *edict  );	
+	virtual void			OnEdictFreed( const edict_t *edict  );
 
 	// IGameEventListener Interface
 	virtual void FireGameEvent( KeyValues * event );
@@ -103,7 +103,7 @@ private:
 };
 
 
-// 
+//
 // The plugin is a static singleton that is exported as an interface
 //
 CEmptyServerPlugin g_EmtpyServerPlugin;
@@ -259,7 +259,7 @@ void CEmptyServerPlugin::ClientDisconnect( edict_t *pEntity )
 }
 
 //---------------------------------------------------------------------------------
-// Purpose: called on 
+// Purpose: called on
 //---------------------------------------------------------------------------------
 void CEmptyServerPlugin::ClientPutInServer( edict_t *pEntity, char const *playername )
 {
@@ -285,7 +285,7 @@ void ClientPrint( edict_t *pEdict, char *format, ... )
 {
 	va_list		argptr;
 	static char		string[1024];
-	
+
 	va_start (argptr, format);
 	Q_vsnprintf(string, sizeof(string), format,argptr);
 	va_end (argptr);
@@ -304,8 +304,8 @@ void CEmptyServerPlugin::ClientSettingsChanged( edict_t *pEdict )
 		const char * name = engine->GetClientConVarValue( engine->IndexOfEdict(pEdict), "name" );
 
 		// CAN'T use Q_stricmp here, this dll is made by 3rd parties and may not link to tier0/vstdlib
-		if ( playerinfo && name && playerinfo->GetName() && 
-			 stricmp( name, playerinfo->GetName()) ) // playerinfo may be NULL if the MOD doesn't support access to player data 
+		if ( playerinfo && name && playerinfo->GetName() &&
+			 stricmp( name, playerinfo->GetName()) ) // playerinfo may be NULL if the MOD doesn't support access to player data
 													   // OR if you are accessing the player before they are fully connected
 		{
 			ClientPrint( pEdict, "Your name changed to \"%s\" (from \"%s\"\n", name, playerinfo->GetName() );
@@ -720,7 +720,7 @@ PLUGIN_RESULT CEmptyServerPlugin::ClientCommand( edict_t *pEntity, const CComman
 {
 	const char *pcmd = args[0];
 
-	if ( !pEntity || pEntity->IsFree() ) 
+	if ( !pEntity || pEntity->IsFree() )
 	{
 		return PLUGIN_CONTINUE;
 	}
@@ -733,7 +733,7 @@ PLUGIN_RESULT CEmptyServerPlugin::ClientCommand( edict_t *pEntity, const CComman
 		kv->SetColor( "color", Color( 255, 0, 0, 255 ));
 		kv->SetInt( "time", 20 );
 		kv->SetString( "msg", "Pick an option\nOr don't." );
-		
+
 		for( int i = 1; i < 9; i++ )
 		{
 			char num[10], msg[10], cmd[10];
@@ -757,7 +757,7 @@ PLUGIN_RESULT CEmptyServerPlugin::ClientCommand( edict_t *pEntity, const CComman
 		kv->SetInt( "level", 1 );
 		kv->SetInt( "time", 20 );
 		kv->SetString( "msg", "This is a long long long text string.\n\nIt also has line breaks." );
-		
+
 		helpers->CreateMessage( pEntity, DIALOG_TEXT, kv, this );
 		kv->deleteThis();
 		return PLUGIN_STOP; // we handled this function
@@ -768,7 +768,7 @@ PLUGIN_RESULT CEmptyServerPlugin::ClientCommand( edict_t *pEntity, const CComman
 		kv->SetString( "title", "Just a simple hello" );
 		kv->SetInt( "level", 1 );
 		kv->SetInt( "time", 20 );
-		
+
 		helpers->CreateMessage( pEntity, DIALOG_MSG, kv, this );
 		kv->deleteThis();
 		return PLUGIN_STOP; // we handled this function
@@ -781,10 +781,10 @@ PLUGIN_RESULT CEmptyServerPlugin::ClientCommand( edict_t *pEntity, const CComman
 		kv->SetString( "command", "say" ); // anything they enter into the dialog turns into a say command
 		kv->SetInt( "level", 1 );
 		kv->SetInt( "time", 20 );
-		
+
 		helpers->CreateMessage( pEntity, DIALOG_ENTRY, kv, this );
 		kv->deleteThis();
-		return PLUGIN_STOP; // we handled this function		
+		return PLUGIN_STOP; // we handled this function
 	}
 #ifdef SAMPLE_TF2_PLUGIN
 	else if ( FStrEq( pcmd, "gameinfo" ) )

@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -102,7 +102,7 @@ void ComboBox2Demo::AddItemToComboBoxMenu()
 {
 	char boxText[128];
 
-	// Get the text from the combo box 
+	// Get the text from the combo box
 	m_pComboBox->GetText(boxText, sizeof( boxText ) );
 
 	// We won't add empty text strings to the menu.
@@ -110,7 +110,7 @@ void ComboBox2Demo::AddItemToComboBoxMenu()
 		return;
 
 	// Add this item to the combo box menu
-	// If you wanted to check for uniqueness you would have to keep a 
+	// If you wanted to check for uniqueness you would have to keep a
 	// list of the items in the menu and check it.
 	m_pComboBox->AddItem(boxText, NULL);
 
@@ -120,7 +120,7 @@ void ComboBox2Demo::AddItemToComboBoxMenu()
 
 MessageMapItem_t ComboBox2Demo::m_MessageMap[] =
 {
-	MAP_MESSAGE( ComboBox2Demo, "ButtonClicked", OnButtonClicked ),   
+	MAP_MESSAGE( ComboBox2Demo, "ButtonClicked", OnButtonClicked ),
 };
 
 IMPLEMENT_PANELMAP(ComboBox2Demo, BaseClass);
@@ -132,5 +132,3 @@ Panel* ComboBox2Demo_Create(Panel *parent)
 {
 	return new ComboBox2Demo(parent, "ComboBox2Demo");
 }
-
-

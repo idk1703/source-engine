@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose:
 //
 //=============================================================================//
 
@@ -34,11 +34,11 @@ class CNetMessage : public INetMessage
 public:
 	CNetMessage() {  m_bReliable = 0; m_bOwnData = false; };
 	virtual ~CNetMessage() {};
-	
+
 	void	SetReliable( bool state = true) {m_bReliable = state;};
 	bool	IsReliable() { return m_bReliable; };
 	bool	IsConnectionless() { return false;};
-		
+
 	virtual const char *ToString() { return "Unknown CNetMessage"; };
 
 public:
@@ -120,7 +120,7 @@ class CLC_VoiceData : public CNetMessage
 		CLC_VoiceData( unsigned char *data, int length )
 		{
 			Assert( data );
-			m_Data = data; 
+			m_Data = data;
 			m_nLength = length;
 			m_bReliable = false;
 			m_bOwnData = false;

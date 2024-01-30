@@ -10,7 +10,7 @@
 
 #include "eiface.h"
 
-// The engine can call its own exposed functions in here rather than 
+// The engine can call its own exposed functions in here rather than
 // splitting them into naked functions and sharing.
 extern IVEngineServer *g_pVEngineServer;
 
@@ -21,4 +21,3 @@ void InvalidateSharedEdictChangeInfos();
 
 
 #endif // VENGINESERVER_IMPL_H
-

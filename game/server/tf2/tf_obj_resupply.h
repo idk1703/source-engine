@@ -53,7 +53,7 @@ public:
 	virtual bool	CanTakeEMPDamage( void ) { return true; }
 
 private:
-	// Resupply Health 
+	// Resupply Health
 	bool ResupplyHealth( CBaseTFPlayer *pPlayer, float flFraction );
 };
 
