@@ -3,8 +3,8 @@
 //=============================================================================
 
 #include "fgdlib/fgdlib.h"
-#include "fgdlib/GameData.h"
-#include "fgdlib/WCKeyValues.h"
+#include "fgdlib/gamedata.h"
+#include "fgdlib/wckeyvalues.h"
 #include "fgdlib/gdvar.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -432,7 +432,7 @@ BOOL GDinputvariable::InitFromTokens(TokenReader &tr)
 
 			// store bitflag value
 			GDGetToken(tr, szToken, sizeof(szToken), INTEGER);
-			sscanf(szToken, "%lu", &ivi.iValue);
+			sscanf(szToken, "%u", &ivi.iValue);
 
 			// colon..
 			if(!GDSkipToken(tr, OPERATOR, ":"))
@@ -465,13 +465,13 @@ BOOL GDinputvariable::InitFromTokens(TokenReader &tr)
 		}
 
 		// Set the default value.
-		unsigned long nDefault = 0;
+		unsigned int nDefault = 0;
 		for(int i = 0; i < m_Items.Count(); i++)
 		{
 			if(m_Items[i].bDefault)
 				nDefault |= m_Items[i].iValue;
 		}
-		m_nDefault = (int)nDefault;
+		m_nDefault = nDefault;
 		Q_snprintf(m_szDefault, sizeof(m_szDefault), "%d", m_nDefault);
 	}
 	else if(m_eType == ivChoices)
@@ -652,7 +652,8 @@ void GDinputvariable::ToKeyValue(MDkeyvalue *pkv)
 	}
 	else if(eStoreAs == INTEGER)
 	{
-		itoa(m_nValue, pkv->szValue, 10);
+		// itoa(m_nValue, pkv->szValue, 10);
+		snprintf(pkv->szValue, sizeof(pkv->szValue), "%d", m_nValue);
 	}
 }
 
