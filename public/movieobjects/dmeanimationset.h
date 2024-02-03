@@ -6,6 +6,7 @@
 
 #ifndef DMEANIMATIONSET_H
 #define DMEANIMATIONSET_H
+
 #ifdef _WIN32
 #pragma once
 #endif
@@ -16,6 +17,7 @@
 #include "movieobjects/dmephonememapping.h"
 #include "movieobjects/timeutils.h"
 #include "movieobjects/proceduralpresets.h"
+#include "movieobjects/dmeoperator.h"
 
 class CDmeBookmark;
 

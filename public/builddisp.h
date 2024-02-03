@@ -978,11 +978,11 @@ public:
 	{
 		return m_AllowedVerts.GetNumDWords();
 	}
-	unsigned long AllowedVerts_GetDWord(int i) const
+	unsigned int AllowedVerts_GetDWord(int i) const
 	{
 		return m_AllowedVerts.GetDWord(i);
 	}
-	void AllowedVerts_SetDWord(int i, unsigned long val)
+	void AllowedVerts_SetDWord(int i, unsigned int val)
 	{
 		m_AllowedVerts.SetDWord(i, val);
 	}

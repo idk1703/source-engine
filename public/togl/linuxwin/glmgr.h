@@ -2297,11 +2297,11 @@ FORCEINLINE void GLMContext::DrawRangeElements(GLenum mode, GLuint start, GLuint
 	if(pIndexBuf->m_bPseudo)
 	{
 		// you have to pass actual address, not offset
-		indicesActual = (void *)((int)indicesActual + (int)pIndexBuf->m_pPseudoBuf);
+		indicesActual = (void *)((uintp)indicesActual + (uintp)pIndexBuf->m_pPseudoBuf);
 	}
 	if(pIndexBuf->m_bUsingPersistentBuffer)
 	{
-		indicesActual = (void *)((int)indicesActual + (int)pIndexBuf->m_nPersistentBufferStartOffset);
+		indicesActual = (void *)((uintp)indicesActual + (uintp)pIndexBuf->m_nPersistentBufferStartOffset);
 	}
 
 //#if GLMDEBUG

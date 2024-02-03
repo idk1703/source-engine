@@ -7,6 +7,7 @@
 #ifndef DMELOGEDITPANEL_H
 #define DMELOGEDITPANEL_H
 
+#include "movieobjects/dmelog.h"
 #ifdef _WIN32
 #pragma once
 #endif

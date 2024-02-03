@@ -45,6 +45,16 @@ enum
 	MDLHANDLE_INVALID = (MDLHandle_t)~0
 };
 
+inline MDLHandle_t VoidPtrToMDLHandle(void *ptr)
+{
+	return (MDLHandle_t)((uintp)ptr & 0xffff);
+}
+
+inline void *MDLHandleToVirtual(MDLHandle_t hndl)
+{
+	return (void *)(uintp)hndl;
+}
+
 //-----------------------------------------------------------------------------
 // Cache data types
 //-----------------------------------------------------------------------------

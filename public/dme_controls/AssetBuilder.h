@@ -6,6 +6,7 @@
 
 #ifndef ASSETBUILDER_H
 #define ASSETBUILDER_H
+
 #ifdef _WIN32
 #pragma once
 #endif
@@ -14,6 +15,7 @@
 #include "vgui_controls/FileOpenStateMachine.h"
 #include "vgui_controls/PHandle.h"
 #include "datamodel/dmehandle.h"
+#include "movieobjects/idmemakefileutils.h"
 #include "tier1/utlstack.h"
 
 //-----------------------------------------------------------------------------
@@ -36,7 +38,7 @@ class CCompileStatusBar;
 class CDmeMakefile;
 class CDmeSource;
 struct DmeMakefileType_t;
-enum CompilationState_t;
+// enum CompilationState_t;
 
 //-----------------------------------------------------------------------------
 // Purpose: Asset builder

@@ -349,7 +349,7 @@ public:
 		SetUint64(un64);
 	}
 
-#if defined(COMPILER_GCC) && defined(PLATFORM_64BITS)
+#if 0 && defined(COMPILER_GCC) && defined(PLATFORM_64BITS)
 	explicit CNumStr(lint64 n64)
 	{
 		SetInt64((int64)n64);

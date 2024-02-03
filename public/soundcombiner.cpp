@@ -179,7 +179,7 @@ unsigned int CSoundCombiner::ComputeChecksum()
 		//	Msg( "  %i -> sentence %u, startoffset %f fn %s\n",
 		//		i, chk, curitem->entry->startoffset, curitem->entry->wavefile );
 
-		CRC32_ProcessBuffer(&crc, &chk, sizeof(unsigned long));
+		CRC32_ProcessBuffer(&crc, &chk, sizeof(unsigned int));
 		CRC32_ProcessBuffer(&crc, &curitem->entry->startoffset, sizeof(float));
 		CRC32_ProcessBuffer(&crc, curitem->entry->wavefile, Q_strlen(curitem->entry->wavefile));
 	}
@@ -266,12 +266,12 @@ bool CSoundCombiner::VerifyFilesExist(IFileSystem *pFilesystem, CUtlVector<Combi
 class StdIOReadBinary : public IFileReadBinary
 {
 public:
-	int open(const char *pFileName)
+	intp open(const char *pFileName)
 	{
-		return (int)filesystem->Open(pFileName, "rb");
+		return (intp)filesystem->Open(pFileName, "rb");
 	}
 
-	int read(void *pOutput, int size, int file)
+	int read(void *pOutput, int size, intp file)
 	{
 		if(!file)
 			return 0;
@@ -279,7 +279,7 @@ public:
 		return filesystem->Read(pOutput, size, (FileHandle_t)file);
 	}
 
-	void seek(int file, int pos)
+	void seek(intp file, int pos)
 	{
 		if(!file)
 			return;
@@ -287,7 +287,7 @@ public:
 		filesystem->Seek((FileHandle_t)file, pos, FILESYSTEM_SEEK_HEAD);
 	}
 
-	unsigned int tell(int file)
+	unsigned int tell(intp file)
 	{
 		if(!file)
 			return 0;
@@ -295,7 +295,7 @@ public:
 		return filesystem->Tell((FileHandle_t)file);
 	}
 
-	unsigned int size(int file)
+	unsigned int size(intp file)
 	{
 		if(!file)
 			return 0;
@@ -303,7 +303,7 @@ public:
 		return filesystem->Size((FileHandle_t)file);
 	}
 
-	void close(int file)
+	void close(intp file)
 	{
 		if(!file)
 			return;
@@ -315,27 +315,27 @@ public:
 class StdIOWriteBinary : public IFileWriteBinary
 {
 public:
-	int create(const char *pFileName)
+	intp create(const char *pFileName)
 	{
-		return (int)filesystem->Open(pFileName, "wb");
+		return (intp)filesystem->Open(pFileName, "wb");
 	}
 
-	int write(void *pData, int size, int file)
+	int write(void *pData, int size, intp file)
 	{
 		return filesystem->Write(pData, size, (FileHandle_t)file);
 	}
 
-	void close(int file)
+	void close(intp file)
 	{
 		filesystem->Close((FileHandle_t)file);
 	}
 
-	void seek(int file, int pos)
+	void seek(intp file, int pos)
 	{
 		filesystem->Seek((FileHandle_t)file, pos, FILESYSTEM_SEEK_HEAD);
 	}
 
-	unsigned int tell(int file)
+	unsigned int tell(intp file)
 	{
 		return filesystem->Tell((FileHandle_t)file);
 	}

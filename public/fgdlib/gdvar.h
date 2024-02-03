@@ -10,7 +10,7 @@
 #pragma once
 
 #include <utlvector.h>
-#include <TokenReader.h> // dvs: for MAX_STRING. Fix.
+#include <tokenreader.h> // dvs: for MAX_STRING. Fix.
 
 class MDkeyvalue;
 
@@ -58,7 +58,7 @@ enum GDIV_TYPE
 //-----------------------------------------------------------------------------
 typedef struct
 {
-	unsigned long iValue;		// Bitflag value for ivFlags
+	unsigned int iValue;		// Bitflag value for ivFlags
 	char szValue[MAX_STRING];	// String value for ivChoices
 	char szCaption[MAX_STRING]; // Name of this choice
 	BOOL bDefault;				// Flag set by default?

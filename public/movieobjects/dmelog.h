@@ -910,9 +910,9 @@ void CDmeTypedLogLayer<Quaternion>::GetValueUsingCurveInfo(DmeTime_t time, Quate
 template<>
 void CDmeTypedLogLayer<Quaternion>::GetValueUsingCurveInfoSkippingKey(int nKeyToSkip, Quaternion &out) const;
 
-template<class T>
-void CDmeTypedLogLayer<T>::CurveSimplify_R(float thresholdSqr, int startPoint, int endPoint,
-										   CDmeTypedLogLayer<T> *output);
+// template<class T>
+// void CDmeTypedLogLayer<T>::CurveSimplify_R(float thresholdSqr, int startPoint, int endPoint,
+// 										   CDmeTypedLogLayer<T> *output);
 template<>
 void CDmeTypedLogLayer<bool>::CurveSimplify_R(float thresholdSqr, int startPoint, int endPoint,
 											  CDmeTypedLogLayer<bool> *output);

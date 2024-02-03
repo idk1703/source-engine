@@ -95,8 +95,8 @@ public:
 		// a little slower... old pack was 4 multiplies and 2 adds.
 		// This is 2 multiplies, 2 adds, and a divide....
 		float w = 126.0f / (tmp.x + tmp.y + tmp.z);
-		long xbits = (long)(tmp.x * w);
-		long ybits = (long)(tmp.y * w);
+		int xbits = (int)(tmp.x * w);
+		int ybits = (int)(tmp.y * w);
 
 		Assert(xbits < 127);
 		Assert(xbits >= 0);
@@ -130,8 +130,8 @@ public:
 		// multiplication
 
 		// get the x and y bits
-		long xbits = ((mVec & TOP_MASK) >> 7);
-		long ybits = (mVec & BOTTOM_MASK);
+		int xbits = ((mVec & TOP_MASK) >> 7);
+		int ybits = (mVec & BOTTOM_MASK);
 
 		// map the numbers back to the triangle (0,0)-(0,126)-(126,0)
 		if((xbits + ybits) >= 127)
@@ -162,8 +162,8 @@ public:
 	{
 		for(int idx = 0; idx < 0x2000; idx++)
 		{
-			long xbits = idx >> 7;
-			long ybits = idx & BOTTOM_MASK;
+			int xbits = idx >> 7;
+			int ybits = idx & BOTTOM_MASK;
 
 			// map the numbers back to the triangle (0,0)-(0,127)-(127,0)
 			if((xbits + ybits) >= 127)

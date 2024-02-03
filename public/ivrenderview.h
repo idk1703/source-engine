@@ -217,7 +217,7 @@ public:
 	virtual void BuildWorldLists(IWorldRenderList *pList, WorldListInfo_t *pInfo, int iForceFViewLeaf,
 								 const VisOverrideData_t *pVisData = NULL, bool bShadowDepth = false,
 								 float *pReflectionWaterHeight = NULL) = 0;
-	virtual void DrawWorldLists(IWorldRenderList *pList, unsigned long flags, float waterZAdjust) = 0;
+	virtual void DrawWorldLists(IWorldRenderList *pList, unsigned int flags, float waterZAdjust) = 0;
 
 	// Optimization for top view
 	virtual void DrawTopView(bool enable) = 0;
@@ -229,7 +229,7 @@ public:
 	virtual void DrawMaskEntities(void) = 0;
 
 	// Draw surfaces with alpha
-	virtual void DrawTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned long flags,
+	virtual void DrawTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned int flags,
 										 bool bShadowDepth) = 0;
 
 	// Draw Particles ( just draws the linefine for debugging map leaks )
@@ -266,7 +266,7 @@ public:
 	virtual void DrawBrushModelShadow(IClientRenderable *pRenderable) = 0;
 
 	// Does the leaf contain translucent surfaces?
-	virtual bool LeafContainsTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned long flags) = 0;
+	virtual bool LeafContainsTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned int flags) = 0;
 
 	virtual bool DoesBoxIntersectWaterVolume(const Vector &mins, const Vector &maxs, int leafWaterDataID) = 0;
 

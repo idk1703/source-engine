@@ -165,32 +165,27 @@
 #error
 #endif
 
-typedef unsigned char uint8;
-typedef signed char int8;
+typedef int8_t int8;
+typedef uint8_t uint8;
+
+typedef int64_t lint64;
+typedef uint64_t ulint64;
+
+typedef int16_t int16;
+typedef uint16_t uint16;
+
+typedef int32_t int32;
+typedef uint32_t uint32;
+
+typedef int64_t int64;
+typedef uint64_t uint64;
+
+typedef intptr_t intp;
+typedef uintptr_t uintp;
+
+typedef void *HWND;
 
 #if defined(_WIN32)
-
-typedef __int16 int16;
-typedef unsigned __int16 uint16;
-typedef __int32 int32;
-typedef unsigned __int32 uint32;
-typedef __int64 int64;
-typedef unsigned __int64 uint64;
-
-#ifdef PLATFORM_64BITS
-typedef __int64 intp;			// intp is an integer that can accomodate a pointer
-typedef unsigned __int64 uintp; // (ie, sizeof(intp) >= sizeof(int) && sizeof(intp) >= sizeof(void *)
-#else
-typedef __int32 intp;
-typedef unsigned __int32 uintp;
-#endif
-
-#if defined(_X360)
-#ifdef __m128
-#undef __m128
-#endif
-#define __m128 __vector4
-#endif
 
 // Use this to specify that a function is an override of a virtual function.
 // This lets the compiler catch cases where you meant to override a virtual
@@ -200,21 +195,6 @@ typedef unsigned __int32 uintp;
 #define OVERRIDE override
 
 #else // _WIN32
-
-typedef short int16;
-typedef unsigned short uint16;
-typedef int int32;
-typedef unsigned int uint32;
-typedef long long int64;
-typedef unsigned long long uint64;
-#ifdef PLATFORM_64BITS
-typedef long long intp;
-typedef unsigned long long uintp;
-#else
-typedef int intp;
-typedef unsigned int uintp;
-#endif
-typedef void *HWND;
 
 // Avoid redefinition warnings if a previous header defines this.
 #undef OVERRIDE
@@ -782,7 +762,7 @@ typedef void *HINSTANCE;
 #define _wtoi(arg)	   wcstol(arg, NULL, 10)
 #define _wtoi64(arg)   wcstoll(arg, NULL, 10)
 
-typedef uint32 HMODULE;
+typedef uintp HMODULE;
 typedef void *HANDLE;
 #endif
 
@@ -858,6 +838,8 @@ inline void SetupFPUControlWord()
 #endif
 #endif
 
+#elif defined(__aarch64__)
+inline void SetupFPUControlWord() {}
 #else
 
 inline void SetupFPUControlWord()
@@ -1178,12 +1160,12 @@ FORCEINLINE void StoreLittleDWord(unsigned long *base, unsigned int dwordIndex, 
 	__storewordbytereverse(dword, dwordIndex << 2, base);
 }
 #else
-FORCEINLINE unsigned long LoadLittleDWord(const unsigned long *base, unsigned int dwordIndex)
+FORCEINLINE uint32 LoadLittleDWord(const uint32 *base, unsigned int dwordIndex)
 {
 	return LittleDWord(base[dwordIndex]);
 }
 
-FORCEINLINE void StoreLittleDWord(unsigned long *base, unsigned int dwordIndex, unsigned long dword)
+FORCEINLINE void StoreLittleDWord(uint32 *base, unsigned int dwordIndex, uint32 dword)
 {
 	base[dwordIndex] = LittleDWord(dword);
 }
@@ -1267,6 +1249,10 @@ inline uint64 Plat_Rdtsc()
 	uint32 lo, hi;
 	__asm__ __volatile__("rdtsc" : "=a"(lo), "=d"(hi));
 	return (((uint64)hi) << 32) | lo;
+#elif defined(__aarch64__)
+	uint64 val;
+    asm volatile("mrs %0, cntvct_el0" : "=r" (val));
+    return val;
 #else
 #error
 #endif

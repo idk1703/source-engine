@@ -7,6 +7,8 @@
 #ifndef CHECKSUM_SHA1_H
 #define CHECKSUM_SHA1_H
 
+#include "platform.h"
+
 #if defined(_WIN32)
 #pragma once
 #endif
@@ -43,8 +45,8 @@
 
 typedef union
 {
-	unsigned char c[64];
-	unsigned long l[16];
+	uint8 c[64];
+	uint32 l[16];
 } SHA1_WORKSPACE_BLOCK;
 
 // SHA1 hash
@@ -77,8 +79,8 @@ public:
 	~Minimum_CSHA1(); // no virtual destructor's in the minimal builds !
 #endif
 
-	unsigned long m_state[5];
-	unsigned long m_count[2];
+	unsigned int m_state[5];
+	unsigned int m_count[2];
 	unsigned char m_buffer[64];
 	unsigned char m_digest[k_cubHash];
 
@@ -99,7 +101,7 @@ public:
 
 private:
 	// Private SHA-1 transformation
-	void Transform(unsigned long state[5], unsigned char buffer[64]);
+	void Transform(unsigned int state[5], unsigned char buffer[64]);
 
 	// Member variables
 	unsigned char m_workspace[64];

@@ -22,9 +22,11 @@
 // For rand(). We really need a library!
 #include <stdlib.h>
 
-#ifndef _X360
+#if !defined(_X360) && !defined(__aarch64__)
 // For MMX intrinsics
 #include <xmmintrin.h>
+#else
+#include <sse2neon.h>
 #endif
 
 #include "tier0/dbg.h"

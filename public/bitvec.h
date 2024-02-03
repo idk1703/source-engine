@@ -51,7 +51,7 @@ inline int FirstBitInWord(unsigned int elem, int offset)
 	elem = mask & comp;
 	return (32 - _CountLeadingZeros(elem)) + offset;
 #else
-	unsigned long out;
+	unsigned int out;
 	_BitScanForward(&out, elem);
 	return out + offset;
 #endif
@@ -1602,7 +1602,7 @@ inline void CBitVecAccessor::operator=(int val)
 	if(val)
 		m_pDWords[m_iBit >> 5] |= (1 << (m_iBit & 31));
 	else
-		m_pDWords[m_iBit >> 5] &= ~(unsigned long)(1 << (m_iBit & 31));
+		m_pDWords[m_iBit >> 5] &= ~(unsigned int)(1 << (m_iBit & 31));
 }
 
 inline CBitVecAccessor::operator uint32()

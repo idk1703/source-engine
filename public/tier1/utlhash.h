@@ -724,7 +724,7 @@ inline Data const &CUtlHashFast<Data, HashFuncs>::operator[](UtlHashFastHandle_t
 // Number of buckets must be a power of 2.
 // Key must be 32-bits (unsigned int).
 //
-typedef int UtlHashFixedHandle_t;
+typedef intp UtlHashFixedHandle_t;
 
 template<int NUM_BUCKETS>
 class CUtlHashFixedGenericHash

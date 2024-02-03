@@ -6,10 +6,10 @@
 #ifndef SSEMATH_H
 #define SSEMATH_H
 
-#if defined(_X360)
-#include <xboxmath.h>
-#else
+#if !defined(_X360) && !defined(__aarch64__)
 #include <xmmintrin.h>
+#else
+#include <sse2neon.h>
 #endif
 
 #include <mathlib/vector.h>

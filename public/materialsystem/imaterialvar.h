@@ -21,7 +21,7 @@ class VMatrix;
 class ITexture;
 
 #define MAKE_MATERIALVAR_FOURCC(ch0, ch1, ch2, ch3) \
-	((unsigned long)(ch0) | ((unsigned long)(ch1) << 8) | ((unsigned long)(ch2) << 16) | ((unsigned long)(ch3) << 24))
+	((unsigned int)(ch0) | ((unsigned int)(ch1) << 8) | ((unsigned int)(ch2) << 16) | ((unsigned int)(ch3) << 24))
 
 // This fourcc is reserved.
 #define FOURCC_UNKNOWN MAKE_MATERIALVAR_FOURCC('U', 'N', 'K', 'N')
@@ -47,7 +47,7 @@ typedef unsigned short MaterialVarSym_t;
 class IMaterialVar
 {
 public:
-	typedef unsigned long FourCC;
+	typedef unsigned int FourCC;
 
 protected:
 	// base data and accessors

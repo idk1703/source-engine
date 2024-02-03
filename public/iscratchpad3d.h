@@ -165,7 +165,7 @@ public:
 	virtual void DrawText(const char *pStr, const CTextParams &params) = 0;
 
 	// Wireframe on/off.
-	virtual void SetRenderState(RenderState state, unsigned long val) = 0;
+	virtual void SetRenderState(RenderState state, unsigned int val) = 0;
 
 	// Clear all the drawing commands.
 	virtual void Clear() = 0;

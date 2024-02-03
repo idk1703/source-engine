@@ -8,6 +8,8 @@
 #ifndef VGUI_H
 #define VGUI_H
 
+#include "platform.h"
+
 #ifdef _WIN32
 #pragma once
 #endif
@@ -50,7 +52,7 @@ namespace vgui
 {
 	// handle to an internal vgui panel
 	// this is the only handle to a panel that is valid across dll boundaries
-	typedef unsigned int VPANEL;
+	typedef uintp VPANEL;
 
 	// handles to vgui objects
 	// NULL values signify an invalid value
