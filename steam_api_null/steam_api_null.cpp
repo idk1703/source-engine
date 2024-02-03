@@ -17,59 +17,37 @@ S_API bool SteamAPI_InitSafe()
 	return true;
 }
 
-S_API void SteamAPI_Shutdown()
-{
-}
+S_API void SteamAPI_Shutdown() {}
 
 S_API bool SteamAPI_RestartAppIfNecessary()
 {
 	return false;
 }
 
-S_API void SteamAPI_ReleaseCurrentThreadMemory()
-{
-}
+S_API void SteamAPI_ReleaseCurrentThreadMemory() {}
 
-S_API void SteamAPI_WriteMiniDump()
-{
-}
+S_API void SteamAPI_WriteMiniDump() {}
 
-S_API void SteamAPI_SetMiniDumpComment()
-{
-}
+S_API void SteamAPI_SetMiniDumpComment() {}
 
-S_API void SteamAPI_RunCallbacks()
-{
-}
+S_API void SteamAPI_RunCallbacks() {}
 
-S_API void SteamAPI_RegisterCallback()
-{
-}
+S_API void SteamAPI_RegisterCallback() {}
 
-S_API void SteamAPI_UnregisterCallback()
-{
-}
+S_API void SteamAPI_UnregisterCallback() {}
 
-S_API void SteamAPI_RegisterCallResult()
-{
-}
+S_API void SteamAPI_RegisterCallResult() {}
 
-S_API void SteamAPI_UnregisterCallResult()
-{
-}
+S_API void SteamAPI_UnregisterCallResult() {}
 
 S_API bool SteamAPI_IsSteamRunning()
 {
 	return false;
 }
 
-S_API void Steam_RunCallbacks()
-{
-}
+S_API void Steam_RunCallbacks() {}
 
-S_API void Steam_RegisterInterfaceFuncs()
-{
-}
+S_API void Steam_RegisterInterfaceFuncs() {}
 
 S_API int Steam_GetHSteamUserCurrent()
 {
@@ -86,17 +64,11 @@ S_API int SteamAPI_GetHSteamPipe()
 	return 0;
 }
 
-S_API void SteamAPI_SetTryCatchCallbacks()
-{
-}
+S_API void SteamAPI_SetTryCatchCallbacks() {}
 
-S_API void SteamAPI_SetBreakpadAppID()
-{
-}
+S_API void SteamAPI_SetBreakpadAppID() {}
 
-S_API void SteamAPI_UseBreakpadCrashHandler()
-{
-}
+S_API void SteamAPI_UseBreakpadCrashHandler() {}
 
 S_API int GetHSteamPipe()
 {
@@ -203,10 +175,18 @@ S_API int SteamGameServer_InitSafe()
 	return 0;
 }
 
-S_API void SteamGameServer_RunCallbacks()
+S_API void SteamGameServer_RunCallbacks() {}
+
+S_API void SteamGameServer_Shutdown() {}
+
+S_API void SteamInternal_GameServer_Init() {}
+
+S_API void* SteamInternal_FindOrCreateUserInterface(int hSteamUser, const char *pszVersion)
 {
+	return nullptr;
 }
 
-S_API void SteamGameServer_Shutdown()
+S_API void* SteamInternal_FindOrCreateGameServerInterface(int hSteamUser, const char *pszVersion)
 {
+	return nullptr;
 }
