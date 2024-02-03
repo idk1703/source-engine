@@ -908,7 +908,7 @@ void *CDbgMemAlloc::Expand_NoLongerSupported(void *pMem, size_t nSize)
 //-----------------------------------------------------------------------------
 void CDbgMemAlloc::PushAllocDbgInfo(const char *pFileName, int nLine)
 {
-	if(g_DbgInfoStack == NULL)
+	if(g_DbgInfoStack == 0)
 	{
 		g_DbgInfoStack = (DbgInfoStack_t *)DebugAlloc(sizeof(DbgInfoStack_t) * DBG_INFO_STACK_DEPTH);
 		g_nDbgInfoStackDepth = -1;
@@ -922,7 +922,7 @@ void CDbgMemAlloc::PushAllocDbgInfo(const char *pFileName, int nLine)
 
 void CDbgMemAlloc::PopAllocDbgInfo()
 {
-	if(g_DbgInfoStack == NULL)
+	if(g_DbgInfoStack == 0)
 	{
 		g_DbgInfoStack = (DbgInfoStack_t *)DebugAlloc(sizeof(DbgInfoStack_t) * DBG_INFO_STACK_DEPTH);
 		g_nDbgInfoStackDepth = -1;
@@ -942,7 +942,7 @@ uint32 CDbgMemAlloc::GetDebugInfoSize()
 
 void CDbgMemAlloc::SaveDebugInfo(void *pvDebugInfo)
 {
-	if(g_DbgInfoStack == NULL)
+	if(g_DbgInfoStack == 0)
 	{
 		g_DbgInfoStack = (DbgInfoStack_t *)DebugAlloc(sizeof(DbgInfoStack_t) * DBG_INFO_STACK_DEPTH);
 		g_nDbgInfoStackDepth = -1;
@@ -955,7 +955,7 @@ void CDbgMemAlloc::SaveDebugInfo(void *pvDebugInfo)
 
 void CDbgMemAlloc::RestoreDebugInfo(const void *pvDebugInfo)
 {
-	if(g_DbgInfoStack == NULL)
+	if(g_DbgInfoStack == 0)
 	{
 		g_DbgInfoStack = (DbgInfoStack_t *)DebugAlloc(sizeof(DbgInfoStack_t) * DBG_INFO_STACK_DEPTH);
 		g_nDbgInfoStackDepth = -1;
@@ -993,7 +993,7 @@ void CDbgMemAlloc::GetActualDbgInfo(const char *&pFileName, int &nLine)
 	return;
 #endif
 
-	if(g_DbgInfoStack == NULL)
+	if(g_DbgInfoStack == 0)
 	{
 		g_DbgInfoStack = (DbgInfoStack_t *)DebugAlloc(sizeof(DbgInfoStack_t) * DBG_INFO_STACK_DEPTH);
 		g_nDbgInfoStackDepth = -1;

@@ -7,14 +7,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <sys/sysctl.h>
+// #include <sys/sysctl.h>
 #include <sys/time.h>
 #include <unistd.h>
 #include <tier0/platform.h>
 #include <errno.h>
 
+#ifndef __aarch64__
 #define rdtsc(x) __asm__ __volatile__("rdtsc" : "=A"(x))
-
+#else
+#define rdtsc(x) asm volatile("mrs %0, cntvct_el0" : "=r" (x));
+#endif
 class TimeVal
 {
 public:

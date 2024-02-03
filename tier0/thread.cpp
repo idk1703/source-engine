@@ -19,7 +19,7 @@
 #include "tier0/dbg.h"
 #include "tier0/threadtools.h"
 
-unsigned long Plat_GetCurrentThreadID()
+ThreadId_t Plat_GetCurrentThreadID()
 {
 	return ThreadGetCurrentId();
 }
@@ -190,7 +190,7 @@ void Plat_SetHardwareDataBreakpoint(const void *pAddress, int nWatchBytes, bool 
 	s_BreakpointStateMutex.Unlock();
 }
 
-void Plat_ApplyHardwareDataBreakpointsToNewThread(unsigned long dwThreadID)
+void Plat_ApplyHardwareDataBreakpointsToNewThread(ThreadId_t dwThreadID)
 {
 	s_BreakpointStateMutex.Lock();
 	if(dwThreadID != GetCurrentThreadId())
@@ -216,7 +216,7 @@ void Plat_SetHardwareDataBreakpoint(const void *pAddress, int nWatchBytes, bool 
 	// no impl on this platform yet
 }
 
-void Plat_ApplyHardwareDataBreakpointsToNewThread(unsigned long dwThreadID)
+void Plat_ApplyHardwareDataBreakpointsToNewThread(ThreadId_t dwThreadID)
 {
 	// no impl on this platform yet
 }
