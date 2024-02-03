@@ -133,10 +133,10 @@ protected:
 			  m_pCur(NULL)
 		{
 		}
-		virtual void SetFirst(void);
-		virtual void Next(void);
-		virtual bool IsValid(void);
-		virtual ConCommandBase *Get(void);
+		virtual void SetFirst(void) RESTRICT;
+		virtual void Next(void) RESTRICT;
+		virtual bool IsValid(void) RESTRICT;
+		virtual ConCommandBase *Get(void) RESTRICT;
 
 	protected:
 		CCvar *const m_pOuter;
