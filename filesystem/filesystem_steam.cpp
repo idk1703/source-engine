@@ -370,26 +370,13 @@ void CFileSystem_Steam::LoadAndStartSteam()
 		if(pchSteamInstallPath)
 		{
 			char szSteamDLLPath[MAX_PATH];
-#ifdef WIN32
-			V_ComposeFileName(pchSteamInstallPath, "steam" DLL_EXT_STRING, szSteamDLLPath, Q_ARRAYSIZE(szSteamDLLPath));
-#elif defined(POSIX)
-			V_ComposeFileName(pchSteamInstallPath, "libsteam" DLL_EXT_STRING, szSteamDLLPath,
-							  Q_ARRAYSIZE(szSteamDLLPath));
-#else
-#error
-#endif
+			V_ComposeFileName(pchSteamInstallPath, LIB_PREFIX_STR "steam" LIB_EXT_STR, szSteamDLLPath, Q_ARRAYSIZE(szSteamDLLPath));
 			// try to load the steam.dll from the running steam process first
 			m_hSteamDLL = (HMODULE)Sys_LoadModule(szSteamDLLPath);
 		}
 
 		if(!m_hSteamDLL)
-#ifdef WIN32
-			m_hSteamDLL = (HMODULE)Sys_LoadModule("steam" DLL_EXT_STRING);
-#elif defined(POSIX)
-			m_hSteamDLL = (HMODULE)Sys_LoadModule("libsteam" DLL_EXT_STRING);
-#else
-#error
-#endif
+			m_hSteamDLL = (HMODULE)Sys_LoadModule(LIB_PREFIX_STR "steam" LIB_EXT_STR);
 	}
 
 	if(m_hSteamDLL)
@@ -1362,8 +1349,8 @@ void CFileSystem_Steam::GetLocalCopy(const char *pFileName)
 	*/
 	{
 		// Convert _srv.so to .so...
-		const char *pDllStringExtension = V_GetFileExtension(DLL_EXT_STRING);
-		const char *pModuleExtension = pDllStringExtension ? (pDllStringExtension - 1) : DLL_EXT_STRING;
+		const char *pDllStringExtension = V_GetFileExtension(LIB_EXT_STR);
+		const char *pModuleExtension = pDllStringExtension ? (pDllStringExtension - 1) : LIB_EXT_STR;
 
 		// If we got an extension, and this filename has it, then check if it's loaded.
 		if(pModuleExtension && V_stristr(pFileName, pModuleExtension))
@@ -1397,7 +1384,7 @@ CSysModule *CFileSystem_Steam::LoadModule(const char *pFileName, const char *pPa
 	CBaseFileSystem::ParsePathID(pFileName, pPathID, szNewPath);
 
 	// File must end in .dll
-	char szExtension[] = DLL_EXT_STRING;
+	char szExtension[] = LIB_EXT_STR;
 	Assert(Q_strlen(pFileName) < sizeof(szNewPath));
 
 	Q_strncpy(szNewPath, pFileName, sizeof(szNewPath));

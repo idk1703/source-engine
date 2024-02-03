@@ -76,7 +76,7 @@ public:
 	}
 
 private:
-	CInterlockedIntT<long> m_RefCount;
+	CInterlockedIntT<int> m_RefCount;
 	T m_pObject;
 };
 
