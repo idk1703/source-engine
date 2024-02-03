@@ -24,7 +24,7 @@
 #include "idedicatedexports.h"
 #include "vgui/vguihelpers.h"
 
-static long hDLLThirdParty = 0L;
+// static long hDLLThirdParty = 0L;
 
 //-----------------------------------------------------------------------------
 // Modules...
@@ -44,6 +44,7 @@ Load3rdParty
 Load support for third party .dlls ( gamehost )
 ==============
 */
+#if 0
 void Load3rdParty(void)
 {
 	// Only do this if the server operator wants the support.
@@ -53,6 +54,7 @@ void Load3rdParty(void)
 		hDLLThirdParty = sys->LoadLibrary("ghostinj.dll");
 	}
 }
+#endif
 
 /*
 ==============
@@ -83,7 +85,7 @@ InitInstance
 */
 bool InitInstance()
 {
-	Load3rdParty();
+	// Load3rdParty();
 
 	return true;
 }
