@@ -1895,7 +1895,7 @@ void CRender3D::RenderCone(Vector const &vBasePt, Vector const &vTipPt, float fR
 	int size = nSlices * sizeof(Vector);
 	size += 16 + sizeof(Vector *);
 	byte *ptr = (byte *)_alloca(size);
-	long data = (long)ptr;
+	intp data = (intp)ptr;
 
 	data += 16 + sizeof(Vector *) - 1;
 	data &= -16;

@@ -1070,7 +1070,7 @@ FSReturnCode_t FileSystem_GetFileSystemDLLName(char *pFileSystemDLL, int nMaxLen
 		return SetupFileSystemError(false, FS_INVALID_PARAMETERS, "FileSystem_GetExecutableDir failed.");
 
 	// Assume we'll use local files
-	Q_snprintf(pFileSystemDLL, nMaxLen, "%s%cfilesystem_stdio" DLL_EXT_STRING, executablePath, CORRECT_PATH_SEPARATOR);
+	Q_snprintf(pFileSystemDLL, nMaxLen, "%s%c" LIB_PREFIX_STR "filesystem_stdio" LIB_EXT_STR, executablePath, CORRECT_PATH_SEPARATOR);
 
 #if !defined(_X360)
 
@@ -1086,8 +1086,7 @@ FSReturnCode_t FileSystem_GetFileSystemDLLName(char *pFileSystemDLL, int nMaxLen
 #endif
 	)
 	{
-		Q_snprintf(pFileSystemDLL, nMaxLen, "%s%cfilesystem_steam" DLL_EXT_STRING, executablePath,
-				   CORRECT_PATH_SEPARATOR);
+		Q_snprintf(pFileSystemDLL, nMaxLen, "%s%c" LIB_PREFIX_STR "filesystem_steam" LIB_EXT_STR, executablePath, CORRECT_PATH_SEPARATOR);
 		bSteam = true;
 	}
 #endif
@@ -1165,7 +1164,7 @@ FSReturnCode_t FileSystem_MountContent(CFSMountContentInfo &mountContentInfo)
 		//
 		//		// Set our working directory temporarily so Steam can remember it.
 		//		// This is what Steam strips off absolute filenames like c:\program
-		//files\valve\steam\steamapps\username\sourcesdk
+		// files\valve\steam\steamapps\username\sourcesdk
 		//		// to get to the relative part of the path.
 		//		char baseDir[MAX_PATH], oldWorkingDir[MAX_PATH];
 		//		if ( !FileSystem_GetBaseDir( baseDir, sizeof( baseDir ) ) )
@@ -1180,7 +1179,8 @@ FSReturnCode_t FileSystem_MountContent(CFSMountContentInfo &mountContentInfo)
 		//		_chdir( oldWorkingDir );
 		//
 		//		if ( retVal != FILESYSTEM_MOUNT_OK )
-		//			return SetupFileSystemError( true, FS_UNABLE_TO_INIT, "Unable to mount Steam content in the file system"
+		//			return SetupFileSystemError( true, FS_UNABLE_TO_INIT, "Unable to mount Steam content in the file
+		//system"
 		//);
 	}
 

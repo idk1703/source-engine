@@ -62,7 +62,7 @@ void R_SceneEnd(void);
 void R_BuildWorldLists(IWorldRenderList *pRenderList, WorldListInfo_t *pInfo, int iForceViewLeaf,
 					   const struct VisOverrideData_t *pVisData, bool bShadowDepth = false,
 					   float *pWaterReflectionHeight = NULL);
-void R_DrawWorldLists(IWorldRenderList *pRenderList, unsigned long flags, float waterZAdjust);
+void R_DrawWorldLists(IWorldRenderList *pRenderList, unsigned int flags, float waterZAdjust);
 
 void R_GetVisibleFogVolume(const Vector &vEyePoint, VisibleFogVolumeInfo_t *pInfo);
 void R_SetFogVolumeState(int fogVolume, bool useHeightFog);
@@ -71,9 +71,9 @@ void R_SetupSkyTexture(model_t *pWorld);
 
 void Shader_DrawLightmapPageChains(IWorldRenderList *pRenderList, int pageId);
 void Shader_DrawLightmapPageSurface(SurfaceHandle_t surfID, float red, float green, float blue);
-void Shader_DrawTranslucentSurfaces(IWorldRenderList *pRenderList, int sortIndex, unsigned long flags,
+void Shader_DrawTranslucentSurfaces(IWorldRenderList *pRenderList, int sortIndex, unsigned int flags,
 									bool bShadowDepth);
-bool Shader_LeafContainsTranslucentSurfaces(IWorldRenderList *pRenderList, int sortIndex, unsigned long flags);
+bool Shader_LeafContainsTranslucentSurfaces(IWorldRenderList *pRenderList, int sortIndex, unsigned int flags);
 void R_DrawTopView(bool enable);
 void R_TopViewBounds(const Vector2D &mins, const Vector2D &maxs);
 

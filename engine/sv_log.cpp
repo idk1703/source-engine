@@ -18,7 +18,7 @@
 #include <proto_oob.h>
 #include "GameEventManager.h"
 #include "netadr.h"
-#include "zlib/zlib.h"
+#include <zlib.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"

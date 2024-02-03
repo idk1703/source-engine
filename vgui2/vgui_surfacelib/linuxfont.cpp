@@ -188,7 +188,7 @@ static FcPattern *FontMatch(const char *type, FcType vtype, const void *value, .
 				fcvalue.u.s = (FcChar8 *)value;
 				break;
 			case FcTypeInteger:
-				fcvalue.u.i = (int)value;
+				fcvalue.u.i = (intp)value;
 				break;
 			default:
 				Assert(!"FontMatch unhandled type");
@@ -454,7 +454,7 @@ char *CLinuxFont::GetFontFileName(const char *windowsFontName, int flags)
 //-----------------------------------------------------------------------------
 // Purpose: writes the char into the specified 32bpp texture
 //-----------------------------------------------------------------------------
-void CLinuxFont::GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba)
+void CLinuxFont::GetCharRGBA(wchar_t ch, uint rgbaWide, int rgbaTall, unsigned char *prgba)
 {
 	bool bShouldAntialias = m_bAntiAliased;
 

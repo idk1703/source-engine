@@ -248,18 +248,18 @@ GameInit
 bool CSys::LoadModules(CDedicatedAppSystemGroup *pAppSystemGroup)
 {
 	AppSystemInfo_t appSystems[] = {
-		{"engine" DLL_EXT_STRING, CVAR_QUERY_INTERFACE_VERSION},
-		{"soundemittersystem" DLL_EXT_STRING,
+		{LIB_PREFIX_STR "engine" LIB_EXT_STR, CVAR_QUERY_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "soundemittersystem" LIB_EXT_STR,
 		 SOUNDEMITTERSYSTEM_INTERFACE_VERSION}, // loaded for backwards compatability, prevents crash on exit for old
 												// game dlls
-		{"materialsystem" DLL_EXT_STRING, MATERIAL_SYSTEM_INTERFACE_VERSION},
-		{"studiorender" DLL_EXT_STRING, STUDIO_RENDER_INTERFACE_VERSION},
-		{"vphysics" DLL_EXT_STRING, VPHYSICS_INTERFACE_VERSION},
-		{"datacache" DLL_EXT_STRING, DATACACHE_INTERFACE_VERSION},
-		{"datacache" DLL_EXT_STRING, MDLCACHE_INTERFACE_VERSION},
-		{"datacache" DLL_EXT_STRING, STUDIO_DATA_CACHE_INTERFACE_VERSION},
-		{"dedicated" DLL_EXT_STRING, QUEUEDLOADER_INTERFACE_VERSION},
-		{"engine" DLL_EXT_STRING, VENGINE_HLDS_API_VERSION},
+		{LIB_PREFIX_STR "materialsystem" LIB_EXT_STR, MATERIAL_SYSTEM_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "studiorender" LIB_EXT_STR, STUDIO_RENDER_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "vphysics" LIB_EXT_STR, VPHYSICS_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "datacache" LIB_EXT_STR, DATACACHE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "datacache" LIB_EXT_STR, MDLCACHE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "datacache" LIB_EXT_STR, STUDIO_DATA_CACHE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "dedicated" LIB_EXT_STR, QUEUEDLOADER_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "engine" LIB_EXT_STR, VENGINE_HLDS_API_VERSION},
 		{"", ""} // Required to terminate the list
 	};
 
@@ -271,7 +271,7 @@ bool CSys::LoadModules(CDedicatedAppSystemGroup *pAppSystemGroup)
 
 	IMaterialSystem *pMaterialSystem =
 		(IMaterialSystem *)pAppSystemGroup->FindSystem(MATERIAL_SYSTEM_INTERFACE_VERSION);
-	pMaterialSystem->SetShaderAPI("shaderapiempty" DLL_EXT_STRING);
+	pMaterialSystem->SetShaderAPI(LIB_PREFIX_STR "shaderapiempty" LIB_EXT_STR);
 	return true;
 }
 

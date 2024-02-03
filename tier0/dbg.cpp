@@ -294,7 +294,7 @@ static SpewRetval_t _SpewMessage(SpewType_t spewType, const char *pGroupName, in
 
 	/* direct it to the appropriate target(s) */
 	SpewRetval_t ret;
-	assert(g_pSpewInfo == NULL);
+	assert(g_pSpewInfo == 0);
 	SpewInfo_t spewInfo = {pColor, pGroupName, nLevel};
 
 	g_pSpewInfo = &spewInfo;

@@ -14,7 +14,9 @@
 #include "tier0/icommandline.h"
 #include "inputsystem/iinputsystem.h"
 #include "appframework/tier3app.h"
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 //#include "..\..\tracker\common\winlite.h"
 
@@ -63,7 +65,9 @@ bool CVLocalizeApp::PreInit()
 
 	if(!BaseClass::SetupSearchPaths(NULL, false, true))
 	{
+#ifdef _WIN32
 		::MessageBox(NULL, "Error", "Unable to initialize file system\n", MB_OK);
+#endif
 		return false;
 	}
 

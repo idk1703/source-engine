@@ -26,7 +26,7 @@
 #include "vgui_controls/PropertySheet.h"
 #include "materialsystem/materialsystem_config.h"
 #include "materialsystem/imaterialsystem.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 using namespace vgui;
 
@@ -526,10 +526,10 @@ public:
 				{
 					shouldBeVisible = false;
 				}
-				else if((!isVRActive || ShouldForceVRActive()) && kv->GetInt("OnlyWhenVRActive"))
-				{
-					shouldBeVisible = false;
-				}
+				// else if((!isVRActive || ShouldForceVRActive()) && kv->GetInt("OnlyWhenVRActive"))
+				// {
+				// 	shouldBeVisible = false;
+				// }
 				else if(isVRActive && kv->GetInt("OnlyWhenVRInactive"))
 				{
 					shouldBeVisible = false;
@@ -1451,8 +1451,8 @@ void CBasePanel::UpdateGameMenus()
 	bool isInGame = GameUI().IsInLevel();
 	bool isMulti = isInGame && (engine->GetMaxClients() > 1);
 	bool isInReplay = GameUI().IsInReplay();
-	bool isVREnabled = materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter == materials->GetCurrentAdapter();
-	bool isVRActive = UseVR();
+	bool isVREnabled = false; // materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter == materials->GetCurrentAdapter();
+	bool isVRActive = false; // UseVR();
 
 	// iterate all the menu items
 	m_pGameMenu->UpdateMenuItemState(isInGame, isMulti, isInReplay, isVREnabled, isVRActive);

@@ -4,6 +4,7 @@
 //
 // $NoKeywords: $
 //=============================================================================//
+
 #include "pch_tier0.h"
 
 #if defined(_WIN32) && !defined(_X360)
@@ -20,15 +21,24 @@
 
 const tchar *GetProcessorVendorId();
 
-static bool cpuid(unsigned long function, unsigned long &out_eax, unsigned long &out_ebx, unsigned long &out_ecx,
-				  unsigned long &out_edx)
+static bool cpuid(uint32 function, uint32 &out_eax, uint32 &out_ebx, uint32 &out_ecx, uint32 &out_edx)
 {
-#if defined(GNUC)
+#if defined(__aarch64__)
+	return false;
+#elif defined(GNUC)
+#if defined(PLATFORM_64BITS)
+	asm("mov %%rbx, %%rsi\n\t"
+		"cpuid\n\t"
+		"xchg %%rsi, %%rbx"
+		: "=a"(out_eax), "=S"(out_ebx), "=c"(out_ecx), "=d"(out_edx)
+		: "a"(function));
+#else
 	asm("mov %%ebx, %%esi\n\t"
 		"cpuid\n\t"
 		"xchg %%esi, %%ebx"
 		: "=a"(out_eax), "=S"(out_ebx), "=c"(out_ecx), "=d"(out_edx)
 		: "a"(function));
+#endif
 	return true;
 #elif defined(_X360)
 	return false;
@@ -42,7 +52,7 @@ static bool cpuid(unsigned long function, unsigned long &out_eax, unsigned long 
 	return true;
 #else
 	bool retval = true;
-	unsigned long local_eax, local_ebx, local_ecx, local_edx;
+	uint32 local_eax, local_ebx, local_ecx, local_edx;
 	_asm pushad;
 
 	__try
@@ -80,7 +90,7 @@ static bool CheckMMXTechnology(void)
 #if defined(_X360) || defined(_PS3)
 	return true;
 #else
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	if(!cpuid(1, eax, ebx, unused, edx))
 		return false;
 
@@ -146,7 +156,7 @@ static bool CheckSSETechnology(void)
 		return false;
 	}
 
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	if(!cpuid(1, eax, ebx, unused, edx))
 	{
 		return false;
@@ -161,7 +171,7 @@ static bool CheckSSE2Technology(void)
 #if defined(_X360) || defined(_PS3)
 	return false;
 #else
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	if(!cpuid(1, eax, ebx, unused, edx))
 		return false;
 
@@ -174,7 +184,7 @@ bool CheckSSE3Technology(void)
 #if defined(_X360) || defined(_PS3)
 	return false;
 #else
-	unsigned long eax, ebx, edx, ecx;
+	uint32 eax, ebx, edx, ecx;
 	if(!cpuid(1, eax, ebx, ecx, edx))
 		return false;
 
@@ -189,7 +199,7 @@ bool CheckSSSE3Technology(void)
 #else
 	// SSSE 3 is implemented by both Intel and AMD
 	// detection is done the same way for both vendors
-	unsigned long eax, ebx, edx, ecx;
+	uint32 eax, ebx, edx, ecx;
 	if(!cpuid(1, eax, ebx, ecx, edx))
 		return false;
 
@@ -205,7 +215,7 @@ bool CheckSSE41Technology(void)
 	// SSE 4.1 is implemented by both Intel and AMD
 	// detection is done the same way for both vendors
 
-	unsigned long eax, ebx, edx, ecx;
+	uint32 eax, ebx, edx, ecx;
 	if(!cpuid(1, eax, ebx, ecx, edx))
 		return false;
 
@@ -224,7 +234,7 @@ bool CheckSSE42Technology(void)
 	if(0 != V_tier0_stricmp(pchVendor, "GenuineIntel"))
 		return false;
 
-	unsigned long eax, ebx, edx, ecx;
+	uint32 eax, ebx, edx, ecx;
 	if(!cpuid(1, eax, ebx, ecx, edx))
 		return false;
 
@@ -243,7 +253,7 @@ bool CheckSSE4aTechnology(void)
 	if(0 != V_tier0_stricmp(pchVendor, "AuthenticAMD"))
 		return false;
 
-	unsigned long eax, ebx, edx, ecx;
+	uint32 eax, ebx, edx, ecx;
 	if(!cpuid(0x80000001, eax, ebx, ecx, edx))
 		return false;
 
@@ -256,7 +266,7 @@ static bool Check3DNowTechnology(void)
 #if defined(_X360) || defined(_PS3)
 	return false;
 #else
-	unsigned long eax, unused;
+	uint32 eax, unused;
 	if(!cpuid(0x80000000, eax, unused, unused, unused))
 		return false;
 
@@ -276,7 +286,7 @@ static bool CheckCMOVTechnology()
 #if defined(_X360) || defined(_PS3)
 	return false;
 #else
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	if(!cpuid(1, eax, ebx, unused, edx))
 		return false;
 
@@ -289,7 +299,7 @@ static bool CheckFCMOVTechnology(void)
 #if defined(_X360) || defined(_PS3)
 	return false;
 #else
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	if(!cpuid(1, eax, ebx, unused, edx))
 		return false;
 
@@ -302,7 +312,7 @@ static bool CheckRDTSCTechnology(void)
 #if defined(_X360) || defined(_PS3)
 	return false;
 #else
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	if(!cpuid(1, eax, ebx, unused, edx))
 		return false;
 
@@ -316,7 +326,7 @@ const tchar *GetProcessorVendorId()
 #if defined(_X360) || defined(_PS3)
 	return "PPC";
 #else
-	unsigned long unused, VendorIDRegisters[3];
+	uint32 unused, VendorIDRegisters[3];
 
 	static tchar VendorID[13];
 
@@ -358,7 +368,7 @@ static bool HTSupported(void)
 	const unsigned int EXT_FAMILY_ID = 0x0f00000; // EAX[23:20] - Bit 23 thru 20 contains extended family  processor id
 	const unsigned int PENTIUM4_ID = 0x0f00;	  // Pentium 4 family processor id
 
-	unsigned long unused, reg_eax = 0, reg_edx = 0, vendor_id[3] = {0, 0, 0};
+	uint32 unused, reg_eax = 0, reg_edx = 0, vendor_id[3] = {0, 0, 0};
 
 	// verify cpuid instruction is supported
 	if(!cpuid(0, unused, vendor_id[0], vendor_id[2], vendor_id[1]) || !cpuid(1, reg_eax, unused, unused, reg_edx))
@@ -382,7 +392,7 @@ static uint8 LogicalProcessorsPerPackage(void)
 	// EBX[23:16] indicate number of logical processors per package
 	const unsigned NUM_LOGICAL_BITS = 0x00FF0000;
 
-	unsigned long unused, reg_ebx = 0;
+	uint32 unused, reg_ebx = 0;
 
 	if(!HTSupported())
 		return 1;
@@ -573,7 +583,7 @@ const CPUInformation *GetCPUInformation()
 	pi.m_szProcessorID = (tchar *)GetProcessorVendorId();
 	pi.m_bHT = HTSupported();
 
-	unsigned long eax, ebx, edx, ecx;
+	uint32 eax, ebx, edx, ecx;
 	if(cpuid(1, eax, ebx, ecx, edx))
 	{
 		pi.m_nModel = eax;		 // full CPU model info

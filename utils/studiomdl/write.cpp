@@ -35,7 +35,7 @@
 #include "perfstats.h"
 
 #include "tier1/smartptr.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 int totalframes = 0;
 float totalseconds = 0;

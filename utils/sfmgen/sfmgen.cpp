@@ -21,7 +21,7 @@
 #include "mathlib/mathlib.h"
 #include "vstdlib/vstdlib.h"
 #include "vstdlib/iprocessutils.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "p4lib/ip4.h"
 #include "tier1/utlbuffer.h"
 #include "tier1/utlstringmap.h"

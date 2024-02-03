@@ -15,7 +15,7 @@
 #include "datacache/imdlcache.h"
 
 #include "tier2/tier2.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "tier2/fileutils.h"
 
 #ifdef TERROR
@@ -1182,7 +1182,7 @@ bool CNavMesh::Save(void) const
 	{
 		char szCorrectPath[MAX_PATH];
 		filesystem->GetCaseCorrectFullPath(filename, szCorrectPath);
-		CP4AutoEditAddFile a(szCorrectPath);
+		// CP4AutoEditAddFile a(szCorrectPath);
 	}
 
 	if(!filesystem->WriteFile(filename, "MOD", fileBuffer))

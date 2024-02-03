@@ -120,7 +120,7 @@ private:
 
 	void BumpedLightmapBitsToPixelWriter_HDRI(float *pFloatImage, float *pFloatImageBump1, float *pFloatImageBump2,
 											  float *pFloatImageBump3, int pLightmapSize[2],
-											  int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut);
+											  int pOffsetIntoLightmapPage[2], FloatBitMap_t *pfmOut) RESTRICT;
 
 	void LightmapBitsToPixelWriter_LDR(float *pFloatImage, int pLightmapSize[2], int pOffsetIntoLightmapPage[2],
 									   FloatBitMap_t *pfmOut);

@@ -912,7 +912,7 @@ void CCSMapOverview::UpdateHostages()
 				hostageCS->isHostage = true;
 
 				//				engine->Con_NPrintf( i + 15, "ID:%d Pos:(%.0f,%.0f,%.0f)", hostage->index,
-				//hostage->position.x, hostage->position.y, hostage->position.z );
+				// hostage->position.x, hostage->position.y, hostage->position.z );
 			}
 			else
 			{
@@ -933,7 +933,7 @@ void CCSMapOverview::UpdateBomb()
 
 	float now = gpGlobals->curtime;
 
-	// First, decide if it has been too long since the bomb has been seen to clear visibility timers.
+	// First, decide if it has been too  since the bomb has been seen to clear visibility timers.
 	if(now - m_bomb.timeLastSeen >= TIME_SPOTS_STAY_SEEN && m_bomb.timeFirstSeen != -1)
 	{
 		SetBombSeen(false);
@@ -1571,7 +1571,7 @@ void CCSMapOverview::DrawHostages()
 		if(hostageCS->overrideExpirationTime > gpGlobals->curtime) // If dead, an X, if alive, an alpha'd normal icon
 		{
 			//			engine->Con_NPrintf( i + 30, "ID:%d Override Pos:(%.0f,%.0f,%.0f)", hostage->index,
-			//hostageCS->overridePosition.x, hostageCS->overridePosition.y, hostageCS->overridePosition.z );
+			// hostageCS->overridePosition.x, hostageCS->overridePosition.y, hostageCS->overridePosition.z );
 			int alphaToUse = alpha;
 			if(hostageCS->overrideFadeTime != -1 && hostageCS->overrideFadeTime <= gpGlobals->curtime)
 			{
@@ -1594,7 +1594,7 @@ void CCSMapOverview::DrawHostages()
 			}
 
 			//			engine->Con_NPrintf( i + 30, "ID:%d Pos:(%.0f,%.0f,%.0f)", hostage->index, hostage->position.x,
-			//hostage->position.y, hostage->position.z );
+			// hostage->position.y, hostage->position.z );
 			int normalIcon, offscreenIcon;
 			float zDifference = 0;
 			if(localPlayer)

@@ -81,6 +81,10 @@ int64 CReliableTimer::GetPerformanceCountNow()
 	uint64 ulNow;
 	SYS_TIMEBASE_GET(ulNow);
 	return ulNow;
+#elif defined(__aarch64__)
+	uint64 un64;
+	asm volatile("mrs %0, cntvct_el0" : "=r" (un64));
+	return (int64)un64;
 #else
 	uint64 un64;
 	__asm__ __volatile__("rdtsc\n\t" : "=A"(un64));

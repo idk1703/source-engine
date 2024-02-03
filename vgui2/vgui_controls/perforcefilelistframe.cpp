@@ -12,7 +12,7 @@
 #include "vgui_controls/TextEntry.h"
 #include "vgui_controls/MessageBox.h"
 #include "tier2/tier2.h"
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "filesystem.h"
 #include "vgui/IVGui.h"
 
@@ -323,7 +323,7 @@ void CPerforceFileListFrame::AddFileForOpen(const char *pFullPath)
 {
 	if(!p4)
 		return;
-
+#if 0
 	bool bIsInPerforce = p4->IsFileInPerforce(pFullPath);
 	bool bIsOpened = (p4->GetFileState(pFullPath) != P4FILE_UNOPENED);
 	switch(m_Action)
@@ -349,13 +349,15 @@ void CPerforceFileListFrame::AddFileForOpen(const char *pFullPath)
 			}
 			break;
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
 // Add files to dialog for submit/revert dialogs
 //-----------------------------------------------------------------------------
-void CPerforceFileListFrame::AddFileForSubmit(const char *pFullPath, P4FileState_t state)
+void CPerforceFileListFrame::AddFileForSubmit(const char *pFullPath, int state)
 {
+#if 0
 	if(state == P4FILE_UNOPENED)
 		return;
 
@@ -383,6 +385,7 @@ void CPerforceFileListFrame::AddFileForSubmit(const char *pFullPath, P4FileState
 			AddOperation(pBuf, pFullPath);
 			break;
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -402,7 +405,7 @@ void CPerforceFileListFrame::AddFile(const char *pFullPath)
 		}
 		return;
 	}
-
+#if 0
 	// Deal with submit, revert
 	bool bFileExists = g_pFullFileSystem->FileExists(pFullPath, NULL);
 	P4FileState_t state = p4->GetFileState(pFullPath);
@@ -410,6 +413,7 @@ void CPerforceFileListFrame::AddFile(const char *pFullPath)
 	{
 		AddFileForSubmit(pFullPath, state);
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -434,7 +438,7 @@ void CPerforceFileListFrame::AddFile(const char *pRelativePath, const char *pPat
 	}
 
 	// Deal with submit, revert
-
+#if 0
 	// First, handle the case where the file exists on the drive
 	char pFullPath[MAX_PATH];
 	if(g_pFullFileSystem->FileExists(pRelativePath, pPathId))
@@ -482,6 +486,7 @@ void CPerforceFileListFrame::AddFile(const char *pRelativePath, const char *pPat
 		AddFileForSubmit(pLocalFile, m_OpenedFiles[k].m_eOpenState);
 		break;
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -492,14 +497,15 @@ bool CPerforceFileListFrame::PerformOperation()
 	if(!p4)
 		return false;
 
+	bool bSuccess = false;
+
+#if 0
 	int nFileCount = GetOperationCount();
 	const char **ppFileNames = (const char **)_alloca(nFileCount * sizeof(char *));
 	for(int i = 0; i < nFileCount; ++i)
 	{
 		ppFileNames[i] = GetFileName(i);
 	}
-
-	bool bSuccess = false;
 
 	switch(m_Action)
 	{
@@ -570,6 +576,7 @@ bool CPerforceFileListFrame::PerformOperation()
 		pError->DoModal();
 	}
 #endif
+#endif
 	return bSuccess;
 }
 
@@ -591,6 +598,7 @@ void ShowPerforceQuery(vgui::Panel *pParent, const char *pFileName, vgui::Panel 
 		return;
 	}
 
+#if 0
 	// Refresh the current perforce settings
 	p4->RefreshActiveClient();
 
@@ -628,4 +636,5 @@ void ShowPerforceQuery(vgui::Panel *pParent, const char *pFileName, vgui::Panel 
 		pQuery->AddActionSignalTarget(pActionSignalTarget);
 	}
 	pQuery->DoModal(pKeyValues, "PerforceQueryCompleted");
+#endif
 }

@@ -134,16 +134,16 @@ CSteamWorksGameStatsUploader &GetSteamWorksSGameStatsUploader()
 //-----------------------------------------------------------------------------
 CSteamWorksGameStatsUploader::CSteamWorksGameStatsUploader()
 	: CAutoGameSystemPerFrame("CSteamWorksGameStatsUploader")
-#if !defined(NO_STEAM) && defined(GAME_DLL)
-	  ,
-	  m_CallbackSteamSessionInfoIssued(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued),
-	  m_CallbackSteamSessionInfoClosed(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed)
-#endif
+// #if !defined(NO_STEAM) && defined(GAME_DLL)
+// 	  ,
+// 	  m_CallbackSteamSessionInfoIssued(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued),
+// 	  m_CallbackSteamSessionInfoClosed(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed)
+// #endif
 {
 
 #if !defined(NO_STEAM) && defined(CLIENT_DLL)
-	m_CallbackSteamSessionInfoIssued.Register(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued);
-	m_CallbackSteamSessionInfoClosed.Register(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed);
+	// m_CallbackSteamSessionInfoIssued.Register(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued);
+	// m_CallbackSteamSessionInfoClosed.Register(this, &CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed);
 #endif
 
 	Reset();
@@ -430,13 +430,13 @@ void CSteamWorksGameStatsUploader::ClientDisconnect()
 		return;
 
 	uint64 ulRowID = 0;
-	m_SteamWorksInterface->AddNewRow(&ulRowID, m_SessionID, "ClientSessionLookup");
+	// m_SteamWorksInterface->AddNewRow(&ulRowID, m_SessionID, "ClientSessionLookup");
 	WriteInt64ToTable(m_SessionID, ulRowID, "SessionID");
 	WriteInt64ToTable(m_ActiveSession.m_ServerSessionID, ulRowID, "ServerSessionID");
 	WriteIntToTable(m_ActiveSession.m_ConnectTime, ulRowID, "ConnectTime");
 	WriteIntToTable(GetTimeSinceEpoch(), ulRowID, "DisconnectTime");
 	WriteIntToTable(nClientJoinMethod, ulRowID, "ClientJoinMethod");
-	m_SteamWorksInterface->CommitRow(ulRowID);
+	// m_SteamWorksInterface->CommitRow(ulRowID);
 
 	m_ActiveSession.Reset();
 }
@@ -499,11 +499,11 @@ EResult CSteamWorksGameStatsUploader::RequestSessionID()
 	m_SteamWorksInterface = GetInterface();
 	if(m_SteamWorksInterface)
 	{
-		int accountType = k_EGameStatsAccountType_Steam;
+		int accountType = k_EAccountTypeIndividual;
 #ifdef GAME_DLL
 		if(engine->IsDedicatedServer())
 		{
-			accountType = k_EGameStatsAccountType_SteamGameServer;
+			accountType = k_EAccountTypeGameServer;
 		}
 #endif
 
@@ -518,7 +518,7 @@ EResult CSteamWorksGameStatsUploader::RequestSessionID()
 
 		// This initiates a callback that will get us our session ID.
 		// Callback: Steam_OnSteamSessionInfoIssued
-		m_SteamWorksInterface->GetNewSession(accountType, m_UserID, m_iAppID, GetTimeSinceEpoch());
+		// m_SteamWorksInterface->GetNewSession(accountType, m_UserID, m_iAppID, GetTimeSinceEpoch());
 	}
 
 	return k_EResultOK;
@@ -538,6 +538,7 @@ void CSteamWorksGameStatsUploader::ClearSessionID()
 //-----------------------------------------------------------------------------
 // Purpose: The steam callback used to get our session IDs.
 //-----------------------------------------------------------------------------
+#if 0
 void CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoIssued(GameStatsSessionIssued_t *pGameStatsSessionInfo)
 {
 	if(!m_SessionIDRequestPending)
@@ -603,6 +604,7 @@ void CSteamWorksGameStatsUploader::Steam_OnSteamSessionInfoClosed(GameStatsSessi
 
 	m_UploadedStats = false;
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Per frame think. Used to periodically check if we have queued operations.
@@ -668,7 +670,7 @@ void CSteamWorksGameStatsUploader::EndSession()
 
 		// Always need some data in the session row or we'll crash steam.
 		WriteSessionRow();
-		m_SteamWorksInterface->EndSession(m_SessionID, m_EndTime, 0);
+		// m_SteamWorksInterface->EndSession(m_SessionID, m_EndTime, 0);
 		Reset();
 	}
 }
@@ -706,20 +708,20 @@ void CSteamWorksGameStatsUploader::WriteSessionRow()
 //	m_SteamWorksInterface->AddSessionAttributeInt64( m_SessionID, "ServerSessionID", m_ServerSessionID );
 #endif
 
-	m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "AppID", m_iAppID);
-	m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "StartTime", m_StartTime);
-	m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "EndTime", m_EndTime);
+	// m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "AppID", m_iAppID);
+	// m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "StartTime", m_StartTime);
+	// m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "EndTime", m_EndTime);
 
 #ifndef CLIENT_DLL
-	m_SteamWorksInterface->AddSessionAttributeString(m_SessionID, "ServerIP", m_pzServerIP);
-	m_SteamWorksInterface->AddSessionAttributeString(m_SessionID, "ServerName", m_pzHostName);
-	m_SteamWorksInterface->AddSessionAttributeString(m_SessionID, "StartMap", m_pzMapStart);
+	// m_SteamWorksInterface->AddSessionAttributeString(m_SessionID, "ServerIP", m_pzServerIP);
+	// m_SteamWorksInterface->AddSessionAttributeString(m_SessionID, "ServerName", m_pzHostName);
+	// m_SteamWorksInterface->AddSessionAttributeString(m_SessionID, "StartMap", m_pzMapStart);
 #endif
 
 #ifdef CLIENT_DLL
 	// TODO CAB: Need to get these added into the clientsessionlookup table
-	m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "PlayersInGame", m_HumanCntInGame);
-	m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "FriendsInGame", m_FriendCntInGame);
+	// m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "PlayersInGame", m_HumanCntInGame);
+	// m_SteamWorksInterface->AddSessionAttributeInt(m_SessionID, "FriendsInGame", m_FriendCntInGame);
 #endif
 }
 
@@ -751,7 +753,7 @@ EResult CSteamWorksGameStatsUploader::WriteIntToTable(const int value, uint64 iT
 	if(!VerifyInterface())
 		return k_EResultNoConnection;
 
-	return m_SteamWorksInterface->AddRowAttributeInt(iTableID, pzRow, value);
+	// return m_SteamWorksInterface->AddRowAttributeInt(iTableID, pzRow, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -762,7 +764,7 @@ EResult CSteamWorksGameStatsUploader::WriteInt64ToTable(const uint64 value, uint
 	if(!VerifyInterface())
 		return k_EResultNoConnection;
 
-	return m_SteamWorksInterface->AddRowAttributeInt64(iTableID, pzRow, value);
+	// return m_SteamWorksInterface->AddRowAttributeInt64(iTableID, pzRow, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -773,7 +775,7 @@ EResult CSteamWorksGameStatsUploader::WriteFloatToTable(const float value, uint6
 	if(!VerifyInterface())
 		return k_EResultNoConnection;
 
-	return m_SteamWorksInterface->AddRowAttributeFloat(iTableID, pzRow, value);
+	// return m_SteamWorksInterface->AddRowAttributeFloat(iTableID, pzRow, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -784,7 +786,7 @@ EResult CSteamWorksGameStatsUploader::WriteStringToTable(const char *value, uint
 	if(!VerifyInterface())
 		return k_EResultNoConnection;
 
-	return m_SteamWorksInterface->AddRowAtributeString(iTableID, pzRow, value);
+	// return m_SteamWorksInterface->AddRowAtributeString(iTableID, pzRow, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -803,7 +805,7 @@ EResult CSteamWorksGameStatsUploader::WriteOptionalFloatToTable(KeyValues *pKV, 
 
 	float value = key->GetFloat();
 
-	return m_SteamWorksInterface->AddRowAttributeFloat(iTableID, pzRow, value);
+	// return m_SteamWorksInterface->AddRowAttributeFloat(iTableID, pzRow, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -822,7 +824,7 @@ EResult CSteamWorksGameStatsUploader::WriteOptionalIntToTable(KeyValues *pKV, co
 
 	int value = key->GetInt();
 
-	return m_SteamWorksInterface->AddRowAttributeInt(iTableID, pzRow, value);
+	// return m_SteamWorksInterface->AddRowAttributeInt(iTableID, pzRow, value);
 }
 
 //-----------------------------------------------------------------------------
@@ -835,7 +837,7 @@ EResult CSteamWorksGameStatsUploader::WriteOptionalIntToTable(KeyValues *pKV, co
 bool CSteamWorksGameStatsUploader::AccessToSteamAPI(void)
 {
 #ifdef GAME_DLL
-	return (steamgameserverapicontext && steamgameserverapicontext->SteamGameServer() && g_pSteamClientGameServer &&
+	return (steamgameserverapicontext && steamgameserverapicontext->SteamGameServer() /*&& g_pSteamClientGameServer*/ &&
 			steamgameserverapicontext->SteamGameServerUtils());
 #elif CLIENT_DLL
 	return (steamapicontext && steamapicontext->SteamUser() && steamapicontext->SteamUser()->BLoggedOn() &&
@@ -848,8 +850,9 @@ bool CSteamWorksGameStatsUploader::AccessToSteamAPI(void)
 // Purpose: There's no guarantee that your interface pointer will persist across level transitions,
 //			so this function will update your interface.
 //-----------------------------------------------------------------------------
-ISteamGameStats *CSteamWorksGameStatsUploader::GetInterface(void)
+ISteamGameServerStats *CSteamWorksGameStatsUploader::GetInterface(void)
 {
+#if 0
 	HSteamUser hSteamUser = 0;
 	HSteamPipe hSteamPipe = 0;
 
@@ -886,6 +889,7 @@ ISteamGameStats *CSteamWorksGameStatsUploader::GetInterface(void)
 																		   STEAMGAMESTATS_INTERFACE_VERSION);
 	}
 	// If we haven't returned already, then we can't get access to the interface
+#endif
 	return NULL;
 }
 
@@ -962,7 +966,7 @@ EResult CSteamWorksGameStatsUploader::ParseKeyValuesAndSendStats(KeyValues *pKV,
 		}
 	*/
 	uint64 iTableID = 0;
-	m_SteamWorksInterface->AddNewRow(&iTableID, m_SessionID, pzTable);
+	// m_SteamWorksInterface->AddNewRow(&iTableID, m_SessionID, pzTable);
 
 	if(!iTableID)
 	{
@@ -1006,7 +1010,7 @@ EResult CSteamWorksGameStatsUploader::ParseKeyValuesAndSendStats(KeyValues *pKV,
 
 	CFastTimer commitTimer;
 	commitTimer.Start();
-	EResult res = m_SteamWorksInterface->CommitRow(iTableID);
+	EResult res /*= m_SteamWorksInterface->CommitRow(iTableID)*/;
 	commitTimer.End();
 	g_rowCommitTime += commitTimer.GetDuration().GetMillisecondsF();
 
@@ -1035,7 +1039,7 @@ void CSteamWorksGameStatsUploader::AddClientPerfData(KeyValues *pKV)
 	uint64 uSessionID = m_SessionID;
 	uint64 ulRowID = 0;
 
-	m_SteamWorksInterface->AddNewRow(&ulRowID, uSessionID, "TF2ClientPerfData");
+	// m_SteamWorksInterface->AddNewRow(&ulRowID, uSessionID, "TF2ClientPerfData");
 
 	if(!ulRowID)
 		return;
@@ -1089,7 +1093,7 @@ void CSteamWorksGameStatsUploader::AddClientPerfData(KeyValues *pKV)
 	// people who replay over and over again.
 	WriteOptionalFloatToTable(pKV, "Map/LoadTimeMainMenu", ulRowID, "MainmenuLoadTime");
 
-	m_SteamWorksInterface->CommitRow(ulRowID);
+	// m_SteamWorksInterface->CommitRow(ulRowID);
 }
 #endif
 

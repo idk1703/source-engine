@@ -29,8 +29,8 @@
 #include "sixense/in_sixense.h"
 #endif
 
-#include "client_virtualreality.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "client_virtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 // NVNT Include
 #include "haptics/haptic_utils.h"
@@ -1247,6 +1247,7 @@ void CInput::ExtraMouseSample(float frametime, bool active)
 	// Let the headtracker override the view at the very end of the process so
 	// that vehicles and other stuff in g_pClientMode->CreateMove can override
 	// first
+#if 0
 	if(active && UseVR())
 	{
 		C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
@@ -1267,6 +1268,7 @@ void CInput::ExtraMouseSample(float frametime, bool active)
 			prediction->SetLocalViewAngles(cmd->viewangles);
 		}
 	}
+#endif
 }
 
 void CInput::CreateMove(int sequence_number, float input_sample_frametime, bool active)
@@ -1400,6 +1402,7 @@ void CInput::CreateMove(int sequence_number, float input_sample_frametime, bool 
 
 #endif
 
+#if 0
 		if(UseVR())
 		{
 			C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
@@ -1424,6 +1427,7 @@ void CInput::CreateMove(int sequence_number, float input_sample_frametime, bool 
 				engine->SetViewAngles(cmd->viewangles);
 			}
 		}
+#endif
 	}
 
 	m_flLastForwardMove = cmd->forwardmove;

@@ -30,7 +30,7 @@
 #include "PhonemeEditor.h"
 #include <vgui/ILocalize.h>
 #include "filesystem_init.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 extern vgui::ILocalize *g_pLocalize;
 

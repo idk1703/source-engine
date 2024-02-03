@@ -961,7 +961,7 @@ bool CDemoPlayer::ParseAheadForInterval(int curtick, int intervalticks)
 
 	democmdinfo_t nextinfo;
 
-	long starting_position = m_DemoFile.GetCurPos(true);
+	uint32 starting_position = m_DemoFile.GetCurPos(true);
 
 	// remove all entrys older than 32 ticks
 	while(m_DestCmdInfo.Count() > 0)
@@ -1077,7 +1077,7 @@ netpacket_t *CDemoPlayer::ReadPacket(void)
 {
 	int tick = 0;
 	byte cmd = dem_signon;
-	long curpos = 0;
+	uint32 curpos = 0;
 
 	if(!m_DemoFile.IsOpen())
 	{

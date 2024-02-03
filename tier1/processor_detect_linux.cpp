@@ -6,17 +6,29 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#define cpuid(in, a, b, c, d)                \
-	asm("pushl %%ebx\n\t"                    \
-		"cpuid\n\t"                          \
-		"movl %%ebx,%%esi\n\t"               \
-		"pop %%ebx"                          \
-		: "=a"(a), "=S"(b), "=c"(c), "=d"(d) \
-		: "a"(in));
+#include "platform.h"
+
+static void cpuid(uint32 function, uint32 &out_eax, uint32 &out_ebx, uint32 &out_ecx, uint32 &out_edx)
+{
+#ifdef __aarch64__
+#elif defined(PLATFORM_64BITS)
+	asm("mov %%rbx, %%rsi\n\t"
+		"cpuid\n\t"
+		"xchg %%rsi, %%rbx"
+		: "=a"(out_eax), "=S"(out_ebx), "=c"(out_ecx), "=d"(out_edx)
+		: "a"(function));
+#else
+	asm("mov %%ebx, %%esi\n\t"
+		"cpuid\n\t"
+		"xchg %%esi, %%ebx"
+		: "=a"(out_eax), "=S"(out_ebx), "=c"(out_ecx), "=d"(out_edx)
+		: "a"(function));
+#endif
+}
 
 bool CheckMMXTechnology(void)
 {
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	cpuid(1, eax, ebx, unused, edx);
 
 	return edx & 0x800000;
@@ -24,7 +36,7 @@ bool CheckMMXTechnology(void)
 
 bool CheckSSETechnology(void)
 {
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	cpuid(1, eax, ebx, unused, edx);
 
 	return edx & 0x2000000L;
@@ -32,7 +44,7 @@ bool CheckSSETechnology(void)
 
 bool CheckSSE2Technology(void)
 {
-	unsigned long eax, ebx, edx, unused;
+	uint32 eax, ebx, edx, unused;
 	cpuid(1, eax, ebx, unused, edx);
 
 	return edx & 0x04000000;
@@ -40,7 +52,7 @@ bool CheckSSE2Technology(void)
 
 bool Check3DNowTechnology(void)
 {
-	unsigned long eax, unused;
+	uint32 eax, unused;
 	cpuid(0x80000000, eax, unused, unused, unused);
 
 	if(eax > 0x80000000L)

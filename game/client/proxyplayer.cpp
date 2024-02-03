@@ -402,7 +402,7 @@ bool CPlayerLogoProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 void CPlayerLogoProxy::OnBind(void *pC_BaseEntity)
 {
 	// Decal's are bound with the player index as the passed in paramter
-	int playerindex = (int)pC_BaseEntity;
+	int playerindex = (uintp)pC_BaseEntity;
 
 	if(playerindex <= 0)
 		return;

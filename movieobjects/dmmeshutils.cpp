@@ -16,7 +16,7 @@
 #include "movieobjects/dmmeshcomp.h" // TODO: This has to be included before dmmeshutils.h
 #include "movieobjects/dmmeshutils.h"
 #include "tier1/utlstack.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "tier1/utlstring.h"
 #include "tier1/utlstringmap.h"
 #include "tier1/utlbuffer.h"

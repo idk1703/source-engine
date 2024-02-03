@@ -1,0 +1,70 @@
+set(PROJECT movieobjects)
+
+set(SOURCES
+    dmeanimationlist.cpp
+    dmeanimationset.cpp
+    dmeattachment.cpp
+    dmebalancetostereocalculatoroperator.cpp
+    dmebookmark.cpp
+    dmecamera.cpp
+    dmechannel.cpp
+    dmeclip.cpp
+    dmecombinationoperator.cpp
+    dmedag.cpp
+    dmedccmakefile.cpp
+    dmeeditortypedictionary.cpp
+    dmeexpressionoperator.cpp
+    dmefaceset.cpp
+    dmegamemodel.cpp
+    dmegamemodelinput.cpp
+    dmeinput.cpp
+    dmejoint.cpp
+    dmekeyboardinput.cpp
+    dmelight.cpp
+    dmelog.cpp
+    dmemakefile.cpp
+    dmemakefileutils.cpp
+    dmematerial.cpp
+    dmematerialoverlayfxclip.cpp
+    dmemdl.cpp
+    dmemdlmakefile.cpp
+    dmemesh.cpp
+    dmemodel.cpp
+    dmemorphoperator.cpp
+    dmemouseinput.cpp
+    dmeoperator.cpp
+    dmepackoperators.cpp
+    dmeparticlesystemdefinition.cpp
+    dmephonememapping.cpp
+    dmeselection.cpp
+    dmeshape.cpp
+    dmesound.cpp
+    dmetimeframe.cpp
+    dmetimeselection.cpp
+    dmetrack.cpp
+    dmetrackgroup.cpp
+    dmetransform.cpp
+    dmetransforminput.cpp
+    dmetransformlist.cpp
+    dmetransformoperator.cpp
+    dmeunpackoperators.cpp
+    dmevertexdata.cpp
+    dmobjserializer.cpp
+    movieobjects_interfaces.cpp
+    ${SRCDIR}/common/movieobjects/timeutils.cpp
+    dmedrawsettings.cpp
+    dmmeshutils.cpp
+    dmmeshcomp.cpp
+    dmeeyeposition.cpp
+    dmeeyeball.cpp
+    dmmeshutils.cpp
+    dmsmdserializer.cpp
+
+    ${SRCDIR}/public/bone_setup.cpp
+    ${SRCDIR}/public/collisionutils.cpp
+    ${SRCDIR}/public/phonemeconverter.cpp
+    ${SRCDIR}/public/studio.cpp
+)
+
+add_library(${PROJECT} STATIC ${SOURCES})
+target_compile_definitions(${PROJECT} PRIVATE MOVIEOBJECTS_LIB)

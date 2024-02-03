@@ -87,7 +87,7 @@
 #include "demofile.h"
 #include "igame.h"
 #include "iclientvirtualreality.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #include "cl_check_process.h"
 #include "enginethreads.h"
 
@@ -1724,7 +1724,7 @@ bool ClientDLL_Load()
 			{
 				Sys_Error("Could not get client.dll interface from library client");
 			}
-
+#if 0
 			if(g_pSourceVR)
 			{
 				g_pClientVR = (IClientVirtualReality *)g_ClientFactory(CLIENTVIRTUALREALITY_INTERFACE_VERSION, NULL);
@@ -1733,6 +1733,7 @@ bool ClientDLL_Load()
 					Msg("client.dll is not VR-compatible.\n");
 				}
 			}
+#endif
 		}
 		else
 		{

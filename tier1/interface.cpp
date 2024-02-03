@@ -187,10 +187,10 @@ unsigned ThreadedLoadLibraryFunc(void *pParam)
 HMODULE Sys_LoadLibrary(const char *pLibraryName, Sys_Flags flags)
 {
 	char str[1024];
-	// Note: DLL_EXT_STRING can be "_srv.so" or "_360.dll". So be careful
+	// Note: LIB_EXT_STR can be "_srv.so" or "_360.dll". So be careful
 	//	when using the V_*Extension* routines...
-	const char *pDllStringExtension = V_GetFileExtension(DLL_EXT_STRING);
-	const char *pModuleExtension = pDllStringExtension ? (pDllStringExtension - 1) : DLL_EXT_STRING;
+	const char *pDllStringExtension = V_GetFileExtension(LIB_EXT_STR);
+	const char *pModuleExtension = pDllStringExtension ? (pDllStringExtension - 1) : LIB_EXT_STR;
 
 	Q_strncpy(str, pLibraryName, sizeof(str));
 

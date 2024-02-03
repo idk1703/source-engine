@@ -12,7 +12,7 @@
 #include "tier1/KeyValues.h"
 #include <vgui/ISurface.h>
 #include "filesystem.h"
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "tier2/tier2.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -235,10 +235,10 @@ void PerforceFileList::AddItemToDirectoryList(const char *pFullPath, int nItemID
 	else
 	{
 		char pClientSpec[MAX_PATH];
-		if(!p4->GetClientSpecForDirectory(pFullPath, pClientSpec, sizeof(pClientSpec)))
-		{
-			pClientSpec[0] = 0;
-		}
+		// if(!p4->GetClientSpecForDirectory(pFullPath, pClientSpec, sizeof(pClientSpec)))
+		// {
+		// 	pClientSpec[0] = 0;
+		// }
 
 		pInfo = &m_Directories[pFullPath];
 		pInfo->m_ClientSpec = pClientSpec;
@@ -396,6 +396,7 @@ void PerforceFileList::RemoveAllFiles()
 //-----------------------------------------------------------------------------
 static P4File_t *FindFileInPerforceList(const char *pFileName, CUtlVector<P4File_t> &fileList, bool *pFound)
 {
+#if 0
 	int nCount = fileList.Count();
 	for(int i = 0; i < nCount; ++i)
 	{
@@ -409,6 +410,7 @@ static P4File_t *FindFileInPerforceList(const char *pFileName, CUtlVector<P4File
 			return &fileList[i];
 		}
 	}
+#endif
 	return NULL;
 }
 
@@ -417,6 +419,7 @@ static P4File_t *FindFileInPerforceList(const char *pFileName, CUtlVector<P4File
 //-----------------------------------------------------------------------------
 void PerforceFileList::RefreshPerforceState(int nItemID, bool bFileExists, P4File_t *pFileInfo)
 {
+#if 0
 	KeyValues *kv = GetItem(nItemID);
 
 	bool bIsSynched = false;
@@ -444,6 +447,7 @@ void PerforceFileList::RefreshPerforceState(int nItemID, bool bFileExists, P4Fil
 	{
 		SetItemVisible(nItemID, m_bShowDeletedFiles);
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -463,7 +467,7 @@ void PerforceFileList::Refresh()
 		RefreshPerforceState( i, bFileExists, bIsFileInPerforce ? &fileInfo : NULL );
 	}
 	*/
-
+#if 0
 	// NOTE: Reducing the # of perforce calls is important for performance
 	int nCount = m_Directories.GetNumStrings();
 	for(int i = 0; i < nCount; ++i)
@@ -487,6 +491,7 @@ void PerforceFileList::Refresh()
 			RefreshPerforceState(nItemID, bFileExists, pFileInfo);
 		}
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------

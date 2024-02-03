@@ -18,7 +18,7 @@
 #include "dme_controls/RecordingState.h"
 #include "tier1/utlvector.h"
 #include "movieobjects/dmelog.h"
-#include "vgui_controls/fileopenstatemachine.h"
+#include "vgui_controls/FileOpenStateMachine.h"
 
 //-----------------------------------------------------------------------------
 // Forward declarations

@@ -42,7 +42,7 @@ struct PAGED_POOL_INFO_t
 //	Plat_GetMemPageSize
 //		Returns the size of a memory page in kilobytes.
 //
-PLATFORM_INTERFACE unsigned long Plat_GetMemPageSize();
+PLATFORM_INTERFACE unsigned int Plat_GetMemPageSize();
 
 //
 //	Plat_GetPagedPoolInfo

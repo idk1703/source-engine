@@ -27,10 +27,10 @@
 #include "tier1/convar.h"
 #include "ModInfo.h"
 #include "vgui_controls/Tooltip.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 #if defined(USE_SDL)
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #endif
 
 #include "inetchannelinfo.h"
@@ -1126,7 +1126,7 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 	}
 
 	// if VR mode isn't available, disable the dropdown
-	if(!g_pSourceVR)
+	// if(!g_pSourceVR)
 	{
 		// if sourcevr.dll is missing entirely that means VR mode is not
 		// supported in this game. Hide the mode dropdown and its label
@@ -1136,7 +1136,7 @@ COptionsSubVideo::COptionsSubVideo(vgui::Panel *parent) : PropertyPage(parent, N
 		if(label)
 			label->SetVisible(false);
 	}
-	else if(!g_pSourceVR->IsHmdConnected())
+	// else if(!g_pSourceVR->IsHmdConnected())
 	{
 		m_pVRMode->ActivateItem(0);
 		m_pVRMode->SetEnabled(false);
@@ -1621,7 +1621,7 @@ void COptionsSubVideo::OnTextChanged(Panel *pPanel, const char *pszText)
 //-----------------------------------------------------------------------------
 void COptionsSubVideo::EnableOrDisableWindowedForVR()
 {
-	bool bCanBeEnabled = g_pSourceVR && g_pSourceVR->IsHmdConnected();
+	bool bCanBeEnabled = false; // g_pSourceVR && g_pSourceVR->IsHmdConnected();
 	bool bVRNowEnabled = m_pVRMode->GetActiveItem() == 1;
 	bool bVRWasEnabled = materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter != -1;
 	if(bCanBeEnabled && (bVRNowEnabled || bVRWasEnabled))

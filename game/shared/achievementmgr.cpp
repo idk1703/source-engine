@@ -68,7 +68,8 @@ extern ConVar developer;
 
 #define DEBUG_ACHIEVEMENTS_IN_RELEASE 0
 
-#ifdef SWDS
+#if 0
+// #ifdef SWDS
 // Hack this for now until we get steam_api recompiling in the Steam codebase.
 ISteamUserStats *SteamUserStats()
 {
@@ -139,8 +140,8 @@ static void WriteAchievementGlobalState(KeyValues *pKV, bool bPersistToSteamClou
 
 		if(pRemoteStorage)
 		{
-			int32 availableBytes = 0;
-			int32 totalBytes = 0;
+			uint64 availableBytes = 0;
+			uint64 totalBytes = 0;
 			if(pRemoteStorage->GetQuota(&totalBytes, &availableBytes))
 			{
 				if(totalBytes > 0)

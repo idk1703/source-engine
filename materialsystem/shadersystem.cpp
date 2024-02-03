@@ -303,7 +303,7 @@ void CShaderSystem::LoadAllShaderDLLs()
 	if(IsPC() || !IsX360())
 	{
 		// Always need the debug shaders
-		LoadShaderDLL("stdshader_dbg" DLL_EXT_STRING);
+		LoadShaderDLL(LIB_PREFIX_STR "stdshader_dbg" LIB_EXT_STR);
 	}
 
 	// Load up standard shader DLLs...
@@ -316,7 +316,7 @@ void CShaderSystem::LoadAllShaderDLLs()
 	char buf[32];
 	for(i = dxStart; i <= dxSupportLevel; ++i)
 	{
-		Q_snprintf(buf, sizeof(buf), "stdshader_dx%d%s", i, DLL_EXT_STRING);
+		Q_snprintf(buf, sizeof(buf), LIB_PREFIX_STR "stdshader_dx%d%s", i, LIB_EXT_STR);
 		LoadShaderDLL(buf);
 	}
 
@@ -337,7 +337,7 @@ void CShaderSystem::LoadAllShaderDLLs()
 	// For fast-iteration debugging
 	if(CommandLine()->FindParm("-testshaders"))
 	{
-		LoadShaderDLL("shader_test" DLL_EXT_STRING);
+		LoadShaderDLL(LIB_PREFIX_STR "shader_test" LIB_EXT_STR);
 	}
 #endif
 }
@@ -384,7 +384,7 @@ void CShaderSystem::LoadModShaderDLLs(int dxSupportLevel)
 	int dxStart = 6;
 	for(int i = dxStart; i <= dxSupportLevel; ++i)
 	{
-		Q_snprintf(buf, sizeof(buf), "game_shader_dx%d%s", i, DLL_EXT_STRING);
+		Q_snprintf(buf, sizeof(buf), LIB_PREFIX_STR "game_shader_dx%d%s", i, LIB_EXT_STR);
 		LoadShaderDLL(buf, pModShaderPathID, true);
 	}
 
@@ -393,7 +393,7 @@ void CShaderSystem::LoadModShaderDLLs(int dxSupportLevel)
 	const char *pFilename = g_pFullFileSystem->FindFirstEx("game_shader_generic*", pModShaderPathID, &findHandle);
 	while(pFilename)
 	{
-		Q_snprintf(buf, sizeof(buf), "%s%s", pFilename, DLL_EXT_STRING);
+		Q_snprintf(buf, sizeof(buf), "%s%s", pFilename, LIB_EXT_STR);
 		LoadShaderDLL(buf, pModShaderPathID, true);
 
 		pFilename = g_pFullFileSystem->FindNext(findHandle);

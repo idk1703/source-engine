@@ -68,7 +68,7 @@
 #include "vgui_controls/Frame.h"
 #include "vgui/ISurface.h"
 #include "p4lib/ip4.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "ProgressDialog.h"
 #include "scriplib.h"
 

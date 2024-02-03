@@ -563,10 +563,10 @@ public:                                                                         
 		return IsA(typeSymbol);                                                               \
 	}                                                                                         \
                                                                                               \
-	template<class T>                                                                         \
+	template<class A>                                                                         \
 	bool IsA() const                                                                          \
 	{                                                                                         \
-		return IsA(T::GetStaticTypeSymbol());                                                 \
+		return IsA(A::GetStaticTypeSymbol());                                                 \
 	}                                                                                         \
                                                                                               \
 	virtual int GetInheritanceDepth(UtlSymId_t typeSymbol) const                              \
@@ -628,9 +628,9 @@ protected:                                                                      
                                                                                               \
 private:                                                                                      \
 	typedef baseClassName BaseClass;                                                          \
-	template<class T>                                                                         \
+	template<class A>                                                                         \
 	friend class CDmElementFactory;                                                           \
-	template<class T>                                                                         \
+	template<class A>                                                                         \
 	friend class CDmAbstractElementFactory;                                                   \
 	static CUtlSymbol m_classType
 

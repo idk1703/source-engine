@@ -6,10 +6,12 @@
 
 #ifndef DMECLIP_H
 #define DMECLIP_H
+
 #ifdef _WIN32
 #pragma once
 #endif
 
+#include "datamodel/dmelementfactoryhelper.h"
 #include "datamodel/dmelement.h"
 #include "datamodel/dmattribute.h"
 #include "datamodel/dmattributevar.h"

@@ -235,7 +235,7 @@ void CSteam3Server::Activate(EServerType serverType)
 	SteamAPI_SetTryCatchCallbacks(
 		false); // We don't use exceptions, so tell steam not to use try/catch in callback handlers
 	if(CommandLine()->FindParm("-hushsteam") ||
-	   !SteamGameServer_InitSafe(
+	   !SteamGameServer_Init(
 		   m_unIP,
 		   m_usPort + 1, // Steam lives on -steamport + 1, master server updater lives on -steamport.
 		   usGamePort, usMasterServerUpdaterPort, m_eServerMode, GetSteamInfIDVersionInfo().szVersionString))
@@ -413,7 +413,7 @@ void CSteam3Server::OnLogonSuccess(SteamServersConnected_t *pLogonSuccess)
 		MsgAndLog("Connection to Steam servers successful.\n");
 		if(SteamGameServer())
 		{
-			uint32 ip = SteamGameServer()->GetPublicIP();
+			uint32 ip = SteamGameServer()->GetPublicIP().m_unIPv4;
 			MsgAndLog("   Public IP is %d.%d.%d.%d.\n", (ip >> 24) & 255, (ip >> 16) & 255, (ip >> 8) & 255, ip & 255);
 		}
 	}

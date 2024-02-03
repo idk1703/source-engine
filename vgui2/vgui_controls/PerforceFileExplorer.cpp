@@ -14,7 +14,7 @@
 #include "vgui/ISystem.h"
 #include "filesystem.h"
 #include <ctype.h>
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "tier2/tier2.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -187,6 +187,7 @@ void PerforceFileExplorer::PopulateFileList()
 	}
 	g_pFullFileSystem->FindClose(h);
 
+#if 0
 	// Now find all files in perforce
 	CUtlVector<P4File_t> &fileList = p4->GetFileList(m_CurrentDirectory);
 	int nCount = fileList.Count();
@@ -209,6 +210,7 @@ void PerforceFileExplorer::PopulateFileList()
 	}
 
 	m_pFileList->SortList();
+#endif
 }
 
 //-----------------------------------------------------------------------------

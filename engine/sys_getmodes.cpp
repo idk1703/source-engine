@@ -6,8 +6,8 @@
 
 #if defined(USE_SDL)
 #undef PROTECTED_THINGS_ENABLE
-#include "SDL.h"
-#include "SDL_syswm.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
 #endif
 
 #if defined(_WIN32) && !defined(_X360)
@@ -41,14 +41,14 @@ typedef void *HDC;
 #include "materialsystem/materialsystem_config.h"
 #include "materialsystem/itexture.h"
 #include "materialsystem/imaterialsystemhardwareconfig.h"
-#include "jpeglib/jpeglib.h"
+#include <jpeglib.h>
 #include "vgui/ISurface.h"
 #include "vgui_controls/Controls.h"
 #include "gl_shader.h"
 #include "sys_dll.h"
 #include "materialsystem/imaterial.h"
 #include "IHammer.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #include "tier2/tier2.h"
 #include "tier2/renderutils.h"
 #include "tier0/etwprof.h"
@@ -527,6 +527,7 @@ void CVideoMode_Common::ResetCurrentModeForNewResolution(int nWidth, int nHeight
 	// assume we won't be overriding the position
 	m_bVROverride = false;
 
+#if 0
 	if(UseVR() || ShouldForceVRActive())
 	{
 		g_pSourceVR->GetViewportBounds(ISourceVirtualReality::VREye_Left, NULL, NULL, &m_nStereoWidth,
@@ -566,6 +567,7 @@ void CVideoMode_Common::ResetCurrentModeForNewResolution(int nWidth, int nHeight
 		}
 	}
 	else if(materials->GetCurrentConfigForVideoCard().m_nVRModeAdapter == materials->GetCurrentAdapter())
+#endif
 	{
 		// if we aren't in VR mode but we do have a VR mode adapter set, we must not be full
 		// screen because that would show up on the HMD
@@ -580,6 +582,7 @@ bool CVideoMode_Common::CreateGameWindow(int nWidth, int nHeight, bool bWindowed
 {
 	COM_TimestampedLog("CVideoMode_Common::Init  CreateGameWindow");
 
+#if 0
 	if(ShouldForceVRActive())
 	{
 		// First make sure we're running a compatible version of DirectX
@@ -602,6 +605,7 @@ bool CVideoMode_Common::CreateGameWindow(int nWidth, int nHeight, bool bWindowed
 		m_nVROverrideX = bounds.nX;
 		m_nVROverrideY = bounds.nY;
 	}
+#endif
 
 	// This allows you to have a window of any size.
 	// Requires you to set both width and height for the window and
@@ -835,7 +839,7 @@ void CVideoMode_Common::DrawStartupVideo()
 	CETWScope timer("CVideoMode_Common::DrawStartupGraphic");
 
 	// render an avi, if we have one
-	if(!m_bPlayedStartupVideo && !InEditMode() && !ShouldForceVRActive())
+	if(!m_bPlayedStartupVideo && !InEditMode() /* && !ShouldForceVRActive() */)
 	{
 		game->PlayStartupVideos();
 		m_bPlayedStartupVideo = true;
@@ -2281,6 +2285,7 @@ bool CVideoMode_MaterialSystem::Init()
 			{
 
 				// in VR mode we want the highest refresh rate, without regard for the desktop refresh rate
+#if 0
 				if(UseVR() || ShouldForceVRActive())
 				{
 					if(info.m_RefreshRate > m_rgModeList[j].refreshRate)
@@ -2289,6 +2294,7 @@ bool CVideoMode_MaterialSystem::Init()
 					}
 				}
 				else
+#endif
 				{
 					// choose the highest refresh rate available for each mode up to the desktop rate
 
@@ -2351,12 +2357,12 @@ bool CVideoMode_MaterialSystem::SetMode(int nWidth, int nHeight, bool bWindowed)
 	config.m_VideoMode.m_Height = pMode->height;
 
 	// make sure VR mode is up to date
-	config.SetFlag(MATSYS_VIDCFG_FLAGS_VR_MODE, UseVR() || ShouldForceVRActive());
+	config.SetFlag(MATSYS_VIDCFG_FLAGS_VR_MODE, false /* UseVR() || ShouldForceVRActive() */);
 
-	if(ShouldForceVRActive())
-	{
-		config.m_nVRModeAdapter = materials->GetCurrentAdapter();
-	}
+	// if(ShouldForceVRActive())
+	// {
+	// 	config.m_nVRModeAdapter = materials->GetCurrentAdapter();
+	// }
 
 #ifdef SWDS
 	config.m_VideoMode.m_RefreshRate = 60;

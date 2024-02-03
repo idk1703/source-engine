@@ -506,6 +506,9 @@ void inline SinCos(float radians, float *sine, float *cosine)
 #elif defined(PLATFORM_WINDOWS_PC64)
 	*sine = sin(radians);
 	*cosine = cos(radians);
+#elif defined(__aarch64__)
+	*sine = std::sin(radians);
+	*cosine = std::cos(radians);
 #elif defined(POSIX)
 	double __cosr, __sinr;
 	__asm("fsincos" : "=t"(__cosr), "=u"(__sinr) : "0"(radians));
@@ -1245,6 +1248,8 @@ FORCEINLINE int RoundFloatToInt(float f)
 	};
 	flResult = __fctiw(f);
 	return pResult[1];
+#elif defined(__aarch64__)
+	return round(f);
 #else
 #error Unknown architecture
 #endif
@@ -1261,23 +1266,8 @@ FORCEINLINE unsigned char RoundFloatToByte(float f)
 
 FORCEINLINE unsigned long RoundFloatToUnsignedLong(float f)
 {
-#if defined(_X360)
-#ifdef Assert
-	Assert(IsFPUControlWordSet());
-#endif
-	union
-	{
-		double flResult;
-		int pIntResult[2];
-		unsigned long pResult[2];
-	};
-	flResult = __fctiw(f);
-	Assert(pIntResult[1] >= 0);
-	return pResult[1];
-#else // !X360
-
 #if defined(PLATFORM_WINDOWS_PC64)
-	uint nRet = (uint)f;
+	uint32 nRet = (uint32)f;
 	if(nRet & 1)
 	{
 		if((f - floor(f) >= 0.5))
@@ -1302,13 +1292,14 @@ FORCEINLINE unsigned long RoundFloatToUnsignedLong(float f)
 			fld f
 			fistp       qword ptr nResult
 	}
-#elif POSIX
+#elif defined(__aarch64__)
+	return round(f);
+#elif defined(POSIX)
 	__asm __volatile__("fistpl %0;" : "=m"(nResult) : "t"(f) : "st");
 #endif
 
 	return *((unsigned long *)nResult);
 #endif // PLATFORM_WINDOWS_PC64
-#endif // !X360
 }
 
 FORCEINLINE bool IsIntegralValue(float flValue, float flTolerance = 0.001f)

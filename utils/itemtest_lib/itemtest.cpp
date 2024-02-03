@@ -34,7 +34,7 @@
 #include "tier1/fmtstr.h"
 #include "tier1/utlsymbol.h"
 #include "tier2/fileutils.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "../public/zip_utils.h"
 
 // Last include
@@ -4228,7 +4228,8 @@ void CTargetDMX::OutputSounds(CUtlBuffer &buf, int nIndentLevel, CDmElement *pEx
 				BufPrintf(soundScriptBuffer, nSoundIndentLevel, "\"volume\"			\"VOL_NORM\"\n");
 				BufPrintf(soundScriptBuffer, nSoundIndentLevel, "\"pitch\"				\"PITCH_NORM\"\n");
 				BufPrintf(soundScriptBuffer, nSoundIndentLevel, "\"soundlevel\"		\"SNDLVL_95dB\"\n");
-				BufPrintf(soundScriptBuffer, nSoundIndentLevel, "\"wave\"				\"%s\"\n", strWaveName.String());
+				BufPrintf(soundScriptBuffer, nSoundIndentLevel, "\"wave\"				\"%s\"\n",
+						  strWaveName.String());
 			}
 			BufEndBlock(soundScriptBuffer, nSoundIndentLevel);
 

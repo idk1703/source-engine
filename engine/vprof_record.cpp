@@ -30,7 +30,7 @@ CVProfile *g_pVProfileForDisplay = &g_VProfCurrentProfile;
 
 long GetFileSize(FILE *fp)
 {
-	int curPos = ftell(fp);
+	long curPos = ftell(fp);
 	fseek(fp, 0, SEEK_END);
 	long ret = ftell(fp);
 	fseek(fp, curPos, SEEK_SET);

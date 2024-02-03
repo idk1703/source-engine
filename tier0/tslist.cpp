@@ -138,7 +138,7 @@ namespace TSListTests
 		}
 	}
 
-	unsigned PopThreadFunc(void *)
+	uintp PopThreadFunc(void *)
 	{
 		ThreadSetDebugName("PopThread");
 		g_nPopThreads++;
@@ -168,7 +168,7 @@ namespace TSListTests
 		return 0;
 	}
 
-	unsigned PushThreadFunc(void *)
+	uintp PushThreadFunc(void *)
 	{
 		ThreadSetDebugName("PushThread");
 		g_nPushThreads++;
@@ -308,7 +308,7 @@ namespace TSListTests
 		TestEnd();
 	}
 
-	unsigned PushPopInterleavedTestThreadFunc(void *)
+	uintp PushPopInterleavedTestThreadFunc(void *)
 	{
 		ThreadSetDebugName("PushPopThread");
 		g_nThreads++;

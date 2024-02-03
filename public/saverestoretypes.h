@@ -99,7 +99,7 @@ struct levellist_t
 
 struct EHandlePlaceholder_t // Engine does some of the game writing (alas, probably shouldn't), but can't see ehandle.h
 {
-	unsigned long i;
+	unsigned int i;
 };
 
 //-------------------------------------
@@ -522,12 +522,10 @@ inline const char *CSaveRestoreSegment::StringFromSymbol(int token)
 ///             compilers. Either way, there's no portable intrinsic.
 
 // Newer GCC versions provide this in this header, older did by default.
-#if !defined(_rotr) && defined(COMPILER_GCC)
+#if !defined(_rotr) && defined(COMPILER_GCC) && !defined(__aarch64__)
 #include <x86intrin.h>
-#endif
-
-#ifdef COMPILER_CLANG
-static __inline__ unsigned int __attribute__((__always_inline__, __nodebug__)) _rotr(unsigned int _Value, int _Shift)
+#else
+static unsigned int _rotr(unsigned int _Value, int _Shift)
 {
 	_Shift &= 0x1f;
 	return _Shift ? (_Value >> _Shift) | (_Value << (32 - _Shift)) : _Value;

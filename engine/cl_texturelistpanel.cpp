@@ -44,8 +44,8 @@
 
 #include "client.h"
 
-#include "tier2/p4helpers.h"
-#include "p4lib/ip4.h"
+// #include "tier2/p4helpers.h"
+// #include "p4lib/ip4.h"
 #include "ivtex.h"
 #include "tier2/fileutils.h"
 
@@ -749,7 +749,7 @@ namespace MatViewOverride
 						// 					if ( !stricmp( arrVars[ idxParam ]->GetName(), "$ignorez" ) )
 						// 					{
 						// 						vars.m_matInfo.ignorez = arrVars[ idxParam ]->GetIntValue() ? true :
-						// false; 						arrVars[ idxParam ]->SetIntValue( 1 ); 						continue;
+						// false; 						arrVars[ idxParam ]->SetIntValue( 1 ); continue;
 						// 					}
 
 						if(!arrVars[idxParam]->IsTexture())

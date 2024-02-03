@@ -51,7 +51,7 @@
 #include "movieobjects/dmmeshutils.h"
 #include "tier1/utlstring.h"
 #include "tier1/utlbuffer.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 // Lua includes
 #include <lua.h>

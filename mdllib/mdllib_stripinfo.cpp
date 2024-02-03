@@ -29,7 +29,7 @@ CMdlStripInfo::CMdlStripInfo() : m_eMode(MODE_UNINITIALIZED), m_lChecksumOld(0),
 
 bool CMdlStripInfo::Serialize(CUtlBuffer &bufStorage) const
 {
-	char chHeader[4] = {'M', 'A', 'P', m_eMode};
+	char chHeader[4] = {'M', 'A', 'P', static_cast<char>(m_eMode)};
 	bufStorage.Put(chHeader, sizeof(chHeader));
 
 	switch(m_eMode)

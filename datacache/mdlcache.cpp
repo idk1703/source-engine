@@ -1041,7 +1041,7 @@ void CMDLCache::UnserializeVCollide(MDLHandle_t handle, bool synchronousLoad)
 			{
 				for(int i = 1; i < pVirtualModel->m_group.Count(); i++)
 				{
-					MDLHandle_t sharedHandle = (MDLHandle_t)(int)pVirtualModel->m_group[i].cache & 0xffff;
+					MDLHandle_t sharedHandle = VoidPtrToMDLHandle(pVirtualModel->m_group[i].cache);
 					studiodata_t *pData = m_MDLDict[sharedHandle];
 					if(!(pData->m_nFlags & STUDIODATA_FLAGS_VCOLLISION_LOADED))
 					{
@@ -1412,7 +1412,7 @@ void CMDLCache::FreeVirtualModel(MDLHandle_t handle)
 		// NOTE: Start at *1* here because the 0th element contains a reference to *this* handle
 		for(int i = 1; i < nGroupCount; ++i)
 		{
-			MDLHandle_t h = (MDLHandle_t)(int)pStudioData->m_pVirtualModel->m_group[i].cache & 0xffff;
+			MDLHandle_t h = VoidPtrToMDLHandle(pStudioData->m_pVirtualModel->m_group[i].cache);
 			FreeVirtualModel(h);
 			Release(h);
 		}
@@ -2241,7 +2241,7 @@ void CMDLCache::TouchAllData(MDLHandle_t handle)
 		// ensure all sub models are cached
 		for(int i = 1; i < pVModel->m_group.Count(); ++i)
 		{
-			MDLHandle_t childHandle = (MDLHandle_t)(int)pVModel->m_group[i].cache & 0xffff;
+			MDLHandle_t childHandle = VoidPtrToMDLHandle(pVModel->m_group[i].cache);
 			if(childHandle != MDLHANDLE_INVALID)
 			{
 				// FIXME: Should this be calling TouchAllData on the child?
@@ -2580,7 +2580,7 @@ bool CMDLCache::VerifyHeaders(studiohdr_t *pStudioHdr)
 	}
 
 	char pFileName[MAX_PATH];
-	MDLHandle_t handle = (MDLHandle_t)(int)pStudioHdr->virtualModel & 0xffff;
+	MDLHandle_t handle = VoidPtrToMDLHandle(pStudioHdr->virtualModel);
 
 	MakeFilename(handle, ".vvd", pFileName, sizeof(pFileName));
 
@@ -2638,7 +2638,7 @@ vertexFileHeader_t *CMDLCache::CacheVertexData(studiohdr_t *pStudioHdr)
 
 	Assert(pStudioHdr);
 
-	handle = (MDLHandle_t)(int)pStudioHdr->virtualModel & 0xffff;
+	handle = VoidPtrToMDLHandle(pStudioHdr->virtualModel);
 	Assert(handle != MDLHANDLE_INVALID);
 
 	pVvdHdr = (vertexFileHeader_t *)CheckData(m_MDLDict[handle]->m_VertexCache, MDLCACHE_VERTEXES);
@@ -3253,7 +3253,7 @@ bool CMDLCache::SetAsyncLoad(MDLCacheDataType_t type, bool bAsync)
 //-----------------------------------------------------------------------------
 vertexFileHeader_t *CMDLCache::BuildAndCacheVertexData(studiohdr_t *pStudioHdr, vertexFileHeader_t *pRawVvdHdr)
 {
-	MDLHandle_t handle = (MDLHandle_t)(int)pStudioHdr->virtualModel & 0xffff;
+	MDLHandle_t handle = VoidPtrToMDLHandle(pStudioHdr->virtualModel);
 	vertexFileHeader_t *pVvdHdr;
 
 	MdlCacheMsg("MDLCache: Load VVD for %s\n", pStudioHdr->pszName());
@@ -3346,7 +3346,7 @@ vertexFileHeader_t *CMDLCache::LoadVertexData(studiohdr_t *pStudioHdr)
 	MDLHandle_t handle;
 
 	Assert(pStudioHdr);
-	handle = (MDLHandle_t)(int)pStudioHdr->virtualModel & 0xffff;
+	handle = VoidPtrToMDLHandle(pStudioHdr->virtualModel);
 	Assert(!m_MDLDict[handle]->m_VertexCache);
 
 	studiodata_t *pStudioData = m_MDLDict[handle];
@@ -3594,7 +3594,7 @@ void CMDLCache::QueuedLoaderCallback_MDL(void *pContext, void *pContext2, const 
 
 	// journal each incoming buffer
 	ModelParts_t *pModelParts = (ModelParts_t *)pContext;
-	ModelParts_t::BufferType_t bufferType = static_cast<ModelParts_t::BufferType_t>((int)pContext2);
+	ModelParts_t::BufferType_t bufferType = static_cast<ModelParts_t::BufferType_t>((uintp)pContext2);
 	pModelParts->Buffers[bufferType].SetExternalBuffer((void *)pData, nSize, nSize, CUtlBuffer::READ_ONLY);
 	pModelParts->nLoadedParts += (1 << bufferType);
 
@@ -3917,20 +3917,20 @@ virtualmodel_t *studiohdr_t::GetVirtualModel(void) const
 	if(numincludemodels == 0)
 		return NULL;
 
-	return g_MDLCache.GetVirtualModelFast(this, (MDLHandle_t)(int)virtualModel & 0xffff);
+	return g_MDLCache.GetVirtualModelFast(this, VoidPtrToMDLHandle(virtualModel));
 }
 
 byte *studiohdr_t::GetAnimBlock(int i) const
 {
-	return g_MDLCache.GetAnimBlock((MDLHandle_t)(int)virtualModel & 0xffff, i);
+	return g_MDLCache.GetAnimBlock(VoidPtrToMDLHandle(virtualModel), i);
 }
 
 int studiohdr_t::GetAutoplayList(unsigned short **pOut) const
 {
-	return g_MDLCache.GetAutoplayList((MDLHandle_t)(int)virtualModel & 0xffff, pOut);
+	return g_MDLCache.GetAutoplayList(VoidPtrToMDLHandle(virtualModel), pOut);
 }
 
 const studiohdr_t *virtualgroup_t::GetStudioHdr(void) const
 {
-	return g_MDLCache.GetStudioHdr((MDLHandle_t)(int)cache & 0xffff);
+	return g_MDLCache.GetStudioHdr(VoidPtrToMDLHandle(cache));
 }

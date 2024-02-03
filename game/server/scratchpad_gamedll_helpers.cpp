@@ -13,7 +13,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-void ScratchPad_DrawWorldToScratchPad(IScratchPad3D *pPad, unsigned long flags)
+void ScratchPad_DrawWorldToScratchPad(IScratchPad3D *pPad, unsigned int flags)
 {
 	pPad->SetRenderState(IScratchPad3D::RS_FillMode, IScratchPad3D::FillMode_Wireframe);
 
@@ -41,7 +41,7 @@ void ScratchPad_DrawWorldToScratchPad(IScratchPad3D *pPad, unsigned long flags)
 	}
 }
 
-void ScratchPad_DrawEntityToScratchPad(IScratchPad3D *pPad, unsigned long flags, CBaseEntity *pEnt,
+void ScratchPad_DrawEntityToScratchPad(IScratchPad3D *pPad, unsigned int flags, CBaseEntity *pEnt,
 									   const Vector &vColor)
 {
 	// Draw the entity's bbox [todo: draw OBBs here too].

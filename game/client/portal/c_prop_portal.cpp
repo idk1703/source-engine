@@ -41,13 +41,15 @@
 #include "debugoverlay_shared.h"
 
 LINK_ENTITY_TO_CLASS(prop_portal, C_Prop_Portal);
-
+// clang-format off
 IMPLEMENT_CLIENTCLASS_DT(C_Prop_Portal, DT_Prop_Portal, CProp_Portal)
-RecvPropEHandle(RECVINFO(m_hLinkedPortal)), RecvPropBool(RECVINFO(m_bActivated)), RecvPropBool(RECVINFO(m_bIsPortal2)),
-END_RECV_TABLE
-()
+	RecvPropEHandle(RECVINFO(m_hLinkedPortal)),
+	RecvPropBool(RECVINFO(m_bActivated)),
+	RecvPropBool(RECVINFO(m_bIsPortal2)),
+END_RECV_TABLE()
+// clang-format on
 
-	void __MsgFunc_EntityPortalled(bf_read &msg)
+void __MsgFunc_EntityPortalled(bf_read &msg)
 {
 	long iEncodedEHandle;
 	int iEntity, iSerialNum;

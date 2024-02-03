@@ -490,7 +490,7 @@ PSDImageResources::ResElement PSDImageResources::FindElement(Resource eType) con
 		// 2 : length
 		// bytes[ length ]
 
-		unsigned long uSignature = BigLong(*(unsigned long *)(pvBuffer));
+		uint32 uSignature = BigLong(*(uint32 *)(pvBuffer));
 		pvBuffer += 4;
 		if(uSignature != PSD_IMGRES_SIGNATURE)
 			break;

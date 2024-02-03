@@ -94,7 +94,7 @@ namespace TGALoader
 			return false;
 
 		// How big is the file?
-		long pos;
+		size_t pos;
 		if(maxbytes < 0)
 		{
 			pos = g_pFullFileSystem->Size(fileHandle);

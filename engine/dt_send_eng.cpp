@@ -266,7 +266,7 @@ static inline void ShowEncodeDeltaWatchInfo(const SendTable *pTable, const SendP
 			value);
 }
 
-static FORCEINLINE void SendTable_EncodeProp(CEncodeInfo *pInfo, unsigned long iProp)
+static FORCEINLINE void SendTable_EncodeProp(CEncodeInfo *pInfo, unsigned int iProp)
 {
 	// Call their proxy to get the property's value.
 	DVariant var;
@@ -285,7 +285,7 @@ static FORCEINLINE void SendTable_EncodeProp(CEncodeInfo *pInfo, unsigned long i
 										pInfo->GetObjectID());
 }
 
-static bool SendTable_IsPropZero(CEncodeInfo *pInfo, unsigned long iProp)
+static bool SendTable_IsPropZero(CEncodeInfo *pInfo, unsigned int iProp)
 {
 	const SendProp *pProp = pInfo->GetCurProp();
 

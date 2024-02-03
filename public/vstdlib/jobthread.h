@@ -1133,17 +1133,17 @@ class CParallelLoopProcessor
 public:
 	CParallelLoopProcessor(const char *pszDescription)
 	{
-		m_lIndex = m_lLimit = 0;
+		m_nIndex = m_nLimit = 0;
 		m_nActive = 0;
 		m_szDescription = pszDescription;
 	}
 
-	void Run(long lBegin, long nItems, int nMaxParallel = INT_MAX)
+	void Run(int nBegin, int nItems, int nMaxParallel = INT_MAX)
 	{
 		if(nItems)
 		{
-			m_lIndex = lBegin;
-			m_lLimit = lBegin + nItems;
+			m_nIndex = nBegin;
+			m_nLimit = nBegin + nItems;
 			int i = g_pThreadPool->NumIdleThreads();
 
 			if(nMaxParallel < i)
@@ -1176,14 +1176,14 @@ private:
 
 		m_ItemProcessor.Begin();
 
-		long lLimit = m_lLimit;
+		int lLimit = m_nLimit;
 
 		for(;;)
 		{
-			long lIndex = m_lIndex++;
-			if(lIndex < lLimit)
+			int nIndex = m_nIndex++;
+			if(nIndex < lLimit)
 			{
-				m_ItemProcessor.Process(lIndex);
+				m_ItemProcessor.Process(nIndex);
 			}
 			else
 			{
@@ -1195,31 +1195,31 @@ private:
 
 		--m_nActive;
 	}
-	CInterlockedInt m_lIndex;
-	long m_lLimit;
+	CInterlockedInt m_nIndex;
+	int m_nLimit;
 	CInterlockedInt m_nActive;
 	const char *m_szDescription;
 };
 
-inline void ParallelLoopProcess(const char *szDescription, long lBegin, unsigned nItems,
-								void (*pfnProcess)(long const &), void (*pfnBegin)() = NULL, void (*pfnEnd)() = NULL,
+inline void ParallelLoopProcess(const char *szDescription, int nBegin, unsigned nItems,
+								void (*pfnProcess)(int const &), void (*pfnBegin)() = NULL, void (*pfnEnd)() = NULL,
 								int nMaxParallel = INT_MAX)
 {
-	CParallelLoopProcessor<CFuncJobItemProcessor<long const>> processor(szDescription);
+	CParallelLoopProcessor<CFuncJobItemProcessor<int const>> processor(szDescription);
 	processor.m_ItemProcessor.Init(pfnProcess, pfnBegin, pfnEnd);
-	processor.Run(lBegin, nItems, nMaxParallel);
+	processor.Run(nBegin, nItems, nMaxParallel);
 }
 
 template<typename OBJECT_TYPE, typename FUNCTION_CLASS>
-inline void ParallelLoopProcess(const char *szDescription, long lBegin, unsigned nItems, OBJECT_TYPE *pObject,
-								void (FUNCTION_CLASS::*pfnProcess)(long const &),
+inline void ParallelLoopProcess(const char *szDescription, int nBegin, unsigned nItems, OBJECT_TYPE *pObject,
+								void (FUNCTION_CLASS::*pfnProcess)(int const &),
 								void (FUNCTION_CLASS::*pfnBegin)() = NULL, void (FUNCTION_CLASS::*pfnEnd)() = NULL,
 								int nMaxParallel = INT_MAX)
 {
-	CParallelLoopProcessor<CMemberFuncJobItemProcessor<long const, OBJECT_TYPE, FUNCTION_CLASS>> processor(
+	CParallelLoopProcessor<CMemberFuncJobItemProcessor<int const, OBJECT_TYPE, FUNCTION_CLASS>> processor(
 		szDescription);
 	processor.m_ItemProcessor.Init(pObject, pfnProcess, pfnBegin, pfnEnd);
-	processor.Run(lBegin, nItems, nMaxParallel);
+	processor.Run(nBegin, nItems, nMaxParallel);
 }
 
 template<class Derived>
@@ -1302,7 +1302,7 @@ private:
 // Raw thread launching
 //-----------------------------------------------------------------------------
 
-inline unsigned FunctorExecuteThread(void *pParam)
+inline uintp FunctorExecuteThread(void *pParam)
 {
 	CFunctor *pFunctor = (CFunctor *)pParam;
 	(*pFunctor)();

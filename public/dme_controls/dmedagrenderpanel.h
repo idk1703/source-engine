@@ -13,7 +13,7 @@
 #endif
 
 #include "tier1/utlvector.h"
-#include "matsys_controls/PotteryWheelPanel.h"
+#include "matsys_controls/potterywheelpanel.h"
 #include "datamodel/dmehandle.h"
 
 //-----------------------------------------------------------------------------
@@ -27,11 +27,12 @@ class CDmeSourceSkin;
 class CDmeSourceAnimation;
 class CDmeDCCMakefile;
 class CDmeDrawSettings;
-class vgui::MenuBar;
+// class vgui::MenuBar;
 
 namespace vgui
 {
 	class IScheme;
+	class MenuBar;
 }
 
 //-----------------------------------------------------------------------------

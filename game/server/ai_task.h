@@ -7,6 +7,9 @@
 
 #ifndef AI_TASK_H
 #define AI_TASK_H
+
+#include "platform.h"
+
 #ifdef _WIN32
 #pragma once
 #endif
@@ -65,7 +68,7 @@ inline bool IsPathTaskFailure(AI_TaskFailureCode_t code)
 const char *TaskFailureToString(AI_TaskFailureCode_t code);
 inline int MakeFailCode(const char *pszGeneralError)
 {
-	return (int)pszGeneralError;
+	return (intp)pszGeneralError;
 }
 
 enum TaskStatus_e

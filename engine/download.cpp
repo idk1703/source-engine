@@ -41,7 +41,7 @@
 #include "tier0/vcrmode.h"
 #include "cdll_engine_int.h"
 
-#include "../utils/bzip2/bzlib.h"
+#include <bzlib.h>
 
 #if defined(_X360)
 #include "xbox/xbox_win32stubs.h"
@@ -941,13 +941,13 @@ void CDownloadManager::StartNewDownload()
 		m_lastPercent = 0;
 
 		// Start the thread
-		DWORD threadID;
+		ThreadId_t threadID;
 		VCRHook_CreateThread(NULL, 0,
 #ifdef POSIX
 							 (void *)
 #endif
 								 DownloadThread,
-							 m_activeRequest, 0, (unsigned long int *)&threadID);
+							 m_activeRequest, 0, &threadID);
 
 		ThreadDetach((ThreadHandle_t)threadID);
 	}
@@ -1090,13 +1090,13 @@ class CDownloadSystem : public IDownloadSystem
 public:
 	virtual DWORD CreateDownloadThread(RequestContext_t *pContext)
 	{
-		DWORD nThreadID;
+		ThreadId_t nThreadID;
 		VCRHook_CreateThread(NULL, 0,
 #ifdef POSIX
 							 (void *)
 #endif
 								 DownloadThread,
-							 pContext, 0, (unsigned long int *)&nThreadID);
+							 pContext, 0, &nThreadID);
 
 		ThreadDetach((ThreadHandle_t)nThreadID);
 		return nThreadID;

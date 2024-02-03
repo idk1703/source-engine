@@ -50,12 +50,12 @@
 #include "tier1/tier1.h"
 #include "tier2/tier2.h"
 #include "tier3/tier3.h"
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "inputsystem/iinputsystem.h"
 #include "filesystem/IQueuedLoader.h"
 #include "reslistgenerator.h"
 #include "tier1/fmtstr.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 #define VERSION_SAFE_STEAM_API_INTERFACES
 #include "steam/steam_api.h"
@@ -67,7 +67,7 @@
 #endif
 
 #if defined(USE_SDL)
-#include "SDL.h"
+#include <SDL2/SDL.h>
 
 #if !defined(_WIN32)
 #define MB_OK		   0x00000001
@@ -561,7 +561,7 @@ void TryToLoadSteamOverlayDLL()
 {
 #if defined(WIN32) && !defined(_X360)
 	// First, check if the module is already loaded, perhaps because we were run from Steam directly
-	HMODULE hMod = GetModuleHandle("GameOverlayRenderer" DLL_EXT_STRING);
+	HMODULE hMod = GetModuleHandle("GameOverlayRenderer" LIB_EXT_STR);
 	if(hMod)
 	{
 		return;
@@ -577,7 +577,7 @@ void TryToLoadSteamOverlayDLL()
 			if(pchSteamInstallPath)
 			{
 				char rgchSteamPath[MAX_PATH];
-				V_ComposeFileName(pchSteamInstallPath, "GameOverlayRenderer" DLL_EXT_STRING, rgchSteamPath,
+				V_ComposeFileName(pchSteamInstallPath, "GameOverlayRenderer" LIB_EXT_STR, rgchSteamPath,
 								  Q_ARRAYSIZE(rgchSteamPath));
 				// This could fail, but we can't fix it if it does so just ignore failures
 				LoadLibrary(rgchSteamPath);
@@ -646,20 +646,20 @@ bool CSourceAppSystemGroup::Create()
 	double st = Plat_FloatTime();
 
 	AppSystemInfo_t appSystems[] = {
-		{"engine" DLL_EXT_STRING, CVAR_QUERY_INTERFACE_VERSION}, // NOTE: This one must be first!!
-		{"inputsystem" DLL_EXT_STRING, INPUTSYSTEM_INTERFACE_VERSION},
-		{"materialsystem" DLL_EXT_STRING, MATERIAL_SYSTEM_INTERFACE_VERSION},
-		{"datacache" DLL_EXT_STRING, DATACACHE_INTERFACE_VERSION},
-		{"datacache" DLL_EXT_STRING, MDLCACHE_INTERFACE_VERSION},
-		{"datacache" DLL_EXT_STRING, STUDIO_DATA_CACHE_INTERFACE_VERSION},
-		{"studiorender" DLL_EXT_STRING, STUDIO_RENDER_INTERFACE_VERSION},
-		{"vphysics" DLL_EXT_STRING, VPHYSICS_INTERFACE_VERSION},
-		{"video_services" DLL_EXT_STRING, VIDEO_SERVICES_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "engine" LIB_EXT_STR, CVAR_QUERY_INTERFACE_VERSION}, // NOTE: This one must be first!!
+		{LIB_PREFIX_STR "inputsystem" LIB_EXT_STR, INPUTSYSTEM_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "materialsystem" LIB_EXT_STR, MATERIAL_SYSTEM_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "datacache" LIB_EXT_STR, DATACACHE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "datacache" LIB_EXT_STR, MDLCACHE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "datacache" LIB_EXT_STR, STUDIO_DATA_CACHE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "studiorender" LIB_EXT_STR, STUDIO_RENDER_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "vphysics" LIB_EXT_STR, VPHYSICS_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "video_services" LIB_EXT_STR, VIDEO_SERVICES_INTERFACE_VERSION},
 
 		// NOTE: This has to occur before vgui2.dll so it replaces vgui2's surface implementation
-		{"vguimatsurface" DLL_EXT_STRING, VGUI_SURFACE_INTERFACE_VERSION},
-		{"vgui2" DLL_EXT_STRING, VGUI_IVGUI_INTERFACE_VERSION},
-		{"engine" DLL_EXT_STRING, VENGINE_LAUNCHER_API_VERSION},
+		{LIB_PREFIX_STR "vguimatsurface" LIB_EXT_STR, VGUI_SURFACE_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "vgui2" LIB_EXT_STR, VGUI_IVGUI_INTERFACE_VERSION},
+		{LIB_PREFIX_STR "engine" LIB_EXT_STR, VENGINE_LAUNCHER_API_VERSION},
 
 		{"", ""} // Required to terminate the list
 	};
@@ -672,11 +672,13 @@ bool CSourceAppSystemGroup::Create()
 		return false;
 
 	// This will be NULL for games that don't support VR. That's ok. Just don't load the DLL
-	AppModule_t sourceVRModule = LoadModule("sourcevr" DLL_EXT_STRING);
+#if 0
+	AppModule_t sourceVRModule = LoadModule(LIB_PREFIX_STR "sourcevr" LIB_EXT_STR);
 	if(sourceVRModule != APP_MODULE_INVALID)
 	{
 		AddSystem(sourceVRModule, SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION);
 	}
+#endif
 
 	// pull in our filesystem dll to pull the queued loader from it, we need to do it this way due to the
 	// steam/stdio split for our steam filesystem
@@ -693,7 +695,7 @@ bool CSourceAppSystemGroup::Create()
 	   ((CommandLine()->FindParm("-tools") && !CommandLine()->FindParm("-nop4")) || CommandLine()->FindParm("-p4")))
 	{
 #ifdef STAGING_ONLY
-		AppModule_t p4libModule = LoadModule("p4lib" DLL_EXT_STRING);
+		AppModule_t p4libModule = LoadModule("p4lib" LIB_EXT_STR);
 		IP4 *p4 = (IP4 *)AddSystem(p4libModule, P4_INTERFACE_VERSION);
 
 		// If we are running with -steam then that means the tools are being used by an SDK user. Don't exit in this
@@ -704,7 +706,7 @@ bool CSourceAppSystemGroup::Create()
 		}
 #endif // STAGING_ONLY
 
-		AppModule_t vstdlibModule = LoadModule("vstdlib" DLL_EXT_STRING);
+		AppModule_t vstdlibModule = LoadModule(LIB_PREFIX_STR "vstdlib" LIB_EXT_STR);
 		IProcessUtils *processUtils = (IProcessUtils *)AddSystem(vstdlibModule, PROCESS_UTILS_INTERFACE_VERSION);
 		if(!processUtils)
 			return false;
@@ -721,7 +723,7 @@ bool CSourceAppSystemGroup::Create()
 #if defined(_WIN32) && defined(STAGING_ONLY)
 	if(m_bEditMode)
 	{
-		AppModule_t hammerModule = LoadModule("hammer_dll" DLL_EXT_STRING);
+		AppModule_t hammerModule = LoadModule(LIB_PREFIX_STR "hammer" LIB_EXT_STR);
 		g_pHammer = (IHammer *)AddSystem(hammerModule, INTERFACEVERSION_HAMMER);
 		if(!g_pHammer)
 		{
@@ -732,10 +734,10 @@ bool CSourceAppSystemGroup::Create()
 
 	// Load up the appropriate shader DLL
 	// This has to be done before connection.
-	char const *pDLLName = "shaderapidx9" DLL_EXT_STRING;
+	char const *pDLLName = LIB_PREFIX_STR "shaderapidx9" LIB_EXT_STR;
 	if(CommandLine()->FindParm("-noshaderapi"))
 	{
-		pDLLName = "shaderapiempty" DLL_EXT_STRING;
+		pDLLName = LIB_PREFIX_STR "shaderapiempty" LIB_EXT_STR;
 	}
 
 	pMaterialSystem->SetShaderAPI(pDLLName);

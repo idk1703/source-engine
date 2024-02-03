@@ -1,13 +1,14 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 //=============================================================================
-
+#ifdef _WIN32
 #include <windows.h>
-#include <tier0/dbg.h>
 #include <io.h>
-#include <WorldSize.h>
-#include "fgdlib/GameData.h"
-#include "fgdlib/HelperInfo.h"
+#endif
+#include <tier0/dbg.h>
+#include <worldsize.h>
+#include "fgdlib/gamedata.h"
+#include "fgdlib/helperinfo.h"
 #include "KeyValues.h"
 #include "filesystem_tools.h"
 #include "tier1/strtools.h"
@@ -268,8 +269,10 @@ BOOL GameData::Load(const char *pszFilename)
 {
 	TokenReader tr;
 
+#ifdef _WIN32
 	if(GetFileAttributes(pszFilename) == 0xffffffff)
 		return FALSE;
+#endif
 
 	if(!tr.Open(pszFilename))
 		return FALSE;

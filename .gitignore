@@ -1,4 +1,6 @@
-
+.cache
+/build*
+/out
 # ignore some unnecessary source engine files
 /app
 /common/curl
@@ -7,7 +9,6 @@
 /common/opengl
 /common/protobuf-*
 /common/python
-/common/xbox
 /devtools
 /external/crypto++-*
 /external/v8
@@ -33,7 +34,6 @@
 /public/zlib
 /sourcevr
 /thirdparty/JSON_parser
-/thirdparty/stb
 /thirdparty/telemetry
 /tools/runtime
 /utils/bzip2

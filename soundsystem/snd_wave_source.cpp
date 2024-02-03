@@ -25,12 +25,12 @@
 class StdIOReadBinary : public IFileReadBinary
 {
 public:
-	int open(const char *pFileName)
+	intp open(const char *pFileName)
 	{
-		return (int)g_pFullFileSystem->Open(pFileName, "rb", "GAME");
+		return (intp)g_pFullFileSystem->Open(pFileName, "rb", "GAME");
 	}
 
-	int read(void *pOutput, int size, int file)
+	int read(void *pOutput, int size, intp file)
 	{
 		if(!file)
 			return 0;
@@ -38,7 +38,7 @@ public:
 		return g_pFullFileSystem->Read(pOutput, size, (FileHandle_t)file);
 	}
 
-	void seek(int file, int pos)
+	void seek(intp file, int pos)
 	{
 		if(!file)
 			return;
@@ -46,7 +46,7 @@ public:
 		g_pFullFileSystem->Seek((FileHandle_t)file, pos, FILESYSTEM_SEEK_HEAD);
 	}
 
-	unsigned int tell(int file)
+	unsigned int tell(intp file)
 	{
 		if(!file)
 			return 0;
@@ -54,7 +54,7 @@ public:
 		return g_pFullFileSystem->Tell((FileHandle_t)file);
 	}
 
-	unsigned int size(int file)
+	unsigned int size(intp file)
 	{
 		if(!file)
 			return 0;
@@ -62,7 +62,7 @@ public:
 		return g_pFullFileSystem->Size((FileHandle_t)file);
 	}
 
-	void close(int file)
+	void close(intp file)
 	{
 		if(!file)
 			return;

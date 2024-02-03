@@ -298,11 +298,11 @@ class CRefMT
 public:
 	static int Increment(int *p)
 	{
-		return ThreadInterlockedIncrement((long *)p);
+		return ThreadInterlockedIncrement((int32 *)p);
 	}
 	static int Decrement(int *p)
 	{
-		return ThreadInterlockedDecrement((long *)p);
+		return ThreadInterlockedDecrement((int32 *)p);
 	}
 };
 

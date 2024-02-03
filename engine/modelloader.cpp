@@ -1827,7 +1827,7 @@ void *Hunk_AllocNameAlignedClear_(int size, int alignment, const char *pHunkName
 	Assert(IsPowerOfTwo(alignment));
 	void *pMem = Hunk_AllocName(alignment + size, pHunkName);
 	memset(pMem, 0, size + alignment);
-	pMem = (void *)((((unsigned long)pMem) + (alignment - 1)) & ~(alignment - 1));
+	pMem = (void *)((((uintp)pMem) + (alignment - 1)) & ~(alignment - 1));
 
 	return pMem;
 }
@@ -2861,7 +2861,7 @@ void Mod_TouchAllData(model_t *pModel, int nServerCount)
 		// skip self, start at children
 		for(int i = 1; i < pVirtualModel->m_group.Count(); ++i)
 		{
-			MDLHandle_t childHandle = (MDLHandle_t)(int)pVirtualModel->m_group[i].cache & 0xffff;
+			MDLHandle_t childHandle = VoidPtrToMDLHandle(pVirtualModel->m_group[i].cache);
 			model_t *pChildModel = (model_t *)g_pMDLCache->GetUserData(childHandle);
 			if(pChildModel)
 			{
@@ -4367,7 +4367,7 @@ static void MarkBrushModelWaterSurfaces(model_t *world, Vector const &mins, Vect
 	model_t *pTemp = host_state.worldmodel;
 	CBrushBSPIterator brushIterator(world, brush);
 	host_state.SetWorldModel(world);
-	g_pToolBSPTree->EnumerateLeavesInBox(mins, maxs, &brushIterator, (int)brush);
+	g_pToolBSPTree->EnumerateLeavesInBox(mins, maxs, &brushIterator, (uintp)brush);
 	brushIterator.CheckSurfaces();
 	host_state.SetWorldModel(pTemp);
 }

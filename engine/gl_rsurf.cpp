@@ -1567,7 +1567,7 @@ void Shader_DrawChains(const CWorldRenderList *pRenderList, int nSortGroup, bool
 //-----------------------------------------------------------------------------
 // Draws all of the opaque displacement surfaces queued up previously
 //-----------------------------------------------------------------------------
-void Shader_DrawDispChain(int nSortGroup, const CMSurfaceSortList &list, unsigned long flags,
+void Shader_DrawDispChain(int nSortGroup, const CMSurfaceSortList &list, unsigned int flags,
 						  ERenderDepthMode DepthMode)
 {
 	VPROF_BUDGET("Shader_DrawDispChain", VPROF_BUDGETGROUP_DISPLACEMENT_RENDERING);
@@ -1839,7 +1839,7 @@ static ConVar r_flashlightrendermodels("r_flashlightrendermodels", "1");
 //-----------------------------------------------------------------------------
 // Performs the shadow depth texture fill
 //-----------------------------------------------------------------------------
-static void Shader_WorldShadowDepthFill(CWorldRenderList *pRenderList, unsigned long flags)
+static void Shader_WorldShadowDepthFill(CWorldRenderList *pRenderList, unsigned int flags)
 {
 	tmZoneFiltered(TELEMETRY_LEVEL0, 50, TMZF_NONE, "%s", __FUNCTION__);
 
@@ -1981,7 +1981,7 @@ static void Shader_WorldShadowDepthFill(CWorldRenderList *pRenderList, unsigned 
 //-----------------------------------------------------------------------------
 // Performs the z-fill
 //-----------------------------------------------------------------------------
-static void Shader_WorldZFill(CWorldRenderList *pRenderList, unsigned long flags)
+static void Shader_WorldZFill(CWorldRenderList *pRenderList, unsigned int flags)
 {
 	tmZoneFiltered(TELEMETRY_LEVEL0, 50, TMZF_NONE, "%s", __FUNCTION__);
 
@@ -2102,7 +2102,7 @@ static void Shader_WorldZFill(CWorldRenderList *pRenderList, unsigned long flags
 //-----------------------------------------------------------------------------
 // Call this after lists of stuff to render are made; it renders opaque surfaces
 //-----------------------------------------------------------------------------
-static void Shader_WorldEnd(CWorldRenderList *pRenderList, unsigned long flags, float waterZAdjust)
+static void Shader_WorldEnd(CWorldRenderList *pRenderList, unsigned int flags, float waterZAdjust)
 {
 	VPROF("Shader_WorldEnd");
 
@@ -2218,7 +2218,7 @@ static void Shader_WorldEnd(CWorldRenderList *pRenderList, unsigned long flags, 
 //-----------------------------------------------------------------------------
 // Renders translucent surfaces
 //-----------------------------------------------------------------------------
-bool Shader_LeafContainsTranslucentSurfaces(IWorldRenderList *pRenderListIn, int sortIndex, unsigned long flags)
+bool Shader_LeafContainsTranslucentSurfaces(IWorldRenderList *pRenderListIn, int sortIndex, unsigned int flags)
 {
 	CWorldRenderList *pRenderList = assert_cast<CWorldRenderList *>(pRenderListIn);
 	int i;
@@ -2242,7 +2242,7 @@ bool Shader_LeafContainsTranslucentSurfaces(IWorldRenderList *pRenderListIn, int
 	return false;
 }
 
-void Shader_DrawTranslucentSurfaces(IWorldRenderList *pRenderListIn, int sortIndex, unsigned long flags,
+void Shader_DrawTranslucentSurfaces(IWorldRenderList *pRenderListIn, int sortIndex, unsigned int flags,
 									bool bShadowDepth)
 {
 	if(!r_drawtranslucentworld.GetBool())
@@ -3227,7 +3227,7 @@ void R_GetVisibleFogVolume(const Vector &vEyePoint, VisibleFogVolumeInfo_t *pInf
 int g_DebugSurfIndex = -1;
 #endif
 
-void R_DrawWorldLists(IWorldRenderList *pRenderListIn, unsigned long flags, float waterZAdjust)
+void R_DrawWorldLists(IWorldRenderList *pRenderListIn, unsigned int flags, float waterZAdjust)
 {
 	CWorldRenderList *pRenderList = assert_cast<CWorldRenderList *>(pRenderListIn);
 	if(g_bTextMode || g_LostVideoMemory)

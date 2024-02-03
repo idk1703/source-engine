@@ -192,7 +192,7 @@ class CGrowableVector : public CUtlVector<T>
 public:
 	T &operator[](int idx)
 	{
-		while(idx >= Count())
+		while(idx >= this->Count())
 			AddToTail(T());
 		return CUtlVector<T>::operator[](idx);
 	}

@@ -38,7 +38,7 @@
 #include "toolframework/itoolframework.h"
 #include "icommandline.h"
 #include "VGuiMatSurface/IMatSystemSurface.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #include "materialsystem/itexture.h"
 #include "render.h"
 #include "iclientvirtualreality.h"
@@ -133,11 +133,13 @@ void V_RenderVGuiOnly_NoSwap()
 	// the loading screen.
 	UpdateMaterialSystemConfig();
 
+#if 0
 	if(UseVR() && g_pClientVR)
 	{
 		g_pClientVR->DrawMainMenu();
 	}
 	else
+#endif
 	{
 		CMatRenderContextPtr pRenderContext(materials);
 
@@ -369,7 +371,7 @@ public:
 										  pReflectionWaterHeight);
 	}
 
-	void DrawWorldLists(IWorldRenderList *pList, unsigned long flags, float waterZAdjust)
+	void DrawWorldLists(IWorldRenderList *pList, unsigned int flags, float waterZAdjust)
 	{
 		g_EngineRenderer->DrawWorldLists(pList, flags, waterZAdjust);
 	}
@@ -400,12 +402,12 @@ public:
 		// R_DrawMaskEntities()
 	}
 
-	void DrawTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned long flags, bool bShadowDepth)
+	void DrawTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned int flags, bool bShadowDepth)
 	{
 		Shader_DrawTranslucentSurfaces(pList, sortIndex, flags, bShadowDepth);
 	}
 
-	bool LeafContainsTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned long flags)
+	bool LeafContainsTranslucentSurfaces(IWorldRenderList *pList, int sortIndex, unsigned int flags)
 	{
 		return Shader_LeafContainsTranslucentSurfaces(pList, sortIndex, flags);
 	}
@@ -532,7 +534,7 @@ public:
 		BoxIntersectWaterContext_t context;
 		context.m_bFoundWaterLeaf = false;
 		context.m_nLeafWaterDataID = leafWaterDataID;
-		g_pToolBSPTree->EnumerateLeavesInBox(mins, maxs, this, (int)&context);
+		g_pToolBSPTree->EnumerateLeavesInBox(mins, maxs, this, (uintp)&context);
 		return context.m_bFoundWaterLeaf;
 	}
 

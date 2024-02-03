@@ -31,7 +31,7 @@ void CBitWrite::StartWriting( void *pData, int nBytes, int iStartBit, int nBits 
 {
 	// Make sure it's dword aligned and padded.
 	Assert( (nBytes % 4) == 0 );
-	Assert(((unsigned long)pData & 3) == 0);
+	Assert(((uintp)pData & 3) == 0);
 	Assert( iStartBit == 0 );
 	m_pData = (uint32 *) pData;
 	m_pDataOut = m_pData;
@@ -109,8 +109,8 @@ void CBitWrite::WriteLongLong(int64 val)
 	// Insert the two DWORDS according to network endian
 	const short endianIndex = 0x0100;
 	byte *idx = (byte*)&endianIndex;
-	WriteUBitLong(pLongs[*idx++], sizeof(long) << 3);
-	WriteUBitLong(pLongs[*idx], sizeof(long) << 3);
+	WriteUBitLong(pLongs[*idx++], sizeof(int) << 3);
+	WriteUBitLong(pLongs[*idx], sizeof(int) << 3);
 }
 
 bool CBitWrite::WriteBits(const void *pInData, int nBits)
@@ -392,7 +392,7 @@ bool CBitRead::Seek( int nPosition )
 void CBitRead::StartReading( const void *pData, int nBytes, int iStartBit, int nBits )
 {
 // Make sure it's dword aligned and padded.
-	Assert(((unsigned long)pData & 3) == 0);
+	Assert(((uintp)pData & 3) == 0);
 	m_pData = (uint32 *) pData;
 	m_pDataIn = m_pData;
 	m_nDataBytes = nBytes;
@@ -473,8 +473,8 @@ int64 CBitRead::ReadLongLong( void )
 	// Read the two DWORDs according to network endian
 	const short endianIndex = 0x0100;
 	byte *idx = (byte*)&endianIndex;
-	pLongs[*idx++] = ReadUBitLong(sizeof(long) << 3);
-	pLongs[*idx] = ReadUBitLong(sizeof(long) << 3);
+	pLongs[*idx++] = ReadUBitLong(sizeof(int) << 3);
+	pLongs[*idx] = ReadUBitLong(sizeof(int) << 3);
 	return retval;
 }
 
@@ -485,7 +485,7 @@ void CBitRead::ReadBits(void *pOutData, int nBits)
 
 
 	// align output to dword boundary
-	while( ((unsigned long)pOut & 3) != 0 && nBitsLeft >= 8 )
+	while( ((unsigned int)pOut & 3) != 0 && nBitsLeft >= 8 )
 	{
 		*pOut = (unsigned char)ReadUBitLong(8);
 		++pOut;
@@ -498,8 +498,8 @@ void CBitRead::ReadBits(void *pOutData, int nBits)
 		// read dwords
 		while ( nBitsLeft >= 32 )
 		{
-			*((unsigned long*)pOut) = ReadUBitLong(32);
-			pOut += sizeof(unsigned long);
+			*((unsigned int*)pOut) = ReadUBitLong(32);
+			pOut += sizeof(unsigned int);
 			nBitsLeft -= 32;
 		}
 	}

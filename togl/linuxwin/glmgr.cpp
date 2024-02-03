@@ -657,7 +657,7 @@ void GLMContext::DumpCaps(void)
 #define dumpfield_hex(fff) printf("\n  %-30s : 0x%08x", #fff, (int)m_caps.fff)
 #define dumpfield_str(fff) printf("\n  %-30s : %s", #fff, m_caps.fff)
 
-	printf("\n-------------------------------- context caps for context %08x", (uint)this);
+	printf("\n-------------------------------- context caps for context %08x", (uintp)this);
 
 	dumpfield(m_fullscreen);
 	dumpfield(m_accelerated);
@@ -2017,7 +2017,7 @@ void GLMContext::Clear(bool color, unsigned long colorValue, bool depth, float d
 		GLStencilWriteMask_t newstenmask = {(GLint)0xFFFFFFFF};
 
 		GLColorMaskSingle_t oldcolormask;
-		GLColorMaskSingle_t newcolormask = {-1, -1, -1, -1}; // D3D clears do not honor color mask, so force it
+		GLColorMaskSingle_t newcolormask = {(char)-1, (char)-1, (char)-1, (char)-1}; // D3D clears do not honor color mask, so force it
 
 		if(color)
 		{
@@ -5240,11 +5240,11 @@ void GLMContext::DrawRangeElementsNonInline(GLenum mode, GLuint start, GLuint en
 	if(pIndexBuf->m_bPseudo)
 	{
 		// you have to pass actual address, not offset
-		indicesActual = (void *)((int)indicesActual + (int)pIndexBuf->m_pPseudoBuf);
+		indicesActual = (void *)((uintp)indicesActual + (uintp)pIndexBuf->m_pPseudoBuf);
 	}
 	if(pIndexBuf->m_bUsingPersistentBuffer)
 	{
-		indicesActual = (void *)((int)indicesActual + (int)pIndexBuf->m_nPersistentBufferStartOffset);
+		indicesActual = (void *)((uintp)indicesActual + (uintp)pIndexBuf->m_nPersistentBufferStartOffset);
 	}
 
 #if GL_ENABLE_INDEX_VERIFICATION

@@ -217,7 +217,7 @@ FN CSysCallCacheEntry::GetFunction() const
 //	Plat_GetMemPageSize
 //		Returns the size of a memory page in bytes.
 //
-unsigned long Plat_GetMemPageSize()
+unsigned int Plat_GetMemPageSize()
 {
 	return 4; // On 32-bit systems memory page size is 4 Kb
 }
@@ -289,7 +289,7 @@ SYSTEM_CALL_RESULT_t Plat_GetPagedPoolInfo(PAGED_POOL_INFO_t *pPPI)
 //	Plat_GetMemPageSize
 //		Returns the size of a memory page in bytes.
 //
-unsigned long Plat_GetMemPageSize()
+unsigned int Plat_GetMemPageSize()
 {
 	return 4; // Assume unknown page size is 4 Kb
 }

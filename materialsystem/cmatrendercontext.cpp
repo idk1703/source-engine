@@ -2185,7 +2185,7 @@ int CMatRenderContext::CompareMaterialCombos(IMaterial *pMaterial1, IMaterial *p
 	if(dLightmap)
 		return dLightmap;
 
-	return (int)pMat1 - (int)pMat2;
+	return (intp)pMat1 - (intp)pMat2;
 }
 
 void CMatRenderContext::Bind(IMaterial *iMaterial, void *proxyData)

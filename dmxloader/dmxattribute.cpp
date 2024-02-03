@@ -69,8 +69,8 @@ struct CSizeTest
 		COMPILE_TIME_ASSERT(sizeof(QAngle) == 12);
 		COMPILE_TIME_ASSERT(sizeof(Quaternion) == 16);
 		COMPILE_TIME_ASSERT(sizeof(VMatrix) == 64);
-		COMPILE_TIME_ASSERT(sizeof(CUtlString) == 4);
-		COMPILE_TIME_ASSERT(sizeof(CUtlBinaryBlock) == 16);
+		COMPILE_TIME_ASSERT(sizeof(CUtlString) == sizeof(void*));
+		COMPILE_TIME_ASSERT(sizeof(CUtlBinaryBlock) == sizeof(int) * 4 + sizeof(void*));
 		COMPILE_TIME_ASSERT(sizeof(DmObjectId_t) == 16);
 	};
 };

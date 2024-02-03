@@ -99,7 +99,7 @@ const unsigned TT_INFINITE = 0xffffffff;
 
 #endif // NO_THREAD_LOCAL
 
-typedef unsigned long ThreadId_t;
+typedef uintp ThreadId_t;
 
 //-----------------------------------------------------------------------------
 //
@@ -108,7 +108,7 @@ typedef unsigned long ThreadId_t;
 //
 //-----------------------------------------------------------------------------
 FORWARD_DECLARE_HANDLE(ThreadHandle_t);
-typedef unsigned (*ThreadFunc_t)(void *pParam);
+typedef uintp (*ThreadFunc_t)(void *pParam);
 
 PLATFORM_OVERLOAD ThreadHandle_t CreateSimpleThread(ThreadFunc_t, void *pParam, ThreadId_t *pID,
 													unsigned stackSize = 0);
@@ -118,7 +118,7 @@ PLATFORM_INTERFACE bool ReleaseThreadHandle(ThreadHandle_t);
 //-----------------------------------------------------------------------------
 
 PLATFORM_INTERFACE void ThreadSleep(unsigned duration = 0);
-PLATFORM_INTERFACE uint ThreadGetCurrentId();
+PLATFORM_INTERFACE ThreadId_t ThreadGetCurrentId();
 PLATFORM_INTERFACE ThreadHandle_t ThreadGetCurrentHandle();
 PLATFORM_INTERFACE int ThreadGetPriority(ThreadHandle_t hThread = NULL);
 PLATFORM_INTERFACE bool ThreadSetPriority(ThreadHandle_t hThread, int priority);
@@ -130,7 +130,7 @@ PLATFORM_INTERFACE bool ThreadInMainThread();
 PLATFORM_INTERFACE void DeclareCurrentThreadIsMainThread();
 
 // NOTE: ThreadedLoadLibraryFunc_t needs to return the sleep time in milliseconds or TT_INFINITE
-typedef int (*ThreadedLoadLibraryFunc_t)();
+typedef uintp (*ThreadedLoadLibraryFunc_t)();
 PLATFORM_INTERFACE void SetThreadedLoadLibraryFunc(ThreadedLoadLibraryFunc_t func);
 PLATFORM_INTERFACE ThreadedLoadLibraryFunc_t GetThreadedLoadLibraryFunc();
 
@@ -144,6 +144,8 @@ inline void ThreadPause()
 #if defined(PLATFORM_WINDOWS_PC)
 	// Intrinsic for __asm pause; from <intrin.h>
 	_mm_pause();
+#elif defined(__aarch64__)
+	asm volatile("isb sy" : : : "memory");
 #elif POSIX
 	__asm __volatile("pause");
 #elif defined(_X360)
@@ -215,13 +217,15 @@ inline int ThreadWaitForObject(HANDLE handle, bool bWaitAll = true, unsigned tim
 #endif
 #define ThreadMemoryBarrier() _ReadWriteBarrier()
 #elif defined(GNUC)
-							 // Prevent compiler reordering across this barrier. This is
-							 // sufficient for most purposes on x86/x64.
-							 // http://preshing.com/20120625/memory-ordering-at-compile-time
+// Prevent compiler reordering across this barrier. This is
+// sufficient for most purposes on x86/x64.
+// http://preshing.com/20120625/memory-ordering-at-compile-time
 #define ThreadMemoryBarrier() asm volatile("" ::: "memory")
 #else
 #error Every platform needs to define ThreadMemoryBarrier to at least prevent compiler reordering
 #endif
+
+
 
 #if defined(_WIN32) && !defined(_X360)
 #if(_MSC_VER >= 1310)
@@ -245,65 +249,240 @@ extern "C"
 #pragma intrinsic(_InterlockedExchangeAdd)
 #pragma intrinsic(_InterlockedIncrement)
 
-inline long ThreadInterlockedIncrement(long volatile *p)
+inline int32 ThreadInterlockedIncrement(int32 volatile *p)
 {
 	Assert((size_t)p % 4 == 0);
-	return _InterlockedIncrement(p);
+	return _InterlockedIncrement((volatile long *)p);
 }
-inline long ThreadInterlockedDecrement(long volatile *p)
+inline int32 ThreadInterlockedDecrement(int32 volatile *p)
 {
 	Assert((size_t)p % 4 == 0);
-	return _InterlockedDecrement(p);
+	return _InterlockedDecrement((volatile long *)p);
 }
-inline long ThreadInterlockedExchange(long volatile *p, long value)
+inline int32 ThreadInterlockedExchange(int32 volatile *p, int32 value)
 {
 	Assert((size_t)p % 4 == 0);
-	return _InterlockedExchange(p, value);
+	return _InterlockedExchange((volatile long *)p, value);
 }
-inline long ThreadInterlockedExchangeAdd(long volatile *p, long value)
+inline int32 ThreadInterlockedExchangeAdd(int32 volatile *p, int32 value)
 {
 	Assert((size_t)p % 4 == 0);
-	return _InterlockedExchangeAdd(p, value);
+	return _InterlockedExchangeAdd((volatile long *)p, value);
 }
-inline long ThreadInterlockedCompareExchange(long volatile *p, long value, long comperand)
+inline int32 ThreadInterlockedCompareExchange(int32 volatile *p, int32 value, int32 comperand)
 {
 	Assert((size_t)p % 4 == 0);
-	return _InterlockedCompareExchange(p, value, comperand);
+	return _InterlockedCompareExchange((volatile long *)p, value, comperand);
 }
-inline bool ThreadInterlockedAssignIf(long volatile *p, long value, long comperand)
+inline bool ThreadInterlockedAssignIf(int32 volatile *p, int32 value, int32 comperand)
 {
 	Assert((size_t)p % 4 == 0);
-	return (_InterlockedCompareExchange(p, value, comperand) == comperand);
+	return (_InterlockedCompareExchange((volatile long *)p, value, comperand) == comperand);
 }
 #else
-PLATFORM_INTERFACE long ThreadInterlockedIncrement(long volatile *);
-PLATFORM_INTERFACE long ThreadInterlockedDecrement(long volatile *);
-PLATFORM_INTERFACE long ThreadInterlockedExchange(long volatile *, long value);
-PLATFORM_INTERFACE long ThreadInterlockedExchangeAdd(long volatile *, long value);
-PLATFORM_INTERFACE long ThreadInterlockedCompareExchange(long volatile *, long value, long comperand);
-PLATFORM_INTERFACE bool ThreadInterlockedAssignIf(long volatile *, long value, long comperand);
-#endif
 
-inline unsigned ThreadInterlockedExchangeSubtract(long volatile *p, long value)
+template <typename T>
+T InterlockedIncrement(T volatile *p)
 {
-	return ThreadInterlockedExchangeAdd((long volatile *)p, -value);
+	return __sync_fetch_and_add(p, 1) + 1;
 }
 
-#if defined(USE_INTRINSIC_INTERLOCKED) && !defined(_WIN64)
+template <typename T>
+T InterlockedDecrement(T volatile *p)
+{
+	return __sync_fetch_and_sub(p, 1) - 1;
+}
+
+template <typename T>
+T InterlockedExchange(T volatile *p, T value)
+{
+	return __sync_lock_test_and_set(p, value);
+}
+
+template <typename T>
+T InterlockedExchangeAdd(T volatile *p, T value)
+{
+	return __sync_fetch_and_add(p, value);
+}
+
+template <typename T>
+T InterlockedCompareExchange(T volatile *p, T value, T comperand)
+{
+	return __sync_val_compare_and_swap(p, comperand, value);
+}
+
+template <typename T>
+bool InterlockedAssignIf(T volatile *p, T value, T comperand)
+{
+	return __sync_bool_compare_and_swap(p, comperand, value);
+}
+
+inline int32 ThreadInterlockedExchangeSubtract(int32 volatile *p, int32 value)
+{
+	return InterlockedExchangeAdd<int32>(p, -value);
+}
+
+inline uint32 ThreadInterlockedExchangeSubtract(uint32 volatile *p, uint32 value)
+{
+	return InterlockedExchangeAdd<uint32>(p, -value);
+}
+
+inline int32 ThreadInterlockedIncrement(int32 volatile *p)
+{
+	return InterlockedIncrement<int32>(p);
+}
+
+inline uint32 ThreadInterlockedIncrement(uint32 volatile *p)
+{
+	return InterlockedIncrement<uint32>(p);
+}
+
+inline int32 ThreadInterlockedDecrement(int32 volatile *p)
+{
+	return InterlockedDecrement<int32>(p);
+}
+
+inline uint32 ThreadInterlockedDecrement(uint32 volatile *p)
+{
+	return InterlockedDecrement<uint32>(p);
+}
+
+inline int32 ThreadInterlockedExchange(int32 volatile *p, int32 value)
+{
+	return InterlockedExchange<int32>(p, value);
+}
+
+inline uint32 ThreadInterlockedExchange(uint32 volatile *p, uint32 value)
+{
+	return InterlockedExchange<uint32>(p, value);
+}
+
+inline int32 ThreadInterlockedExchangeAdd(int32 volatile *p, int32 value)
+{
+	return InterlockedExchangeAdd<int32>(p, value);
+}
+
+inline uint32 ThreadInterlockedExchangeAdd(uint32 volatile *p, uint32 value)
+{
+	return InterlockedExchangeAdd<uint32>(p, value);
+}
+
+inline int32 ThreadInterlockedCompareExchange(int32 volatile *p, int32 value, int32 comperand)
+{
+	return InterlockedCompareExchange<int32>(p, value, comperand);
+}
+
+inline uint32 ThreadInterlockedCompareExchange(uint32 volatile *p, uint32 value, uint32 comperand)
+{
+	return InterlockedCompareExchange<uint32>(p, value, comperand);
+}
+
+inline int32 ThreadInterlockedAssignIf(int32 volatile *p, int32 value, int32 comperand)
+{
+	return InterlockedAssignIf<int32>(p, value, comperand);
+}
+
+inline uint32 ThreadInterlockedAssignIf(uint32 volatile *p, uint32 value, uint32 comperand)
+{
+	return InterlockedAssignIf<uint32>(p, value, comperand);
+}
+
+inline int64 ThreadInterlockedExchangeSubtract64(int64 volatile *p, int64 value)
+{
+	return InterlockedExchangeAdd<int64>(p, -value);
+}
+
+inline uint64 ThreadInterlockedExchangeSubtract64(uint64 volatile *p, uint64 value)
+{
+	return InterlockedExchangeAdd<uint64>(p, -value);
+}
+
+inline int64 ThreadInterlockedIncrement64(int64 volatile *p)
+{
+	return InterlockedIncrement<int64>(p);
+}
+
+inline uint64 ThreadInterlockedIncrement64(uint64 volatile *p)
+{
+	return InterlockedIncrement<uint64>(p);
+}
+
+inline int64 ThreadInterlockedDecrement64(int64 volatile *p)
+{
+	return InterlockedDecrement<int64>(p);
+}
+
+inline uint64 ThreadInterlockedDecrement64(uint64 volatile *p)
+{
+	return InterlockedDecrement<uint64>(p);
+}
+
+inline int64 ThreadInterlockedExchange64(int64 volatile *p, int64 value)
+{
+	return InterlockedExchange<int64>(p, value);
+}
+
+inline uint64 ThreadInterlockedExchange64(uint64 volatile *p, uint64 value)
+{
+	return InterlockedExchange<uint64>(p, value);
+}
+
+inline int64 ThreadInterlockedExchangeAdd64(int64 volatile *p, int64 value)
+{
+	return InterlockedExchangeAdd<int64>(p, value);
+}
+
+inline uint64 ThreadInterlockedExchangeAdd64(uint64 volatile *p, uint64 value)
+{
+	return InterlockedExchangeAdd<uint64>(p, value);
+}
+
+inline int64 ThreadInterlockedCompareExchange64(int64 volatile *p, int64 value, int64 comperand)
+{
+	return InterlockedCompareExchange<int64>(p, value, comperand);
+}
+
+inline uint64 ThreadInterlockedCompareExchange64(uint64 volatile *p, uint64 value, uint64 comperand)
+{
+	return InterlockedCompareExchange<uint64>(p, value, comperand);
+}
+
+inline int64 ThreadInterlockedAssignIf64(int64 volatile *p, int64 value, int64 comperand)
+{
+	return InterlockedAssignIf<int64>(p, value, comperand);
+}
+
+inline uint64 ThreadInterlockedAssignIf64(uint64 volatile *p, uint64 value, uint64 comperand)
+{
+	return InterlockedAssignIf<uint64>(p, value, comperand);
+}
+
+
+
+// PLATFORM_INTERFACE int32 ThreadInterlockedIncrement(int32 volatile *) NOINLINE;
+// PLATFORM_INTERFACE int32 ThreadInterlockedDecrement(int32 volatile *) NOINLINE;
+// PLATFORM_INTERFACE int32 ThreadInterlockedExchange(int32 volatile *, int32 value) NOINLINE;
+// PLATFORM_INTERFACE int32 ThreadInterlockedExchangeAdd(int32 volatile *, int32 value) NOINLINE;
+// PLATFORM_INTERFACE int32 ThreadInterlockedCompareExchange(int32 volatile *, int32 value, int32 comperand) NOINLINE;
+// PLATFORM_INTERFACE bool ThreadInterlockedAssignIf(int32 volatile *, int32 value, int32 comperand) NOINLINE;
+#endif
+
+#if defined(USE_INTRINSIC_INTERLOCKED) && !defined(PLATFORM_64BITS)
 #define TIPTR()
 inline void *ThreadInterlockedExchangePointer(void *volatile *p, void *value)
 {
-	return (void *)_InterlockedExchange(reinterpret_cast<long volatile *>(p), reinterpret_cast<long>(value));
+	return (
+		void *)((intp)ThreadInterlockedExchange(reinterpret_cast<intp volatile *>(p), reinterpret_cast<intp>(value)));
 }
 inline void *ThreadInterlockedCompareExchangePointer(void *volatile *p, void *value, void *comperand)
 {
-	return (void *)_InterlockedCompareExchange(reinterpret_cast<long volatile *>(p), reinterpret_cast<long>(value),
-											   reinterpret_cast<long>(comperand));
+	return (void *)((intp)ThreadInterlockedCompareExchange(
+		reinterpret_cast<intp volatile *>(p), reinterpret_cast<intp>(value), reinterpret_cast<intp>(comperand)));
 }
 inline bool ThreadInterlockedAssignPointerIf(void *volatile *p, void *value, void *comperand)
 {
-	return (_InterlockedCompareExchange(reinterpret_cast<long volatile *>(p), reinterpret_cast<long>(value),
-										reinterpret_cast<long>(comperand)) == reinterpret_cast<long>(comperand));
+	return (ThreadInterlockedCompareExchange(reinterpret_cast<intp volatile *>(p), reinterpret_cast<intp>(value),
+											 reinterpret_cast<intp>(comperand)) == reinterpret_cast<intp>(comperand));
 }
 #else
 PLATFORM_INTERFACE void *ThreadInterlockedExchangePointer(void *volatile *, void *value) NOINLINE;
@@ -345,70 +524,15 @@ PLATFORM_INTERFACE bool ThreadInterlockedAssignIf128(volatile int128 *pDest, con
 
 #endif
 
-PLATFORM_INTERFACE int64 ThreadInterlockedIncrement64(int64 volatile *) NOINLINE;
-PLATFORM_INTERFACE int64 ThreadInterlockedDecrement64(int64 volatile *) NOINLINE;
-PLATFORM_INTERFACE int64 ThreadInterlockedCompareExchange64(int64 volatile *, int64 value, int64 comperand) NOINLINE;
-PLATFORM_INTERFACE int64 ThreadInterlockedExchange64(int64 volatile *, int64 value) NOINLINE;
-PLATFORM_INTERFACE int64 ThreadInterlockedExchangeAdd64(int64 volatile *, int64 value) NOINLINE;
-PLATFORM_INTERFACE bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 comperand) NOINLINE;
+// PLATFORM_INTERFACE int64 ThreadInterlockedIncrement64(int64 volatile *) NOINLINE;
+// PLATFORM_INTERFACE int64 ThreadInterlockedDecrement64(int64 volatile *) NOINLINE;
+// PLATFORM_INTERFACE int64 ThreadInterlockedCompareExchange64(int64 volatile *, int64 value, int64 comperand) NOINLINE;
+// PLATFORM_INTERFACE int64 ThreadInterlockedExchange64(int64 volatile *, int64 value) NOINLINE;
+// PLATFORM_INTERFACE int64 ThreadInterlockedExchangeAdd64(int64 volatile *, int64 value) NOINLINE;
+// PLATFORM_INTERFACE bool ThreadInterlockedAssignIf64(volatile int64 *pDest, int64 value, int64 comperand) NOINLINE;
 
-inline unsigned ThreadInterlockedExchangeSubtract(unsigned volatile *p, unsigned value)
-{
-	return ThreadInterlockedExchangeAdd((long volatile *)p, value);
-}
-inline unsigned ThreadInterlockedIncrement(unsigned volatile *p)
-{
-	return ThreadInterlockedIncrement((long volatile *)p);
-}
-inline unsigned ThreadInterlockedDecrement(unsigned volatile *p)
-{
-	return ThreadInterlockedDecrement((long volatile *)p);
-}
-inline unsigned ThreadInterlockedExchange(unsigned volatile *p, unsigned value)
-{
-	return ThreadInterlockedExchange((long volatile *)p, value);
-}
-inline unsigned ThreadInterlockedExchangeAdd(unsigned volatile *p, unsigned value)
-{
-	return ThreadInterlockedExchangeAdd((long volatile *)p, value);
-}
-inline unsigned ThreadInterlockedCompareExchange(unsigned volatile *p, unsigned value, unsigned comperand)
-{
-	return ThreadInterlockedCompareExchange((long volatile *)p, value, comperand);
-}
-inline bool ThreadInterlockedAssignIf(unsigned volatile *p, unsigned value, unsigned comperand)
-{
-	return ThreadInterlockedAssignIf((long volatile *)p, value, comperand);
-}
 
-inline int ThreadInterlockedExchangeSubtract(int volatile *p, int value)
-{
-	return ThreadInterlockedExchangeAdd((long volatile *)p, value);
-}
-inline int ThreadInterlockedIncrement(int volatile *p)
-{
-	return ThreadInterlockedIncrement((long volatile *)p);
-}
-inline int ThreadInterlockedDecrement(int volatile *p)
-{
-	return ThreadInterlockedDecrement((long volatile *)p);
-}
-inline int ThreadInterlockedExchange(int volatile *p, int value)
-{
-	return ThreadInterlockedExchange((long volatile *)p, value);
-}
-inline int ThreadInterlockedExchangeAdd(int volatile *p, int value)
-{
-	return ThreadInterlockedExchangeAdd((long volatile *)p, value);
-}
-inline int ThreadInterlockedCompareExchange(int volatile *p, int value, int comperand)
-{
-	return ThreadInterlockedCompareExchange((long volatile *)p, value, comperand);
-}
-inline bool ThreadInterlockedAssignIf(int volatile *p, int value, int comperand)
-{
-	return ThreadInterlockedAssignIf((long volatile *)p, value, comperand);
-}
+
 
 //-----------------------------------------------------------------------------
 // Access to VTune thread profiling
@@ -484,17 +608,49 @@ class CThreadLocal : public CThreadLocalBase
 public:
 	CThreadLocal()
 	{
+#ifdef PLATFORM_64BITS
+		COMPILE_TIME_ASSERT(sizeof(T) <= sizeof(void *));
+#else
 		COMPILE_TIME_ASSERT(sizeof(T) == sizeof(void *));
+#endif
+	}
+
+	void operator=(T i)
+	{
+		Set(i);
 	}
 
 	T Get() const
 	{
+#ifdef PLATFORM_64BITS
+		void *pData = CThreadLocalBase::Get();
+		return *reinterpret_cast<T *>(&pData);
+#else
+#ifdef COMPILER_MSVC
+#pragma warning(disable : 4311)
+#endif
 		return reinterpret_cast<T>(CThreadLocalBase::Get());
+#ifdef COMPILER_MSVC
+#pragma warning(default : 4311)
+#endif
+#endif
 	}
 
 	void Set(T val)
 	{
+#ifdef PLATFORM_64BITS
+		void *pData = 0;
+		*reinterpret_cast<T *>(&pData) = val;
+		CThreadLocalBase::Set(pData);
+#else
+#ifdef COMPILER_MSVC
+#pragma warning(disable : 4312)
+#endif
 		CThreadLocalBase::Set(reinterpret_cast<void *>(val));
+#ifdef COMPILER_MSVC
+#pragma warning(default : 4312)
+#endif
+#endif
 	}
 };
 
@@ -502,22 +658,22 @@ public:
 
 //---------------------------------------------------------
 
-template<class T = intp>
+template<class T = int32>
 class CThreadLocalInt : public CThreadLocal<T>
 {
 public:
 	CThreadLocalInt()
 	{
-		COMPILE_TIME_ASSERT(sizeof(T) >= sizeof(int));
+		COMPILE_TIME_ASSERT(sizeof(T) >= sizeof(int32));
 	}
 
 	operator int() const
 	{
-		return (int)this->Get();
+		return this->Get();
 	}
 	int operator=(int i)
 	{
-		this->Set((intp)i);
+		this->Set(i);
 		return i;
 	}
 
@@ -525,26 +681,26 @@ public:
 	{
 		T i = this->Get();
 		this->Set(++i);
-		return (int)i;
+		return i;
 	}
 	int operator++(int)
 	{
 		T i = this->Get();
 		this->Set(i + 1);
-		return (int)i;
+		return i;
 	}
 
 	int operator--()
 	{
 		T i = this->Get();
 		this->Set(--i);
-		return (int)i;
+		return i;
 	}
 	int operator--(int)
 	{
 		T i = this->Get();
 		this->Set(i - 1);
-		return (int)i;
+		return i;
 	}
 };
 
@@ -677,7 +833,7 @@ class CInterlockedIntT
 public:
 	CInterlockedIntT() : m_value(0)
 	{
-		COMPILE_TIME_ASSERT(sizeof(T) == sizeof(long));
+		COMPILE_TIME_ASSERT(sizeof(T) == sizeof(int32));
 	}
 	CInterlockedIntT(T value) : m_value(value) {}
 
@@ -706,7 +862,7 @@ public:
 
 	T operator++()
 	{
-		return (T)ThreadInterlockedIncrement((long *)&m_value);
+		return (T)ThreadInterlockedIncrement((int32 *)&m_value);
 	}
 	T operator++(int)
 	{
@@ -715,7 +871,7 @@ public:
 
 	T operator--()
 	{
-		return (T)ThreadInterlockedDecrement((long *)&m_value);
+		return (T)ThreadInterlockedDecrement((int32 *)&m_value);
 	}
 	T operator--(int)
 	{
@@ -724,18 +880,18 @@ public:
 
 	bool AssignIf(T conditionValue, T newValue)
 	{
-		return ThreadInterlockedAssignIf((long *)&m_value, (long)newValue, (long)conditionValue);
+		return ThreadInterlockedAssignIf((int32 *)&m_value, (int32)newValue, (int32)conditionValue);
 	}
 
 	T operator=(T newValue)
 	{
-		ThreadInterlockedExchange((long *)&m_value, newValue);
+		ThreadInterlockedExchange((int32 *)&m_value, newValue);
 		return m_value;
 	}
 
 	void operator+=(T add)
 	{
-		ThreadInterlockedExchangeAdd((long *)&m_value, (long)add);
+		ThreadInterlockedExchangeAdd((int32 *)&m_value, (int32)add);
 	}
 	void operator-=(T subtract)
 	{
@@ -773,8 +929,8 @@ private:
 	volatile T m_value;
 };
 
-typedef CInterlockedIntT<int> CInterlockedInt;
-typedef CInterlockedIntT<unsigned> CInterlockedUInt;
+typedef CInterlockedIntT<int32> CInterlockedInt;
+typedef CInterlockedIntT<uint32> CInterlockedUInt;
 
 //-----------------------------------------------------------------------------
 
@@ -841,20 +997,20 @@ public:
 #else
 	T *operator++()
 	{
-		return ((T *)ThreadInterlockedExchangeAdd((long *)&m_value, sizeof(T))) + 1;
+		return ((T *)ThreadInterlockedExchangeAdd((int32 *)&m_value, sizeof(T))) + 1;
 	}
 	T *operator++(int)
 	{
-		return (T *)ThreadInterlockedExchangeAdd((long *)&m_value, sizeof(T));
+		return (T *)ThreadInterlockedExchangeAdd((int32 *)&m_value, sizeof(T));
 	}
 
 	T *operator--()
 	{
-		return ((T *)ThreadInterlockedExchangeAdd((long *)&m_value, -sizeof(T))) - 1;
+		return ((T *)ThreadInterlockedExchangeAdd((int32 *)&m_value, -sizeof(T))) - 1;
 	}
 	T *operator--(int)
 	{
-		return (T *)ThreadInterlockedExchangeAdd((long *)&m_value, -sizeof(T));
+		return (T *)ThreadInterlockedExchangeAdd((int32 *)&m_value, -sizeof(T));
 	}
 
 	bool AssignIf(T *conditionValue, T *newValue)
@@ -871,7 +1027,7 @@ public:
 
 	void operator+=(int add)
 	{
-		ThreadInterlockedExchangeAdd((long *)&m_value, add * sizeof(T));
+		ThreadInterlockedExchangeAdd((int32 *)&m_value, add * sizeof(T));
 	}
 #endif
 
@@ -1038,9 +1194,9 @@ public:
 	CThreadFastMutex() : m_ownerID(0), m_depth(0) {}
 
 private:
-	FORCEINLINE bool TryLockInline(const uint32 threadId) volatile
+	FORCEINLINE bool TryLockInline(const ThreadId_t threadId) volatile
 	{
-		if(threadId != m_ownerID && !ThreadInterlockedAssignIf((volatile long *)&m_ownerID, (long)threadId, 0))
+		if(threadId != m_ownerID && !ThreadInterlockedAssignIf64((volatile int64 *)&m_ownerID, threadId, 0))
 			return false;
 
 		ThreadMemoryBarrier();
@@ -1073,7 +1229,7 @@ public:
 #endif
 	void Lock(unsigned int nSpinSleepTime = 0) volatile
 	{
-		const uint32 threadId = ThreadGetCurrentId();
+		const ThreadId_t threadId = ThreadGetCurrentId();
 
 		if(!TryLockInline(threadId))
 		{
@@ -1109,7 +1265,7 @@ public:
 		if(!m_depth)
 		{
 			ThreadMemoryBarrier();
-			ThreadInterlockedExchange(&m_ownerID, 0);
+			ThreadInterlockedExchange64((int64 *)&m_ownerID, 0);
 		}
 	}
 
@@ -1134,7 +1290,7 @@ public:
 	}
 	void SetTrace(bool) {}
 
-	uint32 GetOwnerId() const
+	ThreadId_t GetOwnerId() const
 	{
 		return m_ownerID;
 	}
@@ -1144,7 +1300,7 @@ public:
 	}
 
 private:
-	volatile uint32 m_ownerID;
+	volatile ThreadId_t m_ownerID;
 	int m_depth;
 };
 

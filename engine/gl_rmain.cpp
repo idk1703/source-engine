@@ -253,7 +253,7 @@ public:
 	IWorldRenderList *CreateWorldList();
 	void BuildWorldLists(IWorldRenderList *pList, WorldListInfo_t *pInfo, int iForceViewLeaf,
 						 const VisOverrideData_t *pVisData, bool bShadowDepth, float *pWaterReflectionHeight);
-	void DrawWorldLists(IWorldRenderList *pList, unsigned long flags, float waterZAdjust);
+	void DrawWorldLists(IWorldRenderList *pList, unsigned int flags, float waterZAdjust);
 
 	void DrawSceneBegin(void);
 	void DrawSceneEnd(void);
@@ -1269,7 +1269,7 @@ void CRender::BuildWorldLists(IWorldRenderList *pList, WorldListInfo_t *pInfo, i
 	Assert(m_iLightmapUpdateDepth > 0 || g_LightmapUpdateList.Count() == 0);
 }
 
-void CRender::DrawWorldLists(IWorldRenderList *pList, unsigned long flags, float flWaterZAdjust)
+void CRender::DrawWorldLists(IWorldRenderList *pList, unsigned int flags, float flWaterZAdjust)
 {
 	Assert(pList);
 	R_DrawWorldLists(pList, flags, flWaterZAdjust);

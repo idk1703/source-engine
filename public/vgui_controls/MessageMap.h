@@ -45,7 +45,7 @@ namespace vgui
 #else
 	class Panel;
 #endif
-	typedef unsigned int VPANEL;
+	typedef uintp VPANEL;
 
 	typedef void (Panel::*MessageFunc_t)(void);
 

@@ -24,8 +24,8 @@ typedef unsigned short wchar_t;
 #endif
 
 // direct references to localized strings
-typedef unsigned long StringIndex_t;
-const unsigned long INVALID_LOCALIZE_STRING_INDEX = (StringIndex_t)-1;
+typedef unsigned int StringIndex_t;
+const unsigned int INVALID_LOCALIZE_STRING_INDEX = (StringIndex_t)-1;
 
 //-----------------------------------------------------------------------------
 // Purpose: Handles localization of text

@@ -579,7 +579,7 @@ const char *CSteamID::Render() const
 	}
 	else if(k_EAccountTypeIndividual == m_steamid.m_comp.m_EAccountType)
 	{
-		if(m_steamid.m_comp.m_unAccountInstance != k_unSteamUserDesktopInstance)
+		if(m_steamid.m_comp.m_unAccountInstance != k_unSteamUserDefaultInstance)
 			V_snprintf(pchBuf, k_cBufLen, "[U:%u:%u:%u]", m_steamid.m_comp.m_EUniverse, m_steamid.m_comp.m_unAccountID,
 					   m_steamid.m_comp.m_unAccountInstance);
 		else

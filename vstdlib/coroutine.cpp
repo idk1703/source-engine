@@ -613,7 +613,7 @@ void Coroutine_ReleaseThreadMemory()
 {
 	AUTO_LOCK(g_ThreadMutexCoroutineMgr);
 
-	if(g_ThreadLocalCoroutineMgr != NULL)
+	if(g_ThreadLocalCoroutineMgr != 0)
 	{
 		int iCoroutineMgr = g_VecPCoroutineMgr.Find(g_ThreadLocalCoroutineMgr);
 		delete g_VecPCoroutineMgr[iCoroutineMgr];

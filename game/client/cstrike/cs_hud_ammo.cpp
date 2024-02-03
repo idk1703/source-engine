@@ -71,11 +71,12 @@ CHudAmmo::CHudAmmo(const char *pElementName) : BaseClass(NULL, "HudAmmo"), CHudE
 	vgui::surface()->DrawSetTextureFile(m_iAdditiveWhiteID, "vgui/white_additive", true, false);
 
 	SetHiddenBits(HIDEHUD_HEALTH | HIDEHUD_PLAYERDEAD | HIDEHUD_WEAPONSELECTION);
-
+#if 0
 	hudlcd->SetGlobalStat("(ammo_primary)", "0");
 	hudlcd->SetGlobalStat("(ammo_secondary)", "0");
 	hudlcd->SetGlobalStat("(weapon_print_name)", "");
 	hudlcd->SetGlobalStat("(weapon_name)", "");
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -103,15 +104,18 @@ void CHudAmmo::VidInit(void) {}
 void CHudAmmo::OnThink()
 {
 	C_BaseCombatWeapon *wpn = GetActiveWeapon();
-
+#if 0
 	hudlcd->SetGlobalStat("(weapon_print_name)", wpn ? wpn->GetPrintName() : " ");
 	hudlcd->SetGlobalStat("(weapon_name)", wpn ? wpn->GetName() : " ");
+#endif
 
 	C_BasePlayer *player = C_BasePlayer::GetLocalPlayer();
 	if(!wpn || !player || !wpn->UsesPrimaryAmmo())
 	{
+#if 0
 		hudlcd->SetGlobalStat("(ammo_primary)", "n/a");
 		hudlcd->SetGlobalStat("(ammo_secondary)", "n/a");
+#endif
 
 		SetPaintEnabled(false);
 		SetPaintBackgroundEnabled(false);
@@ -138,8 +142,10 @@ void CHudAmmo::OnThink()
 		ammo2 = player->GetAmmoCount(wpn->GetPrimaryAmmoType());
 	}
 
+#if 0
 	hudlcd->SetGlobalStat("(ammo_primary)", VarArgs("%d", ammo1));
 	hudlcd->SetGlobalStat("(ammo_secondary)", VarArgs("%d", ammo2));
+#endif
 
 	if(wpn == m_hCurrentActiveWeapon)
 	{

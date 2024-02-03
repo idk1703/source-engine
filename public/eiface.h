@@ -304,7 +304,7 @@ public:
 
 	// Draw the brush geometry in the map into the scratch pad.
 	// Flags is currently unused.
-	virtual void DrawMapToScratchPad(IScratchPad3D * pPad, unsigned long iFlags) = 0;
+	virtual void DrawMapToScratchPad(IScratchPad3D * pPad, unsigned int iFlags) = 0;
 
 	// This returns which entities, to the best of the server's knowledge, the client currently knows about.
 	// This is really which entities were in the snapshot that this client last acked.

@@ -39,7 +39,7 @@ void EncodeFloat(const SendProp *pProp, float fVal, bf_write *pOut, int objectID
 	}
 	else // standard clamped-range float
 	{
-		unsigned long ulVal;
+		uint32 uVal;
 		int nBits = pProp->m_nBits;
 		if(flags & SPROP_NOSCALE)
 		{
@@ -48,13 +48,13 @@ void EncodeFloat(const SendProp *pProp, float fVal, bf_write *pOut, int objectID
 				float f;
 				uint32 u;
 			} convert = {fVal};
-			ulVal = convert.u;
+			uVal = convert.u;
 			nBits = 32;
 		}
 		else if(fVal < pProp->m_fLowValue)
 		{
 			// clamp < 0
-			ulVal = 0;
+			uVal = 0;
 
 			if(!(flags & SPROP_ROUNDUP))
 			{
@@ -65,7 +65,7 @@ void EncodeFloat(const SendProp *pProp, float fVal, bf_write *pOut, int objectID
 		else if(fVal > pProp->m_fHighValue)
 		{
 			// clamp > 1
-			ulVal = ((1 << pProp->m_nBits) - 1);
+			uVal = ((1 << pProp->m_nBits) - 1);
 
 			if(!(flags & SPROP_ROUNDDOWN))
 			{
@@ -79,15 +79,15 @@ void EncodeFloat(const SendProp *pProp, float fVal, bf_write *pOut, int objectID
 			if(pProp->m_nBits <= 22)
 			{
 				// this is the case we always expect to hit
-				ulVal = FastFloatToSmallInt(fRangeVal);
+				uVal = FastFloatToSmallInt(fRangeVal);
 			}
 			else
 			{
 				// retain old logic just in case anyone relies on its behavior
-				ulVal = RoundFloatToUnsignedLong(fRangeVal);
+				uVal = RoundFloatToUnsignedLong(fRangeVal);
 			}
 		}
-		pOut->WriteUBitLong(ulVal, nBits);
+		pOut->WriteUBitLong(uVal, nBits);
 	}
 }
 
@@ -112,7 +112,7 @@ static float DecodeFloat(SendProp const *pProp, bf_read *pIn)
 	}
 	else // standard clamped-range float
 	{
-		unsigned long dwInterp = pIn->ReadUBitLong(pProp->m_nBits);
+		uint32 dwInterp = pIn->ReadUBitLong(pProp->m_nBits);
 		float fVal = (float)dwInterp / ((1 << pProp->m_nBits) - 1);
 		fVal = pProp->m_fLowValue + (pProp->m_fHighValue - pProp->m_fLowValue) * fVal;
 		return fVal;
@@ -271,7 +271,7 @@ void Int_Decode(DecodeInfo *pInfo)
 	{
 		if(flags & SPROP_UNSIGNED)
 		{
-			pInfo->m_Value.m_Int = (long)pInfo->m_pIn->ReadVarInt32();
+			pInfo->m_Value.m_Int = (int32)pInfo->m_pIn->ReadVarInt32();
 		}
 		else
 		{
@@ -285,7 +285,7 @@ void Int_Decode(DecodeInfo *pInfo)
 
 		if(bits != 32 && (flags & SPROP_UNSIGNED) == 0)
 		{
-			unsigned long highbit = 1ul << (pProp->m_nBits - 1);
+			uint32 highbit = 1u << (pProp->m_nBits - 1);
 			if(pInfo->m_Value.m_Int & highbit)
 			{
 				pInfo->m_Value.m_Int -= highbit; // strip high bit...

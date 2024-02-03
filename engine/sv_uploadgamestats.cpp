@@ -304,7 +304,7 @@ public:
 		if(VCRGetMode() != VCR_Playback)
 #endif
 		{
-			pSteamUtils->GetCSERIPPort(&unIP, &usPort);
+			// pSteamUtils->GetCSERIPPort(&unIP, &usPort);
 		}
 #if !defined(NO_VCR)
 		VCRGenericValue("a", &unIP, sizeof(unIP));
@@ -1073,7 +1073,7 @@ protected:
 	};
 
 public:
-	static unsigned CallbackThreadProc(void *pvParam)
+	static uintp CallbackThreadProc(void *pvParam)
 	{
 		((CAsyncUploaderThread *)pvParam)->ThreadProc();
 		return 0;

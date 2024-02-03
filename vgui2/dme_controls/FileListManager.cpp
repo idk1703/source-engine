@@ -6,23 +6,23 @@
 //
 //=============================================================================//
 
-#include "dme_controls/filelistmanager.h"
+#include "dme_controls/FileListManager.h"
 #include "vgui_controls/FileOpenDialog.h"
-#include "vgui_controls/menu.h"
-#include "vgui_controls/messagebox.h"
+#include "vgui_controls/Menu.h"
+#include "vgui_controls/MessageBox.h"
 #include "datamodel/idatamodel.h"
 #include "datamodel/dmelement.h"
 #include "datamodel/dmattribute.h"
 #include "datamodel/dmattributevar.h"
 #include "vgui/ISurface.h"
 #include <vgui/IInput.h>
-#include "vgui/mousecode.h"
+#include "vgui/MouseCode.h"
 #include "tier1/strtools.h"
 #include "tier1/KeyValues.h"
 #include "tier2/tier2.h"
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "filesystem.h"
-#include "dme_controls/INotifyUI.h"
+#include "dme_controls/inotifyui.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -229,7 +229,7 @@ void CFileListManager::OnOpenContextMenu(KeyValues *pParams)
 	}
 	else
 	{
-		bool bP4Connected = p4->IsConnectedToServer();
+		// bool bP4Connected = p4->IsConnectedToServer();
 
 		int nSelected = GetSelectedItemsCount();
 		int nLoaded = 0;
@@ -251,7 +251,7 @@ void CFileListManager::OnOpenContextMenu(KeyValues *pParams)
 			{
 				++nOnDisk;
 			}
-
+#if 0
 			if(bP4Connected)
 			{
 				if(p4->IsFileInPerforce(pFilename))
@@ -263,6 +263,7 @@ void CFileListManager::OnOpenContextMenu(KeyValues *pParams)
 					}
 				}
 			}
+#endif
 		}
 
 		AddMenuItemHelper(m_hContextMenu, "Load", "load", this, nLoaded < nSelected && nOnDisk > 0);
@@ -443,6 +444,7 @@ void CFileListManager::OnAddToPerforce(KeyValues *pParams)
 		ppFileNames[i] = pFilename;
 	}
 
+#if 0
 	bool bSuccess = p4->OpenFilesForAdd(nFileCount, ppFileNames);
 	if(!bSuccess)
 	{
@@ -450,6 +452,7 @@ void CFileListManager::OnAddToPerforce(KeyValues *pParams)
 		pError->SetSmallCaption(true);
 		pError->DoModal();
 	}
+#endif
 
 	Refresh();
 }
@@ -472,6 +475,7 @@ void CFileListManager::OnOpenForEdit(KeyValues *pParams)
 		ppFileNames[i] = pFilename;
 	}
 
+#if 0
 	bool bSuccess = p4->OpenFilesForEdit(nFileCount, ppFileNames);
 	if(!bSuccess)
 	{
@@ -479,6 +483,7 @@ void CFileListManager::OnOpenForEdit(KeyValues *pParams)
 		pError->SetSmallCaption(true);
 		pError->DoModal();
 	}
+#endif
 
 	Refresh();
 }
@@ -542,7 +547,7 @@ void CFileListManager::Refresh()
 	m_bRefreshRequired = false;
 	RemoveAll();
 
-	const bool bP4Connected = p4 ? p4->IsConnectedToServer() : false;
+	const bool bP4Connected = /* p4 ? p4->IsConnectedToServer() : */ false;
 
 	int nFiles = g_pDataModel->NumFileIds();
 	for(int i = 0; i < nFiles; ++i)
@@ -555,8 +560,8 @@ void CFileListManager::Refresh()
 		bool bLoaded = g_pDataModel->IsFileLoaded(fileid);
 		int nElements = g_pDataModel->NumElementsInFile(fileid);
 		bool bChanged = false; // TODO - find out for real
-		bool bInPerforce = bP4Connected && p4->IsFileInPerforce(pFileName);
-		bool bOpenForEdit = bInPerforce && p4->GetFileState(pFileName) != P4FILE_UNOPENED;
+		bool bInPerforce = bP4Connected /* && p4->IsFileInPerforce(pFileName) */;
+		bool bOpenForEdit = bInPerforce /* && p4->GetFileState(pFileName) != P4FILE_UNOPENED */;
 
 		char path[256];
 		V_ExtractFilePath(pFileName, path, sizeof(path));

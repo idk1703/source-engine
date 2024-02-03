@@ -18,10 +18,10 @@
 #include "fmtstr.h"
 #include "c_cs_playerresource.h"
 
-#include "../../../public/steam/steam_api.h"
+#include "steam/steam_api.h"
 #include "achievementmgr.h"
-#include "../../../../public/vgui/IScheme.h"
-#include "../vgui_controls/ScrollBar.h"
+#include "vgui/IScheme.h"
+#include "vgui_controls/ScrollBar.h"
 #include "stat_card.h"
 
 #include "weapon_csbase.h"
