@@ -12,11 +12,11 @@
 class IceSubkey
 {
 public:
-	unsigned long val[3];
+	unsigned int val[3];
 };
 
 /* The S-boxes */
-static unsigned long ice_sbox[4][1024];
+static unsigned int ice_sbox[4][1024];
 static int ice_sboxes_initialised = 0;
 
 /* Modulo values for the S-boxes */
@@ -28,7 +28,7 @@ static const int ice_sxor[4][4] = {
 	{0x83, 0x85, 0x9b, 0xcd}, {0xcc, 0xa7, 0xad, 0x41}, {0x4b, 0x2e, 0xd4, 0x33}, {0xea, 0xcb, 0x2e, 0x04}};
 
 /* Permutation values for the P-box */
-static const unsigned long ice_pbox[32] = {
+static const unsigned int ice_pbox[32] = {
 	0x00000001, 0x00000080, 0x00000400, 0x00002000, 0x00080000, 0x00200000, 0x01000000, 0x40000000,
 	0x00000008, 0x00000020, 0x00000100, 0x00004000, 0x00010000, 0x00800000, 0x04000000, 0x20000000,
 	0x00000004, 0x00000010, 0x00000200, 0x00008000, 0x00020000, 0x00400000, 0x08000000, 0x10000000,
@@ -67,7 +67,7 @@ static unsigned int gf_mult(unsigned int a, unsigned int b, unsigned int m)
  * Raise the base to the power of 7, modulo m.
  */
 
-static unsigned long gf_exp7(unsigned int b, unsigned int m)
+static unsigned int gf_exp7(unsigned int b, unsigned int m)
 {
 	unsigned int x;
 
@@ -84,10 +84,10 @@ static unsigned long gf_exp7(unsigned int b, unsigned int m)
  * Carry out the ICE 32-bit P-box permutation.
  */
 
-static unsigned long ice_perm32(unsigned long x)
+static unsigned int ice_perm32(unsigned int x)
 {
-	unsigned long res = 0;
-	const unsigned long *pbox = ice_pbox;
+	unsigned int res = 0;
+	const unsigned int *pbox = ice_pbox;
 
 	while(x)
 	{
@@ -113,7 +113,7 @@ static void ice_sboxes_init(void)
 	{
 		int col = (i >> 1) & 0xff;
 		int row = (i & 0x1) | ((i & 0x200) >> 8);
-		unsigned long x;
+		unsigned int x;
 
 		x = gf_exp7(col ^ ice_sxor[0][row], ice_smod[0][row]) << 24;
 		ice_sbox[0][i] = ice_perm32(x);
@@ -176,10 +176,10 @@ IceKey::~IceKey()
  * The single round ICE f function.
  */
 
-static unsigned long ice_f(unsigned long p, const IceSubkey *sk)
+static unsigned int ice_f(unsigned int p, const IceSubkey *sk)
 {
-	unsigned long tl, tr; /* Expanded 40-bit values */
-	unsigned long al, ar; /* Salted expanded 40-bit values */
+	unsigned int tl, tr; /* Expanded 40-bit values */
+	unsigned int al, ar; /* Salted expanded 40-bit values */
 
 	/* Left half expansion */
 	tl = ((p >> 16) & 0x3ff) | (((p >> 14) | (p << 18)) & 0xffc00);
@@ -208,11 +208,11 @@ static unsigned long ice_f(unsigned long p, const IceSubkey *sk)
 void IceKey::encrypt(const unsigned char *ptext, unsigned char *ctext) const
 {
 	int i;
-	unsigned long l, r;
+	unsigned int l, r;
 
-	l = (((unsigned long)ptext[0]) << 24) | (((unsigned long)ptext[1]) << 16) | (((unsigned long)ptext[2]) << 8) |
+	l = (((unsigned int)ptext[0]) << 24) | (((unsigned int)ptext[1]) << 16) | (((unsigned int)ptext[2]) << 8) |
 		ptext[3];
-	r = (((unsigned long)ptext[4]) << 24) | (((unsigned long)ptext[5]) << 16) | (((unsigned long)ptext[6]) << 8) |
+	r = (((unsigned int)ptext[4]) << 24) | (((unsigned int)ptext[5]) << 16) | (((unsigned int)ptext[6]) << 8) |
 		ptext[7];
 
 	for(i = 0; i < _rounds; i += 2)
@@ -238,11 +238,11 @@ void IceKey::encrypt(const unsigned char *ptext, unsigned char *ctext) const
 void IceKey::decrypt(const unsigned char *ctext, unsigned char *ptext) const
 {
 	int i;
-	unsigned long l, r;
+	unsigned int l, r;
 
-	l = (((unsigned long)ctext[0]) << 24) | (((unsigned long)ctext[1]) << 16) | (((unsigned long)ctext[2]) << 8) |
+	l = (((unsigned int)ctext[0]) << 24) | (((unsigned int)ctext[1]) << 16) | (((unsigned int)ctext[2]) << 8) |
 		ctext[3];
-	r = (((unsigned long)ctext[4]) << 24) | (((unsigned long)ctext[5]) << 16) | (((unsigned long)ctext[6]) << 8) |
+	r = (((unsigned int)ctext[4]) << 24) | (((unsigned int)ctext[5]) << 16) | (((unsigned int)ctext[6]) << 8) |
 		ctext[7];
 
 	for(i = _rounds - 1; i > 0; i -= 2)
@@ -281,7 +281,7 @@ void IceKey::scheduleBuild(unsigned short *kb, int n, const int *keyrot)
 		for(j = 0; j < 15; j++)
 		{
 			int k;
-			unsigned long *curr_sk = &isk->val[j % 3];
+			unsigned int *curr_sk = &isk->val[j % 3];
 
 			for(k = 0; k < 4; k++)
 			{

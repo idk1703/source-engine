@@ -4,6 +4,7 @@
 //
 //=====================================================================================//
 
+#include <cmath>
 #include <math.h>
 #include <float.h> // Needed for FLT_EPSILON
 #include "basetypes.h"
@@ -12,6 +13,10 @@
 #include "mathlib/mathlib.h"
 #include "mathlib/vector.h"
 #include "sse.h"
+
+#ifdef __aarch64__
+#include <sse2neon.h>
+#endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -174,6 +179,8 @@ float _SSE_RSqrtFast(float x)
 		rsqrtss	xmm0, x
 		movss	rroot, xmm0
 	}
+#elif defined(__aarch64__)
+	return std::sqrt(x);
 #elif POSIX
 	__asm__ __volatile__("rsqrtss %0, %1" : "=x"(rroot) : "x"(x));
 #else
@@ -230,6 +237,8 @@ float FASTCALL _SSE_VectorNormalize(Vector &vec)
 			mulps		xmm4, xmm1 // r4 = vx * 1/radius, vy * 1/radius, vz * 1/radius, X
 			movaps		[edx], xmm4 // v = vx * 1/radius, vy * 1/radius, vz * 1/radius, X
 		}
+#elif defined(__aarch64__)
+
 #elif POSIX
 		__asm__ __volatile__(
 #ifdef ALIGNED_VECTOR
@@ -297,6 +306,8 @@ float _SSE_InvRSquared(const float *v)
 		rcpss		xmm0, xmm1 // x0 = 1 / max( 1.0, x1 )
 		movss		inv_r2, xmm0 // inv_r2 = x0
 	}
+#elif defined(__aarch64__)
+
 #elif POSIX
 	__asm__ __volatile__("movss			 %0, %%xmm5 \n\t"
 #ifdef ALIGNED_VECTOR
@@ -458,6 +469,9 @@ void _SSE_SinCos(float x, float *s, float *c)
 		movss	[eax], xmm0
 		movss	[edx], xmm4
 		}
+#elif defined(__aarch64__)
+	*s = std::sin(x);
+	*c = std::cos(x);
 #elif POSIX
 
 	Assert("Needs testing, verify impl!\n");
@@ -628,6 +642,8 @@ float _SSE_cos(float x)
 		movss   x,    xmm0
 
 		}
+#elif defined(__aarch64__)
+	return std::cos(x);
 #elif POSIX
 
 	Assert("Needs testing, verify impl!\n");
