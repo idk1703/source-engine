@@ -107,7 +107,7 @@ target_link_libraries(${PROJECT} PRIVATE
     vtf
 	steam_api
 	JPEG::JPEG
-	${PNG_LIBRARIES}
+	PNG::PNG
     $<$<BOOL:${LINUX}>:rt>
 	$<$<BOOL:${ENABLE_SDL}>:SDL2::SDL2>
 )

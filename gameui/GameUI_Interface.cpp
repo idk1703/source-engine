@@ -54,7 +54,7 @@
 #include "steam/steam_api.h"
 #include "BonusMapsDatabase.h"
 #include "BonusMapsDialog.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 // vgui2 interface
 // note that GameUI project uses ..\vgui2\include, not ..\utils\vgui\include
@@ -94,7 +94,7 @@ IVEngineClient *engine = NULL;
 IEngineSound *enginesound = NULL;
 IAchievementMgr *achievementmgr = NULL;
 IEngineClientReplay *g_pEngineClientReplay = NULL;
-ISourceVirtualReality *g_pSourceVR = NULL;
+// ISourceVirtualReality *g_pSourceVR = NULL;
 
 static CSteamAPIContext g_SteamAPIContext;
 CSteamAPIContext *steamapicontext = &g_SteamAPIContext;
@@ -189,12 +189,12 @@ void CGameUI::Initialize(CreateInterfaceFn factory)
 	gameuifuncs = (IGameUIFuncs *)factory(VENGINE_GAMEUIFUNCS_VERSION, NULL);
 	matchmaking = (IMatchmaking *)factory(VENGINE_MATCHMAKING_VERSION, NULL);
 	xboxsystem = (IXboxSystem *)factory(XBOXSYSTEM_INTERFACE_VERSION, NULL);
-	g_pEngineClientReplay = (IEngineClientReplay *)factory(ENGINE_REPLAY_CLIENT_INTERFACE_VERSION, NULL);
+	// g_pEngineClientReplay = (IEngineClientReplay *)factory(ENGINE_REPLAY_CLIENT_INTERFACE_VERSION, NULL);
 
-	if(ModInfo().SupportsVR() && CommandLine()->CheckParm("-vr"))
-	{
-		g_pSourceVR = (ISourceVirtualReality *)factory(SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION, NULL);
-	}
+	// if(ModInfo().SupportsVR() && CommandLine()->CheckParm("-vr"))
+	// {
+	// 	g_pSourceVR = (ISourceVirtualReality *)factory(SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION, NULL);
+	// }
 
 	// NOTE: g_pEngineReplay intentionally not checked here
 	if(!enginesurfacefuncs || !gameuifuncs || !enginevguifuncs || !xboxsystem || (IsX360() && !matchmaking))
