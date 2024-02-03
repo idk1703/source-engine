@@ -205,7 +205,7 @@ void TE_DispatchEffect(IRecipientFilter &filter, float delay, KeyValues *pKeyVal
 
 	// NOTE: Ptrs are our way of indicating it's an entindex
 	ClientEntityHandle_t hWorld = ClientEntityList().EntIndexToHandle(0);
-	data.m_hEntity = (int)pKeyValues->GetPtr("entindex", (void *)hWorld.ToInt());
+	data.m_hEntity = (uintp)pKeyValues->GetPtr("entindex", (void *)hWorld.ToInt());
 
 	const char *pEffectName = pKeyValues->GetString("effectname");
 

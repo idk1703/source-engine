@@ -51,8 +51,8 @@
 #include "studio_stats.h"
 #include "con_nprint.h"
 #include "clientmode_shared.h"
-#include "sourcevr/isourcevirtualreality.h"
-#include "client_virtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
+// #include "client_virtualreality.h"
 
 #ifdef PORTAL
 //#include "C_Portal_Player.h"
@@ -700,9 +700,9 @@ public:
 //-----------------------------------------------------------------------------
 // Computes draw flags for the engine to build its world surface lists
 //-----------------------------------------------------------------------------
-static inline unsigned long BuildEngineDrawWorldListFlags(unsigned nDrawFlags)
+static inline unsigned int BuildEngineDrawWorldListFlags(unsigned nDrawFlags)
 {
-	unsigned long nEngineFlags = 0;
+	unsigned int nEngineFlags = 0;
 
 	if(nDrawFlags & DF_DRAWSKYBOX)
 	{
@@ -1069,10 +1069,10 @@ void CViewRender::DrawViewModels(const CViewSetup &viewRender, bool drawViewmode
 	ITexture *pRTDepth = NULL;
 	if(viewRender.m_eStereoEye != STEREO_EYE_MONO)
 	{
-		pRTColor = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
-												ISourceVirtualReality::RT_Color);
-		pRTDepth = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
-												ISourceVirtualReality::RT_Depth);
+		// pRTColor = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
+		// 										ISourceVirtualReality::RT_Color);
+		// pRTDepth = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
+		// 										ISourceVirtualReality::RT_Depth);
 	}
 
 	render->Push3DView(viewModelSetup, 0, pRTColor, GetFrustum(), pRTDepth);
@@ -1848,10 +1848,10 @@ void CViewRender::SetupMain3DView(const CViewSetup &viewRender, int &nClearFlags
 		ITexture *pRTDepth = NULL;
 		if(viewRender.m_eStereoEye != STEREO_EYE_MONO)
 		{
-			pRTColor = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
-													ISourceVirtualReality::RT_Color);
-			pRTDepth = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
-													ISourceVirtualReality::RT_Depth);
+			// pRTColor = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
+			// 										ISourceVirtualReality::RT_Color);
+			// pRTDepth = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
+			// 										ISourceVirtualReality::RT_Depth);
 		}
 
 		render->Push3DView(viewRender, nClearFlags, pRTColor, GetFrustum(), pRTDepth);
@@ -2188,11 +2188,13 @@ void CViewRender::RenderView(const CViewSetup &viewRender, int nClearFlags, int 
 	}
 
 	// if we're in VR mode we might need to override the render target
+#if 0
 	if(UseVR())
 	{
 		saveRenderTarget = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(viewRender.m_eStereoEye - 1),
 														ISourceVirtualReality::RT_Color);
 	}
+#endif
 
 	// Draw the 2D graphics
 	render->Push2DView(viewRender, 0, saveRenderTarget, GetFrustum());
@@ -2215,6 +2217,7 @@ void CViewRender::RenderView(const CViewSetup &viewRender, int nClearFlags, int 
 		bool bClear = false;
 		bool bPaintMainMenu = false;
 		ITexture *pTexture = NULL;
+#if 0
 		if(UseVR())
 		{
 			if(g_ClientVirtualReality.ShouldRenderHUDInWorld())
@@ -2243,6 +2246,7 @@ void CViewRender::RenderView(const CViewSetup &viewRender, int nClearFlags, int 
 				viewFramebufferY = 0;
 			}
 		}
+#endif
 
 		// Get the render context out of materials to avoid some debug stuff.
 		// WARNING THIS REQUIRES THE .SafeRelease below or it'll never release the ref
@@ -2263,11 +2267,13 @@ void CViewRender::RenderView(const CViewSetup &viewRender, int nClearFlags, int 
 		}
 
 		// let vgui know where to render stuff for the forced-to-framebuffer panels
+#if 0
 		if(UseVR())
 		{
 			g_pMatSystemSurface->SetFullscreenViewportAndRenderTarget(
 				viewFramebufferX, viewFramebufferY, viewFramebufferWidth, viewFramebufferHeight, saveRenderTarget);
 		}
+#endif
 
 		// clear the render target if we need to
 		if(bClear)
@@ -2317,6 +2323,7 @@ void CViewRender::RenderView(const CViewSetup &viewRender, int nClearFlags, int 
 		}
 		pRenderContext->PopRenderTargetAndViewport();
 
+#if 0
 		if(UseVR())
 		{
 			// figure out if we really want to draw the HUD based on freeze cam
@@ -2338,6 +2345,7 @@ void CViewRender::RenderView(const CViewSetup &viewRender, int nClearFlags, int 
 				CleanupMain3DView(viewRender);
 			}
 		}
+#endif
 
 		pRenderContext->Flush();
 		pRenderContext.SafeRelease();
@@ -3534,7 +3542,7 @@ void CRendering3dView::DrawWorld(float waterZAdjust)
 		return;
 	}
 
-	unsigned long engineFlags = BuildEngineDrawWorldListFlags(m_DrawFlags);
+	unsigned int engineFlags = BuildEngineDrawWorldListFlags(m_DrawFlags);
 
 	render->DrawWorldLists(m_pWorldRenderList, engineFlags, waterZAdjust);
 }
@@ -3594,7 +3602,7 @@ static void DrawClippedDepthBox(IClientRenderable *pEnt, float *pClipPlane)
 
 	Vector vSplitPoints[8][8]; // obviously there are only 12 lines, not 64 lines or 64 split points, but the indexing
 							   // is way easier like this
-	int iLineStates[8][8]; // 0 = unclipped, 2 = wholly clipped, 3 = first point clipped, 4 = second point clipped
+	int iLineStates[8][8];	   // 0 = unclipped, 2 = wholly clipped, 3 = first point clipped, 4 = second point clipped
 
 	// categorize lines and generate split points where needed
 	for(int i = 0; i != 12; ++i)
@@ -3669,8 +3677,8 @@ static void DrawClippedDepthBox(IClientRenderable *pEnt, float *pClipPlane)
 			continue;
 
 		float *pStartPoint = 0;
-		float *pTriangleFanPoints[4]; // at most, one of our fans will have 5 points total, with the first point being
-									  // stored separately as pStartPoint
+		float *pTriangleFanPoints[4];	// at most, one of our fans will have 5 points total, with the first point being
+										// stored separately as pStartPoint
 		int iTriangleFanPointCount = 1; // the switch below creates the first for sure
 
 		// figure out how to start the fan
@@ -4431,7 +4439,7 @@ void CRendering3dView::DrawTranslucentRenderables(bool bInSkybox, bool bShadowDe
 	// 	bool bDrawAboveWater = (nFlags & DF_RENDER_ABOVEWATER) != 0;
 	// 	bool bDrawWater = (nFlags & DF_RENDER_WATER) != 0;
 	// 	bool bClipSkybox = (nFlags & DF_CLIP_SKYBOX ) != 0;
-	unsigned long nEngineDrawFlags = BuildEngineDrawWorldListFlags(m_DrawFlags & ~DF_DRAWSKYBOX);
+	unsigned int nEngineDrawFlags = BuildEngineDrawWorldListFlags(m_DrawFlags & ~DF_DRAWSKYBOX);
 
 	DetailObjectSystem()->BeginTranslucentDetailRendering();
 
@@ -4884,10 +4892,10 @@ void CSkyboxView::Draw()
 	ITexture *pRTDepth = NULL;
 	if(m_eStereoEye != STEREO_EYE_MONO)
 	{
-		pRTColor = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(m_eStereoEye - 1),
-												ISourceVirtualReality::RT_Color);
-		pRTDepth = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(m_eStereoEye - 1),
-												ISourceVirtualReality::RT_Depth);
+		// pRTColor = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(m_eStereoEye - 1),
+		// 										ISourceVirtualReality::RT_Color);
+		// pRTDepth = g_pSourceVR->GetRenderTarget((ISourceVirtualReality::VREye)(m_eStereoEye - 1),
+		// 										ISourceVirtualReality::RT_Depth);
 	}
 
 	DrawInternal(VIEW_3DSKY, true, pRTColor, pRTDepth);

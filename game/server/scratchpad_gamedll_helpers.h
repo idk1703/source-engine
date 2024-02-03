@@ -22,10 +22,10 @@ class IScratchPad3D;
 
 // Draws the world and various things in it into the scratchpad.
 // flags is a combination of the SPDRAWWORLD_ flags.
-void ScratchPad_DrawWorldToScratchPad(IScratchPad3D *pPad, unsigned long flags);
+void ScratchPad_DrawWorldToScratchPad(IScratchPad3D *pPad, unsigned int flags);
 
 // Draw a specific entity into the scratch pad.
-void ScratchPad_DrawEntityToScratchPad(IScratchPad3D *pPad, unsigned long flags, CBaseEntity *pEnt,
+void ScratchPad_DrawEntityToScratchPad(IScratchPad3D *pPad, unsigned int flags, CBaseEntity *pEnt,
 									   const Vector &vColor);
 
 #endif // SCRATCHPAD_GAMEDLL_HELPERS_H

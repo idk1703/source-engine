@@ -2498,7 +2498,7 @@ void CBaseAnimating::LockStudioHdr()
 			if(pStudioHdrContainer && pStudioHdrContainer->GetVirtualModel())
 			{
 				MDLHandle_t hVirtualModel =
-					(MDLHandle_t)(int)(pStudioHdrContainer->GetRenderHdr()->virtualModel) & 0xffff;
+					VoidPtrToMDLHandle(pStudioHdrContainer->GetRenderHdr()->virtualModel);
 				mdlcache->LockStudioHdr(hVirtualModel);
 			}
 			m_pStudioHdr = pStudioHdrContainer; // must be last to ensure virtual model correctly set up
@@ -2516,7 +2516,7 @@ void CBaseAnimating::UnlockStudioHdr()
 			mdlcache->UnlockStudioHdr(modelinfo->GetCacheHandle(mdl));
 			if(m_pStudioHdr->GetVirtualModel())
 			{
-				MDLHandle_t hVirtualModel = (MDLHandle_t)(int)(m_pStudioHdr->GetRenderHdr()->virtualModel) & 0xffff;
+				MDLHandle_t hVirtualModel = VoidPtrToMDLHandle(m_pStudioHdr->GetRenderHdr()->virtualModel);
 				mdlcache->UnlockStudioHdr(hVirtualModel);
 			}
 		}

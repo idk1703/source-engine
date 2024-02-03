@@ -20,7 +20,7 @@
 #include <KeyValues.h>
 #include "ienginevgui.h"
 #include "c_playerresource.h"
-#include "ihudlcd.h"
+// #include "ihudlcd.h"
 #include "vgui/IInput.h"
 #include "vgui/ILocalize.h"
 #include "multiplay_gamerules.h"
@@ -1760,11 +1760,11 @@ void CBaseHudChat::ChatPrintf(int iPlayerIndex, int iFilter, const char *fmt, ..
 
 	if(*pmsg < 32)
 	{
-		hudlcd->AddChatLine(pmsg + 1);
+		// hudlcd->AddChatLine(pmsg + 1);
 	}
 	else
 	{
-		hudlcd->AddChatLine(pmsg);
+		// hudlcd->AddChatLine(pmsg);
 	}
 
 	line->SetText("");

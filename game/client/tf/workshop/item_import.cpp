@@ -19,7 +19,7 @@
 #include "cbase.h"
 
 #include "tier2/tier2.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "tier2/fileutils.h"
 #include "ienginevgui.h"
 #include "imageutils.h"

@@ -47,8 +47,8 @@
 #include "replay/ienginereplay.h"
 #endif
 #include "steam/steam_api.h"
-#include "sourcevr/isourcevirtualreality.h"
-#include "client_virtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
+// #include "client_virtualreality.h"
 
 #ifdef TF_CLIENT_DLL
 #include "tf_gamerules.h"
@@ -513,6 +513,7 @@ CBaseEntity *C_BasePlayer::GetObserverTarget() const // returns players target o
 	}
 	else
 	{
+#if 0
 		if(IsLocalPlayer() && UseVR())
 		{
 			// In VR mode, certain views cause disorientation and nausea. So let's not.
@@ -537,6 +538,7 @@ CBaseEntity *C_BasePlayer::GetObserverTarget() const // returns players target o
 					break;
 			}
 		}
+#endif
 
 		return m_hObserverTarget;
 	}
@@ -575,7 +577,7 @@ void C_BasePlayer::SetObserverTarget(EHANDLE hObserverTarget)
 		{
 			// On a change of viewing mode or target, we may want to reset both head and torso to point at the new
 			// target.
-			g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
+			// g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
 		}
 	}
 }
@@ -589,7 +591,7 @@ void C_BasePlayer::SetObserverMode(int iNewMode)
 		{
 			// On a change of viewing mode or target, we may want to reset both head and torso to point at the new
 			// target.
-			g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
+			// g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
 		}
 	}
 }
@@ -609,6 +611,7 @@ int C_BasePlayer::GetObserverMode() const
 #endif
 #endif
 
+#if 0
 	if(IsLocalPlayer() && UseVR())
 	{
 		// IN VR mode, certain views cause disorientation and nausea. So let's not.
@@ -632,6 +635,7 @@ int C_BasePlayer::GetObserverMode() const
 				break;
 		}
 	}
+#endif
 
 	return m_iObserverMode;
 }
@@ -699,7 +703,7 @@ void C_BasePlayer::FireGameEvent(IGameEvent *event)
 		{
 			// In VR, we want to make sure our head and body
 			// are aligned after we teleport.
-			g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
+			// g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
 		}
 	}
 }
@@ -1456,12 +1460,14 @@ void C_BasePlayer::CalcChaseCamView(Vector &eyeOrigin, QAngle &eyeAngles, float 
 	else if(IsLocalPlayer())
 	{
 		engine->GetViewAngles(viewangles);
+#if 0
 		if(UseVR())
 		{
 			// Don't let people play with the pitch - they drive it into the ground or into the air and
 			// it's distracting at best, nauseating at worst (e.g. when it clips through the ground plane).
 			viewangles[PITCH] = 20.0f;
 		}
+#endif
 	}
 	else
 	{
@@ -1881,7 +1887,9 @@ void C_BasePlayer::ThirdPersonSwitch(bool bThirdperson)
 //-----------------------------------------------------------------------------
 /*static*/ bool C_BasePlayer::ShouldDrawLocalPlayer()
 {
+#if 0
 	if(!UseVR())
+#endif
 	{
 		return !LocalPlayerInFirstPersonView() || cl_first_person_uses_world_model.GetBool();
 	}
@@ -1923,10 +1931,11 @@ bool C_BasePlayer::ShouldDrawThisPlayer()
 	{
 		return true;
 	}
-	if(!UseVR() && cl_first_person_uses_world_model.GetBool())
+	if(/*!UseVR() && */cl_first_person_uses_world_model.GetBool())
 	{
 		return true;
 	}
+#if 0
 	if(UseVR())
 	{
 		static ConVarRef vr_first_person_uses_world_model("vr_first_person_uses_world_model");
@@ -1935,6 +1944,7 @@ bool C_BasePlayer::ShouldDrawThisPlayer()
 			return true;
 		}
 	}
+#endif
 	return false;
 }
 
@@ -2882,6 +2892,7 @@ void C_BasePlayer::BuildFirstPersonMeathookTransformations(CStudioHdr *hdr, Vect
 	// the whole body so that the animated head is in the right place to match the player-controlled head.
 	Vector vHeadUp;
 	Vector vRealPivotPoint;
+#if 0
 	if(UseVR())
 	{
 		VMatrix mWorldFromMideye = g_ClientVirtualReality.GetWorldFromMidEye();
@@ -2898,6 +2909,7 @@ void C_BasePlayer::BuildFirstPersonMeathookTransformations(CStudioHdr *hdr, Vect
 						  (mWorldFromMideye.GetForward() * cl_meathook_neck_pivot_ingame_fwd.GetFloat());
 	}
 	else
+#endif
 	{
 		// figure out where to put the body from the aim angles
 		Vector vForward, vRight, vUp;

@@ -179,7 +179,7 @@ bool ProcessURL(const char *pchURL, void *pSockAddrIn, char *pchRequest, int cch
 	}
 
 	sockaddr_in &sockAddrIn = *((sockaddr_in *)pSockAddrIn);
-	sockAddrIn.sin_addr.s_addr = *((unsigned long *)hp->h_addr);
+	sockAddrIn.sin_addr.s_addr = *((uint32 *)hp->h_addr);
 	sockAddrIn.sin_family = AF_INET;
 	sockAddrIn.sin_port = htons(iPort);
 

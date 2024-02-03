@@ -4165,7 +4165,7 @@ bool CShadowProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 
 void CShadowProxy::OnBind(void *pProxyData)
 {
-	unsigned short clientShadowHandle = (unsigned short)(int)pProxyData & 0xffff;
+	unsigned short clientShadowHandle = VoidPtrToMDLHandle(pProxyData);
 	ITexture *pTex = s_ClientShadowMgr.GetShadowTexture(clientShadowHandle);
 	m_BaseTextureVar->SetTextureValue(pTex);
 	if(ToolsEnabled())
@@ -4247,7 +4247,7 @@ bool CShadowModelProxy::Init(IMaterial *pMaterial, KeyValues *pKeyValues)
 
 void CShadowModelProxy::OnBind(void *pProxyData)
 {
-	unsigned short clientShadowHandle = (unsigned short)((int)pProxyData & 0xffff);
+	unsigned short clientShadowHandle = VoidPtrToMDLHandle(pProxyData);
 	ITexture *pTex = s_ClientShadowMgr.GetShadowTexture(clientShadowHandle);
 	m_BaseTextureVar->SetTextureValue(pTex);
 

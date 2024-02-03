@@ -19,10 +19,10 @@
 #include "stat_card.h"
 #include <vgui/IInput.h>
 
-#include "../../../public/steam/steam_api.h"
+#include "steam/steam_api.h"
 #include "achievementmgr.h"
-#include "../../../../public/vgui/IScheme.h"
-#include "../vgui_controls/ScrollBar.h"
+#include "vgui/IScheme.h"
+#include "vgui_controls/ScrollBar.h"
 #include "achievements_cs.h"
 
 extern CAchievementMgr g_AchievementMgrCS;

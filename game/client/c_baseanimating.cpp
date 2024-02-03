@@ -637,9 +637,9 @@ void C_ClientRagdoll::Release(void)
 //-----------------------------------------------------------------------------
 // Incremented each frame in InvalidateModelBones. Models compare this value to what it
 // was last time they setup their bones to determine if they need to re-setup their bones.
-static unsigned long g_iModelBoneCounter = 0;
+static uint32 g_iModelBoneCounter = 0;
 CUtlVector<C_BaseAnimating *> g_PreviousBoneSetups;
-static unsigned long g_iPreviousBoneCounter = (unsigned)-1;
+static uint32 g_iPreviousBoneCounter = (uint32)-1;
 
 class C_BaseAnimatingGameSystem : public CAutoGameSystem
 {
@@ -945,7 +945,7 @@ void C_BaseAnimating::LockStudioHdr()
 
 	if(pNewWrapper->GetVirtualModel())
 	{
-		MDLHandle_t hVirtualModel = (MDLHandle_t)(int)(pStudioHdr->virtualModel) & 0xffff;
+		MDLHandle_t hVirtualModel = VoidPtrToMDLHandle(pStudioHdr->virtualModel);
 		mdlcache->LockStudioHdr(hVirtualModel);
 	}
 
@@ -977,7 +977,7 @@ void C_BaseAnimating::UnlockStudioHdr()
 			// Immediate-mode rendering, can unlock immediately
 			if(pStudioHdr->GetVirtualModel())
 			{
-				MDLHandle_t hVirtualModel = (MDLHandle_t)(int)pStudioHdr->virtualModel & 0xffff;
+				MDLHandle_t hVirtualModel = VoidPtrToMDLHandle(pStudioHdr->virtualModel);
 				mdlcache->UnlockStudioHdr(hVirtualModel);
 			}
 			mdlcache->UnlockStudioHdr(m_hStudioHdr);

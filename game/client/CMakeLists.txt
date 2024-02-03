@@ -121,7 +121,7 @@ set(SOURCES
 	classmap.cpp
 	client_factorylist.cpp
 	client_thinklist.cpp
-	client_virtualreality.cpp
+	# client_virtualreality.cpp
 	clienteffectprecachesystem.cpp
 	cliententitylist.cpp
 	clientleafsystem.cpp
@@ -350,7 +350,7 @@ set(SOURCES
 	${SRCDIR}/public/vallocator.cpp
 	${SRCDIR}/public/vgui_controls/vgui_controls.cpp
 	${SRCDIR}/public/jigglebones.cpp
-	hud_lcd.cpp
+	# hud_lcd.cpp
 	in_mouse.cpp
 	mumble.cpp
 	${SRCDIR}/public/renamed_recvtable_compat.cpp

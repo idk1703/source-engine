@@ -16,8 +16,10 @@
 #include "utlvector.h"
 
 #ifndef _X360
-#include "steam/isteamgamestats.h"
+// #include "steam/isteamgamestats.h"
 #endif
+
+typedef int GameStatsSessionIssued_t;
 
 // Container to hold all the KeyValue stats to send only if the convar "steamworks_immediate_upload" is set to 0.
 // Otherwise, the stats are uploaded as they are received.
@@ -56,21 +58,21 @@ public:
 	int GetFriendCountInGame();
 
 #ifndef NO_STEAM
-	STEAM_CALLBACK_MANUAL(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoIssued, GameStatsSessionIssued_t,
-						  m_CallbackSteamSessionInfoIssued);
-	STEAM_CALLBACK_MANUAL(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t,
-						  m_CallbackSteamSessionInfoClosed);
+	// STEAM_CALLBACK_MANUAL(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoIssued, GameStatsSessionIssued_t,
+	// 					  m_CallbackSteamSessionInfoIssued);
+	// STEAM_CALLBACK_MANUAL(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t,
+	// 					  m_CallbackSteamSessionInfoClosed);
 #endif
 
 #endif
 
 #ifdef GAME_DLL
-#ifndef NO_STEAM
-	STEAM_GAMESERVER_CALLBACK(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoIssued, GameStatsSessionIssued_t,
-							  m_CallbackSteamSessionInfoIssued);
-	STEAM_GAMESERVER_CALLBACK(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t,
-							  m_CallbackSteamSessionInfoClosed);
-#endif
+// #ifndef NO_STEAM
+// 	STEAM_GAMESERVER_CALLBACK(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoIssued, GameStatsSessionIssued_t,
+// 							  m_CallbackSteamSessionInfoIssued);
+// 	STEAM_GAMESERVER_CALLBACK(CSteamWorksGameStatsUploader, Steam_OnSteamSessionInfoClosed, GameStatsSessionClosed_t,
+// 							  m_CallbackSteamSessionInfoClosed);
+// #endif
 #endif
 
 	// Called each frame before entities think
@@ -186,11 +188,11 @@ private:
 	EResult WriteOptionalFloatToTable(KeyValues *pKV, const char *keyName, uint64 iTableID, const char *pzRow);
 	EResult WriteOptionalIntToTable(KeyValues *pKV, const char *keyName, uint64 iTableID, const char *pzRow);
 
-	ISteamGameStats *GetInterface(void);
+	ISteamGameServerStats *GetInterface(void);
 	EResult ParseKeyValuesAndSendStats(KeyValues *pKV, bool bIncludeClientsServerSessionID = true);
 	void ServerAddressToInt();
 
-	ISteamGameStats *m_SteamWorksInterface;
+	ISteamGameServerStats *m_SteamWorksInterface;
 
 	uint64 m_UserID;
 	uint32 m_iAppID;

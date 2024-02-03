@@ -12,7 +12,7 @@
 #include "iprediction.h"
 #include "prediction.h"
 #include "client_virtualreality.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #else
 #include "vguiscreen.h"
 #endif
@@ -417,11 +417,13 @@ void CBaseViewModel::CalcViewModelView(CBasePlayer *owner, const Vector &eyePosi
 	}
 #endif
 
+#if 0
 	if(UseVR())
 	{
 		g_ClientVirtualReality.OverrideViewModelTransform(vmorigin, vmangles,
 														  pWeapon && pWeapon->ShouldUseLargeViewModelVROverride());
 	}
+#endif
 
 	SetLocalOrigin(vmorigin);
 	SetLocalAngles(vmangles);

@@ -15,9 +15,9 @@
 #include "movevars_shared.h"
 #include "iviewrender.h"
 #include "vgui/ISurface.h"
-#include "client_virtualreality.h"
+// #include "client_virtualreality.h"
 #include "../hud_crosshair.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 // NVNT haptic utils
 #include "haptics/haptic_utils.h"
 
@@ -134,7 +134,7 @@ void C_PropVehicleDriveable::OnDataChanged(DataUpdateType_t updateType)
 	{
 		OnEnteredVehicle(m_hPlayer);
 		SetNextClientThink(CLIENT_THINK_ALWAYS);
-		g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
+		// g_ClientVirtualReality.AlignTorsoAndViewToWeapon();
 	}
 	else if(!m_hPlayer && m_hPrevPlayer)
 	{
@@ -229,6 +229,7 @@ void C_PropVehicleDriveable::DrawHudElements()
 		{
 			float x, y;
 
+#if 0
 			if(UseVR())
 			{
 				C_BasePlayer *pPlayer = (C_BasePlayer *)GetPassenger(VEHICLE_ROLE_DRIVER);
@@ -253,11 +254,12 @@ void C_PropVehicleDriveable::DrawHudElements()
 				y = 0.5f * (1.0f - screen[1]) * screenHeight + 0.5f;
 			}
 			else
+#endif
 			{
 				Vector screen;
 
-				x = ScreenWidth() / 2;
-				y = ScreenHeight() / 2;
+				x = ScreenWidth() / 2.0f;
+				y = ScreenHeight() / 2.0f;
 
 #if TRIANGULATED_CROSSHAIR
 				ScreenTransform(m_vecGunCrosshair, screen);
@@ -266,8 +268,8 @@ void C_PropVehicleDriveable::DrawHudElements()
 #endif
 			}
 
-			x -= pIcon->Width() / 2;
-			y -= pIcon->Height() / 2;
+			x -= pIcon->Width() / 2.0f;
+			y -= pIcon->Height() / 2.0f;
 
 			Color clr = (m_bUnableToFire) ? gHUD.m_clrCaution : gHUD.m_clrNormal;
 			pIcon->DrawSelf(x, y, clr);

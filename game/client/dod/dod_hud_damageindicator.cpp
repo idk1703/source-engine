@@ -322,7 +322,7 @@ void CHudDODDamageIndicator::Paint()
 }
 
 // NVNT - hacky way of passing damage
-static long lastDamage_s = 0;
+static int lastDamage_s = 0;
 
 //-----------------------------------------------------------------------------
 // Purpose: Message handler for Damage message

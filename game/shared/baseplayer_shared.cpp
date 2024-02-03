@@ -22,7 +22,7 @@
 #include "view.h"
 #include "client_virtualreality.h"
 #define CRecipientFilter C_RecipientFilter
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 #else
 
@@ -427,7 +427,8 @@ void CBasePlayer::CacheVehicleView(void)
 		pVehicle->GetVehicleViewPosition(nRole, &m_vecVehicleViewOrigin, &m_vecVehicleViewAngles, &m_flVehicleViewFOV);
 		m_nVehicleViewSavedFrame = gpGlobals->framecount;
 
-#ifdef CLIENT_DLL
+// #ifdef CLIENT_DLL
+#if 0
 		if(UseVR())
 		{
 			C_BaseAnimating *pVehicleAnimating = dynamic_cast<C_BaseAnimating *>(pVehicle);
@@ -1551,7 +1552,7 @@ void CBasePlayer::CalcView(Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, f
 
 	if(!pVehicle)
 	{
-#if defined(CLIENT_DLL)
+#if defined(CLIENT_DLL) && USE_VR
 		if(UseVR())
 			g_ClientVirtualReality.CancelTorsoTransformOverride();
 #endif

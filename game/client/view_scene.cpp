@@ -11,8 +11,8 @@
 #include "rendertexture.h"
 #include "view_scene.h"
 #include "viewrender.h"
-#include "sourcevr/isourcevirtualreality.h"
-#include "client_virtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
+// #include "client_virtualreality.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -104,11 +104,13 @@ int ScreenTransform(const Vector &point, Vector &screen)
 //-----------------------------------------------------------------------------
 int HudTransform(const Vector &point, Vector &screen)
 {
+#if 0
 	if(UseVR())
 	{
 		return FrustumTransform(g_ClientVirtualReality.GetHudProjectionFromWorld(), point, screen);
 	}
 	else
+#endif
 	{
 		return FrustumTransform(engine->WorldToScreenMatrix(), point, screen);
 	}

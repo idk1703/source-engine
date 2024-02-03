@@ -35,7 +35,7 @@
 #include <vgui/ILocalize.h>
 #include "hud_vote.h"
 #include "ienginevgui.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #if defined(_X360)
 #include "xbox/xbox_console.h"
 #endif
@@ -328,10 +328,12 @@ void ClientModeShared::ReloadScheme(bool flushLowLevel)
 //-----------------------------------------------------------------------------
 void ClientModeShared::ComputeVguiResConditions(KeyValues *pkvConditions)
 {
+#if 0
 	if(UseVR())
 	{
 		pkvConditions->FindKey("if_vr", true);
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1140,7 +1142,7 @@ void ClientModeShared::FireGameEvent(IGameEvent *event)
 			}
 		}
 
-		if(team == 0 && GetLocalTeam() > 0)
+		if(team == 0 && GetLocalTeam()->GetTeamNumber() > 0)
 		{
 			bValidTeam = false;
 		}

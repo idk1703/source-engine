@@ -84,7 +84,7 @@
 #include "scenefilecache/ISceneFileCache.h"
 #include "tier2/tier2dm.h"
 #include "tier3/tier3.h"
-#include "ihudlcd.h"
+// #include "ihudlcd.h"
 #include "toolframework_client.h"
 #include "hltvcamera.h"
 #if defined(REPLAY_ENABLED)
@@ -122,8 +122,8 @@
 #include "clientsteamcontext.h"
 #include "renamed_recvtable_compat.h"
 #include "mouthinfo.h"
-#include "sourcevr/isourcevirtualreality.h"
-#include "client_virtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
+// #include "client_virtualreality.h"
 #include "mumble.h"
 #include "vgui_controls/BuildGroup.h"
 
@@ -434,8 +434,8 @@ class CClientDLLSharedAppSystems : public IClientDLLSharedAppSystems
 public:
 	CClientDLLSharedAppSystems()
 	{
-		AddAppSystem("soundemittersystem" DLL_EXT_STRING, SOUNDEMITTERSYSTEM_INTERFACE_VERSION);
-		AddAppSystem("scenefilecache" DLL_EXT_STRING, SCENE_FILE_CACHE_INTERFACE_VERSION);
+		AddAppSystem(LIB_PREFIX_STR "soundemittersystem" LIB_EXT_STR, SOUNDEMITTERSYSTEM_INTERFACE_VERSION);
+		AddAppSystem(LIB_PREFIX_STR "scenefilecache" LIB_EXT_STR, SCENE_FILE_CACHE_INTERFACE_VERSION);
 	}
 
 	virtual int Count()
@@ -838,7 +838,7 @@ CHLClient::CHLClient()
 extern IGameSystem *ViewportClientSystem();
 
 //-----------------------------------------------------------------------------
-ISourceVirtualReality *g_pSourceVR = NULL;
+// ISourceVirtualReality *g_pSourceVR = NULL;
 
 // Purpose: Called when the DLL is first loaded.
 // Input  : engineFactory -
@@ -941,8 +941,8 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 #endif
 
 	// it's ok if this is NULL. That just means the sourcevr.dll wasn't found
-	if(CommandLine()->CheckParm("-vr"))
-		g_pSourceVR = (ISourceVirtualReality *)appSystemFactory(SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION, NULL);
+	// if(CommandLine()->CheckParm("-vr"))
+	// 	g_pSourceVR = (ISourceVirtualReality *)appSystemFactory(SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION, NULL);
 
 	factorylist_t factories;
 	factories.appSystemFactory = appSystemFactory;
@@ -1129,7 +1129,7 @@ void CHLClient::PostInit()
 	g_pSixenseInput->PostInit();
 #endif
 
-	g_ClientVirtualReality.StartupComplete();
+	// g_ClientVirtualReality.StartupComplete();
 
 #ifdef HL1MP_CLIENT_DLL
 	if(s_cl_load_hl1_content.GetBool() && steamapicontext && steamapicontext->SteamApps())
@@ -1267,8 +1267,8 @@ void CHLClient::HudUpdate(bool bActive)
 	// run vgui animations
 	vgui::GetAnimationController()->UpdateAnimations(engine->Time());
 
-	hudlcd->SetGlobalStat("(time_int)", VarArgs("%d", (int)gpGlobals->curtime));
-	hudlcd->SetGlobalStat("(time_float)", VarArgs("%.2f", gpGlobals->curtime));
+	// hudlcd->SetGlobalStat("(time_int)", VarArgs("%d", (int)gpGlobals->curtime));
+	// hudlcd->SetGlobalStat("(time_float)", VarArgs("%.2f", gpGlobals->curtime));
 
 	// I don't think this is necessary any longer, but I will leave it until
 	// I can check into this further.
@@ -1576,7 +1576,7 @@ void CHLClient::LevelInitPreEntity(char const *pMapName)
 	modemanager->LevelInit(pMapName);
 	ParticleMgr()->LevelInit();
 
-	hudlcd->SetGlobalStat("(mapname)", pMapName);
+	// hudlcd->SetGlobalStat("(mapname)", pMapName);
 
 	C_BaseTempEntity::ClearDynamicTempEnts();
 	clienteffects->Flush();

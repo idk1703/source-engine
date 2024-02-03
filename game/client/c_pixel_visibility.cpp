@@ -16,7 +16,7 @@
 #include "utlmultilist.h"
 #include "vprof.h"
 #include "icommandline.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 
 static void PixelvisDrawChanged(IConVar *pPixelvisVar, const char *pOld, float flOldValue);
 
@@ -354,7 +354,7 @@ float CPixelVisibilityQuery::GetFractionVisible(float fadeTimeInv)
 			if(r_pixelvisibility_spew.GetBool() && CurrentViewID() == 0)
 			{
 				DevMsg(1, "Pixels visible: %d (qh:%d) Pixels possible: %d (qh:%d) (frame:%d)\n", pixels,
-					   (int)m_queryHandle, pixelsPossible, (int)m_queryHandleCount, gpGlobals->framecount);
+					   (uintp)m_queryHandle, pixelsPossible, (uintp)m_queryHandleCount, gpGlobals->framecount);
 			}
 
 			if(pixels < 0 || pixelsPossible < 0)
@@ -385,7 +385,7 @@ float CPixelVisibilityQuery::GetFractionVisible(float fadeTimeInv)
 
 			if(r_pixelvisibility_spew.GetBool() && CurrentViewID() == 0)
 			{
-				DevMsg(1, "Pixels visible: %d (qh:%d) (frame:%d)\n", pixels, (int)m_queryHandle, gpGlobals->framecount);
+				DevMsg(1, "Pixels visible: %d (qh:%d) (frame:%d)\n", pixels, (uintp)m_queryHandle, gpGlobals->framecount);
 			}
 
 			if(pixels < 0)
@@ -425,8 +425,8 @@ void CPixelVisibilityQuery::IssueQuery(IMatRenderContext *pRenderContext, float 
 
 		if(r_pixelvisibility_spew.GetBool() && CurrentViewID() == 0)
 		{
-			DevMsg(1, "Draw Proxy: qh:%d org:<%d,%d,%d> (frame:%d)\n", (int)m_queryHandle, (int)m_origin[0],
-				   (int)m_origin[1], (int)m_origin[2], gpGlobals->framecount);
+			DevMsg(1, "Draw Proxy: qh:%d org:<%f,%f,%f> (frame:%d)\n", (uintp)m_queryHandle, m_origin[0],
+				   m_origin[1], m_origin[2], gpGlobals->framecount);
 		}
 
 		m_clipFraction = PixelVisibility_DrawProxy(pRenderContext, m_queryHandle, m_origin, proxySize, proxyAspect,
@@ -442,7 +442,7 @@ void CPixelVisibilityQuery::IssueQuery(IMatRenderContext *pRenderContext, float 
 		}
 	}
 #ifndef PORTAL // FIXME: In portal we query visibility multiple times per frame because of portal renders!
-	Assert((m_frameIssued != gpGlobals->framecount) || UseVR());
+	Assert((m_frameIssued != gpGlobals->framecount)/* || UseVR() */);
 #endif
 
 	m_frameIssued = gpGlobals->framecount;

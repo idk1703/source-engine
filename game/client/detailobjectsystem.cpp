@@ -2344,7 +2344,7 @@ void CDetailObjectSystem::RenderFastSprites(const Vector &viewOrigin, const Vect
 
 					// voodoo - since everything is in 4s, offset structure pointer by a couple of floats to handle
 					// sub-index
-					pquad = (FastSpriteQuadBuildoutBufferNonSIMDView_t const *)(((int)(pquad)) + (nSubIdx << 2));
+					pquad = (FastSpriteQuadBuildoutBufferNonSIMDView_t const *)(((uintp)(pquad)) + (nSubIdx << 2));
 					uint8 const *pColorsCasted = reinterpret_cast<uint8 const *>(pquad->m_Alpha);
 
 					uint8 color[4];
@@ -2577,7 +2577,7 @@ void CDetailObjectSystem::RenderFastTranslucentDetailObjectsInLeaf(const Vector 
 			FastSpriteQuadBuildoutBufferNonSIMDView_t const *pquad = pQuadBuffer + nSIMDIdx;
 
 			// voodoo - since everything is in 4s, offset structure pointer by a couple of floats to handle sub-index
-			pquad = (FastSpriteQuadBuildoutBufferNonSIMDView_t const *)(((int)(pquad)) + (nSubIdx << 2));
+			pquad = (FastSpriteQuadBuildoutBufferNonSIMDView_t const *)(((uintp)(pquad)) + (nSubIdx << 2));
 			uint8 const *pColorsCasted = reinterpret_cast<uint8 const *>(pquad->m_Alpha);
 
 			uint8 color[4];
@@ -2827,5 +2827,5 @@ void CDetailObjectSystem::BuildDetailObjectRenderLists(const Vector &vViewOrigin
 	m_flCurFalloffFactor = 255.0f / (m_flCurMaxSqDist - m_flCurFadeSqDist);
 
 	ISpatialQuery *pQuery = engine->GetBSPTreeQuery();
-	pQuery->EnumerateLeavesInSphere(CurrentViewOrigin(), cl_detaildist.GetFloat(), this, (int)&ctx);
+	pQuery->EnumerateLeavesInSphere(CurrentViewOrigin(), cl_detaildist.GetFloat(), this, (uintp)&ctx);
 }

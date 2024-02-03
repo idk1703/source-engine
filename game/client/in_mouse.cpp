@@ -147,7 +147,7 @@ void CInput::ActivateMouse(void)
 		m_fMouseActive = true;
 
 		ResetMouse();
-#if !defined(PLATFORM_WINDOWS)
+#if !defined(PLATFORM_WINDOWS) && defined(USE_SDL)
 		int dx, dy;
 		engine->GetMouseDelta(dx, dy, true);
 #endif

@@ -43,8 +43,8 @@
 #include <vgui_controls/Controls.h>
 #include <vgui/ISurface.h>
 #include "ScreenSpaceEffects.h"
-#include "sourcevr/isourcevirtualreality.h"
-#include "client_virtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
+// #include "client_virtualreality.h"
 
 #if defined(REPLAY_ENABLED)
 #include "replay/ireplaysystem.h"
@@ -135,7 +135,7 @@ static ConVar cl_demoviewoverride("cl_demoviewoverride", "0", 0, "Override view 
 void SoftwareCursorChangedCB(IConVar *pVar, const char *pOldValue, float fOldValue)
 {
 	ConVar *pConVar = (ConVar *)pVar;
-	vgui::surface()->SetSoftwareCursor(pConVar->GetBool() || UseVR());
+	vgui::surface()->SetSoftwareCursor(pConVar->GetBool() /* || UseVR() */);
 }
 static ConVar cl_software_cursor("cl_software_cursor", "0", FCVAR_ARCHIVE,
 								 "Switches the game to use a larger software cursor instead of the normal OS cursor",
@@ -477,18 +477,22 @@ void CViewRender::DriftPitch(void)
 
 StereoEye_t CViewRender::GetFirstEye() const
 {
+#if 0
 	if(UseVR())
 		return STEREO_EYE_LEFT;
 	else
-		return STEREO_EYE_MONO;
+#endif
+	return STEREO_EYE_MONO;
 }
 
 StereoEye_t CViewRender::GetLastEye() const
 {
+#if 0
 	if(UseVR())
 		return STEREO_EYE_RIGHT;
 	else
-		return STEREO_EYE_MONO;
+#endif
+	return STEREO_EYE_MONO;
 }
 
 // This is called by cdll_client_int to setup view model origins. This has to be done before
@@ -722,6 +726,7 @@ void CViewRender::SetUpViews()
 	// Adjust the viewmodel's FOV to move with any FOV offsets on the viewer's end
 	viewEye.fovViewmodel = g_pClientMode->GetViewModelFOV() - flFOVOffset;
 
+#if 0
 	if(UseVR())
 	{
 		// Let the headtracking read the status of the HMD, etc.
@@ -747,6 +752,7 @@ void CViewRender::SetUpViews()
 		g_ClientVirtualReality.OverrideStereoView(&m_View, &m_ViewLeft, &m_ViewRight);
 	}
 	else
+#endif
 	{
 		// left and right stereo views should default to being the same as the mono/middle view
 		m_ViewLeft = m_View;
@@ -1157,8 +1163,8 @@ void CViewRender::Render(vrect_t *rect)
 			case STEREO_EYE_RIGHT:
 			case STEREO_EYE_LEFT:
 			{
-				g_pSourceVR->GetViewportBounds((ISourceVirtualReality::VREye)(eEye - 1), &viewEye.x, &viewEye.y,
-											   &viewEye.width, &viewEye.height);
+				// g_pSourceVR->GetViewportBounds((ISourceVirtualReality::VREye)(eEye - 1), &viewEye.x, &viewEye.y,
+				// 							   &viewEye.width, &viewEye.height);
 				viewEye.m_nUnscaledWidth = viewEye.width;
 				viewEye.m_nUnscaledHeight = viewEye.height;
 				viewEye.m_nUnscaledX = viewEye.x;
@@ -1224,7 +1230,7 @@ void CViewRender::Render(vrect_t *rect)
 		}
 
 		int flags = 0;
-		if(eEye == STEREO_EYE_MONO || eEye == STEREO_EYE_LEFT || (g_ClientVirtualReality.ShouldRenderHUDInWorld()))
+		if(eEye == STEREO_EYE_MONO || eEye == STEREO_EYE_LEFT /* || (g_ClientVirtualReality.ShouldRenderHUDInWorld()) */)
 		{
 			flags = RENDERVIEW_DRAWHUD;
 		}
@@ -1239,7 +1245,7 @@ void CViewRender::Render(vrect_t *rect)
 		}
 
 		RenderView(viewEye, nClearFlags, flags);
-
+#if 0
 		if(UseVR())
 		{
 			bool bDoUndistort = !engine->IsTakingScreenshot();
@@ -1264,6 +1270,7 @@ void CViewRender::Render(vrect_t *rect)
 					viewEye, bDoUndistort, g_pClientMode->ShouldBlackoutAroundHUD(), bTranslucent);
 			}
 		}
+#endif
 	}
 
 	// TODO: should these be inside or outside the stereo eye stuff?
@@ -1278,7 +1285,7 @@ void CViewRender::Render(vrect_t *rect)
 	// Draw all of the UI stuff "fullscreen"
 	// (this is not health, ammo, etc. Nor is it pre-game briefing interface stuff - this is the stuff that appears when
 	// you hit Esc in-game) In stereo mode this is rendered inside of RenderView so it goes into the render target
-	if(!g_ClientVirtualReality.ShouldRenderHUDInWorld())
+	// if(!g_ClientVirtualReality.ShouldRenderHUDInWorld())
 	{
 		CViewSetup view2d;
 		view2d.x = rect->x;
