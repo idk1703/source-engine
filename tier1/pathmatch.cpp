@@ -68,7 +68,11 @@ static bool s_bShowDiag;
 #define DEBUG_MSG(...) \
 	if(s_bShowDiag)    \
 	fprintf(stderr, ##__VA_ARGS__)
+#ifdef __aarch64__
+#define DEBUG_BREAK()
+#else
 #define DEBUG_BREAK() __asm__ __volatile__("int $3")
+#endif
 #define _COMPILE_TIME_ASSERT(pred) \
 	switch(0)                      \
 	{                              \

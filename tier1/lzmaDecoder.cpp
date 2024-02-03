@@ -14,9 +14,8 @@
 #include "tier0/basetypes.h"
 #include "tier0/dbg.h"
 
-#include "../utils/lzma/C/7zTypes.h"
-#include "../utils/lzma/C/LzmaEnc.h"
-#include "../utils/lzma/C/LzmaDec.h"
+#include "LZMA2/LzmaEnc.h"
+#include "LZMA2/LzmaDec.h"
 
 // Ugly define to let us forward declare the anonymous-struct-typedef that is CLzmaDec in the header.
 #define CLzmaDec_t CLzmaDec
@@ -43,7 +42,7 @@ ConVar lzma_persistent_buffer("lzma_persistent_buffer", LZMA_DEFAULT_PERSISTENT_
 static void *g_pStaticLZMABuf = NULL;
 static size_t g_unStaticLZMABufSize = 0;
 static uint32 g_unStaticLZMABufRef = 0;
-static void *SzAlloc(void *p, size_t size)
+static void *SzAlloc(ISzAllocPtr p, size_t size)
 {
 	// Don't touch static buffer on other threads.
 	if(ThreadInMainThread())
@@ -66,7 +65,7 @@ static void *SzAlloc(void *p, size_t size)
 	// Not using the persistent buffer
 	return malloc(size);
 }
-static void SzFree(void *p, void *address)
+static void SzFree(ISzAllocPtr p, void *address)
 {
 	// Don't touch static buffer on other threads.
 	if(ThreadInMainThread())

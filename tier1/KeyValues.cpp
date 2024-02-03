@@ -2655,7 +2655,7 @@ bool KeyValues::WriteAsBinary(CUtlBuffer &buffer)
 			}
 			case TYPE_PTR:
 			{
-				buffer.PutUnsignedInt((int)dat->m_pValue);
+				buffer.PutUnsignedInt((uintp)dat->m_pValue);
 			}
 
 			default:

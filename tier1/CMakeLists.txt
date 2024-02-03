@@ -46,7 +46,7 @@ set(SOURCES
     snappy-sinksource.cpp
     snappy-stubs-internal.cpp
 
-    ${SRCDIR}/utils/lzma/C/LzmaDec.c
+    ${SRCDIR}/thirdparty/LZMA2/LzmaDec.c
 )
 
 add_library(${PROJECT} STATIC ${SOURCES})
