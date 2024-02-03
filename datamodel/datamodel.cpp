@@ -1668,7 +1668,7 @@ DmAttributeReferenceIterator_t CDataModel::FirstAttributeReferencingElement(DmEl
 	if(!pRef || pRef->m_attributes.m_hAttribute == DMATTRIBUTE_HANDLE_INVALID)
 		return DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
 
-	return (DmAttributeReferenceIterator_t)(int)&pRef->m_attributes;
+	return (DmAttributeReferenceIterator_t)(uintp)&pRef->m_attributes;
 }
 
 DmAttributeReferenceIterator_t CDataModel::NextAttributeReferencingElement(DmAttributeReferenceIterator_t hAttrIter)
@@ -1677,7 +1677,7 @@ DmAttributeReferenceIterator_t CDataModel::NextAttributeReferencingElement(DmAtt
 	if(!pList)
 		return DMATTRIBUTE_REFERENCE_ITERATOR_INVALID;
 
-	return (DmAttributeReferenceIterator_t)(int)pList->m_pNext;
+	return (DmAttributeReferenceIterator_t)(uintp)pList->m_pNext;
 }
 
 CDmAttribute *CDataModel::GetAttribute(DmAttributeReferenceIterator_t hAttrIter)
