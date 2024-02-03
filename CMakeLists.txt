@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.25)
 
 project(hl2)
 
@@ -27,6 +27,7 @@ add_definitions(-D_LIB_PREFIX=${CMAKE_SHARED_LIBRARY_PREFIX})
 
 if(UNIX AND NOT APPLE)
 	set(LINUX 1)
+	set(WINDOWS 0)
 	add_definitions(
 		-DNO_X360_XDK
 		-D_GLIBCXX_USE_CXX11_ABI=0
@@ -67,6 +68,7 @@ if(UNIX AND NOT APPLE)
 	endif()
 elseif(WIN32)
 	set(WINDOWS 1)
+	set(LINUX 0)
 	add_definitions(
 		-DNO_X360_XDK
 		-D_WINDOWS
@@ -134,58 +136,58 @@ include_directories(
 	public/tier2
 	public/tier3
 	thirdparty
+	thirdparty/steamworks-sdk/public
 )
 
 add_subdirectory(appframework)
 add_subdirectory(bitmap)
 add_subdirectory(choreoobjects)
 add_subdirectory(datacache)
-# add_subdirectory(datamodel)
+add_subdirectory(datamodel)
 add_subdirectory(dedicated)
 add_subdirectory(dedicated_main)
-# add_subdirectory(dmserializers)
+add_subdirectory(dmserializers)
 add_subdirectory(dmxloader)
 add_subdirectory(engine)
-# add_subdirectory(fgdlib)
+add_subdirectory(fgdlib)
 add_subdirectory(filesystem)
 add_subdirectory(game)
-# add_subdirectory(gameui)
+add_subdirectory(gameui)
 # add_subdirectory(hammer) # win only
 # add_subdirectory(hammer_launcher) # win only
-# add_subdirectory(inputsystem)
-# add_subdirectory(launcher)
-# add_subdirectory(launcher_main)
+add_subdirectory(inputsystem)
+add_subdirectory(launcher)
+add_subdirectory(launcher_main)
 add_subdirectory(materialsystem)
 add_subdirectory(mathlib)
-# add_subdirectory(mdllib)
-# add_subdirectory(mdlobjects)
+add_subdirectory(mdllib)
+add_subdirectory(mdlobjects)
 # add_subdirectory(movieobjects)
 # add_subdirectory(networksystem) # win only
 add_subdirectory(particles)
-# add_subdirectory(raytrace)
-# add_subdirectory(replay)
+add_subdirectory(raytrace)
+add_subdirectory(replay)
 add_subdirectory(scenefilecache)
 # add_subdirectory(sdklauncher) # win only
-# add_subdirectory(serverbrowser)
+add_subdirectory(serverbrowser)
 # add_subdirectory(sfmobjects) # win only
 add_subdirectory(soundemittersystem)
 # add_subdirectory(soundsystem) # win only
-# add_subdirectory(sourcevr)
 add_subdirectory(studiorender)
 add_subdirectory(tier0)
 add_subdirectory(tier1)
 add_subdirectory(tier2)
 add_subdirectory(tier3)
-# add_subdirectory(togl)
+add_subdirectory(togl)
 # add_subdirectory(tools) # sometime
-# add_subdirectory(tracker)
+add_subdirectory(tracker)
 # add_subdirectory(unicode) # win only
-# add_subdirectory(unitlib)
+add_subdirectory(unitlib)
 # add_subdirectory(unittests) # sometime
 # add_subdirectory(utils) # sometime
 add_subdirectory(vgui2)
-# add_subdirectory(vguimatsurface)
-# add_subdirectory(video)
+add_subdirectory(vguimatsurface)
+add_subdirectory(video)
 # add_subdirectory(vphysics)
 # add_subdirectory(vphysics_jolt)
 add_subdirectory(vpklib)
