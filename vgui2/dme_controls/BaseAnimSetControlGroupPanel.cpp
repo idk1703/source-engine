@@ -108,7 +108,7 @@ void CAnimGroupTree::OnItemDropped(int itemIndex, CUtlVector<KeyValues *> &msgli
 
 void CAnimGroupTree::OnImportAnimation()
 {
-	PostMessage(m_pGroupPanel->m_hEditor, new KeyValues("ImportAnimation", "visibleOnly", "1"), 0.0f);
+	PostMessage((VPANEL)m_pGroupPanel->m_hEditor, new KeyValues("ImportAnimation", "visibleOnly", "1"), 0.0f);
 }
 
 // override to open a custom context menu on a node being selected and right-clicked

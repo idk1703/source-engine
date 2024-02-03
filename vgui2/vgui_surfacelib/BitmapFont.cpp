@@ -250,7 +250,7 @@ void CBitmapFont::GetCharABCWidths(int ch, int &a, int &b, int &c)
 	c = (float)pFont->m_pBitmapGlyphs[ch].c * m_scalex;
 }
 
-void CBitmapFont::GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba)
+void CBitmapFont::GetCharRGBA(wchar_t ch, uint rgbaWide, int rgbaTall, unsigned char *prgba)
 {
 	// CBitmapFont derives off CLinuxFont, etc. But you should never call GetCharRGBA on a bitmap font.
 	// If we let this fall into the CLinuxFont code, we'd have a difficult to track down bug - so crash

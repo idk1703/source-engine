@@ -12,3 +12,8 @@ set(SOURCES
 )
 
 add_library(${PROJECT} STATIC ${SOURCES})
+
+if(LINUX)
+	find_package(Freetype REQUIRED)
+	target_include_directories(${PROJECT} PRIVATE ${FREETYPE_INCLUDE_DIRS})
+endif()

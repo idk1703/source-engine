@@ -11,9 +11,9 @@
 #include "vgui_controls/Button.h"
 #include "vgui_controls/ListPanel.h"
 #include "vgui_controls/TextEntry.h"
-#include "VGUI/IVGui.h"
-#include "VGUI/ILocalize.h"
-#include "VGUI/ISurface.h"
+#include "vgui/IVGui.h"
+#include "vgui/ILocalize.h"
+#include "vgui/ISurface.h"
 #include "tier1/KeyValues.h"
 #include "vgui_controls/Menu.h"
 #include "vgui_controls/MenuButton.h"
@@ -209,14 +209,14 @@ void CLocalizationDialog::OnFileSave()
 	if(g_pVGuiLocalize->SaveToFile(m_szFileName))
 	{
 		// success
-		MessageBox *box = new MessageBox("Save Successful - VLocalize", "File was successfully saved.", false);
+		MessageBox *box = new MessageBox("Save Successful - VLocalize", "File was successfully saved.");
 		box->DoModal();
 	}
 	else
 	{
 		// failure
 		MessageBox *box =
-			new MessageBox("Error during save - VLocalize", "Error - File was not successfully saved.", false);
+			new MessageBox("Error during save - VLocalize", "Error - File was not successfully saved.");
 		box->DoModal();
 	}
 }

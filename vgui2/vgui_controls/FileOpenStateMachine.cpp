@@ -12,7 +12,7 @@
 #include "vgui_controls/perforcefilelistframe.h"
 #include "vgui_controls/savedocumentquery.h"
 #include "filesystem.h"
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "tier2/tier2.h"
 #include "tier0/icommandline.h"
 
@@ -236,13 +236,13 @@ void FileOpenStateMachine::MakeFileWriteableDialog()
 	}
 
 	// If it's in perforce, and not checked out, then we must abort.
-	bool bIsInPerforce = p4->IsFileInPerforce(m_FileName);
-	bool bIsOpened = (p4->GetFileState(m_FileName) != P4FILE_UNOPENED);
-	if(bIsInPerforce && !bIsOpened)
-	{
-		SetCompletionState(FILE_NOT_CHECKED_OUT);
-		return;
-	}
+	// bool bIsInPerforce = p4->IsFileInPerforce(m_FileName);
+	// bool bIsOpened = (p4->GetFileState(m_FileName) != P4FILE_UNOPENED);
+	// if(bIsInPerforce && !bIsOpened)
+	// {
+	// 	SetCompletionState(FILE_NOT_CHECKED_OUT);
+	// 	return;
+	// }
 
 	m_CurrentState = STATE_SHOWING_MAKE_FILE_WRITEABLE_DIALOG;
 

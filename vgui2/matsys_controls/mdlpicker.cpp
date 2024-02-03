@@ -31,7 +31,7 @@
 #include "tier3/tier3.h"
 #include "istudiorender.h"
 #include "../vgui2/src/VPanel.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "ivtex.h"
 #include "bitmap/tgaloader.h"
 
@@ -55,7 +55,7 @@ static bool SaveTgaAndAddToP4(unsigned char *pImage, ImageFormat imageFormat, in
 		return false;
 	}
 
-	CP4AutoEditAddFile autop4(szDestFilename);
+	// CP4AutoEditAddFile autop4(szDestFilename);
 
 	// async write to disk (this will take ownership of the memory)
 	char szDirName[_MAX_PATH];
@@ -718,7 +718,7 @@ void CMDLPicker::WriteBackbackVMTFiles(const char *pAssetName)
 	Q_FixSlashes(pBaseTextureName);
 
 	{
-		CP4AutoEditAddFile autop4(pVMTFilename);
+		// CP4AutoEditAddFile autop4(pVMTFilename);
 		FileHandle_t fileHandle = g_pFullFileSystem->Open(pVMTFilename, "w");
 		if(fileHandle)
 		{
@@ -743,7 +743,7 @@ void CMDLPicker::WriteBackbackVMTFiles(const char *pAssetName)
 	Q_FixSlashes(pBaseTextureName);
 
 	{
-		CP4AutoEditAddFile autop4(pVMTFilename);
+		// CP4AutoEditAddFile autop4(pVMTFilename);
 		FileHandle_t fileHandle = g_pFullFileSystem->Open(pVMTFilename, "w");
 		if(fileHandle)
 		{
@@ -833,7 +833,7 @@ void CMDLPicker::GenerateBackpackIcons(void)
 	V_strcpy_safe(pChangelistLabel, pSelectedAsset);
 	V_FileBase(pChangelistLabel, pChangelistLabel, sizeof(pChangelistLabel));
 	V_strcat_safe(pChangelistLabel, " Auto Checkout", sizeof(pChangelistLabel));
-	g_p4factory->SetOpenFileChangeList(pChangelistLabel);
+	// g_p4factory->SetOpenFileChangeList(pChangelistLabel);
 
 	// generate .VMT files for normal and _large icons
 	WriteBackbackVMTFiles(pSelectedAsset);
@@ -887,7 +887,7 @@ void CMDLPicker::GenerateBackpackIcons(void)
 	V_SetExtension(pVTexOptionsFileName, ".txt", sizeof(pVTexOptionsFileName));
 
 	{
-		CP4AutoEditAddFile autop4(pVTexOptionsFileName);
+		// CP4AutoEditAddFile autop4(pVTexOptionsFileName);
 		FileHandle_t hVTexOptionsFile = g_pFullFileSystem->Open(pVTexOptionsFileName, "w");
 		if(hVTexOptionsFile)
 		{
@@ -1003,7 +1003,7 @@ void CMDLPicker::GenerateBackpackIcons(void)
 	V_SetExtension(pVTexOptionsFileName, ".txt", sizeof(pVTexOptionsFileName));
 
 	{
-		CP4AutoEditAddFile autop4(pVTexOptionsFileName);
+		// CP4AutoEditAddFile autop4(pVTexOptionsFileName);
 		FileHandle_t hVTexOptionsFile = g_pFullFileSystem->Open(pVTexOptionsFileName, "w");
 		if(hVTexOptionsFile)
 		{
@@ -1122,7 +1122,7 @@ void CMDLPicker::SaveCaps(const char *szFileName)
 	}
 
 	CaptureData->SaveToFile(g_pFullFileSystem, temp);
-	CP4AutoAddFile autop4(temp);
+	// CP4AutoAddFile autop4(temp);
 }
 
 //-----------------------------------------------------------------------------
