@@ -6,9 +6,11 @@
 //=============================================================================
 
 #include <stdio.h>
+#ifdef _WIN32
 #include "winsock.h" // this BUGGER defines PropertySheet to PropertySheetA ....
 #undef PropertySheet
-#include "tokenline.h"
+#endif
+#include "TokenLine.h"
 
 #include "GamePanelInfo.h"
 //#include "Info.h"
@@ -41,9 +43,9 @@
 
 using namespace vgui;
 
-static const long RETRY_TIME = 10000;	   // refresh server every 10 seconds
-static const long MAP_CHANGE_TIME = 20000; // refresh 20 seconds after a map change
-static const long RESTART_TIME = 60000;	   // refresh 60 seconds after a "_restart"
+static const int RETRY_TIME = 10000;	   // refresh server every 10 seconds
+static const int MAP_CHANGE_TIME = 20000; // refresh 20 seconds after a map change
+static const int RESTART_TIME = 60000;	   // refresh 60 seconds after a "_restart"
 
 #include "IManageServer.h"
 

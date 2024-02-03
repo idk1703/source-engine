@@ -69,7 +69,7 @@ protected:
 	virtual void ApplySchemeSettings(vgui::IScheme *pScheme);
 
 private:
-	long m_iRequestRetry; // time at which to retry the request
+	int m_iRequestRetry; // time at which to retry the request
 
 	// methods
 	void RequestInfo();
