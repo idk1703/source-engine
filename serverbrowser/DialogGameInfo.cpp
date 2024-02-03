@@ -9,8 +9,8 @@
 
 using namespace vgui;
 
-static const long RETRY_TIME = 10000; // refresh server every 10 seconds
-static const long CHALLENGE_ENTRIES = 1024;
+static const int RETRY_TIME = 10000; // refresh server every 10 seconds
+static const int CHALLENGE_ENTRIES = 1024;
 
 extern "C"
 {

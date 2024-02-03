@@ -88,7 +88,7 @@ protected:
 private:
 	STEAM_CALLBACK(CDialogGameInfo, OnPersonaStateChange, PersonaStateChange_t, m_CallbackPersonaStateChange);
 
-	long m_iRequestRetry; // time at which to retry the request
+	int m_iRequestRetry; // time at which to retry the request
 	static int PlayerTimeColumnSortFunc(vgui::ListPanel *pPanel, const vgui::ListPanelItem &p1,
 										const vgui::ListPanelItem &p2);
 
