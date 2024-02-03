@@ -104,7 +104,7 @@ CObjectBar::CObjectBar() : CHammerBar(), m_CreateList(this)
 		m_PrevSel[i].dwGameID = 0;
 	}
 
-	m_dwPrevGameID = (unsigned long)-1;
+	m_dwPrevGameID = (unsigned int)-1;
 }
 
 bool CObjectBar::UseRandomYawOnEntityPlacement()
