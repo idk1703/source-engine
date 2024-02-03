@@ -1,4 +1,6 @@
-
+.cache
+/build*
+/out
 # ignore some unnecessary source engine files
 /app
 /common/curl
