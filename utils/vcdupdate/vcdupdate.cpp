@@ -18,7 +18,7 @@
 #include "materialsystem/imaterialsystem.h"
 #include "istudiorender.h"
 #include "mathlib/mathlib.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "p4lib/ip4.h"
 #include "sfmobjects/sfmsession.h"
 #include "datacache/idatacache.h"

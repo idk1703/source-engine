@@ -12,7 +12,7 @@
 #endif
 
 #include "tier1/smartptr.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 class CFileBuffer
 {

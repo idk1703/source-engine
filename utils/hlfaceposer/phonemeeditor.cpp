@@ -40,7 +40,7 @@
 #include "mdlviewer.h"
 #include "filesystem_init.h"
 #include "WaveBrowser.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "vstdlib/random.h"
 
 extern IUniformRandomStream *random;

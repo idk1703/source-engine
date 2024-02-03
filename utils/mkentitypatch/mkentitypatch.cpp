@@ -14,7 +14,7 @@
 #include "appframework/tier2app.h"
 #include "filesystem.h"
 #include "icommandline.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "p4lib/ip4.h"
 #include "tier1/KeyValues.h"
 #include "tier1/utlbuffer.h"

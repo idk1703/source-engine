@@ -59,7 +59,7 @@
 #include "filesystem_init.h"
 #include "flexpanel.h"
 #include "tier3/choreoutils.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 using namespace vgui;
 
@@ -8732,7 +8732,7 @@ void CChoreoView::RedrawStatusArea(CChoreoWidgetDrawHelper &drawHelper, RECT &rc
 	}
 
 	//	drawHelper.DrawColoredText( "Arial", 12, 500, RGB( 0, 0, 0 ), rcInfo, m_Flyover.e ?
-	//m_Flyover.e->GetEvent()->GetName() : "" );
+	// m_Flyover.e->GetEvent()->GetName() : "" );
 }
 
 //-----------------------------------------------------------------------------

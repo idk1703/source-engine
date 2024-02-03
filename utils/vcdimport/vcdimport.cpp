@@ -25,7 +25,7 @@
 #include "tier3/tier3.h"
 #include "movieobjects/importintovcd.h"
 #include "p4lib/ip4.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "interpolatortypes.h"
 #include "datacache/idatacache.h"
 #include "datacache/imdlcache.h"

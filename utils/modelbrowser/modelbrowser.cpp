@@ -44,7 +44,7 @@
 #include "vgui_controls/consoledialog.h"
 #include "icvar.h"
 #include "vgui/keycode.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "p4lib/ip4.h"
 #include "ivtex.h"
 #include "modelbrowsermaterialproxies.h"

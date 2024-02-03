@@ -6,7 +6,7 @@
 #include "filesystem.h"
 #include "itemtest/itemtest.h"
 #include "tier0/icommandline.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 // Local includes
 #include "itemtestapp.h"

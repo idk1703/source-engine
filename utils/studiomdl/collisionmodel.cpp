@@ -35,7 +35,7 @@
 #include "KeyValues.h"
 
 #include "tier1/smartptr.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 // these functions just wrap atoi/atof and check for NULL
 static float Safe_atof(const char *pString);

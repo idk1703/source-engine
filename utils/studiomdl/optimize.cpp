@@ -39,7 +39,7 @@
 #include "tier1/utllinkedlist.h"
 
 #include "tier1/smartptr.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 
 bool g_bDumpGLViewFiles;
 extern bool g_IHVTest;
@@ -2169,7 +2169,7 @@ static void MStudioBoneWeightToSBoneWeight( s_boneweight_t &sbone, const mstudio
 									if(m_UsesFixedFunction)
 									{
 										//									bool flexed = pStripGroup->flags &
-										//STRIPGROUP_IS_FLEXED;
+										// STRIPGROUP_IS_FLEXED;
 										SortBonesWithinVertex(false /* flexed */, vert, pStudioModel, pStudioMesh,
 															  globalToHardwareBoneIndex, hardwareToGlobalBoneIndex,
 															  m_MaxBonesPerTri, m_MaxBonesPerVert);
@@ -3528,9 +3528,9 @@ static void MStudioBoneWeightToSBoneWeight( s_boneweight_t &sbone, const mstudio
 												   lastThreeIndices[1] == lastThreeIndices[2] ||
 												   lastThreeIndices[0] == lastThreeIndices[2])
 												{
-													//												printf( "degenerate triangle!!!! %d %d
-													//%d\n", lastThreeIndices[0], lastThreeIndices[1],
-													//lastThreeIndices[2] );
+													//												printf( "degenerate triangle!!!! %d
+													//%d %d\n", lastThreeIndices[0], lastThreeIndices[1],
+													// lastThreeIndices[2] );
 													totalHWDegenerates++;
 												}
 											}

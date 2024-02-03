@@ -28,7 +28,7 @@
 #include "tier1/UtlStringMap.h"
 #include "vstdlib/vstdlib.h"
 #include "vstdlib/iprocessutils.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "p4lib/ip4.h"
 
 // Lua includes
