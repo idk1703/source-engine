@@ -294,7 +294,7 @@ UtlHashFixedHandle_t CVBAllocTracker::TrackAlloc(void *buffer, int bufferSize, V
 												 short allocatorHash)
 {
 	AllocData newData(buffer, bufferSize, fmt, numVerts, allocatorHash);
-	UtlHashFixedHandle_t handle = m_VBAllocTable.Insert((int)buffer, newData);
+	UtlHashFixedHandle_t handle = m_VBAllocTable.Insert((uintp)buffer, newData);
 	if(handle == m_VBAllocTable.InvalidHandle())
 	{
 		Warning("[VBMEM] VBMemAllocTable hash collision (grow table).\n");
@@ -304,7 +304,7 @@ UtlHashFixedHandle_t CVBAllocTracker::TrackAlloc(void *buffer, int bufferSize, V
 
 bool CVBAllocTracker::KillAlloc(void *buffer, int &bufferSize, VertexFormat_t &fmt, int &numVerts, short &allocatorHash)
 {
-	UtlHashFixedHandle_t handle = m_VBAllocTable.Find((int)buffer);
+	UtlHashFixedHandle_t handle = m_VBAllocTable.Find((uintp)buffer);
 	if(handle != m_VBAllocTable.InvalidHandle())
 	{
 		AllocData &data = m_VBAllocTable.Element(handle);

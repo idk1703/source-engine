@@ -477,7 +477,7 @@ public:
 
 	virtual void OnAsyncFindComplete(ITexture *pTex, void *pExtraArgs)
 	{
-		switch((int)pExtraArgs)
+		switch((uintp)pExtraArgs)
 		{
 			case Neutral:
 				SafeAssign(&m_pTex, pTex);
@@ -1243,7 +1243,7 @@ protected:
 
 	virtual void OnAsyncFindComplete(ITexture *pTex, void *pExtraArgs)
 	{
-		switch((int)pExtraArgs)
+		switch((uintp)pExtraArgs)
 		{
 			case Albedo:
 				SafeAssign(&m_pTex, pTex);

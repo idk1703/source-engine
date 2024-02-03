@@ -1,7 +1,7 @@
-# add_subdirectory(shaderapidx9)
+add_subdirectory(shaderapidx9)
 add_subdirectory(shaderapiempty)
 add_subdirectory(shaderlib)
-# add_subdirectory(stdshaders)
+add_subdirectory(stdshaders)
 
 set(PROJECT materialsystem)
 

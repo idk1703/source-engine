@@ -49,9 +49,9 @@
 #include "filesystem/IQueuedLoader.h"
 #include "tier2/fileutils.h"
 #include "filesystem.h"
-#include "tier2/p4helpers.h"
+// #include "tier2/p4helpers.h"
 #include "tier2/tier2.h"
-#include "p4lib/ip4.h"
+// #include "p4lib/ip4.h"
 #include "ctype.h"
 #include "ifilelist.h"
 #include "tier0/icommandline.h"
@@ -4334,7 +4334,7 @@ bool CTexture::UpdateExcludedState(void)
 
 void CTextureStreamingJob::OnAsyncFindComplete(ITexture *pTex, void *pExtraArgs)
 {
-	const int cArgsAsInt = (int)pExtraArgs;
+	const int cArgsAsInt = (intp)pExtraArgs;
 
 	Assert(m_pOwner == NULL || m_pOwner == pTex);
 	if(m_pOwner)
