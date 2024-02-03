@@ -241,7 +241,7 @@ CMPAHeader::CMPAHeader(CMPAFile *pMPAFile, uint32 dwExpectedOffset, bool bSubseq
 
 		// is new offset within valid range?
 		if(nSyncOffset < 0 || nSyncOffset > (int)((pMPAFile->m_dwEnd - pMPAFile->m_dwBegin) - MPA_HEADER_SIZE) ||
-		   abs((long)(nSyncOffset - dwExpectedOffset)) > m_dwMaxRange)
+		   abs((int)(nSyncOffset - dwExpectedOffset)) > m_dwMaxRange)
 		{
 			// out of tolerance range
 			throw CMPAException(CMPAException::NoFrame, pMPAFile->GetFilename() ? pMPAFile->GetFilename() : "??");

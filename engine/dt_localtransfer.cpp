@@ -159,12 +159,12 @@ void BuildPropOffsetToIndexMap(CSendTablePrecalc *pPrecalc, const CStandardSendP
 		{
 			const SendProp *pProp = pPrecalc->m_Props[i];
 
-			int offset = pProp->GetOffset() + (int)pmStack.GetCurStructBase() - 1;
+			int offset = pProp->GetOffset() + (uintp)pmStack.GetCurStructBase() - 1;
 			int elementCount = 1;
 			int elementStride = 0;
 			if(pProp->GetType() == DPT_Array)
 			{
-				offset = pProp->GetArrayProp()->GetOffset() + (int)pmStack.GetCurStructBase() - 1;
+				offset = pProp->GetArrayProp()->GetOffset() + (uintp)pmStack.GetCurStructBase() - 1;
 				elementCount = pProp->m_nElements;
 				elementStride = pProp->m_ElementStride;
 			}

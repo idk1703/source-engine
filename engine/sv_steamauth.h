@@ -87,7 +87,7 @@ public:
 	// Fetch public IP.  Might return 0 if we don't know
 	uint32 GetPublicIP()
 	{
-		return SteamGameServer() ? SteamGameServer()->GetPublicIP() : 0;
+		return SteamGameServer() ? SteamGameServer()->GetPublicIP().m_unIPv4 : 0;
 	}
 
 	bool IsMasterServerUpdaterSharingGameSocket();

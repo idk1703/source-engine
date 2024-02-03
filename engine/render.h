@@ -120,7 +120,7 @@ public:
 	virtual void BuildWorldLists(IWorldRenderList * pList, WorldListInfo_t * pInfo, int iForceViewLeaf,
 								 const VisOverrideData_t *pVisData, bool bShadowDepth,
 								 float *pReflectionWaterHeight) = 0;
-	virtual void DrawWorldLists(IWorldRenderList * pList, unsigned long flags, float waterZAdjust) = 0;
+	virtual void DrawWorldLists(IWorldRenderList * pList, unsigned int flags, float waterZAdjust) = 0;
 
 	// UNDONE: these are temporary functions that will end up on the other
 	// side of this interface

@@ -47,7 +47,7 @@
 #include "tier3/tier3.h"
 #include "MapReslistGenerator.h"
 #include "toolframework/itoolframework.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #include "DevShotGenerator.h"
 #include "gl_shader.h"
 #include "l_studio.h"
@@ -108,7 +108,7 @@ IDedicatedExports *dedicated = NULL;
 extern CreateInterfaceFn g_AppSystemFactory;
 IHammer *g_pHammer = NULL;
 IPhysics *g_pPhysics = NULL;
-ISourceVirtualReality *g_pSourceVR = NULL;
+// ISourceVirtualReality *g_pSourceVR = NULL;
 #if defined(USE_SDL)
 ILauncherMgr *g_pLauncherMgr = NULL;
 #endif
@@ -1129,7 +1129,7 @@ void CEngineAPI::SetStartupInfo(StartupInfo_t &info)
 				DevMsg("Enabling whitelist file tracking in filesystem...\n");
 				g_pFileSystem->EnableWhitelistFileTracking(true, false, false);
 			}
-
+#if 0
 			m_bSupportsVR = modinfo->GetInt("supportsvr") > 0 && CommandLine()->CheckParm("-vr");
 			if(m_bSupportsVR)
 			{
@@ -1149,6 +1149,7 @@ void CEngineAPI::SetStartupInfo(StartupInfo_t &info)
 					}
 				}
 			}
+#endif
 		}
 		modinfo->deleteThis();
 	}
@@ -1559,6 +1560,7 @@ void CEngineAPI::ShutdownRegistry()
 //-----------------------------------------------------------------------------
 bool CEngineAPI::InitVR()
 {
+#if 0
 	if(m_bSupportsVR)
 	{
 		g_pSourceVR = (ISourceVirtualReality *)g_AppSystemFactory(SOURCE_VIRTUAL_REALITY_INTERFACE_VERSION, NULL);
@@ -1566,13 +1568,14 @@ bool CEngineAPI::InitVR()
 		{
 			// make sure that the sourcevr DLL we loaded is secure. If not, don't
 			// let this client connect to secure servers.
-			if(!Host_AllowLoadModule("sourcevr" DLL_EXT_STRING, "EXECUTABLE_PATH", false))
+			if(!Host_AllowLoadModule(LIB_PREFIX_STR "sourcevr" LIB_EXT_STR, "EXECUTABLE_PATH", false))
 			{
 				Warning("Preventing connections to secure servers because sourcevr.dll is not signed.\n");
 				Host_DisallowSecureServers();
 			}
 		}
 	}
+#endif
 	return true;
 }
 
@@ -1917,7 +1920,7 @@ bool CModAppSystemGroup::AddLegacySystems()
 #if !defined(DEDICATED)
 	//	if ( CommandLine()->FindParm( "-tools" ) )
 	{
-		AppModule_t toolFrameworkModule = LoadModule("engine" DLL_EXT_STRING);
+		AppModule_t toolFrameworkModule = LoadModule(LIB_PREFIX_STR "engine" LIB_EXT_STR);
 
 		if(!AddSystem(toolFrameworkModule, VTOOLFRAMEWORK_INTERFACE_VERSION))
 			return false;
@@ -2009,7 +2012,7 @@ bool CModAppSystemGroup::Create()
 #if !defined(DEDICATED)
 	//	if ( CommandLine()->FindParm( "-tools" ) )
 	{
-		AppModule_t toolFrameworkModule = LoadModule("engine" DLL_EXT_STRING);
+		AppModule_t toolFrameworkModule = LoadModule(LIB_PREFIX_STR "engine" LIB_EXT_STR);
 
 		if(!AddSystem(toolFrameworkModule, VTOOLFRAMEWORK_INTERFACE_VERSION))
 			return false;
@@ -2231,13 +2234,13 @@ bool EnableLongTickWatcher()
 		g_bQuitLongTickWatcherThread = false;
 		g_bLongTickWatcherThreadEnabled = true;
 
-		DWORD nThreadID;
+		ThreadId_t nThreadID;
 		VCRHook_CreateThread(NULL, 0,
 #ifdef POSIX
 							 (void *)
 #endif
 								 LongTickWatcherThread,
-							 NULL, 0, (unsigned long int *)&nThreadID);
+							 NULL, 0, &nThreadID);
 
 		bRet = true;
 	}

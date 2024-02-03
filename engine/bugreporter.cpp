@@ -2824,7 +2824,7 @@ void CBugUIPanel::CheckContinueQueryingSteamForCSERList()
 
 	uint32 unIP;
 	uint16 usPort;
-	Steam3Client().SteamUtils()->GetCSERIPPort(&unIP, &usPort);
+	// Steam3Client().SteamUtils()->GetCSERIPPort(&unIP, &usPort);
 	if(unIP)
 	{
 		m_cserIP.SetIPAndPort(unIP, usPort);
@@ -2899,7 +2899,7 @@ void CEngineBugReporter::InstallBugReportingUI(vgui::Panel *parent, IEngineBugRe
 
 	char fn[512];
 
-	Q_snprintf(fn, sizeof(fn), "%s%s", GetInternalBugReporterDLL(), DLL_EXT_STRING);
+	Q_snprintf(fn, sizeof(fn), LIB_PREFIX_STR "%s%s", GetInternalBugReporterDLL(), LIB_EXT_STR);
 
 	bool bCanUseInternal = g_pFileSystem->FileExists(fn, "EXECUTABLE_PATH");
 

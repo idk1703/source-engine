@@ -77,16 +77,16 @@ inline bool DecalSortTreeSortLessFunc(const DecalMaterialSortData_t &decal1, con
 {
 	if((decal1.m_iLightmapPage == -1) || (decal2.m_iLightmapPage == -1))
 	{
-		return ((int)decal1.m_pMaterial < (int)decal2.m_pMaterial);
+		return ((uintp)decal1.m_pMaterial < (uintp)decal2.m_pMaterial);
 	}
 
-	if((int)decal1.m_pMaterial == (int)decal2.m_pMaterial)
+	if((uintp)decal1.m_pMaterial == (uintp)decal2.m_pMaterial)
 	{
 		return (decal1.m_iLightmapPage < decal2.m_iLightmapPage);
 	}
 	else
 	{
-		return ((int)decal1.m_pMaterial < (int)decal2.m_pMaterial);
+		return ((uintp)decal1.m_pMaterial < (uintp)decal2.m_pMaterial);
 	}
 }
 

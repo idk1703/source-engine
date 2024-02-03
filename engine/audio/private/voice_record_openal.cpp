@@ -50,7 +50,7 @@ IVoiceRecord *CreateVoiceRecord_DSound(int sampleRate)
 #else
 #include <AL/al.h>
 #endif
-#include "openal/alc.h"
+#include <AL/alc.h>
 
 // ------------------------------------------------------------------------------
 // VoiceRecord_OpenAL

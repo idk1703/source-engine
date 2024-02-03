@@ -1285,7 +1285,7 @@ int DispInfo_ComputeIndex(HDISPINFOARRAY hArray, IDispInfo *pInfo)
 	if(!pArray)
 		return NULL;
 
-	int iElement = ((int)pInfo - (int)(pArray->m_pDispInfos)) / sizeof(CDispInfo);
+	intp iElement = ((intp)pInfo - (intp)(pArray->m_pDispInfos)) / sizeof(CDispInfo);
 
 	Assert(iElement >= 0 && iElement < pArray->m_nDispInfos);
 	return iElement;
@@ -1389,7 +1389,7 @@ static void DispInfo_DrawDebugInformation(SurfaceHandle_t *pList, int listCount)
 //-----------------------------------------------------------------------------
 // Renders all displacements in sorted order
 //-----------------------------------------------------------------------------
-void DispInfo_RenderList(int nSortGroup, SurfaceHandle_t *pList, int listCount, bool bOrtho, unsigned long flags,
+void DispInfo_RenderList(int nSortGroup, SurfaceHandle_t *pList, int listCount, bool bOrtho, unsigned int flags,
 						 ERenderDepthMode DepthMode)
 {
 #ifndef SWDS

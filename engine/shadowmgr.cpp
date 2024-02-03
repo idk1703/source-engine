@@ -613,7 +613,7 @@ void CShadowMgr::SetMaterial(Shadow_t &shadow, IMaterial *pMaterial, IMaterial *
 	}
 
 	// Search the sort order handles for an enumeration id match
-	int materialEnum = (int)pMaterial;
+	int materialEnum = (uintp)pMaterial;
 	for(unsigned short i = m_SortOrderIds.Head(); i != m_SortOrderIds.InvalidIndex(); i = m_SortOrderIds.Next(i))
 	{
 		// Found a match, lets increment the refcount of this sort order id
@@ -1525,7 +1525,7 @@ void CShadowMgr::ProjectShadow(ShadowHandle_t handle, const Vector &origin, cons
 	for(int i = 0; i < nLeafCount; ++i)
 	{
 		// NOTE: Scope specifier eliminates virtual function call
-		CShadowMgr::EnumerateLeaf(pLeafList[i], (int)&build);
+		CShadowMgr::EnumerateLeaf(pLeafList[i], (uintp)&build);
 	}
 }
 
@@ -1639,7 +1639,7 @@ void CShadowMgr::ProjectFlashlight(ShadowHandle_t handle, const VMatrix &worldTo
 	for(int i = 0; i < nLeafCount; ++i)
 	{
 		// NOTE: Scope specifier eliminates virtual function call
-		CShadowMgr::EnumerateLeaf(pLeafList[i], (int)&build);
+		CShadowMgr::EnumerateLeaf(pLeafList[i], (uintp)&build);
 	}
 }
 

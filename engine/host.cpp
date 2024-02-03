@@ -125,9 +125,9 @@ extern ILauncherMgr *g_pLauncherMgr;
 #include "xbox/xbox_win32stubs.h"
 #include "audio_pch.h"
 #endif
-#if defined(LINUX)
+#if defined(LINUX) && defined(USE_SDL)
 #include <locale.h>
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #endif
 
 #include "ixboxsystem.h"
@@ -163,7 +163,7 @@ int host_frameticks = 0;
 int host_tickcount = 0;
 int host_currentframetick = 0;
 
-static const char g_pModuleExtension[] = DLL_EXT_STRING;
+static const char g_pModuleExtension[] = LIB_EXT_STR;
 
 // Engine player info, no game related infos here
 BEGIN_BYTESWAP_DATADESC(player_info_s)
@@ -1277,7 +1277,7 @@ void Host_WriteConfiguration(const char *filename, bool bAllVars)
 
 	if(pRemoteStorage)
 	{
-		int32 availableBytes, totalBytes = 0;
+		uint64 availableBytes, totalBytes = 0;
 		if(pRemoteStorage->GetQuota(&totalBytes, &availableBytes))
 		{
 			if(totalBytes > 0)
@@ -1907,7 +1907,7 @@ void Host_AccumulateTime(float dt)
 		if(CommandLine()->CheckParm("-tools") == NULL)
 		{
 #endif
-			host_frametime = min((double)host_frametime, MAX_FRAMETIME * fullscale);
+			host_frametime = min(host_frametime, MAX_FRAMETIME * fullscale);
 #ifndef NO_TOOLFRAMEWORK
 		}
 #endif
@@ -1922,8 +1922,8 @@ void Host_AccumulateTime(float dt)
 #endif // !NO_TOOLFRAMEWORK
 	{  // don't allow really long or short frames
 		host_frametime_unbounded = host_frametime;
-		host_frametime = min((double)host_frametime, MAX_FRAMETIME);
-		host_frametime = max((double)host_frametime, MIN_FRAMETIME);
+		host_frametime = min(host_frametime, MAX_FRAMETIME);
+		host_frametime = max(host_frametime, MIN_FRAMETIME);
 	}
 #endif
 
@@ -4074,7 +4074,7 @@ void Host_Init(bool bDedicated)
 	if(Host_IsSecureServerAllowed())
 	{
 		// double check the engine's signature in case it was hooked/modified
-		if(!Host_AllowLoadModule("engine" DLL_EXT_STRING, "EXECUTABLE_PATH", false, bDedicated))
+		if(!Host_AllowLoadModule(LIB_PREFIX_STR "engine" LIB_EXT_STR, "EXECUTABLE_PATH", false, bDedicated))
 		{
 			// not supposed to load this but we will anyway
 			Host_DisallowSecureServers();

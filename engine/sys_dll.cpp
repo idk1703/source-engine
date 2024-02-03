@@ -18,7 +18,7 @@
 #endif
 
 #if defined(USE_SDL)
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #endif
 
 #include "quakedef.h"
@@ -1234,11 +1234,11 @@ void LoadEntityDLLs(const char *szBaseDir, bool bIsServerOnly)
 	modinfo->deleteThis();
 
 	// Load the game .dll
-	LoadThisDll("server" DLL_EXT_STRING, bIsServerOnly);
+	LoadThisDll(LIB_PREFIX_STR "server" LIB_EXT_STR, bIsServerOnly);
 
 	if(serverGameDLL)
 	{
-		Msg("server%s loaded for \"%s\"\n", DLL_EXT_STRING, (char *)serverGameDLL->GetGameDescription());
+		Msg(LIB_PREFIX_STR "server%s loaded for \"%s\"\n", LIB_EXT_STR, serverGameDLL->GetGameDescription());
 	}
 }
 

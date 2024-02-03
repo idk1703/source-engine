@@ -38,13 +38,13 @@
 #include "tier2/tier2.h"
 #include "LoadScreenUpdate.h"
 #include "client.h"
-#include "sourcevr/isourcevirtualreality.h"
+// #include "sourcevr/isourcevirtualreality.h"
 #if defined(_X360)
 #include "xbox/xbox_launch.h"
 #endif
 
 #if defined(USE_SDL)
-#include "SDL.h"
+#include <SDL2/SDL.h>
 #endif
 
 // X360TEMP
@@ -514,7 +514,7 @@ static void WriteMaterialSystemConfigToRegistry(const MaterialSystem_Config_t &c
 #if defined(USE_SDL) && !defined(SWDS)
 	// Save sdl_displayindex out to ScreenDisplayIndex.
 	ConVarRef conVar("sdl_displayindex");
-	if(conVar.IsValid() && !UseVR())
+	if(conVar.IsValid() /* && !UseVR() */)
 	{
 		WriteVideoConfigInt("ScreenDisplayIndex", conVar.GetInt());
 	}
@@ -908,6 +908,7 @@ CON_COMMAND(mat_setvideomode, "sets the width, height, windowed state of the mat
 }
 #endif
 
+#if 0
 CON_COMMAND(mat_enable_vrmode, "Switches the material system to VR mode (after restart)")
 {
 	if(args.ArgC() != 2)
@@ -938,6 +939,7 @@ CON_COMMAND(mat_enable_vrmode, "Switches the material system to VR mode (after r
 		mat_vrmode_adapter.SetValue(-1);
 	}
 }
+#endif
 
 CON_COMMAND(mat_savechanges, "saves current video configuration to the registry")
 {
@@ -1119,6 +1121,7 @@ void InitWellKnownRenderTargets(void)
 	// YES! DX Level should gate these
 
 	// before we create anything, see if VR mode wants to override the "framebuffer" size
+#if 0
 	if(UseVR())
 	{
 		int nWidth, nHeight;
@@ -1126,6 +1129,7 @@ void InitWellKnownRenderTargets(void)
 		g_pMaterialSystem->SetRenderTargetFrameBufferSizeOverrides(nWidth, nHeight);
 	}
 	else
+#endif
 	{
 		g_pMaterialSystem->SetRenderTargetFrameBufferSizeOverrides(0, 0);
 	}
@@ -1177,10 +1181,12 @@ void InitWellKnownRenderTargets(void)
 	g_ResolvedFullFrameDepth.Init(CreateResolvedFullFrameDepthTexture());
 
 	// if we're in stereo mode init a render target for VGUI
+#if 0
 	if(UseVR())
 	{
 		g_pSourceVR->CreateRenderTargets(materials);
 	}
+#endif
 
 	// Allow the client to init their own mod-specific render targets
 	if(g_pClientRenderTargets)
@@ -1252,8 +1258,8 @@ void ShutdownWellKnownRenderTargets(void)
 		materials->RemoveTextureAlias("_rt_FullFrameDepth");
 	}
 
-	if(g_pSourceVR)
-		g_pSourceVR->ShutdownRenderTargets();
+	// if(g_pSourceVR)
+	// 	g_pSourceVR->ShutdownRenderTargets();
 
 	// Shutdown client render targets
 	if(g_pClientRenderTargets)

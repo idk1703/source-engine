@@ -1987,7 +1987,7 @@ void CChannelCullList::Initialize(CChannelList &list)
 		{
 			m_channelInfo[i].m_vol = ChannelLoudestCurVolume(ch);
 			AssertMsg(m_channelInfo[i].m_vol >= 0, "Sound channel has a negative volume?");
-			m_channelInfo[i].m_nameHash = (unsigned int)ch->sfx;
+			m_channelInfo[i].m_nameHash = (uintp)ch->sfx;
 		}
 		else
 		{
@@ -2020,7 +2020,7 @@ void CChannelCullList::Initialize(CChannelList &list)
 		for(int j = 0; m_channelInfo[j].m_channelNum != i && m_channelInfo[j].m_vol >= 0 && j < MAX_CHANNELS; ++j)
 		{
 			// j steps through the sorted list until we find ourselves:
-			if(m_channelInfo[j].m_nameHash == (unsigned int)(ch->sfx))
+			if(m_channelInfo[j].m_nameHash == (uintp)(ch->sfx))
 			{
 				// that's another channel playing this sound but louder than me
 				++howManyLouder;

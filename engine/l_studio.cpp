@@ -889,7 +889,7 @@ public:
 
 	inline vertexFileHeader_t *CacheVertexData()
 	{
-		return g_pMDLCache->GetVertexData((MDLHandle_t)(int)m_pStudioHdr->virtualModel & 0xffff);
+		return g_pMDLCache->GetVertexData(VoidPtrToMDLHandle(m_pStudioHdr->virtualModel));
 	}
 
 	bool Init();
@@ -4196,7 +4196,7 @@ bool CModelRender::UpdateStaticPropColorData(IHandleEntity *pProp, ModelInstance
 	{
 		// vertexes must be available for lighting calculation
 		vertexFileHeader_t *pVertexHdr =
-			g_pMDLCache->GetVertexData((MDLHandle_t)(int)pStudioHdr->virtualModel & 0xffff);
+			g_pMDLCache->GetVertexData(VoidPtrToMDLHandle(pStudioHdr->virtualModel));
 		if(!pVertexHdr)
 		{
 			// data not available yet

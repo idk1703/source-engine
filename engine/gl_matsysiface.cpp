@@ -29,8 +29,8 @@
 #include "materialsystem/imaterial.h"
 #include "toolframework/itoolframework.h"
 #include "toolframework/itoolsystem.h"
-#include "tier2/p4helpers.h"
-#include "p4lib/ip4.h"
+// #include "tier2/p4helpers.h"
+// #include "p4lib/ip4.h"
 #include "vgui/ISystem.h"
 #include <vgui_controls/Controls.h>
 
@@ -152,7 +152,7 @@ CON_COMMAND_F(mat_crosshair_edit,
 			g_pFileSystem->RelativePathToFullPath(chResolveNameArg, "game", chResolveName, sizeof(chResolveName) - 1);
 		if(p4)
 		{
-			CP4AutoEditAddFile autop4(szResolvedName);
+			// CP4AutoEditAddFile autop4(szResolvedName);
 		}
 		else
 		{
@@ -460,7 +460,8 @@ static void GenerateTexCoordsForPrimVerts(void)
 							MSurf_TexInfo(surfID)->lightmapVecsLuxelsPerWorldUnits[0][3];
 						vert.lightCoord[0] -= MSurf_LightmapMins(surfID)[0];
 						vert.lightCoord[0] += 0.5f;
-						vert.lightCoord[0] /= (float)MSurf_LightmapExtents(surfID)[0]; // pSurf->texinfo->texture->width;
+						vert.lightCoord[0] /=
+							(float)MSurf_LightmapExtents(surfID)[0]; // pSurf->texinfo->texture->width;
 
 						vert.lightCoord[1] =
 							DotProduct(vec, MSurf_TexInfo(surfID)->lightmapVecsLuxelsPerWorldUnits[1].AsVector3D()) +
@@ -964,7 +965,7 @@ void DebugDrawLightmapAtCrossHair()
 	IMaterial *pMaterial;
 	int lightmapPageSize[2];
 
-	if(s_CrossHairSurfID <= 0)
+	if(s_CrossHairSurfID == 0)
 	{
 		return;
 	}

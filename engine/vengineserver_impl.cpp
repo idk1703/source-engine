@@ -134,8 +134,8 @@ void SeedRandomNumberGenerator(bool random_invariant)
 {
 	if(!random_invariant)
 	{
-		long iSeed;
-		g_pVCR->Hook_Time(&iSeed);
+		int32 iSeed;
+		g_pVCR->Hook_Time((long*)&iSeed);
 		float flAppTime = Plat_FloatTime();
 		ThreadId_t threadId = ThreadGetCurrentId();
 
@@ -1397,7 +1397,7 @@ public:
 		CM_SetAreaPortalStates(portalNumbers, isOpen, nPortals);
 	}
 
-	virtual void DrawMapToScratchPad(IScratchPad3D *pPad, unsigned long iFlags)
+	virtual void DrawMapToScratchPad(IScratchPad3D *pPad, unsigned int iFlags)
 	{
 		worldbrushdata_t *pData = host_state.worldmodel->brush.pShared;
 		if(!pData)

@@ -67,7 +67,7 @@ void CAutoGain::ProcessSamples(short *pSamples, int nSamples)
 		{
 			// Now we've interpolated to our next gain, make it our current gain.
 			m_CurrentGain = m_NextGain * m_Scale;
-			m_FixedCurrentGain = (int)((double)m_CurrentGain * (1 << AG_FIX_SHIFT));
+			m_FixedCurrentGain = (int)(m_CurrentGain * (1 << AG_FIX_SHIFT));
 
 			// Figure out the next gain (the gain we'll interpolate to).
 			int avg = m_CurTotal / m_BlockSize;
@@ -76,7 +76,7 @@ void CAutoGain::ProcessSamples(short *pSamples, int nSamples)
 
 			// Setup the interpolation multiplier.
 			float fGainMultiplier = (m_NextGain - m_CurrentGain) / (m_BlockSize - 1);
-			m_GainMultiplier = (AGFixed)((double)fGainMultiplier * (1 << AG_FIX_SHIFT));
+			m_GainMultiplier = (AGFixed)(fGainMultiplier * (1 << AG_FIX_SHIFT));
 
 			// Reset counters.
 			m_CurTotal = 0;

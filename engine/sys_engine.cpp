@@ -360,7 +360,12 @@ void CEngine::Frame(void)
 				// the other logical hyperthread core if the CPU supports it)
 				for(int i = 2000; i >= 0; --i)
 				{
-#if defined(POSIX)
+#if defined(__aarch64__)
+					asm volatile ("isb sy" : : : "memory");
+					asm volatile ("isb sy" : : : "memory");
+					asm volatile ("isb sy" : : : "memory");
+					asm volatile ("isb sy" : : : "memory");
+#elif defined(POSIX)
 					__asm("pause");
 					__asm("pause");
 					__asm("pause");

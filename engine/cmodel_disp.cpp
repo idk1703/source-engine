@@ -231,7 +231,7 @@ public:
 	// Fill out the meshlist for this terrain patch
 	virtual void GetVirtualMesh(void *userData, virtualmeshlist_t *pList)
 	{
-		int index = (int)userData;
+		uintp index = (uintp)userData;
 		Assert(index >= 0 && index < g_DispCollTreeCount);
 		g_pDispCollTrees[index].GetVirtualMeshList(pList);
 		pList->pHull = NULL;
@@ -246,7 +246,7 @@ public:
 	// returns the bounds for the terrain patch
 	virtual void GetWorldspaceBounds(void *userData, Vector *pMins, Vector *pMaxs)
 	{
-		int index = (int)userData;
+		uintp index = (uintp)userData;
 		*pMins = g_pDispBounds[index].mins;
 		*pMaxs = g_pDispBounds[index].maxs;
 	}
@@ -254,7 +254,7 @@ public:
 	virtual void GetTrianglesInSphere(void *userData, const Vector &center, float radius,
 									  virtualmeshtrianglelist_t *pList)
 	{
-		int index = (int)userData;
+		uintp index = (uintp)userData;
 		pList->triangleCount = g_pDispCollTrees[index].AABBTree_GetTrisInSphere(center, radius, pList->triangleIndices,
 																				ARRAYSIZE(pList->triangleIndices));
 	}

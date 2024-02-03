@@ -12,9 +12,9 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static unsigned long ReadDWord(FILE *fp)
+static unsigned int ReadDWord(FILE *fp)
 {
-	unsigned long ret;
+	unsigned int ret;
 	fread(&ret, 4, 1, fp);
 	return ret;
 }
@@ -26,7 +26,7 @@ static unsigned short ReadWord(FILE *fp)
 	return ret;
 }
 
-static void WriteDWord(FILE *fp, unsigned long val)
+static void WriteDWord(FILE *fp, unsigned int val)
 {
 	fwrite(&val, 4, 1, fp);
 }
@@ -83,18 +83,18 @@ bool WriteWaveFile(const char *pFilename, const char *pData, int nBytes, int wBi
 	WriteDWord(fp, 0x10);
 	WriteWord(fp, 1); // WAVE_FORMAT_PCM
 	WriteWord(fp, (unsigned short)nChannels);
-	WriteDWord(fp, (unsigned long)nSamplesPerSec);
-	WriteDWord(fp, (unsigned long)((wBitsPerSample / 8) * nChannels * nSamplesPerSec));
+	WriteDWord(fp, (unsigned int)nSamplesPerSec);
+	WriteDWord(fp, (unsigned int)((wBitsPerSample / 8) * nChannels * nSamplesPerSec));
 	WriteWord(fp, (unsigned short)((wBitsPerSample / 8) * nChannels));
 	WriteWord(fp, (unsigned short)wBitsPerSample);
 
 	// Write the DATA chunk.
 	fwrite("data", 4, 1, fp);
-	WriteDWord(fp, (unsigned long)nBytes);
+	WriteDWord(fp, (unsigned int)nBytes);
 	fwrite(pData, nBytes, 1, fp);
 
 	// Go back and write the length of the riff file.
-	unsigned long dwVal = ftell(fp) - 8;
+	unsigned int dwVal = ftell(fp) - 8;
 	fseek(fp, 4, SEEK_SET);
 	WriteDWord(fp, dwVal);
 

@@ -35,7 +35,7 @@ private:
 	{
 		AG_FIX_SHIFT = 7
 	};
-	typedef long AGFixed;
+	typedef int AGFixed;
 
 	// Parameters affecting the algorithm.
 	int m_BlockSize; // Derive gain from blocks of this size.

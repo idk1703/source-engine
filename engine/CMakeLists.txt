@@ -344,24 +344,24 @@ if(NOT DEDICATED)
 	find_package(JPEG REQUIRED)
 	find_package(PNG REQUIRED)
 endif()
-#find_package(BZip2 REQUIRED)
+find_package(BZip2 REQUIRED)
 find_package(ZLIB REQUIRED)
 
 target_link_libraries(${PROJECT} PRIVATE
 	appframework
 	bitmap
 	dmxloader
-#	$<$<NOT:${DEDICATED}>:vgui_controls>
-#	$<$<NOT:${DEDICATED}>:matsys_controls>
+	$<$<NOT:$<BOOL:${DEDICATED}>>:vgui_controls>
+	$<$<NOT:$<BOOL:${DEDICATED}>>:matsys_controls>
 	tier0 tier1 tier2 tier3
 	mathlib
 	vstdlib
 	vtf
 	steam_api
-#	$<$<NOT:${DEDICATED}>:JPEG::JPEG>
-#	BZip2::BZip2
+	$<$<NOT:$<BOOL:${DEDICATED}>>:JPEG::JPEG>
+	BZip2::BZip2
 	ZLIB::ZLIB
-#	$<$<AND:${LINUX},$<NOT:${DEDICATED}>>:${OPENAL_LIBRARY}>
+	$<$<AND:${LINUX},$<NOT:$<BOOL:${DEDICATED}>>>:OpenAL::OpenAL>
 	$<$<BOOL:${LINUX}>:CURL::libcurl>
 	$<$<BOOL:${LINUX}>:rt>
 	$<$<BOOL:${ENABLE_SDL}>:SDL2::SDL2>
