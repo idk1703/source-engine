@@ -60,10 +60,10 @@ extern IVEngineClient *engine;
 
 // use the JPEGLIB_USE_STDIO define so that we can read in jpeg's from outside the game directory tree.
 #define JPEGLIB_USE_STDIO
-#include "jpeglib/jpeglib.h"
+#include <jpeglib.h>
 #undef JPEGLIB_USE_STDIO
 
-#include "libpng/png.h"
+#include <png.h>
 
 #include <setjmp.h>
 

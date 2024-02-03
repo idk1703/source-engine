@@ -32,7 +32,7 @@ public:
 
 	// writes the char into the specified 32bpp texture. We're overloading this because
 	// we derive off font_t, and the implementation there doesn't work for bitmap fonts.
-	virtual void GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *prgba);
+	virtual void GetCharRGBA(wchar_t ch, uint rgbaWide, int rgbaTall, unsigned char *prgba);
 
 	// gets the width of ch given its position around before and after chars
 	virtual void GetKernedCharWidth(wchar_t ch, wchar_t chBefore, wchar_t chAfter, float &wide, float &abcA,

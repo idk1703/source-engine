@@ -39,7 +39,7 @@ public:
 	virtual bool Create(const char *windowsFontName, int tall, int weight, int blur, int scanlines, int flags);
 
 	// writes the char into the specified 32bpp texture
-	virtual void GetCharRGBA(wchar_t ch, int rgbaWide, int rgbaTall, unsigned char *rgba);
+	virtual void GetCharRGBA(wchar_t ch, uint rgbaWide, int rgbaTall, unsigned char *rgba);
 
 	// returns true if the font is equivalent to that specified
 	virtual bool IsEqualTo(const char *windowsFontName, int tall, int weight, int blur, int scanlines, int flags);

@@ -21,6 +21,8 @@
 #ifndef INCLUDED_STEAM_COMMON_STEAMCOMMON_H
 #define INCLUDED_STEAM_COMMON_STEAMCOMMON_H
 
+#include <cstdint>
+
 #if defined(_MSC_VER) && (_MSC_VER > 1000)
 #pragma once
 #endif
@@ -105,11 +107,7 @@ extern "C"
 
 	typedef unsigned int SteamCallHandle_t;
 
-#if defined(_MSC_VER)
-	typedef unsigned __int64 SteamUnsigned64_t;
-#else
-typedef unsigned long long SteamUnsigned64_t;
-#endif
+	typedef uint64_t SteamUnsigned64_t;
 
 	typedef enum
 	{
@@ -643,11 +641,7 @@ typedef unsigned long long SteamUnsigned64_t;
 
 	typedef unsigned short SteamInstanceID_t; // MUST be 16 bits
 
-#if defined(_WIN32)
-	typedef unsigned __int64 SteamLocalUserID_t; // MUST be 64 bits
-#else
-typedef unsigned long long SteamLocalUserID_t; // MUST be 64 bits
-#endif
+	typedef uint64_t SteamLocalUserID_t; // MUST be 64 bits
 
 	/******************************************************************************
 	**

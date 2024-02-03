@@ -16,10 +16,10 @@
 #undef ALIGN4
 #undef ALIGN16
 #undef ALIGN32
-#define ALIGN4(a)  a = (byte *)((int)((byte *)a + 3) & ~3)
-#define ALIGN16(a) a = (byte *)((int)((byte *)a + 15) & ~15)
-#define ALIGN32(a) a = (byte *)((int)((byte *)a + 31) & ~31)
-#define ALIGN64(a) a = (byte *)((int)((byte *)a + 63) & ~63)
+#define ALIGN4(a)  a = (byte *)((intp)((byte *)a + 3) & ~3)
+#define ALIGN16(a) a = (byte *)((intp)((byte *)a + 15) & ~15)
+#define ALIGN32(a) a = (byte *)((intp)((byte *)a + 31) & ~31)
+#define ALIGN64(a) a = (byte *)((intp)((byte *)a + 63) & ~63)
 
 // Fixup macros create variables that may not be referenced
 #pragma warning(push)
@@ -448,12 +448,17 @@ namespace StudioByteSwap
 		Vector dragAxisAreas;
 		int axisMapSize;
 	};
-
+	// clang-format off
 	BEGIN_BYTESWAP_DATADESC(swapcompactsurfaceheader_t)
-		DEFINE_FIELD(size, FIELD_INTEGER), DEFINE_FIELD(vphysicsID, FIELD_INTEGER), DEFINE_FIELD(version, FIELD_SHORT),
-			DEFINE_FIELD(modelType, FIELD_SHORT), DEFINE_FIELD(surfaceSize, FIELD_INTEGER),
-			DEFINE_FIELD(dragAxisAreas, FIELD_VECTOR), DEFINE_FIELD(axisMapSize, FIELD_INTEGER),
+		DEFINE_FIELD(size, FIELD_INTEGER),
+		DEFINE_FIELD(vphysicsID, FIELD_INTEGER),
+		DEFINE_FIELD(version, FIELD_SHORT),
+		DEFINE_FIELD(modelType, FIELD_SHORT),
+		DEFINE_FIELD(surfaceSize, FIELD_INTEGER),
+		DEFINE_FIELD(dragAxisAreas, FIELD_VECTOR),
+		DEFINE_FIELD(axisMapSize, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
+// clang-format on
 
 // Fake header declaration for old style phy format
 #if defined(_X360)
@@ -476,14 +481,17 @@ namespace StudioByteSwap
 #if defined(_X360)
 #pragma bitfield_order(pop)
 #endif
-
+	// clang-format off
 	BEGIN_BYTESWAP_DATADESC(legacysurfaceheader_t)
-		DEFINE_FIELD(size, FIELD_INTEGER), DEFINE_ARRAY(mass_center, FIELD_FLOAT, 3),
-			DEFINE_ARRAY(rotation_inertia, FIELD_FLOAT, 3), DEFINE_FIELD(upper_limit_radius, FIELD_FLOAT),
-			DEFINE_BITFIELD(bf, FIELD_INTEGER, 32), DEFINE_FIELD(offset_ledgetree_root, FIELD_INTEGER),
-			DEFINE_ARRAY(dummy, FIELD_INTEGER, 3),
+		DEFINE_FIELD(size, FIELD_INTEGER),
+		DEFINE_ARRAY(mass_center, FIELD_FLOAT, 3),
+		DEFINE_ARRAY(rotation_inertia, FIELD_FLOAT, 3),
+		DEFINE_FIELD(upper_limit_radius, FIELD_FLOAT),
+		DEFINE_BITFIELD(bf, FIELD_INTEGER, 32),
+		DEFINE_FIELD(offset_ledgetree_root, FIELD_INTEGER),
+		DEFINE_ARRAY(dummy, FIELD_INTEGER, 3),
 	END_BYTESWAP_DATADESC()
-
+	// clang-format on
 	//----------------------------------------------------------------------
 	// Swap a .phy file
 	// Fixes alignment errors
@@ -1233,8 +1241,8 @@ namespace StudioByteSwap
 			V_memcpy(pNewDest, pDestBase, pAnimBlock->datastart);
 			pNewDest += pAnimBlock->datastart;
 
-			int padding = AlignValue((unsigned int)pNewDest - (unsigned int)pNewDestBase, 2048);
-			padding -= (unsigned int)pNewDest - (unsigned int)pNewDestBase;
+			uintp padding = AlignValue((uintp)pNewDest - (uintp)pNewDestBase, 2048);
+			padding -= (uintp)pNewDest - (uintp)pNewDestBase;
 			pNewDest += padding;
 
 			// iterate and compress anim blocks
@@ -1245,7 +1253,7 @@ namespace StudioByteSwap
 				void *pInput = (byte *)pDestBase + pAnimBlock->datastart;
 				int inputSize = pAnimBlock->dataend - pAnimBlock->datastart;
 
-				pAnimBlock->datastart = (unsigned int)pNewDest - (unsigned int)pNewDestBase;
+				pAnimBlock->datastart = (uintp)pNewDest - (uintp)pNewDestBase;
 
 				void *pOutput;
 				int outputSize;
@@ -1262,11 +1270,11 @@ namespace StudioByteSwap
 					pNewDest += inputSize;
 				}
 
-				padding = AlignValue((unsigned int)pNewDest - (unsigned int)pNewDestBase, 2048);
-				padding -= (unsigned int)pNewDest - (unsigned int)pNewDestBase;
+				padding = AlignValue((uintp)pNewDest - (uintp)pNewDestBase, 2048);
+				padding -= (uintp)pNewDest - (uintp)pNewDestBase;
 				pNewDest += padding;
 
-				pAnimBlock->dataend = (unsigned int)pNewDest - (unsigned int)pNewDestBase;
+				pAnimBlock->dataend = (uintp)pNewDest - (uintp)pNewDestBase;
 			}
 
 			fixedFileSize = pNewDest - pNewDestBase;
@@ -2477,157 +2485,248 @@ namespace StudioByteSwap
 // for structures that are written to file for use by the game.
 // For any fields that reference other data in the file, use the
 // DEFINE_INDEX macro to identify them as such.
+// clang-format off
 BEGIN_BYTESWAP_DATADESC(studiohdr_t)
-	DEFINE_FIELD(id, FIELD_INTEGER), DEFINE_FIELD(version, FIELD_INTEGER), DEFINE_FIELD(checksum, FIELD_INTEGER),
-		DEFINE_ARRAY(name, FIELD_CHARACTER, 64), DEFINE_FIELD(length, FIELD_INTEGER),
-		DEFINE_FIELD(eyeposition, FIELD_VECTOR), DEFINE_FIELD(illumposition, FIELD_VECTOR),
-		DEFINE_FIELD(hull_min, FIELD_VECTOR), DEFINE_FIELD(hull_max, FIELD_VECTOR),
-		DEFINE_FIELD(view_bbmin, FIELD_VECTOR), DEFINE_FIELD(view_bbmax, FIELD_VECTOR),
-		DEFINE_FIELD(flags, FIELD_INTEGER), DEFINE_FIELD(numbones, FIELD_INTEGER),				 // bones
-		DEFINE_INDEX(boneindex, FIELD_INTEGER), DEFINE_FIELD(numbonecontrollers, FIELD_INTEGER), // bone controllers
-		DEFINE_INDEX(bonecontrollerindex, FIELD_INTEGER), DEFINE_FIELD(numhitboxsets, FIELD_INTEGER),
-		DEFINE_INDEX(hitboxsetindex, FIELD_INTEGER), DEFINE_FIELD(numlocalanim, FIELD_INTEGER), // animations/poses
-		DEFINE_INDEX(localanimindex, FIELD_INTEGER), // animation descriptions
-		DEFINE_FIELD(numlocalseq, FIELD_INTEGER),	 // sequences
-		DEFINE_INDEX(localseqindex, FIELD_INTEGER),
-		DEFINE_FIELD(activitylistversion, FIELD_INTEGER), // initialization flag - have the sequences been indexed?
-		DEFINE_FIELD(eventsindexed, FIELD_INTEGER), DEFINE_FIELD(numtextures, FIELD_INTEGER),
-		DEFINE_INDEX(textureindex, FIELD_INTEGER), DEFINE_FIELD(numcdtextures, FIELD_INTEGER),
-		DEFINE_INDEX(cdtextureindex, FIELD_INTEGER), DEFINE_FIELD(numskinref, FIELD_INTEGER),
-		DEFINE_FIELD(numskinfamilies, FIELD_INTEGER), DEFINE_INDEX(skinindex, FIELD_INTEGER),
-		DEFINE_FIELD(numbodyparts, FIELD_INTEGER), DEFINE_INDEX(bodypartindex, FIELD_INTEGER),
-		DEFINE_FIELD(numlocalattachments, FIELD_INTEGER), DEFINE_INDEX(localattachmentindex, FIELD_INTEGER),
-		DEFINE_FIELD(numlocalnodes, FIELD_INTEGER), DEFINE_INDEX(localnodeindex, FIELD_INTEGER),
-		DEFINE_INDEX(localnodenameindex, FIELD_INTEGER), DEFINE_FIELD(numflexdesc, FIELD_INTEGER),
-		DEFINE_INDEX(flexdescindex, FIELD_INTEGER), DEFINE_FIELD(numflexcontrollers, FIELD_INTEGER),
-		DEFINE_INDEX(flexcontrollerindex, FIELD_INTEGER), DEFINE_FIELD(numflexrules, FIELD_INTEGER),
-		DEFINE_INDEX(flexruleindex, FIELD_INTEGER), DEFINE_FIELD(numikchains, FIELD_INTEGER),
-		DEFINE_INDEX(ikchainindex, FIELD_INTEGER), DEFINE_FIELD(nummouths, FIELD_INTEGER),
-		DEFINE_INDEX(mouthindex, FIELD_INTEGER), DEFINE_FIELD(numlocalposeparameters, FIELD_INTEGER),
-		DEFINE_INDEX(localposeparamindex, FIELD_INTEGER), DEFINE_INDEX(surfacepropindex, FIELD_INTEGER),
-		DEFINE_INDEX(keyvalueindex, FIELD_INTEGER), DEFINE_FIELD(keyvaluesize, FIELD_INTEGER),
-		DEFINE_FIELD(numlocalikautoplaylocks, FIELD_INTEGER), DEFINE_INDEX(localikautoplaylockindex, FIELD_INTEGER),
-		DEFINE_FIELD(mass, FIELD_FLOAT), DEFINE_FIELD(contents, FIELD_INTEGER),
-		DEFINE_FIELD(numincludemodels, FIELD_INTEGER), DEFINE_INDEX(includemodelindex, FIELD_INTEGER),
-		DEFINE_FIELD(virtualModel, FIELD_INTEGER), // void*
-		DEFINE_INDEX(szanimblocknameindex, FIELD_INTEGER), DEFINE_FIELD(numanimblocks, FIELD_INTEGER),
-		DEFINE_INDEX(animblockindex, FIELD_INTEGER), DEFINE_FIELD(animblockModel, FIELD_INTEGER),	 // void*
-		DEFINE_INDEX(bonetablebynameindex, FIELD_INTEGER), DEFINE_FIELD(pVertexBase, FIELD_INTEGER), // void*
-		DEFINE_FIELD(pIndexBase, FIELD_INTEGER),													 // void*
-		DEFINE_FIELD(constdirectionallightdot, FIELD_CHARACTER),									 // byte
-		DEFINE_FIELD(rootLOD, FIELD_CHARACTER),														 // byte
-		DEFINE_FIELD(numAllowedRootLODs, FIELD_CHARACTER),											 // byte
-		DEFINE_ARRAY(unused, FIELD_CHARACTER, 1),													 // byte
-		DEFINE_INDEX(unused4, FIELD_INTEGER), DEFINE_FIELD(numflexcontrollerui, FIELD_INTEGER),
-		DEFINE_INDEX(flexcontrolleruiindex, FIELD_INTEGER), DEFINE_FIELD(flVertAnimFixedPointScale, FIELD_FLOAT),
-		DEFINE_ARRAY(unused3, FIELD_INTEGER, 1), DEFINE_INDEX(studiohdr2index, FIELD_INTEGER),
-		DEFINE_ARRAY(unused2, FIELD_INTEGER, 1),
+	DEFINE_FIELD(id, FIELD_INTEGER),
+	DEFINE_FIELD(version, FIELD_INTEGER),
+	DEFINE_FIELD(checksum, FIELD_INTEGER),
+	DEFINE_ARRAY(name, FIELD_CHARACTER, 64),
+	DEFINE_FIELD(length, FIELD_INTEGER),
+	DEFINE_FIELD(eyeposition, FIELD_VECTOR),
+	DEFINE_FIELD(illumposition, FIELD_VECTOR),
+	DEFINE_FIELD(hull_min, FIELD_VECTOR),
+	DEFINE_FIELD(hull_max, FIELD_VECTOR),
+	DEFINE_FIELD(view_bbmin, FIELD_VECTOR),
+	DEFINE_FIELD(view_bbmax, FIELD_VECTOR),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(numbones, FIELD_INTEGER),	// bones
+	DEFINE_INDEX(boneindex, FIELD_INTEGER),
+	DEFINE_FIELD(numbonecontrollers, FIELD_INTEGER),	// bone controllers
+	DEFINE_INDEX(bonecontrollerindex, FIELD_INTEGER),
+	DEFINE_FIELD(numhitboxsets, FIELD_INTEGER),
+	DEFINE_INDEX(hitboxsetindex, FIELD_INTEGER),
+	DEFINE_FIELD(numlocalanim, FIELD_INTEGER),	// animations/poses
+	DEFINE_INDEX(localanimindex, FIELD_INTEGER),	// animation descriptions
+	DEFINE_FIELD(numlocalseq, FIELD_INTEGER),	// sequences
+	DEFINE_INDEX(localseqindex, FIELD_INTEGER),
+	DEFINE_FIELD(activitylistversion, FIELD_INTEGER),	// initialization flag - have the sequences been indexed?
+	DEFINE_FIELD(eventsindexed, FIELD_INTEGER),
+	DEFINE_FIELD(numtextures, FIELD_INTEGER),
+	DEFINE_INDEX(textureindex, FIELD_INTEGER),
+	DEFINE_FIELD(numcdtextures, FIELD_INTEGER),
+	DEFINE_INDEX(cdtextureindex, FIELD_INTEGER),
+	DEFINE_FIELD(numskinref, FIELD_INTEGER),
+	DEFINE_FIELD(numskinfamilies, FIELD_INTEGER),
+	DEFINE_INDEX(skinindex, FIELD_INTEGER),
+	DEFINE_FIELD(numbodyparts, FIELD_INTEGER),
+	DEFINE_INDEX(bodypartindex, FIELD_INTEGER),
+	DEFINE_FIELD(numlocalattachments, FIELD_INTEGER),
+	DEFINE_INDEX(localattachmentindex, FIELD_INTEGER),
+	DEFINE_FIELD(numlocalnodes, FIELD_INTEGER),
+	DEFINE_INDEX(localnodeindex, FIELD_INTEGER),
+	DEFINE_INDEX(localnodenameindex, FIELD_INTEGER),
+	DEFINE_FIELD(numflexdesc, FIELD_INTEGER),
+	DEFINE_INDEX(flexdescindex, FIELD_INTEGER),
+	DEFINE_FIELD(numflexcontrollers, FIELD_INTEGER),
+	DEFINE_INDEX(flexcontrollerindex, FIELD_INTEGER),
+	DEFINE_FIELD(numflexrules, FIELD_INTEGER),
+	DEFINE_INDEX(flexruleindex, FIELD_INTEGER),
+	DEFINE_FIELD(numikchains, FIELD_INTEGER),
+	DEFINE_INDEX(ikchainindex, FIELD_INTEGER),
+	DEFINE_FIELD(nummouths, FIELD_INTEGER),
+	DEFINE_INDEX(mouthindex, FIELD_INTEGER),
+	DEFINE_FIELD(numlocalposeparameters, FIELD_INTEGER),
+	DEFINE_INDEX(localposeparamindex, FIELD_INTEGER),
+	DEFINE_INDEX(surfacepropindex, FIELD_INTEGER),
+	DEFINE_INDEX(keyvalueindex, FIELD_INTEGER),
+	DEFINE_FIELD(keyvaluesize, FIELD_INTEGER),
+	DEFINE_FIELD(numlocalikautoplaylocks, FIELD_INTEGER),
+	DEFINE_INDEX(localikautoplaylockindex, FIELD_INTEGER),
+	DEFINE_FIELD(mass, FIELD_FLOAT),
+	DEFINE_FIELD(contents, FIELD_INTEGER),
+	DEFINE_FIELD(numincludemodels, FIELD_INTEGER),
+	DEFINE_INDEX(includemodelindex, FIELD_INTEGER),
+	DEFINE_FIELD(virtualModel, FIELD_INTEGER),	// void*
+	DEFINE_INDEX(szanimblocknameindex, FIELD_INTEGER),
+	DEFINE_FIELD(numanimblocks, FIELD_INTEGER),
+	DEFINE_INDEX(animblockindex, FIELD_INTEGER),
+	DEFINE_FIELD(animblockModel, FIELD_INTEGER),	// void*
+	DEFINE_INDEX(bonetablebynameindex, FIELD_INTEGER),
+	DEFINE_FIELD(pVertexBase, FIELD_INTEGER),	// void*
+	DEFINE_FIELD(pIndexBase, FIELD_INTEGER),	// void*
+	DEFINE_FIELD(constdirectionallightdot, FIELD_CHARACTER),	// byte
+	DEFINE_FIELD(rootLOD, FIELD_CHARACTER),	// byte
+	DEFINE_FIELD(numAllowedRootLODs, FIELD_CHARACTER),	// byte
+	DEFINE_ARRAY(unused, FIELD_CHARACTER, 1),	// byte
+	DEFINE_INDEX(unused4, FIELD_INTEGER),
+	DEFINE_FIELD(numflexcontrollerui, FIELD_INTEGER),
+	DEFINE_INDEX(flexcontrolleruiindex, FIELD_INTEGER),
+	DEFINE_FIELD(flVertAnimFixedPointScale, FIELD_FLOAT),
+	DEFINE_ARRAY(unused3, FIELD_INTEGER, 1),
+	DEFINE_INDEX(studiohdr2index, FIELD_INTEGER),
+	DEFINE_ARRAY(unused2, FIELD_INTEGER, 1),
 END_BYTESWAP_DATADESC()
 
 // NOTE! Next time we up the .mdl file format, remove studiohdr2_t
 // and insert all fields in this structure into studiohdr_t.
 BEGIN_BYTESWAP_DATADESC(studiohdr2_t)
-	DEFINE_FIELD(numsrcbonetransform, FIELD_INTEGER), DEFINE_INDEX(srcbonetransformindex, FIELD_INTEGER),
-		DEFINE_FIELD(illumpositionattachmentindex, FIELD_INTEGER), DEFINE_FIELD(flMaxEyeDeflection, FIELD_FLOAT),
-		DEFINE_INDEX(linearboneindex, FIELD_INTEGER), DEFINE_INDEX(sznameindex, FIELD_INTEGER),
-		DEFINE_INDEX(m_nBoneFlexDriverCount, FIELD_INTEGER), DEFINE_INDEX(m_nBoneFlexDriverIndex, FIELD_INTEGER),
-		DEFINE_ARRAY(reserved, FIELD_INTEGER, 56),
+	DEFINE_FIELD(numsrcbonetransform, FIELD_INTEGER),
+	DEFINE_INDEX(srcbonetransformindex, FIELD_INTEGER),
+	DEFINE_FIELD(illumpositionattachmentindex, FIELD_INTEGER),
+	DEFINE_FIELD(flMaxEyeDeflection, FIELD_FLOAT),
+	DEFINE_INDEX(linearboneindex, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_INDEX(m_nBoneFlexDriverCount, FIELD_INTEGER),
+	DEFINE_INDEX(m_nBoneFlexDriverIndex, FIELD_INTEGER),
+	DEFINE_ARRAY(reserved, FIELD_INTEGER, 56),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiobone_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(parent, FIELD_INTEGER),
-		DEFINE_ARRAY(bonecontroller, FIELD_INTEGER, 6), DEFINE_FIELD(pos, FIELD_VECTOR),
-		DEFINE_FIELD(quat, FIELD_QUATERNION), DEFINE_ARRAY(rot, FIELD_FLOAT, 3), // RadianEuler
-		DEFINE_FIELD(posscale, FIELD_VECTOR), DEFINE_FIELD(rotscale, FIELD_VECTOR),
-		DEFINE_ARRAY(poseToBone, FIELD_FLOAT, 12), // matrix3x4_t
-		DEFINE_FIELD(qAlignment, FIELD_QUATERNION), DEFINE_FIELD(flags, FIELD_INTEGER),
-		DEFINE_FIELD(proctype, FIELD_INTEGER), DEFINE_INDEX(procindex, FIELD_INTEGER),
-		DEFINE_INDEX(physicsbone, FIELD_INTEGER), DEFINE_INDEX(surfacepropidx, FIELD_INTEGER),
-		DEFINE_FIELD(contents, FIELD_INTEGER), DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(parent, FIELD_INTEGER),
+	DEFINE_ARRAY(bonecontroller, FIELD_INTEGER, 6),
+	DEFINE_FIELD(pos, FIELD_VECTOR),
+	DEFINE_FIELD(quat, FIELD_QUATERNION),
+	DEFINE_ARRAY(rot, FIELD_FLOAT, 3),	// RadianEuler
+	DEFINE_FIELD(posscale, FIELD_VECTOR),
+	DEFINE_FIELD(rotscale, FIELD_VECTOR),
+	DEFINE_ARRAY(poseToBone, FIELD_FLOAT, 12),	// matrix3x4_t
+	DEFINE_FIELD(qAlignment, FIELD_QUATERNION),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(proctype, FIELD_INTEGER),
+	DEFINE_INDEX(procindex, FIELD_INTEGER),
+	DEFINE_INDEX(physicsbone, FIELD_INTEGER),
+	DEFINE_INDEX(surfacepropidx, FIELD_INTEGER),
+	DEFINE_FIELD(contents, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiolinearbone_t)
-	DEFINE_FIELD(numbones, FIELD_INTEGER), DEFINE_INDEX(flagsindex, FIELD_INTEGER),
-		DEFINE_INDEX(parentindex, FIELD_INTEGER), DEFINE_INDEX(posindex, FIELD_INTEGER),
-		DEFINE_INDEX(quatindex, FIELD_INTEGER), DEFINE_INDEX(rotindex, FIELD_INTEGER),
-		DEFINE_INDEX(posetoboneindex, FIELD_INTEGER), DEFINE_INDEX(posscaleindex, FIELD_INTEGER),
-		DEFINE_INDEX(rotscaleindex, FIELD_INTEGER), DEFINE_INDEX(qalignmentindex, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 6),
+	DEFINE_FIELD(numbones, FIELD_INTEGER),
+	DEFINE_INDEX(flagsindex, FIELD_INTEGER),
+	DEFINE_INDEX(parentindex, FIELD_INTEGER),
+	DEFINE_INDEX(posindex, FIELD_INTEGER),
+	DEFINE_INDEX(quatindex, FIELD_INTEGER),
+	DEFINE_INDEX(rotindex, FIELD_INTEGER),
+	DEFINE_INDEX(posetoboneindex, FIELD_INTEGER),
+	DEFINE_INDEX(posscaleindex, FIELD_INTEGER),
+	DEFINE_INDEX(rotscaleindex, FIELD_INTEGER),
+	DEFINE_INDEX(qalignmentindex, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 6),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioboneflexdrivercontrol_t)
-	DEFINE_INDEX(m_nBoneComponent, FIELD_INTEGER), DEFINE_FIELD(m_nFlexControllerIndex, FIELD_INTEGER),
-		DEFINE_INDEX(m_flMin, FIELD_FLOAT), DEFINE_INDEX(m_flMax, FIELD_FLOAT),
+	DEFINE_INDEX(m_nBoneComponent, FIELD_INTEGER),
+	DEFINE_FIELD(m_nFlexControllerIndex, FIELD_INTEGER),
+	DEFINE_INDEX(m_flMin, FIELD_FLOAT),
+	DEFINE_INDEX(m_flMax, FIELD_FLOAT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioboneflexdriver_t)
-	DEFINE_INDEX(m_nBoneIndex, FIELD_INTEGER), DEFINE_FIELD(m_nControlCount, FIELD_INTEGER),
-		DEFINE_INDEX(m_nControlIndex, FIELD_FLOAT), DEFINE_ARRAY(unused, FIELD_INTEGER, 3),
+	DEFINE_INDEX(m_nBoneIndex, FIELD_INTEGER),
+	DEFINE_FIELD(m_nControlCount, FIELD_INTEGER),
+	DEFINE_INDEX(m_nControlIndex, FIELD_FLOAT),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 3),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioaxisinterpbone_t)
-	DEFINE_FIELD(control, FIELD_INTEGER), DEFINE_FIELD(axis, FIELD_INTEGER), DEFINE_ARRAY(pos, FIELD_VECTOR, 6),
-		DEFINE_ARRAY(quat, FIELD_QUATERNION, 6),
+	DEFINE_FIELD(control, FIELD_INTEGER),
+	DEFINE_FIELD(axis, FIELD_INTEGER),
+	DEFINE_ARRAY(pos, FIELD_VECTOR, 6),
+	DEFINE_ARRAY(quat, FIELD_QUATERNION, 6),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioquatinterpbone_t)
-	DEFINE_FIELD(control, FIELD_INTEGER), DEFINE_FIELD(numtriggers, FIELD_INTEGER),
-		DEFINE_INDEX(triggerindex, FIELD_INTEGER),
+	DEFINE_FIELD(control, FIELD_INTEGER),
+	DEFINE_FIELD(numtriggers, FIELD_INTEGER),
+	DEFINE_INDEX(triggerindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiojigglebone_t)
-	DEFINE_FIELD(flags, FIELD_INTEGER), DEFINE_FIELD(length, FIELD_FLOAT), DEFINE_FIELD(tipMass, FIELD_FLOAT),
-		DEFINE_FIELD(yawStiffness, FIELD_FLOAT), DEFINE_FIELD(yawDamping, FIELD_FLOAT),
-		DEFINE_FIELD(pitchStiffness, FIELD_FLOAT), DEFINE_FIELD(pitchDamping, FIELD_FLOAT),
-		DEFINE_FIELD(alongStiffness, FIELD_FLOAT), DEFINE_FIELD(alongDamping, FIELD_FLOAT),
-		DEFINE_FIELD(angleLimit, FIELD_FLOAT), DEFINE_FIELD(minYaw, FIELD_FLOAT), DEFINE_FIELD(maxYaw, FIELD_FLOAT),
-		DEFINE_FIELD(yawFriction, FIELD_FLOAT), DEFINE_FIELD(yawBounce, FIELD_FLOAT),
-		DEFINE_FIELD(minPitch, FIELD_FLOAT), DEFINE_FIELD(maxPitch, FIELD_FLOAT),
-		DEFINE_FIELD(pitchFriction, FIELD_FLOAT), DEFINE_FIELD(pitchBounce, FIELD_FLOAT),
-		DEFINE_FIELD(baseMass, FIELD_FLOAT), DEFINE_FIELD(baseStiffness, FIELD_FLOAT),
-		DEFINE_FIELD(baseDamping, FIELD_FLOAT), DEFINE_FIELD(baseMinLeft, FIELD_FLOAT),
-		DEFINE_FIELD(baseMaxLeft, FIELD_FLOAT), DEFINE_FIELD(baseLeftFriction, FIELD_FLOAT),
-		DEFINE_FIELD(baseMinUp, FIELD_FLOAT), DEFINE_FIELD(baseMaxUp, FIELD_FLOAT),
-		DEFINE_FIELD(baseUpFriction, FIELD_FLOAT), DEFINE_FIELD(baseMinForward, FIELD_FLOAT),
-		DEFINE_FIELD(baseMaxForward, FIELD_FLOAT), DEFINE_FIELD(baseForwardFriction, FIELD_FLOAT),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(length, FIELD_FLOAT),
+	DEFINE_FIELD(tipMass, FIELD_FLOAT),
+	DEFINE_FIELD(yawStiffness, FIELD_FLOAT),
+	DEFINE_FIELD(yawDamping, FIELD_FLOAT),
+	DEFINE_FIELD(pitchStiffness, FIELD_FLOAT),
+	DEFINE_FIELD(pitchDamping, FIELD_FLOAT),
+	DEFINE_FIELD(alongStiffness, FIELD_FLOAT),
+	DEFINE_FIELD(alongDamping, FIELD_FLOAT),
+	DEFINE_FIELD(angleLimit, FIELD_FLOAT),
+	DEFINE_FIELD(minYaw, FIELD_FLOAT),
+	DEFINE_FIELD(maxYaw, FIELD_FLOAT),
+	DEFINE_FIELD(yawFriction, FIELD_FLOAT),
+	DEFINE_FIELD(yawBounce, FIELD_FLOAT),
+	DEFINE_FIELD(minPitch, FIELD_FLOAT),
+	DEFINE_FIELD(maxPitch, FIELD_FLOAT),
+	DEFINE_FIELD(pitchFriction, FIELD_FLOAT),
+	DEFINE_FIELD(pitchBounce, FIELD_FLOAT),
+	DEFINE_FIELD(baseMass, FIELD_FLOAT),
+	DEFINE_FIELD(baseStiffness, FIELD_FLOAT),
+	DEFINE_FIELD(baseDamping, FIELD_FLOAT),
+	DEFINE_FIELD(baseMinLeft, FIELD_FLOAT),
+	DEFINE_FIELD(baseMaxLeft, FIELD_FLOAT),
+	DEFINE_FIELD(baseLeftFriction, FIELD_FLOAT),
+	DEFINE_FIELD(baseMinUp, FIELD_FLOAT),
+	DEFINE_FIELD(baseMaxUp, FIELD_FLOAT),
+	DEFINE_FIELD(baseUpFriction, FIELD_FLOAT),
+	DEFINE_FIELD(baseMinForward, FIELD_FLOAT),
+	DEFINE_FIELD(baseMaxForward, FIELD_FLOAT),
+	DEFINE_FIELD(baseForwardFriction, FIELD_FLOAT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioaimatbone_t)
-	DEFINE_FIELD(parent, FIELD_INTEGER), DEFINE_FIELD(aim, FIELD_INTEGER), DEFINE_ARRAY(aimvector, FIELD_FLOAT, 3),
-		DEFINE_ARRAY(upvector, FIELD_FLOAT, 3), DEFINE_ARRAY(basepos, FIELD_FLOAT, 3),
+	DEFINE_FIELD(parent, FIELD_INTEGER),
+	DEFINE_FIELD(aim, FIELD_INTEGER),
+	DEFINE_ARRAY(aimvector, FIELD_FLOAT, 3),
+	DEFINE_ARRAY(upvector, FIELD_FLOAT, 3),
+	DEFINE_ARRAY(basepos, FIELD_FLOAT, 3),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioquatinterpinfo_t)
-	DEFINE_FIELD(inv_tolerance, FIELD_FLOAT), DEFINE_FIELD(trigger, FIELD_QUATERNION), DEFINE_FIELD(pos, FIELD_VECTOR),
-		DEFINE_FIELD(quat, FIELD_QUATERNION),
+	DEFINE_FIELD(inv_tolerance, FIELD_FLOAT),
+	DEFINE_FIELD(trigger, FIELD_QUATERNION),
+	DEFINE_FIELD(pos, FIELD_VECTOR),
+	DEFINE_FIELD(quat, FIELD_QUATERNION),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiobonecontroller_t)
-	DEFINE_FIELD(bone, FIELD_INTEGER), DEFINE_FIELD(type, FIELD_INTEGER), DEFINE_FIELD(start, FIELD_FLOAT),
-		DEFINE_FIELD(end, FIELD_FLOAT), DEFINE_FIELD(rest, FIELD_INTEGER), DEFINE_FIELD(inputfield, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
+	DEFINE_FIELD(bone, FIELD_INTEGER),
+	DEFINE_FIELD(type, FIELD_INTEGER),
+	DEFINE_FIELD(start, FIELD_FLOAT),
+	DEFINE_FIELD(end, FIELD_FLOAT),
+	DEFINE_FIELD(rest, FIELD_INTEGER),
+	DEFINE_FIELD(inputfield, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioattachment_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(flags, FIELD_INTEGER),
-		DEFINE_FIELD(localbone, FIELD_INTEGER), DEFINE_ARRAY(local, FIELD_FLOAT, 12), // matrix3x4_t
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(localbone, FIELD_INTEGER),
+	DEFINE_ARRAY(local, FIELD_FLOAT, 12),	// matrix3x4_t
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiohitboxset_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(numhitboxes, FIELD_INTEGER),
-		DEFINE_INDEX(hitboxindex, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(numhitboxes, FIELD_INTEGER),
+	DEFINE_INDEX(hitboxindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiosrcbonetransform_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_ARRAY(pretransform, FIELD_FLOAT, 12), // matrix3x4_t
-		DEFINE_ARRAY(posttransform, FIELD_FLOAT, 12),									   // matrix3x4_t
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_ARRAY(pretransform, FIELD_FLOAT, 12),	// matrix3x4_t
+	DEFINE_ARRAY(posttransform, FIELD_FLOAT, 12),	// matrix3x4_t
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiobbox_t)
-	DEFINE_FIELD(bone, FIELD_INTEGER), DEFINE_FIELD(group, FIELD_INTEGER), DEFINE_FIELD(bbmin, FIELD_VECTOR),
-		DEFINE_FIELD(bbmax, FIELD_VECTOR), DEFINE_INDEX(szhitboxnameindex, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
+	DEFINE_FIELD(bone, FIELD_INTEGER),
+	DEFINE_FIELD(group, FIELD_INTEGER),
+	DEFINE_FIELD(bbmin, FIELD_VECTOR),
+	DEFINE_FIELD(bbmax, FIELD_VECTOR),
+	DEFINE_INDEX(szhitboxnameindex, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioanim_valueptr_t)
@@ -2635,59 +2734,100 @@ BEGIN_BYTESWAP_DATADESC(mstudioanim_valueptr_t)
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiolocalhierarchy_t)
-	DEFINE_FIELD(iBone, FIELD_INTEGER), DEFINE_FIELD(iNewParent, FIELD_INTEGER), DEFINE_FIELD(start, FIELD_FLOAT),
-		DEFINE_FIELD(peak, FIELD_FLOAT), DEFINE_FIELD(tail, FIELD_FLOAT), DEFINE_FIELD(end, FIELD_FLOAT),
-		DEFINE_FIELD(iStart, FIELD_INTEGER), DEFINE_INDEX(localanimindex, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 4),
+	DEFINE_FIELD(iBone, FIELD_INTEGER),
+	DEFINE_FIELD(iNewParent, FIELD_INTEGER),
+	DEFINE_FIELD(start, FIELD_FLOAT),
+	DEFINE_FIELD(peak, FIELD_FLOAT),
+	DEFINE_FIELD(tail, FIELD_FLOAT),
+	DEFINE_FIELD(end, FIELD_FLOAT),
+	DEFINE_FIELD(iStart, FIELD_INTEGER),
+	DEFINE_INDEX(localanimindex, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 4),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioanimsections_t)
-	DEFINE_FIELD(animblock, FIELD_INTEGER), DEFINE_INDEX(animindex, FIELD_INTEGER),
+	DEFINE_FIELD(animblock, FIELD_INTEGER),
+	DEFINE_INDEX(animindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioanimdesc_t)
-	DEFINE_INDEX(baseptr, FIELD_INTEGER), DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(fps, FIELD_FLOAT),
-		DEFINE_FIELD(flags, FIELD_INTEGER), DEFINE_FIELD(numframes, FIELD_INTEGER),
-		DEFINE_FIELD(nummovements, FIELD_INTEGER), DEFINE_INDEX(movementindex, FIELD_INTEGER),
-		DEFINE_ARRAY(unused1, FIELD_INTEGER, 6), DEFINE_FIELD(animblock, FIELD_INTEGER),
-		DEFINE_INDEX(animindex, FIELD_INTEGER), DEFINE_FIELD(numikrules, FIELD_INTEGER),
-		DEFINE_INDEX(ikruleindex, FIELD_INTEGER), DEFINE_INDEX(animblockikruleindex, FIELD_INTEGER),
-		DEFINE_FIELD(numlocalhierarchy, FIELD_INTEGER), DEFINE_INDEX(localhierarchyindex, FIELD_INTEGER),
-		DEFINE_INDEX(sectionindex, FIELD_INTEGER), DEFINE_FIELD(sectionframes, FIELD_INTEGER),
-		DEFINE_FIELD(zeroframespan, FIELD_SHORT), DEFINE_FIELD(zeroframecount, FIELD_SHORT),
-		DEFINE_INDEX(zeroframeindex, FIELD_INTEGER), DEFINE_FIELD(zeroframestalltime, FIELD_FLOAT),
+	DEFINE_INDEX(baseptr, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(fps, FIELD_FLOAT),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(numframes, FIELD_INTEGER),
+	DEFINE_FIELD(nummovements, FIELD_INTEGER),
+	DEFINE_INDEX(movementindex, FIELD_INTEGER),
+	DEFINE_ARRAY(unused1, FIELD_INTEGER, 6),
+	DEFINE_FIELD(animblock, FIELD_INTEGER),
+	DEFINE_INDEX(animindex, FIELD_INTEGER),
+	DEFINE_FIELD(numikrules, FIELD_INTEGER),
+	DEFINE_INDEX(ikruleindex, FIELD_INTEGER),
+	DEFINE_INDEX(animblockikruleindex, FIELD_INTEGER),
+	DEFINE_FIELD(numlocalhierarchy, FIELD_INTEGER),
+	DEFINE_INDEX(localhierarchyindex, FIELD_INTEGER),
+	DEFINE_INDEX(sectionindex, FIELD_INTEGER),
+	DEFINE_FIELD(sectionframes, FIELD_INTEGER),
+	DEFINE_FIELD(zeroframespan, FIELD_SHORT),
+	DEFINE_FIELD(zeroframecount, FIELD_SHORT),
+	DEFINE_INDEX(zeroframeindex, FIELD_INTEGER),
+	DEFINE_FIELD(zeroframestalltime, FIELD_FLOAT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioanim_t)
-	DEFINE_FIELD(bone, FIELD_CHARACTER), DEFINE_FIELD(flags, FIELD_CHARACTER), DEFINE_INDEX(nextoffset, FIELD_SHORT),
+	DEFINE_FIELD(bone, FIELD_CHARACTER),
+	DEFINE_FIELD(flags, FIELD_CHARACTER),
+	DEFINE_INDEX(nextoffset, FIELD_SHORT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioikerror_t)
-	DEFINE_FIELD(pos, FIELD_VECTOR), DEFINE_FIELD(q, FIELD_QUATERNION),
+	DEFINE_FIELD(pos, FIELD_VECTOR),
+	DEFINE_FIELD(q, FIELD_QUATERNION),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiocompressedikerror_t)
-	DEFINE_ARRAY(scale, FIELD_FLOAT, 6), DEFINE_ARRAY(offset, FIELD_SHORT, 6),
+	DEFINE_ARRAY(scale, FIELD_FLOAT, 6),
+	DEFINE_ARRAY(offset, FIELD_SHORT, 6),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioikrule_t)
-	DEFINE_FIELD(index, FIELD_INTEGER), DEFINE_FIELD(type, FIELD_INTEGER), DEFINE_FIELD(chain, FIELD_INTEGER),
-		DEFINE_FIELD(bone, FIELD_INTEGER), DEFINE_FIELD(slot, FIELD_INTEGER), DEFINE_FIELD(height, FIELD_FLOAT),
-		DEFINE_FIELD(radius, FIELD_FLOAT), DEFINE_FIELD(floor, FIELD_FLOAT), DEFINE_FIELD(pos, FIELD_VECTOR),
-		DEFINE_FIELD(q, FIELD_QUATERNION), DEFINE_INDEX(compressedikerrorindex, FIELD_INTEGER),
-		DEFINE_FIELD(unused2, FIELD_INTEGER), DEFINE_FIELD(iStart, FIELD_INTEGER),
-		DEFINE_INDEX(ikerrorindex, FIELD_INTEGER), DEFINE_FIELD(start, FIELD_FLOAT), DEFINE_FIELD(peak, FIELD_FLOAT),
-		DEFINE_FIELD(tail, FIELD_FLOAT), DEFINE_FIELD(end, FIELD_FLOAT), DEFINE_FIELD(unused3, FIELD_FLOAT),
-		DEFINE_FIELD(contact, FIELD_FLOAT), DEFINE_FIELD(drop, FIELD_FLOAT), DEFINE_FIELD(top, FIELD_FLOAT),
-		DEFINE_FIELD(unused6, FIELD_INTEGER), DEFINE_FIELD(unused7, FIELD_INTEGER),
-		DEFINE_FIELD(unused8, FIELD_INTEGER), DEFINE_INDEX(szattachmentindex, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 7),
+	DEFINE_FIELD(index, FIELD_INTEGER),
+	DEFINE_FIELD(type, FIELD_INTEGER),
+	DEFINE_FIELD(chain, FIELD_INTEGER),
+	DEFINE_FIELD(bone, FIELD_INTEGER),
+	DEFINE_FIELD(slot, FIELD_INTEGER),
+	DEFINE_FIELD(height, FIELD_FLOAT),
+	DEFINE_FIELD(radius, FIELD_FLOAT),
+	DEFINE_FIELD(floor, FIELD_FLOAT),
+	DEFINE_FIELD(pos, FIELD_VECTOR),
+	DEFINE_FIELD(q, FIELD_QUATERNION),
+	DEFINE_INDEX(compressedikerrorindex, FIELD_INTEGER),
+	DEFINE_FIELD(unused2, FIELD_INTEGER),
+	DEFINE_FIELD(iStart, FIELD_INTEGER),
+	DEFINE_INDEX(ikerrorindex, FIELD_INTEGER),
+	DEFINE_FIELD(start, FIELD_FLOAT),
+	DEFINE_FIELD(peak, FIELD_FLOAT),
+	DEFINE_FIELD(tail, FIELD_FLOAT),
+	DEFINE_FIELD(end, FIELD_FLOAT),
+	DEFINE_FIELD(unused3, FIELD_FLOAT),
+	DEFINE_FIELD(contact, FIELD_FLOAT),
+	DEFINE_FIELD(drop, FIELD_FLOAT),
+	DEFINE_FIELD(top, FIELD_FLOAT),
+	DEFINE_FIELD(unused6, FIELD_INTEGER),
+	DEFINE_FIELD(unused7, FIELD_INTEGER),
+	DEFINE_FIELD(unused8, FIELD_INTEGER),
+	DEFINE_INDEX(szattachmentindex, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 7),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiomovement_t)
-	DEFINE_FIELD(endframe, FIELD_INTEGER), DEFINE_FIELD(motionflags, FIELD_INTEGER), DEFINE_FIELD(v0, FIELD_FLOAT),
-		DEFINE_FIELD(v1, FIELD_FLOAT), DEFINE_FIELD(angle, FIELD_FLOAT), DEFINE_FIELD(vector, FIELD_VECTOR),
-		DEFINE_FIELD(position, FIELD_VECTOR),
+	DEFINE_FIELD(endframe, FIELD_INTEGER),
+	DEFINE_FIELD(motionflags, FIELD_INTEGER),
+	DEFINE_FIELD(v0, FIELD_FLOAT),
+	DEFINE_FIELD(v1, FIELD_FLOAT),
+	DEFINE_FIELD(angle, FIELD_FLOAT),
+	DEFINE_FIELD(vector, FIELD_VECTOR),
+	DEFINE_FIELD(position, FIELD_VECTOR),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioactivitymodifier_t)
@@ -2695,72 +2835,102 @@ BEGIN_BYTESWAP_DATADESC(mstudioactivitymodifier_t)
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioseqdesc_t)
-	DEFINE_INDEX(baseptr, FIELD_INTEGER), DEFINE_INDEX(szlabelindex, FIELD_INTEGER),
-		DEFINE_INDEX(szactivitynameindex, FIELD_INTEGER),
-		DEFINE_FIELD(flags, FIELD_INTEGER),	   // looping/non-looping flags
-		DEFINE_FIELD(activity, FIELD_INTEGER), // initialized at loadtime to game DLL values
-		DEFINE_FIELD(actweight, FIELD_INTEGER), DEFINE_FIELD(numevents, FIELD_INTEGER),
-		DEFINE_INDEX(eventindex, FIELD_INTEGER), DEFINE_FIELD(bbmin, FIELD_VECTOR), DEFINE_FIELD(bbmax, FIELD_VECTOR),
-		DEFINE_FIELD(numblends, FIELD_INTEGER), DEFINE_INDEX(animindexindex, FIELD_INTEGER),
-		DEFINE_INDEX(movementindex, FIELD_INTEGER), // [blend] float array for blended movement
-		DEFINE_ARRAY(groupsize, FIELD_INTEGER, 2), DEFINE_ARRAY(paramindex, FIELD_INTEGER, 2), // X, Y, Z, XR, YR, ZR
-		DEFINE_ARRAY(paramstart, FIELD_FLOAT, 2), // local (0..1) starting value
-		DEFINE_ARRAY(paramend, FIELD_FLOAT, 2),	  // local (0..1) ending value
-		DEFINE_FIELD(paramparent, FIELD_INTEGER),
-		DEFINE_FIELD(fadeintime, FIELD_FLOAT),		 // ideal cross fate in time (0.2 default)
-		DEFINE_FIELD(fadeouttime, FIELD_FLOAT),		 // ideal cross fade out time (0.2 default)
-		DEFINE_FIELD(localentrynode, FIELD_INTEGER), // transition node at entry
-		DEFINE_FIELD(localexitnode, FIELD_INTEGER),	 // transition node at exit
-		DEFINE_FIELD(nodeflags, FIELD_INTEGER),		 // transition rules
-		DEFINE_FIELD(entryphase, FIELD_FLOAT),		 // used to match entry gait
-		DEFINE_FIELD(exitphase, FIELD_FLOAT),		 // used to match exit gait
-		DEFINE_FIELD(lastframe, FIELD_FLOAT),		 // frame that should generation EndOfSequence
-		DEFINE_FIELD(nextseq, FIELD_INTEGER),		 // auto advancing sequences
-		DEFINE_FIELD(pose, FIELD_INTEGER),			 // index of delta animation between end and nextseq
-		DEFINE_FIELD(numikrules, FIELD_INTEGER), DEFINE_FIELD(numautolayers, FIELD_INTEGER),
-		DEFINE_INDEX(autolayerindex, FIELD_INTEGER), DEFINE_INDEX(weightlistindex, FIELD_INTEGER),
-		DEFINE_INDEX(posekeyindex, FIELD_INTEGER), DEFINE_FIELD(numiklocks, FIELD_INTEGER),
-		DEFINE_INDEX(iklockindex, FIELD_INTEGER), DEFINE_INDEX(keyvalueindex, FIELD_INTEGER),
-		DEFINE_FIELD(keyvaluesize, FIELD_INTEGER), DEFINE_INDEX(cycleposeindex, FIELD_INTEGER),
-		DEFINE_INDEX(activitymodifierindex, FIELD_INTEGER), DEFINE_FIELD(numactivitymodifiers, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 5), // remove/add as appropriate (grow back to 8 ints on version change!)
+	DEFINE_INDEX(baseptr, FIELD_INTEGER),
+	DEFINE_INDEX(szlabelindex, FIELD_INTEGER),
+	DEFINE_INDEX(szactivitynameindex, FIELD_INTEGER),
+	DEFINE_FIELD(flags, FIELD_INTEGER),	   // looping/non-looping flags
+	DEFINE_FIELD(activity, FIELD_INTEGER), // initialized at loadtime to game DLL values
+	DEFINE_FIELD(actweight, FIELD_INTEGER),
+	DEFINE_FIELD(numevents, FIELD_INTEGER),
+	DEFINE_INDEX(eventindex, FIELD_INTEGER),
+	DEFINE_FIELD(bbmin, FIELD_VECTOR),
+	DEFINE_FIELD(bbmax, FIELD_VECTOR),
+	DEFINE_FIELD(numblends, FIELD_INTEGER),
+	DEFINE_INDEX(animindexindex, FIELD_INTEGER),
+	DEFINE_INDEX(movementindex, FIELD_INTEGER), // [blend] float array for blended movement
+	DEFINE_ARRAY(groupsize, FIELD_INTEGER, 2),
+	DEFINE_ARRAY(paramindex, FIELD_INTEGER, 2), // X, Y, Z, XR, YR, ZR
+	DEFINE_ARRAY(paramstart, FIELD_FLOAT, 2), // local (0..1) starting value
+	DEFINE_ARRAY(paramend, FIELD_FLOAT, 2),	  // local (0..1) ending value
+	DEFINE_FIELD(paramparent, FIELD_INTEGER),
+	DEFINE_FIELD(fadeintime, FIELD_FLOAT),		 // ideal cross fate in time (0.2 default)
+	DEFINE_FIELD(fadeouttime, FIELD_FLOAT),		 // ideal cross fade out time (0.2 default)
+	DEFINE_FIELD(localentrynode, FIELD_INTEGER), // transition node at entry
+	DEFINE_FIELD(localexitnode, FIELD_INTEGER),	 // transition node at exit
+	DEFINE_FIELD(nodeflags, FIELD_INTEGER),		 // transition rules
+	DEFINE_FIELD(entryphase, FIELD_FLOAT),		 // used to match entry gait
+	DEFINE_FIELD(exitphase, FIELD_FLOAT),		 // used to match exit gait
+	DEFINE_FIELD(lastframe, FIELD_FLOAT),		 // frame that should generation EndOfSequence
+	DEFINE_FIELD(nextseq, FIELD_INTEGER),		 // auto advancing sequences
+	DEFINE_FIELD(pose, FIELD_INTEGER),			 // index of delta animation between end and nextseq
+	DEFINE_FIELD(numikrules, FIELD_INTEGER),
+	DEFINE_FIELD(numautolayers, FIELD_INTEGER),
+	DEFINE_INDEX(autolayerindex, FIELD_INTEGER),
+	DEFINE_INDEX(weightlistindex, FIELD_INTEGER),
+	DEFINE_INDEX(posekeyindex, FIELD_INTEGER),
+	DEFINE_FIELD(numiklocks, FIELD_INTEGER),
+	DEFINE_INDEX(iklockindex, FIELD_INTEGER),
+	DEFINE_INDEX(keyvalueindex, FIELD_INTEGER),
+	DEFINE_FIELD(keyvaluesize, FIELD_INTEGER),
+	DEFINE_INDEX(cycleposeindex, FIELD_INTEGER),
+	DEFINE_INDEX(activitymodifierindex, FIELD_INTEGER),
+	DEFINE_FIELD(numactivitymodifiers, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 5), // remove/add as appropriate (grow back to 8 ints on version change!)
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioevent_t)
-	DEFINE_FIELD(cycle, FIELD_FLOAT), DEFINE_FIELD(event, FIELD_INTEGER), DEFINE_FIELD(type, FIELD_INTEGER),
-		DEFINE_ARRAY(options, FIELD_CHARACTER, 64), DEFINE_INDEX(szeventindex, FIELD_INTEGER),
+	DEFINE_FIELD(cycle, FIELD_FLOAT),
+	DEFINE_FIELD(event, FIELD_INTEGER),
+	DEFINE_FIELD(type, FIELD_INTEGER),
+	DEFINE_ARRAY(options, FIELD_CHARACTER, 64),
+	DEFINE_INDEX(szeventindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioautolayer_t)
-	DEFINE_FIELD(iSequence, FIELD_SHORT), DEFINE_FIELD(iPose, FIELD_SHORT), DEFINE_FIELD(flags, FIELD_INTEGER),
-		DEFINE_FIELD(start, FIELD_FLOAT), DEFINE_FIELD(peak, FIELD_FLOAT), DEFINE_FIELD(tail, FIELD_FLOAT),
-		DEFINE_FIELD(end, FIELD_FLOAT),
+	DEFINE_FIELD(iSequence, FIELD_SHORT),
+	DEFINE_FIELD(iPose, FIELD_SHORT),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(start, FIELD_FLOAT),
+	DEFINE_FIELD(peak, FIELD_FLOAT),
+	DEFINE_FIELD(tail, FIELD_FLOAT),
+	DEFINE_FIELD(end, FIELD_FLOAT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioiklock_t)
-	DEFINE_FIELD(chain, FIELD_INTEGER), DEFINE_FIELD(flPosWeight, FIELD_FLOAT),
-		DEFINE_FIELD(flLocalQWeight, FIELD_FLOAT), DEFINE_FIELD(flags, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 4),
+	DEFINE_FIELD(chain, FIELD_INTEGER),
+	DEFINE_FIELD(flPosWeight, FIELD_FLOAT),
+	DEFINE_FIELD(flLocalQWeight, FIELD_FLOAT),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 4),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiobodyparts_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(nummodels, FIELD_INTEGER), DEFINE_FIELD(base, FIELD_INTEGER),
-		DEFINE_INDEX(modelindex, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(nummodels, FIELD_INTEGER),
+	DEFINE_FIELD(base, FIELD_INTEGER),
+	DEFINE_INDEX(modelindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiomodel_t)
-	DEFINE_ARRAY(name, FIELD_CHARACTER, 64), DEFINE_FIELD(type, FIELD_INTEGER),
-		DEFINE_FIELD(boundingradius, FIELD_FLOAT), DEFINE_FIELD(nummeshes, FIELD_INTEGER),
-		DEFINE_INDEX(meshindex, FIELD_INTEGER), DEFINE_FIELD(numvertices, FIELD_INTEGER),
-		DEFINE_INDEX(vertexindex, FIELD_INTEGER), DEFINE_INDEX(tangentsindex, FIELD_INTEGER),
-		DEFINE_FIELD(numattachments, FIELD_INTEGER), DEFINE_INDEX(attachmentindex, FIELD_INTEGER),
-		DEFINE_FIELD(numeyeballs, FIELD_INTEGER), DEFINE_INDEX(eyeballindex, FIELD_INTEGER),
-		DEFINE_EMBEDDED(vertexdata), DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
+	DEFINE_ARRAY(name, FIELD_CHARACTER, 64),
+	DEFINE_FIELD(type, FIELD_INTEGER),
+	DEFINE_FIELD(boundingradius, FIELD_FLOAT),
+	DEFINE_FIELD(nummeshes, FIELD_INTEGER),
+	DEFINE_INDEX(meshindex, FIELD_INTEGER),
+	DEFINE_FIELD(numvertices, FIELD_INTEGER),
+	DEFINE_INDEX(vertexindex, FIELD_INTEGER),
+	DEFINE_INDEX(tangentsindex, FIELD_INTEGER),
+	DEFINE_FIELD(numattachments, FIELD_INTEGER),
+	DEFINE_INDEX(attachmentindex, FIELD_INTEGER),
+	DEFINE_FIELD(numeyeballs, FIELD_INTEGER),
+	DEFINE_INDEX(eyeballindex, FIELD_INTEGER),
+	DEFINE_EMBEDDED(vertexdata),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudio_modelvertexdata_t)
-	DEFINE_FIELD(pVertexData, FIELD_INTEGER),	   // void*
-		DEFINE_FIELD(pTangentData, FIELD_INTEGER), // void*
+	DEFINE_FIELD(pVertexData, FIELD_INTEGER),	// void*
+	DEFINE_FIELD(pTangentData, FIELD_INTEGER),	// void*
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioflexdesc_t)
@@ -2768,118 +2938,176 @@ BEGIN_BYTESWAP_DATADESC(mstudioflexdesc_t)
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioflexcontroller_t)
-	DEFINE_INDEX(sztypeindex, FIELD_INTEGER), DEFINE_INDEX(sznameindex, FIELD_INTEGER),
-		DEFINE_FIELD(localToGlobal, FIELD_INTEGER), DEFINE_FIELD(min, FIELD_FLOAT), DEFINE_FIELD(max, FIELD_FLOAT),
+	DEFINE_INDEX(sztypeindex, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(localToGlobal, FIELD_INTEGER),
+	DEFINE_FIELD(min, FIELD_FLOAT),
+	DEFINE_FIELD(max, FIELD_FLOAT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioflexcontrollerui_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_INDEX(szindex0, FIELD_INTEGER),
-		DEFINE_INDEX(szindex1, FIELD_INTEGER), DEFINE_INDEX(szindex2, FIELD_INTEGER),
-		DEFINE_FIELD(remaptype, FIELD_CHARACTER), DEFINE_FIELD(stereo, FIELD_BOOLEAN),
-		DEFINE_ARRAY(unused, FIELD_CHARACTER, 2),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_INDEX(szindex0, FIELD_INTEGER),
+	DEFINE_INDEX(szindex1, FIELD_INTEGER),
+	DEFINE_INDEX(szindex2, FIELD_INTEGER),
+	DEFINE_FIELD(remaptype, FIELD_CHARACTER),
+	DEFINE_FIELD(stereo, FIELD_BOOLEAN),
+	DEFINE_ARRAY(unused, FIELD_CHARACTER, 2),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioflexrule_t)
-	DEFINE_FIELD(flex, FIELD_INTEGER), DEFINE_FIELD(numops, FIELD_INTEGER), DEFINE_INDEX(opindex, FIELD_INTEGER),
+	DEFINE_FIELD(flex, FIELD_INTEGER),
+	DEFINE_FIELD(numops, FIELD_INTEGER),
+	DEFINE_INDEX(opindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioflexop_t)
-	DEFINE_FIELD(op, FIELD_INTEGER), DEFINE_FIELD(d, FIELD_INTEGER), // int/float union
+	DEFINE_FIELD(op, FIELD_INTEGER),
+	DEFINE_FIELD(d, FIELD_INTEGER), // int/float union
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioikchain_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(linktype, FIELD_INTEGER),
-		DEFINE_FIELD(numlinks, FIELD_INTEGER), DEFINE_INDEX(linkindex, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(linktype, FIELD_INTEGER),
+	DEFINE_FIELD(numlinks, FIELD_INTEGER),
+	DEFINE_INDEX(linkindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioiklink_t)
-	DEFINE_FIELD(bone, FIELD_INTEGER), DEFINE_FIELD(kneeDir, FIELD_VECTOR), DEFINE_FIELD(unused0, FIELD_VECTOR),
+	DEFINE_FIELD(bone, FIELD_INTEGER),
+	DEFINE_FIELD(kneeDir, FIELD_VECTOR),
+	DEFINE_FIELD(unused0, FIELD_VECTOR),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiomouth_t)
-	DEFINE_FIELD(bone, FIELD_INTEGER), DEFINE_FIELD(forward, FIELD_VECTOR), DEFINE_FIELD(flexdesc, FIELD_INTEGER),
+	DEFINE_FIELD(bone, FIELD_INTEGER),
+	DEFINE_FIELD(forward, FIELD_VECTOR),
+	DEFINE_FIELD(flexdesc, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioposeparamdesc_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(flags, FIELD_INTEGER), DEFINE_FIELD(start, FIELD_FLOAT),
-		DEFINE_FIELD(end, FIELD_FLOAT), DEFINE_FIELD(loop, FIELD_FLOAT),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(start, FIELD_FLOAT),
+	DEFINE_FIELD(end, FIELD_FLOAT),
+	DEFINE_FIELD(loop, FIELD_FLOAT),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiomesh_t)
-	DEFINE_FIELD(material, FIELD_INTEGER), DEFINE_INDEX(modelindex, FIELD_INTEGER),
-		DEFINE_FIELD(numvertices, FIELD_INTEGER), DEFINE_FIELD(vertexoffset, FIELD_INTEGER),
-		DEFINE_FIELD(numflexes, FIELD_INTEGER), DEFINE_INDEX(flexindex, FIELD_INTEGER),
-		DEFINE_FIELD(materialtype, FIELD_INTEGER), DEFINE_FIELD(materialparam, FIELD_INTEGER),
-		DEFINE_FIELD(meshid, FIELD_INTEGER), DEFINE_FIELD(center, FIELD_VECTOR), DEFINE_EMBEDDED(vertexdata),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
+	DEFINE_FIELD(material, FIELD_INTEGER),
+	DEFINE_INDEX(modelindex, FIELD_INTEGER),
+	DEFINE_FIELD(numvertices, FIELD_INTEGER),
+	DEFINE_FIELD(vertexoffset, FIELD_INTEGER),
+	DEFINE_FIELD(numflexes, FIELD_INTEGER),
+	DEFINE_INDEX(flexindex, FIELD_INTEGER),
+	DEFINE_FIELD(materialtype, FIELD_INTEGER),
+	DEFINE_FIELD(materialparam, FIELD_INTEGER),
+	DEFINE_FIELD(meshid, FIELD_INTEGER),
+	DEFINE_FIELD(center, FIELD_VECTOR),
+	DEFINE_EMBEDDED(vertexdata),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 8),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudio_meshvertexdata_t)
 	DEFINE_FIELD(modelvertexdata, FIELD_INTEGER), // mstudio_modelvertexdata_t*
-		DEFINE_ARRAY(numLODVertexes, FIELD_INTEGER, MAX_NUM_LODS),
+	DEFINE_ARRAY(numLODVertexes, FIELD_INTEGER, MAX_NUM_LODS),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioeyeball_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(bone, FIELD_INTEGER), DEFINE_FIELD(org, FIELD_VECTOR),
-		DEFINE_FIELD(zoffset, FIELD_FLOAT), DEFINE_FIELD(radius, FIELD_FLOAT), DEFINE_FIELD(up, FIELD_VECTOR),
-		DEFINE_FIELD(forward, FIELD_VECTOR), DEFINE_FIELD(texture, FIELD_INTEGER), DEFINE_FIELD(unused1, FIELD_INTEGER),
-		DEFINE_FIELD(iris_scale, FIELD_FLOAT), DEFINE_FIELD(unused2, FIELD_INTEGER),
-		DEFINE_ARRAY(upperflexdesc, FIELD_INTEGER, 3), DEFINE_ARRAY(lowerflexdesc, FIELD_INTEGER, 3),
-		DEFINE_ARRAY(uppertarget, FIELD_FLOAT, 3), DEFINE_ARRAY(lowertarget, FIELD_FLOAT, 3),
-		DEFINE_FIELD(upperlidflexdesc, FIELD_INTEGER), DEFINE_FIELD(lowerlidflexdesc, FIELD_INTEGER),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 4), DEFINE_FIELD(m_bNonFACS, FIELD_BOOLEAN),
-		DEFINE_ARRAY(unused3, FIELD_CHARACTER, 3), DEFINE_ARRAY(unused4, FIELD_INTEGER, 7),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(bone, FIELD_INTEGER),
+	DEFINE_FIELD(org, FIELD_VECTOR),
+	DEFINE_FIELD(zoffset, FIELD_FLOAT),
+	DEFINE_FIELD(radius, FIELD_FLOAT),
+	DEFINE_FIELD(up, FIELD_VECTOR),
+	DEFINE_FIELD(forward, FIELD_VECTOR),
+	DEFINE_FIELD(texture, FIELD_INTEGER),
+	DEFINE_FIELD(unused1, FIELD_INTEGER),
+	DEFINE_FIELD(iris_scale, FIELD_FLOAT),
+	DEFINE_FIELD(unused2, FIELD_INTEGER),
+	DEFINE_ARRAY(upperflexdesc, FIELD_INTEGER, 3),
+	DEFINE_ARRAY(lowerflexdesc, FIELD_INTEGER, 3),
+	DEFINE_ARRAY(uppertarget, FIELD_FLOAT, 3),
+	DEFINE_ARRAY(lowertarget, FIELD_FLOAT, 3),
+	DEFINE_FIELD(upperlidflexdesc, FIELD_INTEGER),
+	DEFINE_FIELD(lowerlidflexdesc, FIELD_INTEGER),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 4),
+	DEFINE_FIELD(m_bNonFACS, FIELD_BOOLEAN),
+	DEFINE_ARRAY(unused3, FIELD_CHARACTER, 3),
+	DEFINE_ARRAY(unused4, FIELD_INTEGER, 7),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioflex_t)
-	DEFINE_FIELD(flexdesc, FIELD_INTEGER), DEFINE_FIELD(target0, FIELD_FLOAT), DEFINE_FIELD(target1, FIELD_FLOAT),
-		DEFINE_FIELD(target2, FIELD_FLOAT), DEFINE_FIELD(target3, FIELD_FLOAT), DEFINE_FIELD(numverts, FIELD_INTEGER),
-		DEFINE_INDEX(vertindex, FIELD_INTEGER), DEFINE_FIELD(flexpair, FIELD_INTEGER),
-		DEFINE_FIELD(vertanimtype, FIELD_CHARACTER), DEFINE_ARRAY(unusedchar, FIELD_CHARACTER, 3),
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 6),
+	DEFINE_FIELD(flexdesc, FIELD_INTEGER),
+	DEFINE_FIELD(target0, FIELD_FLOAT),
+	DEFINE_FIELD(target1, FIELD_FLOAT),
+	DEFINE_FIELD(target2, FIELD_FLOAT),
+	DEFINE_FIELD(target3, FIELD_FLOAT),
+	DEFINE_FIELD(numverts, FIELD_INTEGER),
+	DEFINE_INDEX(vertindex, FIELD_INTEGER),
+	DEFINE_FIELD(flexpair, FIELD_INTEGER),
+	DEFINE_FIELD(vertanimtype, FIELD_CHARACTER),
+	DEFINE_ARRAY(unusedchar, FIELD_CHARACTER, 3),
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 6),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiovertanim_t)
-	DEFINE_FIELD(index, FIELD_SHORT), DEFINE_FIELD(speed, FIELD_CHARACTER), DEFINE_FIELD(side, FIELD_CHARACTER),
-		DEFINE_ARRAY(delta, FIELD_SHORT, 3),  // short[3]/float16[3]union
-		DEFINE_ARRAY(ndelta, FIELD_SHORT, 3), // short[3]/float16[3] union
+	DEFINE_FIELD(index, FIELD_SHORT),
+	DEFINE_FIELD(speed, FIELD_CHARACTER),
+	DEFINE_FIELD(side, FIELD_CHARACTER),
+	DEFINE_ARRAY(delta, FIELD_SHORT, 3),  // short[3]/float16[3]union
+	DEFINE_ARRAY(ndelta, FIELD_SHORT, 3), // short[3]/float16[3] union
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiomodelgroup_t)
-	DEFINE_INDEX(szlabelindex, FIELD_INTEGER), DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_INDEX(szlabelindex, FIELD_INTEGER),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioanimblock_t)
-	DEFINE_INDEX(datastart, FIELD_INTEGER), DEFINE_INDEX(dataend, FIELD_INTEGER),
+	DEFINE_INDEX(datastart, FIELD_INTEGER),
+	DEFINE_INDEX(dataend, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiotexture_t)
-	DEFINE_INDEX(sznameindex, FIELD_INTEGER), DEFINE_FIELD(flags, FIELD_INTEGER), DEFINE_FIELD(used, FIELD_INTEGER),
-		DEFINE_FIELD(unused1, FIELD_INTEGER), DEFINE_FIELD(material, FIELD_INTEGER), // IMaterial*
-		DEFINE_FIELD(clientmaterial, FIELD_INTEGER),								 // void*
-		DEFINE_ARRAY(unused, FIELD_INTEGER, 10),
+	DEFINE_INDEX(sznameindex, FIELD_INTEGER),
+	DEFINE_FIELD(flags, FIELD_INTEGER),
+	DEFINE_FIELD(used, FIELD_INTEGER),
+	DEFINE_FIELD(unused1, FIELD_INTEGER),
+	DEFINE_FIELD(material, FIELD_INTEGER),	// IMaterial*
+	DEFINE_FIELD(clientmaterial, FIELD_INTEGER),	// void*
+	DEFINE_ARRAY(unused, FIELD_INTEGER, 10),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(vertexFileHeader_t)
-	DEFINE_FIELD(id, FIELD_INTEGER), DEFINE_FIELD(version, FIELD_INTEGER), DEFINE_FIELD(checksum, FIELD_INTEGER),
-		DEFINE_FIELD(numLODs, FIELD_INTEGER), DEFINE_ARRAY(numLODVertexes, FIELD_INTEGER, MAX_NUM_LODS),
-		DEFINE_FIELD(numFixups, FIELD_INTEGER), DEFINE_FIELD(fixupTableStart, FIELD_INTEGER),
-		DEFINE_FIELD(vertexDataStart, FIELD_INTEGER), DEFINE_FIELD(tangentDataStart, FIELD_INTEGER),
+	DEFINE_FIELD(id, FIELD_INTEGER),
+	DEFINE_FIELD(version, FIELD_INTEGER),
+	DEFINE_FIELD(checksum, FIELD_INTEGER),
+	DEFINE_FIELD(numLODs, FIELD_INTEGER),
+	DEFINE_ARRAY(numLODVertexes, FIELD_INTEGER, MAX_NUM_LODS),
+	DEFINE_FIELD(numFixups, FIELD_INTEGER),
+	DEFINE_FIELD(fixupTableStart, FIELD_INTEGER),
+	DEFINE_FIELD(vertexDataStart, FIELD_INTEGER),
+	DEFINE_FIELD(tangentDataStart, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(vertexFileFixup_t)
-	DEFINE_FIELD(lod, FIELD_INTEGER), DEFINE_FIELD(sourceVertexID, FIELD_INTEGER),
-		DEFINE_FIELD(numVertexes, FIELD_INTEGER),
+	DEFINE_FIELD(lod, FIELD_INTEGER),
+	DEFINE_FIELD(sourceVertexID, FIELD_INTEGER),
+	DEFINE_FIELD(numVertexes, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudioboneweight_t)
 	DEFINE_ARRAY(weight, FIELD_FLOAT, MAX_NUM_BONES_PER_VERT),
-		DEFINE_ARRAY(bone, FIELD_CHARACTER, MAX_NUM_BONES_PER_VERT), DEFINE_FIELD(numbones, FIELD_CHARACTER),
+	DEFINE_ARRAY(bone, FIELD_CHARACTER, MAX_NUM_BONES_PER_VERT),
+	DEFINE_FIELD(numbones, FIELD_CHARACTER),
 END_BYTESWAP_DATADESC()
 
 BEGIN_BYTESWAP_DATADESC(mstudiovertex_t)
-	DEFINE_EMBEDDED(m_BoneWeights), DEFINE_FIELD(m_vecPosition, FIELD_VECTOR), DEFINE_FIELD(m_vecNormal, FIELD_VECTOR),
-		DEFINE_ARRAY(m_vecTexCoord, FIELD_FLOAT, 2),
+	DEFINE_EMBEDDED(m_BoneWeights),
+	DEFINE_FIELD(m_vecPosition, FIELD_VECTOR),
+	DEFINE_FIELD(m_vecNormal, FIELD_VECTOR),
+	DEFINE_ARRAY(m_vecTexCoord, FIELD_FLOAT, 2),
 END_BYTESWAP_DATADESC()
 
 // Data descriptions from OptimizedModel.h
@@ -2887,66 +3115,89 @@ namespace OptimizedModel
 {
 
 	BEGIN_BYTESWAP_DATADESC(BoneStateChangeHeader_t)
-		DEFINE_FIELD(hardwareID, FIELD_INTEGER), DEFINE_FIELD(newBoneID, FIELD_INTEGER),
+		DEFINE_FIELD(hardwareID, FIELD_INTEGER),
+		DEFINE_FIELD(newBoneID, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(Vertex_t)
-		DEFINE_ARRAY(boneWeightIndex, FIELD_CHARACTER, MAX_NUM_BONES_PER_VERT), DEFINE_FIELD(numBones, FIELD_CHARACTER),
-			DEFINE_FIELD(origMeshVertID, FIELD_SHORT), DEFINE_ARRAY(boneID, FIELD_CHARACTER, MAX_NUM_BONES_PER_VERT),
+		DEFINE_ARRAY(boneWeightIndex, FIELD_CHARACTER, MAX_NUM_BONES_PER_VERT),
+		DEFINE_FIELD(numBones, FIELD_CHARACTER),
+		DEFINE_FIELD(origMeshVertID, FIELD_SHORT),
+		DEFINE_ARRAY(boneID, FIELD_CHARACTER, MAX_NUM_BONES_PER_VERT),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(StripHeader_t)
-		DEFINE_FIELD(numIndices, FIELD_INTEGER), DEFINE_FIELD(indexOffset, FIELD_INTEGER),
-			DEFINE_FIELD(numVerts, FIELD_INTEGER), DEFINE_FIELD(vertOffset, FIELD_INTEGER),
-			DEFINE_FIELD(numBones, FIELD_SHORT), DEFINE_FIELD(flags, FIELD_CHARACTER),
-			DEFINE_FIELD(numBoneStateChanges, FIELD_INTEGER), DEFINE_FIELD(boneStateChangeOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numIndices, FIELD_INTEGER),
+		DEFINE_FIELD(indexOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numVerts, FIELD_INTEGER),
+		DEFINE_FIELD(vertOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numBones, FIELD_SHORT),
+		DEFINE_FIELD(flags, FIELD_CHARACTER),
+		DEFINE_FIELD(numBoneStateChanges, FIELD_INTEGER),
+		DEFINE_FIELD(boneStateChangeOffset, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(StripGroupHeader_t)
-		DEFINE_FIELD(numVerts, FIELD_INTEGER), DEFINE_FIELD(vertOffset, FIELD_INTEGER),
-			DEFINE_FIELD(numIndices, FIELD_INTEGER), DEFINE_FIELD(indexOffset, FIELD_INTEGER),
-			DEFINE_FIELD(numStrips, FIELD_INTEGER), DEFINE_FIELD(stripOffset, FIELD_INTEGER),
-			DEFINE_FIELD(flags, FIELD_CHARACTER),
+		DEFINE_FIELD(numVerts, FIELD_INTEGER),
+		DEFINE_FIELD(vertOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numIndices, FIELD_INTEGER),
+		DEFINE_FIELD(indexOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numStrips, FIELD_INTEGER),
+		DEFINE_FIELD(stripOffset, FIELD_INTEGER),
+		DEFINE_FIELD(flags, FIELD_CHARACTER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(MeshHeader_t)
-		DEFINE_FIELD(numStripGroups, FIELD_INTEGER), DEFINE_FIELD(stripGroupHeaderOffset, FIELD_INTEGER),
-			DEFINE_FIELD(flags, FIELD_CHARACTER),
+		DEFINE_FIELD(numStripGroups, FIELD_INTEGER),
+		DEFINE_FIELD(stripGroupHeaderOffset, FIELD_INTEGER),
+		DEFINE_FIELD(flags, FIELD_CHARACTER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(ModelLODHeader_t)
-		DEFINE_FIELD(numMeshes, FIELD_INTEGER), DEFINE_FIELD(meshOffset, FIELD_INTEGER),
-			DEFINE_FIELD(switchPoint, FIELD_FLOAT),
+		DEFINE_FIELD(numMeshes, FIELD_INTEGER),
+		DEFINE_FIELD(meshOffset, FIELD_INTEGER),
+		DEFINE_FIELD(switchPoint, FIELD_FLOAT),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(ModelHeader_t)
-		DEFINE_FIELD(numLODs, FIELD_INTEGER), DEFINE_FIELD(lodOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numLODs, FIELD_INTEGER),
+		DEFINE_FIELD(lodOffset, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(BodyPartHeader_t)
-		DEFINE_FIELD(numModels, FIELD_INTEGER), DEFINE_FIELD(modelOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numModels, FIELD_INTEGER),
+		DEFINE_FIELD(modelOffset, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(MaterialReplacementHeader_t)
-		DEFINE_FIELD(materialID, FIELD_SHORT), DEFINE_FIELD(replacementMaterialNameOffset, FIELD_INTEGER),
+		DEFINE_FIELD(materialID, FIELD_SHORT),
+		DEFINE_FIELD(replacementMaterialNameOffset, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(MaterialReplacementListHeader_t)
-		DEFINE_FIELD(numReplacements, FIELD_INTEGER), DEFINE_FIELD(replacementOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numReplacements, FIELD_INTEGER),
+		DEFINE_FIELD(replacementOffset, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 	BEGIN_BYTESWAP_DATADESC(FileHeader_t)
-		DEFINE_FIELD(version, FIELD_INTEGER), DEFINE_FIELD(vertCacheSize, FIELD_INTEGER),
-			DEFINE_FIELD(maxBonesPerStrip, FIELD_SHORT), DEFINE_FIELD(maxBonesPerTri, FIELD_SHORT),
-			DEFINE_FIELD(maxBonesPerVert, FIELD_INTEGER), DEFINE_FIELD(checkSum, FIELD_INTEGER),
-			DEFINE_FIELD(numLODs, FIELD_INTEGER), DEFINE_FIELD(materialReplacementListOffset, FIELD_INTEGER),
-			DEFINE_FIELD(numBodyParts, FIELD_INTEGER), DEFINE_FIELD(bodyPartOffset, FIELD_INTEGER),
+		DEFINE_FIELD(version, FIELD_INTEGER),
+		DEFINE_FIELD(vertCacheSize, FIELD_INTEGER),
+		DEFINE_FIELD(maxBonesPerStrip, FIELD_SHORT),
+		DEFINE_FIELD(maxBonesPerTri, FIELD_SHORT),
+		DEFINE_FIELD(maxBonesPerVert, FIELD_INTEGER),
+		DEFINE_FIELD(checkSum, FIELD_INTEGER),
+		DEFINE_FIELD(numLODs, FIELD_INTEGER),
+		DEFINE_FIELD(materialReplacementListOffset, FIELD_INTEGER),
+		DEFINE_FIELD(numBodyParts, FIELD_INTEGER),
+		DEFINE_FIELD(bodyPartOffset, FIELD_INTEGER),
 	END_BYTESWAP_DATADESC()
 
 } // namespace OptimizedModel
 
 // Data descriptions from phyfile.h
 BEGIN_BYTESWAP_DATADESC(phyheader_t)
-	DEFINE_FIELD(size, FIELD_INTEGER), DEFINE_FIELD(id, FIELD_INTEGER), DEFINE_FIELD(solidCount, FIELD_INTEGER),
-		DEFINE_FIELD(checkSum, FIELD_INTEGER),
+	DEFINE_FIELD(size, FIELD_INTEGER),
+	DEFINE_FIELD(id, FIELD_INTEGER),
+	DEFINE_FIELD(solidCount, FIELD_INTEGER),
+	DEFINE_FIELD(checkSum, FIELD_INTEGER),
 END_BYTESWAP_DATADESC()
